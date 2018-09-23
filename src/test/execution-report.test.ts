@@ -10,6 +10,8 @@ import { ISessionDescription } from '../transport/session-description'
 import { replayFixFile } from '../util/replay'
 import { getDefinitions } from '../util/dictionary-definitions'
 import { JsFixConfig } from '../config/js-fix-config'
+import { IUndInstrmtGrp } from '../types/FIX4.4/quickfix/set/und_instrmt_grp'
+import { IUnderlyingInstrument } from '../types/FIX4.4/quickfix/set/underlying_instrument'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -807,10 +809,10 @@ test('UndInstrmtGrp component decode', () => {
     // check the instrument component
   const undInstrmtGrpView: MsgView = erView.getView('UndInstrmtGrp')
   expect(undInstrmtGrpView).toBeTruthy()
-  const undInstrmtGrpViewAsObject: ILooseObject = undInstrmtGrpView.toObject()
+  const undInstrmtGrpViewAsObject: IUndInstrmtGrp = undInstrmtGrpView.toObject()
   expect(undInstrmtGrpViewAsObject).toBeTruthy()
   expect(undInstrmtGrpViewAsObject.NoUnderlyings.length).toEqual(2)
-  const underlying0: ILooseObject = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
+  const underlying0: IUnderlyingInstrument = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
   expect(underlying0).toBeTruthy()
   expect(underlying0.UnderlyingSymbol).toEqual('massa.')
   expect(underlying0.UndSecAltIDGrp).toEqual(

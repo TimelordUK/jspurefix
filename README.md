@@ -172,11 +172,13 @@ from data/examples/FIX.4.4/quickfix/execution-report
 get first in group fetched from object where group is array
 
 ```typescript
+  import { IUndInstrmtGrp } from '../types/FIX4.4/quickfix/set/und_instrmt_grp'
+  import { IUnderlyingInstrument } from '../types/FIX4.4/quickfix/set/underlying_instrument'
   const erView: MsgView = views[0]
   const undInstrmtGrpView: MsgView = erView.getView('UndInstrmtGrp')
-  const undInstrmtGrpViewAsObject: ILooseObject = undInstrmtGrpView.toObject()
+  const undInstrmtGrpViewAsObject: IUndInstrmtGrp = undInstrmtGrpView.toObject()
   expect(undInstrmtGrpViewAsObject.NoUnderlyings.length).toEqual(2)
-  const underlying0: ILooseObject = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
+  const underlying0: IUnderlyingInstrument = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
   expect(underlying0.UnderlyingSymbol).toEqual('massa.')
 ```
 
