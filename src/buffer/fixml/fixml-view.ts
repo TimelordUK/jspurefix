@@ -27,7 +27,13 @@ export class FixmlView extends MsgView {
 
   private static getDateOnly (s: string, useUtc: boolean): Date {
     let m = moment(s)
-    return useUtc ? m.utc().toDate() : m.toDate()
+    let d: Date
+    if (useUtc) {
+      d = m.utc().toDate()
+    } else {
+      d = m.toDate()
+    }
+    return d
   }
 
   // if the view is to be kept beyond the event on which it arrives, must be cloned

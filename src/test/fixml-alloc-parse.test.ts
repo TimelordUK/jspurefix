@@ -10,6 +10,7 @@ import { IAllocationInstruction } from '../types/FIXML50SP2/allocation_instructi
 import { IAllocationReport } from '../types/FIXML50SP2/allocation_report'
 
 import { ToViews } from './to-views'
+import * as moment from 'moment'
 
 const testFolder: string = 'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange'
 const toViews: ToViews = new ToViews(testFolder)
@@ -197,6 +198,6 @@ test('main attributes', () => {
   expect(v.getTyped('RptTyp')).toEqual(16)
   expect(v.getTyped('TrdType')).toEqual(2)
   expect(v.getTyped('SideAvgPx')).toEqual(95.5)
-  expect(v.getTyped('TradeDate')).toEqual(new Date('2015-08-04T23:00:00.000Z'))
+  expect(v.getTyped('TradeDate')).toEqual(moment('2015-08-05').toDate())
   expect(v.getTyped('TradeMatchID')).toEqual('12A80D9ED85HI04008310')
 })
