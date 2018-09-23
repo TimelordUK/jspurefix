@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/2w2eag4trnijg5d3?svg=true)](https://ci.appveyor.com/project/TimelordUK/jsfix)
 
 # jsfix
 

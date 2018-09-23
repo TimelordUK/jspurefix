@@ -1,0 +1,5 @@
+version: 1.0.{build}
+build_script:
+- cmd: script\build.cmd
+test_script:
+- cmd: script\test.cmd
