@@ -7,6 +7,7 @@ import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
 import { ContainedSimpleField } from '../dictionary/contained/contained-simple-field'
 import { TagType } from '../buffer/tags'
 import { dispatchFields, IFieldDispatcher } from '../dictionary/fields-dispatch'
+import moment = require('moment')
 
 export class JsonHelper {
   constructor (public readonly definitions: FixDefinitions) {
@@ -31,10 +32,15 @@ export class JsonHelper {
       }
 
       case TagType.UtcTimestamp:
+        const m = moment(v)
+        object[name] = m.toDate()
+        break
+
       case TagType.UtcDateOnly:
       case TagType.UtcTimeOnly:
       case TagType.LocalDate: {
-        object[name] = new Date(v)
+        const m = moment(v)
+        object[name] = m.toDate()
         break
       }
     }

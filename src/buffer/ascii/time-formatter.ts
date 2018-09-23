@@ -196,7 +196,6 @@ export class TimeFormatter implements ITimeFormatter {
       t = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
     } else {
       t = new Date(year, month - 1, day, 0, 0, 0, 0)
-      console.log(`getDate offset = ${t.getTimezoneOffset()}`)
       if (this.adjustLocal) {
         t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
       }
