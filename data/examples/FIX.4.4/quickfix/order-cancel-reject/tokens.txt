@@ -1,0 +1,15 @@
+[0] 8 (BeginString) = FIX4.4, [1] 9 (BodyLength) = 0000327
+[2] 35 (MsgType) = 9[ORDER_CANCEL_REJECT], [3] 49 (SenderCompID) = sender-10
+[4] 56 (TargetCompID) = target-20, [5] 34 (MsgSeqNum) = 1
+[6] 57 (TargetSubID) = sub-a, [7] 52 (SendingTime) = 20180610-11:15:45.793
+[8] 37 (OrderID) = ipsum, [9] 198 (SecondaryOrderID) = sit
+[10] 526 (SecondaryClOrdID) = consectetur, [11] 11 (ClOrdID) = elit.
+[12] 583 (ClOrdLinkID) = odio, [13] 41 (OrigClOrdID) = blandit
+[14] 39 (OrdStatus) = D[ACCEPTED_FOR_BIDDING], [15] 636 (WorkingIndicator) = N[NO]
+[16] 586 (OrigOrdModTime) = 20180528-15:32:50.179, [17] 66 (ListID) = semper
+[18] 1 (Account) = bibendum, [19] 660 (AcctIDSource) = 3[TFM]
+[20] 581 (AccountType) = 4[FLOOR_TRADER], [21] 229 (TradeOriginationDate) = 20180528
+[22] 75 (TradeDate) = 20180528, [23] 60 (TransactTime) = 20180528-15:32:50.179
+[24] 434 (CxlRejResponseTo) = 1[ORDER_CANCEL_REQUEST], [25] 102 (CxlRejReason) = 99[OTHER]
+[26] 58 (Text) = lectus., [27] 354 (EncodedTextLen) = 20
+[28] 355 (EncodedText) = CLJQfqGqFZmOkp3uG0gY[29] 10 (CheckSum) = 241

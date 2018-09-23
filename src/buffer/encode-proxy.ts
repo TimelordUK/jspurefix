@@ -1,0 +1,150 @@
+import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { ILooseObject } from '../collections/collection'
+import { MessageDefinition } from '../dictionary/definition/message-definition'
+import { ContainedField, ContainedFieldType } from '../dictionary/contained/contained-field'
+import { ContainedSimpleField } from '../dictionary/contained/contained-simple-field'
+import { TagType } from './tags'
+import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
+import { ContainedComponentField } from '../dictionary/contained/contained-component-field'
+import { SimpleFieldDefinition } from '../dictionary/definition/simple-field-definition'
+import { ContainedGroupField } from '../dictionary/contained/contained-group-field'
+
+export class EncodeProxy {
+  constructor (public readonly definitions: FixDefinitions) {
+  }
+
+  private static SimpleFieldCheck (field: ContainedSimpleField, val: any): void {
+    const sf: ContainedSimpleField = field as ContainedSimpleField
+    const definition: SimpleFieldDefinition = sf.definition
+    if (definition.isEnum()) {
+      const resolved: boolean = definition.containsEnum(val)
+      if (!resolved) {
+        throw new Error(`enum field ${field.name} does not support "${val}"`)
+      }
+    }
+    switch (definition.tagType) {
+      case TagType.LocalDate:
+      case TagType.UtcTimeOnly:
+      case TagType.UtcDateOnly:
+      case TagType.UtcTimestamp: {
+        const isDate: boolean = val instanceof Date
+        if (!isDate) {
+          throw new Error(`field ${field.name} expects Date but receives "${typeof val}"`)
+        }
+        break
+      }
+
+      case TagType.Boolean: {
+        if (typeof(val) !== typeof(true)) {
+          throw new Error(`field ${field.name} expects boolean but receives "${typeof val}"`)
+        }
+        break
+      }
+
+      case TagType.String: {
+        if (typeof(val) !== 'string') {
+          throw new Error(`field ${field.name} expects string but receives "${typeof val}"`)
+        }
+        break
+      }
+
+      case TagType.RawData: {
+        const isBuffer: boolean = val instanceof Buffer
+        if (!isBuffer) {
+          throw new Error(`field ${field.name} expects Buffer but receives "${typeof val}"`)
+        }
+        break
+      }
+
+      case TagType.Int:
+      case TagType.Float:
+      case TagType.Length: {
+        if (isNaN(val)) {
+          throw new Error(`field ${field.name} expects number but receives "${typeof val}"`)
+        }
+        break
+      }
+    }
+  }
+
+  private static checkProperties (wrapped: ILooseObject, val: ILooseObject): ILooseObject {
+    const keys: string[] = Object.keys(val)
+    for (let k of keys) {
+      wrapped[k] = val[k]
+    }
+    return wrapped
+  }
+
+  private static ComponentFieldCheck (field: ContainedComponentField, val: any): object {
+    const isComplex: boolean = typeof val === 'object'
+    if (!isComplex) {
+      throw new Error(`type ${field.name} is a component but is given type "${typeof val}"`)
+    }
+    const cf: ContainedComponentField = field as ContainedComponentField
+    return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(cf.definition)), val)
+  }
+
+  private static GroupFieldCheck (field: ContainedGroupField, val: any): object {
+    const accepted: boolean = Array.isArray(val) || !isNaN(val)
+    if (!accepted) {
+      throw new Error(`type ${field.name} is a group and needs array or number, not "${typeof val}"`)
+    }
+    const gf: ContainedComponentField = field as ContainedComponentField
+    const j: number = val
+    const isNumber: boolean = !isNaN(val)
+    if (isNumber) {
+      const arr: ILooseObject[] = new Array(j)
+      for (let i: number = 0; i < j; ++i) {
+        arr[i] = new Proxy({}, EncodeProxy.handler(gf.definition))
+      }
+      return arr
+    } else {
+      const arr: ILooseObject[] = val
+      for (let i: number = 0; i < arr.length; ++i) {
+        arr[i] = EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(gf.definition)), arr[i])
+      }
+      return arr
+    }
+  }
+
+  private static handler (set: ContainedFieldSet): Object {
+    return {
+      set (target: ILooseObject, prop: string, val: any): boolean {
+        const field: ContainedField = set.localNameToField.get(prop)
+        if (!field) {
+          throw new Error(`type ${set.name} has no field named ${prop}`)
+        }
+        target[prop] = EncodeProxy.examine(field, val)
+        return true
+      }
+    }
+  }
+
+  private static examine (field: ContainedField, val: any): any {
+    switch (field.type) {
+      case ContainedFieldType.Simple: {
+        EncodeProxy.SimpleFieldCheck(field as ContainedSimpleField, val)
+        break
+      }
+
+      case ContainedFieldType.Component: {
+        val = EncodeProxy.ComponentFieldCheck(field as ContainedComponentField, val)
+        break
+      }
+
+      case ContainedFieldType.Group: {
+        val = EncodeProxy.GroupFieldCheck(field as ContainedGroupField, val)
+        break
+      }
+    }
+    return val
+  }
+  public wrap (msgName: string): ILooseObject {
+    const msg: MessageDefinition = this.definitions.message.get(msgName)
+    if (!msg) {
+      throw new Error(`no message defined for type ${msgName}`)
+    }
+
+    return new Proxy({}, EncodeProxy.handler(msg))
+  }
+}

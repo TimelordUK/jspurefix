@@ -1,0 +1,6 @@
+[0] 715 (ClearingBusinessDate) = 2008-12-09, [1] 41973 (UnderlyingStreamCommodityExchange) = CME
+[2] 50000 (BatchID) = 01, [3] 1649 (RelatedSymbol) = ZCZ9
+[4] 1652 (RelatedSecurityType) = FUT, [5] 1546 (InstrumentScopeCFICode) = FFCPSO
+[6] 1653 (RelatedMaturityMonthYear) = 200906, [7] 42204 (LegContractualMatrixSource) = H
+[8] 40 (OrdType) = 6[WithOrWithout], [9] 43066 (UnderlyingReturnRatePrice) = 18.97
+[10] 275 (MDMkt) = CME

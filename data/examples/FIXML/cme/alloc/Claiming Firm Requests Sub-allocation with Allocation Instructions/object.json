@@ -1,0 +1,139 @@
+{
+  "AllocID": "1004",
+  "TransferTransType": 0,
+  "AllocType": 23,
+  "RelativeValueSide": 1,
+  "RelatedTradeQuantity": 40,
+  "TradingSessionID": "RTH",
+  "TradingSessionSubID": "P",
+  "TradeDate": "2015-03-11T00:00:00.000Z",
+  "RelSymTransactTime": "2015-03-11T07:13:38.000Z",
+  "PostTradeType": 0,
+  "ExecutingClaimingIndicator": 1,
+  "AllocCustomerCapacity": "4",
+  "SideMultiLegReportingType": 1,
+  "ClearDate": "2015-03-11T00:00:00.000Z",
+  "StandardHeader": {
+    "SenderCompID": "123",
+    "TargetCompID": "CME",
+    "SenderSubID": "CME",
+    "TargetSubID": "CME",
+    "HopSendingTime": "2010-08-13T15:18:02.000Z"
+  },
+  "OrdAllocGrp": [
+    {
+      "ClOrdID": "QQQ"
+    }
+  ],
+  "Instrument": {
+    "BatchID": "NQ",
+    "InstrumentScopeCFICode": "FXXXXX",
+    "RelatedSecurityType": "FUT",
+    "RelatedMaturityMonthYear": "201503",
+    "UnderlyingStreamCommodityExchange": "CME"
+  },
+  "Parties": [
+    {
+      "BatchID": "CME",
+      "UnderlyingProvisionPartyRole": 22
+    },
+    {
+      "BatchID": "CME",
+      "UnderlyingProvisionPartyRole": 21
+    },
+    {
+      "BatchID": "EDCUST4",
+      "UnderlyingProvisionPartyRole": 24,
+      "PtysSubGrp": [
+        {
+          "BatchID": "1",
+          "UnderlyingReturnRateValuationDateType": 26
+        }
+      ]
+    },
+    {
+      "BatchID": "123",
+      "UnderlyingProvisionPartyRole": 1
+    }
+  ],
+  "AllocGrp": [
+    {
+      "RelatedTradeQuantity": 40,
+      "LegIndividualAllocID": "100035GI",
+      "SecondaryIndividualAllocID": "100035",
+      "AllocCustomerCapacity": "4",
+      "NestedParties": [
+        {
+          "BatchID": "CME",
+          "UnderlyingProvisionPartyRole": 22
+        },
+        {
+          "BatchID": "EDCUST4",
+          "UnderlyingProvisionPartyRole": 24,
+          "NstdPtysSubGrp": [
+            {
+              "BatchID": "1",
+              "UnderlyingReturnRateValuationDateType": 26
+            }
+          ]
+        },
+        {
+          "BatchID": "123",
+          "UnderlyingProvisionPartyRole": 1
+        }
+      ]
+    },
+    {
+      "RelatedTradeQuantity": 22,
+      "LegIndividualAllocID": "100035GI",
+      "SecondaryIndividualAllocID": "100035",
+      "AllocCustomerCapacity": "4",
+      "NestedParties": [
+        {
+          "BatchID": "CME",
+          "UnderlyingProvisionPartyRole": 22
+        },
+        {
+          "BatchID": "EDCUST4",
+          "UnderlyingProvisionPartyRole": 24,
+          "NstdPtysSubGrp": [
+            {
+              "BatchID": "1",
+              "UnderlyingReturnRateValuationDateType": 26
+            }
+          ]
+        },
+        {
+          "BatchID": "123",
+          "UnderlyingProvisionPartyRole": 1
+        }
+      ]
+    },
+    {
+      "RelatedTradeQuantity": 15,
+      "LegIndividualAllocID": "100035GI",
+      "SecondaryIndividualAllocID": "100035",
+      "AllocCustomerCapacity": "4",
+      "NestedParties": [
+        {
+          "BatchID": "CME",
+          "UnderlyingProvisionPartyRole": 22
+        },
+        {
+          "BatchID": "EDHOUSE2",
+          "UnderlyingProvisionPartyRole": 24,
+          "NstdPtysSubGrp": [
+            {
+              "BatchID": "1",
+              "UnderlyingReturnRateValuationDateType": 26
+            }
+          ]
+        },
+        {
+          "BatchID": "123714",
+          "UnderlyingProvisionPartyRole": 1
+        }
+      ]
+    }
+  ]
+}

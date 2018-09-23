@@ -1,0 +1,241 @@
+[
+  {
+    "name": "StandardHeader",
+    "depth": 1,
+    "startTag": 629,
+    "startPosition": 19,
+    "endTag": 57,
+    "endPosition": 23,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "OrdAllocGrp",
+    "depth": 1,
+    "startTag": 11,
+    "startPosition": 24,
+    "endTag": 11,
+    "endPosition": 24,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "OrdAllocGrp",
+    "depth": 1,
+    "startTag": 11,
+    "startPosition": 24,
+    "endTag": 11,
+    "endPosition": 24,
+    "delimiterTag": 11,
+    "delimiterPositions": [
+      24
+    ]
+  },
+  {
+    "name": "Instrument",
+    "depth": 1,
+    "startTag": 50000,
+    "startPosition": 25,
+    "endTag": 1576,
+    "endPosition": 30,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 1,
+    "startTag": 50000,
+    "startPosition": 31,
+    "endTag": 42176,
+    "endPosition": 32,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 2,
+    "startTag": 50000,
+    "startPosition": 33,
+    "endTag": 42176,
+    "endPosition": 34,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 2,
+    "startTag": 50000,
+    "startPosition": 35,
+    "endTag": 42176,
+    "endPosition": 36,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 39,
+    "endTag": 43073,
+    "endPosition": 40,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 39,
+    "endTag": 43073,
+    "endPosition": 40,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      39
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 2,
+    "startTag": 50000,
+    "startPosition": 37,
+    "endTag": 43073,
+    "endPosition": 40,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 1,
+    "startTag": 50000,
+    "startPosition": 31,
+    "endTag": 43073,
+    "endPosition": 40,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      31,
+      33,
+      35,
+      37
+    ]
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 46,
+    "endTag": 42176,
+    "endPosition": 47,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 48,
+    "endTag": 42176,
+    "endPosition": 49,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 52,
+    "endTag": 43073,
+    "endPosition": 53,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 52,
+    "endTag": 43073,
+    "endPosition": 53,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      52
+    ]
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 50,
+    "endTag": 43073,
+    "endPosition": 53,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 54,
+    "endTag": 42176,
+    "endPosition": 55,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 56,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 46,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      46,
+      48,
+      50,
+      54,
+      56
+    ]
+  },
+  {
+    "name": "AllocGrp",
+    "depth": 1,
+    "startTag": 672,
+    "startPosition": 41,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "AllocGrp",
+    "depth": 1,
+    "startTag": 672,
+    "startPosition": 41,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 672,
+    "delimiterPositions": [
+      41
+    ]
+  },
+  {
+    "name": "AllocationReport",
+    "depth": 0,
+    "startTag": 2453,
+    "startPosition": 0,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  }
+]

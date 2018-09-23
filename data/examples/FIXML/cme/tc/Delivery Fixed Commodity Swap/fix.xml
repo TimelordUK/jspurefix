@@ -1,0 +1,54 @@
+<FIXML s="20090815" cv="CME.0001" xv="109" v="5.0 SP2">
+    <Batch>
+        <Hdr TSub="STP_API_IRAT_T" SSub="STP" TID="ATS_BROKER1" SID="CME"></Hdr>
+        <TrdCaptRpt ClrReqmtExcptn="0" ClrIntn="0" Clrd="0" LastUpdateTm="2016-07-14T04:18:14.002-05:00" ExecMeth="2" TxnTm="2016-07-14T04:18:10-05:00" MLegRptTyp="1" TrdDt="2016-07-14" QtyTyp="1" VenuTyp="X" PxTyp="2" TrdSubTyp="7" TrdTyp="22" ReqID="ABC124" RptTyp="101" TransTyp="0" TrdID2="12510821" RptID="edbba144-a4ed-4e40-b88f-274098e9c2af">
+            <Instrmt Exch="XXXX" SecTyp="CMDTYSWAP">
+                <Strm TotNotlUOM="MMBtu" TotNotl="310000.10" NotlUOM="MMBtu" NotlUnit="D" NotlPeriod="1" Notl="10000.20" RcvSide="1" PaySide="2" Typ="1">
+                    <Cmdty Base="NG"></Cmdty>
+                    <EfctvDt Dt="2019-08-01"></EfctvDt>
+                    <TrmtnDt Dt="2019-08-31"></TrmtnDt>
+                    <DlvryStrm DlvryRstctn="2" DlvryPnt="Northwest Pipeline Corp - Canadian Border (Huntingdon)"></DlvryStrm>
+                </Strm>
+                <Strm TotNotlUOM="MMBtu" TotNotl="310000.10" NotlUOM="MMBtu" NotlUnit="D" NotlPeriod="1" Notl="10000.20" RcvSide="2" PaySide="1" Typ="0">
+                    <Cmdty Base="NG"></Cmdty>
+                    <EfctvDt Dt="2019-08-01"></EfctvDt>
+                    <TrmtnDt Dt="2019-08-31"></TrmtnDt>
+                    <PmtStrm>
+                        <Fixed Ccy="USD" Rt="3.666660"></Fixed>
+                    </PmtStrm>
+                </Strm>
+            </Instrmt>
+            <RptSide InptSrc="CHB" Ccy="USD" ClOrdID2="BR100000687800271" Side="2">
+                <Pty R="7" Src="C" ID="ATS_TRADER1">
+                    <Sub Typ="5" ID="Paxton Commodities Ltd"></Sub>
+                </Pty>
+                <Pty R="30" ID="ATS_BROKER1">
+                    <Sub Typ="5" ID="ATS_BROKER1"></Sub>
+                </Pty>
+                <Pty R="36" ID="Paxton Trader">
+                    <Sub Typ="9" ID="Paxton Trader"></Sub>
+                </Pty>
+                <Pty R="62" ID="Adamax Broker 1">
+                    <Sub Typ="9" ID="Adamax Broker 1"></Sub>
+                </Pty>
+                <CommData Rt="0.55550" UOM="MMBtu" Ccy="USD" Basis="1" Amt="0.40"></CommData>
+                <TrdRegTS Typ="1" TS="2016-07-14T04:18:07-05:00"></TrdRegTS>
+            </RptSide>
+            <RptSide InptSrc="CHB" Ccy="USD" Side="1">
+                <Pty R="7" Src="C" ID="ATS_TRADER2">
+                    <Sub Typ="5" ID="Adamax Test Company 3"></Sub>
+                </Pty>
+                <Pty R="30" ID="ATS_BROKER1">
+                    <Sub Typ="5" ID="ATS_BROKER1"></Sub>
+                </Pty>
+                <Pty R="36" ID="Adamax Trader">
+                    <Sub Typ="9" ID="Adamax Trader"></Sub>
+                </Pty>
+                <Pty R="62" ID="Adamax Broker 2">
+                    <Sub Typ="9" ID="Adamax Broker 2"></Sub>
+                </Pty>
+                <TrdRegTS Typ="1" TS="2016-07-14T04:18:07-05:00"></TrdRegTS>
+            </RptSide>
+        </TrdCaptRpt>
+    </Batch>
+</FIXML>

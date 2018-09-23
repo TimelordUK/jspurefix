@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Executing Firm Marks a Trade for Give-up-->
+<FIXML cv="CME.0001" s="20090815" v="5.0SP2">
+	<TrdCaptRpt RptID="0008153" TransTyp="0" RptTyp="0" TrdID="12345" TrdHandlInst="0" TxnTm="2015-02-28T10:43:37-06:00" TrdDt="2015-02-28" MLegRptTyp="2" MtchStat="0" TrdTyp="0" LastQty="1.00" LastPx=".52000000">
+		<Hdr Snt="2015-02-28T10:43:37-06:00" SSub="CME" TSub="CME" SID="123" TID="CME"/>
+		<Instrmt ID="ED" Exch="CME" CFI="OPXXXX" MMY="201509" PutCall="0" SecTyp="OOF"/>
+		<RptSide CustCpcty="4" Side="2" ClOrdID="ABC" AllocInd="2" InptDev="API" OrdTyp="M" TmBkt="J" SesSub="P">
+			<Pty ID="CME" R="22"/>
+			<Pty ID="MCC" R="12"/>
+			<Pty ID="825" R="17"/>
+			<Pty ID="DBL" R="37"/>
+			<Pty ID="CME" R="21"/>
+			<Pty ID="287" R="1"/>
+			<Pty ID="406104" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+			<Alloc>
+				<Pty ID="CME" R="22"/>
+				<Pty ID="148" R="1"/>
+				<Pty ID="519334" R="24"/>
+			</Alloc>
+		</RptSide>
+	</TrdCaptRpt>
+</FIXML>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FIXML>
+	<AllocInstrctn ID="1004" SesSub="P" MLegRptTyp="1" Qty="22" Side="1" TransTyp="0" TrdDt="2015-03-09" Typ="20" PostTrdTyp="0" ExecOrClaimInd="1">
+		<Hdr SID="123" SSub="CME" Snt="2015-03-09T11:40:00-05:00" TID="CME" TSub="CME"/>
+		<OrdAlloc ClOrdID="QQQ"/>
+		<Instrmt Exch="CME" SecTyp="FUT" ID="ES" CFI="FFICSO" MMY="20150600"/>
+		<Pty ID="600" R="1"/>
+		<Pty ID="CME" R="22"/>
+		<Alloc CustCpcty="4" IndAllocID="CME091001400E8" IndAllocID2="100142" Qty="22">
+			<Pty ID="350" R="1"/>
+			<Pty ID="CME" R="22"/>
+			<Pty ID="456" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+		</Alloc>
+	</AllocInstrctn>
+</FIXML>

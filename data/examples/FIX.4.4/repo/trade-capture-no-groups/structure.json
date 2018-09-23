@@ -1,0 +1,92 @@
+[
+    {
+        "name": "StandardHeader",
+        "depth": 2,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 52,
+        "endPosition": 7,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "Instrument",
+        "depth": 1,
+        "startTag": 55,
+        "startPosition": 29,
+        "endTag": 874,
+        "endPosition": 64,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "FinancingDetails",
+        "depth": 1,
+        "startTag": 913,
+        "startPosition": 65,
+        "endTag": 898,
+        "endPosition": 70,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "OrderQtyData",
+        "depth": 1,
+        "startTag": 38,
+        "startPosition": 71,
+        "endTag": 516,
+        "endPosition": 73,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "YieldData",
+        "depth": 1,
+        "startTag": 235,
+        "startPosition": 75,
+        "endTag": 698,
+        "endPosition": 80,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "SpreadOrBenchmarkCurveData",
+        "depth": 1,
+        "startTag": 218,
+        "startPosition": 89,
+        "endTag": 761,
+        "endPosition": 94,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 1,
+        "startTag": 10,
+        "startPosition": 103,
+        "endTag": 10,
+        "endPosition": 103,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "TradeCaptureReport",
+        "depth": 1,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 10,
+        "endPosition": 103,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 0,
+        "startTag": 10,
+        "startPosition": 104,
+        "endTag": 10,
+        "endPosition": 103,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    }
+]

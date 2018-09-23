@@ -1,0 +1,552 @@
+[
+  {
+    "name": "StandardHeader",
+    "depth": 1,
+    "startTag": 57,
+    "startPosition": 0,
+    "endTag": 49,
+    "endPosition": 3,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamCommodity",
+    "depth": 5,
+    "startTag": 41964,
+    "startPosition": 33,
+    "endTag": 41964,
+    "endPosition": 33,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamEffectiveDate",
+    "depth": 5,
+    "startTag": 43082,
+    "startPosition": 34,
+    "endTag": 43082,
+    "endPosition": 34,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamTerminationDate",
+    "depth": 5,
+    "startTag": 43082,
+    "startPosition": 35,
+    "endTag": 43082,
+    "endPosition": 35,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "DeliveryStream",
+    "depth": 5,
+    "startTag": 41782,
+    "startPosition": 36,
+    "endTag": 41781,
+    "endPosition": 37,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamGrp",
+    "depth": 3,
+    "startTag": 42024,
+    "startPosition": 24,
+    "endTag": 41781,
+    "endPosition": 37,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamCommodity",
+    "depth": 5,
+    "startTag": 41964,
+    "startPosition": 47,
+    "endTag": 41964,
+    "endPosition": 47,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamEffectiveDate",
+    "depth": 5,
+    "startTag": 43082,
+    "startPosition": 48,
+    "endTag": 43082,
+    "endPosition": 48,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamTerminationDate",
+    "depth": 5,
+    "startTag": 43082,
+    "startPosition": 49,
+    "endTag": 43082,
+    "endPosition": 49,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PaymentStreamFixedRate",
+    "depth": 6,
+    "startTag": 43067,
+    "startPosition": 50,
+    "endTag": 40875,
+    "endPosition": 51,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PaymentStream",
+    "depth": 5,
+    "startTag": 43082,
+    "startPosition": 49,
+    "endTag": 40875,
+    "endPosition": 51,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamGrp",
+    "depth": 4,
+    "startTag": 42024,
+    "startPosition": 38,
+    "endTag": 40875,
+    "endPosition": 51,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StreamGrp",
+    "depth": 3,
+    "startTag": 42024,
+    "startPosition": 24,
+    "endTag": 40875,
+    "endPosition": 51,
+    "delimiterTag": 42024,
+    "delimiterPositions": [
+      24,
+      38
+    ]
+  },
+  {
+    "name": "Instrument",
+    "depth": 2,
+    "startTag": 41973,
+    "startPosition": 22,
+    "endTag": 40875,
+    "endPosition": 51,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 59,
+    "endTag": 50000,
+    "endPosition": 60,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 59,
+    "endTag": 50000,
+    "endPosition": 60,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      59
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 4,
+    "startTag": 42176,
+    "startPosition": 56,
+    "endTag": 50000,
+    "endPosition": 60,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 63,
+    "endTag": 50000,
+    "endPosition": 64,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 63,
+    "endTag": 50000,
+    "endPosition": 64,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      63
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 5,
+    "startTag": 42176,
+    "startPosition": 61,
+    "endTag": 50000,
+    "endPosition": 64,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 67,
+    "endTag": 50000,
+    "endPosition": 68,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 67,
+    "endTag": 50000,
+    "endPosition": 68,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      67
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 5,
+    "startTag": 42176,
+    "startPosition": 65,
+    "endTag": 50000,
+    "endPosition": 68,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 71,
+    "endTag": 50000,
+    "endPosition": 72,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 71,
+    "endTag": 50000,
+    "endPosition": 72,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      71
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 5,
+    "startTag": 42176,
+    "startPosition": 69,
+    "endTag": 50000,
+    "endPosition": 72,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 4,
+    "startTag": 42176,
+    "startPosition": 56,
+    "endTag": 50000,
+    "endPosition": 72,
+    "delimiterTag": 42176,
+    "delimiterPositions": [
+      56,
+      61,
+      65,
+      69
+    ]
+  },
+  {
+    "name": "CommissionDataGrp",
+    "depth": 4,
+    "startTag": 40875,
+    "startPosition": 73,
+    "endTag": 42889,
+    "endPosition": 77,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "CommissionDataGrp",
+    "depth": 4,
+    "startTag": 40875,
+    "startPosition": 73,
+    "endTag": 42889,
+    "endPosition": 77,
+    "delimiterTag": 40875,
+    "delimiterPositions": [
+      73
+    ]
+  },
+  {
+    "name": "SideTrdRegTS",
+    "depth": 4,
+    "startTag": 43073,
+    "startPosition": 78,
+    "endTag": 1012,
+    "endPosition": 79,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "SideTrdRegTS",
+    "depth": 4,
+    "startTag": 43073,
+    "startPosition": 78,
+    "endTag": 1012,
+    "endPosition": 79,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      78
+    ]
+  },
+  {
+    "name": "TrdCapRptSideGrp",
+    "depth": 2,
+    "startTag": 979,
+    "startPosition": 52,
+    "endTag": 1012,
+    "endPosition": 79,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 86,
+    "endTag": 50000,
+    "endPosition": 87,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 86,
+    "endTag": 50000,
+    "endPosition": 87,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      86
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 4,
+    "startTag": 42176,
+    "startPosition": 83,
+    "endTag": 50000,
+    "endPosition": 87,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 90,
+    "endTag": 50000,
+    "endPosition": 91,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 90,
+    "endTag": 50000,
+    "endPosition": 91,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      90
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 5,
+    "startTag": 42176,
+    "startPosition": 88,
+    "endTag": 50000,
+    "endPosition": 91,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 94,
+    "endTag": 50000,
+    "endPosition": 95,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 94,
+    "endTag": 50000,
+    "endPosition": 95,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      94
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 5,
+    "startTag": 42176,
+    "startPosition": 92,
+    "endTag": 50000,
+    "endPosition": 95,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 98,
+    "endTag": 50000,
+    "endPosition": 99,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 6,
+    "startTag": 43073,
+    "startPosition": 98,
+    "endTag": 50000,
+    "endPosition": 99,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      98
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 5,
+    "startTag": 42176,
+    "startPosition": 96,
+    "endTag": 50000,
+    "endPosition": 99,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 4,
+    "startTag": 42176,
+    "startPosition": 83,
+    "endTag": 50000,
+    "endPosition": 99,
+    "delimiterTag": 42176,
+    "delimiterPositions": [
+      83,
+      88,
+      92,
+      96
+    ]
+  },
+  {
+    "name": "SideTrdRegTS",
+    "depth": 4,
+    "startTag": 43073,
+    "startPosition": 100,
+    "endTag": 1012,
+    "endPosition": 101,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "SideTrdRegTS",
+    "depth": 4,
+    "startTag": 43073,
+    "startPosition": 100,
+    "endTag": 1012,
+    "endPosition": 101,
+    "delimiterTag": 43073,
+    "delimiterPositions": [
+      100
+    ]
+  },
+  {
+    "name": "TrdCapRptSideGrp",
+    "depth": 3,
+    "startTag": 979,
+    "startPosition": 80,
+    "endTag": 1012,
+    "endPosition": 101,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "TrdCapRptSideGrp",
+    "depth": 2,
+    "startTag": 979,
+    "startPosition": 52,
+    "endTag": 1012,
+    "endPosition": 101,
+    "delimiterTag": 979,
+    "delimiterPositions": [
+      52,
+      80
+    ]
+  },
+  {
+    "name": "TradeCaptureReport",
+    "depth": 1,
+    "startTag": 1932,
+    "startPosition": 4,
+    "endTag": 1012,
+    "endPosition": 101,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "TradeCaptureReport",
+    "depth": 0,
+    "startTag": -1,
+    "startPosition": 0,
+    "endTag": 1012,
+    "endPosition": 101,
+    "delimiterTag": -1,
+    "delimiterPositions": [
+      4
+    ]
+  }
+]

@@ -1,0 +1,34 @@
+<FIXML>
+	<AllocInstrctn ID="1004" TransTyp="0" Typ="23" ExecOrClaimInd="1" MLegRptTyp="1" SesSub="P" Side="1" TrdDt="2015-03-11" PostTrdTyp="0" TxnTm="2015-03-11T07:13:38" Qty="40" ClrDt="2015-03-11" SesID="RTH">
+		<Hdr Snt="2010-08-13T10:18:02-05:00" SID="123" TID="CME" SSub="CME" TSub="CME"/>
+		<OrdAlloc ClOrdID="QQQ"/>
+		<Instrmt SecTyp="FUT" Exch="CME" MMY="201503" ID="NQ" CFI="FXXXXX"/>
+		<Pty ID="CME" R="22"/>
+		<Pty ID="CME" R="21"/>
+		<Pty ID="EDCUST4" R="24">
+			<Sub ID="1" Typ="26"/>
+		</Pty>
+		<Pty ID="123" R="1"/>
+		<Alloc Qty="40" IndAllocID="100035GI" CustCpcty="4" IndAllocID2="100035">
+			<Pty ID="CME" R="22"/>
+			<Pty ID="EDCUST4" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+			<Pty ID="123" R="1"/>
+		</Alloc>
+		<Alloc Qty="22" IndAllocID="100035GI" CustCpcty="4" IndAllocID2="100035">
+			<Pty ID="CME" R="22"/>
+			<Pty ID="EDCUST4" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+			<Pty ID="123" R="1"/>
+		</Alloc>
+		<Alloc Qty="15" IndAllocID="100035GI" CustCpcty="4" IndAllocID2="100035">
+			<Pty ID="CME" R="22"/>
+			<Pty ID="EDHOUSE2" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+			<Pty ID="123714" R="1"/>
+		</Alloc>
+	</AllocInstrctn>
+</FIXML>

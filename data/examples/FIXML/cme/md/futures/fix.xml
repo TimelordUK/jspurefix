@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FIXML>
+    <Batch>
+        <MktDataFull
+            BizDt="2008-12-09">
+            <Instrmt
+                Exch="CME"
+                ID="01"
+                Sym="ZCZ9"
+                SecTyp="FUT"
+                CFI="FFCPSO"
+                MMY="200906"
+                Src="H" />
+            <Full
+                Typ="6"
+                Px="18.97"
+                Mkt="CME" />
+        </MktDataFull>
+    </Batch>
+</FIXML>

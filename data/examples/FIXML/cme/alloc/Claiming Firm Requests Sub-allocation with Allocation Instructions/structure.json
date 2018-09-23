@@ -1,0 +1,373 @@
+[
+  {
+    "name": "StandardHeader",
+    "depth": 1,
+    "startTag": 629,
+    "startPosition": 13,
+    "endTag": 57,
+    "endPosition": 17,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "OrdAllocGrp",
+    "depth": 1,
+    "startTag": 11,
+    "startPosition": 18,
+    "endTag": 11,
+    "endPosition": 18,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "OrdAllocGrp",
+    "depth": 1,
+    "startTag": 11,
+    "startPosition": 18,
+    "endTag": 11,
+    "endPosition": 18,
+    "delimiterTag": 11,
+    "delimiterPositions": [
+      18
+    ]
+  },
+  {
+    "name": "Instrument",
+    "depth": 1,
+    "startTag": 1652,
+    "startPosition": 19,
+    "endTag": 1546,
+    "endPosition": 23,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 1,
+    "startTag": 50000,
+    "startPosition": 24,
+    "endTag": 42176,
+    "endPosition": 25,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 2,
+    "startTag": 50000,
+    "startPosition": 26,
+    "endTag": 42176,
+    "endPosition": 27,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 30,
+    "endTag": 43073,
+    "endPosition": 31,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "PtysSubGrp",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 30,
+    "endTag": 43073,
+    "endPosition": 31,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      30
+    ]
+  },
+  {
+    "name": "Parties",
+    "depth": 2,
+    "startTag": 50000,
+    "startPosition": 28,
+    "endTag": 43073,
+    "endPosition": 31,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 2,
+    "startTag": 50000,
+    "startPosition": 32,
+    "endTag": 42176,
+    "endPosition": 33,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Parties",
+    "depth": 1,
+    "startTag": 50000,
+    "startPosition": 24,
+    "endTag": 42176,
+    "endPosition": 33,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      24,
+      26,
+      28,
+      32
+    ]
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 38,
+    "endTag": 42176,
+    "endPosition": 39,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 42,
+    "endTag": 43073,
+    "endPosition": 43,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 42,
+    "endTag": 43073,
+    "endPosition": 43,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      42
+    ]
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 40,
+    "endTag": 43073,
+    "endPosition": 43,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 44,
+    "endTag": 42176,
+    "endPosition": 45,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 38,
+    "endTag": 42176,
+    "endPosition": 45,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      38,
+      40,
+      44
+    ]
+  },
+  {
+    "name": "AllocGrp",
+    "depth": 1,
+    "startTag": 1860,
+    "startPosition": 34,
+    "endTag": 42176,
+    "endPosition": 45,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 50,
+    "endTag": 42176,
+    "endPosition": 51,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 54,
+    "endTag": 43073,
+    "endPosition": 55,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 54,
+    "endTag": 43073,
+    "endPosition": 55,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      54
+    ]
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 52,
+    "endTag": 43073,
+    "endPosition": 55,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 56,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 50,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      50,
+      52,
+      56
+    ]
+  },
+  {
+    "name": "AllocGrp",
+    "depth": 2,
+    "startTag": 1860,
+    "startPosition": 46,
+    "endTag": 42176,
+    "endPosition": 57,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 62,
+    "endTag": 42176,
+    "endPosition": 63,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 66,
+    "endTag": 43073,
+    "endPosition": 67,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NstdPtysSubGrp",
+    "depth": 5,
+    "startTag": 50000,
+    "startPosition": 66,
+    "endTag": 43073,
+    "endPosition": 67,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      66
+    ]
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 64,
+    "endTag": 43073,
+    "endPosition": 67,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 4,
+    "startTag": 50000,
+    "startPosition": 68,
+    "endTag": 42176,
+    "endPosition": 69,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NestedParties",
+    "depth": 3,
+    "startTag": 50000,
+    "startPosition": 62,
+    "endTag": 42176,
+    "endPosition": 69,
+    "delimiterTag": 50000,
+    "delimiterPositions": [
+      62,
+      64,
+      68
+    ]
+  },
+  {
+    "name": "AllocGrp",
+    "depth": 2,
+    "startTag": 1860,
+    "startPosition": 58,
+    "endTag": 42176,
+    "endPosition": 69,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "AllocGrp",
+    "depth": 1,
+    "startTag": 1860,
+    "startPosition": 34,
+    "endTag": 42176,
+    "endPosition": 69,
+    "delimiterTag": 1860,
+    "delimiterPositions": [
+      34,
+      46,
+      58
+    ]
+  },
+  {
+    "name": "AllocationInstruction",
+    "depth": 0,
+    "startTag": 70,
+    "startPosition": 0,
+    "endTag": 42176,
+    "endPosition": 69,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  }
+]

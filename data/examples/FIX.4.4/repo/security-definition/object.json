@@ -1,0 +1,409 @@
+{
+    "SecurityReqID": "Lorem",
+    "SecurityResponseID": "ipsum",
+    "SecurityResponseType": 5,
+    "Instrument": {
+        "Symbol": "dolor",
+        "SymbolSfx": "sit",
+        "SecurityIDSource": "G",
+        "SecAltIDGrp": [
+            {
+                "SecurityAltID": "amet,",
+                "SecurityAltIDSource": "consectetur"
+            },
+            {
+                "SecurityAltID": "adipiscing",
+                "SecurityAltIDSource": "elit."
+            }
+        ],
+        "Product": 11,
+        "CFICode": "Nunc",
+        "SecurityType": "EUCP",
+        "MaturityMonthYear": "odio",
+        "PutOrCall": 1,
+        "RepurchaseRate": 9420,
+        "Factor": 66604,
+        "InstrRegistry": "orci,",
+        "CountryOfIssue": "blandit",
+        "StateOrProvinceOfIssue": "vel",
+        "LocaleOfIssue": "semper",
+        "StrikeCurrency": 99587,
+        "OptAttribute": "sed,",
+        "ContractMultiplier": 11427,
+        "CouponRate": 82952,
+        "SecurityExchange": "bibendum",
+        "Issuer": "cursus",
+        "SecurityDesc": "lectus.",
+        "EncodedSecurityDescLen": 5,
+        "EncodedSecurityDesc": {
+            "type": "Buffer",
+            "data": [
+                119,
+                121,
+                114,
+                107,
+                66
+            ]
+        },
+        "Pool": "Aenean",
+        "ContractSettlMonth": "vel",
+        "CPProgram": 1,
+        "CPRegType": "diam",
+        "EvntGrp": [
+            {
+                "EventType": 2,
+                "EventPx": 10383,
+                "EventText": "magna."
+            },
+            {
+                "EventType": 4,
+                "EventText": "Aenean"
+            }
+        ]
+    },
+    "InstrumentExtension": {
+        "DeliveryForm": 1,
+        "PctAtRisk": 54942,
+        "AttrbGrp": [
+            {
+                "InstrAttribType": 3,
+                "InstrAttribValue": "et"
+            },
+            {
+                "InstrAttribType": 4,
+                "InstrAttribValue": "viverra"
+            }
+        ]
+    },
+    "UndInstrmtGrp": [
+        {
+            "UnderlyingInstrument": {
+                "UnderlyingSymbol": "leo,",
+                "UnderlyingSecurityID": "non",
+                "UnderlyingSecurityIDSource": "iaculis",
+                "UndSecAltIDGrp": [
+                    {
+                        "UnderlyingSecurityAltID": "neque."
+                    },
+                    {
+                        "UnderlyingSecurityAltID": "Nullam"
+                    },
+                    {
+                        "UnderlyingSecurityAltID": "arcu",
+                        "UnderlyingSecurityAltIDSource": "lectus,"
+                    }
+                ],
+                "UnderlyingProduct": 64698,
+                "UnderlyingCFICode": "dignissim",
+                "UnderlyingSecurityType": "eget",
+                "UnderlyingSecuritySubType": "auctor",
+                "UnderlyingRepoCollateralSecurityType": "vitae,",
+                "UnderlyingRepurchaseTerm": 72166,
+                "UnderlyingRepurchaseRate": 83928,
+                "UnderlyingFactor": 27642,
+                "UnderlyingCreditRating": "maximus",
+                "UnderlyingInstrRegistry": "ac",
+                "UnderlyingStateOrProvinceOfIssue": "quam.",
+                "UnderlyingLocaleOfIssue": "Quisque",
+                "UnderlyingStrikePrice": 15175,
+                "UnderlyingContractMultiplier": 64595,
+                "UnderlyingCouponRate": 37215,
+                "UnderlyingSecurityExchange": "varius",
+                "EncodedUnderlyingIssuerLen": 5,
+                "EncodedUnderlyingIssuer": {
+                    "type": "Buffer",
+                    "data": [
+                        74,
+                        85,
+                        90,
+                        85,
+                        57
+                    ]
+                },
+                "UnderlyingSecurityDesc": "tincidunt",
+                "UnderlyingCPProgram": "auctor.",
+                "UnderlyingCPRegType": "Class",
+                "UnderlyingCurrency": 62265,
+                "UnderlyingQty": 76398,
+                "UnderlyingPx": 32028,
+                "UnderlyingCurrentValue": 2467,
+                "UnderlyingStipulations": [
+                    {
+                        "UnderlyingStipType": "aptent",
+                        "UnderlyingStipValue": "taciti"
+                    },
+                    {
+                        "UnderlyingStipType": "sociosqu"
+                    },
+                    {
+                        "UnderlyingStipType": "ad",
+                        "UnderlyingStipValue": "litora"
+                    }
+                ]
+            }
+        },
+        {
+            "UnderlyingInstrument": {
+                "UnderlyingSymbol": "torquent",
+                "UnderlyingSymbolSfx": "per",
+                "UnderlyingSecurityID": "conubia",
+                "UnderlyingSecurityIDSource": "nostra,",
+                "UndSecAltIDGrp": [
+                    {
+                        "UnderlyingSecurityAltID": "per",
+                        "UnderlyingSecurityAltIDSource": "inceptos"
+                    },
+                    {
+                        "UnderlyingSecurityAltID": "himenaeos.",
+                        "UnderlyingSecurityAltIDSource": "Pellentesque"
+                    }
+                ],
+                "UnderlyingProduct": 34992,
+                "UnderlyingCFICode": "eu",
+                "UnderlyingSecurityType": "luctus",
+                "UnderlyingSecuritySubType": "risus,",
+                "UnderlyingMaturityMonthYear": "et",
+                "UnderlyingPutOrCall": 18365,
+                "UnderlyingRepurchaseTerm": 12536,
+                "UnderlyingRepurchaseRate": 99983,
+                "UnderlyingCreditRating": "tincidunt",
+                "UnderlyingInstrRegistry": "nunc.",
+                "UnderlyingCountryOfIssue": "Morbi",
+                "UnderlyingStateOrProvinceOfIssue": "tellus",
+                "UnderlyingLocaleOfIssue": "mi,",
+                "UnderlyingStrikePrice": 43744,
+                "UnderlyingStrikeCurrency": 61471,
+                "UnderlyingContractMultiplier": 899,
+                "UnderlyingSecurityExchange": "feugiat",
+                "UnderlyingIssuer": "vel",
+                "EncodedUnderlyingIssuerLen": 15,
+                "EncodedUnderlyingIssuer": {
+                    "type": "Buffer",
+                    "data": [
+                        68,
+                        54,
+                        100,
+                        73,
+                        86,
+                        110,
+                        89,
+                        69,
+                        48,
+                        116,
+                        105,
+                        74,
+                        84,
+                        112,
+                        78
+                    ]
+                },
+                "UnderlyingSecurityDesc": "dictum",
+                "UnderlyingCPProgram": "ac,",
+                "UnderlyingCPRegType": "posuere",
+                "UnderlyingCurrency": 96982,
+                "UnderlyingPx": 85595,
+                "UnderlyingDirtyPrice": 65210,
+                "UnderlyingEndPrice": 94263,
+                "UnderlyingStartValue": 20308,
+                "UnderlyingCurrentValue": 73055,
+                "UnderlyingEndValue": 70441,
+                "UnderlyingStipulations": [
+                    {
+                        "UnderlyingStipType": "non",
+                        "UnderlyingStipValue": "nibh."
+                    },
+                    {
+                        "UnderlyingStipType": "Pellentesque"
+                    },
+                    {
+                        "UnderlyingStipType": "ornare,"
+                    }
+                ]
+            }
+        }
+    ],
+    "Currency": 5395,
+    "TradingSessionID": "lorem",
+    "TradingSessionSubID": "semper",
+    "EncodedTextLen": 17,
+    "EncodedText": {
+        "type": "Buffer",
+        "data": [
+            102,
+            97,
+            118,
+            103,
+            89,
+            106,
+            65,
+            90,
+            80,
+            83,
+            87,
+            52,
+            74,
+            78,
+            50,
+            76,
+            121
+        ]
+    },
+    "InstrmtLegGrp": [
+        {
+            "InstrumentLeg": {
+                "LegSymbol": "consequat",
+                "LegSymbolSfx": "laoreet,",
+                "LegSecurityID": "sapien",
+                "LegSecurityIDSource": "odio",
+                "LegSecAltIDGrp": [
+                    {
+                        "LegSecurityAltID": "tempor",
+                        "LegSecurityAltIDSource": "velit,"
+                    },
+                    {
+                        "LegSecurityAltID": "a",
+                        "LegSecurityAltIDSource": "sollicitudin"
+                    },
+                    {
+                        "LegSecurityAltID": "purus",
+                        "LegSecurityAltIDSource": "augue"
+                    }
+                ],
+                "LegProduct": 32945,
+                "LegSecurityType": "ut",
+                "LegSecuritySubType": "odio.",
+                "LegMaturityMonthYear": "Proin",
+                "LegRepoCollateralSecurityType": "tempor",
+                "LegRepurchaseTerm": 65354,
+                "LegRepurchaseRate": 92656,
+                "LegFactor": 45395,
+                "LegCreditRating": "justo",
+                "LegInstrRegistry": "nisi,",
+                "LegCountryOfIssue": "ut",
+                "LegLocaleOfIssue": "euismod",
+                "LegStrikePrice": 97805,
+                "LegStrikeCurrency": 99940,
+                "LegOptAttribute": "nibh",
+                "LegContractMultiplier": 80361,
+                "LegCouponRate": 44909,
+                "LegSecurityExchange": "convallis",
+                "LegIssuer": "at.",
+                "LegSecurityDesc": "Donec",
+                "EncodedLegSecurityDescLen": 9,
+                "EncodedLegSecurityDesc": {
+                    "type": "Buffer",
+                    "data": [
+                        80,
+                        97,
+                        84,
+                        100,
+                        115,
+                        113,
+                        114,
+                        52,
+                        102
+                    ]
+                },
+                "LegRatioQty": 20846,
+                "LegSide": "fermentum",
+                "LegCurrency": 45691,
+                "LegContractSettlMonth": "erat"
+            }
+        },
+        {
+            "InstrumentLeg": {
+                "LegSymbol": "risus,",
+                "LegSymbolSfx": "vel",
+                "LegSecurityID": "placerat",
+                "LegSecAltIDGrp": [
+                    {
+                        "LegSecurityAltID": "nulla"
+                    },
+                    {
+                        "LegSecurityAltID": "luctus",
+                        "LegSecurityAltIDSource": "ac."
+                    },
+                    {
+                        "LegSecurityAltID": "Vivamus"
+                    }
+                ],
+                "LegProduct": 29372,
+                "LegCFICode": "vel",
+                "LegSecurityType": "mi",
+                "LegSecuritySubType": "eros.",
+                "LegMaturityMonthYear": "Nam",
+                "LegRepoCollateralSecurityType": "arcu",
+                "LegRepurchaseTerm": 91941,
+                "LegRepurchaseRate": 22393,
+                "LegFactor": 75192,
+                "LegCreditRating": "urna,",
+                "LegInstrRegistry": "rhoncus",
+                "LegCountryOfIssue": "sit",
+                "LegLocaleOfIssue": "amet",
+                "LegStrikePrice": 42524,
+                "LegStrikeCurrency": 33829,
+                "LegOptAttribute": "bibendum",
+                "LegContractMultiplier": 92874,
+                "LegCouponRate": 25685,
+                "LegIssuer": "sit",
+                "EncodedLegIssuerLen": 17,
+                "EncodedLegIssuer": {
+                    "type": "Buffer",
+                    "data": [
+                        112,
+                        48,
+                        88,
+                        66,
+                        113,
+                        57,
+                        82,
+                        106,
+                        109,
+                        56,
+                        98,
+                        105,
+                        106,
+                        86,
+                        107,
+                        103,
+                        81
+                    ]
+                },
+                "LegSecurityDesc": "amet,",
+                "EncodedLegSecurityDescLen": 20,
+                "EncodedLegSecurityDesc": {
+                    "type": "Buffer",
+                    "data": [
+                        66,
+                        67,
+                        81,
+                        122,
+                        80,
+                        122,
+                        110,
+                        105,
+                        100,
+                        106,
+                        82,
+                        104,
+                        116,
+                        86,
+                        81,
+                        77,
+                        73,
+                        101,
+                        100,
+                        71
+                    ]
+                },
+                "LegSide": "eleifend",
+                "LegCurrency": 64049,
+                "LegPool": "non",
+                "LegContractSettlMonth": "massa."
+            }
+        }
+    ],
+    "ExpirationCycle": 0,
+    "RoundLot": 8933,
+    "MinTradeVol": 77995
+}

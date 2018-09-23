@@ -1,0 +1,11 @@
+[0] 8 (BeginString) = FIX4.4, [1] 9 (BodyLength) = 0000208
+[2] 35 (MsgType) = A[LOGON], [3] 49 (SenderCompID) = sender-10
+[4] 56 (TargetCompID) = target-20, [5] 34 (MsgSeqNum) = 1
+[6] 57 (TargetSubID) = sub-a, [7] 52 (SendingTime) = 20180603-00:31:39.054
+[8] 98 (EncryptMethod) = 2[DES], [9] 108 (HeartBtInt) = 62441
+[10] 95 (RawDataLength) = 20, [11] 96 (RawData) = VgfoSqo56NqSVI1fLdlI
+[12] 141 (ResetSeqNumFlag) = Y[YES], [13] 789 (NextExpectedMsgSeqNum) = 4886
+[14] 383 (MaxMessageSize) = 20, [15] 384 (NoMsgTypes) = 1
+[16] 372 (RefMsgType) = ipsum, [17] 385 (MsgDirection) = R[RECEIVE]
+[18] 464 (TestMessageIndicator) = N[NO], [19] 553 (Username) = sit
+[20] 554 (Password) = consectetur, [21] 10 (CheckSum) = 30

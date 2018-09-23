@@ -1,0 +1,210 @@
+{
+  "StandardHeader": {
+    "SenderCompID": "CME",
+    "TargetCompID": "ATS_BROKER1",
+    "SenderSubID": "STP",
+    "TargetSubID": "STP_API_IRAT_T"
+  },
+  "Batch": [
+    {
+      "MDStatisticRptID": "edbba144-a4ed-4e40-b88f-274098e9c2af",
+      "SecondaryTradeID": "12510821",
+      "TransferTransType": 0,
+      "TransferReportType": 101,
+      "MDStatisticReqID": "ABC124",
+      "TrdType": 22,
+      "SideTrdSubTyp": 7,
+      "TradeMatchID": "12510821",
+      "UnderlyingReturnRatePriceType": 2,
+      "SideVenueType": "X",
+      "LegQtyType": 1,
+      "UnderlyingReturnRatePriceCurrency": "USD",
+      "TradeDate": "2016-07-13T23:00:00.000Z",
+      "SideMultiLegReportingType": 1,
+      "RelSymTransactTime": "2016-07-14T09:18:10.000Z",
+      "ExecMethod": 2,
+      "LastUpdateTime": "2016-07-14T09:18:14.002Z",
+      "ClearedIndicator": 0,
+      "ClearingIntention": 0,
+      "ClearingRequirementException": 0,
+      "RootParties": [],
+      "Instrument": {
+        "RelatedSecurityType": "CMDTYSWAP",
+        "UnderlyingStreamCommodityExchange": "XXXX",
+        "StreamGrp": [
+          {
+            "UnderlyingReturnRateValuationDateType": 1,
+            "PaymentSchedulePaySide": 2,
+            "PaymentScheduleReceiveSide": 1,
+            "UnderlyingProtectionTermNotional": 10000.2,
+            "UnderlyingStreamNotionalFrequencyPeriod": 1,
+            "UnderlyingStreamNotionalFrequencyUnit": "D",
+            "UnderlyingStreamNotionalUnitOfMeasure": "MMBtu",
+            "UnderlyingStreamTotalNotional": 310000.1,
+            "UnderlyingStreamTotalNotionalUnitOfMeasure": "MMBtu",
+            "StreamCommodity": {
+              "UnderlyingStreamCommodityBase": "NG"
+            },
+            "StreamEffectiveDate": {
+              "UnderlyingSettlMethodElectionDateAdjusted": "2019-07-31T23:00:00.000Z"
+            },
+            "StreamTerminationDate": {
+              "UnderlyingSettlMethodElectionDateAdjusted": "2019-08-30T23:00:00.000Z"
+            },
+            "DeliveryStream": {
+              "UnderlyingDeliveryStreamDeliveryPoint": "Northwest Pipeline Corp - Canadian Border (Huntingdon)",
+              "UnderlyingDeliveryStreamDeliveryRestriction": 2
+            }
+          },
+          {
+            "UnderlyingReturnRateValuationDateType": 0,
+            "PaymentSchedulePaySide": 1,
+            "PaymentScheduleReceiveSide": 2,
+            "UnderlyingProtectionTermNotional": 10000.2,
+            "UnderlyingReturnRatePriceCurrency": "USD",
+            "UnderlyingStreamNotionalFrequencyPeriod": 1,
+            "UnderlyingStreamNotionalFrequencyUnit": "D",
+            "UnderlyingStreamNotionalUnitOfMeasure": "MMBtu",
+            "UnderlyingStreamTotalNotional": 310000.1,
+            "UnderlyingStreamTotalNotionalUnitOfMeasure": "MMBtu",
+            "StreamCommodity": {
+              "UnderlyingStreamCommodityBase": "NG"
+            },
+            "StreamEffectiveDate": {
+              "UnderlyingSettlMethodElectionDateAdjusted": "2019-07-31T23:00:00.000Z"
+            },
+            "StreamTerminationDate": {
+              "UnderlyingSettlMethodElectionDateAdjusted": "2019-08-30T23:00:00.000Z"
+            },
+            "PaymentStream": {
+              "PaymentStreamFixedRate": {
+                "PaymentStubRate": 3.66666,
+                "UnderlyingReturnRatePriceCurrency": "USD"
+              }
+            }
+          }
+        ]
+      },
+      "TrdRegTimestamps": [],
+      "TrdCapRptSideGrp": [
+        {
+          "RelativeValueSide": 2,
+          "UnderlyingReturnRatePriceCurrency": "USD",
+          "InputSource": "CHB",
+          "Parties": [
+            {
+              "BatchID": "Paxton Commodities Ltd",
+              "LegContractualMatrixSource": "C",
+              "UnderlyingProvisionPartyRole": 7,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "Paxton Commodities Ltd",
+                  "UnderlyingReturnRateValuationDateType": 5
+                }
+              ]
+            },
+            {
+              "BatchID": "ATS_BROKER1",
+              "UnderlyingProvisionPartyRole": 30,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "ATS_BROKER1",
+                  "UnderlyingReturnRateValuationDateType": 5
+                }
+              ]
+            },
+            {
+              "BatchID": "Paxton Trader",
+              "UnderlyingProvisionPartyRole": 36,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "Paxton Trader",
+                  "UnderlyingReturnRateValuationDateType": 9
+                }
+              ]
+            },
+            {
+              "BatchID": "Adamax Broker 1",
+              "UnderlyingProvisionPartyRole": 62,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "Adamax Broker 1",
+                  "UnderlyingReturnRateValuationDateType": 9
+                }
+              ]
+            }
+          ],
+          "CommissionDataGrp": [
+            {
+              "UnderlyingMakeWholeAmount": 0.4,
+              "AllocCommissionBasis": "1",
+              "UnderlyingReturnRatePriceCurrency": "USD",
+              "UnderlyingStreamCommodityUnitOfMeasure": "MMBtu",
+              "PaymentStubRate": 0.5555
+            }
+          ],
+          "SideTrdRegTS": [
+            {
+              "SideTrdRegTimestamp": "2016-07-14T09:18:07.000Z",
+              "UnderlyingReturnRateValuationDateType": 1
+            }
+          ]
+        },
+        {
+          "RelativeValueSide": 1,
+          "UnderlyingReturnRatePriceCurrency": "USD",
+          "InputSource": "CHB",
+          "Parties": [
+            {
+              "BatchID": "Adamax Test Company 3",
+              "LegContractualMatrixSource": "C",
+              "UnderlyingProvisionPartyRole": 7,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "Adamax Test Company 3",
+                  "UnderlyingReturnRateValuationDateType": 5
+                }
+              ]
+            },
+            {
+              "BatchID": "ATS_BROKER1",
+              "UnderlyingProvisionPartyRole": 30,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "ATS_BROKER1",
+                  "UnderlyingReturnRateValuationDateType": 5
+                }
+              ]
+            },
+            {
+              "BatchID": "Adamax Trader",
+              "UnderlyingProvisionPartyRole": 36,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "Adamax Trader",
+                  "UnderlyingReturnRateValuationDateType": 9
+                }
+              ]
+            },
+            {
+              "BatchID": "Adamax Broker 2",
+              "UnderlyingProvisionPartyRole": 62,
+              "PtysSubGrp": [
+                {
+                  "BatchID": "Adamax Broker 2",
+                  "UnderlyingReturnRateValuationDateType": 9
+                }
+              ]
+            }
+          ],
+          "SideTrdRegTS": [
+            {
+              "SideTrdRegTimestamp": "2016-07-14T09:18:07.000Z",
+              "UnderlyingReturnRateValuationDateType": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

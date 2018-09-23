@@ -1,0 +1,79 @@
+{
+    "SecondaryClOrdID": "Lorem",
+    "ClOrdID": "ipsum",
+    "QuoteRespID": "dolor",
+    "TradeOriginationDate": "2018-09-08T23:00:00.000Z",
+    "OrigCrossID": "sit",
+    "OrdStatus": "E",
+    "SettlType": "1",
+    "Instrument": {
+        "Symbol": "amet,",
+        "SymbolSfx": "consectetur",
+        "CouponPaymentDate": "2018-09-08T23:00:00.000Z",
+        "InstrRegistry": "adipiscing",
+        "StateOrProvinceOfIssue": "elit.",
+        "LocaleOfIssue": "Nunc",
+        "RedemptionDate": "2018-09-08T23:00:00.000Z",
+        "EncodedSecurityDescLen": 8,
+        "EncodedSecurityDesc": {
+            "type": "Buffer",
+            "data": [
+                66,
+                118,
+                69,
+                99,
+                81,
+                121,
+                88,
+                109
+            ]
+        },
+        "ContractSettlMonth": "odio",
+        "DatedDate": "2018-09-08T23:00:00.000Z",
+        "InterestAccrualDate": "2018-09-08T23:00:00.000Z"
+    },
+    "FinancingDetails": {
+        "AgreementDesc": "orci,",
+        "AgreementCurrency": -854.64,
+        "TerminationType": 1,
+        "EndDate": "2018-09-08T23:00:00.000Z",
+        "MarginRatio": -0.0002212
+    },
+    "OrderQtyData": {
+        "OrderQty": 27257,
+        "RoundingModulus": 94.18
+    },
+    "PegInstructions": {
+        "PegOffsetValue": 0.0002654,
+        "PegScope": 2
+    },
+    "DiscretionInstructions": {
+        "DiscretionInst": "3",
+        "DiscretionLimitType": 0,
+        "DiscretionScope": 1
+    },
+    "LastQty": 55567,
+    "LastPx": -2325.8,
+    "UnderlyingLastPx": -0.0039644,
+    "LastMkt": "blandit",
+    "DayAvgPx": 9.9568,
+    "CommissionData": {
+        "Commission": -8.8213
+    },
+    "SpreadOrBenchmarkCurveData": {
+        "Spread": -34.346,
+        "BenchmarkPriceType": 52328
+    },
+    "YieldData": {
+        "YieldType": "ANNUAL",
+        "YieldCalcDate": "2018-09-08T23:00:00.000Z"
+    },
+    "ExDate": "2018-09-08T23:00:00.000Z",
+    "InterestAtMaturity": 0.098745,
+    "EndCash": -97.667,
+    "Concession": -0.0034632,
+    "SettlCurrFxRateCalc": "D",
+    "Text": "vel",
+    "RegistID": "semper",
+    "ExecPriceType": "P"
+}

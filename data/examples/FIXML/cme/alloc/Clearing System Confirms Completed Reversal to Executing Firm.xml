@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FIXML v="5.0 SP2" xv="109" cv="CME.0001">
+	<AllocRpt ClrDt="2015-03-09" TxnTm="2015-03-09T11:28:29-05:00" TrdTyp="2" RptTyp="18" AvgPx="2087.5" RptID="14BFA8A39DB0001D408E1113844212" MLegRptTyp="1" Side="1" Stat="7" GrpID="177006" TransTyp="0" RvrslStat="0" Qty="15" TrdDt="2015-03-09" SesSub="E" SesID="RTH" MtchID="14BFA8A39DB0001D4086" PostTrdTyp="0" ExecOrClaimInd="0">
+		<Hdr Snt="2015-03-09T11:38:44-05:00" SID="CME" TID="123" SSub="CME" TSub="CME"/>
+		<OrdAlloc ClOrdID="A000X"/>
+		<Instrmt ID="ES" CFI="FFICSO" SecTyp="FUT" MMY="20150600" Exch="CME" PxQteCcy="USD"/>
+		<Pty ID="CME" R="22"/>
+		<Pty ID="600" R="1"/>
+		<Pty ID="6J0L" R="12"/>
+		<Pty ID="CME" R="21"/>
+		<Pty ID="123" R="24">
+			<Sub ID="1" Typ="26"/>
+		</Pty>
+		<Pty ID="323" R="38">
+			<Sub ID="1" Typ="26"/>
+		</Pty>
+		<Pty ID="560" R="4"/>
+		<Alloc IndAllocID2="100247" CustCpcty="4" Qty="15" TrdID2="14BFA8A39DB0001D408E" OrigTrdID2="12A80D9ED85HI040083A">
+			<Pty ID="CME" R="21"/>
+			<Pty ID="350" R="4"/>
+			<Pty ID="CME" R="22"/>
+			<Pty ID="350" R="1"/>
+			<Pty ID="123" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+		</Alloc>
+	</AllocRpt>
+</FIXML>

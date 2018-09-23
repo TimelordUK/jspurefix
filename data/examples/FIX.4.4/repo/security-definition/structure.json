@@ -1,0 +1,250 @@
+[
+    {
+        "name": "StandardHeader",
+        "depth": 2,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 52,
+        "endPosition": 7,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "SecAltIDGrp",
+        "depth": 2,
+        "startTag": 454,
+        "startPosition": 14,
+        "endTag": 456,
+        "endPosition": 18,
+        "delimiterTag": 455,
+        "delimiterPositions": [
+            15,
+            17
+        ]
+    },
+    {
+        "name": "EvntGrp",
+        "depth": 2,
+        "startTag": 864,
+        "startPosition": 43,
+        "endTag": 868,
+        "endPosition": 48,
+        "delimiterTag": 865,
+        "delimiterPositions": [
+            44,
+            47
+        ]
+    },
+    {
+        "name": "Instrument",
+        "depth": 1,
+        "startTag": 55,
+        "startPosition": 11,
+        "endTag": 868,
+        "endPosition": 48,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "AttrbGrp",
+        "depth": 2,
+        "startTag": 870,
+        "startPosition": 51,
+        "endTag": 872,
+        "endPosition": 55,
+        "delimiterTag": 871,
+        "delimiterPositions": [
+            52,
+            54
+        ]
+    },
+    {
+        "name": "InstrumentExtension",
+        "depth": 1,
+        "startTag": 668,
+        "startPosition": 49,
+        "endTag": 872,
+        "endPosition": 55,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "UndSecAltIDGrp",
+        "depth": 3,
+        "startTag": 457,
+        "startPosition": 60,
+        "endTag": 459,
+        "endPosition": 64,
+        "delimiterTag": 458,
+        "delimiterPositions": [
+            61,
+            62,
+            63
+        ]
+    },
+    {
+        "name": "UnderlyingStipulations",
+        "depth": 3,
+        "startTag": 887,
+        "startPosition": 90,
+        "endTag": 889,
+        "endPosition": 95,
+        "delimiterTag": 888,
+        "delimiterPositions": [
+            91,
+            93,
+            94
+        ]
+    },
+    {
+        "name": "UnderlyingInstrument",
+        "depth": 2,
+        "startTag": 311,
+        "startPosition": 57,
+        "endTag": 889,
+        "endPosition": 95,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "UndSecAltIDGrp",
+        "depth": 3,
+        "startTag": 457,
+        "startPosition": 100,
+        "endTag": 459,
+        "endPosition": 104,
+        "delimiterTag": 458,
+        "delimiterPositions": [
+            101,
+            103
+        ]
+    },
+    {
+        "name": "UnderlyingStipulations",
+        "depth": 3,
+        "startTag": 887,
+        "startPosition": 135,
+        "endTag": 888,
+        "endPosition": 139,
+        "delimiterTag": 888,
+        "delimiterPositions": [
+            136,
+            138,
+            139
+        ]
+    },
+    {
+        "name": "UnderlyingInstrument",
+        "depth": 2,
+        "startTag": 311,
+        "startPosition": 96,
+        "endTag": 888,
+        "endPosition": 139,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "UndInstrmtGrp",
+        "depth": 1,
+        "startTag": 711,
+        "startPosition": 56,
+        "endTag": 888,
+        "endPosition": 139,
+        "delimiterTag": 311,
+        "delimiterPositions": [
+            57,
+            96
+        ]
+    },
+    {
+        "name": "LegSecAltIDGrp",
+        "depth": 3,
+        "startTag": 604,
+        "startPosition": 150,
+        "endTag": 606,
+        "endPosition": 156,
+        "delimiterTag": 605,
+        "delimiterPositions": [
+            151,
+            153,
+            155
+        ]
+    },
+    {
+        "name": "InstrumentLeg",
+        "depth": 2,
+        "startTag": 600,
+        "startPosition": 146,
+        "endTag": 955,
+        "endPosition": 182,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "LegSecAltIDGrp",
+        "depth": 3,
+        "startTag": 604,
+        "startPosition": 186,
+        "endTag": 605,
+        "endPosition": 190,
+        "delimiterTag": 605,
+        "delimiterPositions": [
+            187,
+            188,
+            190
+        ]
+    },
+    {
+        "name": "InstrumentLeg",
+        "depth": 2,
+        "startTag": 600,
+        "startPosition": 183,
+        "endTag": 955,
+        "endPosition": 218,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "InstrmtLegGrp",
+        "depth": 1,
+        "startTag": 555,
+        "startPosition": 145,
+        "endTag": 955,
+        "endPosition": 218,
+        "delimiterTag": 600,
+        "delimiterPositions": [
+            146,
+            183
+        ]
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 1,
+        "startTag": 10,
+        "startPosition": 222,
+        "endTag": 10,
+        "endPosition": 222,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "SecurityDefinition",
+        "depth": 1,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 10,
+        "endPosition": 222,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 0,
+        "startTag": 10,
+        "startPosition": 223,
+        "endTag": 10,
+        "endPosition": 222,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    }
+]

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Executing Firm Marks a Trade for Average Pricing--> 
+<FIXML v="5.0 SP2" xv="109" cv="CME.0001"> 
+	<TrdCaptRpt RptID="0008153" TransTyp="0" RptTyp="0" TrdID="12345" TrdHandlInst="0" TxnTm="2015-02-28T10:43:37-06:00" TrdDt="2015-02-28" MLegRptTyp="2" MtchStat="0" TrdTyp="0" LastQty="1.00" LastPx=".52000000">
+		<Hdr Snt="2015-02-28T10:43:37-06:00" SSub="CME" TSub="CME" SID="123" TID="CME"/>
+		<Instrmt SecTyp="IRS" ID="" Exch="CME"/>
+		<RptSide Side="2" ClOrdID="ABC" AllocInd="1" AvgPxInd="1" AvgPxGrpID="AvgPxID1" OrdTyp="M" >
+			<Pty ID="CME" R="22"/>
+			<Pty ID="MCC" R="12"/>
+			<Pty ID="825" R="17"/>
+			<Pty ID="DBL" R="37"/>
+			<Pty ID="CME" R="21"/>
+			<Pty ID="287" R="1"/>
+			<Pty ID="406104" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+			<Alloc>
+				<Pty ID="CME" R="22"/>
+					<Pty ID="148" R="1"/>
+				<Pty ID="519334" R="24"/>
+			</Alloc>
+		</RptSide>
+	</TrdCaptRpt>
+</FIXML>

@@ -1,0 +1,42 @@
+{
+  "EncryptMethod": 2,
+  "HeartBtInt": 62441,
+  "RawDataLength": 20,
+  "RawData": {
+    "type": "Buffer",
+    "data": [
+      86,
+      103,
+      102,
+      111,
+      83,
+      113,
+      111,
+      53,
+      54,
+      78,
+      113,
+      83,
+      86,
+      73,
+      49,
+      102,
+      76,
+      100,
+      108,
+      73
+    ]
+  },
+  "ResetSeqNumFlag": true,
+  "NextExpectedMsgSeqNum": 4886,
+  "MaxMessageSize": 20,
+  "NoMsgTypes": [
+    {
+      "RefMsgType": "ipsum",
+      "MsgDirection": "R"
+    }
+  ],
+  "TestMessageIndicator": false,
+  "Username": "sit",
+  "Password": "consectetur"
+}

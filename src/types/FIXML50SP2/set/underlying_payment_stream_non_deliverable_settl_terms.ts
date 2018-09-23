@@ -1,0 +1,17 @@
+import { IUnderlyingPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp } from './underlying_payment_stream_non_deliverable_fixing_dates_business_center_grp'
+import { IUnderlyingPaymentStreamNonDeliverableSettlRateSource } from './underlying_payment_stream_non_deliverable_settl_rate_source'
+import { IUnderlyingPaymentStreamNonDeliverableFixingDateGrp } from './underlying_payment_stream_non_deliverable_fixing_date_grp'
+import { IUnderlyingSettlRateDisruptionFallbackGrp } from './underlying_settl_rate_disruption_fallback_grp'
+
+export interface IUnderlyingPaymentStreamNonDeliverableSettlTerms {
+  UnderlyingReturnRatePriceCurrency?: string// 43067
+  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
+  PaymentScheduleFixingDateRelativeTo?: number// 40852
+  PaymentScheduleFixingDateOffsetPeriod?: number// 40855
+  PaymentScheduleFixingDateOffsetUnit?: string// 40856
+  PaymentScheduleFixingDateOffsetDayType?: number// 40857
+  UnderlyingPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp?: IUnderlyingPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp[]
+  UnderlyingPaymentStreamNonDeliverableSettlRateSource?: IUnderlyingPaymentStreamNonDeliverableSettlRateSource
+  UnderlyingPaymentStreamNonDeliverableFixingDateGrp?: IUnderlyingPaymentStreamNonDeliverableFixingDateGrp
+  UnderlyingSettlRateDisruptionFallbackGrp?: IUnderlyingSettlRateDisruptionFallbackGrp[]
+}

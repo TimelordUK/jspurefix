@@ -1,0 +1,122 @@
+[
+    {
+        "name": "StandardHeader",
+        "depth": 2,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 52,
+        "endPosition": 7,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "Instrument",
+        "depth": 1,
+        "startTag": 55,
+        "startPosition": 15,
+        "endTag": 874,
+        "endPosition": 26,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "FinancingDetails",
+        "depth": 1,
+        "startTag": 913,
+        "startPosition": 27,
+        "endTag": 898,
+        "endPosition": 31,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "OrderQtyData",
+        "depth": 1,
+        "startTag": 38,
+        "startPosition": 32,
+        "endTag": 469,
+        "endPosition": 33,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "PegInstructions",
+        "depth": 1,
+        "startTag": 211,
+        "startPosition": 34,
+        "endTag": 840,
+        "endPosition": 35,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "DiscretionInstructions",
+        "depth": 1,
+        "startTag": 388,
+        "startPosition": 36,
+        "endTag": 846,
+        "endPosition": 38,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "CommissionData",
+        "depth": 1,
+        "startTag": 12,
+        "startPosition": 44,
+        "endTag": 12,
+        "endPosition": 44,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "SpreadOrBenchmarkCurveData",
+        "depth": 1,
+        "startTag": 218,
+        "startPosition": 45,
+        "endTag": 663,
+        "endPosition": 46,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "YieldData",
+        "depth": 1,
+        "startTag": 235,
+        "startPosition": 47,
+        "endTag": 701,
+        "endPosition": 48,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 1,
+        "startTag": 10,
+        "startPosition": 57,
+        "endTag": 10,
+        "endPosition": 57,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "ExecutionReport",
+        "depth": 1,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 10,
+        "endPosition": 57,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 0,
+        "startTag": 10,
+        "startPosition": 58,
+        "endTag": 10,
+        "endPosition": 57,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    }
+]

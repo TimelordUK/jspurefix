@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FIXML>
+    <Batch>
+        <MktDataFull
+                BizDt="2008-06-18">
+            <Instrmt
+                    Exch="CME"
+                    ID="01"
+                    Sym="SU1C"
+                    SecTyp="FUT"
+                    CFI="FFIPSO"
+                    MMY="200806"
+                    Src="H" />
+            <Full
+                    Typ="6"
+                    Px="65.51"
+                    Mkt="CME" />
+            <Full
+                    Typ="N"
+                    Px="65.55"
+                    Mkt="CME" />
+            <Full
+                    Typ="O"
+                    Px="63.78"
+                    Mkt="CME" />
+        </MktDataFull>
+        <MktDataFull
+                BizDt="2008-06-19">
+            <Instrmt
+                    Exch="CME"
+                    ID="EUR6E"
+                    Sym="E6E"
+                    Desc="EUR6E 200901"
+                    SecTyp="IRS"
+                    MMY="200901"
+                    Src="H"
+                    MatDt="2008-07-14"
+                    Fctr="100000"/>
+            <Full
+                    Typ="6"
+                    Px="5.209"
+                    Mkt="CME"
+                    Dt="2008-06-19" />
+            <Full
+                    Typ="S"
+                    Px="50896.5969622"
+                    Mkt="CME"
+                    Dt="2008-06-19" />
+            <Full
+                    Typ="4"
+                    Px="5.209"
+                    Mkt="CME"
+                    OpenClsSettlFlag="5"
+                    Dt="2008-06-20" />
+        </MktDataFull>
+    </Batch>
+</FIXML>

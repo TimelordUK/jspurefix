@@ -1,0 +1,143 @@
+[
+  {
+    "name": "Instrument",
+    "depth": 2,
+    "startTag": 41973,
+    "startPosition": 1,
+    "endTag": 42204,
+    "endPosition": 7,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 2,
+    "startTag": 40,
+    "startPosition": 8,
+    "endTag": 275,
+    "endPosition": 10,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 3,
+    "startTag": 40,
+    "startPosition": 11,
+    "endTag": 275,
+    "endPosition": 13,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 3,
+    "startTag": 40,
+    "startPosition": 14,
+    "endTag": 275,
+    "endPosition": 16,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 2,
+    "startTag": 40,
+    "startPosition": 8,
+    "endTag": 275,
+    "endPosition": 16,
+    "delimiterTag": 40,
+    "delimiterPositions": [
+      8,
+      11,
+      14
+    ]
+  },
+  {
+    "name": "MarketDataSnapshotFullRefresh",
+    "depth": 1,
+    "startTag": 715,
+    "startPosition": 0,
+    "endTag": 275,
+    "endPosition": 16,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Instrument",
+    "depth": 2,
+    "startTag": 41973,
+    "startPosition": 18,
+    "endTag": 253,
+    "endPosition": 26,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 2,
+    "startTag": 40,
+    "startPosition": 27,
+    "endTag": 43082,
+    "endPosition": 30,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 3,
+    "startTag": 40,
+    "startPosition": 31,
+    "endTag": 43082,
+    "endPosition": 34,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 3,
+    "startTag": 40,
+    "startPosition": 35,
+    "endTag": 43082,
+    "endPosition": 39,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 2,
+    "startTag": 40,
+    "startPosition": 27,
+    "endTag": 43082,
+    "endPosition": 39,
+    "delimiterTag": 40,
+    "delimiterPositions": [
+      27,
+      31,
+      35
+    ]
+  },
+  {
+    "name": "MarketDataSnapshotFullRefresh",
+    "depth": 1,
+    "startTag": 715,
+    "startPosition": 17,
+    "endTag": 43082,
+    "endPosition": 39,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MarketDataSnapshotFullRefresh",
+    "depth": 0,
+    "startTag": -1,
+    "startPosition": 0,
+    "endTag": 43082,
+    "endPosition": 39,
+    "delimiterTag": -1,
+    "delimiterPositions": [
+      0,
+      17
+    ]
+  }
+]

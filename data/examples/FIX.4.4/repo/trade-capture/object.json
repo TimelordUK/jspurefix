@@ -1,0 +1,1072 @@
+{
+    "TradeReportID": "Lorem",
+    "TradeReportTransType": 47271,
+    "TradeRequestID": "ipsum",
+    "TrdSubType": 37569,
+    "SecondaryTrdType": 1766,
+    "TransferReason": "dolor",
+    "ExecType": "G",
+    "TotNumTradeReports": 89202,
+    "LastRptRequested": true,
+    "UnsolicitedIndicator": false,
+    "SubscriptionRequestType": "2",
+    "SecondaryTradeReportRefID": "sit",
+    "TradeLinkID": "amet,",
+    "TrdMatchID": "consectetur",
+    "ExecID": "adipiscing",
+    "OrdStatus": "6",
+    "SecondaryExecID": "elit.",
+    "ExecRestatementReason": 5,
+    "PreviouslyReported": false,
+    "PriceType": 5,
+    "Instrument": {
+        "Symbol": "Nunc",
+        "SecurityID": "odio",
+        "SecurityIDSource": "8",
+        "SecAltIDGrp": [
+            {
+                "SecurityAltID": "orci,"
+            }
+        ],
+        "Product": 8,
+        "CFICode": "blandit",
+        "SecurityType": "EUSUPRA",
+        "MaturityMonthYear": "vel",
+        "PutOrCall": 0,
+        "RepoCollateralSecurityType": "semper",
+        "RepurchaseTerm": 93210,
+        "Factor": 54705,
+        "CreditRating": "sed,",
+        "CountryOfIssue": "bibendum",
+        "StateOrProvinceOfIssue": "cursus",
+        "LocaleOfIssue": "lectus.",
+        "StrikePrice": 22781,
+        "StrikeCurrency": 35438,
+        "OptAttribute": "Aenean",
+        "SecurityExchange": "vel",
+        "Issuer": "diam",
+        "SecurityDesc": "magna.",
+        "EncodedSecurityDescLen": 16,
+        "EncodedSecurityDesc": {
+            "type": "Buffer",
+            "data": [
+                76,
+                107,
+                104,
+                113,
+                111,
+                112,
+                75,
+                121,
+                98,
+                71,
+                116,
+                107,
+                117,
+                79,
+                82,
+                75
+            ]
+        },
+        "Pool": "Aenean",
+        "ContractSettlMonth": "et",
+        "CPProgram": 2,
+        "CPRegType": "viverra",
+        "EvntGrp": [
+            {
+                "EventType": 99,
+                "EventPx": 15635,
+                "EventText": "leo,"
+            }
+        ]
+    },
+    "FinancingDetails": {
+        "AgreementDesc": "non",
+        "AgreementID": "iaculis",
+        "AgreementCurrency": 85688,
+        "TerminationType": 4,
+        "DeliveryType": 1,
+        "MarginRatio": 2181
+    },
+    "OrderQtyData": {
+        "OrderQty": 62488,
+        "OrderPercent": 85646,
+        "RoundingDirection": "2",
+        "RoundingModulus": 92771
+    },
+    "QtyType": 0,
+    "YieldData": {
+        "YieldType": "GOVTEQUIV",
+        "YieldRedemptionPrice": 93680,
+        "YieldRedemptionPriceType": 6350
+    },
+    "UndInstrmtGrp": [
+        {
+            "UnderlyingInstrument": {
+                "UnderlyingSymbol": "neque.",
+                "UnderlyingSymbolSfx": "Nullam",
+                "UnderlyingSecurityID": "arcu",
+                "UndSecAltIDGrp": [
+                    {
+                        "UnderlyingSecurityAltID": "lectus,",
+                        "UnderlyingSecurityAltIDSource": "dignissim"
+                    },
+                    {
+                        "UnderlyingSecurityAltID": "eget",
+                        "UnderlyingSecurityAltIDSource": "auctor"
+                    }
+                ],
+                "UnderlyingProduct": 88603,
+                "UnderlyingCFICode": "vitae,",
+                "UnderlyingSecurityType": "maximus",
+                "UnderlyingSecuritySubType": "ac",
+                "UnderlyingMaturityMonthYear": "quam.",
+                "UnderlyingPutOrCall": 87199,
+                "UnderlyingRepoCollateralSecurityType": "Quisque",
+                "UnderlyingRepurchaseRate": 63039,
+                "UnderlyingFactor": 38859,
+                "UnderlyingInstrRegistry": "varius",
+                "UnderlyingCountryOfIssue": "tincidunt",
+                "UnderlyingStateOrProvinceOfIssue": "auctor.",
+                "UnderlyingLocaleOfIssue": "Class",
+                "UnderlyingStrikePrice": 62831,
+                "UnderlyingStrikeCurrency": 36286,
+                "UnderlyingOptAttribute": "aptent",
+                "UnderlyingContractMultiplier": 90506,
+                "UnderlyingCouponRate": 89162,
+                "UnderlyingSecurityExchange": "taciti",
+                "EncodedUnderlyingIssuerLen": 7,
+                "EncodedUnderlyingIssuer": {
+                    "type": "Buffer",
+                    "data": [
+                        114,
+                        98,
+                        65,
+                        84,
+                        118,
+                        103,
+                        68
+                    ]
+                },
+                "UnderlyingSecurityDesc": "sociosqu",
+                "EncodedUnderlyingSecurityDescLen": 15,
+                "EncodedUnderlyingSecurityDesc": {
+                    "type": "Buffer",
+                    "data": [
+                        76,
+                        103,
+                        110,
+                        101,
+                        54,
+                        99,
+                        119,
+                        51,
+                        116,
+                        120,
+                        122,
+                        110,
+                        97,
+                        73,
+                        82
+                    ]
+                },
+                "UnderlyingCPProgram": "ad",
+                "UnderlyingCPRegType": "litora",
+                "UnderlyingCurrency": 33705,
+                "UnderlyingPx": 62317,
+                "UnderlyingDirtyPrice": 88177,
+                "UnderlyingEndPrice": 93141,
+                "UnderlyingStartValue": 41150,
+                "UnderlyingCurrentValue": 48553,
+                "UnderlyingEndValue": 79856,
+                "UnderlyingStipulations": [
+                    {
+                        "UnderlyingStipType": "torquent",
+                        "UnderlyingStipValue": "per"
+                    },
+                    {
+                        "UnderlyingStipType": "conubia",
+                        "UnderlyingStipValue": "nostra,"
+                    }
+                ]
+            }
+        },
+        {
+            "UnderlyingInstrument": {
+                "UnderlyingSymbol": "per",
+                "UnderlyingSymbolSfx": "inceptos",
+                "UnderlyingSecurityID": "himenaeos.",
+                "UnderlyingSecurityIDSource": "Pellentesque",
+                "UndSecAltIDGrp": [
+                    {
+                        "UnderlyingSecurityAltID": "eu"
+                    }
+                ],
+                "UnderlyingCFICode": "luctus",
+                "UnderlyingSecurityType": "risus,",
+                "UnderlyingSecuritySubType": "et",
+                "UnderlyingMaturityMonthYear": "tincidunt",
+                "UnderlyingPutOrCall": 43257,
+                "UnderlyingRepoCollateralSecurityType": "nunc.",
+                "UnderlyingRepurchaseTerm": 18995,
+                "UnderlyingRepurchaseRate": 51203,
+                "UnderlyingFactor": 24474,
+                "UnderlyingCreditRating": "Morbi",
+                "UnderlyingInstrRegistry": "tellus",
+                "UnderlyingStateOrProvinceOfIssue": "mi,",
+                "UnderlyingStrikePrice": 67083,
+                "UnderlyingStrikeCurrency": 95783,
+                "UnderlyingOptAttribute": "feugiat",
+                "UnderlyingContractMultiplier": 36513,
+                "UnderlyingCouponRate": 74398,
+                "UnderlyingSecurityExchange": "vel",
+                "EncodedUnderlyingIssuerLen": 16,
+                "EncodedUnderlyingIssuer": {
+                    "type": "Buffer",
+                    "data": [
+                        77,
+                        72,
+                        88,
+                        67,
+                        71,
+                        81,
+                        85,
+                        49,
+                        100,
+                        52,
+                        78,
+                        78,
+                        114,
+                        72,
+                        105,
+                        65
+                    ]
+                },
+                "UnderlyingSecurityDesc": "dictum",
+                "EncodedUnderlyingSecurityDescLen": 16,
+                "EncodedUnderlyingSecurityDesc": {
+                    "type": "Buffer",
+                    "data": [
+                        110,
+                        85,
+                        70,
+                        115,
+                        73,
+                        77,
+                        82,
+                        89,
+                        87,
+                        122,
+                        78,
+                        122,
+                        53,
+                        49,
+                        68,
+                        97
+                    ]
+                },
+                "UnderlyingCPProgram": "ac,",
+                "UnderlyingCPRegType": "posuere",
+                "UnderlyingQty": 71153,
+                "UnderlyingPx": 59918,
+                "UnderlyingDirtyPrice": 9102,
+                "UnderlyingEndPrice": 46093,
+                "UnderlyingStartValue": 37578,
+                "UnderlyingCurrentValue": 15178,
+                "UnderlyingEndValue": 26459,
+                "UnderlyingStipulations": [
+                    {
+                        "UnderlyingStipType": "non",
+                        "UnderlyingStipValue": "nibh."
+                    }
+                ]
+            }
+        },
+        {
+            "UnderlyingInstrument": {
+                "UnderlyingSymbol": "Pellentesque",
+                "UnderlyingSymbolSfx": "ornare,",
+                "UnderlyingSecurityID": "lorem",
+                "UnderlyingSecurityIDSource": "semper",
+                "UndSecAltIDGrp": [
+                    {
+                        "UnderlyingSecurityAltID": "consequat"
+                    },
+                    {
+                        "UnderlyingSecurityAltID": "laoreet,",
+                        "UnderlyingSecurityAltIDSource": "sapien"
+                    }
+                ],
+                "UnderlyingCFICode": "odio",
+                "UnderlyingSecurityType": "tempor",
+                "UnderlyingSecuritySubType": "velit,",
+                "UnderlyingMaturityMonthYear": "a",
+                "UnderlyingPutOrCall": 86344,
+                "UnderlyingRepoCollateralSecurityType": "sollicitudin",
+                "UnderlyingRepurchaseRate": 77042,
+                "UnderlyingFactor": 15292,
+                "UnderlyingCreditRating": "purus",
+                "UnderlyingInstrRegistry": "augue",
+                "UnderlyingCountryOfIssue": "ut",
+                "UnderlyingLocaleOfIssue": "odio.",
+                "UnderlyingStrikePrice": 34220,
+                "UnderlyingStrikeCurrency": 39043,
+                "UnderlyingCouponRate": 85025,
+                "UnderlyingSecurityExchange": "Proin",
+                "UnderlyingIssuer": "tempor",
+                "EncodedUnderlyingIssuerLen": 18,
+                "EncodedUnderlyingIssuer": {
+                    "type": "Buffer",
+                    "data": [
+                        113,
+                        111,
+                        65,
+                        103,
+                        78,
+                        117,
+                        73,
+                        116,
+                        115,
+                        97,
+                        54,
+                        104,
+                        70,
+                        74,
+                        49,
+                        101,
+                        104,
+                        81
+                    ]
+                },
+                "UnderlyingSecurityDesc": "justo",
+                "EncodedUnderlyingSecurityDescLen": 13,
+                "EncodedUnderlyingSecurityDesc": {
+                    "type": "Buffer",
+                    "data": [
+                        51,
+                        114,
+                        81,
+                        106,
+                        112,
+                        117,
+                        74,
+                        71,
+                        81,
+                        120,
+                        75,
+                        121,
+                        52
+                    ]
+                },
+                "UnderlyingCPProgram": "nisi,",
+                "UnderlyingCPRegType": "ut",
+                "UnderlyingCurrency": 76384,
+                "UnderlyingQty": 82267,
+                "UnderlyingPx": 49834,
+                "UnderlyingDirtyPrice": 31463,
+                "UnderlyingEndPrice": 54046,
+                "UnderlyingStartValue": 56909,
+                "UnderlyingCurrentValue": 32999,
+                "UnderlyingEndValue": 25482,
+                "UnderlyingStipulations": [
+                    {
+                        "UnderlyingStipType": "euismod",
+                        "UnderlyingStipValue": "nibh"
+                    },
+                    {
+                        "UnderlyingStipType": "convallis",
+                        "UnderlyingStipValue": "at."
+                    }
+                ]
+            }
+        }
+    ],
+    "UnderlyingTradingSessionID": "Donec",
+    "LastPx": 6228,
+    "LastParPx": 66286,
+    "LastSpotRate": 33267,
+    "LastMkt": "fermentum",
+    "AvgPx": 79956,
+    "SpreadOrBenchmarkCurveData": {
+        "Spread": 56134,
+        "BenchmarkCurveCurrency": 22828,
+        "BenchmarkCurveName": "erat",
+        "BenchmarkCurvePoint": "risus,",
+        "BenchmarkPrice": 50582,
+        "BenchmarkPriceType": 39289,
+        "BenchmarkSecurityID": "vel",
+        "BenchmarkSecurityIDSource": "placerat"
+    },
+    "PositionAmountData": [
+        {
+            "PosAmtType": "IMTM",
+            "PosAmt": 10647
+        },
+        {
+            "PosAmtType": "TVAR"
+        },
+        {
+            "PosAmtType": "SMTM",
+            "PosAmt": 56701
+        }
+    ],
+    "MultiLegReportingType": "3",
+    "TradeLegRefID": "nulla",
+    "TrdInstrmtLegGrp": [
+        {
+            "InstrumentLeg": {
+                "LegSymbol": "luctus",
+                "LegSymbolSfx": "ac.",
+                "LegSecurityID": "Vivamus",
+                "LegSecurityIDSource": "vel",
+                "LegSecAltIDGrp": [
+                    {
+                        "LegSecurityAltID": "mi",
+                        "LegSecurityAltIDSource": "eros."
+                    },
+                    {
+                        "LegSecurityAltID": "Nam",
+                        "LegSecurityAltIDSource": "arcu"
+                    },
+                    {
+                        "LegSecurityAltID": "urna,",
+                        "LegSecurityAltIDSource": "rhoncus"
+                    }
+                ],
+                "LegProduct": 4298,
+                "LegCFICode": "sit",
+                "LegSecuritySubType": "amet",
+                "LegMaturityMonthYear": "bibendum",
+                "LegRepurchaseTerm": 30368,
+                "LegRepurchaseRate": 36391,
+                "LegFactor": 26994,
+                "LegCreditRating": "sit",
+                "LegInstrRegistry": "amet,",
+                "LegCountryOfIssue": "eleifend",
+                "LegStateOrProvinceOfIssue": "non",
+                "LegLocaleOfIssue": "massa.",
+                "LegStrikePrice": 53399,
+                "LegStrikeCurrency": 66131,
+                "LegOptAttribute": "Nam",
+                "LegContractMultiplier": 43380,
+                "LegCouponRate": 86637,
+                "LegSecurityExchange": "metus",
+                "LegIssuer": "mi,",
+                "LegSecurityDesc": "maximus",
+                "LegRatioQty": 87430,
+                "LegSide": "et",
+                "LegCurrency": 22653,
+                "LegPool": "facilisis",
+                "LegContractSettlMonth": "in,"
+            },
+            "LegSwapType": 4,
+            "LegStipulations": [
+                {
+                    "LegStipulationType": "ornare",
+                    "LegStipulationValue": "sed"
+                }
+            ],
+            "LegPositionEffect": "magna.",
+            "LegCoveredOrUncovered": 36739,
+            "NestedParties": [
+                {
+                    "NestedPartyID": "Nulla",
+                    "NestedPartyIDSource": "non",
+                    "NstdPtysSubGrp": [
+                        {
+                            "NestedPartySubID": "leo",
+                            "NestedPartySubIDType": 78949
+                        }
+                    ]
+                }
+            ],
+            "LegPrice": 88923,
+            "LegSettlType": "at",
+            "LegLastPx": 80996
+        },
+        {
+            "InstrumentLeg": {
+                "LegSymbol": "odio",
+                "LegSymbolSfx": "hendrerit",
+                "LegSecurityID": "placerat.",
+                "LegSecAltIDGrp": [
+                    {
+                        "LegSecurityAltID": "Pellentesque",
+                        "LegSecurityAltIDSource": "felis"
+                    },
+                    {
+                        "LegSecurityAltID": "arcu,",
+                        "LegSecurityAltIDSource": "elementum"
+                    },
+                    {
+                        "LegSecurityAltID": "eu",
+                        "LegSecurityAltIDSource": "mollis"
+                    }
+                ],
+                "LegProduct": 21772,
+                "LegSecurityType": "vitae,",
+                "LegRepoCollateralSecurityType": "euismod",
+                "LegRepurchaseTerm": 48947,
+                "LegRepurchaseRate": 30417,
+                "LegFactor": 75940,
+                "LegCreditRating": "ut",
+                "LegInstrRegistry": "diam.",
+                "LegCountryOfIssue": "Aliquam",
+                "LegStateOrProvinceOfIssue": "porttitor",
+                "LegLocaleOfIssue": "erat",
+                "LegStrikePrice": 78648,
+                "LegStrikeCurrency": 20443,
+                "LegContractMultiplier": 36739,
+                "LegCouponRate": 88015,
+                "LegSecurityExchange": "eget",
+                "LegIssuer": "tellus",
+                "EncodedLegIssuerLen": 7,
+                "EncodedLegIssuer": {
+                    "type": "Buffer",
+                    "data": [
+                        78,
+                        111,
+                        104,
+                        72,
+                        86,
+                        99,
+                        50
+                    ]
+                },
+                "LegSecurityDesc": "cursus,",
+                "LegRatioQty": 22704,
+                "LegSide": "in",
+                "LegCurrency": 93624,
+                "LegContractSettlMonth": "hendrerit"
+            },
+            "LegQty": 80760,
+            "LegStipulations": [
+                {
+                    "LegStipulationType": "nisi",
+                    "LegStipulationValue": "tempus."
+                }
+            ],
+            "LegPositionEffect": "Interdum",
+            "LegCoveredOrUncovered": 4968,
+            "NestedParties": [
+                {
+                    "NestedPartyID": "et",
+                    "NestedPartyIDSource": "malesuada",
+                    "NestedPartyRole": 82043,
+                    "NstdPtysSubGrp": [
+                        {
+                            "NestedPartySubID": "fames",
+                            "NestedPartySubIDType": 43878
+                        },
+                        {
+                            "NestedPartySubID": "ac",
+                            "NestedPartySubIDType": 98936
+                        },
+                        {
+                            "NestedPartySubID": "ante",
+                            "NestedPartySubIDType": 71668
+                        }
+                    ]
+                },
+                {
+                    "NestedPartyID": "ipsum",
+                    "NestedPartyIDSource": "primis",
+                    "NestedPartyRole": 41045,
+                    "NstdPtysSubGrp": [
+                        {
+                            "NestedPartySubID": "in",
+                            "NestedPartySubIDType": 89803
+                        },
+                        {
+                            "NestedPartySubID": "faucibus.",
+                            "NestedPartySubIDType": 23773
+                        }
+                    ]
+                }
+            ],
+            "LegPrice": 83514,
+            "LegLastPx": 90952
+        }
+    ],
+    "TransactTime": "2018-07-29T18:40:57.000Z",
+    "TrdRegTimestamps": [
+        {
+            "TrdRegTimestamp": "2018-07-29T18:40:57.000Z",
+            "TrdRegTimestampType": 1,
+            "TrdRegTimestampOrigin": "Ut"
+        }
+    ],
+    "SettlType": "6",
+    "MatchStatus": "2",
+    "TrdCapRptSideGrp": [
+        {
+            "Side": "2",
+            "OrderID": "egestas",
+            "ClOrdID": "massa",
+            "ListID": "ac",
+            "Parties": [
+                {
+                    "PartyID": "cursus",
+                    "PartyRole": 28,
+                    "PtysSubGrp": [
+                        {
+                            "PartySubID": "semper.",
+                            "PartySubIDType": 14
+                        },
+                        {
+                            "PartySubID": "Vivamus",
+                            "PartySubIDType": 10
+                        }
+                    ]
+                },
+                {
+                    "PartyID": "rhoncus",
+                    "PartyIDSource": "7",
+                    "PartyRole": 33,
+                    "PtysSubGrp": [
+                        {
+                            "PartySubID": "convallis"
+                        },
+                        {
+                            "PartySubID": "nulla,",
+                            "PartySubIDType": 3
+                        },
+                        {
+                            "PartySubID": "nec",
+                            "PartySubIDType": 24
+                        }
+                    ]
+                }
+            ],
+            "Account": "ornare",
+            "AcctIDSource": 3,
+            "AccountType": 3,
+            "ProcessCode": "3",
+            "OddLot": true,
+            "ClrInstGrp": [
+                {
+                    "ClearingInstruction": 2
+                }
+            ],
+            "TradeInputSource": "urna",
+            "OrderInputDevice": "iaculis",
+            "Currency": 25360,
+            "ComplianceID": "vitae.",
+            "SolicitedFlag": false,
+            "OrderCapacity": "W",
+            "CustOrderCapacity": 2,
+            "OrdType": "D",
+            "CommissionData": {
+                "Commission": 42994,
+                "CommCurrency": 4004
+            },
+            "GrossTradeAmt": 33302,
+            "NumDaysInterest": 77945,
+            "AccruedInterestRate": 14371,
+            "AccruedInterestAmt": 94677,
+            "InterestAtMaturity": 32285,
+            "EndAccruedInterestAmt": 96042,
+            "StartCash": 79778,
+            "EndCash": 71139,
+            "TotalTakedown": 59190,
+            "NetMoney": 85319,
+            "SettlCurrAmt": 29939,
+            "SettlCurrency": 72497,
+            "SettlCurrFxRateCalc": "D",
+            "PositionEffect": "C",
+            "Text": "Aliquam",
+            "EncodedTextLen": 15,
+            "EncodedText": {
+                "type": "Buffer",
+                "data": [
+                    109,
+                    119,
+                    114,
+                    87,
+                    68,
+                    51,
+                    69,
+                    82,
+                    101,
+                    53,
+                    68,
+                    107,
+                    49,
+                    120,
+                    111
+                ]
+            },
+            "SideMultiLegReportingType": 3,
+            "ContAmtGrp": [
+                {
+                    "ContAmtType": 10,
+                    "ContAmtValue": 82140,
+                    "ContAmtCurr": 53484
+                },
+                {
+                    "ContAmtType": 11,
+                    "ContAmtCurr": 57240
+                },
+                {
+                    "ContAmtType": 1,
+                    "ContAmtCurr": 41183
+                }
+            ],
+            "Stipulations": [
+                {
+                    "StipulationType": "MATURITY",
+                    "StipulationValue": "erat"
+                },
+                {
+                    "StipulationType": "WAM"
+                },
+                {
+                    "StipulationType": "PPM",
+                    "StipulationValue": "volutpat."
+                }
+            ],
+            "MiscFeesGrp": [
+                {
+                    "MiscFeeAmt": 25807,
+                    "MiscFeeType": "6",
+                    "MiscFeeBasis": 2
+                },
+                {
+                    "MiscFeeAmt": 86,
+                    "MiscFeeType": "2",
+                    "MiscFeeBasis": 2
+                },
+                {
+                    "MiscFeeAmt": 87770,
+                    "MiscFeeCurr": 23128
+                }
+            ],
+            "ExchangeRule": "In",
+            "PreallocMethod": "0",
+            "AllocID": "condimentum",
+            "TrdAllocGrp": [
+                {
+                    "AllocAccount": "feugiat",
+                    "AllocAcctIDSource": 9836,
+                    "AllocSettlCurrency": 45230,
+                    "IndividualAllocID": "sem",
+                    "NestedParties2": [
+                        {
+                            "Nested2PartyID": "ut",
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "porttitor.",
+                                    "Nested2PartySubIDType": 71611
+                                },
+                                {
+                                    "Nested2PartySubID": "Quisque",
+                                    "Nested2PartySubIDType": 96546
+                                }
+                            ]
+                        },
+                        {
+                            "Nested2PartyID": "pellentesque",
+                            "Nested2PartyIDSource": "tortor",
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "eget"
+                                },
+                                {
+                                    "Nested2PartySubID": "est"
+                                },
+                                {
+                                    "Nested2PartySubID": "tincidunt",
+                                    "Nested2PartySubIDType": 84621
+                                }
+                            ]
+                        },
+                        {
+                            "Nested2PartyID": "Lorem",
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "ipsum",
+                                    "Nested2PartySubIDType": 5145
+                                },
+                                {
+                                    "Nested2PartySubID": "dolor",
+                                    "Nested2PartySubIDType": 36976
+                                }
+                            ]
+                        }
+                    ],
+                    "AllocQty": 64875
+                },
+                {
+                    "AllocAccount": "sit",
+                    "AllocSettlCurrency": 89429,
+                    "NestedParties2": [
+                        {
+                            "Nested2PartyID": "amet,",
+                            "Nested2PartyRole": 24209,
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "consectetur",
+                                    "Nested2PartySubIDType": 32956
+                                },
+                                {
+                                    "Nested2PartySubID": "adipiscing",
+                                    "Nested2PartySubIDType": 38576
+                                },
+                                {
+                                    "Nested2PartySubID": "elit.",
+                                    "Nested2PartySubIDType": 60917
+                                }
+                            ]
+                        },
+                        {
+                            "Nested2PartyID": "Nunc",
+                            "Nested2PartyIDSource": "odio",
+                            "Nested2PartyRole": 9256,
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "orci,",
+                                    "Nested2PartySubIDType": 20608
+                                },
+                                {
+                                    "Nested2PartySubID": "blandit",
+                                    "Nested2PartySubIDType": 92962
+                                }
+                            ]
+                        }
+                    ],
+                    "AllocQty": 89222
+                },
+                {
+                    "AllocAccount": "vel",
+                    "AllocAcctIDSource": 22134,
+                    "NestedParties2": [
+                        {
+                            "Nested2PartyID": "semper",
+                            "Nested2PartyIDSource": "sed,",
+                            "Nested2PartyRole": 93598,
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "bibendum",
+                                    "Nested2PartySubIDType": 14634
+                                },
+                                {
+                                    "Nested2PartySubID": "cursus",
+                                    "Nested2PartySubIDType": 83918
+                                }
+                            ]
+                        }
+                    ],
+                    "AllocQty": 65082
+                }
+            ]
+        },
+        {
+            "Side": "B",
+            "SecondaryOrderID": "lectus.",
+            "ClOrdID": "Aenean",
+            "SecondaryClOrdID": "vel",
+            "ListID": "diam",
+            "Parties": [
+                {
+                    "PartyID": "magna.",
+                    "PartyRole": 17,
+                    "PtysSubGrp": [
+                        {
+                            "PartySubID": "Aenean",
+                            "PartySubIDType": 9
+                        },
+                        {
+                            "PartySubID": "et",
+                            "PartySubIDType": 19
+                        },
+                        {
+                            "PartySubID": "viverra",
+                            "PartySubIDType": 24
+                        }
+                    ]
+                },
+                {
+                    "PartyID": "leo,",
+                    "PartyIDSource": "8",
+                    "PartyRole": 36,
+                    "PtysSubGrp": [
+                        {
+                            "PartySubID": "non",
+                            "PartySubIDType": 20
+                        }
+                    ]
+                }
+            ],
+            "Account": "iaculis",
+            "AccountType": 7,
+            "ProcessCode": "0",
+            "ClrInstGrp": [
+                {
+                    "ClearingInstruction": 10
+                },
+                {
+                    "ClearingInstruction": 10
+                }
+            ],
+            "TradeInputSource": "neque.",
+            "TradeInputDevice": "Nullam",
+            "OrderInputDevice": "arcu",
+            "Currency": 78490,
+            "ComplianceID": "lectus,",
+            "SolicitedFlag": true,
+            "OrderCapacity": "I",
+            "OrderRestrictions": "9",
+            "CustOrderCapacity": 2,
+            "OrdType": "M",
+            "TransBkdTime": "2018-07-29T18:40:57.000Z",
+            "TradingSessionID": "dignissim",
+            "TimeBracket": "eget",
+            "CommissionData": {
+                "Commission": 35396,
+                "CommCurrency": 46540,
+                "FundRenewWaiv": "N"
+            },
+            "GrossTradeAmt": 49852,
+            "NumDaysInterest": 82627,
+            "AccruedInterestRate": 33309,
+            "AccruedInterestAmt": 85989,
+            "InterestAtMaturity": 89762,
+            "EndAccruedInterestAmt": 34574,
+            "StartCash": 18318,
+            "EndCash": 79233,
+            "Concession": 3538,
+            "TotalTakedown": 55150,
+            "NetMoney": 33121,
+            "SettlCurrAmt": 33856,
+            "SettlCurrency": 96010,
+            "SettlCurrFxRate": 2563,
+            "SettlCurrFxRateCalc": "M",
+            "PositionEffect": "R",
+            "Text": "auctor",
+            "EncodedTextLen": 15,
+            "EncodedText": {
+                "type": "Buffer",
+                "data": [
+                    69,
+                    75,
+                    67,
+                    65,
+                    50,
+                    53,
+                    102,
+                    108,
+                    77,
+                    114,
+                    70,
+                    103,
+                    103,
+                    89,
+                    112
+                ]
+            },
+            "SideMultiLegReportingType": 2,
+            "ContAmtGrp": [
+                {
+                    "ContAmtType": 7,
+                    "ContAmtCurr": 51819
+                }
+            ],
+            "Stipulations": [
+                {
+                    "StipulationType": "ISSUER",
+                    "StipulationValue": "vitae,"
+                },
+                {
+                    "StipulationType": "MAT",
+                    "StipulationValue": "maximus"
+                }
+            ],
+            "MiscFeesGrp": [
+                {
+                    "MiscFeeAmt": 61378,
+                    "MiscFeeCurr": 45857,
+                    "MiscFeeType": "2",
+                    "MiscFeeBasis": 1
+                },
+                {
+                    "MiscFeeAmt": 10539
+                },
+                {
+                    "MiscFeeAmt": 11976,
+                    "MiscFeeBasis": 0
+                }
+            ],
+            "ExchangeRule": "ac",
+            "PreallocMethod": "1",
+            "AllocID": "quam.",
+            "TrdAllocGrp": [
+                {
+                    "AllocAccount": "Quisque",
+                    "AllocAcctIDSource": 38091,
+                    "AllocSettlCurrency": 25998,
+                    "NestedParties2": [
+                        {
+                            "Nested2PartyID": "varius",
+                            "Nested2PartyIDSource": "tincidunt",
+                            "Nested2PartyRole": 91814,
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "auctor.",
+                                    "Nested2PartySubIDType": 35362
+                                },
+                                {
+                                    "Nested2PartySubID": "Class",
+                                    "Nested2PartySubIDType": 74490
+                                }
+                            ]
+                        },
+                        {
+                            "Nested2PartyID": "aptent",
+                            "Nested2PartyIDSource": "taciti",
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "sociosqu",
+                                    "Nested2PartySubIDType": 59103
+                                },
+                                {
+                                    "Nested2PartySubID": "ad",
+                                    "Nested2PartySubIDType": 14834
+                                }
+                            ]
+                        }
+                    ],
+                    "AllocQty": 51211
+                },
+                {
+                    "AllocAccount": "litora",
+                    "AllocAcctIDSource": 90680,
+                    "AllocSettlCurrency": 82574,
+                    "NestedParties2": [
+                        {
+                            "Nested2PartyID": "torquent",
+                            "Nested2PartyIDSource": "per",
+                            "Nested2PartyRole": 97472,
+                            "NstdPtys2SubGrp": [
+                                {
+                                    "Nested2PartySubID": "conubia",
+                                    "Nested2PartySubIDType": 75082
+                                },
+                                {
+                                    "Nested2PartySubID": "nostra,",
+                                    "Nested2PartySubIDType": 40432
+                                },
+                                {
+                                    "Nested2PartySubID": "per",
+                                    "Nested2PartySubIDType": 37928
+                                }
+                            ]
+                        }
+                    ],
+                    "AllocQty": 22477
+                }
+            ]
+        }
+    ],
+    "CopyMsgIndicator": false,
+    "PublishTrdIndicator": true
+}

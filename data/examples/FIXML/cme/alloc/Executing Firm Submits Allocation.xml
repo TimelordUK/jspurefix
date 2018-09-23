@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Executing Firm Submits Allocation-->
+<FIXML v="5.0 SP2" xv="109" cv="CME.0001">
+	<AllocInstrctn ID="1000" GrpID="177006" PostTrdTyp="0" TransTyp="0" Typ="17" MLegRptTyp="1" Qty="22" SesSub="P" Side="1" TrdDt="2015-08-05" ExecOrClaimInd="0" TxnTm="2015-08-13T10:12:09-05:00">
+		<Hdr Snt="2015-08-13T10:12:09-05:00" SID="560" TID="CME" SSub="CME" TSub="CME"/>
+		<OrdAlloc ClOrdID="QQQ"/>
+		<Instrmt ID="ED" CFI="FFDCSO" SecTyp="FUT" MMY="201509" Exch="CME"/>
+		<Pty ID="560" R="1"/>
+		<Pty ID="CME" R="22"/>
+		<Pty ID="SSS" R="24">
+			<Sub ID="1" Typ="26"/>
+		</Pty>
+		<Alloc CustCpcty="4" IndAllocID="2000" Qty="22">
+			<Pty ID="CME" R="22"/>
+			<Pty ID="CARRY1" R="24">
+				<Sub ID="1" Typ="26"/>
+			</Pty>
+			<Pty ID="714" R="1"/>
+		</Alloc>
+	</AllocInstrctn>
+</FIXML>

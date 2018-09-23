@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "pretty": true,
+    "outDir": "./dist"
+  },
+  "compileOnSave": true,
+  "include": [
+    "src/dict-parser.txt",
+    "src/buffer/*.ts",
+    "src/**/*"
+  ]
+}

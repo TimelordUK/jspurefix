@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FIXML v="5.0 SP2" xv="109" cv="CME.0001">
+	<AllocInstrctnAlert ID="12E251CB2133225C1CC112533311" RefAllocID="1000" GrpID="177006" Stat="6" TransTyp="0" SesID="RTH" SesSub="P" AvgPx="95.5" RndPx="95.5" TrdDt="2015-08-05" ClrDt="2015-08-05" TrdTyp="2"  MLegRptTyp="1" TxnTm="2015-08-13T10:12:09-05:00" InptDev="API" InptSrc="FIRM" PostTrdTyp="1" Typ="11" Qty="22" GrpQty="33" Side="2">
+		<Hdr Snt="2015-08-13T10:12:09-05:00" SID="CME" TID="123" SSub="CME" TSub="CME"/>
+		<OrdAlloc ClOrdID="QQQ"/>
+		<AllExc LastQty="22" LastPx="95.5" TrdID="177005"/>
+		<Instrmt ID="ED" CFI="FFDCSO" SecTyp="FUT" MMY="201509" Exch="CME" PxQteCcy="USD"/>
+		<Pty ID="CME" R="21"/>
+		<Pty ID="CME" R="22"/>
+		<Pty ID="560" R="1"/>
+		<Pty ID="SSS" R="24">
+			<Sub ID="1" Typ="26"/>
+		</Pty>
+	</AllocInstrctnAlert>
+</FIXML>

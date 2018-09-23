@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This is a sample message of an executing firm un-completing an Average Price group.--> 
+<FIXML v="5.0 SP2" xv="109" cv="CME.0001">
+	<AllocInstrctn ID="1003" GrpID="177006" PostTrdTyp="1" TransTyp="1" Typ="15" MLegRptTyp="1" Qty="33" Side="2" TrdDt="2010-08-05" ExecOrClaimInd="0" TxnTm="2010-08-13T10:12:09-05:00">
+	<!-- Typ="13" Allocation type. 13=Complete Group.--> 
+		<Hdr Snt="2010-08-13T10:12:09-05:00" SID="560" TID="CME" SSub="CME" TSub="CME"/>
+		<Instrmt ID="ED" CFI="FFDCSO" SecTyp="FUT" MMY="201009" Exch="CME"/>
+		<Pty ID="560" R="1"/>
+		<Pty ID="CME" R="22"/>
+	</AllocInstrctn>
+</FIXML>
