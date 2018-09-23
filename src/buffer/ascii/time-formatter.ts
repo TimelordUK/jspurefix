@@ -3,7 +3,7 @@ import { ElasticBuffer } from '../elastic-buffer'
 import { ITimeFormatter } from '../time-formatter'
 
 export class TimeFormatter implements ITimeFormatter {
-  constructor (public readonly buffer: ElasticBuffer) {
+  constructor (public readonly buffer: ElasticBuffer, public readonly adjustLocal: boolean = false) {
   }
 
   public writeLocalDate (v: Date): void {
@@ -92,11 +92,16 @@ export class TimeFormatter implements ITimeFormatter {
     const year: number = Math.round(n / 10000)
     const len = end - start
     if (len === 8) {
+      let t: Date
       if (useUtc) {
-        return new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
+        t = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
       } else {
-        return new Date(year, month - 1, day, 0, 0, 0, 0)
+        t = new Date(year, month - 1, day, 0, 0, 0, 0)
       }
+      if (this.adjustLocal) {
+        t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+      }
+      return t
     }
 
     let offset: number = 8
@@ -128,11 +133,16 @@ export class TimeFormatter implements ITimeFormatter {
       offset += 1
       ms = buffer.getWholeNumber(start + offset, start + offset + 2)
     }
+    let t: Date
     if (useUtc) {
-      return new Date(Date.UTC(year, month - 1, day, hh, mm, ss, ms))
+      t = new Date(Date.UTC(year, month - 1, day, hh, mm, ss, ms))
     } else {
-      return new Date(year, month - 1, day, hh, mm, ss, ms)
+      t = new Date(year, month - 1, day, hh, mm, ss, ms)
     }
+    if (this.adjustLocal) {
+      t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+    }
+    return t
   }
 
   private getTime (start: number, useUtc: boolean): Date {
@@ -176,11 +186,15 @@ export class TimeFormatter implements ITimeFormatter {
     const month: number = Math.round(monthDay / 100)
     const day: number = monthDay % 100
     const year: number = Math.round(n / 10000)
-
+    let t: Date
     if (useUtc) {
-      return new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
+      t = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
     } else {
-      return new Date(year, month - 1, day, 0, 0, 0, 0)
+      t = new Date(year, month - 1, day, 0, 0, 0, 0)
     }
+    if (this.adjustLocal) {
+      t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+    }
+    return t
   }
 }
