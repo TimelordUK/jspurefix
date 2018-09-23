@@ -118,6 +118,36 @@ see src/test/view-decode.test.ts
 
 note that a view can only be used within a callback context unless it is cloned.  Once returned, the memory is re-used for next message.  It is intended to convert to an object or parsed into an application specific message.
 
+fetch a group view
+
+```typescript
+  const noMDEntriesView: MsgView = view.getView('NoMDEntries')
+  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(1)
+
+  const mmEntryExpireTimeAsString: string = mmEntryView.getString('ExpireTime')
+  expect(mmEntryExpireTimeAsString).toEqual('20180608-20:53:14.000')
+  expect(mmEntryView.getString(126)).toEqual('20180608-20:53:14.000')
+```
+
+fetch single tags
+
+```typescript
+  const erView: MsgView = views[0]
+  expect(erView.getString(35)).toEqual('8')
+  expect(erView.getString('MsgType')).toEqual('8')
+  expect(erView.getString(8)).toEqual('FIX4.4')
+  expect(erView.getTyped(9)).toEqual(6542)
+  expect(erView.getTyped('TotNumReports')).toEqual(19404)
+  expect(erView.getTyped('StrikePrice')).toEqual(52639)
+```
+
+fetch repeated tag
+
+```typescript
+  const erView: MsgView = views[0]
+  expect(erView.getStrings('PartyID')).toEqual(['magna.', 'iaculis', 'vitae,'])
+```
+
 fetch a set of tags
 
 ```typescript
