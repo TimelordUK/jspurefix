@@ -164,7 +164,20 @@ convert view into an object which can be used alongside an interface for intelli
   import { ITradeCaptureReport } from '../../../types/FIX4.4/repo/trade_capture_report'
   import { ITradeCaptureReportRequest } from '../../../types/FIX4.4/repo/trade_capture_report_request'
 
- const tc: ITradeCaptureReport = view.toObject()
+  const tc: ITradeCaptureReport = view.toObject()
+```
+
+from data/examples/FIX.4.4/quickfix/execution-report
+
+get first in group fetched from object where group is array
+
+```typescript
+  const erView: MsgView = views[0]
+  const undInstrmtGrpView: MsgView = erView.getView('UndInstrmtGrp')
+  const undInstrmtGrpViewAsObject: ILooseObject = undInstrmtGrpView.toObject()
+  expect(undInstrmtGrpViewAsObject.NoUnderlyings.length).toEqual(2)
+  const underlying0: ILooseObject = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
+  expect(underlying0.UnderlyingSymbol).toEqual('massa.')
 ```
 
 get a tokenised view of tags in view
