@@ -58,19 +58,19 @@
     "yauzl": "^2.10.0"
   },
   "devDependencies": {
-    "@types/winston": "^2.3.9",
-    "@types/minimist": "^1.2.0",
     "@types/jest": "^23.1.0",
     "@types/lodash": "^4.14.111",
     "@types/log4js": "^2.3.5",
+    "@types/minimist": "^1.2.0",
     "@types/node": "^10.3.3",
     "@types/sax": "^1.0.0",
+    "@types/winston": "^2.3.9",
     "@types/xmlbuilder": "0.0.32",
     "jest": "^23.1.0",
     "standard": "^11.0.1",
     "ts-jest": "^22.4.6",
     "tslint": "^5.10.0",
     "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.9.2"
+    "typescript": "^3.0.3"
   }
 }
