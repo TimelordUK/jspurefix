@@ -23,12 +23,13 @@ This fix engine provides fast easy API to parse or send FIX based messages.
 
 Install the package from npm:
 
-```
+```shell
 coming soon on npm
 ```
 
 clone from git
-```
+
+```shell
     git clone https://github.com/TimelordUK/jsfix.git
     cd jsfix
     npm run unzip-repo
@@ -47,10 +48,11 @@ used to parse messages.
 
 run a full application example the trade capture or a simple skeleton
 
-```
+```shell
 npm run tcp-tc
 ```
-```
+
+```shell
 npm run tcp-sk
 ```
 
@@ -105,11 +107,13 @@ the client onReady method is called when a connection is made and logon establis
 ```
 
 ## working with Views
+
 see src/test/view-decode.test.ts
 
 note that a view can only be used within a callback context unless it is cloned.  Once returned, the memory is re-used for next message.  It is intended to convert to an object or parsed into an application specific message.
 
 fetch a set of tags
+
 ```typescript
   const [a, b, c, d] = view.getTypedTags([8, 9, 35, 49])
   expect(a).toEqual('FIX4.4')
@@ -118,39 +122,51 @@ fetch a set of tags
   expect(d).toEqual('sender-10')
 ```
 
-convert view into an object which cab be used alongside an interface for intellisense.
-```
+convert view into an object which can be used alongside an interface for intellisense.
+
+```typescript
+  import { ITradeCaptureReport } from '../../../types/FIX4.4/repo/trade_capture_report'
+  import { ITradeCaptureReportRequest } from '../../../types/FIX4.4/repo/trade_capture_report_request'
+
  const tc: ITradeCaptureReport = view.toObject()
 ```
+
 get a tokenised view of tags in view
-```
+
+```typescript
 console.log(view.toString())
 ```
 
 get a component from parent - this is very low cost
-```
+
+```typescript
  const instrumentView: MsgView = view.getView('Instrument')
  const instrumentObject: IInstrument = view.getView('Instrument').toObject()
 ```
 
 ## performance on Windows Intel Core I7-4770 @ 3.5 GHz
+
 These messages have been randomly generated with command line tool. They are syntactically valid.
 
 ### data/examples/FIX.4.4/repo/execution-report/fix.txt
-```
+
+```shell
 [8]: repeats = 250000, fields = 58, length = 604 chars, elapsed ms 3658, 14.632 micros per msg
 ```
 
 ### data/examples/FIX.4.4/repo/security-definition/fix.txt
-```
+
+```shell
 [d]: repeats = 150000, fields = 223, length = 2233 chars, elapsed ms 7962, 53.080000000000005 micros per msg
 ```
 
 ### data/examples/FIX.4.4/repo/trade-capture/fix.txt
-```
+
+```shell
 npm run repo44-bench-tc
 ```
-```
+
+```shell
 [AE]: repeats = 30000, fields = 613, length = 5818 chars, elapsed ms 5206, 173.53333333333333 micros per msg
 ```
 
@@ -160,10 +176,11 @@ the command line tool jsfix can be used to parse any fix log providing an approp
 
 ## parsing fields
 
-```
+```shell
 npm run cmd -- -session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --tokens
 ```
-```
+
+```shell
 [0] 8 (BeginString) = FIX4.4, [1] 9 (BodyLength) = 0000135
 [2] 35 (MsgType) = AD[TradeCaptureReportRequest], [3] 49 (SenderCompID) = init-comp
 [4] 56 (TargetCompID) = accept-comp, [5] 34 (MsgSeqNum) = 2
@@ -175,28 +192,29 @@ npm run cmd -- -session=data/session/test-initiator.json --fix=data/examples/FIX
 
 ## stats on entire file
 
-```
+```shell
 npm run cmd -- -session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --stats
 ```
 
 ```json
-messages 13 elapsed ms 8   
-{                          
-    "0": 1,                
-    "5": 2,                
-    "A": 2,                
-    "AD": 1,               
-    "AQ": 2,               
-    "AE": 5                
-}                          
+messages 13 elapsed ms 8
+{
+    "0": 1,
+    "5": 2,
+    "A": 2,
+    "AD": 1,
+    "AQ": 2,
+    "AE": 5
+}
 ```
 
 ## benchmark parsing repeated reads of file
 
-```
+```cmd
 npm run cmd -- -session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --stats --repeats=20
 ```
-```
+
+```cmd
 messages 13 elapsed ms 0
 {
     "0": 1,
@@ -210,7 +228,7 @@ messages 13 elapsed ms 0
 
 ## parse message type in a file
 
-```
+```cmd
 npm run cmd -- -session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --objects
 ```
 
@@ -239,5 +257,3 @@ npm run cmd -- -session=data/session/test-initiator.json --fix=data/examples/FIX
     }
 }
 ```
-
-
