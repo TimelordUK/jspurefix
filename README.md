@@ -31,7 +31,13 @@ clone from git
 ```
     git clone https://github.com/TimelordUK/jsfix.git
     cd jsfix
+    npm install
     npm run unzip-repo
+    # install typescript if not installed
+    npm install -g typescript
+    tsc
+    # run demo app
+    npm run tcp-tc
 ```
 
 # Run Sample
