@@ -181,7 +181,7 @@ export class TimeFormatter implements ITimeFormatter {
 
   private getDate (start: number, useUtc: boolean): Date {
 
-    // (SendingTime) = 20150417-01:00:08.201
+    // = 20150417
 
     const n: number = this.buffer.getWholeNumber(start, start + 7)
     if (n == null) {
@@ -196,6 +196,7 @@ export class TimeFormatter implements ITimeFormatter {
       t = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
     } else {
       t = new Date(year, month - 1, day, 0, 0, 0, 0)
+      console.log(`getDate offset = ${t.getTimezoneOffset()}`)
       if (this.adjustLocal) {
         t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
       }
