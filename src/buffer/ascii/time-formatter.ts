@@ -138,9 +138,9 @@ export class TimeFormatter implements ITimeFormatter {
       t = new Date(Date.UTC(year, month - 1, day, hh, mm, ss, ms))
     } else {
       t = new Date(year, month - 1, day, hh, mm, ss, ms)
-    }
-    if (this.adjustLocal) {
-      t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+      if (this.adjustLocal) {
+        t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+      }
     }
     return t
   }
@@ -167,11 +167,16 @@ export class TimeFormatter implements ITimeFormatter {
       offset += 1
       ms = buffer.getWholeNumber(start + offset, start + offset + 2)
     }
+    let t: Date
     if (useUtc) {
-      return new Date(Date.UTC(0, 0, 0, hh, mm, ss, ms))
+      t = new Date(Date.UTC(0, 0, 0, hh, mm, ss, ms))
     } else {
-      return new Date(0, 0, 0, hh, mm, ss, ms)
+      t = new Date(0, 0, 0, hh, mm, ss, ms)
+      if (this.adjustLocal) {
+        t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+      }
     }
+    return t
   }
 
   private getDate (start: number, useUtc: boolean): Date {
@@ -191,9 +196,9 @@ export class TimeFormatter implements ITimeFormatter {
       t = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
     } else {
       t = new Date(year, month - 1, day, 0, 0, 0, 0)
-    }
-    if (this.adjustLocal) {
-      t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+      if (this.adjustLocal) {
+        t = new Date(t.getTime() - t.getTimezoneOffset() * -60000)
+      }
     }
     return t
   }
