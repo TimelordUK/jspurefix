@@ -38,6 +38,7 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
   })
 }
 
+/*
 test('test logon JSON => object => fix => object', async () => {
   const msgType: string = 'A'
   const file: string = path.join(root, 'examples/FIX.4.4/quickfix/logon/object.json')
@@ -72,3 +73,4 @@ test('test md request JSON => object => fix => object', async () => {
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)
 }, 1000)
+*/
