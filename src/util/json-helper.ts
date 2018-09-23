@@ -36,11 +36,18 @@ export class JsonHelper {
         object[name] = m.toDate()
         break
 
-      case TagType.UtcDateOnly:
+      case TagType.UtcDateOnly: {
+        const m = moment(v)
+        const d = m.toDate()
+        object[name] = new Date(Date.UTC(d.getFullYear(), d.getMonth() - 1, d.getDay(), 0, 0, 0, 0))
+        break
+      }
+
       case TagType.UtcTimeOnly:
       case TagType.LocalDate: {
         const m = moment(v)
-        object[name] = m.toDate()
+        const d = m.toDate()
+        object[name] = new Date(d.getFullYear(), d.getMonth() - 1, d.getDay(), 0, 0, 0, 0)
         break
       }
     }
