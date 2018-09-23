@@ -75,10 +75,3 @@ test('check LocalTime', () => {
   expect(buffer.toString()).toEqual('15:55:59.123')
   expect(timeFormatter.getUtcTime(0)).toEqual(utcTime)
 })
-
-test('write Utc read Local', () => {
-  buffer.reset()
-  timeFormatter.writeUtcTime(localDateTime)
-  expect(buffer.getPos()).toEqual(timeLength)
-  expect(buffer.toString()).toEqual('14:55:59.123')
-})
