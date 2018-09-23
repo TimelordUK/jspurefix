@@ -308,3 +308,38 @@ npm run cmd -- -session=data/session/test-initiator.json --fix=data/examples/FIX
     }
 }
 ```
+
+as above where --type=AE --objects
+
+```typescript
+{
+    "StandardHeader": {
+        "BeginString": "FIX4.4",
+        "BodyLength": 213,
+        "MsgType": "AE",
+        "SenderCompID": "accept-comp",
+        "TargetCompID": "init-comp",
+        "MsgSeqNum": 4,
+        "TargetSubID": "fix",
+        "SendingTime": "2018-09-23T16:07:04.986Z"
+    },
+    "TradeReportID": "100001",
+    "TradeReportTransType": 0,
+    "TradeReportType": 0,
+    "TrdType": 0,
+    "ExecID": "600001",
+    "OrdStatus": "2",
+    "PreviouslyReported": false,
+    "Instrument": {
+        "Symbol": "Gold",
+        "SecurityID": "Gold.INC"
+    },
+    "LastQty": 107,
+    "LastPx": 45.38,
+    "TradeDate": "2018-09-22T23:00:00.000Z",
+    "TransactTime": "2018-09-23T16:07:04.776Z",
+    "StandardTrailer": {
+        "CheckSum": "54"
+    }
+}
+```
