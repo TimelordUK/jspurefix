@@ -1,2 +1,6 @@
 data/examples/FIXML
+data/examples/FIXML/FIX.4.4/quickfix
+data/examples/FIXML/FIX.4.4/repo
+data/examples/FIXML/FIX.4.4/fix.txt
 src/dict-parser.ts
+src/test
