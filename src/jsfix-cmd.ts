@@ -1,5 +1,3 @@
-import * as minimist from 'minimist'
-import * as path from 'path'
 import { Ascii } from './buffer/ascii'
 import { AsciiView } from './buffer/ascii/ascii-view'
 import { ILooseObject } from './collections/collection'
@@ -23,9 +21,11 @@ import { ICompilerSettings } from './dictionary/compiler/compiler-settings'
 import { MsgCompiler } from './dictionary/compiler/msg-compiler'
 import { EnumCompiler } from './dictionary/compiler/enum-compiler'
 import { getWords } from './util/buffer-helper'
-import { getDefinitions } from './util/dictionary-definitions'
+import { getDefinitions, getDictPath } from './util/dictionary-definitions'
 import * as util from 'util'
-import * as fs from 'fs'
+const fs = require('node-fs-extra')
+import * as minimist from 'minimist'
+import * as path from 'path'
 
 const argv: any = minimist(process.argv.slice(2))
 
@@ -74,127 +74,6 @@ export class JsfixCmd {
       command = Command.Encode
     }
     return command
-  }
-
-  private static getDictOutput (): string {
-    let output: string
-    switch (argv.dict) {
-      case 'repo40': {
-        output = 'src/types/FIX4.0/repo'
-        break
-      }
-
-      case 'repo41': {
-        output = 'src/types/FIX4.1/repo'
-        break
-      }
-
-      case 'repo42': {
-        output = 'src/types/FIX4.2/repo'
-        break
-      }
-
-      case 'repo43': {
-        output = 'src/types/FIX4.3/repo'
-        break
-      }
-
-      case 'repo44': {
-        output = 'src/types/FIX4.4/repo'
-        break
-      }
-
-      case 'repo50': {
-        output = 'src/types/FIX5.0/repo'
-        break
-      }
-
-      case 'repo50sp1': {
-        output = 'src/types/FIX.5.0SP1/repo'
-        break
-      }
-
-      case 'repo50sp2': {
-        output = 'src/types/FIX.5.0SP2/repo'
-        break
-      }
-
-      case 'repofixml': {
-        output = 'src/types/FIXML50SP2'
-        break
-      }
-
-      case 'qf44': {
-        output = 'src/types/FIX4.4/quickfix'
-        break
-      }
-
-      default: {
-        output = argv.output
-      }
-    }
-    return output
-  }
-
-  private static getDictPath (): string {
-    let dict: string
-    if (argv.dict) {
-      switch (argv.dict) {
-        case 'repo40': {
-          dict = 'data/fix_repo/FIX.4.0/Base'
-          break
-        }
-
-        case 'repo41': {
-          dict = 'data/fix_repo/FIX.4.1/Base'
-          break
-        }
-
-        case 'repo42': {
-          dict = 'data/fix_repo/FIX.4.2/Base'
-          break
-        }
-
-        case 'repo43': {
-          dict = 'data/fix_repo/FIX.4.3/Base'
-          break
-        }
-
-        case 'repo44': {
-          dict = 'data/fix_repo/FIX.4.4/Base'
-          break
-        }
-
-        case 'repo50': {
-          dict = 'data/fix_repo/FIX.5.0/Base'
-          break
-        }
-
-        case 'repo50sp1': {
-          dict = 'data/fix_repo/FIX.5.0SP1/Base'
-          break
-        }
-
-        case 'repo50sp2': {
-          dict = 'data/fix_repo/FIX.5.0SP2/Base'
-          break
-        }
-
-        case 'repofixml': {
-          dict = 'data/fix_repo/fixmlschema_FIX.5.0SP2_EP228'
-          break
-        }
-
-        case 'qf44': {
-          dict = 'data/FIX44.xml'
-          break
-        }
-
-        default:
-          dict = argv.dict
-      }
-      return dict
-    }
   }
 
   private static getPrintMode (): PrintMode {
@@ -389,7 +268,21 @@ export class JsfixCmd {
     }
   }
 
+  ensureExists (path: string): Promise<any> {
+    return new Promise<any>((accept, reject) => {
+      fs.mkdirp(path, (err: Error) => {
+        if (err) {
+          reject(err)
+        } else {
+          accept()
+        }
+      })
+    })
+  }
+
   private async compileDefinitions (outputPath: string) {
+    await this.ensureExists(path.join(outputPath, 'set'))
+    await this.ensureExists(path.join(outputPath, 'enum'))
     const definitions = this.definitions
     const compilerSettings: ICompilerSettings = require('../data/compiler.json')
     compilerSettings.output = outputPath
@@ -401,7 +294,11 @@ export class JsfixCmd {
   }
 
   private async compile () {
-    let output: string = JsfixCmd.getDictOutput()
+    let output = argv.output
+    const dp = getDictPath(argv.dict)
+    if (dp) {
+      output = dp.output
+    }
     output = path.join(this.root, output)
     await this.compileDefinitions(output)
   }
@@ -412,7 +309,7 @@ export class JsfixCmd {
     this.sessionDescription = require(session)
     let dict: string
     if (argv.dict) {
-      dict = JsfixCmd.getDictPath()
+      dict = argv.dict
     } else {
       dict = this.sessionDescription.application.dictionary
     }

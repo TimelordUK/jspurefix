@@ -1,0 +1,42 @@
+{
+  "repo40": {
+    "output": "src/types/FIX4.0/repo",
+    "dict": "data/fix_repo/FIX.4.0/Base"
+  },
+  "repo41": {
+    "output": "src/types/FIX4.1/repo",
+    "dict": "data/fix_repo/FIX.4.1/Base"
+  },
+  "repo42": {
+    "output": "src/types/FIX4.2/repo",
+    "dict": "data/fix_repo/FIX.4.2/Base"
+  },
+  "repo43": {
+    "output": "src/types/FIX4.3/repo",
+    "dict": "data/fix_repo/FIX.4.3/Base"
+  },
+  "repo44": {
+    "output": "src/types/FIX4.4/repo",
+    "dict": "data/fix_repo/FIX.4.4/Base"
+  },
+  "repo50": {
+    "output": "src/types/FIX5.0/repo",
+    "dict": "data/fix_repo/FIX.5.0/Base"
+  },
+  "repo50sp1": {
+    "output": "src/types/FIX.5.0SP1/repo",
+    "dict": "data/fix_repo/FIX.5.0SP1/Base"
+  },
+  "repo50sp2": {
+    "output": "src/types/FIX.5.0SP2/repo",
+    "dict": "data/fix_repo/FIX.5.0SP2/Base"
+  },
+  "repofixml": {
+    "output": "src/types/FIXML50SP2",
+    "dict": "data/fix_repo/fixmlschema_FIX.5.0SP2_EP228"
+  },
+  "qf44": {
+    "output": "src/types/FIX4.4/quickfix",
+    "dict": "data/FIX44.xml"
+  }
+}
