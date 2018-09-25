@@ -303,7 +303,7 @@ the command line tool jsfix can be used to parse any fix log providing an approp
 ## parsing fields
 
 ```shell
-npm run cmd -- -dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --tokens
+npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --tokens
 ```
 
 ```shell
@@ -319,7 +319,7 @@ npm run cmd -- -dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --
 ## stats on entire file
 
 ```shell
-npm run cmd -- -dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --stats
+npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --stats
 ```
 
 ```json
@@ -337,7 +337,7 @@ messages 13 elapsed ms 8
 ## benchmark parsing repeated reads of file
 
 ```cmd
-npm run cmd -- -dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --stats --repeats=20
+npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --stats --repeats=20
 ```
 
 ```cmd
@@ -355,7 +355,7 @@ messages 13 elapsed ms 0
 ## parse message type in a file
 
 ```cmd
-npm run cmd -- -dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --objects
+npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --objects
 ```
 
 ```json
