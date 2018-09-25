@@ -1,6 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/2w2eag4trnijg5d3?svg=true)](https://ci.appveyor.com/project/TimelordUK/jsfix)
 
-# jsfix
+# jspurefix
 
 1. fast native clean fix engine
 1. quickfix or repo based data dictionary
