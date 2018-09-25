@@ -418,3 +418,65 @@ as above where --type=AE --objects
     }
 }
 ```
+
+## show all structures within a message
+
+```shell
+cd dist && node jsfix-cmd "--dict=repo44" "--fix=data/examples/FIX.4.4/jsfix.test_client.txt" "--delimiter=|" "--type=AD" "--structures"
+```
+```json
+[
+    {
+        "name": "StandardHeader",
+        "depth": 2,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 52,
+        "endPosition": 7,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "TrdCapDtGrp",
+        "depth": 1,
+        "startTag": 580,
+        "startPosition": 11,
+        "endTag": 75,
+        "endPosition": 12,
+        "delimiterTag": 75,
+        "delimiterPositions": [
+            12
+        ]
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 1,
+        "startTag": 10,
+        "startPosition": 13,
+        "endTag": 10,
+        "endPosition": 13,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "TradeCaptureReportRequest",
+        "depth": 1,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 10,
+        "endPosition": 13,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 0,
+        "startTag": 10,
+        "startPosition": 14,
+        "endTag": 10,
+        "endPosition": 13,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    }
+]
+```
