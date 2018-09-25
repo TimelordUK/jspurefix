@@ -31,11 +31,10 @@ coming soon on npm
 clone from git
 
 ```shell
-    git clone https://github.com/TimelordUK/jsfix.git
+    git clone https://github.com/TimelordUK/jspurefix.git
     cd jsfix
     npm install
     npm run unzip-repo
-    # install typescript if not installed
     npm install -g typescript
     tsc
     # run demo app
