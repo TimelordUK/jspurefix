@@ -2,8 +2,8 @@
 
 # jspurefix
 
-1. fast native clean fix engine
-1. quickfix or repo based data dictionary
+1. fast 100% native clean fix engine
+1. represent data dictionary as quickfix or repo notation 
 1. compile interface types against definitions
 1. ascii / fixml supported
 1. parses repeat groups, components and raw data fields
@@ -12,11 +12,11 @@
 1. a skeleton example shows connection, login and session only
 1. parse fix logs into human readable format - JSON, tokens
 1. socket session management for login, heartbeat etc
-1. initiator or acceptor
+1. implement initiator or acceptor
 
 ## Native Typescript FIX Engine
 
-This fix engine provides fast easy API to parse or send FIX based messages.
+This fix engine provides a fast easy API to parse or send FIX based messages. It is implemented entirely in typescript. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc. 
 
 ### extensive documentation coming soon.
 
@@ -30,14 +30,27 @@ coming soon on npm
 
 clone from git
 
+unix
+```shell
+  npm install
+  npm run unzip-repo
+  ./node_modules/.bin/tsc --version
+  ./node_modules/.bin/tsc
+```
+
+windows 
 ```shell
     git clone https://github.com/TimelordUK/jspurefix.git
-    cd jsfix
+    cd jspurefix
+    script\build.cmd
+```
+or
+```shell
+    git clone https://github.com/TimelordUK/jspurefix.git
+    cd jspurefix
     npm install
     npm run unzip-repo
-    npm install -g typescript
-    tsc
-    # run demo app
+    node_modules/.bin/tsc
     npm run tcp-tc
 ```
 
@@ -61,6 +74,16 @@ npm run tcp-tc
 ```shell
 npm run tcp-sk
 ```
+
+## Dictionary Definitions
+
+base definitions on existing template e.g. quickfix format FIX44.xml
+create an alias in data/dictionary.json
+compile interfaces 
+```shell
+npm run cmd -- --dict=repo42 --compile
+```
+use the alias in a session file e.g. data/session/test-initiator.json
 
 ## sample trade-capture-client.ts
 
@@ -202,10 +225,18 @@ These messages have been randomly generated with command line tool. They are syn
 ### data/examples/FIX.4.4/repo/execution-report/fix.txt
 
 ```shell
+npm run repo44-bench-er
+```
+
+```shell
 [8]: repeats = 250000, fields = 58, length = 604 chars, elapsed ms 3658, 14.632 micros per msg
 ```
 
 ### data/examples/FIX.4.4/repo/security-definition/fix.txt
+
+```shell
+npm run repo44-bench-sd
+```
 
 ```shell
 [d]: repeats = 150000, fields = 223, length = 2233 chars, elapsed ms 7962, 53.080000000000005 micros per msg
@@ -221,7 +252,7 @@ npm run repo44-bench-tc
 [AE]: repeats = 30000, fields = 613, length = 5818 chars, elapsed ms 5206, 173.53333333333333 micros per msg
 ```
 
-# Log parsing
+## Log parsing
 
 the command line tool jsfix can be used to parse any fix log providing an appropriate dictionary is provided.
 
