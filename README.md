@@ -16,7 +16,7 @@
 
 ## Native Typescript FIX Engine
 
-This fix engine provides a fast easy API to parse or send FIX based messages. It is implemented entirely in typescript. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc. 
+This fix engine provides a fast easy API to parse or send finacial protocol FIX messages. It is implemented entirely in typescript. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc. 
 
 ### extensive documentation coming soon.
 
@@ -25,33 +25,40 @@ This fix engine provides a fast easy API to parse or send FIX based messages. It
 Install the package from npm:
 
 ```shell
-coming soon on npm
+  npm install jspurefix
 ```
+please complete installation by running either script/build.sh or script/build.cmd.  It is a requirement to unzip the repo and compile the typescript before using the library or running the test.
 
 clone from git
 
 unix
 ```shell
+  git clone https://github.com/TimelordUK/jspurefix.git
+  cd jspurefix
+  script/build.sh
+```
+```shell
   npm install
   npm run unzip-repo
   ./node_modules/.bin/tsc --version
   ./node_modules/.bin/tsc
+  npm run tcp-tc
 ```
 
 windows 
 ```shell
-    git clone https://github.com/TimelordUK/jspurefix.git
-    cd jspurefix
-    script\build.cmd
+  git clone https://github.com/TimelordUK/jspurefix.git
+  cd jspurefix
+  script\build.cmd
 ```
 or
 ```shell
-    git clone https://github.com/TimelordUK/jspurefix.git
-    cd jspurefix
-    npm install
-    npm run unzip-repo
-    node_modules/.bin/tsc
-    npm run tcp-tc
+  git clone https://github.com/TimelordUK/jspurefix.git
+  cd jspurefix
+  npm install
+  npm run unzip-repo
+  node_modules/.bin/tsc
+  npm run tcp-tc
 ```
 
 # Run Sample
@@ -73,6 +80,43 @@ npm run tcp-tc
 
 ```shell
 npm run tcp-sk
+```
+
+## Unit Tests
+
+there is a comprehensive suite of tests which can be run 
+```shell
+npm t
+```
+```
+PASS  src/test/elastic-buffer.test.ts
+RUNS  src/test/session.test.ts
+PASS  src/test/encode-proxy.test.tsst.ts
+PASS  src/test/execution-report.test.ts
+PASS  src/test/view-decode.test.ts
+PASS  src/test/ascii-encode.test.ts
+PASS  src/test/ascii-parser.test.ts
+PASS  src/test/includes.test.ts
+PASS  src/test/fixml-alloc-parse.test.ts (9.433s)
+PASS  src/test/repo-full-fixml-msg.test.ts (6.025s)
+PASS  src/test/fixml-mkt-data-settle-parse.test.ts (6.021s)
+PASS  src/test/qf-full-msg.test.ts
+PASS  src/test/logon.test.ts
+PASS  src/test/fixml-mkt-data-fut-parse.test.ts (7.761s)
+PASS  src/test/time-formatter.test.ts
+PASS  src/test/ascii-segment.test.ts
+PASS  src/test/session-state.test.ts
+PASS  src/test/fixml-tc-bi-lateral-parse.test.ts (7.534s)
+PASS  src/test/ascii-tag-pos.test.ts
+PASS  src/test/fix-log-replay.test.ts
+PASS  src/test/repo-full-ascii-msg.test.ts
+PASS  src/test/session.test.ts (52.637s)
+
+Test Suites: 21 passed, 21 total
+Tests:       204 passed, 204 total
+Snapshots:   0 total
+Time:        54.606s, estimated 65s
+Ran all test suites.
 ```
 
 ## Dictionary Definitions
