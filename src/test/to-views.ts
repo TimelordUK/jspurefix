@@ -18,11 +18,11 @@ export class ToViews {
   constructor (public readonly testFolder: string) {
   }
 
-  public async load (file: string = 'fix_repo/fixmlschema_FIX.5.0SP2_EP228'): Promise<any> {
+  public async load (file: string = 'repofixml'): Promise<any> {
     const root = this.root
     const testFolder = this.testFolder
     const views = this.views
-    this.definitions = await getDefinitions(path.join(root, file))
+    this.definitions = await getDefinitions(file)
     const definitions = this.definitions
     const fs: any = require('fs')
     const fullName = path.join(root, `${testFolder}/fix.xml`)

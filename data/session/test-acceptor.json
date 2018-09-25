@@ -7,7 +7,7 @@
       "port": 2344
     },
     "protocol": "ascii",
-    "dictionary": "data/fix_repo/FIX.4.4/Base"
+    "dictionary": "repo44"
   },
   "Username": "js-server",
   "Password": "pwd-server",
