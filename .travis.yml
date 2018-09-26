@@ -7,4 +7,25 @@ before_script:
 - ./node_modules/.bin/tsc
 
 script:
-- npm t
+- npm t src/test/ascii-encode.test.ts
+- npm t src/test/includes.test.ts
+- npm t src/test/fixml-mkt-data-settle-parse.test.ts
+- npm t src/test/repo-full-ascii-msg.test.ts
+- npm t src/test/fixml-mkt-data-fut-parse.test.ts
+- npm t src/test/fixml-alloc-parse.test.ts
+- npm t src/test/repo-full-fixml-msg.test.ts
+- npm t src/test/fixml-tc-bi-lateral-parse.test.ts
+- npm t src/test/view-decode.test.ts
+- npm t src/test/qf-full-msg.test.ts
+- npm t src/test/session.test.ts
+- npm t src/test/encode-proxy.test.ts
+- npm t src/test/ascii-segment.test.ts
+- npm t src/test/logon.test.ts
+- npm t src/test/execution-report.test.ts
+- npm t src/test/time-formatter.test.ts
+- npm t src/test/session-state.test.ts
+- npm t src/test/ascii-tag-pos.test.ts
+- npm t src/test/elastic-buffer.test.ts
+- npm t src/test/fix-log-replay.test.ts
+- npm t src/test/ascii-parser.test.ts
+- npm t src/test/session.test.ts
