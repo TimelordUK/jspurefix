@@ -2,6 +2,7 @@ data/examples/FIXML
 data/examples/FIX.4.4/quickfix
 data/examples/FIX.4.4/repo
 data/examples/FIX.4.4/fix.txt
+data/examples/FIX.4.4/fix.json
 src/dict-parser.ts
 src/test
 jest.config.js
