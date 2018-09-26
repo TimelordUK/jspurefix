@@ -34,7 +34,7 @@ beforeAll(async () => {
   encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), Ascii.Pipe)
   nos = definitions.message.get('NewOrderSingle')
   er = definitions.message.get('ExecutionReport')
-})
+}, 30000)
 
 test('expect a definition ', () => {
   expect(nos).toBeTruthy()

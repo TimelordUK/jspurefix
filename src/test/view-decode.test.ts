@@ -28,7 +28,7 @@ beforeAll(async () => {
     view = views[0]
     structure = view.structure
   }
-})
+}, 30000)
 
 test('expect a structure from fix msg', () => {
   expect(structure).toBeTruthy()
