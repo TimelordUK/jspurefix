@@ -68,7 +68,7 @@ beforeAll(async () => {
     structure = views[0].structure
     tp = views[0].structure.tags.tagPos.slice(0, views[0].segment.endPosition)
   }
-}, 30000)
+}, 45000)
 
 test('logon tags parsed fully', () => {
   expect(tp).toEqual(unsortedLogon)

@@ -15,7 +15,7 @@ const main: string = `fixml-main-${ver}.xsd`
 beforeAll(async () => {
   includes = new IncludeGraph(root, main)
   await includes.build()
-}, 30000)
+}, 45000)
 
 test('test resolving node with no dependencies', async () => {
   expect(includes.resolve(dataTypes)).toEqual([dataTypes])

@@ -43,7 +43,7 @@ beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
-})
+}, 45000)
 
 class ParsingResult {
   constructor (public readonly event: string, public readonly msgType: string, public readonly view: MsgView,

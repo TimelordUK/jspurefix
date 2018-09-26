@@ -20,7 +20,7 @@ beforeAll(async () => {
   const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
   session = new AsciiMsgTransmitter(config)
   proxyFactory = new EncodeProxy(definitions)
-}, 30000)
+}, 45000)
 
 test('check wrapper will reject unknown field', () => {
   const proxy: ILooseObject = proxyFactory.wrap('ExecutionReport')

@@ -49,7 +49,7 @@ beforeAll(async () => {
   clientDescription = require(path.join(root, 'session/test-initiator.json'))
   serverDescription = require(path.join(root, 'session/test-acceptor.json'))
   definitions = await getDefinitions(clientDescription.application.dictionary)
-})
+}, 45000)
 
 beforeEach(async () => {
 

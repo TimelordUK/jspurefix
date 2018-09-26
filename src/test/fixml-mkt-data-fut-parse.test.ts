@@ -10,7 +10,7 @@ const toViews: ToViews = new ToViews(testFolder)
 
 beforeAll(async () => {
   await toViews.load()
-}, 30000)
+}, 45000)
 
 test('expect a view from fix msg', () => {
   const views = toViews.views
