@@ -22,7 +22,7 @@ beforeAll(async () => {
   sessionDescription = require(path.join(root, 'session/test-initiator.json'))
   definitions = await getDefinitions('data/fix_repo/fixmlschema_FIX.5.0SP2_EP228')
   jsonHelper = new JsonHelper(definitions)
-}, 10000)
+}, 30000)
 
 async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<ILooseObject> {
   // encode to FIXML format from provided object.

@@ -22,7 +22,7 @@ beforeAll(async () => {
   jsonHelper = new JsonHelper(definitions)
   const config = new JsFixConfig(new Fix44MsgFactory(sessionDescription), definitions, sessionDescription, Ascii.Pipe)
   session = new AsciiMsgTransmitter(config)
-})
+}, 30000)
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
   // encode to FIX format from provided object.
