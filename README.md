@@ -422,7 +422,7 @@ as above where --type=AE --objects
 ## show all structures within a message
 
 ```shell
-cd dist && node jsfix-cmd "--dict=repo44" "--fix=data/examples/FIX.4.4/jsfix.test_client.txt" "--delimiter=|" "--type=AD" "--structures"
+npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --structures
 ```
 ```json
 [
