@@ -1,6 +1,6 @@
 {
-  "name": "jsfix",
-  "version": "1.0.0",
+  "name": "jspurefix",
+  "version": "1.0.2",
   "description": "pure js fix engine",
   "keywords": [
     "fix",
@@ -12,6 +12,14 @@
     "trading"
   ],
   "main": "index.js",
+  "homepage": "https://github.com/TimelordUK/jspurefix",
+  "bugs": {
+    "url": "https://github.com/TimelordUK/jspurefix/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimelordUK/jspurefix.git"
+  },
   "scripts": {
     "test": "jest",
     "cmd": "cd dist && node jsfix-cmd",
