@@ -35,7 +35,7 @@ export class EnumCompiler {
         await this.oneEnum(field, asOneFile)
       })
       if (asOneFile) {
-        this.writeAsOne(asOneFile)
+        await this.writeAsOne(asOneFile)
       }
     }).catch((e: Error) => {
       throw e

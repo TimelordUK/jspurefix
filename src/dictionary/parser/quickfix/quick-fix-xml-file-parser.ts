@@ -1,6 +1,5 @@
 import * as fs from 'fs'
 import { SAXParser } from 'sax'
-import { promisify } from 'util'
 import { IDictDoneCb, ISaxNode, SAXStream } from '../../dict-primitive'
 import { FixDefinitions } from '../../definition/fix-definitions'
 import { FieldDefinitionParser } from './field-definition-parser'
@@ -10,6 +9,7 @@ import { NodeParser } from './node-parser'
 import { FixParser } from '../../fix-parser'
 import { FixDefinitionSource, VersionUtil } from '../../fix-versions'
 import { GetJsFixLogger } from '../../../config/js-fix-logger'
+import { promisify } from 'util'
 
 enum ParseState {
     Begin = 1,
@@ -86,27 +86,40 @@ export class QuickFixXmlFileParser extends FixParser {
       switch (saxNode.name) {
 
         case 'fix': {
-          if (instance.parseState === ParseState.FieldDefinitions) {
-            const major = saxNode.attributes.major
-            const minor = saxNode.attributes.major
-            const description: string = `FIX.${major}.${minor}`
-            instance.definitions = new FixDefinitions(FixDefinitionSource.QuickFix, VersionUtil.resolve(description))
+          switch (instance.parseState) {
+            case ParseState.FieldDefinitions: {
+              const major = saxNode.attributes.major
+              const minor = saxNode.attributes.major
+              const description: string = `FIX.${major}.${minor}`
+              instance.definitions = new FixDefinitions(FixDefinitionSource.QuickFix, VersionUtil.resolve(description))
+              break
+            }
           }
           break
         }
 
         case 'fields': {
-          if (instance.parseState === ParseState.FieldDefinitions) {
-            parser = new FieldDefinitionParser(instance)
-          } else {
-            parser = null
+          switch (instance.parseState) {
+            case ParseState.FieldDefinitions: {
+              parser = new FieldDefinitionParser(instance)
+              break
+            }
+            default: {
+              parser = null
+            }
           }
           break
         }
 
         case 'messages': {
-          if (instance.parseState === ParseState.Messages) {
-            parser = new MessageParser(instance)
+          switch (instance.parseState) {
+            case ParseState.Messages: {
+              parser = new MessageParser(instance)
+              break
+            }
+
+            default:
+              break
           }
           break
         }
@@ -136,19 +149,28 @@ export class QuickFixXmlFileParser extends FixParser {
         }
 
         case 'message': {
-          if (instance.parseState === ParseState.Messages) {
-            if (parser != null) {
-              parser.open(saxParser.line, saxNode)
+          switch (instance.parseState) {
+            case ParseState.Messages: {
+              if (parser != null) {
+                parser.open(saxParser.line, saxNode)
+              }
+              break
             }
+
+            default:
+              break
           }
           break
         }
 
         case 'header':
         case 'trailer': {
-          if (instance.parseState === ParseState.Messages) {
-            parser = new FieldSetParser(instance)
-            parser.open(saxParser.line, node)
+          switch (instance.parseState) {
+            case ParseState.Messages: {
+              parser = new FieldSetParser(instance)
+              parser.open(saxParser.line, node)
+              break
+            }
           }
           break
         }

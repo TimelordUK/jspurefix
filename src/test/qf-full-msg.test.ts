@@ -7,26 +7,26 @@ import { Ascii } from '../buffer/ascii'
 import { JsonHelper } from '../util/json-helper'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
-import { getDefinitions } from '../util/dictionary-definitions'
 import { JsFixConfig } from '../config/js-fix-config'
 import { Fix44MsgFactory } from '../transport/ascii/fix44-msg-factory'
+import { getDefinitions } from '../util/dictionary-definitions'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
-let session: AsciiMsgTransmitter
+let config: JsFixConfig
 const root: string = path.join(__dirname, '../../data')
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
-  const config = new JsFixConfig(new Fix44MsgFactory(sessionDescription), definitions, sessionDescription, Ascii.Pipe)
-  session = new AsciiMsgTransmitter(config)
+  config = new JsFixConfig(new Fix44MsgFactory(sessionDescription), definitions, sessionDescription, Ascii.Pipe)
 }, 45000)
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
     // encode to FIX format from provided object.
   return new Promise(async (resolve, reject) => {
+    let session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
     const parser: AsciiParser = new AsciiParser(definitions, session.encodeStream, Ascii.Pipe)
     parser.on('msg', (msgType: string, view: AsciiView) => {
       resolve(view.toObject())

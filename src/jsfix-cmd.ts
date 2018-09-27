@@ -20,14 +20,14 @@ import { AsciiParser } from './buffer/ascii/ascii-parser'
 import { ICompilerSettings } from './dictionary/compiler/compiler-settings'
 import { MsgCompiler } from './dictionary/compiler/msg-compiler'
 import { EnumCompiler } from './dictionary/compiler/enum-compiler'
-import { getWords } from './util/buffer-helper'
-import { getDefinitions, getDictPath } from './util/dictionary-definitions'
 import * as util from 'util'
 const fs = require('node-fs-extra')
 import * as minimist from 'minimist'
 import * as path from 'path'
 
 const argv: any = minimist(process.argv.slice(2))
+import { getWords } from './util/buffer-helper'
+import { getDefinitions, getDictPath } from './util/dictionary-definitions'
 
 enum PrintMode {
   Structure = 1,
@@ -153,7 +153,7 @@ export class JsfixCmd {
           }
 
           case Command.Compile: {
-            this.compile()
+            await this.compile()
             break
           }
 
