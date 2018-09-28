@@ -47,18 +47,22 @@ export class FixmlEncoder extends MsgEncoder {
 
       case TagType.UtcTimestamp: {
         const d: Date = v as Date
-        return moment(d).format()
+        return moment(d).format('YYYY-MM-DDTHH:mm:ss.SSS')
       }
 
       case TagType.UtcTimeOnly: {
         const d: Date = v as Date
-        return moment(d).format('HH:mm:ss.SSS')
+        return moment.utc(d).format('HH:mm:ss.SSS')
       }
 
-      case TagType.UtcDateOnly:
       case TagType.LocalDate: {
         const d: Date = v as Date
         return moment(d).format('YYYYMMDD')
+      }
+
+      case TagType.UtcDateOnly: {
+        const d: Date = v as Date
+        return moment.utc(d).format('YYYYMMDD')
       }
     }
   }

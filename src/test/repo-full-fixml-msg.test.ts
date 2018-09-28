@@ -32,10 +32,18 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
     const fixml: string = fe.buffer.toString()
     const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
     const xmlParser: MsgParser = new FiXmlParser(config, new StringDuplex(fixml).readable)
-    xmlParser.on('msg', (msgType: string, v: MsgView) => {
-      const o: ILooseObject = v.toObject()
-      resolve(o)
-    })
+    if (asObj.Batch) {
+      xmlParser.on('batch', (msgType: string, v: MsgView) => {
+        const o: ILooseObject = v.toObject()
+        resolve(o)
+      })
+    } else {
+      xmlParser.on('msg', (msgType: string, v: MsgView) => {
+        const o: ILooseObject = v.toObject()
+        resolve(o)
+      })
+    }
+
     xmlParser.on('error', (e) => {
       reject(e)
     })
@@ -45,6 +53,38 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
 test('AllocInstrctn fixml object', async () => {
   const msgType: string = 'AllocInstrctn'
   const file: string = path.join(root,'examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
+
+test('AllocRpt fixml object', async () => {
+  const msgType: string = 'AllocRpt'
+  const file: string = path.join(root,'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
+
+test('TrdCaptRpt fixml object', async () => {
+  const msgType: string = 'TrdCaptRpt'
+  const file: string = path.join(root,'examples/FIXML/cme/tc/Delivery Fixed Commodity Swap')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
+
+test('MktDataFull fixml object', async () => {
+  const msgType: string = 'MktDataFull'
+  const file: string = path.join(root,'examples/FIXML/cme/md/futures')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
+
+test('MktDataFull settle fixml object', async () => {
+  const msgType: string = 'MktDataFull'
+  const file: string = path.join(root,'examples/FIXML/cme/md/settle')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)

@@ -6,8 +6,8 @@ import { ILooseObject } from '../collections/collection'
 import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
 import { ContainedSimpleField } from '../dictionary/contained/contained-simple-field'
 import { TagType } from '../buffer/tags'
-import { dispatchFields, IFieldDispatcher } from '../dictionary/fields-dispatch'
 import moment = require('moment')
+import { dispatchFields, IFieldDispatcher } from '../dictionary/fields-dispatch'
 
 export class JsonHelper {
   constructor (public readonly definitions: FixDefinitions) {
@@ -33,7 +33,8 @@ export class JsonHelper {
 
       case TagType.UtcTimestamp:
         const m = moment(v)
-        object[name] = m.toDate()
+        const d = m.utc(true).toDate()
+        object[name] = d
         break
 
       case TagType.UtcDateOnly: {
@@ -56,6 +57,17 @@ export class JsonHelper {
         object[name] = new Date(d.getFullYear(), d.getMonth() - 1, d.getDay(), 0, 0, 0, 0)
         break
       }
+
+      case TagType.Float: {
+        object[name] = parseFloat(v)
+        break
+      }
+
+      case TagType.Int:
+      case TagType.Length: {
+        object[name] = parseInt(v, 10)
+        break
+      }
     }
   }
 
@@ -65,7 +77,13 @@ export class JsonHelper {
     if (!def) {
       return msg
     }
-    this.patchJsonFields(def, msg)
+    if (msg.Batch) {
+      msg.Batch.forEach((m: ILooseObject) => {
+        this.patchJsonFields(def, m)
+      })
+    } else {
+      this.patchJsonFields(def, msg)
+    }
     return msg
   }
 

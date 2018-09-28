@@ -51,8 +51,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.16.0",
     "@types/mathjs": "^4.4.1",
     "align-text": "^1.0.2",
+    "express": "^4.16.3",
     "lodash": "^4.17.11",
     "log4js": "^3.0.5",
     "mathjs": "^5.1.2",
@@ -71,15 +73,15 @@
     "@types/lodash": "^4.14.116",
     "@types/log4js": "^2.3.5",
     "@types/minimist": "^1.2.0",
-    "@types/node": "^10.10.3",
+    "@types/node": "^10.11.2",
     "@types/sax": "^1.0.1",
     "@types/winston": "^2.4.4",
-    "@types/xmlbuilder": "0.0.33",
+    "@types/xmlbuilder": "0.0.34",
     "jest": "^23.6.0",
     "standard": "^12.0.1",
-    "ts-jest": "^23.10.1",
+    "ts-jest": "^23.10.2",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.0.3"
+    "typescript": "^3.1.1"
   }
 }
