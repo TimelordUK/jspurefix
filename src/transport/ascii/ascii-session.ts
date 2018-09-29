@@ -1,18 +1,18 @@
-import { MsgTransport } from './msg-transport'
-import { MsgView } from '../buffer/msg-view'
-import { ILooseObject } from '../collections/collection'
-import { MsgType } from '../types/enum/msg_type'
-import { MsgTag } from '../types/enum/msg_tag'
-import { IJsFixLogger } from '../config/js-fix-logger'
-import { IJsFixConfig } from '../config/js-fix-config'
-import { IMsgApplication } from './session-description'
-import { ElasticBuffer } from '../buffer/elastic-buffer'
-import { FixSessionState, SessionState, TickAction } from './fix-session-state'
-import { SessionRejectReason } from '../types/enum/sess_rej_rsn'
-import { SegmentType } from '../buffer/segment-description'
+import { MsgTransport } from '../msg-transport'
+import { MsgView } from '../../buffer/msg-view'
+import { ILooseObject } from '../../collections/collection'
+import { MsgType } from '../../types/enum/msg_type'
+import { MsgTag } from '../../types/enum/msg_tag'
+import { IJsFixLogger } from '../../config/js-fix-logger'
+import { IJsFixConfig } from '../../config/js-fix-config'
+import { IMsgApplication } from '../session-description'
+import { ElasticBuffer } from '../../buffer/elastic-buffer'
+import { FixSessionState, SessionState, TickAction } from '../fix-session-state'
+import { SessionRejectReason } from '../../types/enum/sess_rej_rsn'
+import { SegmentType } from '../../buffer/segment-description'
 import * as events from 'events'
 
-export abstract class FixSession {
+export abstract class AsciiSession {
 
   public readonly me: string
   public manageSession: boolean = true
@@ -109,8 +109,8 @@ export abstract class FixSession {
   }
 
   // application responsible for writing its own log
-  protected abstract onAsciiDecoded (msgType: string, txt: string): void
-  protected abstract onAsciiEncoded (msgType: string, txt: string): void
+  protected abstract onDecoded (msgType: string, txt: string): void
+  protected abstract onEncoded (msgType: string, txt: string): void
   // an application level message to be handled by implementation, unless
   // manageSession = false in which case all messages will be forwarded
   protected abstract onApplicationMsg (msgType: string, view: MsgView): void
@@ -152,7 +152,7 @@ export abstract class FixSession {
 
     rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
       logger.debug(`rx: [${msgType}] ${ptr} bytes`)
-      this.onAsciiDecoded(msgType, data.toString(ptr))
+      this.onDecoded(msgType, data.toString(ptr))
     })
 
     tx.on('error', (e: Error) => {
@@ -162,7 +162,7 @@ export abstract class FixSession {
 
     tx.on('encoded', (msgType: string, data: Buffer) => {
       logger.debug(`tx: [${msgType}] ${data.length} bytes`)
-      this.onAsciiEncoded(msgType, data.toString())
+      this.onEncoded(msgType, data.toString())
     })
   }
 

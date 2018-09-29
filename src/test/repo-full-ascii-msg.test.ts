@@ -8,7 +8,7 @@ import { JsonHelper } from '../util/json-helper'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
 import { JsFixConfig } from '../config/js-fix-config'
-import { Fix44MsgFactory } from '../transport/ascii/fix44-msg-factory'
+import { AsciiSessionMsgFactory } from '../transport/ascii/ascii-session-msg-factory'
 import { getDefinitions } from '../util/dictionary-definitions'
 
 let definitions: FixDefinitions
@@ -20,7 +20,7 @@ beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
-  const config = new JsFixConfig(new Fix44MsgFactory(sessionDescription), definitions, sessionDescription, Ascii.Pipe)
+  const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, Ascii.Pipe)
   session = new AsciiMsgTransmitter(config)
 }, 45000)
 

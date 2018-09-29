@@ -89,3 +89,19 @@ test('MktDataFull settle fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
+
+test('UserReq logon fixml object', async () => {
+  const msgType: string = 'UserReq'
+  const file: string = path.join(root,'examples/FIXML/cme/ur/logon')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
+
+test('UserReq logoff fixml object', async () => {
+  const msgType: string = 'UserReq'
+  const file: string = path.join(root,'examples/FIXML/cme/ur/logoff')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)

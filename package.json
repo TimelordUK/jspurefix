@@ -53,6 +53,7 @@
   "dependencies": {
     "@types/express": "^4.16.0",
     "@types/mathjs": "^4.4.1",
+    "@types/request-promise": "^4.1.42",
     "align-text": "^1.0.2",
     "express": "^4.16.3",
     "lodash": "^4.17.11",
@@ -61,6 +62,7 @@
     "minimist": "^1.2.0",
     "moment": "^2.22.2",
     "node-fs-extra": "^0.8.2",
+    "request-promise": "^4.2.2",
     "sax": "^1.2.4",
     "winston": "^3.1.0",
     "word-wrap": "^1.2.3",

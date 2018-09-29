@@ -1,0 +1,4 @@
+[0] 923 (UserRequestID) = 123456, [1] 924 (UserRequestType) = 1[LogOnUser]
+[2] 553 (Username) = user123, [3] 554 (Password) = User!Pass5
+[4] 49 (SenderCompID) = BRKR, [5] 50 (SenderSubID) = user123
+[6] 56 (TargetCompID) = CME, [7] 57 (TargetSubID) = CPAPI

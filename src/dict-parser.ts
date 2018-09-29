@@ -20,9 +20,13 @@ import { MsgType } from './types/enum/msg_type'
 import { ElasticBuffer } from './buffer/elastic-buffer'
 import { JsFixConfig } from './config/js-fix-config'
 import { StringDuplex } from './transport/duplex/string-duplex'
+import { MsgCompiler } from './dictionary/compiler/msg-compiler'
+import { JsFixWinstonLogFactory } from './config/js-fix-winston-log-factory'
+import { WinstonLogger } from './config/winston-logger'
 import { getDefinitions } from './util/dictionary-definitions'
 import { getWords } from './util/buffer-helper'
-import { MsgCompiler } from './dictionary/compiler/msg-compiler'
+import * as requestPromise from 'request-promise'
+import {acceptor} from './transport/fixml/acceptor'
 
 async function testEncodeDecode (): Promise<any> {
   const msgType: string = 'W'
@@ -87,11 +91,11 @@ Executing Firm Marks a Trade for Give-up.xml
  */
 async function repository (): Promise<any> {
   const root: string = path.join(__dirname, '../')
-  const definitions: FixDefinitions = await getDefinitions('data/fix_repo/fixmlschema_FIX.5.0SP2_EP228')
+  const definitions: FixDefinitions = await getDefinitions('repofixml')
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
   // const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
-  const file: string = path.join(root,'data/examples/FIXML/cme/md/futures')
+  const file: string = path.join(root,'data/examples/FIXML/cme/ur/logoff')
   const jh: JsonHelper = new JsonHelper(definitions)
   const fs: any = require('fs')
   let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
@@ -102,6 +106,16 @@ async function repository (): Promise<any> {
     console.log(`received message ${msgType}`)
     const o: ILooseObject = v.toObject()
     console.log(JSON.stringify(o, null, 4))
+    const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
+    fe.encode(o, msgType)
+    const fixml: string = fe.buffer.toString()
+    console.log(fixml)
+  })
+  xmlParser.on('msg', (msgType: string, v: MsgView) => {
+    console.log(`received message ${msgType}`)
+    const o: ILooseObject = v.toObject()
+    console.log(JSON.stringify(o, null, 4))
+    console.log(v.toString())
     const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
     fe.encode(o, msgType)
     const fixml: string = fe.buffer.toString()
@@ -176,13 +190,44 @@ async function decode (): Promise<any> {
   })
 }
 
+async function http (): Promise<any> {
+  const sessionDescription: ISessionDescription = require('../data/session/test-http-acceptor.json')
+  const definitions = await getDefinitions(sessionDescription.application.dictionary)
+  const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
+  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe, logFactory)
+  // const acceptor = acceptor(config)
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<FIXML v="5.0 SP2" s="20090815" xv="109" cv="CME.0001">\n' +
+    '    <UserReq UserReqID="123456" UserReqTyp="1" Username="user123" Password="User!Pass5">\n' +
+    '        <Hdr SID="BRKR" SSub="user123" TID="CME" TSub="CPAPI"/>\n' +
+    '    </UserReq>\n' +
+    '</FIXML>'
+  // acceptor.listen()
+  requestPromise({
+    method: 'POST',
+    uri: 'http://localhost:2343/session',
+    body: {
+      fixml : xml
+    },
+    json: true // Automatically stringifies the body to JSON
+  }).then(function (parsedBody) {
+    console.log(parsedBody)
+    // POST succeeded...
+  })
+    .catch((err: Error) => {
+      console.log(err)
+      // POST failed...
+    })
+}
+
+// http()
 // decode()
 // generateMessage()
-compiler()
+// compiler()
 // stronglyTyped()
 // streamExample()
 // testEncodeDecode()
-// repository()
+repository()
 // testEncodeDecode();
 // runTest();
 // testSocket()

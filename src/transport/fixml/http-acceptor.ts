@@ -2,7 +2,10 @@ import { MsgTransport } from '../msg-transport'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
+import { IFixmlRequest } from './fixml-request'
+import { StringDuplex } from '../duplex/string-duplex'
 import * as express from 'express'
+import * as bodyParser from 'body-parser'
 import * as http from 'http'
 
 export class HttpAcceptor extends FixAcceptor {
@@ -10,26 +13,30 @@ export class HttpAcceptor extends FixAcceptor {
   private server: http.Server
   private logger: IJsFixLogger
   private router: express.Router
+  private nextId: number = 0
+
   constructor (public readonly config: IJsFixConfig) {
     super(config.description.application)
     this.logger = config.logFactory.logger(`${config.description.application.name}:HttpAcceptor`)
-    let nextId: number = 0
-    this.router = express.Router()
-    this.subscribe()
-    this.app.use('/acceptor', this.app)
     this.logger.info('creating http server')
-    this.server.on('error', ((err: Error) => {
-      throw err
-    }))
+    this.router = express.Router()
+    this.router.use(bodyParser.json())
+    this.subscribe()
+    this.app.use('/', this.router)
   }
 
   public listen (): void {
-    const port = this.config.description.application.tcp.port
+    const app = this.config.description.application
+    const port = app.http.port
     this.logger.info(`start to listen ${port}`)
     this.server = this.app.listen(port, () => {
       const address = this.server.address()
-      this.logger.info(`app listening at http://${address}`)
+      this.logger.info(`app listening at http://localhost:${port}${app.http.uri}`)
     })
+    this.server.on('error', ((err: Error) => {
+      this.logger.error(err)
+      this.emit('error', err)
+    }))
   }
 
   public close (cb: Function): void {
@@ -53,8 +60,17 @@ export class HttpAcceptor extends FixAcceptor {
 
   private subscribe (): void {
     const router = this.router
-    router.get('/logon/:id', (req, res) => {
+    const app = this.config.description.application
+    router.post(app.http.uri, (req, res) => {
+      const body: IFixmlRequest = req.body
+      const id = this.nextId++
+      this.logger.info(JSON.stringify(body, null,4))
       // check hand back session key
+      const d = new StringDuplex()
+      const transport = new MsgTransport(id, this.config, d)
+      this.transports[id] = transport
+      this.emit('transport', transport)
+      d.readable.push(body.fixml)
     })
   }
 }

@@ -1,7 +1,7 @@
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription } from './session-description'
 
-export interface IFixMsgFactory {
+export interface IAsciiSessionMsgFactory {
   description: ISessionDescription
   reject (msgType: string, seqNo: number, msg: string, reason: number): ILooseObject
   logout (text: string): ILooseObject

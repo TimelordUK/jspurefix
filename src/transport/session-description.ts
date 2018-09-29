@@ -4,11 +4,17 @@ export interface ITcpTransportDescription {
   readonly host: string,
 }
 
+export interface IHttpTransportDescription {
+  readonly port: number
+  readonly uri: string,
+}
+
 export interface IMsgApplication {
   readonly name: string
   readonly type: string,
   readonly reconnectSeconds: number
   readonly tcp?: ITcpTransportDescription,
+  readonly http?: IHttpTransportDescription,
   readonly protocol: string,
   readonly dictionary: string
 }

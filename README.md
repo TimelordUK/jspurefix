@@ -133,7 +133,7 @@ use the alias in a session file e.g. data/session/test-initiator.json
 
 ## sample trade-capture-client.ts
 
-the method onApplicationMsg is called when a message is received.  In this case the client has inherited from FixSession which carries out the session management.
+the method onApplicationMsg is called when a message is received.  In this case the client has inherited from AsciiSession which carries out the session management.
 
 ```typescript
   constructor (public readonly config: IJsFixConfig) {

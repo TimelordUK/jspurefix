@@ -1,4 +1,4 @@
-import { IFixMsgFactory } from '../fix-msg-factory'
+import { IAsciiSessionMsgFactory } from '../fix-msg-factory'
 import { ISessionDescription } from '../session-description'
 import { ILogon } from '../../types/FIX4.4/repo/logon'
 import { ITestRequest } from '../../types/FIX4.4/repo/test_request'
@@ -16,7 +16,7 @@ import { EncryptMethod } from '../../types/FIX4.4/repo/enum/all-enum'
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }
 
-export class Fix44MsgFactory implements IFixMsgFactory {
+export class AsciiSessionMsgFactory implements IAsciiSessionMsgFactory {
 
   constructor (public readonly description: ISessionDescription, public mutator: ObjectMutator = null) {
   }

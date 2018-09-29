@@ -14,7 +14,7 @@ import { MsgView } from './buffer/msg-view'
 import { MsgTag } from './types/enum/msg_tag'
 import { ElasticBuffer } from './buffer/elastic-buffer'
 import { JsFixConfig } from './config/js-fix-config'
-import { Fix44MsgFactory } from './transport/ascii/fix44-msg-factory'
+import { AsciiSessionMsgFactory } from './transport/ascii/fix44-msg-factory'
 import { MsgParser } from './buffer/msg-parser'
 import { AsciiParser } from './buffer/ascii/ascii-parser'
 import { ICompilerSettings } from './dictionary/compiler/compiler-settings'
@@ -321,7 +321,7 @@ export class JsfixCmd {
     this.jsonHelper = new JsonHelper(definitions)
     if (argv.session) {
       const description = this.sessionDescription
-      const config = new JsFixConfig(new Fix44MsgFactory(description), definitions, description, this.delimiter)
+      const config = new JsFixConfig(new AsciiSessionMsgFactory(description), definitions, description, this.delimiter)
       this.session = new AsciiMsgTransmitter(config)
     }
   }

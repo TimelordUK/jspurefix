@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FIXML v="5.0 SP2" s="20090815" xv="109" cv="CME.0001">
+    <UserReq UserReqID="123456" UserReqTyp="1" Username="user123" Password="User!Pass5">
+        <Hdr SID="BRKR" SSub="user123" TID="CME" TSub="CPAPI"/>
+    </UserReq>
+</FIXML>

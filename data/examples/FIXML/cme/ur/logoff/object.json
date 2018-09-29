@@ -1,0 +1,12 @@
+{
+  "UserRequestID": "123456",
+  "UserRequestType": 2,
+  "Username": "user123",
+  "Password": "User!Pass5",
+  "StandardHeader": {
+    "SenderCompID": "BRKR",
+    "TargetCompID": "CME",
+    "SenderSubID": "user123",
+    "TargetSubID": "CPAPI"
+  }
+}

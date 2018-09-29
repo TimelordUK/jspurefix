@@ -1,9 +1,9 @@
-import { AsciiSession } from '../../../transport/ascii/ascii-session'
+import { FixmlSession } from '../../../transport/fixml/fixml-session'
 import { MsgView } from '../../../buffer/msg-view'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
 
-export class SkeletonSession extends AsciiSession {
+export class TradeCaptureServer extends FixmlSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   constructor (public readonly config: IJsFixConfig,
@@ -25,7 +25,7 @@ export class SkeletonSession extends AsciiSession {
 
   // no delimiter substitution on transmit messages
   protected onEncoded (msgType: string, txt: string): void {
-    this.fixLog.info(AsciiSession.asPiped(txt))
+    this.fixLog.info(txt)
   }
 
   protected onLogon (view: MsgView, user: string, password: string): boolean {

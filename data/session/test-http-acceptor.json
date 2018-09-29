@@ -1,0 +1,24 @@
+{
+  "application": {
+    "type": "acceptor",
+    "name": "test_http-server",
+    "http": {
+      "port": 2434,
+      "uri": "/session"
+    },
+    "protocol": "fixml",
+    "dictionary": "repofixml",
+    "attributes": {
+      "v": "5.0 SP2",
+      "s": "20090815",
+      "xv": "109",
+      "cv": "CME.0001"
+    }
+  },
+  "Username": "http-server",
+  "Password": "http-server",
+  "EncryptMethod": 0,
+  "SenderCompId": "accept-comp",
+  "TargetCompID": "init-comp",
+  "TargetSubID": "fix"
+}

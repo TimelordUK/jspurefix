@@ -1,4 +1,4 @@
-import { FixSession } from '../../../transport/fix-session'
+import { AsciiSession } from '../../../transport/ascii/ascii-session'
 import { MsgView } from '../../../buffer/msg-view'
 import { MsgType } from '../../../types/enum/msg_type'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
@@ -10,7 +10,7 @@ import { MsgTag } from '../../../types/enum/msg_tag'
 import { SessionRejectReason, SubscriptionRequestType, TradeRequestStatus } from '../../../types/FIX4.4/repo/enum/all-enum'
 import { IJsFixConfig } from '../../../config/js-fix-config'
 
-export class TradeCaptureServer extends FixSession {
+export class TradeCaptureServer extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   private readonly tradeFactory: TradeFactory = new TradeFactory()
@@ -56,13 +56,13 @@ export class TradeCaptureServer extends FixSession {
   }
 
   // use msgType for example to persist only trade capture messages to database
-  protected onAsciiDecoded (msgType: string, txt: string): void {
+  protected onDecoded (msgType: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
   // no delimiter substitution on transmit messages
-  protected onAsciiEncoded (msgType: string, txt: string): void {
-    this.fixLog.info(FixSession.asPiped(txt))
+  protected onEncoded (msgType: string, txt: string): void {
+    this.fixLog.info(AsciiSession.asPiped(txt))
   }
 
   private tradeCaptureReportRequest (tcr: ITradeCaptureReportRequest): void {
