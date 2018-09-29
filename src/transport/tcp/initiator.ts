@@ -2,8 +2,8 @@ import { IJsFixConfig } from '../../config/js-fix-config'
 import { FixInitiator } from '../fix-initiator'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../msg-transport'
-import { MakeAsciiSession } from '../make-app-session'
-import { AsciiSession } from '../fix-session'
+import { MakeAsciiSession } from '../ascii/make-ascii-session'
+import { AsciiSession } from '../ascii/ascii-session'
 
 export function initiator (config: IJsFixConfig, sessionFactory: MakeAsciiSession, reconnectTimeout: number = 0): Promise<any> {
   return new Promise<any>(async (accept, reject) => {

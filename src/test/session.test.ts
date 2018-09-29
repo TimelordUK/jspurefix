@@ -9,7 +9,7 @@ import { MsgView } from '../buffer/msg-view'
 import { ILooseObject } from '../collections/collection'
 import { FixDuplex } from '../transport/duplex/fix-duplex'
 import { IJsFixConfig, JsFixConfig } from '../config/js-fix-config'
-import { AsciiSessionMsgFactory } from '../transport/ascii/ascii-session-msg-factory'
+import { SessionMsgFactory } from '../transport/ascii/ascii-session-msg-factory'
 import { SkeletonSession } from '../sample/tcp/skeleton/skeleton-session'
 import { IStandardHeader } from '../types/FIX4.4/repo/set/standard_header'
 import { IReject } from '../types/FIX4.4/repo/reject'
@@ -35,8 +35,8 @@ let definitions: FixDefinitions
 let clientDescription: ISessionDescription
 let serverDescription: ISessionDescription
 let client: FixEntity
-let clientFactory: AsciiSessionMsgFactory
-let serverFactory: AsciiSessionMsgFactory
+let clientFactory: SessionMsgFactory
+let serverFactory: SessionMsgFactory
 let server: FixEntity
 
 function loopBack (lhs: FixDuplex, rhs: FixDuplex) {
@@ -53,8 +53,8 @@ beforeAll(async () => {
 
 beforeEach(async () => {
 
-  clientFactory = new AsciiSessionMsgFactory(clientDescription)
-  serverFactory = new AsciiSessionMsgFactory(serverDescription)
+  clientFactory = new SessionMsgFactory(clientDescription)
+  serverFactory = new SessionMsgFactory(serverDescription)
 
   const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, Ascii.Pipe)
   const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, Ascii.Pipe)

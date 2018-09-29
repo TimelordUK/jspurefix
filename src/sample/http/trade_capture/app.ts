@@ -1,17 +1,23 @@
-import { TradeCaptureServer } from './trade-capture-server'
-import { runner } from '../launcher'
+import { HttpServer } from './http-server'
+import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config/js-fix-config'
+import { runner } from '../launcher'
 
 runner((config: IJsFixConfig) => {
   const logger = config.logFactory.logger('sessionFactory')
-  switch (config.description.application.type) {
+  const type = config.description.application.type
+  switch (type) {
     case 'initiator': {
-      logger.info('creating TradeCaptureClient')
-      return null
+      logger.info('creating HttpClient')
+      return new HttpClient(config)
+    }
+    case 'acceptor': {
+      logger.info('creating HttpServer')
+      return new HttpServer(config)
     }
     default: {
-      logger.info('creating TradeCaptureServer')
-      return new TradeCaptureServer(config)
+      logger.info(`unknown type ${type} in config`)
+      break
     }
   }
 }).then(() => {

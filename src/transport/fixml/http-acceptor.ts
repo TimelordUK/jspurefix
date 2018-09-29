@@ -28,13 +28,13 @@ export class HttpAcceptor extends FixAcceptor {
   public listen (): void {
     const app = this.config.description.application
     const port = app.http.port
-    this.logger.info(`start to listen ${port}`)
+    const logger = this.logger
+    logger.info(`start to listen ${port}`)
     this.server = this.app.listen(port, () => {
-      const address = this.server.address()
-      this.logger.info(`app listening at http://localhost:${port}${app.http.uri}`)
+      logger.info(`app listening at http://localhost:${port}${app.http.uri}`)
     })
     this.server.on('error', ((err: Error) => {
-      this.logger.error(err)
+      logger.error(err)
       this.emit('error', err)
     }))
   }

@@ -60,7 +60,7 @@ export abstract class FixmlSession {
     return new Promise<any>((accept, reject) => {
       if (this.initiator) {
         logger.debug('sending logon')
-        this.send(MsgType.Logon, this.config.factory.logon())
+        this.send('UserReq', this.config.factory.logon())
       }
       this.emitter.on('error', (e: Error) => {
         logger.error(e)

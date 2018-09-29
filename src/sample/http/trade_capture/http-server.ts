@@ -3,7 +3,7 @@ import { MsgView } from '../../../buffer/msg-view'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
 
-export class TradeCaptureServer extends FixmlSession {
+export class HttpServer extends FixmlSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   constructor (public readonly config: IJsFixConfig,

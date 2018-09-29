@@ -8,7 +8,7 @@ import { JsonHelper } from '../util/json-helper'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
 import { JsFixConfig } from '../config/js-fix-config'
-import { AsciiSessionMsgFactory } from '../transport/ascii/ascii-session-msg-factory'
+import { SessionMsgFactory } from '../transport/ascii/ascii-session-msg-factory'
 import { getDefinitions } from '../util/dictionary-definitions'
 
 let definitions: FixDefinitions
@@ -20,7 +20,7 @@ beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
-  config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, Ascii.Pipe)
+  config = new JsFixConfig(new SessionMsgFactory(sessionDescription), definitions, sessionDescription, Ascii.Pipe)
 }, 45000)
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
