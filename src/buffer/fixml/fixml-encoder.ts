@@ -78,7 +78,9 @@ export class FixmlEncoder extends MsgEncoder {
     const eol = this.eol
     buffer.reset()
     buffer.writeString(begin)
-    this.batchStart(o, set, depth)
+    if (batch) {
+      this.batchStart(o, set, depth)
+    }
     toWrite.forEach((next: ILooseObject) => {
       this.toXml(next, set.abbreviation, set, depth + 1)
       buffer.writeString(eol)

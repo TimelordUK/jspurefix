@@ -3,7 +3,7 @@ import { AsciiMsgTransmitter } from './ascii/ascii-msg-transmitter'
 import { MsgParser } from '../buffer/msg-parser'
 import { FiXmlParser } from '../buffer/fixml/fixml-parser'
 import { MsgTransmitter } from './msg-transmitter'
-import { FixmlMsgTransmitter } from './fixml-msg-transmitter'
+import { FixmlMsgTransmitter } from './fixml/fixml-msg-transmitter'
 import { FixDuplex } from './duplex/fix-duplex'
 import { Ascii } from '../buffer/ascii'
 import { IJsFixConfig } from '../config/js-fix-config'
@@ -33,7 +33,7 @@ export class MsgTransport {
       }
 
       case 'fixml': {
-        this.transmitter = new FixmlMsgTransmitter(definitions, description)
+        this.transmitter = new FixmlMsgTransmitter(config)
         this.receiver = new FiXmlParser(config, duplex.readable)
         break
       }

@@ -10,6 +10,6 @@ export interface ISessionMsgFactory {
   resendRequest (from: number, to: number): ILooseObject
   sequenceReset (newSeq: number): ILooseObject
   heartbeat (testReqId: string): ILooseObject
-  header (msgType: string, seqNum: number, time: Date): ILooseObject
+  header (msgType?: string, seqNum?: number, time?: Date): ILooseObject
   trailer (checksum: number): ILooseObject
 }

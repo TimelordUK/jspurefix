@@ -8,7 +8,7 @@ import { JsonHelper } from '../util/json-helper'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
 import { JsFixConfig } from '../config/js-fix-config'
-import { SessionMsgFactory } from '../transport/ascii/ascii-session-msg-factory'
+import { SessionMsgFactory } from '../transport/session-msg-factory'
 import { getDefinitions } from '../util/dictionary-definitions'
 
 let definitions: FixDefinitions

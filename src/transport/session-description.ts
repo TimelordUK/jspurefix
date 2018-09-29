@@ -28,6 +28,7 @@ export interface ISessionDescription {
   readonly SenderCompId: string
   readonly TargetCompID: string
   readonly ResetSeqNumFlag: boolean
+  readonly SenderSubID: string
   readonly TargetSubID: string
   readonly BeginString: string
 }

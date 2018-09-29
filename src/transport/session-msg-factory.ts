@@ -16,6 +16,7 @@ import { EncryptMethod } from '../types/FIX4.4/repo/enum/all-enum'
 
 import { IUserRequest } from '../types/FIXML50SP2/user_request'
 import { UserRequestType } from '../types/FIXML50SP2/enum/all-enum'
+import { IStandardHeader as IStandardHeaderFixml } from '../types/FIXML50SP2/set/standard_header'
 
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }
@@ -83,19 +84,12 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     return this.mutator ? this.mutator(this.description, MsgType.SequenceReset, o) : o
   }
 
-  public header (msgType: string, seqNum: number, time: Date): ILooseObject {
-    const description = this.description
-    const o: IStandardHeader = {
-      BeginString: description.BeginString,
-      BodyLength: 9999999,
-      MsgType: msgType,
-      SenderCompID: description.SenderCompId,
-      MsgSeqNum: seqNum,
-      SendingTime: time,
-      TargetCompID: description.TargetCompID,
-      TargetSubID: description.TargetSubID
+  public header (msgType: string, seqNum: number = 0, time: Date = new Date()): ILooseObject {
+    if (this.isAscii) {
+      return this.asciiHeader(msgType, seqNum, time)
+    } else {
+      return this.fixmlHeader()
     }
-    return this.mutator ? this.mutator(description, 'StandardHeader', o) : o
   }
 
   public trailer (checksum: number): ILooseObject {
@@ -124,6 +118,32 @@ export class SessionMsgFactory implements ISessionMsgFactory {
       UserRequestID: userRequestId,
       UserRequestType: UserRequestType.LogOnUser
     } as IUserRequest
+    return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
+  }
+
+  private asciiHeader (msgType: string, seqNum: number, time: Date): ILooseObject {
+    const description = this.description
+    const o: IStandardHeader = {
+      BeginString: description.BeginString,
+      BodyLength: 9999999,
+      MsgType: msgType,
+      SenderCompID: description.SenderCompId,
+      MsgSeqNum: seqNum,
+      SendingTime: time,
+      TargetCompID: description.TargetCompID,
+      TargetSubID: description.TargetSubID
+    }
+    return this.mutator ? this.mutator(description, 'StandardHeader', o) : o
+  }
+
+  private fixmlHeader (): ILooseObject {
+    const description = this.description
+    const o: IStandardHeaderFixml = {
+      SenderCompID: description.SenderCompId,
+      TargetCompID: description.TargetCompID,
+      SenderSubID: description.SenderSubID,
+      TargetSubID: description.TargetSubID
+    } as IStandardHeaderFixml
     return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
   }
 }

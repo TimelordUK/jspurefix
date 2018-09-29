@@ -19,5 +19,6 @@
   "EncryptMethod": 0,
   "SenderCompId": "accept-comp",
   "TargetCompID": "init-comp",
-  "TargetSubID": "fix"
+  "TargetSubID": "INC",
+  "SenderSubID": "user123"
 }
