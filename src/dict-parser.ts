@@ -26,7 +26,7 @@ import { WinstonLogger } from './config/winston-logger'
 import { getDefinitions } from './util/dictionary-definitions'
 import { getWords } from './util/buffer-helper'
 import * as requestPromise from 'request-promise'
-import {acceptor} from './transport/fixml/acceptor'
+import { acceptor } from './transport/fixml/acceptor'
 
 async function testEncodeDecode (): Promise<any> {
   const msgType: string = 'W'

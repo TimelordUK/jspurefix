@@ -85,8 +85,10 @@ export class FixmlEncoder extends MsgEncoder {
       this.toXml(next, set.abbreviation, set, depth + 1)
       buffer.writeString(eol)
     })
-    buffer.writeString(`${indent}${endBatch}`)
-    buffer.writeString(eol)
+    if (batch) {
+      buffer.writeString(`${indent}${endBatch}`)
+    }
+
     buffer.writeString(this.endDoc)
   }
 
