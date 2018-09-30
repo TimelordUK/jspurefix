@@ -2,8 +2,8 @@ import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
 import * as requestPromise from 'request-promise'
 
-export class HttpDuplex extends FixDuplex {
-  constructor (public readonly uri: string = '') {
+export abstract class HttpDuplex extends FixDuplex {
+  protected constructor () {
     super()
     this.readable = HttpDuplex.makeReadable()
     this.writable = this.makeWritable()
@@ -19,16 +19,7 @@ export class HttpDuplex extends FixDuplex {
     return new Readable(reader)
   }
 
-  private getOptions (data: Buffer): requestPromise.OptionsWithUri {
-    return {
-      method: 'POST',
-      uri: this.uri,
-      body: {
-        fixml: data.toString()
-      },
-      json: true
-    } as requestPromise.OptionsWithUri
-  }
+  protected abstract getOptions (data: Buffer): requestPromise.OptionsWithUri
 
   private makeWritable (): Writable {
     const forward: Readable = this.readable
