@@ -6,8 +6,7 @@ import { IJsFixConfig } from '../../../config/js-fix-config'
 export class HttpServer extends FixmlSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
-  constructor (public readonly config: IJsFixConfig,
-               public readonly logoutSeconds: number = 45) {
+  constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
@@ -34,13 +33,6 @@ export class HttpServer extends FixmlSession {
 
   protected onReady (view: MsgView): void {
     this.logger.info('onReady')
-    const logoutSeconds = this.logoutSeconds
-    if (this.config.description.application.type === 'initiator') {
-      this.logger.info(`will logout after ${logoutSeconds}`)
-      setTimeout(() => {
-        this.done()
-      }, logoutSeconds * 1000)
-    }
   }
 
   protected onStopped (): void {

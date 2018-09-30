@@ -35,12 +35,10 @@ export class HttpClient extends FixmlSession {
   protected onReady (view: MsgView): void {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
-    if (this.config.description.application.type === 'initiator') {
-      this.logger.info(`will logout after ${logoutSeconds}`)
-      setTimeout(() => {
-        this.done()
-      }, logoutSeconds * 1000)
-    }
+    this.logger.info(`will logout after ${logoutSeconds}`)
+    setTimeout(() => {
+      this.done()
+    }, logoutSeconds * 1000)
   }
 
   protected onStopped (): void {

@@ -29,16 +29,19 @@ Install the package from npm:
 ```shell
   npm install jspurefix
 ```
+
 please complete installation by running either script/build.sh or script/build.cmd.  It is a requirement to unzip the repo and compile the typescript before using the library or running the test.
 
 clone from git
 
 unix
+
 ```shell
   git clone https://github.com/TimelordUK/jspurefix.git
   cd jspurefix
   script/build.sh
 ```
+
 ```shell
   npm install
   npm run unzip-repo
@@ -47,13 +50,16 @@ unix
   npm run tcp-tc
 ```
 
-windows 
+windows
+
 ```shell
   git clone https://github.com/TimelordUK/jspurefix.git
   cd jspurefix
   script\build.cmd
 ```
+
 or
+
 ```shell
   git clone https://github.com/TimelordUK/jspurefix.git
   cd jspurefix
@@ -86,11 +92,13 @@ npm run tcp-sk
 
 ## Unit Tests
 
-there is a comprehensive suite of tests which can be run 
+there is a comprehensive suite of tests which can be run
+
 ```shell
 npm t
 ```
-```
+
+```bash
 PASS  src/test/elastic-buffer.test.ts
 RUNS  src/test/session.test.ts
 PASS  src/test/encode-proxy.test.tsst.ts
@@ -125,10 +133,12 @@ Ran all test suites.
 
 base definitions on existing template e.g. quickfix format FIX44.xml
 create an alias in data/dictionary.json
-compile interfaces 
+compile interfaces
+
 ```shell
 npm run cmd -- --dict=repo42 --compile
 ```
+
 use the alias in a session file e.g. data/session/test-initiator.json
 
 ## sample trade-capture-client.ts
@@ -426,6 +436,7 @@ as above where --type=AE --objects
 ```shell
 npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --type=AD --structures
 ```
+
 ```json
 [
     {

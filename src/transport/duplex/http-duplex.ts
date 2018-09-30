@@ -6,7 +6,7 @@ export class HttpDuplex extends FixDuplex {
   constructor (public readonly uri: string = '') {
     super()
     this.readable = HttpDuplex.makeReadable()
-    this.writable = HttpDuplex.makeWritable(uri, this.readable)
+    this.writable = this.makeWritable()
   }
 
   private static makeReadable (): Readable {
@@ -19,24 +19,28 @@ export class HttpDuplex extends FixDuplex {
     return new Readable(reader)
   }
 
-  private static makeWritable (uri: string, forward: Readable): Writable {
+  private getOptions (data: Buffer): requestPromise.OptionsWithUri {
+    return {
+      method: 'POST',
+      uri: this.uri,
+      body: {
+        fixml: data.toString()
+      },
+      json: true
+    } as requestPromise.OptionsWithUri
+  }
+
+  private makeWritable (): Writable {
+    const forward: Readable = this.readable
     const Writable = require('stream').Writable
     const writer = {
       write: async (data: Buffer, _: any, done: Function) => {
         try {
-          requestPromise({
-            method: 'POST',
-            uri: uri,
-            body: {
-              fixml : data.toString()
-            },
-            json: true
-          }).then(function (parsedBody) {
+          requestPromise(this.getOptions(data)).then((parsedBody) => {
             forward.push(parsedBody)
+          }).catch((err: Error) => {
+            receiver.emit('error', err)
           })
-            .catch((err: Error) => {
-              receiver.emit('error', err)
-            })
         } catch (e) {
           done(e)
         }

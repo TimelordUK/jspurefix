@@ -70,9 +70,9 @@ export class HttpAcceptor extends FixAcceptor {
       const d = new StringDuplex()
       const transport = new MsgTransport(id, this.config, d)
       this.transports[id] = transport
-      res.setHeader('Content-Type', 'application/json')
       this.emit('transport', transport)
       d.writable.on('data', (d) => {
+        res.setHeader('Content-Type', 'application/json')
         res.send(d)
       })
 
