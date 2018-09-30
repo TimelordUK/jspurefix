@@ -8,7 +8,7 @@ import { MsgView } from '../../buffer/msg-view'
 import { SegmentType } from '../../buffer/segment-description'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
 import { ILooseObject } from '../../collections/collection'
-import { UserRequestType } from '../../types/FIXML50SP2/enum/all-enum'
+import { UserRequestType, UserStatus } from '../../types/FIXML50SP2/enum/all-enum'
 import { MsgTag } from '../../types/enum/msg_tag'
 
 export abstract class FixmlSession {
@@ -167,8 +167,9 @@ export abstract class FixmlSession {
   private onMsg (msgType: string, view: MsgView): void {
 
     switch (msgType) {
-      case 'UserReq': {
-        this.onSessionMsg(view)
+      case 'UserReq':
+      case 'UserRsp': {
+        this.onSessionMsg(msgType, view)
         break
       }
 
@@ -179,29 +180,52 @@ export abstract class FixmlSession {
     }
   }
 
-  private onSessionMsg (view: MsgView): void {
-    const reqType: number = view.getTyped('UserReqTyp')
-    switch (reqType) {
-      case UserRequestType.LogOnUser: {
-        this.peerLogon(view)
+  private onSessionMsg (msgType: string, view: MsgView): void {
+    switch (msgType) {
+      case 'UserReq': {
+        const reqType: number = view.getTyped('UserReqTyp')
+        switch (reqType) {
+          case UserRequestType.LogOnUser: {
+            this.peerLogon(view)
+            break
+          }
+
+          case UserRequestType.LogOffUser: {
+            // this.peerLogout(view)
+            break
+          }
+        }
         break
       }
 
-      case UserRequestType.LogOffUser: {
-       // this.peerLogout(view)
+      case 'UserRsp': {
+        const userStatus: number = view.getTyped('UserStatus')
+        switch (userStatus) {
+          case UserStatus.LoggedIn: {
+            this.peerLogon(view)
+            break
+          }
+
+          case UserStatus.NotLoggedIn: {
+            break
+          }
+        }
         break
       }
     }
   }
 
   private peerLogon (view: MsgView) {
+    const logger = this.sessionLogger
     const state = this.sessionState
-    const reqId: string = view.getString('UserReqID')
     state.state = SessionState.PeerLoggedOn
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
+      const reqId: string = view.getString('UserReqID')
       this.send('UserRsp', this.config.factory.logon(reqId, true))
     }
+    logger.info(`system ready, inform app`)
+    this.onReady(view)
   }
 
   private checkForwardMsg (msgType: string, view: MsgView): void {
