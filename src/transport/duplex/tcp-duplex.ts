@@ -1,9 +1,11 @@
-import { FixDuplex } from '../duplex/fix-duplex'
+import { FixDuplex } from './fix-duplex'
 import * as net from 'net'
 
 export class TcpDuplex extends FixDuplex {
   constructor (public readonly socket: net.Socket) {
-    super(socket, socket)
+    super()
+    this.readable = socket
+    this.writable = socket
   }
 
   end (): void {

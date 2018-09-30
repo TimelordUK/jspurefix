@@ -15,8 +15,9 @@ import { IStandardTrailer } from '../types/FIX4.4/repo/set/standard_trailer'
 import { EncryptMethod } from '../types/FIX4.4/repo/enum/all-enum'
 
 import { IUserRequest } from '../types/FIXML50SP2/user_request'
-import { UserRequestType } from '../types/FIXML50SP2/enum/all-enum'
+import { UserRequestType, UserStatus } from '../types/FIXML50SP2/enum/all-enum'
 import { IStandardHeader as IStandardHeaderFixml } from '../types/FIXML50SP2/set/standard_header'
+import { IUserResponse } from '../types/FIXML50SP2/user_response'
 
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }
@@ -39,11 +40,11 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     return this.mutator ? this.mutator(this.description, MsgType.Reject, o) : o
   }
 
-  public logon (userRequestId: string = ''): ILooseObject {
+  public logon (userRequestId: string = '', isResponse: boolean = false): ILooseObject {
     if (this.isAscii) {
       return this.asciiLogon()
     } else {
-      return this.fixmlLogon(userRequestId)
+      return this.fixmlLogon(userRequestId, isResponse)
     }
   }
 
@@ -110,15 +111,24 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
   }
 
-  private fixmlLogon (userRequestId: string): ILooseObject {
+  private fixmlLogon (userRequestId: string, isResponse: boolean): ILooseObject {
     const description = this.description
-    const o: IUserRequest = {
-      Username: description.Username,
-      Password: description.Password,
-      UserRequestID: userRequestId,
-      UserRequestType: UserRequestType.LogOnUser
-    } as IUserRequest
-    return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
+    if (!isResponse) {
+      const o: IUserRequest = {
+        Username: description.Username,
+        Password: description.Password,
+        UserRequestID: userRequestId,
+        UserRequestType: UserRequestType.LogOnUser
+      } as IUserRequest
+      return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
+    } else {
+      const o: IUserResponse = {
+        Username: description.Username,
+        UserRequestID: userRequestId,
+        UserStatus: UserStatus.LoggedIn
+      } as IUserResponse
+      return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
+    }
   }
 
   private asciiHeader (msgType: string, seqNum: number, time: Date): ILooseObject {

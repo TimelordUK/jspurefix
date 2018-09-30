@@ -3,7 +3,7 @@ import { ITcpTransportDescription } from '../session-description'
 import { FixInitiator } from '../fix-initiator'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
-import { TcpDuplex } from './tcp-duplex'
+import { TcpDuplex } from '../duplex/tcp-duplex'
 import { FixDuplex } from '../duplex/fix-duplex'
 
 import * as util from 'util'

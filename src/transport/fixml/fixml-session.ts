@@ -196,10 +196,11 @@ export abstract class FixmlSession {
 
   private peerLogon (view: MsgView) {
     const state = this.sessionState
+    const reqId: string = view.getString('UserReqID')
     state.state = SessionState.PeerLoggedOn
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
-      this.send('UserReq', this.config.factory.logon())
+      this.send('UserRsp', this.config.factory.logon(reqId, true))
     }
   }
 

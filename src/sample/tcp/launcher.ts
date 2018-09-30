@@ -1,5 +1,5 @@
 import * as path from 'path'
-import { SessionMsgFactory } from '../../transport/ascii/ascii-session-msg-factory'
+import { SessionMsgFactory } from '../../transport/session-msg-factory'
 import { JsFixWinstonLogFactory } from '../../config/js-fix-winston-log-factory'
 import { MakeAsciiSession } from '../../transport/ascii/make-ascii-session'
 import { WinstonLogger } from '../../config/winston-logger'
