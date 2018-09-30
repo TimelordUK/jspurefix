@@ -113,3 +113,11 @@ test('TrdCaptRpt 2 fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
+
+test('TrdCaptRpt 3 fixml object', async () => {
+  const msgType: string = 'TrdCaptRpt'
+  const file: string = path.join(root,'examples/FIXML/cme/tc/Accepted Unmatched')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)

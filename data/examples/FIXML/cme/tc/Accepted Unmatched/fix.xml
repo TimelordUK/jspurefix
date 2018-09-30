@@ -1,0 +1,22 @@
+<FIXML v="5.0 SP2" xv="109" s="20090815" cv="CME.0001">
+    <TrdCaptRpt RptID="1490793140603" TransTyp="0" TrdRptStat="100" TrdTyp="2" OrigTrdDt="2017-03-17" TrdDt="2017-03-17" BizDt="2017-03-17" TxnTm="2017-03-17T15:31:10.601-05:00" QtyTyp="1" LastQty="50" LastPx="370.0" TotTrdQty="50" TotTrdMultdQty="250000" RptTyp="0" LastRptReqed="Y" TotNumTrdRpts="1" ReqID="123456">
+        <Hdr SID="CME" SSub="CPAPI" TID="ABPLT" TSub="API_ABC"/>
+        <Instrmt ID="C" Src="H" SecTyp="FUT" MMY="201707" Exch="CBT" TmUnit="Mo"/>
+        <TrdRegTS TS="2017-03-16T08:37:36-05:00" Typ="1"/>
+        <RptSide Side="1" ClOrdID="98765" InptDev="API" InptSrc="ABPLT" TrdID="7799607" CustCpcty="4">
+            <Pty R="44" ID="API_ABC"/>
+            <Pty R="7" ID="ABC_TRD1">
+                <Sub Typ="5" ID="Entering Firm Legal Name"/>
+            </Pty>
+            <Pty R="17" ID="ABC_TRD2">
+                <Sub Typ="5" ID="Contra Firm Legal Name"/>
+            </Pty>
+            <Pty R="1" ID="685">
+                <Sub Typ="5" ID="Executing Firm Legal Name"/>
+            </Pty>
+            <Pty R="24" ID="ABRAV1" Src="C">
+                <Sub Typ="26" ID="1"/>
+            </Pty>
+        </RptSide>
+    </TrdCaptRpt>
+</FIXML>
