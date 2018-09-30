@@ -1,0 +1,13 @@
+<FIXML v="5.0 SP2" xv="109" s="20090815" cv="CME.0001">
+    <TrdCaptRpt RptID="NEW123" RptTyp="0" TransTyp="0" TxnTm="2017-03-16T08:37:36.238-05:00" TrdTyp="2" LastPx="370" LastQty="50" QtyTyp="1">
+        <Hdr SID="ABPLT" SSub="API_ABC" TID="CME" TSub="CPAPI"/>
+        <Instrmt ID="C" Src="H" Exch="CBT" SecTyp="FUT" MMY="201707"/>
+        <TrdRegTS TS="2017-03-16T08:37:36.238-05:00" Typ="1"/>
+        <RptSide InptSrc="ABPLT" Side="1" ClOrdID="98765" TrdID="12345">
+            <Pty ID="ABC_TRD1" R="7"/>
+            <Pty ID="ABRAV1" R="24" Src="C"/>
+            <Pty ID="685" R="1"/>
+            <Pty ID="ABC_TRD2" R="17"/>
+        </RptSide>
+    </TrdCaptRpt>
+</FIXML>

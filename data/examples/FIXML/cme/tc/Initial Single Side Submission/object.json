@@ -1,0 +1,57 @@
+{
+  "MDStatisticRptID": "NEW123",
+  "LegTradeID": "12345",
+  "TransferTransType": 0,
+  "TransferReportType": 0,
+  "TrdType": 2,
+  "LegQtyType": 1,
+  "LegLastQty": 50,
+  "LegLastPx": 370,
+  "RelSymTransactTime": "2017-03-16T13:37:36.238Z",
+  "StandardHeader": {
+    "SenderCompID": "ABPLT",
+    "TargetCompID": "CME",
+    "SenderSubID": "API_ABC",
+    "TargetSubID": "CPAPI"
+  },
+  "RootParties": [],
+  "Instrument": {
+    "BatchID": "C",
+    "LegContractualMatrixSource": "H",
+    "RelatedSecurityType": "FUT",
+    "RelatedMaturityMonthYear": "201707",
+    "UnderlyingStreamCommodityExchange": "CBT"
+  },
+  "TrdRegTimestamps": [
+    {
+      "SideTrdRegTimestamp": "2017-03-16T13:37:36.238Z",
+      "UnderlyingReturnRateValuationDateType": 1
+    }
+  ],
+  "TrdCapRptSideGrp": [
+    {
+      "RelativeValueSide": 1,
+      "LegTradeID": "12345",
+      "InputSource": "ABPLT",
+      "Parties": [
+        {
+          "BatchID": "ABC_TRD1",
+          "UnderlyingProvisionPartyRole": 7
+        },
+        {
+          "BatchID": "ABRAV1",
+          "LegContractualMatrixSource": "C",
+          "UnderlyingProvisionPartyRole": 24
+        },
+        {
+          "BatchID": "685",
+          "UnderlyingProvisionPartyRole": 1
+        },
+        {
+          "BatchID": "ABC_TRD2",
+          "UnderlyingProvisionPartyRole": 17
+        }
+      ]
+    }
+  ]
+}

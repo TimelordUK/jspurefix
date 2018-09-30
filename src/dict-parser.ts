@@ -34,7 +34,7 @@ async function testEncodeDecode (): Promise<any> {
   const sessionDescription: ISessionDescription = require('../data/session/test-initiator.json')
   const definitions = await getDefinitions(path.join(root, sessionDescription.application.dictionary))
   const jh: JsonHelper = new JsonHelper(definitions)
-  const msg: ILooseObject = jh.fromJson(path.join(root, 'data/examples/FIX.4.4/md-data-snapshot/object.json'), msgType)
+  const msg: ILooseObject = jh.fromJson(path.join(root, 'data/examples/FIXML/cme/tc/Initial Single Side Submission/fix.xml'), msgType)
   const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
   const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
   const payload: MsgPayload = new MsgPayload(msgType, msg)
@@ -95,7 +95,7 @@ async function repository (): Promise<any> {
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
   // const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
-  const file: string = path.join(root,'data/examples/FIXML/cme/ur/logoff')
+  const file: string = path.join(root,'data/examples/FIXML/cme/tc/Initial Single Side Submission')
   const jh: JsonHelper = new JsonHelper(definitions)
   const fs: any = require('fs')
   let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
@@ -160,6 +160,9 @@ async function compileDefinitions (definitionPath: string, outputPath: string) {
   await msgCompiler.generate()
   const enumCompiler: EnumCompiler = new EnumCompiler(definitions, compilerSettings)
   const writeFile = path.join(compilerSettings.output, './enum/all-enum.ts')
+  await enumCompiler.generate(writeFile)
+
+  const writeFileTypes = path.join(compilerSettings.output, './enum/msg-type.ts')
   await enumCompiler.generate(writeFile)
 }
 
@@ -228,7 +231,7 @@ async function http (): Promise<any> {
 // streamExample()
 // testEncodeDecode()
 repository()
-// testEncodeDecode();
+// testEncodeDecode()
 // runTest();
 // testSocket()
 // testRead();
