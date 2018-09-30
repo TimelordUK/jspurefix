@@ -3,7 +3,8 @@ import { ReadStream } from 'fs'
 
 export class FileDuplex extends FixDuplex {
   constructor (public readonly fileName: string) {
-    super(FileDuplex.makeReadable(fileName), null)
+    super()
+    this.readable = FileDuplex.makeReadable(fileName)
   }
 
   private static makeReadable (fileName: string): ReadStream {

@@ -13,8 +13,8 @@ export class MsgTransport {
   public readonly receiver: MsgParser
 
   constructor (public readonly id: number,
-              public readonly config: IJsFixConfig,
-              public readonly duplex: FixDuplex) {
+               public readonly config: IJsFixConfig,
+               public readonly duplex: FixDuplex) {
 
     const delimiter = config.delimiter
     if (!delimiter) {
@@ -25,9 +25,9 @@ export class MsgTransport {
     const protocol = description.application.protocol
     switch (protocol) {
       case 'ascii': {
-        this.transmitter = new AsciiMsgTransmitter(config)
         // let parser replace delimiter with Pipe so fix log does not require
         // expensive replace
+        this.transmitter = new AsciiMsgTransmitter(config)
         this.receiver = new AsciiParser(definitions, duplex.readable, delimiter, Ascii.Pipe)
         break
       }

@@ -4,7 +4,9 @@ import { Readable, Writable } from 'stream'
 export class StringDuplex extends FixDuplex {
 
   constructor (public readonly text: string = '', public chunks: boolean = false) {
-    super(StringDuplex.makeReadable(text, chunks), StringDuplex.makeWritable())
+    super()
+    this.readable = StringDuplex.makeReadable(text, chunks)
+    this.writable = StringDuplex.makeWritable()
   }
 
   private static makeReadable (text: string, chunks: boolean): Readable {
@@ -59,10 +61,6 @@ export class StringDuplex extends FixDuplex {
       readable.push(snippet)
       start = end
     }
-  }
-
-  public asChunks (text: string) {
-    StringDuplex.sendReaderChunks(text, this.readable)
   }
 
   public end (): void {

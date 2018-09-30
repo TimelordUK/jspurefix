@@ -4,6 +4,7 @@ import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
 import { IFixmlRequest } from './fixml-request'
 import { StringDuplex } from '../duplex/string-duplex'
+
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
@@ -61,7 +62,7 @@ export class HttpAcceptor extends FixAcceptor {
   private subscribe (): void {
     const router = this.router
     const app = this.config.description.application
-    router.post(app.http.uri, (req, res) => {
+    router.post(app.http.uri, (req: express.Request, res: express.Response) => {
       const body: IFixmlRequest = req.body
       const id = this.nextId++
       this.logger.info(JSON.stringify(body, null,4))
@@ -69,7 +70,12 @@ export class HttpAcceptor extends FixAcceptor {
       const d = new StringDuplex()
       const transport = new MsgTransport(id, this.config, d)
       this.transports[id] = transport
+      res.setHeader('Content-Type', 'application/json')
       this.emit('transport', transport)
+      d.writable.on('data', (d) => {
+        res.send(d)
+      })
+
       d.readable.push(body.fixml)
     })
   }

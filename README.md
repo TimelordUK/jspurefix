@@ -388,7 +388,7 @@ npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt -
 
 as above where --type=AE --objects
 
-```typescript
+```json
 {
     "StandardHeader": {
         "BeginString": "FIX4.4",

@@ -3,7 +3,7 @@
     "type": "initiator",
     "name": "test_http-client",
     "http": {
-      "uri": "http://localhost:2343/session"
+      "uri": "http://localhost:2434/session"
     },
     "protocol": "fixml",
     "dictionary": "repofixml",
