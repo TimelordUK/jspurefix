@@ -16,6 +16,12 @@ export class SkeletonSession extends AsciiSession {
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {
     // dispatch messages
+    switch (msgType) {
+      default: {
+        this.logger.info(`received message type ${msgType}`)
+        break
+      }
+    }
   }
 
   // use msgType for example to persist only trade capture messages to database
@@ -29,17 +35,32 @@ export class SkeletonSession extends AsciiSession {
   }
 
   protected onLogon (view: MsgView, user: string, password: string): boolean {
+    this.logger.info(`peer logs in user ${user}`)
     return true
   }
 
   protected onReady (view: MsgView): void {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
-    if (this.config.description.application.type === 'initiator') {
-      this.logger.info(`will logout after ${logoutSeconds}`)
-      setTimeout(() => {
-        this.done()
-      }, logoutSeconds * 1000)
+    const t = this.config.description.application.type
+    switch (t) {
+      case 'initiator': {
+        this.logger.info(`will logout after ${logoutSeconds}`)
+        setTimeout(() => {
+          this.done()
+        }, logoutSeconds * 1000)
+        break
+      }
+
+      case 'acceptor': {
+        this.logger.info(`acceptor is ready for requests`)
+        break
+      }
+
+      default: {
+        this.logger.warning(`unknown type ${t}`)
+        break
+      }
     }
   }
 

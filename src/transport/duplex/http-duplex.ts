@@ -2,8 +2,13 @@ import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
 import * as requestPromise from 'request-promise'
 
-export abstract class HttpDuplex extends FixDuplex {
-  protected constructor () {
+export interface IHttpAdapter {
+  getOptions (data: Buffer): requestPromise.OptionsWithUri
+  onMessage (m: any): void
+}
+
+export class HttpDuplex extends FixDuplex {
+  public constructor (public readonly adapter: IHttpAdapter) {
     super()
     this.readable = HttpDuplex.makeReadable()
     this.writable = this.makeWritable()
@@ -19,16 +24,15 @@ export abstract class HttpDuplex extends FixDuplex {
     return new Readable(reader)
   }
 
-  protected abstract getOptions (data: Buffer): requestPromise.OptionsWithUri
-
   private makeWritable (): Writable {
     const forward: Readable = this.readable
     const Writable = require('stream').Writable
     const writer = {
       write: async (data: Buffer, _: any, done: Function) => {
         try {
-          requestPromise(this.getOptions(data)).then((parsedBody) => {
-            forward.push(parsedBody)
+          requestPromise(this.adapter.getOptions(data)).then((message: any) => {
+            this.adapter.onMessage(message)
+            forward.push(message.body)
           }).catch((err: Error) => {
             receiver.emit('error', err)
           })
