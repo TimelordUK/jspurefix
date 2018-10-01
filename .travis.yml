@@ -1,6 +1,7 @@
 language: nodejs
 
 before_script:
+- node --version
 - npm install
 - npm run unzip-repo
 - ./node_modules/.bin/tsc --version
