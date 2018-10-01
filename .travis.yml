@@ -1,4 +1,6 @@
 language: nodejs
+node_js:
+- "10"
 
 before_script:
 - node --version
