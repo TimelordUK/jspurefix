@@ -8,6 +8,7 @@ import * as requestPromise from 'request-promise'
 export class HttpJsonSampleAdapter implements IHttpAdapter {
   private logger: IJsFixLogger
   private queue: HttpTransaction[] = []
+  private token: string = null
   constructor (public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger('http.adapter')
     this.logger.info('instance created')
@@ -27,8 +28,12 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
   }
 
   endMessage (m: IncomingMessage): void {
-    //
-    let x = 0
+    // grab token if not yet received
+    if (!this.token) {
+      const headers = m.headers
+      this.token = headers.authorization
+      this.logger.info(`receive token ${this.token}`)
+    }
   }
 
   beginMessage (msgType: string): void {

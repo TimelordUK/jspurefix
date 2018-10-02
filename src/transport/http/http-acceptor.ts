@@ -4,10 +4,13 @@ import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
 import { IFixmlRequest } from '../fixml/fixml-request'
 import { StringDuplex } from '../duplex/string-duplex'
+import { Dictionary } from '../../collections/dictionary'
 
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
+
+const uuidv3 = require('uuid/v3')
 
 export class HttpAcceptor extends FixAcceptor {
   private app: express.Express = express()
@@ -15,6 +18,7 @@ export class HttpAcceptor extends FixAcceptor {
   private logger: IJsFixLogger
   private router: express.Router
   private nextId: number = 0
+  private keys: Dictionary<MsgTransport> = new Dictionary()
 
   constructor (public readonly config: IJsFixConfig) {
     super(config.description.application)
@@ -46,11 +50,15 @@ export class HttpAcceptor extends FixAcceptor {
     this.server.close(cb)
   }
 
-  private saveTransport (tid: number, transport: MsgTransport): void {
+  private saveTransport (tid: number, transport: MsgTransport): string {
     this.transports[tid] = transport
+    const app = this.config.description.application
     const keys: string[] = Object.keys(this.transports)
-    this.logger.info(`new transport id = ${tid} created total transports = ${keys.length}`)
+    const a = uuidv3(app.http.uri, uuidv3.URL)
+    this.keys.addUpdate(a, transport)
+    this.logger.info(`new transport id = ${tid} token = ${a} created total transports = ${keys.length}`)
     this.emit('transport', transport)
+    return a
   }
 
   private harvestTransport (tid: number): void {
@@ -66,13 +74,14 @@ export class HttpAcceptor extends FixAcceptor {
       const body: IFixmlRequest = req.body
       const id = this.nextId++
       this.logger.info(JSON.stringify(body, null,4))
+
       // check hand back session key
       const d = new StringDuplex()
       const transport = new MsgTransport(id, this.config, d)
-      this.transports[id] = transport
-      this.emit('transport', transport)
+      const token = this.saveTransport(id, transport)
       d.writable.on('data', (d) => {
         res.setHeader('Content-Type', 'application/json')
+        res.setHeader('authorization', token)
         res.send(d)
       })
 
