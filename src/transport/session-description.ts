@@ -8,7 +8,7 @@ export interface ITcpTransportDescription {
 export interface IHttpAdapter {
   getOptions (data: Buffer): requestPromise.OptionsWithUri
   beginMessage (msgType: string): void
-  endMessage (m: any): void
+  endMessage (m: any): Buffer
 }
 
 export interface IHttpTransportDescription {

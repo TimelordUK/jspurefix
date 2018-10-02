@@ -1,4 +1,3 @@
-import { IncomingMessage } from 'http'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
 import { IHttpAdapter } from '../session-description'
@@ -27,23 +26,28 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     return options
   }
 
-  endMessage (m: IncomingMessage): void {
+  endMessage (m: any): Buffer {
     // grab token if not yet received
     if (!this.token) {
       const headers = m.headers
       this.token = headers.authorization
       this.logger.info(`receive token ${this.token}`)
     }
+    return m.body
   }
 
   beginMessage (msgType: string): void {
     // build options based on type
-    const options = {
-      method: 'POST',
-      uri: this.config.description.application.http.uri,
-      json: true,
-      resolveWithFullResponse: true
-    } as requestPromise.OptionsWithUri
-    this.queue.push(new HttpTransaction(msgType, options))
+    const uri = this.config.description.application.http.uri
+    if (!this.token) {
+      this.logger.info(`assume POST to fetch token on ${uri}`)
+      const options = {
+        method: 'POST',
+        uri: uri,
+        json: true,
+        resolveWithFullResponse: true
+      } as requestPromise.OptionsWithUri
+      this.queue.push(new HttpTransaction(msgType, options))
+    }
   }
 }

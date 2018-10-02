@@ -28,8 +28,8 @@ export class HttpDuplex extends FixDuplex {
         try {
           const adapter = this.adapter
           requestPromise(adapter.getOptions(data)).then((message: any) => {
-            adapter.endMessage(message)
-            forward.push(message.body)
+            const body = adapter.endMessage(message)
+            forward.push(body)
           }).catch((err: Error) => {
             receiver.emit('error', err)
           })
