@@ -2,7 +2,7 @@ import { MsgTransport } from '../msg-transport'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
-import { IFixmlRequest } from './fixml-request'
+import { IFixmlRequest } from '../fixml/fixml-request'
 import { StringDuplex } from '../duplex/string-duplex'
 
 import * as express from 'express'

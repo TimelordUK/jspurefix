@@ -1,6 +1,7 @@
 import { HttpServer } from './http-server'
 import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config/js-fix-config'
+import { HttpJsonSampleAdapter } from '../../../transport/http/http-json-sample-adapter'
 import { runner } from '../launcher'
 
 runner((config: IJsFixConfig) => {
@@ -9,6 +10,7 @@ runner((config: IJsFixConfig) => {
   switch (type) {
     case 'initiator': {
       logger.info('creating HttpClient')
+      config.description.application.http.adapter = new HttpJsonSampleAdapter(config)
       return new HttpClient(config)
     }
     case 'acceptor': {

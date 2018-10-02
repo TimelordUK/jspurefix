@@ -1,12 +1,20 @@
+import * as requestPromise from 'request-promise'
 
 export interface ITcpTransportDescription {
   readonly port: number
   readonly host: string,
 }
 
+export interface IHttpAdapter {
+  getOptions (data: Buffer): requestPromise.OptionsWithUri
+  beginMessage (msgType: string): void
+  endMessage (m: any): void
+}
+
 export interface IHttpTransportDescription {
   readonly port: number
   readonly uri: string,
+  adapter: IHttpAdapter
 }
 
 export interface IMsgApplication {

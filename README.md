@@ -14,7 +14,7 @@
 1. a skeleton example shows connection, login and session only
 1. parse fix logs into human readable format - JSON, tokens
 1. socket session management for login, heartbeat etc
-1. implement initiator or acceptor
+1. implement httpInitiator or acceptor
 
 ## Native Typescript FIX Engine
 
@@ -139,7 +139,7 @@ compile interfaces
 npm run cmd -- --dict=repo42 --compile
 ```
 
-use the alias in a session file e.g. data/session/test-initiator.json
+use the alias in a session file e.g. data/session/test-httpInitiator.json
 
 ## sample trade-capture-client.ts
 

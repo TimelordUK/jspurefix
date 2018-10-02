@@ -1,11 +1,7 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
 import * as requestPromise from 'request-promise'
-
-export interface IHttpAdapter {
-  getOptions (data: Buffer): requestPromise.OptionsWithUri
-  onMessage (m: any): void
-}
+import { IHttpAdapter } from '../session-description'
 
 export class HttpDuplex extends FixDuplex {
   public constructor (public readonly adapter: IHttpAdapter) {
@@ -30,8 +26,9 @@ export class HttpDuplex extends FixDuplex {
     const writer = {
       write: async (data: Buffer, _: any, done: Function) => {
         try {
-          requestPromise(this.adapter.getOptions(data)).then((message: any) => {
-            this.adapter.onMessage(message)
+          const adapter = this.adapter
+          requestPromise(adapter.getOptions(data)).then((message: any) => {
+            adapter.endMessage(message)
             forward.push(message.body)
           }).catch((err: Error) => {
             receiver.emit('error', err)

@@ -5,7 +5,7 @@ import { WinstonLogger } from '../../config/winston-logger'
 import { MakeFixmlSession } from '../../transport/fixml/make-fixml-session'
 import { makeConfig } from '../../transport/make-config'
 import { acceptor } from '../../transport/fixml/acceptor'
-import { initiator } from '../../transport/fixml/initiator'
+import { httpInitiator } from '../../transport/http/http-initiator'
 
 const root = '../../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -16,7 +16,7 @@ async function app (sessionFactory: MakeFixmlSession) {
   const clientConfig = await makeConfig(clientDescription, logFactory, new SessionMsgFactory(clientDescription))
   const serverConfig = await makeConfig(serverDescription, logFactory, new SessionMsgFactory(serverDescription))
   const server = acceptor(serverConfig, sessionFactory)
-  const client = initiator(clientConfig, sessionFactory)
+  const client = httpInitiator(clientConfig, sessionFactory)
   return Promise.all([server, client])
 }
 

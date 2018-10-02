@@ -1,11 +1,10 @@
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { MsgTransport } from '../msg-transport'
-import { MakeFixmlSession } from './make-fixml-session'
-import { FixmlSession } from './fixml-session'
-import { HttpJsonAdapter } from '../duplex/http-json-adapter'
+import { MakeFixmlSession } from '../fixml/make-fixml-session'
+import { FixmlSession } from '../fixml/fixml-session'
 import { HttpDuplex } from '../duplex/http-duplex'
 
-export function initiator (config: IJsFixConfig, sessionFactory: MakeFixmlSession): Promise<any> {
+export function httpInitiator (config: IJsFixConfig, sessionFactory: MakeFixmlSession): Promise<any> {
   const initiatorSession = sessionFactory(config)
   return once(config, initiatorSession)
 }
@@ -15,7 +14,7 @@ function once (config: IJsFixConfig, initiatorSession: FixmlSession): Promise<an
   return new Promise<any>(async (accept, reject) => {
     const logger = config.logFactory.logger('initiator')
     logger.info('connecting ...')
-    const initiatorTransport: MsgTransport = new MsgTransport(0, config, new HttpDuplex(new HttpJsonAdapter(config)))
+    const initiatorTransport: MsgTransport = new MsgTransport(0, config, new HttpDuplex(config.description.application.http.adapter))
     logger.info('... connected, run session')
     initiatorSession.run(initiatorTransport).then(() => {
       logger.info('ends')
