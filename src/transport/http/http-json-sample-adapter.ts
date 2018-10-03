@@ -51,6 +51,12 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     // build options based on type
     const routes = this.routes
     const route = routes.get(msgType) || routes.get('default')
-    this.queue.push(new HttpTransaction(msgType, route.value))
+    const options = {
+      method: route.value.method,
+      uri: route.value.uri,
+      json: route.value.json,
+      resolveWithFullResponse: route.value.resolveWithFullResponse
+    }
+    this.queue.push(new HttpTransaction(msgType, options))
   }
 }
