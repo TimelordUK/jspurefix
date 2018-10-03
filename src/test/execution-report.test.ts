@@ -7,11 +7,11 @@ import { Ascii } from '../buffer/ascii'
 import { MsgView } from '../buffer/msg-view'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
-import { replayFixFile } from '../util/replay'
-import { getDefinitions } from '../util/dictionary-definitions'
 import { JsFixConfig } from '../config/js-fix-config'
 import { IUndInstrmtGrp } from '../types/FIX4.4/quickfix/set/und_instrmt_grp'
 import { IUnderlyingInstrument } from '../types/FIX4.4/quickfix/set/underlying_instrument'
+import { replayFixFile } from '../util/replay'
+import { getDefinitions } from '../util/dictionary-definitions'
 
 const root: string = path.join(__dirname, '../../data')
 

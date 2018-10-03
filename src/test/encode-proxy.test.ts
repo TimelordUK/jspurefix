@@ -1,4 +1,3 @@
-import { getDefinitions } from '../util/dictionary-definitions'
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition/fix-definitions'
 import { EncodeProxy } from '../buffer/encode-proxy'
@@ -7,7 +6,7 @@ import { Ascii } from '../buffer/ascii'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
 import { JsFixConfig } from '../config/js-fix-config'
-
+import { getDefinitions } from '../util/dictionary-definitions'
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions

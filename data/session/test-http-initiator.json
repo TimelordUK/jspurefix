@@ -3,7 +3,32 @@
     "type": "initiator",
     "name": "test_http-client",
     "http": {
-      "uri": "http://localhost:2434/session"
+      "options": [
+        {
+          "name": "UserReq",
+          "value": {
+            "method": "POST",
+            "uri": "http://localhost:2434/session",
+            "json":true,
+            "resolveWithFullResponse": true
+          }
+        },
+        {
+          "name": "default",
+          "value": {
+            "method": "GET",
+            "uri": "http://localhost:2434/session/query",
+            "json": true,
+            "resolveWithFullResponse": true,
+            "headers": [
+              {
+                "name": "authorization",
+                "value": "$token"
+              }
+            ]
+          }
+        }
+      ]
     },
     "protocol": "fixml",
     "dictionary": "repofixml",

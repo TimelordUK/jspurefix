@@ -9,9 +9,8 @@ import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
 import { TimeFormatter } from '../buffer/ascii/time-formatter'
-
-import { getDefinitions } from '../util/dictionary-definitions'
 import { JsFixConfig } from '../config/js-fix-config'
+import { getDefinitions } from '../util/dictionary-definitions'
 
 const root: string = path.join(__dirname, '../../data')
 

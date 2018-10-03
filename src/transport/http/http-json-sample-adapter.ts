@@ -1,16 +1,26 @@
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
-import { IHttpAdapter } from '../session-description'
+import { IHtmlRoute, IHttpAdapter } from '../session-description'
 import { HttpTransaction } from './http-transaction'
+import { Dictionary } from '../../collections/dictionary'
 import * as requestPromise from 'request-promise'
 
 export class HttpJsonSampleAdapter implements IHttpAdapter {
   private logger: IJsFixLogger
   private queue: HttpTransaction[] = []
   private token: string = null
+  private routes: Dictionary<IHtmlRoute> = new Dictionary()
   constructor (public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger('http.adapter')
-    this.logger.info('instance created')
+    const routes = this.routes
+    const options = config.description.application.http.options
+    if (!options) {
+      return
+    }
+    options.forEach((o: IHtmlRoute) => {
+      routes.addUpdate(o.name, o)
+    })
+    this.logger.info(`instance created routes ${routes.count()}`)
   }
 
   public getOptions (data: Buffer): requestPromise.OptionsWithUri {
@@ -23,6 +33,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     options.body = {
       fixml: data.toString()
     }
+    this.logger.info(`${next.msgType}: ${next.options.method} ${next.options.uri} ${data.length}`)
     return options
   }
 
@@ -38,16 +49,8 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
 
   beginMessage (msgType: string): void {
     // build options based on type
-    const uri = this.config.description.application.http.uri
-    if (!this.token) {
-      this.logger.info(`assume POST to fetch token on ${uri}`)
-      const options = {
-        method: 'POST',
-        uri: uri,
-        json: true,
-        resolveWithFullResponse: true
-      } as requestPromise.OptionsWithUri
-      this.queue.push(new HttpTransaction(msgType, options))
-    }
+    const routes = this.routes
+    const route = routes.get(msgType) || routes.get('default')
+    this.queue.push(new HttpTransaction(msgType, route.value))
   }
 }

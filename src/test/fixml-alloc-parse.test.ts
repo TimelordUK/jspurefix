@@ -1,5 +1,4 @@
 import { MsgView } from '../buffer/msg-view'
-import { ILooseObject } from '../collections/collection'
 // use the compiled interfaces for intelisense
 import { IStandardHeader } from '../types/FIXML50SP2/set/standard_header'
 import { IInstrument } from '../types/FIXML50SP2/set/instrument'
@@ -8,6 +7,7 @@ import { IParties } from '../types/FIXML50SP2/set/parties'
 import { INstdPtysSubGrp } from '../types/FIXML50SP2/set/nstd_ptys_sub_grp'
 import { IAllocationInstruction } from '../types/FIXML50SP2/allocation_instruction'
 import { IAllocationReport } from '../types/FIXML50SP2/allocation_report'
+import { IOrdAllocGrp } from '../types/FIXML50SP2/set/ord_alloc_grp'
 
 import { ToViews } from './to-views'
 import * as moment from 'moment'
@@ -91,14 +91,14 @@ test('test complex sub structure OrdAllocGrp', () => {
 test('test instrument on fixml allocation - use abbreviation', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: ILooseObject = v.getView('Instrmt').toObject()
+  const instrument: IInstrument = v.getView('Instrmt').toObject()
   expect(instrument).toBeTruthy()
 })
 
 test('test instrument attributes', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: IInstrument = v.getView('Instrmt').toObject() as IInstrument
+  const instrument: IInstrument = v.getView('Instrmt').toObject()
   expect(instrument).toBeTruthy()
   expect(instrument.BatchID).toEqual('ED')
   expect(instrument.InstrumentScopeCFICode).toEqual('FFDCSO')
@@ -111,7 +111,7 @@ test('test instrument attributes', () => {
 test('test instrument on fixml allocation - use full name', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: ILooseObject = v.getView('Instrument').toObject()
+  const instrument: IInstrument = v.getView('Instrument').toObject()
   expect(instrument).toBeTruthy()
 })
 
@@ -134,7 +134,7 @@ test('test complex sub structure AllocGrp', () => {
 test('test OrdAllocGrp', () => {
   const views = toViews.views
   const v = views[0]
-  const ordAlloc: ILooseObject[] = v.getView('OrdAllocGrp').toObject()
+  const ordAlloc: IOrdAllocGrp[] = v.getView('OrdAllocGrp').toObject()
   expect(ordAlloc).toBeTruthy()
   expect(Array.isArray(ordAlloc)).toBeTruthy()
   expect(ordAlloc.length).toEqual(1)

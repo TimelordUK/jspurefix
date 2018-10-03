@@ -11,9 +11,22 @@ export interface IHttpAdapter {
   endMessage (m: any): Buffer
 }
 
+export interface IHtmlOptions {
+  method: string,
+  uri: string,
+  json: boolean,
+  resolveWithFullResponse: boolean
+}
+
+export interface IHtmlRoute {
+  name: string,
+  value: IHtmlOptions
+}
+
 export interface IHttpTransportDescription {
   readonly port: number
   readonly uri: string,
+  readonly options: IHtmlRoute[]
   adapter: IHttpAdapter
 }
 
