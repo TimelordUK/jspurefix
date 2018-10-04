@@ -20,12 +20,10 @@
             "uri": "http://localhost:2434/query",
             "json": true,
             "resolveWithFullResponse": true,
-            "headers": [
-              {
-                "name": "authorization",
-                "value": "$token"
-              }
-            ]
+            "headers": {
+              "User-Agent": "jspurefix-client",
+              "authorization": "_token"
+            }
           }
         }
       ]

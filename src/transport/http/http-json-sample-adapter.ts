@@ -54,8 +54,15 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
       method: route.value.method,
       uri: route.value.uri,
       json: route.value.json,
-      resolveWithFullResponse: route.value.resolveWithFullResponse
+      resolveWithFullResponse: route.value.resolveWithFullResponse,
+      headers: route.value.headers
     } as IHtmlOptions
+    const headers = options.headers
+    if (headers) {
+      if (headers.authorization) {
+        headers.authorization = this.token
+      }
+    }
     this.queue.push(new HttpTransaction(msgType, options))
   }
 }
