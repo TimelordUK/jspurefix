@@ -1,9 +1,8 @@
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IJsFixLogger } from '../../config/js-fix-logger'
-import { IHtmlRoute, IHttpAdapter } from '../session-description'
+import { IHtmlOptions, IHtmlRoute, IHttpAdapter } from '../session-description'
 import { HttpTransaction } from './http-transaction'
 import { Dictionary } from '../../collections/dictionary'
-import * as requestPromise from 'request-promise'
 
 export class HttpJsonSampleAdapter implements IHttpAdapter {
   private logger: IJsFixLogger
@@ -23,7 +22,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     this.logger.info(`instance created routes ${routes.count()}`)
   }
 
-  public getOptions (data: Buffer): requestPromise.OptionsWithUri {
+  public getOptions (data: Buffer): IHtmlOptions {
     const q = this.queue
     if (q.length === 0) {
       return null
@@ -56,7 +55,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
       uri: route.value.uri,
       json: route.value.json,
       resolveWithFullResponse: route.value.resolveWithFullResponse
-    }
+    } as IHtmlOptions
     this.queue.push(new HttpTransaction(msgType, options))
   }
 }

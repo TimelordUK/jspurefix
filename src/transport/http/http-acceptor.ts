@@ -15,8 +15,8 @@ const uuidv3 = require('uuid/v3')
 export class HttpAcceptor extends FixAcceptor {
   private app: express.Express = express()
   private server: http.Server
-  private logger: IJsFixLogger
-  private router: express.Router
+  private readonly logger: IJsFixLogger
+  private readonly router: express.Router
   private nextId: number = 0
   private keys: Dictionary<MsgTransport> = new Dictionary()
 

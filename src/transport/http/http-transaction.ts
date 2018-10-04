@@ -1,7 +1,7 @@
-import * as requestPromise from 'request-promise'
+import { IHtmlOptions } from '../session-description'
 
 export class HttpTransaction {
   constructor (public readonly msgType: string,
-               public readonly options: requestPromise.OptionsWithUri) {
+               public readonly options: IHtmlOptions) {
   }
 }

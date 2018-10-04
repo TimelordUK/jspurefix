@@ -1,12 +1,10 @@
-import * as requestPromise from 'request-promise'
-
 export interface ITcpTransportDescription {
   readonly port: number
   readonly host: string,
 }
 
 export interface IHttpAdapter {
-  getOptions (data: Buffer): requestPromise.OptionsWithUri
+  getOptions (data: Buffer): IHtmlOptions
   beginMessage (msgType: string): void
   endMessage (m: any): Buffer
 }
@@ -15,6 +13,7 @@ export interface IHtmlOptions {
   method: string,
   uri: string,
   json: boolean,
+  body: any,
   resolveWithFullResponse: boolean
 }
 
