@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FIXML v="5.0 SP2" s="20090815" xv="109" cv="CME.0001">
+    <!-- ReqTyp = Unreported trades that match criteria. Indicates that this is a continuation of a prior subscription. -->
+    <!-- Note that token is passed in the x-cme-token HTTP header. -->
+    <!-- SubReqTyp = Subscribe -->
+    <!-- No times are given, including a start time. Use system default. -->
+    <!-- No BizDt or TrdDt given, so all trades. -->
+    <!-- MLegRptTyp = Prefer Spreads, not Legs. -->
+    <TrdCaptRptReq ReqID="ABC123" ReqTyp="3" SubReqTyp="1" MLegRptTyp="3">
+        <Hdr SID="RYAN" TID="CME" SSub="RYAN123" TSub="STP"/>
+        <!-- Query is for Trading Firm: RYANTF -->
+        <Pty ID="RYANTF" R="7"/>
+        <Pty ID="RYANTF1" R="7"/>
+    </TrdCaptRptReq>
+</FIXML>

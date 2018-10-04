@@ -1,0 +1,22 @@
+{
+  "MDStatisticReqID": "ABC123",
+  "RiskLimitRequestType": 3,
+  "SubscriptionRequestType": "1",
+  "SideMultiLegReportingType": 3,
+  "StandardHeader": {
+    "SenderCompID": "RYAN",
+    "TargetCompID": "CME",
+    "SenderSubID": "RYAN123",
+    "TargetSubID": "STP"
+  },
+  "Parties": [
+    {
+      "BatchID": "RYANTF",
+      "UnderlyingProvisionPartyRole": 7
+    },
+    {
+      "BatchID": "RYANTF1",
+      "UnderlyingProvisionPartyRole": 7
+    }
+  ]
+}

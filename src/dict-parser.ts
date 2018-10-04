@@ -95,7 +95,7 @@ async function repository (): Promise<any> {
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
   // const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
-  const file: string = path.join(root,'data/examples/FIXML/cme/tc/Accepted Unmatched')
+  const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription')
   const jh: JsonHelper = new JsonHelper(definitions)
   const fs: any = require('fs')
   let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)

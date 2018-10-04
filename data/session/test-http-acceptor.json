@@ -4,7 +4,7 @@
     "name": "test_http-server",
     "http": {
       "port": 2434,
-      "uri": "/session"
+      "uri": "/"
     },
     "protocol": "fixml",
     "dictionary": "repofixml",

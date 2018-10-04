@@ -20,7 +20,7 @@ const root: string = path.join(__dirname, '../../data')
 
 beforeAll(async () => {
   sessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await getDefinitions('data/fix_repo/fixmlschema_FIX.5.0SP2_EP228')
+  definitions = await getDefinitions('repofixml')
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 
@@ -117,6 +117,14 @@ test('TrdCaptRpt 2 fixml object', async () => {
 test('TrdCaptRpt 3 fixml object', async () => {
   const msgType: string = 'TrdCaptRpt'
   const file: string = path.join(root,'examples/FIXML/cme/tc/Accepted Unmatched')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
+
+test('TrdCaptRptReq fixml object', async () => {
+  const msgType: string = 'TrdCaptRptReq'
+  const file: string = path.join(root,'examples/FIXML/cme/tc/Trading Firm Continued Subscription')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)

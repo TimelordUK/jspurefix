@@ -2,6 +2,12 @@ import { FixmlSession } from '../../../transport/fixml/fixml-session'
 import { MsgView } from '../../../buffer/msg-view'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
+import {
+  RiskLimitRequestType,
+  SideMultiLegReportingType,
+  SubscriptionRequestType,
+  UnderlyingProvisionPartyRole
+} from '../../../types/FIXML50SP2/enum/all-enum'
 
 export class HttpClient extends FixmlSession {
   private readonly logger: IJsFixLogger
@@ -35,6 +41,23 @@ export class HttpClient extends FixmlSession {
   protected onReady (view: MsgView): void {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
+    const req = {
+      MDStatisticReqID: 'REQ123',
+      RiskLimitRequestType: RiskLimitRequestType.DefinitionsAndUtilization,
+      SubscriptionRequestType: SubscriptionRequestType.SnapshotUpdatesSubscribe,
+      SideMultiLegReportingType: SideMultiLegReportingType.MultilegSecurity,
+      Parties: [
+        {
+          BatchID: 'FIRM1',
+          UnderlyingProvisionPartyRole: UnderlyingProvisionPartyRole.EnteringFirm
+        },
+        {
+          BatchID: 'FIRM2',
+          UnderlyingProvisionPartyRole: UnderlyingProvisionPartyRole.EnteringFirm
+        }
+      ]
+    }
+    this.send('TrdCaptRptReq', req)
     this.logger.info(`will logout after ${logoutSeconds}`)
     setTimeout(() => {
       this.done()

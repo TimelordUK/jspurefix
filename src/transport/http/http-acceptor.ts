@@ -67,25 +67,35 @@ export class HttpAcceptor extends FixAcceptor {
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
   }
 
+  private logon (req: express.Request, res: express.Response) {
+    const body: IFixmlRequest = req.body
+    const id = this.nextId++
+    this.logger.info(JSON.stringify(body, null,4))
+    // check hand back session key
+    const d = new StringDuplex()
+    const transport = new MsgTransport(id, this.config, d)
+    const token = this.saveTransport(id, transport)
+    d.writable.on('data', (d) => {
+      res.setHeader('Content-Type', 'application/json')
+      res.setHeader('authorization', token)
+      res.send(d)
+    })
+    d.readable.push(body.fixml)
+  }
+
   private subscribe (): void {
     const router = this.router
     const app = this.config.description.application
-    router.post(app.http.uri, (req: express.Request, res: express.Response) => {
-      const body: IFixmlRequest = req.body
-      const id = this.nextId++
-      this.logger.info(JSON.stringify(body, null,4))
+    const root = app.http.uri
+    const authorise = `${root}authorise`
+    const query = `${root}query`
+    this.logger.info(`uri: authorise ${authorise}, query ${query}`)
+    router.post(authorise, (req: express.Request, res: express.Response) => {
+      this.logon(req, res)
+    })
 
-      // check hand back session key
-      const d = new StringDuplex()
-      const transport = new MsgTransport(id, this.config, d)
-      const token = this.saveTransport(id, transport)
-      d.writable.on('data', (d) => {
-        res.setHeader('Content-Type', 'application/json')
-        res.setHeader('authorization', token)
-        res.send(d)
-      })
-
-      d.readable.push(body.fixml)
+    router.get(query, (req: express.Request, res: express.Response) => {
+      const headers = req.headers
     })
   }
 }
