@@ -96,6 +96,21 @@ export class HttpAcceptor extends FixAcceptor {
 
     router.get(query, (req: express.Request, res: express.Response) => {
       const headers = req.headers
+      const body: IFixmlRequest = req.body
+      const t: MsgTransport = this.keys.get(headers.authorization)
+      if (!t) {
+        this.logger.info(`received request with no token`)
+        res.send({
+          error: 'no key with query'
+        })
+      } else {
+        const d = t.duplex
+        d.writable.on('data', (d) => {
+          res.setHeader('Content-Type', 'application/json')
+          res.send(d)
+        })
+        d.readable.push(body.fixml)
+      }
     })
   }
 }

@@ -2,6 +2,7 @@ import { FixmlSession } from '../../../transport/fixml/fixml-session'
 import { MsgView } from '../../../buffer/msg-view'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
+import {ITradeCaptureReportRequest} from '../../../types/FIXML50SP2/trade_capture_report_request'
 
 export class HttpServer extends FixmlSession {
   private readonly logger: IJsFixLogger
@@ -15,6 +16,12 @@ export class HttpServer extends FixmlSession {
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {
     // dispatch messages
+    switch (msgType) {
+      case 'TrdCaptRptReq': {
+        const req: ITradeCaptureReportRequest = view.toObject()
+        this.logger.info(`received request ${req.MDStatisticReqID}`)
+      }
+    }
   }
 
   // use msgType for example to persist only trade capture messages to database
