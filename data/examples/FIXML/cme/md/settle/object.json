@@ -13,18 +13,18 @@
       },
       "MDFullGrp": [
         {
+          "MDEntryType": "6",
           "MDEntryPx": 65.51,
-          "OrdType": "6",
           "MDMkt": "CME"
         },
         {
+          "MDEntryType": "N",
           "MDEntryPx": 65.55,
-          "OrdType": "N",
           "MDMkt": "CME"
         },
         {
+          "MDEntryType": "O",
           "MDEntryPx": 63.78,
-          "OrdType": "O",
           "MDMkt": "CME"
         }
       ]
@@ -44,20 +44,20 @@
       },
       "MDFullGrp": [
         {
+          "MDEntryType": "6",
           "MDEntryPx": 5.209,
-          "OrdType": "6",
           "MDEntryDate": "2008-06-18T23:00:00.000Z",
           "MDMkt": "CME"
         },
         {
+          "MDEntryType": "S",
           "MDEntryPx": 50896.5969622,
-          "OrdType": "S",
           "MDEntryDate": "2008-06-18T23:00:00.000Z",
           "MDMkt": "CME"
         },
         {
+          "MDEntryType": "4",
           "MDEntryPx": 5.209,
-          "OrdType": "4",
           "MDEntryDate": "2008-06-19T23:00:00.000Z",
           "MDMkt": "CME",
           "OpenCloseSettlFlag": "5"
