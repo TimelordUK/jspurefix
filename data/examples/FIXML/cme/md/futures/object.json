@@ -13,8 +13,8 @@
       },
       "MDFullGrp": [
         {
+          "MDEntryType": "6",
           "MDEntryPx": 18.97,
-          "OrdType": "6",
           "MDMkt": "CME"
         }
       ]

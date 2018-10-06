@@ -2,5 +2,5 @@
 [2] 48 (SecurityID) = 01, [3] 55 (Symbol) = ZCZ9
 [4] 167 (SecurityType) = FUT[Future], [5] 461 (CFICode) = FFCPSO
 [6] 200 (MaturityMonthYear) = 200906, [7] 22 (SecurityIDSource) = H[ClearingHouseClearingOrganization]
-[8] 40 (OrdType) = 6[WithOrWithout], [9] 270 (MDEntryPx) = 18.97
+[8] 269 (MDEntryType) = 6[SettlementPrice], [9] 270 (MDEntryPx) = 18.97
 [10] 275 (MDMkt) = CME

@@ -54,6 +54,6 @@ test('expect an md group from fix msg', () => {
   const first: IMDFullGrp = fullGrp[0]
   expect(first).toBeTruthy()
   expect(first.MDEntryPx).toEqual(18.97)
-  expect(first.OrdType).toEqual('6')
+  expect(first.MDEntryType).toEqual('6')
   expect(first.MDMkt).toEqual('CME')
 })

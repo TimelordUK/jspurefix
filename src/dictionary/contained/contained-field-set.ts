@@ -98,7 +98,7 @@ export abstract class ContainedFieldSet {
     if (definition.abbreviation && definition.abbreviation !== definition.name) {
       this.localNameToField.addUpdate(definition.abbreviation, field)
     }
-    if (definition.baseCategoryAbbreviation) {
+    if (definition.baseCategoryAbbreviation && definition.baseCategory === this.category) {
       this.localNameToField.addUpdate(definition.baseCategoryAbbreviation, field)
     }
     if (field.attribute) {

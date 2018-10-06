@@ -24,6 +24,8 @@ export class FiXmlParser extends MsgParser {
   private readonly segments: SegmentDescription[] = []
   private readonly segmentStack: SegmentDescription[] = []
   private readonly logger: IJsFixLogger
+  private last: SegmentDescription
+  private raw: string
   constructor (public readonly config: IJsFixConfig,
                public readonly readStream: Readable,
                public readonly maxMessageLocations: number = 10 * 1024) {
@@ -41,6 +43,7 @@ export class FiXmlParser extends MsgParser {
   private subscribe (): void {
     const writeStream = this.saxStream
     const readStream = this.readStream
+    let instance = this
     readStream.pipe(writeStream).on('ready', () => {
       this.logger.info('stream close event')
       this.emit('close')
@@ -53,12 +56,21 @@ export class FiXmlParser extends MsgParser {
       this.logger.info('stream end event')
       this.emit('end')
     })
+    writeStream.on('data', (i: Buffer) => {
+      if (instance.last) {
+        instance.emit('decoded', instance.last.name, i.toString())
+      } else {
+        this.raw = i.toString()
+      }
+    })
 
     writeStream.on('opentag', (node) => {
       const stack = this.segmentStack
       const saxNode: ISaxNode = node as ISaxNode
       switch (saxNode.name) {
         case 'FIXML':
+          this.last = null
+          this.raw = null
           while (stack.length) {
             stack.pop()
           }
@@ -165,7 +177,12 @@ export class FiXmlParser extends MsgParser {
         case SegmentType.Msg: {
           // raise msg event
           const last = segments[segments.length - 1]
+          this.last = last
           this.emit('msg', last.name, this.getView())
+          if (this.raw) {
+            this.emit('decoded', this.last.name, this.raw)
+            this.raw = null
+          }
           break
         }
         case SegmentType.Batch: {

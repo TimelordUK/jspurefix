@@ -2,18 +2,13 @@ import { FixmlSession } from '../../../transport/fixml/fixml-session'
 import { MsgView } from '../../../buffer/msg-view'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
-import { INewOrderSingle } from '../../../types/FIXML50SP2/new_order_single'
-import { IOrderQtyData } from '../../../types/FIX.5.0SP2/repo/set/order_qty_data'
-import { IInstrument } from '../../../types/FIXML50SP2/set/instrument'
-import {
-  OrdType,
-  SecurityIDSource, Side,
-  TimeInForce
-} from '../../../types/FIXML50SP2/enum/all-enum'
+import { Side } from '../../../types/FIXML50SP2/enum/all-enum'
+import { OmsFactory } from './oms-factory'
 
 export class HttpClient extends FixmlSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
+  private readonly factory: OmsFactory = new OmsFactory('TradersRUs')
   constructor (public readonly config: IJsFixConfig,
                public readonly logoutSeconds: number = 45) {
     super(config)
@@ -43,23 +38,8 @@ export class HttpClient extends FixmlSession {
   protected onReady (view: MsgView): void {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
-    const req = {
-      ClOrdID: '1',
-      Account: 'TradersRUs',
-      Side: Side.Buy,
-      Price: 110.12,
-      OrdType: OrdType.Limit,
-      OrderQtyData: {
-        OrderQty: 1000000
-      } as IOrderQtyData,
-      Instrument: {
-        Symbol: 'IBM',
-        SecurityID: '459200101',
-        SecurityIDSource: SecurityIDSource.IsinNumber
-      } as IInstrument,
-      TimeInForce: TimeInForce.GoodTillCancelGtc
-    } as INewOrderSingle
-    this.send('Order', req)
+    const req = this.factory.createOrder('IBM', Side.Buy, 10000, 100.12)
+    this.send('NewOrderSingle', req)
     this.logger.info(`will logout after ${logoutSeconds}`)
     setTimeout(() => {
       this.done()
