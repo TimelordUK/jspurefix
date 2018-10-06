@@ -41,6 +41,7 @@ export abstract class MsgTransmitter extends events.EventEmitter {
       transform (payload: MsgPayload, encoding, done: Function) {
         try {
           const msgType = payload.msgType
+          transmitter.buffer.reset()
           transmitter.encodeMessage(msgType, payload.obj)
           payload.encoded = transmitter.buffer.slice()
           this.push(payload.encoded)

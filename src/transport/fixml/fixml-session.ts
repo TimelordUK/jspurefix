@@ -3,7 +3,6 @@ import { IJsFixLogger } from '../../config/js-fix-logger'
 import { FixSessionState, SessionState } from '../fix-session-state'
 import { MsgTransport } from '../msg-transport'
 import { IJsFixConfig } from '../../config/js-fix-config'
-import { MsgType } from '../../types/enum/msg_type'
 import { MsgView } from '../../buffer/msg-view'
 import { SegmentType } from '../../buffer/segment-description'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
@@ -246,7 +245,7 @@ export abstract class FixmlSession {
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} initiate logout`
         this.sessionLogger.info(msg)
-        this.send(MsgType.Logout, factory.logout(msg))
+        this.send('UserReq', factory.logout(msg))
         break
       }
 
@@ -255,7 +254,7 @@ export abstract class FixmlSession {
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} confirming logout`
         this.sessionLogger.info(msg)
-        this.send(MsgType.Logout, factory.logout(msg))
+        this.send('UserRsp', factory.logout(msg))
         break
       }
 

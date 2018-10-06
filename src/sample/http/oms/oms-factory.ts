@@ -40,6 +40,8 @@ export class OmsFactory {
   public fillOrder (order: INewOrderSingle): IExecutionReport {
     const id: number = this.execId++
     return {
+      ClOrdID: order.ClOrdID,
+      OrdType: order.OrdType,
       TransactTime: new Date(),
       AvgPx: order.Price,
       LeavesQty: 0,
@@ -49,7 +51,6 @@ export class OmsFactory {
       ExecID: `exec${id}`,
       Side: order.Side,
       Price: order.Price,
-      OrdType: OrdType.Limit,
       OrderQtyData: {
         OrderQty: order.OrderQtyData.OrderQty
       } as IOrderQtyData,

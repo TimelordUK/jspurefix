@@ -48,11 +48,12 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     }
   }
 
-  public logout (text: string): ILooseObject {
-    const o: ILogout = {
-      Text:  text
-    } as ILogout
-    return this.mutator ? this.mutator(this.description, MsgType.Logout, o) : o
+  public logout (text: string, isResponse: boolean = false): ILooseObject {
+    if (this.isAscii) {
+      return this.asciiLogout(text)
+    } else {
+      return this.fixmlLogout(text, isResponse)
+    }
   }
 
   public testRequest (reqId: string = `ping-${new Date().toUTCString()}`): ILooseObject {
@@ -111,6 +112,13 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
   }
 
+  private asciiLogout (text: string): ILooseObject {
+    const o: ILogout = {
+      Text:  text
+    } as ILogout
+    return this.mutator ? this.mutator(this.description, MsgType.Logout, o) : o
+  }
+
   private fixmlLogon (userRequestId: string, isResponse: boolean): ILooseObject {
     const description = this.description
     if (!isResponse) {
@@ -126,6 +134,24 @@ export class SessionMsgFactory implements ISessionMsgFactory {
         Username: description.Username,
         UserRequestID: userRequestId,
         UserStatus: UserStatus.LoggedIn
+      } as IUserResponse
+      return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
+    }
+  }
+
+  private fixmlLogout (userRequestId: string, isResponse: boolean): ILooseObject {
+    if (!isResponse) {
+      const o: IUserRequest = {
+        Username: this.description.Username,
+        UserRequestID: userRequestId,
+        UserRequestType: UserRequestType.LogOffUser
+      } as IUserRequest
+      return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
+    } else {
+      const o: IUserResponse = {
+        Username: this.description.Username,
+        UserRequestID: userRequestId,
+        UserStatus: UserStatus.NotLoggedIn
       } as IUserResponse
       return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
     }

@@ -47,10 +47,9 @@ export class HttpClient extends FixmlSession {
     const req = this.factory.createOrder('IBM', Side.Buy, 10000, 100.12)
     this.send('NewOrderSingle', req)
     this.logger.info(`will logout after ${logoutSeconds}`)
-    return
     setTimeout(() => {
       this.done()
-    }, logoutSeconds * 1000)
+    }, 11 * 1000)
   }
 
   protected onStopped (): void {

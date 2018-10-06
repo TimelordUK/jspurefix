@@ -61,24 +61,23 @@ export class HttpAcceptor extends FixAcceptor {
     return a
   }
 
-  private harvestTransport (tid: number): void {
+  private harvestTransport (token: string, tid: number): void {
     delete this.transports[tid]
+    this.keys.remove(token)
     const keys: string[] = Object.keys(this.transports)
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
   }
 
   private respond (duplex: FixDuplex, res: express.Response, token: string = null) {
-
+    res.setHeader('Content-Type', 'application/json')
     const timer = setTimeout(() => {
       const businessReject = `<FIXML><BizMsgRej BizRejRsn="4" Txt="no response from application"/></FIXML>`
       const b = Buffer.from(businessReject, 'utf-8')
-      res.setHeader('Content-Type', 'application/json')
       duplex.writable.removeListener('data', transmit)
       res.send(b)
     }, 5000)
 
     const transmit = (d: Buffer) => {
-      res.setHeader('Content-Type', 'application/json')
       this.logger.info('responding to request')
       clearTimeout(timer)
       if (token) {
@@ -103,6 +102,19 @@ export class HttpAcceptor extends FixAcceptor {
     d.readable.push(body.fixml)
   }
 
+  private logout (req: express.Request, res: express.Response) {
+    const headers = req.headers
+    const body: IFixmlRequest = req.body
+    const t: MsgTransport = this.keys.get(headers.authorization)
+    if (t) {
+      const token = req.headers.authorization
+      this.harvestTransport(token, t.id)
+      const d = t.duplex
+      this.respond(d, res, token)
+      d.readable.push(body.fixml)
+    }
+  }
+
   private subscribe (): void {
     const router = this.router
     const app = this.config.description.application
@@ -114,6 +126,9 @@ export class HttpAcceptor extends FixAcceptor {
       if (!req.headers.authorization) {
         this.logger.info('logon')
         this.logon(req, res)
+      } else {
+        this.logger.info('logout')
+        this.logout(req, res)
       }
     })
 
