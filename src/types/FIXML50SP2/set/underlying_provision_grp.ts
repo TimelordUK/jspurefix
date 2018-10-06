@@ -19,7 +19,7 @@ export interface IUnderlyingProvisionGrp {
   UnderlyingProvisionCalculationAgent?: number// 42156
   UnderlyingProvisionOptionSinglePartyBuyerSide?: number// 42157
   UnderlyingProvisionOptionSinglePartySellerSide?: number// 42158
-  UnderlyingProvisionOptionExerciseStyle?: number// 42159
+  ExerciseStyle?: number// 1194
   UnderlyingProvisionOptionExerciseMultipleNotional?: number// 42160
   UnderlyingProvisionOptionExerciseMinimumNotional?: number// 42161
   UnderlyingProvisionOptionExerciseMaximumNotional?: number// 42162

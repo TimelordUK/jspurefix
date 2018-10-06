@@ -13,7 +13,7 @@ export interface ILegOrdGrp {
   LegPositionEffect?: string// 564
   LegCoveredOrUncovered?: number// 565
   LegRefID?: string// 654
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   LegSettlDate?: Date// 588
   LegSettlCurrency?: string// 675
   LegVolatility?: number// 1379

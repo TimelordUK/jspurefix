@@ -4,7 +4,7 @@ import { ITradeReportOrderDetail } from './trade_report_order_detail'
 import { ITrdInstrmtLegExecGrp } from './trd_instrmt_leg_exec_grp'
 
 export interface ITrdMatchSideGrp {
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   SideExecID?: string// 1427
   SideExecRefID?: string// 1900
   SideTradeID?: string// 1506

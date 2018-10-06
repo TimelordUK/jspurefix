@@ -11,7 +11,7 @@ import { IApplicationSequenceControl } from './set/application_sequence_control'
 export interface ITradeMatchReportAck {
   TrdMatchID: string// 880
   TradeMatchAckStatus: number// 1896
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665

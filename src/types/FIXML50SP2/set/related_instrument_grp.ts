@@ -2,7 +2,7 @@ export interface IRelatedInstrumentGrp {
   RelatedInstrumentType?: number// 1648
   RelatedSymbol?: string// 1649
   RelatedSecurityID?: string// 1650
-  LegContractualMatrixSource?: string// 42204
+  SecurityIDSource?: string// 22
   RelatedSecurityType?: string// 1652
   RelatedMaturityMonthYear?: string// 1653
   RelatedToSecurityID?: string// 2413

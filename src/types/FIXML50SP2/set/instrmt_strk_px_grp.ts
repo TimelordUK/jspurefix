@@ -5,7 +5,7 @@ export interface IInstrmtStrkPxGrp {
   PrevClosePx?: number// 140
   ClOrdID?: string// 11
   SecondaryClOrdID?: string// 526
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   Price?: number// 44
   Currency?: string// 15
   Text?: string// 58

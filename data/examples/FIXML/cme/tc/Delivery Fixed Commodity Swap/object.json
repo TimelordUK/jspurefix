@@ -13,7 +13,7 @@
       "TradeReportType": 101,
       "TradeRequestID": "ABC124",
       "TrdType": 22,
-      "SideTrdSubTyp": 7,
+      "TrdSubType": 7,
       "PriceType": 2,
       "VenueType": "X",
       "QtyType": 1,
@@ -85,7 +85,7 @@
       "TrdRegTimestamps": [],
       "TrdCapRptSideGrp": [
         {
-          "RelativeValueSide": 2,
+          "Side": "2",
           "SideCurrency": "USD",
           "TradeInputSource": "CHB",
           "Parties": [
@@ -96,7 +96,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "Paxton Commodities Ltd",
-                  "UnderlyingReturnRateValuationDateType": 5
+                  "MiscFeeType": "5"
                 }
               ]
             },
@@ -106,7 +106,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "ATS_BROKER1",
-                  "UnderlyingReturnRateValuationDateType": 5
+                  "MiscFeeType": "5"
                 }
               ]
             },
@@ -116,7 +116,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "Paxton Trader",
-                  "UnderlyingReturnRateValuationDateType": 9
+                  "MiscFeeType": "9"
                 }
               ]
             },
@@ -126,7 +126,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "Adamax Broker 1",
-                  "UnderlyingReturnRateValuationDateType": 9
+                  "MiscFeeType": "9"
                 }
               ]
             }
@@ -148,7 +148,7 @@
           ]
         },
         {
-          "RelativeValueSide": 1,
+          "Side": "1",
           "SideCurrency": "USD",
           "TradeInputSource": "CHB",
           "Parties": [
@@ -159,7 +159,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "Adamax Test Company 3",
-                  "UnderlyingReturnRateValuationDateType": 5
+                  "MiscFeeType": "5"
                 }
               ]
             },
@@ -169,7 +169,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "ATS_BROKER1",
-                  "UnderlyingReturnRateValuationDateType": 5
+                  "MiscFeeType": "5"
                 }
               ]
             },
@@ -179,7 +179,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "Adamax Trader",
-                  "UnderlyingReturnRateValuationDateType": 9
+                  "MiscFeeType": "9"
                 }
               ]
             },
@@ -189,7 +189,7 @@
               "PtysSubGrp": [
                 {
                   "PartySubID": "Adamax Broker 2",
-                  "UnderlyingReturnRateValuationDateType": 9
+                  "MiscFeeType": "9"
                 }
               ]
             }

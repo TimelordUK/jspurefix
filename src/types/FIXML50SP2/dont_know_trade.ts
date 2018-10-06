@@ -16,7 +16,7 @@ export interface IDontKnowTrade {
   SecondaryOrderID?: string// 198
   ExecID: string// 17
   DKReason: string// 127
-  RelativeValueSide: number// 2532
+  Side: string// 54
   LastQty?: number// 32
   LastPx?: number// 31
   Text?: string// 58

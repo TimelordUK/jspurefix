@@ -25,7 +25,7 @@ export interface IPartyRiskLimitCheckRequest {
   RiskLimitCheckAmount?: number// 2324
   Currency?: string// 15
   RiskLimitID?: string// 1670
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   TransactTime?: Date// 60
   Text?: string// 58
   EncodedTextLen?: number// 354

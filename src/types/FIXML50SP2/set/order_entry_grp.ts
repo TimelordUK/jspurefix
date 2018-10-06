@@ -9,7 +9,7 @@ export interface IOrderEntryGrp {
   OrderID?: string// 37
   OrdType?: string// 40
   Price?: number// 44
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   TimeInForce?: string// 59
   OrderQtyData?: IOrderQtyData
   Instrument?: IInstrument

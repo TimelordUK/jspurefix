@@ -2,7 +2,7 @@
   "AllocID": "1004",
   "AllocTransType": "0",
   "AllocType": 23,
-  "RelativeValueSide": 1,
+  "Side": "1",
   "Quantity": 40,
   "TradingSessionID": "RTH",
   "TradingSessionSubID": "P",
@@ -46,7 +46,7 @@
       "PtysSubGrp": [
         {
           "PartySubID": "1",
-          "UnderlyingReturnRateValuationDateType": 26
+          "MiscFeeType": "26"
         }
       ]
     },

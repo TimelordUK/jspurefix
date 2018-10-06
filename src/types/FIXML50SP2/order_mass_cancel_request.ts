@@ -19,7 +19,7 @@ export interface IOrderMassCancelRequest {
   TradingSessionSubID?: string// 625
   MarketID?: string// 1301
   MarketSegmentID?: string// 1300
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   TransactTime: Date// 60
   Text?: string// 58
   EncodedTextLen?: number// 354

@@ -15,7 +15,7 @@ export interface ITradeMatchReport {
   TradeReportType?: number// 856
   ClearingBusinessDate?: Date// 715
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   TradeDate?: Date// 75
   MarketID?: string// 1301
   MarketSegmentID?: string// 1300

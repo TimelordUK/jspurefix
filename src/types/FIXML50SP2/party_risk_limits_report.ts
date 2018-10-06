@@ -13,7 +13,7 @@ export interface IPartyRiskLimitsReport {
   RiskLimitReportID: string// 1667
   RiskLimitRequestID?: string// 1666
   RiskLimitRequestType?: number// 1760
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   UnsolicitedIndicator?: boolean// 325
   TotNoParties?: number// 1512
   LastFragment?: boolean// 893

@@ -37,8 +37,8 @@ export interface IQuote {
   QuoteResponseLevel?: number// 301
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  RelativeValueSide?: number// 2532
-  InstrumentScopeSettlType?: string// 1557
+  Side?: string// 54
+  SettlType?: string// 63
   SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192

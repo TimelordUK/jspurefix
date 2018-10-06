@@ -1,4 +1,4 @@
 export interface IRelatedPartyDetailSubGrp {
   RelatedPartyDetailSubID?: string// 1567
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  MiscFeeType?: string// 139
 }

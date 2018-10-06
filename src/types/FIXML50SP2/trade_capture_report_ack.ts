@@ -27,7 +27,7 @@ export interface ITradeCaptureReportAck {
   TradeReportTransType?: number// 487
   TradeReportType?: number// 856
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   SecondaryTrdType?: number// 855
   OffsetInstruction?: number// 1849
   TradeHandlingInstr?: string// 1123
@@ -41,7 +41,7 @@ export interface ITradeCaptureReportAck {
   SecondaryTradeReportRefID?: string// 881
   TrdRptStatus?: number// 939
   TrdAckStatus?: number// 1523
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
@@ -81,7 +81,7 @@ export interface ITradeCaptureReportAck {
   MultiLegReportingType?: string// 442
   TradeLegRefID?: string// 824
   TransactTime?: Date// 60
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   MatchStatus?: string// 573
   MatchType?: string// 574
   CopyMsgIndicator?: boolean// 797

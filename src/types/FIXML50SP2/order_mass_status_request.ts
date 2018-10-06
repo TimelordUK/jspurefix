@@ -18,7 +18,7 @@ export interface IOrderMassStatusRequest {
   AcctIDSource?: number// 660
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   TargetParties?: ITargetParties[]

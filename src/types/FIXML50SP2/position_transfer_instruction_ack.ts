@@ -16,7 +16,7 @@ export interface IPositionTransferInstructionAck {
   TransferTransType?: number// 2439
   TransferType?: number// 2440
   TransferStatus?: number// 2442
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   TransferScope?: number// 2441
   TransactTime?: Date// 60
   RejectText?: string// 1328

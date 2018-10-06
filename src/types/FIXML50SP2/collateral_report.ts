@@ -43,7 +43,7 @@ export interface ICollateralReport {
   MarginExcess?: number// 899
   TotalNetValue?: number// 900
   CashOutstanding?: number// 901
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   Price?: number// 44
   PriceType?: number// 423
   AccruedInterestAmt?: number// 159

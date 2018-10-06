@@ -1,5 +1,5 @@
 export interface ISecondaryAssetGrp {
   SecondaryAssetClass?: number// 1977
-  UnderlyingSecondaryAssetSubClass?: number// 2082
+  SecondaryAssetSubClass?: number// 1978
   SecondaryAssetType?: string// 1979
 }

@@ -7,7 +7,7 @@
   "MultiLegReportingType": "1",
   "TradeInputSource": "FIRM",
   "TradeInputDevice": "API",
-  "RelativeValueSide": 2,
+  "Side": "2",
   "Quantity": 4,
   "TradingSessionID": "RTH",
   "TradingSessionSubID": "P",
@@ -57,7 +57,7 @@
       "PtysSubGrp": [
         {
           "PartySubID": "1",
-          "UnderlyingReturnRateValuationDateType": 26
+          "MiscFeeType": "26"
         }
       ]
     }

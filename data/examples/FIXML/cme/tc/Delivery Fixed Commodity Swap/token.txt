@@ -5,7 +5,7 @@
 [8] 2405 (ExecMethod) = 2[Automated], [9] 60 (TransactTime) = 2016-07-14T04:18:10-05:00
 [10] 442 (MultiLegReportingType) = 1[SingleSecurityDefaultIfNotSpecified], [11] 75 (TradeDate) = 2016-07-14
 [12] 854 (QtyType) = 1[Contracts], [13] 1430 (VenueType) = X[ExPit]
-[14] 423 (PriceType) = 2[PerUnitIEPerShareOrContract], [15] 1008 (SideTrdSubTyp) = 7[DifferentialSpread]
+[14] 423 (PriceType) = 2[PerUnitIEPerShareOrContract], [15] 829 (TrdSubType) = 7[DifferentialSpread]
 [16] 828 (TrdType) = 22[PrivatelyNegotiatedTrade], [17] 568 (TradeRequestID) = ABC124
 [18] 856 (TradeReportType) = 101[101], [19] 487 (TradeReportTransType) = 0[New]
 [20] 1 (OriginalSecondaryTradeID) = 12510821, [21] 571 (TradeReportID) = edbba144-a4ed-4e40-b88f-274098e9c2af
@@ -13,39 +13,39 @@
 [24] 41311 (StreamTotalNotionalUnitOfMeasure) = MMBtu[OneMillionBtu], [25] 41310 (StreamTotalNotional) = 310000.10
 [26] 41309 (StreamNotionalUnitOfMeasure) = MMBtu[OneMillionBtu], [27] 41307 (StreamNotionalFrequencyUnit) = D[Day]
 [28] 41306 (StreamNotionalFrequencyPeriod) = 1, [29] 40054 (StreamNotional) = 10000.20
-[30] 40053 (StreamReceiveSide) = 1[Buy], [31] 40052 (StreamPaySide) = 1[Buy]
-[32] 40050 (StreamType) = 1[PhysicalDelivery], [33] 41251 (StreamCommodityBase) = NG
+[30] 40053 (StreamReceiveSide) = 2[Sell], [31] 40052 (StreamPaySide) = 1[Buy]
+[32] 40050 (StreamType) = 0[PaymentCashSettlement], [33] 41251 (StreamCommodityBase) = NG
 [34] 40914 (StreamEffectiveDateAdjusted) = 2019-08-01, [35] 40072 (StreamTerminationDateAdjusted) = 2019-08-31
 [36] 41063 (DeliveryStreamDeliveryRestriction) = 2[InterruptableOrNonFirm], [37] 41062 (DeliveryStreamDeliveryPoint) = Northwest Pipeline Corp - Canadian Border (Huntingdon)
 [38] 41311 (StreamTotalNotionalUnitOfMeasure) = MMBtu[OneMillionBtu], [39] 41310 (StreamTotalNotional) = 310000.10
 [40] 41309 (StreamNotionalUnitOfMeasure) = MMBtu[OneMillionBtu], [41] 41307 (StreamNotionalFrequencyUnit) = D[Day]
 [42] 41306 (StreamNotionalFrequencyPeriod) = 1, [43] 40054 (StreamNotional) = 10000.20
-[44] 40053 (StreamReceiveSide) = 1[Buy], [45] 40052 (StreamPaySide) = 1[Buy]
-[46] 40050 (StreamType) = 1[PhysicalDelivery], [47] 41251 (StreamCommodityBase) = NG
+[44] 40053 (StreamReceiveSide) = 2[Sell], [45] 40052 (StreamPaySide) = 1[Buy]
+[46] 40050 (StreamType) = 0[PaymentCashSettlement], [47] 41251 (StreamCommodityBase) = NG
 [48] 40914 (StreamEffectiveDateAdjusted) = 2019-08-01, [49] 40072 (StreamTerminationDateAdjusted) = 2019-08-31
 [50] 40786 (PaymentStreamRateOrAmountCurrency) = USD, [51] 40784 (PaymentStreamRate) = 3.666660
 [52] 578 (TradeInputSource) = CHB, [53] 1154 (SideCurrency) = USD
-[54] -1 (unknown) = BR100000687800271, [55] 2532 (RelativeValueSide) = 1[Bid]
-[56] 452 (PartyRole) = 7[EnteringFirm], [57] 447 (PartyIDSource) = C[GenerallyAcceptedMarketParticipantIdentifierEGNasdMnemonic]
-[58] 448 (PartyID) = ATS_BROKER1, [59] 43073 (UnderlyingReturnRateValuationDateType) = 9[9]
-[60] 523 (PartySubID) = Adamax Trader, [61] 452 (PartyRole) = 7[EnteringFirm]
-[62] 448 (PartyID) = ATS_BROKER1, [63] 43073 (UnderlyingReturnRateValuationDateType) = 9[9]
-[64] 523 (PartySubID) = Adamax Trader, [65] 452 (PartyRole) = 7[EnteringFirm]
-[66] 448 (PartyID) = ATS_BROKER1, [67] 43073 (UnderlyingReturnRateValuationDateType) = 9[9]
-[68] 523 (PartySubID) = Adamax Trader, [69] 452 (PartyRole) = 7[EnteringFirm]
-[70] 448 (PartyID) = ATS_BROKER1, [71] 43073 (UnderlyingReturnRateValuationDateType) = 9[9]
-[72] 523 (PartySubID) = Adamax Trader, [73] 2646 (CommissionRate) = 0.55550
+[54] -1 (unknown) = BR100000687800271, [55] 54 (Side) = 2[Sell]
+[56] 452 (PartyRole) = 30[Agent], [57] 447 (PartyIDSource) = C[GenerallyAcceptedMarketParticipantIdentifierEGNasdMnemonic]
+[58] 448 (PartyID) = ATS_BROKER1, [59] 139 (MiscFeeType) = 9[ConsumptionTax]
+[60] 523 (PartySubID) = ATS_BROKER1, [61] 452 (PartyRole) = 30[Agent]
+[62] 448 (PartyID) = ATS_BROKER1, [63] 139 (MiscFeeType) = 9[ConsumptionTax]
+[64] 523 (PartySubID) = ATS_BROKER1, [65] 452 (PartyRole) = 30[Agent]
+[66] 448 (PartyID) = ATS_BROKER1, [67] 139 (MiscFeeType) = 9[ConsumptionTax]
+[68] 523 (PartySubID) = ATS_BROKER1, [69] 452 (PartyRole) = 30[Agent]
+[70] 448 (PartyID) = ATS_BROKER1, [71] 139 (MiscFeeType) = 9[ConsumptionTax]
+[72] 523 (PartySubID) = ATS_BROKER1, [73] 2646 (CommissionRate) = 0.55550
 [74] 2644 (CommissionUnitOfMeasure) = MMBtu[OneMillionBtu], [75] 2643 (CommissionCurrency) = USD
 [76] 2642 (CommissionBasis) = 1[AmountPerUnit], [77] 2640 (CommissionAmount) = 0.40
 [78] 1013 (SideTrdRegTimestampType) = 1[ExecutionTime], [79] 1012 (SideTrdRegTimestamp) = 2016-07-14T04:18:07-05:00
 [80] 578 (TradeInputSource) = CHB, [81] 1154 (SideCurrency) = USD
-[82] 2532 (RelativeValueSide) = 1[Bid], [83] 452 (PartyRole) = 7[EnteringFirm]
+[82] 54 (Side) = 2[Sell], [83] 452 (PartyRole) = 30[Agent]
 [84] 447 (PartyIDSource) = C[GenerallyAcceptedMarketParticipantIdentifierEGNasdMnemonic], [85] 448 (PartyID) = ATS_BROKER1
-[86] 43073 (UnderlyingReturnRateValuationDateType) = 9[9], [87] 523 (PartySubID) = Adamax Trader
-[88] 452 (PartyRole) = 7[EnteringFirm], [89] 448 (PartyID) = ATS_BROKER1
-[90] 43073 (UnderlyingReturnRateValuationDateType) = 9[9], [91] 523 (PartySubID) = Adamax Trader
-[92] 452 (PartyRole) = 7[EnteringFirm], [93] 448 (PartyID) = ATS_BROKER1
-[94] 43073 (UnderlyingReturnRateValuationDateType) = 9[9], [95] 523 (PartySubID) = Adamax Trader
-[96] 452 (PartyRole) = 7[EnteringFirm], [97] 448 (PartyID) = ATS_BROKER1
-[98] 43073 (UnderlyingReturnRateValuationDateType) = 9[9], [99] 523 (PartySubID) = Adamax Trader
+[86] 139 (MiscFeeType) = 9[ConsumptionTax], [87] 523 (PartySubID) = ATS_BROKER1
+[88] 452 (PartyRole) = 30[Agent], [89] 448 (PartyID) = ATS_BROKER1
+[90] 139 (MiscFeeType) = 9[ConsumptionTax], [91] 523 (PartySubID) = ATS_BROKER1
+[92] 452 (PartyRole) = 30[Agent], [93] 448 (PartyID) = ATS_BROKER1
+[94] 139 (MiscFeeType) = 9[ConsumptionTax], [95] 523 (PartySubID) = ATS_BROKER1
+[96] 452 (PartyRole) = 30[Agent], [97] 448 (PartyID) = ATS_BROKER1
+[98] 139 (MiscFeeType) = 9[ConsumptionTax], [99] 523 (PartySubID) = ATS_BROKER1
 [100] 1013 (SideTrdRegTimestampType) = 1[ExecutionTime], [101] 1012 (SideTrdRegTimestamp) = 2016-07-14T04:18:07-05:00

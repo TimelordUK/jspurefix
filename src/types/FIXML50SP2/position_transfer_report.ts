@@ -20,7 +20,7 @@ export interface IPositionTransferReport {
   TransferTransType: number// 2439
   TransferReportType: number// 2444
   TransferStatus: number// 2442
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   TransferScope?: number// 2441
   ClearingBusinessDate?: Date// 715
   TradeDate?: Date// 75

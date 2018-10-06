@@ -33,8 +33,8 @@ export interface IQuoteStatusReport {
   QuoteCancelType?: number// 298
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  RelativeValueSide?: number// 2532
-  InstrumentScopeSettlType?: string// 1557
+  Side?: string// 54
+  SettlType?: string// 63
   SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
@@ -84,7 +84,7 @@ export interface IQuoteStatusReport {
   OrderCapacity?: string// 528
   OrderRestrictions?: string// 529
   QuoteStatus?: number// 297
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665

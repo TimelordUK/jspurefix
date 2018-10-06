@@ -1,7 +1,7 @@
 import { IRiskWarningLevelGrp } from './risk_warning_level_grp'
 
 export interface IRiskLimitTypesGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  MiscFeeType?: string// 139
   RiskLimitAmount?: number// 1531
   RiskLimitAction?: number// 1767
   RiskLimitUtilizationAmount?: number// 1766

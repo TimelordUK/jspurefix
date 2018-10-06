@@ -20,7 +20,7 @@ export interface ITradeCaptureReportRequestAck {
   TradeRequestType: number// 569
   SubscriptionRequestType?: string// 263
   TotNumTradeReports?: number// 748
-  MDStatisticRequestResult: number// 2473
+  SecurityRequestResult: number// 560
   TradeRequestStatus: number// 750
   MultiLegReportingType?: string// 442
   ResponseTransportType?: number// 725

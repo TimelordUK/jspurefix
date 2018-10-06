@@ -1,4 +1,4 @@
 export interface IOrderAttributeGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  MiscFeeType?: string// 139
   OrderAttributeValue?: string// 2595
 }

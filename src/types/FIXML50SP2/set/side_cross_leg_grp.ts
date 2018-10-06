@@ -10,7 +10,7 @@ export interface ISideCrossLegGrp {
   LegClearingAccountType?: number// 1817
   LegPositionEffect?: string// 564
   LegCoveredOrUncovered?: number// 565
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   LegSettlDate?: Date// 588
   LegSettlCurrency?: string// 675
   LegVolatility?: number// 1379

@@ -66,7 +66,9 @@ export class FixDefinitions {
     simple.addUpdate(field.name, field)
     this.tagToSimple[field.tag] = field
     if (field.abbreviation && field.abbreviation !== field.name) {
-      simple.addUpdate(field.abbreviation, field)
+      if (!simple.containsKey(field.abbreviation)) {
+        simple.addUpdate(field.abbreviation, field)
+      }
     }
     if (typeName && typeName !== field.name && field.name && field.type) {
       simple.addUpdate(typeName, field)

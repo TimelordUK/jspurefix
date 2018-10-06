@@ -36,7 +36,7 @@ test('expect an instrument from fix msg', () => {
   expect(i).toBeTruthy()
   expect(i.Symbol).toEqual('ZCZ9')
   expect(i.SecurityID).toEqual('01')
-  expect(i.LegContractualMatrixSource).toEqual('H')
+  expect(i.SecurityIDSource).toEqual('H')
   expect(i.CFICode).toEqual('FFCPSO')
   expect(i.SecurityType).toEqual('FUT')
   expect(i.MaturityMonthYear).toEqual('200906')

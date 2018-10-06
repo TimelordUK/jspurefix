@@ -1,6 +1,6 @@
 export interface IMDStatisticParameters {
-  UnderlyingReturnRateValuationDateType: number// 43073
-  MDStatisticScope: number// 2457
+  MiscFeeType: string// 139
+  Scope: string// 546
   MDStatisticSubScope?: number// 2458
   MDStatisticScopeType?: number// 2459
   MDStatisticName?: string// 2454
@@ -26,7 +26,7 @@ export interface IMDStatisticParameters {
   TimeInForce?: string// 59
   QuoteCondition?: string// 276
   TradeCondition?: string// 277
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   TradeInputSource?: string// 578
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625

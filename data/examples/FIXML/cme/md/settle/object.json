@@ -5,7 +5,7 @@
       "Instrument": {
         "Symbol": "SU1C",
         "SecurityID": "01",
-        "LegContractualMatrixSource": "H",
+        "SecurityIDSource": "H",
         "CFICode": "FFIPSO",
         "SecurityType": "FUT",
         "MaturityMonthYear": "200806",
@@ -34,7 +34,7 @@
       "Instrument": {
         "Symbol": "E6E",
         "SecurityID": "EUR6E",
-        "LegContractualMatrixSource": "H",
+        "SecurityIDSource": "H",
         "SecurityType": "IRS",
         "MaturityMonthYear": "200901",
         "MaturityDate": "2008-07-13T23:00:00.000Z",

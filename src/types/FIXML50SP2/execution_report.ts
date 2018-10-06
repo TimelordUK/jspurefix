@@ -77,14 +77,14 @@ export interface IExecutionReport {
   ExecTypeReason?: number// 2431
   OrdStatus: string// 39
   WorkingIndicator?: boolean// 636
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   ExecRestatementReason?: number// 378
   AlgorithmicTradeIndicator?: number// 2667
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   SecondaryTrdType?: number// 855
   RegulatoryTransactionType?: number// 2347
   PreviouslyReported?: boolean// 570
@@ -96,13 +96,13 @@ export interface IExecutionReport {
   BookingUnit?: string// 590
   PreallocMethod?: string// 591
   AllocID?: string// 70
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   MatchType?: string// 574
   OrderCategory?: string// 1115
   CashMargin?: string// 544
   ClearingFeeIndicator?: string// 635
-  RelativeValueSide: number// 2532
+  Side: string// 54
   ShortMarkingExemptIndicator?: boolean// 2102
   ShortSaleExemptionReason?: number// 1688
   QtyType?: number// 854
@@ -198,7 +198,7 @@ export interface IExecutionReport {
   SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
-  AllocHandlInst?: number// 209
+  HandlInst?: string// 21
   MinQty?: number// 110
   MinQtyMethod?: number// 1822
   MatchIncrement?: number// 1089

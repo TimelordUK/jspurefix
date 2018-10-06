@@ -1,4 +1,4 @@
 export interface IProvisionPtysSubGrp {
   ProvisionPartySubID?: string// 40179
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  MiscFeeType?: string// 139
 }

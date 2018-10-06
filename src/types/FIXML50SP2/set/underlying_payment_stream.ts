@@ -12,11 +12,11 @@ export interface IUnderlyingPaymentStream {
   UnderlyingPaymentStreamDelayIndicator?: boolean// 40570
   UnderlyingPaymentStreamCashSettlIndicator?: boolean// 42895
   UnderlyingPaymentStreamSettlCurrency?: string// 40571
-  UnderlyingAdditionalTermBondDayCount?: number// 42035
+  AdditionalTermBondDayCount?: number// 40018
   UnderlyingPaymentStreamAccrualDays?: number// 40573
   UnderlyingPaymentStreamDiscountType?: number// 40574
   UnderlyingPaymentStreamDiscountRate?: number// 40575
-  PaymentStreamDiscountRateDayCount?: number// 40746
+  LegPaymentStreamDiscountRateDayCount?: number// 40287
   UnderlyingPaymentStreamCompoundingMethod?: number// 40577
   UnderlyingPaymentStreamCompoundingXIDRef?: string// 42896
   UnderlyingPaymentStreamCompoundingSpread?: number// 42897

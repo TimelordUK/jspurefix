@@ -33,7 +33,7 @@ export interface IDerivativeInstrument {
   DerivativeOptAttribute?: string// 1265
   DerivativeContractMultiplier?: number// 1266
   DerivativeContractMultiplierUnit?: number// 1438
-  DerivativeFlowScheduleType?: number// 1442
+  FlowScheduleType?: number// 1439
   DerivativeMinPriceIncrement?: number// 1267
   DerivativeMinPriceIncrementAmount?: number// 1268
   DerivativeUnitOfMeasure?: string// 1269

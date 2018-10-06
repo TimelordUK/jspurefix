@@ -27,7 +27,7 @@ export interface IOrderCancelRequest {
   MarketSegmentID?: string// 1300
   ExDestination?: string// 100
   ExDestinationIDSource?: string// 1133
-  RelativeValueSide: number// 2532
+  Side: string// 54
   TransactTime: Date// 60
   ComplianceID?: string// 376
   ComplianceText?: string// 2404

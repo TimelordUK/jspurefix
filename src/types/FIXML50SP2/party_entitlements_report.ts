@@ -12,7 +12,7 @@ import { IPartyEntitlementGrp } from './set/party_entitlement_grp'
 export interface IPartyEntitlementsReport {
   EntitlementReportID: string// 1771
   EntitlementRequestID?: string// 1770
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   TotNoParties?: number// 1512
   LastFragment?: boolean// 893
   TransactTime?: Date// 60

@@ -31,7 +31,7 @@ export interface IPositionReport {
   TotalNumPosReports?: number// 727
   TotNumReports?: number// 911
   LastRptRequested?: boolean// 912
-  EntitlementResult?: number// 1884
+  PosMaintResult?: number// 723
   UnsolicitedIndicator?: boolean// 325
   ClearingBusinessDate: Date// 715
   PreviousClearingBusinessDate?: Date// 2084

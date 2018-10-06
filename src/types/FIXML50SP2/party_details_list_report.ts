@@ -12,7 +12,7 @@ import { IPartyDetailGrp } from './set/party_detail_grp'
 export interface IPartyDetailsListReport {
   PartyDetailsListReportID: string// 1510
   PartyDetailsListRequestID?: string// 1505
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   TotNoParties?: number// 1512
   LastFragment?: boolean// 893
   TransactTime?: Date// 60

@@ -1,5 +1,5 @@
 export interface IEvntGrp {
-  DerivativeEventType?: number// 1287
+  EventType?: number // 865
   EventDate?: Date// 866
   EventTime?: Date// 1145
   EventTimeUnit?: string// 1827

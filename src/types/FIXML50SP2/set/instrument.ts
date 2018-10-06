@@ -21,7 +21,7 @@ export interface IInstrument {
   Symbol?: string// 55
   SymbolSfx?: string// 65
   SecurityID?: string// 48
-  LegContractualMatrixSource?: string// 42204
+  SecurityIDSource?: string// 22
   Product?: number// 460
   ProductComplex?: string// 1227
   SecurityGroup?: string// 1151
@@ -44,7 +44,7 @@ export interface IInstrument {
   ObligationType?: string// 1739
   AssetGroup?: number// 2210
   AssetClass?: number// 1938
-  LegAssetSubClass?: number// 2068
+  AssetSubClass?: number// 1939
   AssetType?: string// 1940
   SwapClass?: string// 1941
   SwapSubClass?: string// 1575
@@ -56,9 +56,9 @@ export interface IInstrument {
   TotalIssuedAmount?: number// 1947
   CouponFrequencyPeriod?: number// 1948
   CouponFrequencyUnit?: string// 1949
-  LegCouponDayCount?: number// 2165
+  CouponDayCount?: number// 1950
   ConvertibleBondEquityID?: string// 1951
-  LegConvertibleBondEquityIDSource?: string// 2167
+  ConvertibleBondEquityIDSource?: string// 1952
   ContractPriceRefMonth?: string// 1953
   LienSeniority?: number// 1954
   LoanFacility?: number// 1955
@@ -94,7 +94,7 @@ export interface IInstrument {
   StrikeIndexCurvePoint?: string// 2600
   StrikeIndexSpread?: number// 2001
   StrikeIndexQuote?: number// 2601
-  LegStrikePriceDeterminationMethod?: number// 2186
+  StrikePriceDeterminationMethod?: number// 1478
   StrikePriceBoundaryMethod?: number// 1479
   StrikePriceBoundaryPrecision?: number// 1480
   UnderlyingPriceDeterminationMethod?: number// 1481
@@ -102,7 +102,7 @@ export interface IInstrument {
   ContractMultiplier?: number// 231
   ContractMultiplierUnit?: number// 1435
   TradingUnitPeriodMultiplier?: number// 2353
-  DerivativeFlowScheduleType?: number// 1442
+  FlowScheduleType?: number// 1439
   MinPriceIncrement?: number// 969
   MinPriceIncrementAmount?: number// 1146
   UnitOfMeasure?: string// 996
@@ -113,7 +113,7 @@ export interface IInstrument {
   PriceUnitOfMeasureCurrency?: string// 1717
   SettlMethod?: string// 1193
   SettlSubMethod?: number// 2579
-  UnderlyingProvisionOptionExerciseStyle?: number// 42159
+  ExerciseStyle?: number// 1194
   OptPayoutType?: number// 1482
   OptPayoutAmount?: number// 1195
   PriceQuoteMethod?: string// 1196
@@ -144,7 +144,7 @@ export interface IInstrument {
   EncodedSecurityDesc?: Buffer// 351
   Pool?: string// 691
   ContractSettlMonth?: string// 667
-  LegCPProgram?: number// 2207
+  CPProgram?: number// 875
   CPRegType?: string// 876
   DatedDate?: Date// 873
   InterestAccrualDate?: Date// 874

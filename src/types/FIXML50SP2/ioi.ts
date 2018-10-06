@@ -26,9 +26,9 @@ export interface IIOI {
   IOIID: string// 23
   IOITransType: string// 28
   IOIRefID?: string// 26
-  RelativeValueSide: number// 2532
+  Side: string// 54
   QtyType?: number// 854
-  RelatedTradeQuantity: number// 1860
+  IOIQty: string// 27
   Currency?: string// 15
   PriceType?: number// 423
   Price?: number// 44

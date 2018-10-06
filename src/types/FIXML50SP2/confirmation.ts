@@ -42,7 +42,7 @@ export interface IConfirmation {
   TradeDate: Date// 75
   AllocQty: number// 80
   QtyType?: number// 854
-  RelativeValueSide: number// 2532
+  Side: string// 54
   Currency?: string// 15
   LastMkt?: string// 30
   AllocAccount: string// 79
@@ -74,7 +74,7 @@ export interface IConfirmation {
   SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   SharedCommission?: number// 858
   StandardHeader?: IStandardHeader

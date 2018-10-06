@@ -13,7 +13,7 @@ export interface ISettlementInstructionRequest {
   TransactTime: Date// 60
   AllocAccount?: string// 79
   AllocAcctIDSource?: number// 661
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   Product?: number// 460
   SecurityType?: string// 167
   CFICode?: string// 461

@@ -12,11 +12,11 @@ export interface IPaymentStream {
   PaymentStreamDelayIndicator?: boolean// 40740
   PaymentStreamCashSettlIndicator?: boolean// 42600
   PaymentStreamSettlCurrency?: string// 40741
-  UnderlyingAdditionalTermBondDayCount?: number// 42035
+  AdditionalTermBondDayCount?: number// 40018
   PaymentStreamAccrualDays?: number// 40743
   PaymentStreamDiscountType?: number// 40744
   PaymentStreamDiscountRate?: number// 40745
-  PaymentStreamDiscountRateDayCount?: number// 40746
+  LegPaymentStreamDiscountRateDayCount?: number// 40287
   PaymentStreamCompoundingMethod?: number// 40747
   PaymentStreamCompoundingXIDRef?: string// 42601
   PaymentStreamCompoundingSpread?: number// 42602

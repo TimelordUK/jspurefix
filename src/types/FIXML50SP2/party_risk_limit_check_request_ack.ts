@@ -27,7 +27,7 @@ export interface IPartyRiskLimitCheckRequestAck {
   EncodedRejectText?: Buffer// 1665
   RefOrderID?: string// 1080
   RefOrderIDSource?: string// 1081
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   RiskLimitApprovedAmount?: number// 2327
   RiskLimitCheckAmount?: number// 2324
   RiskLimitID?: string// 1670

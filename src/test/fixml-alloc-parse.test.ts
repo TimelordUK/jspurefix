@@ -172,7 +172,7 @@ test('test party sub group', () => {
   expect(parties[0]).toEqual(
     {
       PartySubID: '1',
-      UnderlyingReturnRateValuationDateType: 26
+      MiscFeeType: '26'
     })
 })
 

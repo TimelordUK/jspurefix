@@ -6,7 +6,7 @@ import { ICommissionData } from './commission_data'
 import { ICommissionDataGrp } from './commission_data_grp'
 
 export interface ISideCrossOrdModGrp {
-  RelativeValueSide: number// 2532
+  Side: string// 54
   ShortMarkingExemptIndicator?: boolean// 2102
   OrigClOrdID?: string// 41
   ClOrdID: string// 11

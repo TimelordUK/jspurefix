@@ -16,7 +16,7 @@ export interface IQuoteAck {
   QuoteCancelType?: number// 298
   SecondaryQuoteID?: string// 1751
   QuoteAckStatus: number// 1865
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665

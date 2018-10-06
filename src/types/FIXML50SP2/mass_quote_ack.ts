@@ -15,7 +15,7 @@ export interface IMassQuoteAck {
   QuoteReqID?: string// 131
   QuoteID?: string// 117
   QuoteStatus: number// 297
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   QuoteResponseLevel?: number// 301
   QuoteType?: number// 537
   QuoteCancelType?: number// 298

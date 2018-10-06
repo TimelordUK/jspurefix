@@ -1,19 +1,23 @@
 {
-  "ClearingBusinessDate": "2008-12-09T00:00:00.000Z",
-  "Instrument": {
-    "Symbol": "ZCZ9",
-    "SecurityID": "01",
-    "LegContractualMatrixSource": "H",
-    "CFICode": "FFCPSO",
-    "SecurityType": "FUT",
-    "MaturityMonthYear": "200906",
-    "SecurityExchange": "CME"
-  },
-  "MDFullGrp": [
+  "Batch": [
     {
-      "MDEntryPx": 18.97,
-      "OrdType": "6",
-      "MDMkt": "CME"
+      "ClearingBusinessDate": "2008-12-09T00:00:00.000Z",
+      "Instrument": {
+        "Symbol": "ZCZ9",
+        "SecurityID": "01",
+        "SecurityIDSource": "H",
+        "CFICode": "FFCPSO",
+        "SecurityType": "FUT",
+        "MaturityMonthYear": "200906",
+        "SecurityExchange": "CME"
+      },
+      "MDFullGrp": [
+        {
+          "MDEntryPx": 18.97,
+          "OrdType": "6",
+          "MDMkt": "CME"
+        }
+      ]
     }
   ]
 }

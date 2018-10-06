@@ -9,7 +9,7 @@ import { ISpreadOrBenchmarkCurveData } from './spread_or_benchmark_curve_data'
 export interface IInstrmtMDReqGrp {
   Currency?: string// 15
   QuoteType?: number// 537
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   MDEntrySize?: number// 271
   MDStreamID?: string// 1500

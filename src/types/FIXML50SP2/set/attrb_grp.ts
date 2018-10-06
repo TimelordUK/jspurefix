@@ -1,4 +1,4 @@
 export interface IAttrbGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  MiscFeeType?: string// 139
   InstrAttribValue?: string// 872
 }

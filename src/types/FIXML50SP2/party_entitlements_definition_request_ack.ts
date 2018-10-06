@@ -13,7 +13,7 @@ import { IPartyEntitlementAckGrp } from './set/party_entitlement_ack_grp'
 export interface IPartyEntitlementsDefinitionRequestAck {
   EntitlementRequestID: string// 1770
   EntitlementRequestStatus: number// 1882
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355

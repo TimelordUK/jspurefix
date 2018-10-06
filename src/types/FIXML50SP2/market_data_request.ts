@@ -18,8 +18,8 @@ export interface IMarketDataRequest {
   MarketDepth: number// 264
   MDUpdateType?: number// 265
   AggregatedBook?: boolean// 266
-  DerivativeSettleOnOpenFlag?: string// 1254
-  MDStatisticScope?: number// 2457
+  OpenCloseSettlFlag?: string// 286
+  Scope?: string// 546
   MDImplicitDelete?: boolean// 547
   ApplQueueAction?: number// 815
   ApplQueueMax?: number// 812

@@ -18,7 +18,7 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 export interface ICollateralInquiryAck {
   CollInquiryID: string// 909
   CollInquiryStatus: number// 945
-  EntitlementResult?: number// 1884
+  PosMaintResult?: number// 723
   TotNumReports?: number// 911
   Account?: string// 1
   AccountType?: number// 581

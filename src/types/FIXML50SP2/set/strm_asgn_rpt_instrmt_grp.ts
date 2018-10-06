@@ -1,10 +1,10 @@
 import { IInstrument } from './instrument'
 
 export interface IStrmAsgnRptInstrmtGrp {
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   StreamAsgnType?: number// 1617
   MDStreamID?: string// 1500
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355

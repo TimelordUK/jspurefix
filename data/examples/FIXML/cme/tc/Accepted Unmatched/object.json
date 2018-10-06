@@ -25,7 +25,7 @@
   "RootParties": [],
   "Instrument": {
     "SecurityID": "C",
-    "LegContractualMatrixSource": "H",
+    "SecurityIDSource": "H",
     "SecurityType": "FUT",
     "MaturityMonthYear": "201707",
     "TimeUnit": "Mo",
@@ -39,7 +39,7 @@
   ],
   "TrdCapRptSideGrp": [
     {
-      "RelativeValueSide": 1,
+      "Side": "1",
       "SideTradeID": "7799607",
       "TradeInputSource": "ABPLT",
       "TradeInputDevice": "API",
@@ -55,7 +55,7 @@
           "PtysSubGrp": [
             {
               "PartySubID": "Entering Firm Legal Name",
-              "UnderlyingReturnRateValuationDateType": 5
+              "MiscFeeType": "5"
             }
           ]
         },
@@ -65,7 +65,7 @@
           "PtysSubGrp": [
             {
               "PartySubID": "Contra Firm Legal Name",
-              "UnderlyingReturnRateValuationDateType": 5
+              "MiscFeeType": "5"
             }
           ]
         },
@@ -75,7 +75,7 @@
           "PtysSubGrp": [
             {
               "PartySubID": "Executing Firm Legal Name",
-              "UnderlyingReturnRateValuationDateType": 5
+              "MiscFeeType": "5"
             }
           ]
         },
@@ -86,7 +86,7 @@
           "PtysSubGrp": [
             {
               "PartySubID": "1",
-              "UnderlyingReturnRateValuationDateType": 26
+              "MiscFeeType": "26"
             }
           ]
         }

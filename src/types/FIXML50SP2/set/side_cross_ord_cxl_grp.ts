@@ -2,7 +2,7 @@ import { IParties } from './parties'
 import { IOrderQtyData } from './order_qty_data'
 
 export interface ISideCrossOrdCxlGrp {
-  RelativeValueSide: number// 2532
+  Side: string// 54
   OrigClOrdID?: string// 41
   ClOrdID: string// 11
   SecondaryClOrdID?: string// 526

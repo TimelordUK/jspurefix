@@ -1,6 +1,6 @@
 export interface ILegAdditionalTermBondRefGrp {
   LegAdditionalTermBondSecurityID?: string// 41317
-  LegContractualMatrixSource?: string// 42204
+  SecurityIDSource?: string// 22
   LegAdditionalTermBondDesc?: string// 41319
   EncodedLegAdditionalTermBondDescLen?: number// 41320
   EncodedLegAdditionalTermBondDesc?: Buffer// 41321
@@ -16,5 +16,5 @@ export interface ILegAdditionalTermBondRefGrp {
   LegAdditionalTermBondCurrentTotalIssuedAmount?: number// 41331
   LegAdditionalTermBondCouponFrequencyPeriod?: number// 41332
   LegAdditionalTermBondCouponFrequencyUnit?: string// 41333
-  UnderlyingAdditionalTermBondDayCount?: number// 42035
+  AdditionalTermBondDayCount?: number// 40018
 }

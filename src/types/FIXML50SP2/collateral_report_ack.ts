@@ -12,7 +12,7 @@ export interface ICollateralReportAck {
   CollRptID: string// 908
   TransactTime?: Date// 60
   CollRptStatus: number// 2488
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665

@@ -2,7 +2,7 @@ import { IPaymentBusinessCenterGrp } from './payment_business_center_grp'
 import { IPaymentSettlGrp } from './payment_settl_grp'
 
 export interface IPaymentGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  MiscFeeType?: string// 139
   PaymentSubType?: number// 40993
   PaymentPaySide?: number// 40214
   PaymentReceiveSide?: number// 40215

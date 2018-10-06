@@ -19,7 +19,7 @@ export interface ITradingSessionStatus {
   TradSesMethod?: number// 338
   TradSesMode?: number// 339
   UnsolicitedIndicator?: boolean// 325
-  MDStatisticStatus: number// 2477
+  AllocStatus: number// 87
   TradSesEvent?: number// 1368
   FastMarketIndicator?: boolean// 2447
   TradSesStatusRejReason?: number// 567

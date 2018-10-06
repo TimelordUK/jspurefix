@@ -18,7 +18,7 @@ import { IRelatedPositionGrp } from './related_position_grp'
 import { ISideCollateralAmountGrp } from './side_collateral_amount_grp'
 
 export interface ITrdCapRptSideGrp {
-  RelativeValueSide: number// 2532
+  Side: string// 54
   ShortMarkingExemptIndicator?: boolean// 2102
   SideExecID?: string// 1427
   OrderDelay?: number// 1428

@@ -39,7 +39,7 @@ export interface IAllocationInstruction {
   PreviouslyReported?: boolean// 570
   ReversalIndicator?: boolean// 700
   MatchType?: string// 574
-  RelativeValueSide: number// 2532
+  Side: string// 54
   Quantity: number// 53
   QtyType?: number// 854
   LastMkt?: string// 30
@@ -53,7 +53,7 @@ export interface IAllocationInstruction {
   AvgPxPrecision?: number// 74
   TradeDate: Date// 75
   TransactTime?: Date// 60
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   BookingType?: number// 775
   GrossTradeAmt?: number// 381
@@ -80,7 +80,7 @@ export interface IAllocationInstruction {
   AvgPxGroupID?: string// 1731
   ClearingBusinessDate?: Date// 715
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   PostTradeType?: number// 60001
   ExecutingClaimingIndicator?: number// 60002
   CustOrderCapacity?: number// 582

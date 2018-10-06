@@ -13,7 +13,7 @@ import { IInstrument } from './set/instrument'
 export interface IMarginRequirementInquiryAck {
   MarginReqmtInqID: string// 1635
   MarginReqmtInqStatus: number// 1640
-  EntitlementResult?: number// 1884
+  PosMaintResult?: number// 723
   TotNumReports?: number// 911
   SubscriptionRequestType?: string// 263
   ResponseTransportType?: number// 725

@@ -24,14 +24,14 @@ export interface ISecurityStatus {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   UnsolicitedIndicator?: boolean// 325
-  MDSecurityTradingStatus?: number// 1682
+  SecurityTradingStatus?: number// 326
   MarketMakerActivity?: number// 1655
   FastMarketIndicator?: boolean// 2447
-  SecurityMassTradingEvent?: number// 1680
+  SecurityTradingEvent?: number// 1174
   NextAuctionTime?: Date// 2116
   FinancialStatus?: string// 291
   CorporateAction?: string// 292
-  MDHaltReason?: number// 1684
+  HaltReason?: number// 327
   InViewOfCommon?: boolean// 328
   DueToRelated?: boolean// 329
   MDBookType?: number// 1021

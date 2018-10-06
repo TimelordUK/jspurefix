@@ -26,7 +26,7 @@ export interface ICollateralResponse {
   CollAsgnReason?: number// 895
   CollAsgnTransType?: number// 903
   CollAsgnRespType: number// 905
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   TransactTime: Date// 60
   CollApplType?: number// 1043
   FinancialStatus?: string// 291
@@ -44,7 +44,7 @@ export interface ICollateralResponse {
   MarginExcess?: number// 899
   TotalNetValue?: number// 900
   CashOutstanding?: number// 901
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   Price?: number// 44
   PriceType?: number// 423
   AccruedInterestAmt?: number// 159

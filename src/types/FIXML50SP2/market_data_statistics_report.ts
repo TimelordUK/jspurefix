@@ -19,7 +19,7 @@ import { IMDStatisticRptGrp } from './set/md_statistic_rpt_grp'
 export interface IMarketDataStatisticsReport {
   MDStatisticRptID: string// 2453
   MDStatisticReqID?: string// 2452
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   UnsolicitedIndicator?: boolean// 325
   TradeDate?: Date// 75
   MarketID?: string// 1301

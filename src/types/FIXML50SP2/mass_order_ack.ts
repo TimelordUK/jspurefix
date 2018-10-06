@@ -15,7 +15,7 @@ export interface IMassOrderAck {
   MassOrderRequestID?: string// 2423
   MassOrderReportID?: string// 2424
   MassOrderRequestStatus: number// 2425
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   OrderResponseLevel?: number// 2427
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664

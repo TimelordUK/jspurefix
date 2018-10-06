@@ -32,7 +32,7 @@ export interface IOrderMassActionReport {
   MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   Price?: number// 44
   TransactTime?: Date// 60
   ComplianceID?: string// 376

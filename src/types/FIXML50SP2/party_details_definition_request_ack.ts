@@ -13,7 +13,7 @@ import { IPartyDetailAckGrp } from './set/party_detail_ack_grp'
 export interface IPartyDetailsDefinitionRequestAck {
   PartyDetailsListRequestID: string// 1505
   PartyDetailRequestStatus: number// 1878
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355

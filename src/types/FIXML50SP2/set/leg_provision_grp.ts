@@ -19,7 +19,7 @@ export interface ILegProvisionGrp {
   LegProvisionCalculationAgent?: number// 40456
   LegProvisionOptionSinglePartyBuyerSide?: number// 40457
   LegProvisionOptionSinglePartySellerSide?: number// 40458
-  UnderlyingProvisionOptionExerciseStyle?: number// 42159
+  ExerciseStyle?: number// 1194
   LegProvisionOptionExerciseMultipleNotional?: number// 40460
   LegProvisionOptionExerciseMinimumNotional?: number// 40461
   LegProvisionOptionExerciseMaximumNotional?: number// 40462

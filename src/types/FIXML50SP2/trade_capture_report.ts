@@ -43,7 +43,7 @@ export interface ITradeCaptureReport {
   TrdRptStatus?: number// 939
   TradeRequestID?: string// 568
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   SecondaryTrdType?: number// 855
   AlgorithmicTradeIndicator?: number// 2667
   OffsetInstruction?: number// 1849
@@ -114,7 +114,7 @@ export interface ITradeCaptureReport {
   MultiLegReportingType?: string// 442
   TradeLegRefID?: string// 824
   TransactTime?: Date// 60
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   UnderlyingSettlementDate?: Date// 987
   MatchStatus?: string// 573
@@ -138,14 +138,14 @@ export interface ITradeCaptureReport {
   ReportedPxDiff?: boolean// 1134
   GrossTradeAmt?: number// 381
   TotalGrossTradeAmt?: number// 2369
-  CollRptRejectReason?: number// 2487
+  OrdRejReason?: number// 103
   RejectText?: string// 1328
   EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   FeeMultiplier?: number// 1329
   ClearedIndicator?: number// 1832
   ClearingIntention?: number// 1924
-  TradeClearingInstruction?: number// 1925
+  ClearingInstruction?: number// 577
   BackloadedTradeIndicator?: boolean// 1926
   ConfirmationMethod?: number// 1927
   MandatoryClearingIndicator?: boolean// 1928

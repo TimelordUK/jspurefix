@@ -1,4 +1,4 @@
 export interface IEntitlementTypeGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  PaymentSubType?: number// 40993
+  MiscFeeType?: string// 139
+  SecuritySubType?: string// 762
 }

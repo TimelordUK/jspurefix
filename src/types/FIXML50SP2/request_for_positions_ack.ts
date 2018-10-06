@@ -17,7 +17,7 @@ export interface IRequestForPositionsAck {
   TotalNumPosReports?: number// 727
   TotNumReports?: number// 911
   UnsolicitedIndicator?: boolean// 325
-  EntitlementResult: number// 1884
+  PosMaintResult: number// 723
   PosReqStatus: number// 729
   PosReqType?: number// 724
   MatchStatus?: string// 573

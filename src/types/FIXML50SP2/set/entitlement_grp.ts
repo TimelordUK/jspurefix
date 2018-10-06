@@ -4,8 +4,8 @@ import { IMarketSegmentScopeGrp } from './market_segment_scope_grp'
 
 export interface IEntitlementGrp {
   EntitlementIndicator?: boolean// 1774
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  PaymentSubType?: number// 40993
+  MiscFeeType?: string// 139
+  SecuritySubType?: string// 762
   EntitlementID?: string// 1776
   EntitlementPlatform?: string// 1784
   EntitlementStartDate?: Date// 1782

@@ -16,9 +16,9 @@ export interface IQuotReqRjctGrp {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   TradeOriginationDate?: Date// 229
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   QtyType?: number// 854
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192

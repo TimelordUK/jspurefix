@@ -21,6 +21,6 @@ export interface IRiskInstrumentScopeGrp {
   InstrumentScopeCouponRate?: number// 1555
   InstrumentScopeSecurityExchange?: string// 1616
   InstrumentScopeSecurityDesc?: string// 1556
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   InstrumentScopeSecurityAltIDGrp?: IInstrumentScopeSecurityAltIDGrp[]
 }

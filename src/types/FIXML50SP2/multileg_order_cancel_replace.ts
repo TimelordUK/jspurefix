@@ -43,11 +43,11 @@ export interface IMultilegOrderCancelReplace {
   BookingUnit?: string// 590
   PreallocMethod?: string// 591
   AllocID?: string// 70
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   CashMargin?: string// 544
   ClearingFeeIndicator?: string// 635
-  AllocHandlInst?: number// 209
+  HandlInst?: string// 21
   ExecInst?: string// 18
   AuctionInstruction?: number// 1805
   MinQty?: number// 110
@@ -62,7 +62,7 @@ export interface IMultilegOrderCancelReplace {
   ExDestinationIDSource?: string// 1133
   ExDestinationType?: number// 2704
   ProcessCode?: string// 81
-  RelativeValueSide: number// 2532
+  Side: string// 54
   ShortMarkingExemptIndicator?: boolean// 2102
   PrevClosePx?: number// 140
   SwapPoints?: number// 1069

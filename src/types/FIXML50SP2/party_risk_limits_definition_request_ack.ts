@@ -12,7 +12,7 @@ import { IPartyRiskLimitsAckGrp } from './set/party_risk_limits_ack_grp'
 */
 export interface IPartyRiskLimitsDefinitionRequestAck {
   RiskLimitRequestID: string// 1666
-  MDStatisticRequestResult?: number// 2473
+  SecurityRequestResult?: number// 560
   RiskLimitRequestStatus: number// 1762
   Text?: string// 58
   EncodedTextLen?: number// 354

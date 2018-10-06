@@ -26,9 +26,9 @@ export interface INewOrderCross {
   OrderRequestID?: number// 2422
   CrossType: number// 549
   CrossPrioritization: number// 550
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
-  AllocHandlInst?: number// 209
+  HandlInst?: string// 21
   ExecInst?: string// 18
   MinQty?: number// 110
   MinQtyMethod?: number// 1822

@@ -20,7 +20,7 @@ export interface IOrderStatusRequest {
   Account?: string// 1
   AcctIDSource?: number// 660
   MarketSegmentID?: string// 1300
-  RelativeValueSide: number// 2532
+  Side: string// 54
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   Instrument?: IInstrument

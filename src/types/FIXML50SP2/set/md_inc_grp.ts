@@ -38,15 +38,15 @@ export interface IMDIncGrp {
   MDMkt?: string// 275
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  MDSecurityTradingStatus?: number// 1682
-  MDHaltReason?: number// 1684
+  SecurityTradingStatus?: number// 326
+  HaltReason?: number// 327
   FastMarketIndicator?: boolean// 2447
   QuoteCondition?: string// 276
   TradeCondition?: string// 277
   AlgorithmicTradeIndicator?: number// 2667
   RegulatoryReportType?: number// 1934
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   ExecMethod?: number// 2405
   MatchType?: string// 574
   OrderCategory?: string// 1115
@@ -55,7 +55,7 @@ export interface IMDIncGrp {
   MDEntryOriginator?: string// 282
   LocationID?: string// 283
   DeskID?: string// 284
-  DerivativeSettleOnOpenFlag?: string// 1254
+  OpenCloseSettlFlag?: string// 286
   TimeInForce?: string// 59
   ExpireDate?: Date// 432
   ExpireTime?: Date// 126
@@ -75,7 +75,7 @@ export interface IMDIncGrp {
   NumberOfSellOrders?: number// 2450
   NumberOfOrders?: number// 346
   MDEntryPositionNo?: number// 290
-  MDStatisticScope?: number// 2457
+  Scope?: string// 546
   PriceDelta?: number// 811
   NetChgPrevDay?: number// 451
   Text?: string// 58
@@ -92,7 +92,7 @@ export interface IMDIncGrp {
   TradeVolume?: number// 1020
   SettlPriceType?: number// 731
   SettlPriceDeterminationMethod?: number// 2451
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   TransBkdTime?: Date// 483
   TransactTime?: Date// 60

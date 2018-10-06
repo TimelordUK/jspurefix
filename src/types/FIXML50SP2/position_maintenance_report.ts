@@ -26,7 +26,7 @@ export interface IPositionMaintenanceReport {
   PosMaintAction: number// 712
   OrigPosReqRefID?: string// 713
   PosMaintStatus?: number// 722
-  EntitlementResult?: number// 1884
+  PosMaintResult?: number// 723
   ClearingBusinessDate: Date// 715
   PreviousClearingBusinessDate?: Date// 2084
   ValuationDate?: Date// 2085

@@ -7,7 +7,7 @@ export interface ILegQuotStatGrp {
   LegQty?: number// 687
   LegMidPx?: number// 2346
   LegSwapType?: number// 690
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   LegSettlDate?: Date// 588
   InstrumentLeg?: IInstrumentLeg
   LegStipulations?: ILegStipulations[]

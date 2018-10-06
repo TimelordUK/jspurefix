@@ -19,7 +19,7 @@ export interface IExecutionAck {
   ExecAckStatus: string// 1036
   ExecID: string// 17
   DKReason?: string// 127
-  RelativeValueSide: number// 2532
+  Side: string// 54
   LastQty?: number// 32
   LastPx?: number// 31
   PriceType?: number// 423

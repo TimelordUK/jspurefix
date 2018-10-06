@@ -98,6 +98,9 @@ export class FieldsParser extends XsdParser {
   private insertFields (): void {
     const alias = this.alias
     this.data.forEach((f: ISimpleField) => {
+      if (f.simpleTypeName === 'InstrumentScopeSettlType_enum_t') {
+        let x = 0
+      }
       const sf: SimpleFieldDefinition = new SimpleFieldDefinition(f.Tag,
         f.name,
         f.AbbrName,

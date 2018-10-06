@@ -31,7 +31,7 @@ export interface ITradeCaptureReportRequest {
   ClOrdID?: string// 11
   MatchStatus?: string// 573
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   OffsetInstruction?: number// 1849
   TradeHandlingInstr?: string// 1123
   TransferReason?: string// 830
@@ -42,7 +42,7 @@ export interface ITradeCaptureReportRequest {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   TimeBracket?: string// 943
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   MultiLegReportingType?: string// 442
   TradeInputSource?: string// 578
   TradeInputDevice?: string// 579

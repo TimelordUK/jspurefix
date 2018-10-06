@@ -1,5 +1,5 @@
 export interface ILegSecondaryAssetGrp {
   LegSecondaryAssetClass?: number// 2077
-  UnderlyingSecondaryAssetSubClass?: number// 2082
+  SecondaryAssetSubClass?: number// 1978
   LegSecondaryAssetType?: string// 2079
 }

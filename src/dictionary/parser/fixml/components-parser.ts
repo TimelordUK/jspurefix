@@ -379,6 +379,9 @@ export class ComponentsParser extends XsdParser {
         }
 
         default: {
+          if (set.name === 'NewOrderSingle' && attribute.name === 'SettlTyp') {
+            let x = 0
+          }
           this.addSimpleAttribute(set, attribute)
         }
       }

@@ -12,11 +12,11 @@ export interface ILegPaymentStream {
   LegPaymentStreamDelayIndicator?: boolean// 40281
   LegPaymentStreamCashSettlIndicator?: boolean// 42399
   LegPaymentStreamSettlCurrency?: string// 40282
-  UnderlyingAdditionalTermBondDayCount?: number// 42035
+  AdditionalTermBondDayCount?: number// 40018
   LegPaymentStreamAccrualDays?: number// 40284
   LegPaymentStreamDiscountType?: number// 40285
   LegPaymentStreamDiscountRate?: number// 40286
-  PaymentStreamDiscountRateDayCount?: number// 40746
+  LegPaymentStreamDiscountRateDayCount?: number// 40287
   LegPaymentStreamCompoundingMethod?: number// 40288
   LegPaymentStreamCompoundingXIDRef?: string// 42400
   LegPaymentStreamCompoundingSpread?: number// 42401

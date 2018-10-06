@@ -1,3 +1,3 @@
 export interface IClrInstGrp {
-  TradeClearingInstruction?: number// 1925
+  ClearingInstruction?: number// 577
 }

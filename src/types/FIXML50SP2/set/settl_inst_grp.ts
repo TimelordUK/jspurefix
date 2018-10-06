@@ -5,7 +5,7 @@ export interface ISettlInstGrp {
   SettlInstID?: string// 162
   SettlInstTransType?: string// 163
   SettlInstRefID?: string// 214
-  RelativeValueSide?: number// 2532
+  Side?: string// 54
   Product?: number// 460
   SecurityType?: string// 167
   CFICode?: string// 461

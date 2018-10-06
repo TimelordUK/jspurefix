@@ -30,11 +30,11 @@ export interface IListOrdGrp {
   BookingUnit?: string// 590
   AllocID?: string// 70
   PreallocMethod?: string// 591
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   CashMargin?: string// 544
   ClearingFeeIndicator?: string// 635
-  AllocHandlInst?: number// 209
+  HandlInst?: string// 21
   ExecInst?: string// 18
   MinQty?: number// 110
   MatchIncrement?: number// 1089
@@ -44,7 +44,7 @@ export interface IListOrdGrp {
   ExDestinationIDSource?: string// 1133
   ProcessCode?: string// 81
   PrevClosePx?: number// 140
-  RelativeValueSide: number// 2532
+  Side: string// 54
   ShortMarkingExemptIndicator?: boolean// 2102
   ShortSaleExemptionReason?: number// 1688
   SideValueInd?: number// 401

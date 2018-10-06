@@ -9,19 +9,19 @@
 [16] 568 (TradeRequestID) = 123456, [17] 49 (SenderCompID) = CME
 [18] 50 (SenderSubID) = CPAPI, [19] 56 (TargetCompID) = ABPLT
 [20] 57 (TargetSubID) = API_ABC, [21] 48 (SecurityID) = C
-[22] 42204 (LegContractualMatrixSource) = H, [23] 167 (SecurityType) = FUT[Future]
+[22] 22 (SecurityIDSource) = H[ClearingHouseClearingOrganization], [23] 167 (SecurityType) = FUT[Future]
 [24] 200 (MaturityMonthYear) = 201707, [25] 207 (SecurityExchange) = CBT
 [26] 997 (TimeUnit) = Mo[Month], [27] 769 (TrdRegTimestamp) = 2017-03-16T08:37:36-05:00
-[28] 770 (TrdRegTimestampType) = 1[ExecutionTime], [29] 2532 (RelativeValueSide) = 1[Bid]
+[28] 770 (TrdRegTimestampType) = 1[ExecutionTime], [29] 54 (Side) = 1[Buy]
 [30] -1 (unknown) = 98765, [31] 579 (TradeInputDevice) = API
 [32] 578 (TradeInputSource) = ABPLT, [33] 1506 (SideTradeID) = 7799607
-[34] 582 (CustOrderCapacity) = 4[AllOther], [35] 452 (PartyRole) = 24[CustomerAccount]
-[36] 448 (PartyID) = API_ABC, [37] 452 (PartyRole) = 24[CustomerAccount]
-[38] 448 (PartyID) = API_ABC, [39] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
-[40] 523 (PartySubID) = Entering Firm Legal Name, [41] 452 (PartyRole) = 24[CustomerAccount]
-[42] 448 (PartyID) = API_ABC, [43] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
-[44] 523 (PartySubID) = Entering Firm Legal Name, [45] 452 (PartyRole) = 24[CustomerAccount]
-[46] 448 (PartyID) = API_ABC, [47] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
-[48] 523 (PartySubID) = Entering Firm Legal Name, [49] 452 (PartyRole) = 24[CustomerAccount]
-[50] 448 (PartyID) = API_ABC, [51] 447 (PartyIDSource) = C[GenerallyAcceptedMarketParticipantIdentifierEGNasdMnemonic]
-[52] 43073 (UnderlyingReturnRateValuationDateType) = 5[5], [53] 523 (PartySubID) = Entering Firm Legal Name
+[34] 582 (CustOrderCapacity) = 4[AllOther], [35] 452 (PartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
+[36] 448 (PartyID) = ABC_TRD1, [37] 452 (PartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
+[38] 448 (PartyID) = ABC_TRD1, [39] 139 (MiscFeeType) = 5[Stamp]
+[40] 523 (PartySubID) = Contra Firm Legal Name, [41] 452 (PartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
+[42] 448 (PartyID) = ABC_TRD1, [43] 139 (MiscFeeType) = 5[Stamp]
+[44] 523 (PartySubID) = Contra Firm Legal Name, [45] 452 (PartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
+[46] 448 (PartyID) = ABC_TRD1, [47] 139 (MiscFeeType) = 5[Stamp]
+[48] 523 (PartySubID) = Contra Firm Legal Name, [49] 452 (PartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
+[50] 448 (PartyID) = ABC_TRD1, [51] 447 (PartyIDSource) = C[GenerallyAcceptedMarketParticipantIdentifierEGNasdMnemonic]
+[52] 139 (MiscFeeType) = 5[Stamp], [53] 523 (PartySubID) = Contra Firm Legal Name

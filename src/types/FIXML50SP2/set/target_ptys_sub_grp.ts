@@ -1,4 +1,4 @@
 export interface ITargetPtysSubGrp {
   TargetPartySubID?: string// 2434
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  MiscFeeType?: string// 139
 }

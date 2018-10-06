@@ -16,7 +16,7 @@
   "RootParties": [],
   "Instrument": {
     "SecurityID": "C",
-    "LegContractualMatrixSource": "H",
+    "SecurityIDSource": "H",
     "SecurityType": "FUT",
     "MaturityMonthYear": "201707",
     "SecurityExchange": "CBT"
@@ -29,7 +29,7 @@
   ],
   "TrdCapRptSideGrp": [
     {
-      "RelativeValueSide": 1,
+      "Side": "1",
       "SideTradeID": "12345",
       "TradeInputSource": "ABPLT",
       "Parties": [

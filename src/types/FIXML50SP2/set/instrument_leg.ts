@@ -44,7 +44,7 @@ export interface IInstrumentLeg {
   LegObligationType?: string// 2155
   LegAssetGroup?: number// 2348
   LegAssetClass?: number// 2067
-  LegAssetSubClass?: number// 2068
+  AssetSubClass?: number// 1939
   LegAssetType?: string// 2069
   LegSwapClass?: string// 2070
   LegSwapSubClass?: string// 2156
@@ -56,9 +56,9 @@ export interface IInstrumentLeg {
   LegTotalIssuedAmount?: number// 2162
   LegCouponFrequencyPeriod?: number// 2163
   LegCouponFrequencyUnit?: string// 2164
-  LegCouponDayCount?: number// 2165
+  CouponDayCount?: number// 1950
   LegConvertibleBondEquityID?: string// 2166
-  LegConvertibleBondEquityIDSource?: string// 2167
+  ConvertibleBondEquityIDSource?: string// 1952
   LegContractPriceRefMonth?: string// 2168
   LegLienSeniority?: number// 2169
   LegLoanFacility?: number// 2170
@@ -100,7 +100,7 @@ export interface IInstrumentLeg {
   LegContractMultiplier?: number// 614
   LegContractMultiplierUnit?: number// 1436
   LegTradingUnitPeriodMultiplier?: number// 2354
-  DerivativeFlowScheduleType?: number// 1442
+  FlowScheduleType?: number// 1439
   LegMinPriceIncrement?: number// 2190
   LegMinPriceIncrementAmount?: number// 2191
   LegUnitOfMeasure?: string// 999
@@ -134,7 +134,7 @@ export interface IInstrumentLeg {
   LegSecurityDesc?: string// 620
   EncodedLegSecurityDescLen?: number// 621
   EncodedLegSecurityDesc?: Buffer// 622
-  LegCPProgram?: number// 2207
+  CPProgram?: number// 875
   LegCPRegType?: string// 2208
   LegRatioQty?: number// 623
   LegSide?: string// 624

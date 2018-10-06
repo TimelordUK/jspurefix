@@ -14,7 +14,7 @@ import { IRelatedTradeGrp } from './related_trade_grp'
 import { IRelatedPositionGrp } from './related_position_grp'
 
 export interface ITrdCapRptAckSideGrp {
-  RelativeValueSide: number// 2532
+  Side: string// 54
   SideExecID?: string// 1427
   SideTradeID?: string// 1506
   SideOrigTradeID?: string// 1507

@@ -1,4 +1,4 @@
 export interface ISecurityClassificationGrp {
-  NotAffectedReason?: number// 2677
+  SecurityClassificationReason?: number// 1583
   SecurityClassificationValue?: string// 1584
 }

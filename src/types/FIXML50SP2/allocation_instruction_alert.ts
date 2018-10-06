@@ -37,7 +37,7 @@ export interface IAllocationInstructionAlert {
   PreviouslyReported?: boolean// 570
   ReversalIndicator?: boolean// 700
   MatchType?: string// 574
-  RelativeValueSide: number// 2532
+  Side: string// 54
   Quantity?: number// 53
   QtyType?: number// 854
   AllocGroupQuantity?: number// 1736
@@ -54,7 +54,7 @@ export interface IAllocationInstructionAlert {
   TradeDate: Date// 75
   TransactTime?: Date// 60
   AllocStatus?: number// 87
-  InstrumentScopeSettlType?: string// 1557
+  SettlType?: string// 63
   SettlDate?: Date// 64
   BookingType?: number// 775
   GrossTradeAmt?: number// 381
@@ -81,7 +81,7 @@ export interface IAllocationInstructionAlert {
   AvgPxGroupID?: string// 1731
   ClearingBusinessDate?: Date// 715
   TrdType?: number// 828
-  SideTrdSubTyp?: number// 1008
+  TrdSubType?: number// 829
   CustOrderCapacity?: number// 582
   TradeInputSource?: string// 578
   MultiLegReportingType?: string// 442

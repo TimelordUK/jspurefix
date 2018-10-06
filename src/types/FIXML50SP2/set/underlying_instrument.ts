@@ -62,7 +62,7 @@ export interface IUnderlyingInstrument {
   UnderlyingContractMultiplier?: number// 436
   UnderlyingContractMultiplierUnit?: number// 1437
   UnderlyingTradingUnitPeriodMultiplier?: number// 2363
-  DerivativeFlowScheduleType?: number// 1442
+  FlowScheduleType?: number// 1439
   UnderlyingUnitOfMeasure?: string// 998
   UnderlyingUnitOfMeasureQty?: number// 1423
   UnderlyingUnitOfMeasureCurrency?: string// 1718
@@ -80,7 +80,7 @@ export interface IUnderlyingInstrument {
   UnderlyingSecurityDesc?: string// 307
   EncodedUnderlyingSecurityDescLen?: number// 364
   EncodedUnderlyingSecurityDesc?: Buffer// 365
-  LegCPProgram?: number// 2207
+  CPProgram?: number// 875
   UnderlyingCPRegType?: string// 878
   UnderlyingAllocationPercent?: number// 972
   UnderlyingCurrency?: string// 318
@@ -107,7 +107,7 @@ export interface IUnderlyingInstrument {
   UnderlyingTotalIssuedAmount?: number// 1990
   UnderlyingCouponFrequencyPeriod?: number// 1991
   UnderlyingCouponFrequencyUnit?: string// 1992
-  LegCouponDayCount?: number// 2165
+  CouponDayCount?: number// 1950
   UnderlyingObligationID?: string// 1994
   UnderlyingObligationIDSource?: string// 1995
   UnderlyingEquityID?: string// 1996
@@ -134,7 +134,7 @@ export interface IUnderlyingInstrument {
   UnderlyingObligationType?: string// 2012
   UnderlyingAssetGroup?: number// 2491
   UnderlyingAssetClass?: number// 2013
-  LegAssetSubClass?: number// 2068
+  AssetSubClass?: number// 1939
   UnderlyingAssetType?: string// 2015
   UnderlyingSwapClass?: string// 2016
   UnderlyingSwapSubClass?: string// 2289

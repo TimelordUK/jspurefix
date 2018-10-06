@@ -19,7 +19,7 @@ export interface IProvisionGrp {
   ProvisionCalculationAgent?: number// 40098
   ProvisionOptionSinglePartyBuyerSide?: number// 40099
   ProvisionOptionSinglePartySellerSide?: number// 40100
-  UnderlyingProvisionOptionExerciseStyle?: number// 42159
+  ExerciseStyle?: number// 1194
   ProvisionOptionExerciseMultipleNotional?: number// 40102
   ProvisionOptionExerciseMinimumNotional?: number// 40103
   ProvisionOptionExerciseMaximumNotional?: number// 40104

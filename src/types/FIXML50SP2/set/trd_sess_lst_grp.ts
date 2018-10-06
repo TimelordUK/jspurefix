@@ -11,7 +11,7 @@ export interface ITrdSessLstGrp {
   TradSesMethod?: number// 338
   TradSesMode?: number// 339
   UnsolicitedIndicator?: boolean// 325
-  MDStatisticStatus: number// 2477
+  AllocStatus: number// 87
   TradSesStatusRejReason?: number// 567
   TradSesStartTime?: Date// 341
   TradSesOpenTime?: Date// 342
