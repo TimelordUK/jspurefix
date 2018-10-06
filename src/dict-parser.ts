@@ -27,6 +27,8 @@ import { getDefinitions } from './util/dictionary-definitions'
 import { getWords } from './util/buffer-helper'
 import * as requestPromise from 'request-promise'
 import { acceptor } from './transport/fixml/acceptor'
+import { BusinessRejectReason } from './types/FIXML50SP2/enum/all-enum'
+import { IBusinessMessageReject } from './types/FIXML50SP2/business_message_reject'
 
 async function testEncodeDecode (): Promise<any> {
   const msgType: string = 'W'
@@ -106,6 +108,14 @@ async function repository (): Promise<any> {
   const so = definitions.message.get('ExecutionReport')
   const t855 = definitions.simple.get('SecondaryTrdType')
 
+  const reject = {
+    Text: `no response`,
+    BusinessRejectReason: BusinessRejectReason.ApplicationNotAvailable
+  } as IBusinessMessageReject
+  const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
+  fe.encode(reject, 'BusinessMessageReject')
+  const fixml: string = fe.buffer.toString()
+  console.log(fixml)
   const jh: JsonHelper = new JsonHelper(definitions)
   const fs: any = require('fs')
   let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)

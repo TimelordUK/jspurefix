@@ -5,6 +5,7 @@ import { IJsFixLogger } from '../../config/js-fix-logger'
 import { IFixmlRequest } from '../fixml/fixml-request'
 import { StringDuplex } from '../duplex/string-duplex'
 import { Dictionary } from '../../collections/dictionary'
+import { FixDuplex } from '../duplex/fix-duplex'
 
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
@@ -67,6 +68,25 @@ export class HttpAcceptor extends FixAcceptor {
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
   }
 
+  private respond (duplex: FixDuplex, res: express.Response, token: string = null) {
+    res.setHeader('Content-Type', 'application/json')
+    const timer = setTimeout(() => {
+      const businessReject = `<FIXML>
+	<BizMsgRej BizRejRsn="4" Txt="no response from application"/>
+</FIXML>`
+      const b = Buffer.from(businessReject, 'utf-8')
+      res.send(b)
+    }, 5000)
+    duplex.writable.on('data', (d) => {
+      this.logger.info('responding to request')
+      clearTimeout(timer)
+      if (token) {
+        res.setHeader('authorization', token)
+      }
+      res.send(d)
+    })
+  }
+
   private logon (req: express.Request, res: express.Response) {
     const body: IFixmlRequest = req.body
     const id = this.nextId++
@@ -75,11 +95,7 @@ export class HttpAcceptor extends FixAcceptor {
     const d = new StringDuplex()
     const transport = new MsgTransport(id, this.config, d)
     const token = this.saveTransport(id, transport)
-    d.writable.on('data', (d) => {
-      res.setHeader('Content-Type', 'application/json')
-      res.setHeader('authorization', token)
-      res.send(d)
-    })
+    this.respond(d, res, token)
     d.readable.push(body.fixml)
   }
 
@@ -105,10 +121,7 @@ export class HttpAcceptor extends FixAcceptor {
         })
       } else {
         const d = t.duplex
-        d.writable.on('data', (d) => {
-          res.setHeader('Content-Type', 'application/json')
-          res.send(d)
-        })
+        this.respond(d, res)
         d.readable.push(body.fixml)
       }
     })

@@ -20,7 +20,7 @@ export class HttpServer extends FixmlSession {
     switch (msgType) {
       case 'Order': {
         const req: INewOrderSingle = view.toObject()
-        this.logger.info(`received request ${req.ClOrdID}`)
+        this.logger.info(`received order id ${req.ClOrdID}`)
       }
     }
   }
@@ -30,7 +30,6 @@ export class HttpServer extends FixmlSession {
     this.fixLog.info(txt)
   }
 
-  // no delimiter substitution on transmit messages
   protected onEncoded (msgType: string, txt: string): void {
     this.fixLog.info(txt)
   }

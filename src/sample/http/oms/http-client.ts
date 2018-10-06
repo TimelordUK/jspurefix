@@ -19,6 +19,14 @@ export class HttpClient extends FixmlSession {
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {
     // dispatch messages
+    const o = view.toObject()
+    this.logger.info(JSON.stringify(o, null, 4))
+    switch (msgType) {
+      case 'BizMsgRej': {
+        this.logger.warning('received rejection')
+        break
+      }
+    }
   }
 
   // use msgType for example to persist only trade capture messages to database
@@ -26,7 +34,6 @@ export class HttpClient extends FixmlSession {
     this.fixLog.info(txt)
   }
 
-  // no delimiter substitution on transmit messages
   protected onEncoded (msgType: string, txt: string): void {
     this.fixLog.info(txt)
   }
