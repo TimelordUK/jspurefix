@@ -19,8 +19,7 @@ export class HttpClient extends FixmlSession {
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {
     // dispatch messages
-    const o = view.toObject()
-    this.logger.info(JSON.stringify(o, null, 4))
+    this.logger.info(view.toJson())
     switch (msgType) {
       case 'BizMsgRej': {
         this.logger.warning('received rejection')
@@ -48,6 +47,7 @@ export class HttpClient extends FixmlSession {
     const req = this.factory.createOrder('IBM', Side.Buy, 10000, 100.12)
     this.send('NewOrderSingle', req)
     this.logger.info(`will logout after ${logoutSeconds}`)
+    return
     setTimeout(() => {
       this.done()
     }, logoutSeconds * 1000)

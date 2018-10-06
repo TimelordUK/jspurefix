@@ -11,8 +11,6 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
 
-const uuidv3 = require('uuid/v3')
-
 export class HttpAcceptor extends FixAcceptor {
   private app: express.Express = express()
   private server: http.Server
@@ -52,6 +50,7 @@ export class HttpAcceptor extends FixAcceptor {
   }
 
   private saveTransport (tid: number, transport: MsgTransport): string {
+    const uuidv3 = require('uuid/v3')
     this.transports[tid] = transport
     const app = this.config.description.application
     const keys: string[] = Object.keys(this.transports)
@@ -69,22 +68,27 @@ export class HttpAcceptor extends FixAcceptor {
   }
 
   private respond (duplex: FixDuplex, res: express.Response, token: string = null) {
-    res.setHeader('Content-Type', 'application/json')
+
     const timer = setTimeout(() => {
-      const businessReject = `<FIXML>
-	<BizMsgRej BizRejRsn="4" Txt="no response from application"/>
-</FIXML>`
+      const businessReject = `<FIXML><BizMsgRej BizRejRsn="4" Txt="no response from application"/></FIXML>`
       const b = Buffer.from(businessReject, 'utf-8')
+      res.setHeader('Content-Type', 'application/json')
+      duplex.writable.removeListener('data', transmit)
       res.send(b)
     }, 5000)
-    duplex.writable.on('data', (d) => {
+
+    const transmit = (d: Buffer) => {
+      res.setHeader('Content-Type', 'application/json')
       this.logger.info('responding to request')
       clearTimeout(timer)
       if (token) {
         res.setHeader('authorization', token)
       }
+      duplex.writable.removeListener('data', transmit)
       res.send(d)
-    })
+    }
+
+    duplex.writable.on('data', transmit)
   }
 
   private logon (req: express.Request, res: express.Response) {
@@ -107,7 +111,10 @@ export class HttpAcceptor extends FixAcceptor {
     const query = `${root}query`
     this.logger.info(`uri: authorise ${authorise}, query ${query}`)
     router.post(authorise, (req: express.Request, res: express.Response) => {
-      this.logon(req, res)
+      if (!req.headers.authorization) {
+        this.logger.info('logon')
+        this.logon(req, res)
+      }
     })
 
     router.get(query, (req: express.Request, res: express.Response) => {

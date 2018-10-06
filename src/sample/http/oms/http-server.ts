@@ -3,10 +3,13 @@ import { MsgView } from '../../../buffer/msg-view'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
 import { INewOrderSingle } from '../../../types/FIXML50SP2/new_order_single'
+import { IExecutionReport } from '../../../types/FIXML50SP2/execution_report'
+import { OmsFactory } from './oms-factory'
 
 export class HttpServer extends FixmlSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
+  private readonly factory: OmsFactory = new OmsFactory('server')
   constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
@@ -19,8 +22,10 @@ export class HttpServer extends FixmlSession {
     this.logger.info(view.toJson())
     switch (msgType) {
       case 'Order': {
-        const req: INewOrderSingle = view.toObject()
-        this.logger.info(`received order id ${req.ClOrdID}`)
+        const order: INewOrderSingle = view.toObject()
+        this.logger.info(`received order id ${order.ClOrdID}`)
+        const fill: IExecutionReport = this.factory.fillOrder(order)
+        this.send('ExecutionReport', fill)
       }
     }
   }
