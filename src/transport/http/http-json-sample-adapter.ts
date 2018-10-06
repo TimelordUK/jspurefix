@@ -59,8 +59,10 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     } as IHtmlOptions
     const headers = options.headers
     if (headers) {
-      if (headers.authorization) {
+      if (this.token) {
         headers.authorization = this.token
+      } else if (msgType === 'UserReq') {
+        delete headers.authorization
       }
     }
     this.queue.push(new HttpTransaction(msgType, options))

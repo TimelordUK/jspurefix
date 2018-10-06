@@ -10,7 +10,11 @@
             "method": "POST",
             "uri": "http://localhost:2434/authorise",
             "json":true,
-            "resolveWithFullResponse": true
+            "resolveWithFullResponse": true,
+            "headers": {
+              "User-Agent": "jspurefix-client",
+              "authorization": "_token"
+            }
           }
         },
         {
