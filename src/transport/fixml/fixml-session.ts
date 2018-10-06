@@ -190,7 +190,7 @@ export abstract class FixmlSession {
           }
 
           case UserRequestType.LogOffUser: {
-            // this.peerLogout(view)
+            this.peerLogout(view)
             break
           }
         }
@@ -210,6 +210,23 @@ export abstract class FixmlSession {
           }
         }
         break
+      }
+    }
+  }
+
+  private peerLogout (view: MsgView) {
+    const msg = view.getString(MsgTag.Text)
+    switch (this.sessionState.state) {
+      case SessionState.WaitingLogoutConfirm: {
+        this.sessionLogger.info(`peer confirms logout Text = '${msg}'`)
+        this.stop()
+        break
+      }
+
+      case SessionState.PeerLoggedOn: {
+        this.sessionState.state = SessionState.ConfirmingLogout
+        this.sessionLogger.info(`peer initiates logout Text = '${msg}'`)
+        this.sessionLogout()
       }
     }
   }
@@ -254,7 +271,7 @@ export abstract class FixmlSession {
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} confirming logout`
         this.sessionLogger.info(msg)
-        this.send('UserRsp', factory.logout(msg))
+        this.send('UserRsp', factory.logout(msg, true))
         break
       }
 
