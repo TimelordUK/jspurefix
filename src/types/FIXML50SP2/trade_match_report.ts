@@ -10,21 +10,21 @@ import { IInstrmtMatchSideGrp } from './set/instrmt_match_side_grp'
 ****************************************************
 */
 export interface ITradeMatchReport {
-  TradeMatchID: string// 1
+  TrdMatchID: string// 880
   MatchType?: string// 574
-  TransferReportType?: number// 2444
+  TradeReportType?: number// 856
   ClearingBusinessDate?: Date// 715
   TrdType?: number// 828
   SideTrdSubTyp?: number// 1008
   TradeDate?: Date// 75
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  SideVenueType?: string// 1899
+  VenueType?: string// 1430
   TradeMatchTimestamp?: Date// 1888
-  RelSymTransactTime?: Date// 1504
-  SideMultiLegReportingType?: number// 752
+  TransactTime?: Date// 60
+  MultiLegReportingType?: string// 442
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   InstrmtMatchSideGrp?: IInstrmtMatchSideGrp[]

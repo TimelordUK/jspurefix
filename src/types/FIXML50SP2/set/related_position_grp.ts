@@ -1,5 +1,5 @@
 export interface IRelatedPositionGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  RelatedPositionID?: string// 1862
+  RelatedPositionIDSource?: number// 1863
+  RelatedPositionDate?: Date// 1864
 }

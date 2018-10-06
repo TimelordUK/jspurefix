@@ -12,7 +12,7 @@ import { IRFQReqGrp } from './set/rfq_req_grp'
 export interface IRFQRequest {
   RFQReqID: string// 644
   SubscriptionRequestType?: string// 263
-  PrivateQuote?: string// 1171
+  PrivateQuote?: boolean// 1171
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   RFQReqGrp?: IRFQReqGrp[]

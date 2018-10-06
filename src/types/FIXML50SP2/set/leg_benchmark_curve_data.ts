@@ -1,7 +1,7 @@
 export interface ILegBenchmarkCurveData {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingMakeWholeBenchmarkCurveName?: string// 42890
-  UnderlyingMakeWholeBenchmarkCurvePoint?: string// 42891
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceType?: number// 43068
+  LegBenchmarkCurveCurrency?: string// 676
+  LegBenchmarkCurveName?: string// 677
+  LegBenchmarkCurvePoint?: string// 678
+  LegBenchmarkPrice?: number// 679
+  LegBenchmarkPriceType?: number// 680
 }

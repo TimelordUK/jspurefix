@@ -1,8 +1,8 @@
 {
-  "MDStatisticReqID": "ABC123",
-  "RiskLimitRequestType": 3,
+  "TradeRequestID": "ABC123",
+  "TradeRequestType": 3,
   "SubscriptionRequestType": "1",
-  "SideMultiLegReportingType": 3,
+  "MultiLegReportingType": "3",
   "StandardHeader": {
     "SenderCompID": "RYAN",
     "TargetCompID": "CME",
@@ -11,12 +11,12 @@
   },
   "Parties": [
     {
-      "BatchID": "RYANTF",
-      "UnderlyingProvisionPartyRole": 7
+      "PartyID": "RYANTF",
+      "PartyRole": 7
     },
     {
-      "BatchID": "RYANTF1",
-      "UnderlyingProvisionPartyRole": 7
+      "PartyID": "RYANTF1",
+      "PartyRole": 7
     }
   ]
 }

@@ -4,26 +4,26 @@ import { IUnderlyingPaymentStreamFixingDateBusinessCenterGrp } from './underlyin
 import { IUnderlyingPaymentStreamFixingDateGrp } from './underlying_payment_stream_fixing_date_grp'
 
 export interface IUnderlyingPaymentStreamResetDates {
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  PaymentStreamResetWeeklyRollConvention?: string// 40766
-  PaymentStreamInitialFixingDateRelativeTo?: number// 40767
-  PaymentStreamInitialFixingDateBusinessDayConvention?: number// 40768
-  PaymentStreamInitialFixingDateOffsetPeriod?: number// 40770
-  PaymentStreamInitialFixingDateOffsetUnit?: string// 40771
-  PaymentStreamInitialFixingDateOffsetDayType?: number// 40772
-  PaymentStreamInitialFixingDateAdjusted?: Date// 40773
-  PaymentScheduleFixingDateRelativeTo?: number// 40852
-  PaymentScheduleFixingDateBusinessDayConvention?: number// 40853
-  PaymentScheduleFixingDateOffsetPeriod?: number// 40855
-  PaymentScheduleFixingDateOffsetUnit?: string// 40856
-  PaymentScheduleFixingDateOffsetDayType?: number// 40857
-  PaymentScheduleFixingDateAdjusted?: Date// 40858
-  PaymentStreamRateCutoffDateOffsetPeriod?: number// 40781
-  PaymentStreamRateCutoffDateOffsetUnit?: string// 40782
-  PaymentStreamRateCutoffDateOffsetDayType?: number// 40783
+  UnderlyingPaymentStreamResetDateRelativeTo?: number// 40592
+  UnderlyingPaymentStreamResetDateBusinessDayConvention?: number// 40593
+  UnderlyingPaymentStreamResetFrequencyPeriod?: number// 40595
+  UnderlyingPaymentStreamResetFrequencyUnit?: string// 40596
+  UnderlyingPaymentStreamResetWeeklyRollConvention?: string// 40597
+  UnderlyingPaymentStreamInitialFixingDateRelativeTo?: number// 40598
+  UnderlyingPaymentStreamInitialFixingDateBusinessDayConvention?: number// 40599
+  UnderlyingPaymentStreamInitialFixingDateOffsetPeriod?: number// 40601
+  UnderlyingPaymentStreamInitialFixingDateOffsetUnit?: string// 40602
+  UnderlyingPaymentStreamInitialFixingDateOffsetDayType?: number// 40603
+  UnderlyingPaymentStreamInitialFixingDateAdjusted?: Date// 40604
+  UnderlyingPaymentStreamFixingDateRelativeTo?: number// 40605
+  UnderlyingPaymentStreamFixingDateBusinessDayConvention?: number// 40606
+  UnderlyingPaymentStreamFixingDateOffsetPeriod?: number// 40608
+  UnderlyingPaymentStreamFixingDateOffsetUnit?: string// 40609
+  UnderlyingPaymentStreamFixingDateOffsetDayType?: number// 40610
+  UnderlyingPaymentStreamFixingDateAdjusted?: Date// 40611
+  UnderlyingPaymentStreamRateCutoffDateOffsetPeriod?: number// 40612
+  UnderlyingPaymentStreamRateCutoffDateOffsetUnit?: string// 40613
+  UnderlyingPaymentStreamRateCutoffDateOffsetDayType?: number// 40614
   UnderlyingPaymentStreamResetDateBusinessCenterGrp?: IUnderlyingPaymentStreamResetDateBusinessCenterGrp[]
   UnderlyingPaymentStreamInitialFixingDateBusinessCenterGrp?: IUnderlyingPaymentStreamInitialFixingDateBusinessCenterGrp[]
   UnderlyingPaymentStreamFixingDateBusinessCenterGrp?: IUnderlyingPaymentStreamFixingDateBusinessCenterGrp[]

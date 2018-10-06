@@ -9,10 +9,10 @@ import { IApplicationSequenceControl } from './set/application_sequence_control'
 ****************************************************
 */
 export interface IMarketDataReport {
-  MDStatisticRptID?: string// 2453
+  MDReportID?: number// 963
   MDReportEvent: number// 2535
   MDReportCount: number// 2536
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   TotNumReports?: number// 911
   TotNoMarketSegmentReports?: number// 2537
   TotNoInstrumentReports?: number// 2538

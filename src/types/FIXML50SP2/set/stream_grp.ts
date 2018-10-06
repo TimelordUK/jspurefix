@@ -9,27 +9,27 @@ import { IDeliveryStream } from './delivery_stream'
 import { IDeliveryScheduleGrp } from './delivery_schedule_grp'
 
 export interface IStreamGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingDividendPeriodXID?: string// 42881
-  PaymentDesc?: string// 43087
-  UnderlyingStreamVersion?: string// 43083
-  UnderlyingStreamVersionEffectiveDate?: Date// 43084
-  PaymentSchedulePaySide?: number// 40833
-  PaymentScheduleReceiveSide?: number// 40834
-  UnderlyingStreamNotionalXIDRef?: string// 42018
-  UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingStreamNotionalDeterminationMethod?: string// 43085
-  UnderlyingStreamNotionalAdjustments?: number// 43086
-  UnderlyingStreamNotionalFrequencyPeriod?: number// 42019
-  UnderlyingStreamNotionalFrequencyUnit?: string// 42020
-  UnderlyingStreamNotionalCommodityFrequency?: number// 42021
-  UnderlyingStreamNotionalUnitOfMeasure?: string// 42022
-  UnderlyingStreamTotalNotional?: number// 42023
-  UnderlyingStreamTotalNotionalUnitOfMeasure?: string// 42024
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  StreamType?: number// 40050
+  StreamXID?: string// 41303
+  StreamDesc?: string// 40051
+  StreamVersion?: string// 42784
+  StreamVersionEffectiveDate?: Date// 42785
+  StreamPaySide?: number// 40052
+  StreamReceiveSide?: number// 40053
+  StreamNotionalXIDRef?: string// 41305
+  StreamNotional?: number// 40054
+  StreamCurrency?: string// 40055
+  StreamNotionalDeterminationMethod?: string// 42786
+  StreamNotionalAdjustments?: number// 42787
+  StreamNotionalFrequencyPeriod?: number// 41306
+  StreamNotionalFrequencyUnit?: string// 41307
+  StreamNotionalCommodityFrequency?: number// 41308
+  StreamNotionalUnitOfMeasure?: string// 41309
+  StreamTotalNotional?: number// 41310
+  StreamTotalNotionalUnitOfMeasure?: string// 41311
+  StreamText?: string// 40056
+  EncodedStreamTextLen?: number// 40982
+  EncodedStreamText?: Buffer// 40983
   StreamCommodity?: IStreamCommodity
   StreamEffectiveDate?: IStreamEffectiveDate
   StreamTerminationDate?: IStreamTerminationDate

@@ -235,7 +235,8 @@ export abstract class MsgView {
   protected resolveTag (tagOrName: number | string): number {
     let tag: number
     if (typeof(tagOrName) === 'string') {
-      const f: SimpleFieldDefinition = this.structure.tags.definitions.simple.get(tagOrName)
+      let cf = this.segment.set.simple.get(tagOrName)
+      const f: SimpleFieldDefinition = cf ? cf.definition : this.structure.tags.definitions.simple.get(tagOrName)
       if (f == null) {
         return null
       }

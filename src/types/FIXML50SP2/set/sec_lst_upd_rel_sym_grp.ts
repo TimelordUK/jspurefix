@@ -12,11 +12,11 @@ import { IYieldData } from './yield_data'
 
 export interface ISecLstUpdRelSymGrp {
   ListUpdateAction?: string// 1324
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   Instrument?: IInstrument
   InstrumentExtension?: IInstrumentExtension
   FinancingDetails?: IFinancingDetails

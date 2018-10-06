@@ -1,8 +1,8 @@
 export interface IRelatedTradeGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
+  RelatedTradeID?: string// 1856
+  RelatedTradeIDSource?: number// 1857
   RelatedRegulatoryTradeIDSource?: string// 2103
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  SideCollateralAmountMarketID?: string// 2692
+  RelatedTradeDate?: Date// 1858
+  RelatedTradeMarketID?: string// 1859
   RelatedTradeQuantity?: number// 1860
 }

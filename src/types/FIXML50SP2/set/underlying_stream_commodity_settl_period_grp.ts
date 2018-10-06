@@ -4,15 +4,15 @@ export interface IUnderlyingStreamCommoditySettlPeriodGrp {
   UnderlyingStreamCommoditySettlCountry?: string// 42003
   UnderlyingStreamCommoditySettlTimeZone?: string// 42004
   UnderlyingStreamCommoditySettlFlowType?: number// 42005
-  UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingStreamNotionalUnitOfMeasure?: string// 42022
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRatePrice?: number// 43066
+  UnderlyingStreamCommoditySettlPeriodNotional?: number// 42006
+  UnderlyingStreamCommoditySettlPeriodNotionalUnitOfMeasure?: string// 42007
+  UnderlyingStreamCommoditySettlPeriodFrequencyPeriod?: number// 42008
+  UnderlyingStreamCommoditySettlPeriodFrequencyUnit?: string// 42009
+  UnderlyingStreamCommoditySettlPeriodPrice?: number// 42010
   UnderlyingStreamCommoditySettlPeriodPriceUnitOfMeasure?: string// 42011
   UnderlyingStreamCommoditySettlPeriodPriceCurrency?: string// 42012
   UnderlyingStreamCommoditySettlHolidaysProcessingInstruction?: number// 42013
-  UnderlyingDividendPeriodXID?: string// 42881
+  UnderlyingStreamCommoditySettlPeriodXID?: string// 42014
   UnderlyingStreamCommoditySettlPeriodXIDRef?: string// 42015
   UnderlyingStreamCommoditySettlDayGrp?: IUnderlyingStreamCommoditySettlDayGrp[]
 }

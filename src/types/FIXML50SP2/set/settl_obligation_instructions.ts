@@ -9,10 +9,10 @@ export interface ISettlObligationInstructions {
   SettlObligRefID?: string// 1163
   CcyAmt?: number// 1157
   SettlCurrAmt?: number// 119
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  SettlCurrFxRate?: string// 155
-  LegSettlDate?: Date// 588
+  Currency?: string// 15
+  SettlCurrency?: string// 120
+  SettlCurrFxRate?: number// 155
+  SettlDate?: Date// 64
   EffectiveTime?: Date// 168
   ExpireTime?: Date// 126
   LastUpdateTime?: Date// 779

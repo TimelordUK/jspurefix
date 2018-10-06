@@ -1,7 +1,7 @@
 export interface IMiscFeesSubGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingMakeWholeAmount?: number// 42889
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
+  MiscFeeSubType?: string// 2634
+  MiscFeeSubTypeAmt?: number// 2635
+  MiscFeeSubTypeDesc?: string// 2636
+  EncodedMiscFeeSubTypeDescLen?: number// 2637
+  EncodedMiscFeeSubTypeDesc?: Buffer// 2638
 }

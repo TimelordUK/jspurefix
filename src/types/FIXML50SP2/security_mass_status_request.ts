@@ -9,11 +9,11 @@ import { IInstrumentScope } from './set/instrument_scope'
 *************************************************************
 */
 export interface ISecurityMassStatusRequest {
-  OrdStatusReqID: string// 790
+  SecurityStatusReqID: string// 324
   SubscriptionRequestType: string// 263
   SecurityListID?: string// 1465
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   StandardHeader?: IStandardHeader

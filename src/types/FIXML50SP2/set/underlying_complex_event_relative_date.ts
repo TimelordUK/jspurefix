@@ -1,13 +1,13 @@
 import { IUnderlyingComplexEventDateBusinessCenterGrp } from './underlying_complex_event_date_business_center_grp'
 
 export interface IUnderlyingComplexEventRelativeDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  UnderlyingComplexEventDateUnadjusted?: Date// 41739
+  UnderlyingComplexEventDateRelativeTo?: number// 41740
+  UnderlyingComplexEventDateOffsetPeriod?: number// 41741
+  UnderlyingComplexEventDateOffsetUnit?: string// 41742
+  UnderlyingComplexEventDateOffsetDayType?: number// 41743
+  UnderlyingComplexEventDateBusinessDayConvention?: number// 41744
+  UnderlyingComplexEventDateAdjusted?: Date// 41745
   UnderlyingComplexEventFixingTime?: string// 41746
   UnderlyingComplexEventFixingTimeBusinessCenter?: string// 41747
   UnderlyingComplexEventDateBusinessCenterGrp?: IUnderlyingComplexEventDateBusinessCenterGrp[]

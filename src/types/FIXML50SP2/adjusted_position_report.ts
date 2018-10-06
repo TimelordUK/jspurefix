@@ -11,12 +11,12 @@ import { IInstrmtGrp } from './set/instrmt_grp'
 **********************************************************
 */
 export interface IAdjustedPositionReport {
-  MDStatisticRptID: string// 2453
-  RiskLimitRequestType?: number// 1760
+  PosMaintRptID: string// 721
+  PosReqType?: number// 724
   ClearingBusinessDate: Date// 715
   SettlSessID?: string// 716
-  AllocReportRefID?: string// 795
-  ClearingSettlPrice?: number// 2528
+  PosMaintRptRefID?: string// 714
+  SettlPrice?: number// 730
   PriorSettlPrice?: number// 734
   StandardHeader?: IStandardHeader
   Parties?: IParties[]

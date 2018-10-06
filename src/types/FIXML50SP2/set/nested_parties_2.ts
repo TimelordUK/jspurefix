@@ -1,9 +1,9 @@
 import { INstdPtys2SubGrp } from './nstd_ptys_2_sub_grp'
 
 export interface INestedParties2 {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  Nested2PartyID?: string// 757
+  Nested2PartyIDSource?: string// 758
+  Nested2PartyRole?: number// 759
+  Nested2PartyRoleQualifier?: number// 2381
   NstdPtys2SubGrp?: INstdPtys2SubGrp[]
 }

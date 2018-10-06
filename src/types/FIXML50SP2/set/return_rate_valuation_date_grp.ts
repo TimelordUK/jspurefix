@@ -1,4 +1,4 @@
 export interface IReturnRateValuationDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  ReturnRateValuationDate?: Date// 42773
+  ReturnRateValuationDateType?: number// 42774
 }

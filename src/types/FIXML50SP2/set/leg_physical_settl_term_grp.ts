@@ -1,9 +1,9 @@
 import { ILegPhysicalSettlDeliverableObligationGrp } from './leg_physical_settl_deliverable_obligation_grp'
 
 export interface ILegPhysicalSettlTermGrp {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingPhysicalSettlBusinessDays?: number// 42062
-  UnderlyingPhysicalSettlMaximumBusinessDays?: number// 42063
-  UnderlyingDividendPeriodXID?: string// 42881
+  LegPhysicalSettlCurency?: string// 41601
+  LegPhysicalSettlBusinessDays?: number// 41602
+  LegPhysicalSettlMaximumBusinessDays?: number// 41603
+  LegPhysicalSettlTermXID?: string// 41600
   LegPhysicalSettlDeliverableObligationGrp?: ILegPhysicalSettlDeliverableObligationGrp[]
 }

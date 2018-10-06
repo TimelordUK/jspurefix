@@ -4,22 +4,22 @@ export interface IMDStatisticParameters {
   MDStatisticSubScope?: number// 2458
   MDStatisticScopeType?: number// 2459
   MDStatisticName?: string// 2454
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
+  MDStatisticDesc?: string// 2455
+  EncodedMDStatisticDescLen?: number// 2481
+  EncodedMDStatisticDesc?: Buffer// 2482
   MarketDepth?: number// 264
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
+  MDStatisticFrequencyPeriod?: number// 2460
+  MDStatisticFrequencyUnit?: number// 2461
   MDStatisticDelayPeriod?: number// 2462
   MDStatisticDelayUnit?: number// 2463
   MDStatisticIntervalType: number// 2464
   MDStatisticIntervalTypeUnit?: string// 2465
   MDStatisticIntervalPeriod?: number// 2466
   MDStatisticIntervalUnit?: number// 2467
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingReturnRateValuationEndDateAdjusted?: Date// 43025
-  MDStatisticStartTime?: string// 2470
-  MDStatisticEndTime?: string// 2471
+  MDStatisticStartDate?: Date// 2468
+  MDStatisticEndDate?: Date// 2469
+  MDStatisticStartTime?: Date// 2470
+  MDStatisticEndTime?: Date// 2471
   MDStatisticRatioType?: number// 2472
   TradingCapacity?: number// 1815
   OrdType?: string// 40
@@ -27,7 +27,7 @@ export interface IMDStatisticParameters {
   QuoteCondition?: string// 276
   TradeCondition?: string// 277
   RelativeValueSide?: number// 2532
-  InputSource?: string// 979
+  TradeInputSource?: string// 578
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
 }

@@ -15,19 +15,19 @@ import { ITrdCapDtGrp } from './set/trd_cap_dt_grp'
 *************************************************************
 */
 export interface ITradeCaptureReportRequest {
-  MDStatisticReqID: string// 2452
-  LegTradeID?: string// 1894
+  TradeRequestID: string// 568
+  TradeID?: string// 1003
   SecondaryTradeID?: string// 1
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
-  RiskLimitRequestType: number// 1760
+  TradeRequestType: number// 569
   SubscriptionRequestType?: string// 263
-  MDStatisticRptID?: string// 2453
+  TradeReportID?: string// 571
   SecondaryTradeReportID?: string// 818
   SecondaryExecID?: string// 527
-  LegExecID?: string// 1893
+  ExecID?: string// 17
   ExecType?: string// 150
-  NotAffectedOrderID?: string// 1371
+  OrderID?: string// 37
   ClOrdID?: string// 11
   MatchStatus?: string// 573
   TrdType?: number// 828
@@ -37,20 +37,20 @@ export interface ITradeCaptureReportRequest {
   TransferReason?: string// 830
   SecondaryTrdType?: number// 855
   TradeLinkID?: string// 820
-  TradeMatchID?: string// 1
+  TrdMatchID?: string// 880
   ClearingBusinessDate?: Date// 715
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   TimeBracket?: string// 943
   RelativeValueSide?: number// 2532
-  SideMultiLegReportingType?: number// 752
-  InputSource?: string// 979
+  MultiLegReportingType?: string// 442
+  TradeInputSource?: string// 578
   TradeInputDevice?: string// 579
   ResponseTransportType?: number// 725
   ResponseDestination?: string// 726
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   MessageEventSource?: string// 1011
   StandardHeader?: IStandardHeader
   Parties?: IParties[]

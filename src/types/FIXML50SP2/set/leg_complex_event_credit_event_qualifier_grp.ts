@@ -1,3 +1,3 @@
 export interface ILegComplexEventCreditEventQualifierGrp {
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  LegComplexEventCreditEventQualifier?: string// 41375
 }

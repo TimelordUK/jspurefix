@@ -19,23 +19,23 @@ import { IRoutingGrp } from './set/routing_grp'
 */
 export interface IMarketDataSnapshotFullRefresh {
   TotNumReports?: number// 911
-  MDStatisticRptID?: string// 2453
+  MDReportID?: number// 963
   ClearingBusinessDate?: Date// 715
   MDBookType?: number// 1021
   MDSubBookType?: number// 1173
   MarketDepth?: number// 264
   MDFeedType?: string// 1022
   MDSubFeedType?: string// 1683
-  RefreshIndicator?: string// 1187
+  RefreshIndicator?: boolean// 1187
   TradeDate?: Date// 75
-  MDStatisticReqID?: string// 2452
+  MDReqID?: string// 262
   MDStreamID?: string// 1500
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   LastUpdateTime: Date// 779
   FinancialStatus?: string// 291
   CorporateAction?: string// 292
-  NetChgPrevDay?: string// 451
+  NetChgPrevDay?: number// 451
   MDSecurityTradingStatus?: number// 1682
   MDHaltReason?: number// 1684
   ApplQueueDepth?: number// 813

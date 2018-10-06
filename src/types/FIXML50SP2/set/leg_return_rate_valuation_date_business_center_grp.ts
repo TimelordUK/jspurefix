@@ -1,3 +1,3 @@
 export interface ILegReturnRateValuationDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegReturnRateValuationDateBusinessCenter?: string// 42570
 }

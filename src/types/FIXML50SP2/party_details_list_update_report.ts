@@ -11,14 +11,14 @@ import { IPartyDetailsUpdateGrp } from './set/party_details_update_grp'
 ****************************************************************
 */
 export interface IPartyDetailsListUpdateReport {
-  MDStatisticRptID: string// 2453
-  MDStatisticReqID?: string// 2452
+  PartyDetailsListReportID: string// 1510
+  PartyDetailsListRequestID?: string// 1505
   TotNoParties?: number// 1512
-  LastFragment?: string// 893
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  LastFragment?: boolean// 893
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   RequestingPartyGrp?: IRequestingPartyGrp[]

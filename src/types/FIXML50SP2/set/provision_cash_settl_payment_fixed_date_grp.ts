@@ -1,4 +1,4 @@
 export interface IProvisionCashSettlPaymentFixedDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  ProvisionCashSettlPaymentDate?: Date// 40172
+  ProvisionCashSettlPaymentDateType?: number// 40173
 }

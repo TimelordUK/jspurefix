@@ -43,10 +43,10 @@ test('check instrument attributes', () => {
   expect(i).toBeTruthy()
   const iv = views[0].getView('Instrument')
   expect(iv).toBeTruthy()
-  expect(i.UnderlyingStreamCommodityExchange).toEqual('XXXX')
-  expect(iv.getString('Exch')).toEqual('XXXX')
-  expect(iv.getString('SecTyp')).toEqual('CMDTYSWAP')
-  expect(i.RelatedSecurityType).toEqual('CMDTYSWAP')
+  expect(i.SecurityExchange).toEqual('XXXX')
+  expect(iv.getString('SecurityExchange')).toEqual('XXXX')
+  expect(iv.getString('SecurityType')).toEqual('CMDTYSWAP')
+  expect(i.SecurityType).toEqual('CMDTYSWAP')
 })
 
 test('check instrument groups', () => {
@@ -64,7 +64,7 @@ test('check instrument groups', () => {
   expect(g0).toBeTruthy()
   expect(g1).toBeTruthy()
   // TotNotlUOM="MMBtu" TotNotl="310000.10" NotlUOM="MMBtu" NotlUnit="D" NotlPeriod="1" Notl="10000.20" RcvSide="1" PaySide="2" Typ="1"
-  const keys = ['TotNotlUOM', 'TotNotl', 'NotlUOM', 'NotlUnit', 'NotlPeriod', 'Notl', 'RcvSide', 'PaySide', 'Typ']
+  const keys = ['StreamTotalNotionalUnitOfMeasure', 'StreamTotalNotional', 'StreamNotionalUnitOfMeasure', 'StreamNotionalFrequencyUnit', 'StreamNotionalFrequencyPeriod', 'StreamNotional', 'StreamReceiveSide', 'StreamPaySide', 'StreamType']
 
   const v0: any[] = g0.getTypedTags(keys)
   expect(v0[0]).toEqual('MMBtu')

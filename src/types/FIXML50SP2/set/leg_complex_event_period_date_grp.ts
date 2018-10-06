@@ -1,4 +1,4 @@
 export interface ILegComplexEventPeriodDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
+  LegComplexEventPeriodDate?: Date// 41377
+  LegComplexEventPeriodTime?: string// 41378
 }

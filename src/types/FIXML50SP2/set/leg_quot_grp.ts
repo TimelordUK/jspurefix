@@ -5,17 +5,17 @@ import { ILegBenchmarkCurveData } from './leg_benchmark_curve_data'
 
 export interface ILegQuotGrp {
   LegOrderQty?: number// 685
-  RelatedTradeQuantity?: number// 1860
+  LegQty?: number// 687
   LegMidPx?: number// 2346
   LegSwapType?: number// 690
   InstrumentScopeSettlType?: string// 1557
   LegSettlDate?: Date// 588
-  UnderlyingReturnRatePriceType?: number// 43068
+  LegPriceType?: number// 686
   LegBidPx?: number// 681
   LegOfferPx?: number// 684
-  EntitlementRefID?: string// 1885
-  LegBidForwardPoints?: string// 1067
-  LegOfferForwardPoints?: string// 1068
+  LegRefID?: string// 654
+  LegBidForwardPoints?: number// 1067
+  LegOfferForwardPoints?: number// 1068
   InstrumentLeg?: IInstrumentLeg
   LegStipulations?: ILegStipulations[]
   NestedParties?: INestedParties[]

@@ -9,27 +9,27 @@ import { ILegDeliveryStream } from './leg_delivery_stream'
 import { ILegDeliveryScheduleGrp } from './leg_delivery_schedule_grp'
 
 export interface ILegStreamGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingDividendPeriodXID?: string// 42881
-  PaymentDesc?: string// 43087
-  UnderlyingStreamVersion?: string// 43083
-  UnderlyingStreamVersionEffectiveDate?: Date// 43084
-  PaymentSchedulePaySide?: number// 40833
-  PaymentScheduleReceiveSide?: number// 40834
-  UnderlyingStreamNotionalXIDRef?: string// 42018
-  UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingStreamNotionalDeterminationMethod?: string// 43085
-  UnderlyingStreamNotionalAdjustments?: number// 43086
-  UnderlyingStreamNotionalFrequencyPeriod?: number// 42019
-  UnderlyingStreamNotionalFrequencyUnit?: string// 42020
-  UnderlyingStreamNotionalCommodityFrequency?: number// 42021
-  UnderlyingStreamNotionalUnitOfMeasure?: string// 42022
-  UnderlyingStreamTotalNotional?: number// 42023
-  UnderlyingStreamTotalNotionalUnitOfMeasure?: string// 42024
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  LegStreamType?: number// 40242
+  LegStreamXID?: string// 41700
+  LegStreamDesc?: string// 40243
+  LegStreamVersion?: string// 42583
+  LegStreamVersionEffectiveDate?: Date// 42584
+  LegStreamPaySide?: number// 40244
+  LegStreamReceiveSide?: number// 40245
+  LegStreamNotionalXIDRef?: string// 41702
+  LegStreamNotional?: number// 40246
+  LegStreamCurrency?: string// 40247
+  LegStreamNotionalDeterminationMethod?: string// 42585
+  LegStreamNotionalAdjustments?: number// 42586
+  LegStreamNotionalFrequencyPeriod?: number// 41703
+  LegStreamNotionalFrequencyUnit?: string// 41704
+  LegStreamNotionalCommodityFrequency?: number// 41705
+  LegStreamNotionalUnitOfMeasure?: string// 41706
+  LegStreamTotalNotional?: number// 41707
+  LegStreamTotalNotionalUnitOfMeasure?: string// 41708
+  LegStreamText?: string// 40248
+  EncodedLegStreamTextLen?: number// 40978
+  EncodedLegStreamText?: Buffer// 40979
   LegStreamCommodity?: ILegStreamCommodity
   LegStreamEffectiveDate?: ILegStreamEffectiveDate
   LegStreamTerminationDate?: ILegStreamTerminationDate

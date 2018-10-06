@@ -2,18 +2,18 @@ import { ICommissionData } from './commission_data'
 
 export interface IBidCompRspGrp {
   ListID?: string// 66
-  UnderlyingStreamCommoditySettlCountry?: string// 42003
+  Country?: string// 421
   RelativeValueSide?: number// 2532
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceType?: number// 43068
+  Price?: number// 44
+  PriceType?: number// 423
   FairValue?: number// 406
   NetGrossInd?: number// 430
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   CommissionData: ICommissionData
 }

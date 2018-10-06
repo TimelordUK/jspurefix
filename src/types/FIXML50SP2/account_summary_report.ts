@@ -14,14 +14,14 @@ import { IPositionAmountData } from './set/position_amount_data'
 ********************************************************
 */
 export interface IAccountSummaryReport {
-  MDStatisticRptID: string// 2453
+  AccountSummaryReportID: string// 1699
   ClearingBusinessDate: Date// 715
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   TotalNetValue?: number// 900
   MarginExcess?: number// 899
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   StandardHeader?: IStandardHeader
   SettlementAmountGrp?: ISettlementAmountGrp[]
   MarginAmount?: IMarginAmount[]

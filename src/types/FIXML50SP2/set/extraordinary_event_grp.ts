@@ -1,4 +1,4 @@
 export interface IExtraordinaryEventGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  ExtraordinaryEventType?: string// 42297
+  ExtraordinaryEventValue?: string// 42298
 }

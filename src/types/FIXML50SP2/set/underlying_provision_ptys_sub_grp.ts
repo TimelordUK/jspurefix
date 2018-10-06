@@ -1,4 +1,4 @@
 export interface IUnderlyingProvisionPtysSubGrp {
-  BatchID?: string// 50000
+  UnderlyingProvisionPartySubID?: string// 42178
   UnderlyingReturnRateValuationDateType?: number// 43073
 }

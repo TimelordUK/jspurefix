@@ -4,7 +4,7 @@ import { INestedParties } from './nested_parties'
 
 export interface ILegQuotStatGrp {
   LegOrderQty?: number// 685
-  RelatedTradeQuantity?: number// 1860
+  LegQty?: number// 687
   LegMidPx?: number// 2346
   LegSwapType?: number// 690
   InstrumentScopeSettlType?: string// 1557

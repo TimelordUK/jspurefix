@@ -1,4 +1,4 @@
 export interface ITrdCollGrp {
-  MDStatisticRptID?: string// 2453
+  TradeReportID?: string// 571
   SecondaryTradeReportID?: string// 818
 }

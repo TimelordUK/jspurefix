@@ -14,11 +14,11 @@ import { IRelatedInstrumentGrp } from './set/related_instrument_grp'
 *********************************************************
 */
 export interface ISecurityStatusRequest {
-  OrdStatusReqID: string// 790
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  SecurityStatusReqID: string// 324
+  Currency?: string// 15
   SubscriptionRequestType: string// 263
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   StandardHeader?: IStandardHeader

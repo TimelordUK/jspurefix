@@ -15,30 +15,30 @@ import { IPositionAmountData } from './set/position_amount_data'
 ****************************************************
 */
 export interface IAssignmentReport {
-  MDStatisticRptID: string// 2453
-  MDStatisticReqID?: string// 2452
+  AsgnRptID: string// 833
+  PosReqID?: string// 710
   TotNumAssignmentReports?: number// 832
-  LastRptRequested?: string// 912
-  LegAccount?: string// 2680
-  AllocAccountType?: number// 798
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  ThresholdAmount?: string// 834
-  ClearingSettlPrice?: number// 2528
+  LastRptRequested?: boolean// 912
+  Account?: string// 1
+  AccountType?: number// 581
+  Currency?: string// 15
+  ThresholdAmount?: number// 834
+  SettlPrice?: number// 730
   SettlPriceType?: number// 731
   UnderlyingSettlPrice?: number// 732
   PriorSettlPrice?: number// 734
   PositionContingentPrice?: number// 1595
   ExpireDate?: Date// 432
-  LegInstrmtAssignmentMethod?: string// 2147
-  UnderlyingProtectionTermEventUnit?: string// 42082
+  AssignmentMethod?: string// 744
+  AssignmentUnit?: number// 745
   OpenInterest?: number// 746
   ExerciseMethod?: string// 747
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
   ClearingBusinessDate: Date// 715
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Parties?: IParties[]

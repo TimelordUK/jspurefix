@@ -13,12 +13,12 @@ import { IYieldData } from './yield_data'
 import { IPriceMovementGrp } from './price_movement_grp'
 
 export interface ISecListGrp {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   RelSymTransactTime?: Date// 1504
   NumOfSimpleInstruments?: number// 1606
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   Instrument?: IInstrument
   InstrumentExtension?: IInstrumentExtension
   SecurityClassificationGrp?: ISecurityClassificationGrp[]

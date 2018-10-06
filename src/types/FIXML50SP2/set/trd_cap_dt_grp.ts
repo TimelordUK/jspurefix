@@ -1,5 +1,5 @@
 export interface ITrdCapDtGrp {
   TradeDate?: Date// 75
   LastUpdateTime?: Date// 779
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
 }

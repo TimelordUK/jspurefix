@@ -21,13 +21,13 @@ export interface IPositionTransferInstruction {
   TransferScope?: number// 2441
   ClearingBusinessDate?: Date// 715
   TradeDate?: Date// 75
-  RelSymTransactTime?: Date// 1504
-  SideClearingTradePrice?: number// 1597
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime?: Date// 60
+  ClearingTradePrice?: number// 1596
+  Currency?: string// 15
+  PriceType?: number// 423
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   TargetParties?: ITargetParties[]

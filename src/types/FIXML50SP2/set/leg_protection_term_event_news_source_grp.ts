@@ -1,3 +1,3 @@
 export interface ILegProtectionTermEventNewsSourceGrp {
-  LegContractualMatrixSource?: string// 42204
+  LegProtectionTermEventNewsSource?: string// 41615
 }

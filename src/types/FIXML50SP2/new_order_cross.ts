@@ -27,7 +27,7 @@ export interface INewOrderCross {
   CrossType: number// 549
   CrossPrioritization: number// 550
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   AllocHandlInst?: number// 209
   ExecInst?: string// 18
   MinQty?: number// 110
@@ -35,20 +35,20 @@ export interface INewOrderCross {
   MatchIncrement?: number// 1089
   MaxPriceLevels?: number// 1090
   MaxFloor?: number// 111
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketSegmentID?: string// 1300
   ExDestination?: string// 100
   ExDestinationIDSource?: string// 1133
   ProcessCode?: string// 81
   PrevClosePx?: number// 140
-  LocateReqd?: string// 114
-  RelSymTransactTime: Date// 1504
+  LocateReqd?: boolean// 114
+  TransactTime: Date// 60
   TransBkdTime?: Date// 483
   OrdType: string// 40
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingReturnRatePrice?: number// 43066
+  PriceType?: number// 423
+  Price?: number// 44
   PriceProtectionScope?: string// 1092
   StopPx?: number// 99
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   ComplianceID?: string// 376
   IOIID?: string// 23
   QuoteID?: string// 117

@@ -1,3 +1,3 @@
 export interface ILegStreamEffectiveDateBusinessCenterGrp {
-  UnderlyingProtectionTermEventBusinessCenter?: string// 42073
+  LegStreamEffectiveDateBusinessCenter?: string// 40251
 }

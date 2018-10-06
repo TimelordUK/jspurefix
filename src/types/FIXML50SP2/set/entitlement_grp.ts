@@ -3,13 +3,13 @@ import { IInstrumentScopeGrp } from './instrument_scope_grp'
 import { IMarketSegmentScopeGrp } from './market_segment_scope_grp'
 
 export interface IEntitlementGrp {
-  EntitlementIndicator?: string// 1774
+  EntitlementIndicator?: boolean// 1774
   UnderlyingReturnRateValuationDateType?: number// 43073
   PaymentSubType?: number// 40993
-  RiskLimitID?: string// 1670
+  EntitlementID?: string// 1776
   EntitlementPlatform?: string// 1784
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingReturnRateValuationEndDateAdjusted?: Date// 43025
+  EntitlementStartDate?: Date// 1782
+  EntitlementEndDate?: Date// 1783
   EntitlementAttribGrp?: IEntitlementAttribGrp[]
   InstrumentScopeGrp?: IInstrumentScopeGrp[]
   MarketSegmentScopeGrp?: IMarketSegmentScopeGrp[]

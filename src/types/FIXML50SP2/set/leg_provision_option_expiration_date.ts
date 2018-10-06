@@ -1,14 +1,14 @@
 import { ILegProvisionOptionExpirationDateBusinessCenterGrp } from './leg_provision_option_expiration_date_business_center_grp'
 
 export interface ILegProvisionOptionExpirationDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingProvisionOptionExpirationTime?: string// 42140
-  UnderlyingProvisionOptionExpirationTimeBusinessCenter?: string// 42141
+  LegProvisionOptionExpirationDateUnadjusted?: Date// 40498
+  LegProvisionOptionExpirationDateBusinessDayConvention?: number// 40499
+  LegProvisionOptionExpirationDateRelativeTo?: number// 40501
+  LegProvisionOptionExpirationDateOffsetPeriod?: number// 40502
+  LegProvisionOptionExpirationDateOffsetUnit?: string// 40503
+  LegProvisionOptionExpirationDateOffsetDayType?: number// 40504
+  LegProvisionOptionExpirationDateAdjusted?: Date// 40505
+  LegProvisionOptionExpirationTime?: string// 40506
+  LegProvisionOptionExpirationTimeBusinessCenter?: string// 40507
   LegProvisionOptionExpirationDateBusinessCenterGrp?: ILegProvisionOptionExpirationDateBusinessCenterGrp[]
 }

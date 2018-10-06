@@ -2,26 +2,26 @@ import { IUnderlyingCashSettlDealerGrp } from './underlying_cash_settl_dealer_gr
 import { IUnderlyingCashSettlDate } from './underlying_cash_settl_date'
 
 export interface IUnderlyingCashSettlTermGrp {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  UnderlyingCashSettlCurrency?: string// 42042
   UnderlyingCashSettlValuationFirstBusinessDayOffset?: number// 42043
   UnderlyingCashSettlValuationSubsequentBusinessDaysOffset?: number// 42044
   UnderlyingCashSettlNumOfValuationDates?: number// 42045
-  UnderlyingReturnRateValuationTime?: string// 43056
-  UnderlyingProtectionTermEventBusinessCenter?: string// 42073
-  UnderlyingReturnRateQuoteMethod?: number// 43044
+  UnderlyingCashSettlValuationTime?: string// 42046
+  UnderlyingCashSettlBusinessCenter?: string// 42047
+  UnderlyingCashSettlQuoteMethod?: number// 42048
   UnderlyingCashSettlQuoteAmount?: number// 42049
-  UnderlyingReturnRateQuoteCurrency?: string// 43045
+  UnderlyingCashSettlQuoteCurrency?: string// 42050
   UnderlyingCashSettlMinimumQuoteAmount?: number// 42051
   UnderlyingCashSettlMinimumQuoteCurrency?: string// 42052
   UnderlyingCashSettlPriceSource?: string// 42797
   UnderlyingCashSettlPriceDefault?: number// 42798
-  UnderlyingPhysicalSettlBusinessDays?: number// 42062
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingCashSettlRecoveryFactor?: string// 42055
-  UnderlyingCashSettlFixedTermIndicator?: string// 42056
-  UnderlyingCashSettlAccruedInterestIndicator?: string// 42057
+  UnderlyingCashSettlBusinessDays?: number// 42053
+  UnderlyingCashSettlAmount?: number// 42054
+  UnderlyingCashSettlRecoveryFactor?: number// 42055
+  UnderlyingCashSettlFixedTermIndicator?: boolean// 42056
+  UnderlyingCashSettlAccruedInterestIndicator?: boolean// 42057
   UnderlyingCashSettlValuationMethod?: number// 42058
-  UnderlyingDividendPeriodXID?: string// 42881
+  UnderlyingCashSettlTermXID?: string// 42059
   UnderlyingCashSettlDealerGrp?: IUnderlyingCashSettlDealerGrp[]
   UnderlyingCashSettlDate?: IUnderlyingCashSettlDate
 }

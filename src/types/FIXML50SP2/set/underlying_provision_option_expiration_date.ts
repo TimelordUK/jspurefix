@@ -1,13 +1,13 @@
 import { IUnderlyingProvisionOptionExpirationDateBusinessCenterGrp } from './underlying_provision_option_expiration_date_business_center_grp'
 
 export interface IUnderlyingProvisionOptionExpirationDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  UnderlyingProvisionOptionExpirationDateUnadjusted?: Date// 42133
+  UnderlyingProvisionOptionExpirationDateBusinessDayConvention?: number// 42134
+  UnderlyingProvisionOptionExpirationDateRelativeTo?: number// 42135
+  UnderlyingProvisionOptionExpirationDateOffsetPeriod?: number// 42136
+  UnderlyingProvisionOptionExpirationDateOffsetUnit?: string// 42137
+  UnderlyingProvisionOptionExpirationDateOffsetDayType?: number// 42138
+  UnderlyingProvisionOptionExpirationDateAdjusted?: Date// 42139
   UnderlyingProvisionOptionExpirationTime?: string// 42140
   UnderlyingProvisionOptionExpirationTimeBusinessCenter?: string// 42141
   UnderlyingProvisionOptionExpirationDateBusinessCenterGrp?: IUnderlyingProvisionOptionExpirationDateBusinessCenterGrp[]

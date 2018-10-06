@@ -1,4 +1,4 @@
 export interface IUnderlyingComplexEventPeriodDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
+  UnderlyingComplexEventPeriodDate?: Date// 41727
+  UnderlyingComplexEventPeriodTime?: string// 41728
 }

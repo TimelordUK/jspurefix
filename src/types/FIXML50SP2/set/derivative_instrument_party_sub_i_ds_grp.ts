@@ -1,4 +1,4 @@
 export interface IDerivativeInstrumentPartySubIDsGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  DerivativeInstrumentPartySubID?: string// 1297
+  DerivativeInstrumentPartySubIDType?: number// 1298
 }

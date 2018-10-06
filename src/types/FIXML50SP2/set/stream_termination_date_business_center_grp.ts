@@ -1,3 +1,3 @@
 export interface IStreamTerminationDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  StreamTerminationDateBusinessCenter?: string// 40067
 }

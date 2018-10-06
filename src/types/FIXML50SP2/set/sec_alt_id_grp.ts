@@ -1,4 +1,4 @@
 export interface ISecAltIDGrp {
-  UnderlyingStreamCommodityAltID?: string// 41991
-  UnderlyingStreamCommodityAltIDSource?: string// 41992
+  SecurityAltID?: string// 455
+  SecurityAltIDSource?: string// 456
 }

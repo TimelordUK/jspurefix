@@ -1,4 +1,4 @@
 export interface IRequestingPartySubGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  RequestingPartySubID?: string// 1662
+  RequestingPartySubIDType?: number// 1663
 }

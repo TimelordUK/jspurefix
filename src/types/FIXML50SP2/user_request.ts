@@ -14,11 +14,11 @@ export interface IUserRequest {
   Password?: string// 554
   NewPassword?: string// 925
   EncryptedPasswordMethod?: number// 1400
-  EncryptedPasswordLen?: string// 1401
+  EncryptedPasswordLen?: number// 1401
   EncryptedPassword?: Buffer// 1402
-  EncryptedNewPasswordLen?: string// 1403
+  EncryptedNewPasswordLen?: number// 1403
   EncryptedNewPassword?: Buffer// 1404
-  RawDataLength?: string// 95
+  RawDataLength?: number// 95
   RawData?: Buffer// 96
   StandardHeader?: IStandardHeader
 }

@@ -4,31 +4,31 @@ import { ILegReturnRateInformationSourceGrp } from './leg_return_rate_informatio
 import { ILegReturnRateDateGrp } from './leg_return_rate_date_grp'
 
 export interface ILegReturnRateGrp {
-  UnderlyingReturnRatePriceSequence?: number// 43035
-  UnderlyingReturnRateCommissionBasis?: string// 43036
-  UnderlyingReturnRateCommissionAmount?: number// 43037
-  UnderlyingReturnRateCommissionCurrency?: string// 43038
-  UnderlyingReturnRateTotalCommissionPerTrade?: number// 43039
-  UnderlyingReturnRateDeterminationMethod?: string// 43040
-  UnderlyingReturnRateAmountRelativeTo?: number// 43041
-  UnderlyingReturnRateQuoteMeasureType?: string// 43042
-  UnderlyingReturnRateQuoteUnits?: string// 43043
-  UnderlyingReturnRateQuoteMethod?: number// 43044
-  UnderlyingReturnRateQuoteCurrency?: string// 43045
-  UnderlyingReturnRateQuoteCurrencyType?: string// 43046
-  UnderlyingReturnRateQuoteTimeType?: number// 43047
-  UnderlyingReturnRateQuoteTime?: Date// 43048
-  UnderlyingReturnRateQuoteDate?: Date// 43049
-  UnderlyingReturnRateQuoteExpirationTime?: string// 43050
-  UnderlyingReturnRateQuoteBusinessCenter?: string// 43051
-  UnderlyingReturnRateQuoteExchange?: string// 43052
-  UnderlyingReturnRateQuotePricingModel?: string// 43053
-  UnderlyingReturnRateCashFlowType?: string// 43054
-  UnderlyingReturnRateValuationTimeType?: number// 43055
-  UnderlyingReturnRateValuationTime?: string// 43056
-  UnderlyingReturnRateValuationTimeBusinessCenter?: string// 43057
-  UnderlyingReturnRateValuationPriceOption?: number// 43058
-  UnderlyingReturnRateFinalPriceFallback?: number// 43059
+  LegReturnRatePriceSequence?: number// 42535
+  LegReturnRateCommissionBasis?: string// 42536
+  LegReturnRateCommissionAmount?: number// 42537
+  LegReturnRateCommissionCurrency?: string// 42538
+  LegReturnRateTotalCommissionPerTrade?: number// 42539
+  LegReturnRateDeterminationMethod?: string// 42540
+  LegReturnRateAmountRelativeTo?: number// 42541
+  LegReturnRateQuoteMeasureType?: string// 42542
+  LegReturnRateQuoteUnits?: string// 42543
+  LegReturnRateQuoteMethod?: number// 42544
+  LegReturnRateQuoteCurrency?: string// 42545
+  LegReturnRateQuoteCurrencyType?: string// 42546
+  LegReturnRateQuoteTimeType?: number// 42547
+  LegReturnRateQuoteTime?: string// 42548
+  LegReturnRateQuoteDate?: Date// 42549
+  LegReturnRateQuoteExpirationTime?: string// 42550
+  LegReturnRateQuoteBusinessCenter?: string// 42551
+  LegReturnRateQuoteExchange?: string// 42552
+  LegReturnRateQuotePricingModel?: string// 42553
+  LegReturnRateCashFlowType?: string// 42554
+  LegReturnRateValuationTimeType?: number// 42555
+  LegReturnRateValuationTime?: string// 42556
+  LegReturnRateValuationTimeBusinessCenter?: string// 42557
+  LegReturnRateValuationPriceOption?: number// 42558
+  LegReturnRateFinalPriceFallback?: number// 42559
   LegReturnRatePriceGrp?: ILegReturnRatePriceGrp[]
   LegReturnRateFXConversionGrp?: ILegReturnRateFXConversionGrp[]
   LegReturnRateInformationSourceGrp?: ILegReturnRateInformationSourceGrp[]

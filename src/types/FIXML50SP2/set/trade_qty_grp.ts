@@ -1,4 +1,4 @@
 export interface ITradeQtyGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  RelatedTradeQuantity?: number// 1860
+  TradeQtyType?: number// 1842
+  TradeQty?: number// 1843
 }

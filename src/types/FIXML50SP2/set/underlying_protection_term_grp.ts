@@ -4,13 +4,13 @@ import { IUnderlyingProtectionTermObligationGrp } from './underlying_protection_
 
 export interface IUnderlyingProtectionTermGrp {
   UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProtectionTermSellerNotifies?: string// 42071
-  UnderlyingProtectionTermBuyerNotifies?: string// 42072
+  UnderlyingProtectionTermCurrency?: string// 42070
+  UnderlyingProtectionTermSellerNotifies?: boolean// 42071
+  UnderlyingProtectionTermBuyerNotifies?: boolean// 42072
   UnderlyingProtectionTermEventBusinessCenter?: string// 42073
-  UnderlyingProtectionTermStandardSources?: string// 42074
+  UnderlyingProtectionTermStandardSources?: boolean// 42074
   UnderlyingProtectionTermEventMinimumSources?: number// 42075
-  UnderlyingDividendPeriodXID?: string// 42881
+  UnderlyingProtectionTermXID?: string// 42076
   UnderlyingProtectionTermEventNewsSourceGrp?: IUnderlyingProtectionTermEventNewsSourceGrp[]
   UnderlyingProtectionTermEventGrp?: IUnderlyingProtectionTermEventGrp[]
   UnderlyingProtectionTermObligationGrp?: IUnderlyingProtectionTermObligationGrp[]

@@ -19,13 +19,13 @@ import { ITrdCapRptAckSideGrp } from './set/trd_cap_rpt_ack_side_grp'
 *********************************************************
 */
 export interface ITradeCaptureReportAck {
-  MDStatisticRptID?: string// 2453
-  LegTradeID?: string// 1894
+  TradeReportID?: string// 571
+  TradeID?: string// 1003
   SecondaryTradeID?: string// 1
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
-  TransferTransType?: number// 2439
-  TransferReportType?: number// 2444
+  TradeReportTransType?: number// 487
+  TradeReportType?: number// 856
   TrdType?: number// 828
   SideTrdSubTyp?: number// 1008
   SecondaryTrdType?: number// 855
@@ -33,77 +33,77 @@ export interface ITradeCaptureReportAck {
   TradeHandlingInstr?: string// 1123
   OrigTradeHandlingInstr?: string// 1124
   OrigTradeDate?: Date// 1125
-  SideOrigTradeID?: string// 1507
+  OrigTradeID?: string// 1126
   OrigSecondaryTradeID?: string// 1127
   TransferReason?: string// 830
   ExecType?: string// 150
-  AllocReportRefID?: string// 795
+  TradeReportRefID?: string// 572
   SecondaryTradeReportRefID?: string// 881
   TrdRptStatus?: number// 939
   TrdAckStatus?: number// 1523
   CollRptRejectReason?: number// 2487
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   SecondaryTradeReportID?: string// 818
   SubscriptionRequestType?: string// 263
   TradeLinkID?: string// 820
-  TradeMatchID?: string// 1
-  LegExecID?: string// 1893
+  TrdMatchID?: string// 880
+  ExecID?: string// 17
   SecondaryExecID?: string// 527
   ExecRestatementReason?: number// 378
-  PreviouslyReported?: string// 570
-  UnderlyingReturnRatePriceType?: number// 43068
+  PreviouslyReported?: boolean// 570
+  PriceType?: number// 423
   CrossType?: number// 549
   UnderlyingTradingSessionID?: string// 822
   UnderlyingTradingSessionSubID?: string// 823
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  LegQtyType?: number// 1591
-  LegLastQty?: number// 1418
-  LegLastPx?: number// 637
-  SideVenueType?: string// 1899
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  SideCollateralAmountMarketID?: string// 2692
+  QtyType?: number// 854
+  LastQty?: number// 32
+  LastPx?: number// 31
+  VenueType?: string// 1430
+  MarketSegmentID?: string// 1300
+  MarketID?: string// 1301
   LastParPx?: number// 669
   CalculatedCcyLastQty?: number// 1056
-  LastSwapPoints?: string// 1071
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  LastSwapPoints?: number// 1071
+  Currency?: string// 15
+  SettlCurrency?: string// 120
   LastSpotRate?: number// 194
-  LastForwardPoints?: string// 195
+  LastForwardPoints?: number// 195
   LastMkt?: string// 30
   TradeDate?: Date// 75
   ClearingBusinessDate?: Date// 715
-  SideAvgPx?: number// 1852
-  SideAvgPxGroupID?: string// 1854
-  SideAvgPxIndicator?: number// 1853
-  SideMultiLegReportingType?: number// 752
+  AvgPx?: number// 6
+  AvgPxGroupID?: string// 1731
+  AvgPxIndicator?: number// 819
+  MultiLegReportingType?: string// 442
   TradeLegRefID?: string// 824
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   InstrumentScopeSettlType?: string// 1557
   MatchStatus?: string// 573
   MatchType?: string// 574
-  CopyMsgIndicator?: string// 797
-  PublishTrdIndicator?: string// 852
+  CopyMsgIndicator?: boolean// 797
+  PublishTrdIndicator?: boolean// 852
   TradePublishIndicator?: number// 1390
   ShortSaleReason?: number// 853
   ResponseTransportType?: number// 725
   ResponseDestination?: string// 726
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   AsOfIndicator?: string// 1015
-  AllocClearingFeeIndicator?: string// 1136
+  ClearingFeeIndicator?: string// 635
   TierCode?: string// 994
   MessageEventSource?: string// 1011
   LastUpdateTime?: Date// 779
   RndPx?: number// 991
   RptSys?: string// 1135
-  AllocGrossTradeAmt?: number// 2300
-  LegSettlDate?: Date// 588
-  FeeMultiplier?: string// 1329
-  AllocRiskLimitCheckStatus?: number// 2483
+  GrossTradeAmt?: number// 381
+  SettlDate?: Date// 64
+  FeeMultiplier?: number// 1329
+  RiskLimitCheckStatus?: number// 2343
   StandardHeader?: IStandardHeader
   RootParties?: IRootParties[]
   Instrument?: IInstrument

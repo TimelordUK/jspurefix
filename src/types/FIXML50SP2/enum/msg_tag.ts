@@ -6743,7 +6743,7 @@ export enum MsgTag {
 /*
 ****************************************************************
 * Identifies the class or source of the order handling         *
-* instruction values. �Scope of this will apply to both        *
+* instruction values.  Scope of this will apply to both        *
 * CustOrderHandlingInst(1031) and DeskOrderHandlingInst(1035). *
 * Conditionally required when CustOrderHandlingInst(1031) or   *
 * DeskOrderHandlingInst(1035) is specified.                    *
@@ -38784,6 +38784,5 @@ export enum MsgTag {
 * The Clearing Date for the allocation or trade. *
 **************************************************
 */
-  ClearDate = 60003,
-  undefined = NaN
+  ClearDate = 60003
 }

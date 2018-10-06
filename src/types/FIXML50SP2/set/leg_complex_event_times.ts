@@ -1,4 +1,4 @@
 export interface ILegComplexEventTimes {
-  MDStatisticStartTime?: string// 2470
-  MDStatisticEndTime?: string// 2471
+  LegComplexEventStartTime?: Date// 2204
+  LegComplexEventEndTime?: Date// 2247
 }

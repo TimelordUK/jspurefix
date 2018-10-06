@@ -1,4 +1,4 @@
 export interface ILegOptionExerciseDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  LegOptionExerciseDate?: Date// 41513
+  LegOptionExerciseDateType?: number// 41514
 }

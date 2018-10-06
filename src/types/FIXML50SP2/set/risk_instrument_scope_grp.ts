@@ -2,25 +2,25 @@ import { IInstrumentScopeSecurityAltIDGrp } from './instrument_scope_security_al
 
 export interface IRiskInstrumentScopeGrp {
   InstrumentScopeOperator?: number// 1535
-  RelatedSymbol?: string// 1649
+  InstrumentScopeSymbol?: string// 1536
   InstrumentScopeSymbolSfx?: string// 1537
-  RiskLimitID?: string// 1670
-  LegContractualMatrixSource?: string// 42204
+  InstrumentScopeSecurityID?: string// 1538
+  InstrumentScopeSecurityIDSource?: string// 1539
   InstrumentScopeProduct?: number// 1543
-  UnderlyingProductComplex?: string// 2007
-  UnderlyingSecurityGroup?: string// 2008
+  InstrumentScopeProductComplex?: string// 1544
+  InstrumentScopeSecurityGroup?: string// 1545
   InstrumentScopeCFICode?: string// 1546
-  RelatedSecurityType?: string// 1652
+  InstrumentScopeSecurityType?: string// 1547
   InstrumentScopeSecuritySubType?: string// 1548
-  RelatedMaturityMonthYear?: string// 1653
+  InstrumentScopeMaturityMonthYear?: string// 1549
   InstrumentScopeMaturityTime?: string// 1550
   InstrumentScopeRestructuringType?: string// 1551
-  UnderlyingAdditionalTermBondSeniority?: string// 42027
+  InstrumentScopeSeniority?: string// 1552
   InstrumentScopePutOrCall?: number// 1553
-  LegFlexibleIndicator?: string// 2202
-  UnderlyingAdditionalTermBondCouponRate?: number// 42029
-  UnderlyingStreamCommodityExchange?: string// 41973
-  PaymentDesc?: string// 43087
+  InstrumentScopeFlexibleIndicator?: boolean// 1554
+  InstrumentScopeCouponRate?: number// 1555
+  InstrumentScopeSecurityExchange?: string// 1616
+  InstrumentScopeSecurityDesc?: string// 1556
   InstrumentScopeSettlType?: string// 1557
   InstrumentScopeSecurityAltIDGrp?: IInstrumentScopeSecurityAltIDGrp[]
 }

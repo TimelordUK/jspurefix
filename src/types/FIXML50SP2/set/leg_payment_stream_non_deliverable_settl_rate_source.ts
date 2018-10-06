@@ -1,4 +1,4 @@
 export interface ILegPaymentStreamNonDeliverableSettlRateSource {
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingReturnRateReferencePage?: string// 43062
+  LegPaymentStreamNonDeliverableSettlRateSource?: number// 40087
+  LegPaymentStreamNonDeliverableSettlReferencePage?: string// 40228
 }

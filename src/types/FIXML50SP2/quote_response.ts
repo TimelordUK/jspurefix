@@ -22,14 +22,14 @@ export interface IQuoteResponse {
   QuoteRespID: string// 693
   QuoteID?: string// 117
   QuoteMsgID?: string// 1166
-  MDStatisticReqID?: string// 2452
+  QuoteReqID?: string// 131
   QuoteRespType: number// 694
   ClOrdID?: string// 11
   OrderCapacity?: string// 528
   OrderRestrictions?: string// 529
   IOIID?: string// 23
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  PreTradeAnonymity?: string// 1091
+  QuoteType?: number// 537
+  PreTradeAnonymity?: boolean// 1091
   TrdType?: number// 828
   RegulatoryTransactionType?: number// 2347
   NegotiationMethod?: number// 2115
@@ -38,15 +38,15 @@ export interface IQuoteResponse {
   RelativeValueSide?: number// 2532
   MinQty?: number// 110
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  LegAccount?: string// 2680
+  Currency?: string// 15
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
-  LegBidPx?: number// 681
-  LegOfferPx?: number// 684
+  AccountType?: number// 581
+  BidPx?: number// 132
+  OfferPx?: number// 133
   MktBidPx?: number// 645
   MktOfferPx?: number// 646
   MinBidSize?: number// 647
@@ -56,27 +56,27 @@ export interface IQuoteResponse {
   ValidUntilTime?: Date// 62
   BidSpotRate?: number// 188
   OfferSpotRate?: number// 190
-  BidForwardPoints?: string// 189
-  OfferForwardPoints?: string// 191
-  LegMidPx?: number// 2346
+  BidForwardPoints?: number// 189
+  OfferForwardPoints?: number// 191
+  MidPx?: number// 631
   BidYield?: number// 632
   MidYield?: number// 633
   OfferYield?: number// 634
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   OrdType?: string// 40
-  BidForwardPoints2?: string// 642
-  OfferForwardPoints2?: string// 643
-  SettlCurrBidFxRate?: string// 656
-  SettlCurrOfferFxRate?: string// 657
+  BidForwardPoints2?: number// 642
+  OfferForwardPoints2?: number// 643
+  SettlCurrBidFxRate?: number// 656
+  SettlCurrOfferFxRate?: number// 657
   SettlCurrFxRateCalc?: string// 156
-  AllocCustomerCapacity?: string// 993
+  CustOrderCapacity?: number// 582
   ExDestination?: string// 100
   ExDestinationIDSource?: string// 1133
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceType?: number// 43068
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  Price?: number// 44
+  PriceType?: number// 423
   CoverPrice?: number// 1917
   StrikeTime?: Date// 443
   StandardHeader?: IStandardHeader

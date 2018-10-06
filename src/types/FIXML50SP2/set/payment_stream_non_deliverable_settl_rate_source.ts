@@ -1,4 +1,4 @@
 export interface IPaymentStreamNonDeliverableSettlRateSource {
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingReturnRateReferencePage?: string// 43062
+  PaymentStreamNonDeliverableSettlRateSource?: number// 40371
+  PaymentStreamNonDeliverableSettlReferencePage?: string// 40372
 }

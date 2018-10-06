@@ -10,14 +10,14 @@ import { IParties } from './set/parties'
 */
 export interface ISettlementInstructionRequest {
   SettlInstReqID: string// 791
-  RelSymTransactTime: Date// 1504
-  LegAccount?: string// 2680
+  TransactTime: Date// 60
+  AllocAccount?: string// 79
   AllocAcctIDSource?: number// 661
   RelativeValueSide?: number// 2532
-  InstrumentScopeProduct?: number// 1543
-  RelatedSecurityType?: string// 1652
-  InstrumentScopeCFICode?: string// 1546
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  Product?: number// 460
+  SecurityType?: string// 167
+  CFICode?: string// 461
+  SettlCurrency?: string// 120
   EffectiveTime?: Date// 168
   ExpireTime?: Date// 126
   LastUpdateTime?: Date// 779

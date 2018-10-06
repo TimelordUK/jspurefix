@@ -1,12 +1,12 @@
 import { IUnderlyingCashSettlDateBusinessCenterGrp } from './underlying_cash_settl_date_business_center_grp'
 
 export interface IUnderlyingCashSettlDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  UnderlyingCashSettlDateUnadjusted?: Date// 42790
+  UnderlyingCashSettlDateBusinessDayConvention?: number// 42791
+  UnderlyingCashSettlDateRelativeTo?: number// 42792
+  UnderlyingCashSettlDateOffsetPeriod?: number// 42793
+  UnderlyingCashSettlDateOffsetUnit?: string// 42794
+  UnderlyingCashSettlDateOffsetDayType?: number// 42795
+  UnderlyingCashSettlDateAdjusted?: Date// 42796
   UnderlyingCashSettlDateBusinessCenterGrp?: IUnderlyingCashSettlDateBusinessCenterGrp[]
 }

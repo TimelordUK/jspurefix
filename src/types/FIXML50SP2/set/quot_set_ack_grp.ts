@@ -8,7 +8,7 @@ export interface IQuotSetAckGrp {
   TotNoCxldQuotes?: number// 1168
   TotNoAccQuotes?: number// 1169
   TotNoRejQuotes?: number// 1170
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   UnderlyingInstrument?: IUnderlyingInstrument
   QuotEntryAckGrp?: IQuotEntryAckGrp[]
 }

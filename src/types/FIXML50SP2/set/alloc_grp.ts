@@ -8,44 +8,44 @@ import { ISettlInstructionsData } from './settl_instructions_data'
 import { ITradeAllocAmtGrp } from './trade_alloc_amt_grp'
 
 export interface IAllocGrp {
-  LegAccount?: string// 2680
+  AllocAccount?: string// 79
   AllocAcctIDSource?: number// 661
   MatchStatus?: string// 573
-  UnderlyingReturnRatePrice?: number// 43066
-  RelatedTradeQuantity?: number// 1860
+  AllocPrice?: number// 366
+  AllocQty?: number// 80
   AllocCalculatedCcyQty?: number// 2515
-  LegCustodialLotID?: string// 1756
-  LegVersusPurchaseDate?: Date// 1757
-  LegVersusPurchasePrice?: number// 1758
-  LegCurrentCostBasis?: number// 1759
-  LegIndividualAllocID?: string// 672
+  CustodialLotID?: string// 1752
+  VersusPurchaseDate?: Date// 1753
+  VersusPurchasePrice?: number// 1754
+  CurrentCostBasis?: number// 1755
+  IndividualAllocID?: string// 467
   FirmMnemonic?: string// 1729
   ParentAllocID?: string// 1593
   ProcessCode?: string// 81
   SecondaryIndividualAllocID?: string// 989
-  UnderlyingComplexEventDeterminationMethod?: string// 2272
+  AllocMethod?: number// 1002
   AllocationRollupInstruction?: number// 1735
   AllocCustomerCapacity?: string// 993
   AllocPositionEffect?: string// 1047
-  AllocType?: number// 626
-  NotifyBrokerOfCredit?: string// 208
+  IndividualAllocType?: number// 992
+  NotifyBrokerOfCredit?: boolean// 208
   AllocHandlInst?: number// 209
-  UnderlyingProvisionText?: string// 42170
-  EncodedAllocTextLen?: string// 360
+  AllocText?: string// 161
+  EncodedAllocTextLen?: number// 360
   EncodedAllocText?: Buffer// 361
   FirmAllocText?: string// 1732
-  SideAvgPx?: number// 1852
+  AllocAvgPx?: number// 153
   AllocNetMoney?: number// 154
   SettlCurrAmt?: number// 119
   AllocGrossTradeAmt?: number// 2300
   AllocSettlCurrAmt?: number// 737
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  LegAllocSettlCurrency?: string// 1367
-  SettlCurrFxRate?: string// 155
+  SettlCurrency?: string// 120
+  AllocSettlCurrency?: string// 736
+  SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   AllocAccruedInterestAmt?: number// 742
   AllocInterestAtMaturity?: number// 741
-  AllocClearingFeeIndicator?: string// 1136
+  ClearingFeeIndicator?: string// 635
   AllocSettlInstType?: number// 780
   AllocRefRiskLimitCheckID?: string// 2392
   AllocRefRiskLimitCheckIDType?: number// 2393

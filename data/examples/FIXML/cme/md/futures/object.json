@@ -1,23 +1,19 @@
 {
-  "Batch": [
+  "ClearingBusinessDate": "2008-12-09T00:00:00.000Z",
+  "Instrument": {
+    "Symbol": "ZCZ9",
+    "SecurityID": "01",
+    "LegContractualMatrixSource": "H",
+    "CFICode": "FFCPSO",
+    "SecurityType": "FUT",
+    "MaturityMonthYear": "200906",
+    "SecurityExchange": "CME"
+  },
+  "MDFullGrp": [
     {
-      "ClearingBusinessDate": "2008-12-09T00:00:00.000Z",
-      "Instrument": {
-        "RelatedSymbol": "ZCZ9",
-        "BatchID": "01",
-        "LegContractualMatrixSource": "H",
-        "InstrumentScopeCFICode": "FFCPSO",
-        "RelatedSecurityType": "FUT",
-        "RelatedMaturityMonthYear": "200906",
-        "UnderlyingStreamCommodityExchange": "CME"
-      },
-      "MDFullGrp": [
-        {
-          "UnderlyingReturnRatePrice": 18.97,
-          "OrdType": "6",
-          "MDMkt": "CME"
-        }
-      ]
+      "MDEntryPx": 18.97,
+      "OrdType": "6",
+      "MDMkt": "CME"
     }
   ]
 }

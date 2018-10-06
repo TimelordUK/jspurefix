@@ -1,4 +1,4 @@
 export interface ILegPaymentStreamFormulaImage {
-  UnderlyingPaymentStreamFormulaImageLength?: string// 42947
-  UnderlyingPaymentStreamFormulaImage?: Buffer// 42948
+  LegPaymentStreamFormulaImageLength?: number// 42451
+  LegPaymentStreamFormulaImage?: Buffer// 42452
 }

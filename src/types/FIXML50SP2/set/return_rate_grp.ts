@@ -4,31 +4,31 @@ import { IReturnRateInformationSourceGrp } from './return_rate_information_sourc
 import { IReturnRateDateGrp } from './return_rate_date_grp'
 
 export interface IReturnRateGrp {
-  UnderlyingReturnRatePriceSequence?: number// 43035
-  UnderlyingReturnRateCommissionBasis?: string// 43036
-  UnderlyingReturnRateCommissionAmount?: number// 43037
-  UnderlyingReturnRateCommissionCurrency?: string// 43038
-  UnderlyingReturnRateTotalCommissionPerTrade?: number// 43039
-  UnderlyingReturnRateDeterminationMethod?: string// 43040
-  UnderlyingReturnRateAmountRelativeTo?: number// 43041
-  UnderlyingReturnRateQuoteMeasureType?: string// 43042
-  UnderlyingReturnRateQuoteUnits?: string// 43043
-  UnderlyingReturnRateQuoteMethod?: number// 43044
-  UnderlyingReturnRateQuoteCurrency?: string// 43045
-  UnderlyingReturnRateQuoteCurrencyType?: string// 43046
-  UnderlyingReturnRateQuoteTimeType?: number// 43047
-  UnderlyingReturnRateQuoteTime?: Date// 43048
-  UnderlyingReturnRateQuoteDate?: Date// 43049
-  UnderlyingReturnRateQuoteExpirationTime?: string// 43050
-  UnderlyingReturnRateQuoteBusinessCenter?: string// 43051
-  UnderlyingReturnRateQuoteExchange?: string// 43052
-  UnderlyingReturnRateQuotePricingModel?: string// 43053
-  UnderlyingReturnRateCashFlowType?: string// 43054
-  UnderlyingReturnRateValuationTimeType?: number// 43055
-  UnderlyingReturnRateValuationTime?: string// 43056
-  UnderlyingReturnRateValuationTimeBusinessCenter?: string// 43057
-  UnderlyingReturnRateValuationPriceOption?: number// 43058
-  UnderlyingReturnRateFinalPriceFallback?: number// 43059
+  ReturnRatePriceSequence?: number// 42736
+  ReturnRateCommissionBasis?: string// 42737
+  ReturnRateCommissionAmount?: number// 42738
+  ReturnRateCommissionCurrency?: string// 42739
+  ReturnRateTotalCommissionPerTrade?: number// 42740
+  ReturnRateDeterminationMethod?: string// 42741
+  ReturnRateAmountRelativeTo?: number// 42742
+  ReturnRateQuoteMeasureType?: string// 42743
+  ReturnRateQuoteUnits?: string// 42744
+  ReturnRateQuoteMethod?: number// 42745
+  ReturnRateQuoteCurrency?: string// 42746
+  ReturnRateQuoteCurrencyType?: string// 42747
+  ReturnRateQuoteTimeType?: number// 42748
+  ReturnRateQuoteTime?: string// 42749
+  ReturnRateQuoteDate?: Date// 42750
+  ReturnRateQuoteExpirationTime?: string// 42751
+  ReturnRateQuoteBusinessCenter?: string// 42752
+  ReturnRateQuoteExchange?: string// 42753
+  ReturnRateQuotePricingModel?: string// 42754
+  ReturnRateCashFlowType?: string// 42755
+  ReturnRateValuationTimeType?: number// 42756
+  ReturnRateValuationTime?: string// 42757
+  ReturnRateValuationTimeBusinessCenter?: string// 42758
+  ReturnRateValuationPriceOption?: number// 42759
+  ReturnRateFinalPriceFallback?: number// 42760
   ReturnRatePriceGrp?: IReturnRatePriceGrp[]
   ReturnRateFXConversionGrp?: IReturnRateFXConversionGrp[]
   ReturnRateInformationSourceGrp?: IReturnRateInformationSourceGrp[]

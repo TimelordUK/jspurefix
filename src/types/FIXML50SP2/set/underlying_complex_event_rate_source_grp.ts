@@ -1,6 +1,6 @@
 export interface IUnderlyingComplexEventRateSourceGrp {
-  UnderlyingReturnRateInformationSource?: number// 43061
+  UnderlyingComplexEventRateSource?: number// 41733
   UnderlyingComplexEventRateSourceType?: number// 41734
-  UnderlyingReturnRateReferencePage?: string// 43062
+  UnderlyingComplexEventReferencePage?: string// 41735
   UnderlyingComplexEventReferencePageHeading?: string// 41736
 }

@@ -1,5 +1,5 @@
 export interface IDeliveryScheduleSettlTimeGrp {
-  UnderlyingStreamCommoditySettlStart?: string// 42000
-  UnderlyingStreamCommoditySettlEnd?: string// 42001
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  DeliveryScheduleSettlStart?: string// 41055
+  DeliveryScheduleSettlEnd?: string// 41056
+  DeliveryScheduleSettlTimeType?: number// 41057
 }

@@ -12,16 +12,16 @@ import { IOrderQtyData } from './set/order_qty_data'
 *************************************************
 */
 export interface IDontKnowTrade {
-  NotAffectedOrderID: string// 1371
-  NotAffSecondaryOrderID?: string// 1825
-  LegExecID: string// 1893
+  OrderID: string// 37
+  SecondaryOrderID?: string// 198
+  ExecID: string// 17
   DKReason: string// 127
   RelativeValueSide: number// 2532
-  LegLastQty?: number// 1418
-  LegLastPx?: number// 637
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  LastQty?: number// 32
+  LastPx?: number// 31
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Instrument?: IInstrument
   UndInstrmtGrp?: IUndInstrmtGrp[]

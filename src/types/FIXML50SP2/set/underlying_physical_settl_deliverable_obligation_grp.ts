@@ -1,4 +1,4 @@
 export interface IUnderlyingPhysicalSettlDeliverableObligationGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  UnderlyingPhysicalSettlDeliverableObligationType?: string// 42066
+  UnderlyingPhysicalSettlDeliverableObligationValue?: string// 42067
 }

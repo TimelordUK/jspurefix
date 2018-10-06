@@ -1,13 +1,13 @@
 import { INestedParties } from './nested_parties'
 
 export interface IPositionQty {
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  PosType?: string// 703
   LongQty?: number// 704
   ShortQty?: number// 705
   CoveredQty?: number// 1654
-  MDStatisticStatus?: number// 2477
+  PosQtyStatus?: number// 706
   QuantityDate?: Date// 976
-  UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
-  AllocCommissionUnitOfMeasureCurrency?: string// 2659
+  PosQtyUnitOfMeasure?: string// 1836
+  PosQtyUnitOfMeasureCurrency?: string// 1835
   NestedParties?: INestedParties[]
 }

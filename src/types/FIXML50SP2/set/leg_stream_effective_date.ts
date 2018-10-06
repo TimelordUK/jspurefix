@@ -1,12 +1,12 @@
 import { ILegStreamEffectiveDateBusinessCenterGrp } from './leg_stream_effective_date_business_center_grp'
 
 export interface ILegStreamEffectiveDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  LegStreamEffectiveDateUnadjusted?: Date// 40249
+  LegStreamEffectiveDateBusinessDayConvention?: number// 40250
+  LegStreamEffectiveDateRelativeTo?: number// 40252
+  LegStreamEffectiveDateOffsetPeriod?: number// 40253
+  LegStreamEffectiveDateOffsetUnit?: string// 40254
+  LegStreamEffectiveDateOffsetDayType?: number// 40255
+  LegStreamEffectiveDateAdjusted?: Date// 40256
   LegStreamEffectiveDateBusinessCenterGrp?: ILegStreamEffectiveDateBusinessCenterGrp[]
 }

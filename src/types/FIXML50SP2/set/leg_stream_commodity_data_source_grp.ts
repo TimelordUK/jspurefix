@@ -1,4 +1,4 @@
 export interface ILegStreamCommodityDataSourceGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  LegStreamCommodityDataSourceID?: string// 41678
+  LegStreamCommodityDataSourceIDType?: number// 41679
 }

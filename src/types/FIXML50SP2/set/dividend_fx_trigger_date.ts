@@ -1,12 +1,12 @@
 import { IDividendFXTriggerDateBusinessCenterGrp } from './dividend_fx_trigger_date_business_center_grp'
 
 export interface IDividendFXTriggerDate {
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  DividendFXTriggerDateRelativeTo?: number// 42265
+  DividendFXTriggerDateOffsetPeriod?: number// 42266
+  DividendFXTriggerDateOffsetUnit?: string// 42267
+  DividendFXTriggerDateOffsetDayType?: number// 42268
+  DividendFXTriggerDateUnadjusted?: Date// 42269
+  DividendFXTriggerDateBusinessDayConvention?: number// 42270
+  DividendFXTriggerDateAdjusted?: Date// 42271
   DividendFXTriggerDateBusinessCenterGrp?: IDividendFXTriggerDateBusinessCenterGrp[]
 }

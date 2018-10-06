@@ -15,9 +15,9 @@ export interface IApplicationMessageRequestAck {
   ApplReqType?: number// 1347
   ApplResponseType?: number// 1348
   ApplTotalMessageCount?: number// 1349
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplIDRequestAckGrp?: IApplIDRequestAckGrp[]
   Parties?: IParties[]

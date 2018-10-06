@@ -1,15 +1,15 @@
 export interface IAllocCommissionDataGrp {
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  AllocCommissionAmount?: number// 2654
+  AllocCommissionAmountType?: number// 2655
   AllocCommissionBasis?: string// 2656
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
+  AllocCommissionCurrency?: string// 2657
+  AllocCommissionUnitOfMeasure?: string// 2658
   AllocCommissionUnitOfMeasureCurrency?: string// 2659
-  PaymentStubRate?: number// 40875
-  AllocCommissionSharedIndicator?: string// 2661
+  AllocCommissionRate?: number// 2660
+  AllocCommissionSharedIndicator?: boolean// 2661
   AllocCommissionAmountShared?: number// 2662
-  PaymentLegRefID?: string// 41304
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
+  AllocCommissionLegRefID?: string// 2663
+  AllocCommissionDesc?: string// 2664
+  EncodedAllocCommissionDescLen?: number// 2665
+  EncodedAllocCommissionDesc?: Buffer// 2666
 }

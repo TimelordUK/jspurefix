@@ -2,11 +2,11 @@ import { IUnderlyingProvisionCashSettlPaymentDateBusinessCenterGrp } from './und
 import { IUnderlyingProvisionCashSettlPaymentFixedDateGrp } from './underlying_provision_cash_settl_payment_fixed_date_grp'
 
 export interface IUnderlyingProvisionCashSettlPaymentDates {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
+  UnderlyingProvisionCashSettlPaymentDateBusinessDayConvention?: number// 42092
+  UnderlyingProvisionCashSettlPaymentDateRelativeTo?: number// 42093
+  UnderlyingProvisionCashSettlPaymentDateOffsetPeriod?: number// 42094
+  UnderlyingProvisionCashSettlPaymentDateOffsetUnit?: string// 42095
+  UnderlyingProvisionCashSettlPaymentDateOffsetDayType?: number// 42096
   UnderlyingProvisionCashSettlPaymentDateRangeFirst?: Date// 42097
   UnderlyingProvisionCashSettlPaymentDateRangeLast?: Date// 42098
   UnderlyingProvisionCashSettlPaymentDateBusinessCenterGrp?: IUnderlyingProvisionCashSettlPaymentDateBusinessCenterGrp[]

@@ -10,9 +10,9 @@ import { IInstrument } from './set/instrument'
 */
 export interface ICrossRequestAck {
   CrossRequestID: string// 2672
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  RelatedTradeQuantity?: number// 1860
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  OrderQty?: number// 38
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
   StandardHeader?: IStandardHeader

@@ -12,14 +12,14 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 ******************************************************
 */
 export interface IOrderStatusRequest {
-  NotAffectedOrderID?: string// 1371
+  OrderID?: string// 37
   ClOrdID?: string// 11
   SecondaryClOrdID?: string// 526
   ClOrdLinkID?: string// 583
   OrdStatusReqID?: string// 790
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketSegmentID?: string// 1300
   RelativeValueSide: number// 2532
   StandardHeader?: IStandardHeader
   Parties?: IParties[]

@@ -7,38 +7,38 @@ import { ICommissionDataGrp } from './commission_data_grp'
 
 export interface ISideCrossOrdModGrp {
   RelativeValueSide: number// 2532
-  ShortMarkingExemptIndicator?: string// 2102
-  AffectedOrigClOrdID?: string// 1824
+  ShortMarkingExemptIndicator?: boolean// 2102
+  OrigClOrdID?: string// 41
   ClOrdID: string// 11
   SecondaryClOrdID?: string// 526
   ClOrdLinkID?: string// 583
   SideShortSaleExemptionReason?: number// 1690
   TradeOriginationDate?: Date// 229
   TradeDate?: Date// 75
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   DayBookingInst?: string// 589
   BookingUnit?: string// 590
   PreallocMethod?: string// 591
   AllocID?: string// 70
-  LegQtyType?: number// 1591
+  QtyType?: number// 854
   OrderCapacity?: string// 528
   OrderRestrictions?: string// 529
-  PreTradeAnonymity?: string// 1091
-  AllocCustomerCapacity?: string// 993
-  ForexReq?: string// 121
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  PreTradeAnonymity?: boolean// 1091
+  CustOrderCapacity?: number// 582
+  ForexReq?: boolean// 121
+  SettlCurrency?: string// 120
   BookingType?: number// 775
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  LegClearingAccountType?: number// 1817
-  LegPositionEffect?: string// 564
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  ClearingAccountType?: number// 1816
+  PositionEffect?: string// 77
   CoveredOrUncovered?: number// 203
   CashMargin?: string// 544
-  AllocClearingFeeIndicator?: string// 1136
-  SolicitedFlag?: string// 377
+  ClearingFeeIndicator?: string// 635
+  SolicitedFlag?: boolean// 377
   SideComplianceID?: string// 659
   SideTimeInForce?: Date// 962
   Parties?: IParties[]

@@ -11,16 +11,16 @@ import { IQuotCxlEntriesGrp } from './set/quot_cxl_entries_grp'
 ***********************************************
 */
 export interface IQuoteCancel {
-  MDStatisticReqID?: string// 2452
+  QuoteReqID?: string// 131
   QuoteID?: string// 117
   SecondaryQuoteID?: string// 1751
   QuoteMsgID?: string// 1166
   QuoteCancelType: number// 298
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  QuoteType?: number// 537
   QuoteResponseLevel?: number// 301
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   StandardHeader?: IStandardHeader

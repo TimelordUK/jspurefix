@@ -1,3 +1,3 @@
 export interface ILegSecurityXML {
-  UnderlyingSecurityXMLSchema?: string// 1876
+  LegSecurityXMLSchema?: string// 1873
 }

@@ -51,8 +51,8 @@ test('fetch attributes from Hdr', () => {
   expect(v.getTyped('TID')).toEqual('560')
   expect(hdr.SenderSubID).toEqual('CME')
   expect(hdr.TargetSubID).toEqual('CME')
-  expect(hdr.HopSendingTime).toEqual(new Date('2015-08-13T10:12:09-05:00'))
-  const snt: Date = v.getTyped('Snt')
+  expect(hdr.SendingTime).toEqual(new Date('2015-08-13T10:12:09-05:00'))
+  const snt: Date = v.getTyped('SendingTime')
   expect(snt).toEqual(new Date('2015-08-13T10:12:09-05:00'))
 })
 
@@ -60,13 +60,13 @@ test('fetch attributes from main object', () => {
   const views = toViews.views
   const v = views[0]
   const allocation: IAllocationReport = v.toObject() as IAllocationReport
-  expect(allocation.MDStatisticRptID).toEqual('12E251CB2133225C1CC112533311')
+  expect(allocation.AllocReportID).toEqual('12E251CB2133225C1CC112533311')
   expect(allocation.TradeMatchID).toEqual('12A80D9ED85HI04008310')
-  expect(allocation.TransferReportType).toEqual(16)
+  expect(allocation.AllocReportType).toEqual(16)
   expect(allocation.AllocStatus).toEqual(6)
   expect(allocation.TrdType).toEqual(2)
-  expect(allocation.SideMultiLegReportingType).toEqual(1)
-  expect(allocation.AllocCustomerCapacity).toEqual('4')
+  expect(allocation.ExecutingClaimingIndicator).toEqual(1)
+  expect(allocation.Quantity).toEqual(4)
 })
 
 test('test complex sub structure OrdAllocGrp', () => {
@@ -100,12 +100,12 @@ test('test instrument attributes', () => {
   const v = views[0]
   const instrument: IInstrument = v.getView('Instrmt').toObject()
   expect(instrument).toBeTruthy()
-  expect(instrument.BatchID).toEqual('ED')
-  expect(instrument.InstrumentScopeCFICode).toEqual('FFDCSO')
-  expect(instrument.RelatedSecurityType).toEqual('FUT')
-  expect(instrument.RelatedMaturityMonthYear).toEqual('201512')
-  expect(instrument.DerivativePriceQuoteCurrency).toEqual('USD')
-  expect(instrument.UnderlyingStreamCommodityExchange).toEqual('CME')
+  expect(instrument.SecurityID).toEqual('ED')
+  expect(instrument.CFICode).toEqual('FFDCSO')
+  expect(instrument.SecurityType).toEqual('FUT')
+  expect(instrument.MaturityMonthYear).toEqual('201512')
+  expect(instrument.PriceQuoteCurrency).toEqual('USD')
+  expect(instrument.SecurityExchange).toEqual('CME')
 })
 
 test('test instrument on fixml allocation - use full name', () => {
@@ -122,8 +122,8 @@ test('test complex sub structure AllocGrp', () => {
   expect(allocInstruction).toBeTruthy()
   expect(Array.isArray(allocInstruction.AllocGrp)).toBeTruthy()
   expect(allocInstruction.AllocGrp.length).toEqual(1)
-  expect(allocInstruction.AllocGrp[0].RelatedTradeQuantity).toEqual(4)
-  expect(allocInstruction.AllocGrp[0].LegIndividualAllocID).toEqual('307006')
+  expect(allocInstruction.AllocGrp[0].AllocQty).toEqual(4)
+  expect(allocInstruction.AllocGrp[0].IndividualAllocID).toEqual('307006')
   expect(allocInstruction.AllocGrp[0].SecondaryIndividualAllocID).toEqual('178004')
   expect(allocInstruction.AllocGrp[0].AllocCustomerCapacity).toEqual('4')
   expect(allocInstruction.AllocGrp[0].SecondaryTradeID).toEqual('12A80D9ED85HI040083A')
@@ -149,16 +149,16 @@ test('main Party Group', () => {
   expect(Array.isArray(parties)).toBeTruthy()
   expect(parties.length).toEqual(4)
   expect(parties[0]).toEqual({
-    BatchID: 'CME',
-    UnderlyingProvisionPartyRole: 21
+    PartyID: 'CME',
+    PartyRole: 21
   })
   expect(parties[1]).toEqual({
-    BatchID: 'CME',
-    UnderlyingProvisionPartyRole: 22
+    PartyID: 'CME',
+    PartyRole: 22
   })
   expect(parties[2]).toEqual({
-    BatchID: '560',
-    UnderlyingProvisionPartyRole: 1
+    PartyID: '560',
+    PartyRole: 1
   })
 })
 
@@ -171,7 +171,7 @@ test('test party sub group', () => {
   expect(parties.length).toEqual(1)
   expect(parties[0]).toEqual(
     {
-      BatchID: '1',
+      PartySubID: '1',
       UnderlyingReturnRateValuationDateType: 26
     })
 })
@@ -185,19 +185,19 @@ test('test AllocGrp.NestedParties.NstdPtysSubGrp', () => {
   expect(parties.length).toEqual(1)
   expect(parties[0]).toEqual(
     {
-      BatchID: '1',
-      UnderlyingReturnRateValuationDateType: 26
+      NestedPartySubID: '1',
+      NestedPartySubIDType: 26
     })
 })
 
 test('main attributes', () => {
   const views = toViews.views
   const v = views[0]
-  expect(v.getTyped('MDStatisticRptID')).toEqual('12E251CB2133225C1CC112533311')
-  expect(v.getTyped('MtchID')).toEqual('12A80D9ED85HI04008310')
-  expect(v.getTyped('RptTyp')).toEqual(16)
+  expect(v.getTyped('AllocReportID')).toEqual('12E251CB2133225C1CC112533311')
+  expect(v.getTyped('TradeMatchID')).toEqual('12A80D9ED85HI04008310')
+  expect(v.getTyped('AllocReportType')).toEqual(16)
   expect(v.getTyped('TrdType')).toEqual(2)
-  expect(v.getTyped('SideAvgPx')).toEqual(95.5)
+  expect(v.getTyped('AvgPx')).toEqual(95.5)
   expect(v.getTyped('TradeDate')).toEqual(moment('2015-08-05').toDate())
   expect(v.getTyped('TradeMatchID')).toEqual('12A80D9ED85HI04008310')
 })

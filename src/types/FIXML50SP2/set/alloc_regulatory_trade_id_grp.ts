@@ -1,8 +1,8 @@
 export interface IAllocRegulatoryTradeIDGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingMarketDisruptionEvent?: string// 41865
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  PaymentLegRefID?: string// 41304
-  MDStatisticScope?: number// 2457
+  AllocRegulatoryTradeID?: string// 1909
+  AllocRegulatoryTradeIDSource?: string// 1910
+  AllocRegulatoryTradeIDEvent?: number// 1911
+  AllocRegulatoryTradeIDType?: number// 1912
+  AllocRegulatoryLegRefID?: string// 2406
+  AllocRegulatoryTradeIDScope?: number// 2399
 }

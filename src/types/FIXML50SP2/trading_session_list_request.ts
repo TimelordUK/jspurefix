@@ -8,14 +8,14 @@ import { IStandardHeader } from './set/standard_header'
 *************************************************************
 */
 export interface ITradingSessionListRequest {
-  MDStatisticReqID: string// 2452
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  TradSesReqID: string// 335
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  UnderlyingStreamCommodityExchange?: string// 41973
+  SecurityExchange?: string// 207
   TradSesMethod?: number// 338
-  UnderlyingReturnRateDateMode?: number// 43009
+  TradSesMode?: number// 339
   SubscriptionRequestType: string// 263
   StandardHeader?: IStandardHeader
 }

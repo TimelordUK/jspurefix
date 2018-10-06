@@ -14,13 +14,13 @@ import { IMarketSegmentScopeGrp } from './set/market_segment_scope_grp'
 ************************************************************
 */
 export interface IPartyEntitlementsRequest {
-  MDStatisticReqID?: string// 2452
+  EntitlementRequestID?: string// 1770
   SubscriptionRequestType?: string// 263
-  MDStatisticStatus?: number// 2477
+  EntitlementStatus?: number// 1883
   EntitlementPlatform?: string// 1784
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   Parties?: IParties[]

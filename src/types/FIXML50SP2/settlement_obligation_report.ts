@@ -14,10 +14,10 @@ export interface ISettlementObligationReport {
   SettlementCycleNo?: number// 1153
   SettlObligMsgID: string// 1160
   SettlObligMode: number// 1159
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  RelSymTransactTime?: Date// 1504
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  TransactTime?: Date// 60
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   SettlObligationInstructions?: ISettlObligationInstructions[]

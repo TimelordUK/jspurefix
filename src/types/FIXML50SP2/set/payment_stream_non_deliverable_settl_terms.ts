@@ -4,12 +4,12 @@ import { IPaymentStreamNonDeliverableFixingDateGrp } from './payment_stream_non_
 import { ISettlRateDisruptionFallbackGrp } from './settl_rate_disruption_fallback_grp'
 
 export interface IPaymentStreamNonDeliverableSettlTerms {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  PaymentScheduleFixingDateRelativeTo?: number// 40852
-  PaymentScheduleFixingDateOffsetPeriod?: number// 40855
-  PaymentScheduleFixingDateOffsetUnit?: string// 40856
-  PaymentScheduleFixingDateOffsetDayType?: number// 40857
+  PaymentStreamNonDeliverableRefCurrency?: string// 40817
+  PaymentStreamNonDeliverableFixingDatesBusinessDayConvention?: number// 40818
+  PaymentStreamNonDeliverableFixingDatesRelativeTo?: number// 40820
+  PaymentStreamNonDeliverableFixingDatesOffsetPeriod?: number// 40821
+  PaymentStreamNonDeliverableFixingDatesOffsetUnit?: string// 40822
+  PaymentStreamNonDeliverableFixingDatesOffsetDayType?: number// 40823
   PaymentStreamNonDeliverableFixingDatesBusinessCenterGrp?: IPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp[]
   PaymentStreamNonDeliverableSettlRateSource?: IPaymentStreamNonDeliverableSettlRateSource
   PaymentStreamNonDeliverableFixingDateGrp?: IPaymentStreamNonDeliverableFixingDateGrp

@@ -22,14 +22,14 @@ export interface INewOrderList {
   ListExecInstType?: string// 433
   ListExecInst?: string// 69
   ContingencyType?: number// 1385
-  EncodedListExecInstLen?: string// 352
+  EncodedListExecInstLen?: number// 352
   EncodedListExecInst?: Buffer// 353
   AllowableOneSidednessPct?: number// 765
   AllowableOneSidednessValue?: number// 766
   AllowableOneSidednessCurr?: string// 767
-  ListManualOrderIndicator?: string// 2401
+  ListManualOrderIndicator?: boolean// 2401
   TotNoOrders: number// 68
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   ThrottleInst?: number// 1685
   StandardHeader?: IStandardHeader
   RootParties?: IRootParties[]

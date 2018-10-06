@@ -1,4 +1,4 @@
 export interface ILegPaymentStreamNonDeliverableFixingDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  LegNonDeliverableFixingDate?: Date// 40368
+  LegNonDeliverableFixingDateType?: number// 40369
 }

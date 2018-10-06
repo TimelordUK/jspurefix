@@ -11,10 +11,10 @@ import { IParties } from './set/parties'
 */
 export interface IRegistrationInstructionsResponse {
   RegistID: string// 513
-  TransferTransType: number// 2439
+  RegistTransType: string// 514
   RegistRefID: string// 508
   ClOrdID?: string// 11
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
   RegistStatus: string// 506
   RegistRejReasonCode?: number// 507

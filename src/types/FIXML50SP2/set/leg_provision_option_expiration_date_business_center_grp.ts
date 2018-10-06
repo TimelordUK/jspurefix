@@ -1,3 +1,3 @@
 export interface ILegProvisionOptionExpirationDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegProvisionOptionExpirationDateBusinessCenter?: string// 40500
 }

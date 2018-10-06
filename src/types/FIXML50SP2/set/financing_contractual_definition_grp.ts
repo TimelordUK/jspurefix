@@ -1,3 +1,3 @@
 export interface IFinancingContractualDefinitionGrp {
-  LegContractualDefinition?: string// 42199
+  ContractualDefinition?: string// 40041
 }

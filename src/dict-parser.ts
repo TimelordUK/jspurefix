@@ -94,8 +94,18 @@ async function repository (): Promise<any> {
   const definitions: FixDefinitions = await getDefinitions('repofixml')
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
-  // const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
-  const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription')
+  // const file: string = path.join(root, 'data/examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
+  const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
+  // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription')
+  // const file: string = path.join(root,'data/examples/FIXML/cme/md/futures')
+  // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap')
+  // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Initial Single Side Submission/')
+  // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Accepted Unmatched')
+  // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription/')
+
+  const so = definitions.message.get('ExecutionReport')
+  const t855 = definitions.simple.get('SecondaryTrdType')
+
   const jh: JsonHelper = new JsonHelper(definitions)
   const fs: any = require('fs')
   let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
@@ -110,7 +120,9 @@ async function repository (): Promise<any> {
     fe.encode(o, msgType)
     const fixml: string = fe.buffer.toString()
     console.log(fixml)
+    console.log(v.toString())
   })
+/*
   xmlParser.on('msg', (msgType: string, v: MsgView) => {
     console.log(`received message ${msgType}`)
     const o: ILooseObject = v.toObject()
@@ -120,7 +132,7 @@ async function repository (): Promise<any> {
     fe.encode(o, msgType)
     const fixml: string = fe.buffer.toString()
     console.log(fixml)
-  })
+  })*/
 }
 
 async function runTest (): Promise<any> {

@@ -1,4 +1,4 @@
 export interface ILegComplexEventAveragingObservationGrp {
-  UnderlyingComplexEventAveragingObservationNumber?: number// 41714
-  UnderlyingComplexEventAveragingWeight?: string// 41715
+  LegComplexEventAveragingObservationNumber?: number// 41364
+  LegComplexEventAveragingWeight?: number// 41365
 }

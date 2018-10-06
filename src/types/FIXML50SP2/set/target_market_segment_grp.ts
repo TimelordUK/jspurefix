@@ -1,3 +1,3 @@
 export interface ITargetMarketSegmentGrp {
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  TargetMarketSegmentID?: string// 1790
 }

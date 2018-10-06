@@ -1,13 +1,13 @@
 import { ILegProvisionCashSettlValueDateBusinessCenterGrp } from './leg_provision_cash_settl_value_date_business_center_grp'
 
 export interface ILegProvisionCashSettlValueDates {
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
-  UnderlyingProvisionCashSettlValueTimeBusinessCenter?: string// 42105
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  LegProvisionCashSettlValueTime?: string// 40524
+  LegProvisionCashSettlValueTimeBusinessCenter?: string// 40525
+  LegProvisionCashSettlValueDateBusinessDayConvention?: number// 40526
+  LegProvisionCashSettlValueDateRelativeTo?: number// 40528
+  LegProvisionCashSettlValueDateOffsetPeriod?: number// 40529
+  LegProvisionCashSettlValueDateOffsetUnit?: string// 40530
+  LegProvisionCashSettlValueDateOffsetDayType?: number// 40531
+  LegProvisionCashSettlValueDateAdjusted?: Date// 40532
   LegProvisionCashSettlValueDateBusinessCenterGrp?: ILegProvisionCashSettlValueDateBusinessCenterGrp[]
 }

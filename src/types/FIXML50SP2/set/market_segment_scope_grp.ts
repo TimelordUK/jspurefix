@@ -1,4 +1,4 @@
 export interface IMarketSegmentScopeGrp {
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
 }

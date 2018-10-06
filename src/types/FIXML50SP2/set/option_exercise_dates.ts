@@ -2,25 +2,25 @@ import { IOptionExerciseBusinessCenterGrp } from './option_exercise_business_cen
 import { IOptionExerciseDateGrp } from './option_exercise_date_grp'
 
 export interface IOptionExerciseDates {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingOptionExerciseEarliestDateOffsetDayType?: number// 41823
-  UnderlyingProvisionOptionExerciseEarliestDateOffsetPeriod?: number// 42116
-  UnderlyingProvisionOptionExerciseEarliestDateOffsetUnit?: string// 42117
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationStartDateUnadjusted?: Date// 43014
-  UnderlyingReturnRateValuationStartDateRelativeTo?: number// 43015
-  UnderlyingReturnRateValuationStartDateOffsetPeriod?: number// 43016
-  UnderlyingReturnRateValuationStartDateOffsetUnit?: string// 43017
-  UnderlyingReturnRateValuationStartDateOffsetDayType?: number// 43018
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingPaymentStreamCompoundingPeriodSkip?: number// 42909
-  UnderlyingOptionExerciseNominationDeadline?: Date// 41835
-  UnderlyingPaymentStreamBoundsFirstDateUnadjusted?: Date// 42913
-  UnderlyingPaymentStreamBoundsLastDateUnadjusted?: Date// 42914
-  UnderlyingProvisionOptionExerciseEarliestTime?: string// 42129
-  UnderlyingProvisionOptionExerciseLatestTime?: string// 42131
-  UnderlyingProvisionCashSettlValueTimeBusinessCenter?: string// 42105
+  OptionExerciseBusinessDayConvention?: number// 41118
+  OptionExerciseEarliestDateOffsetDayType?: number// 41119
+  OptionExerciseEarliestDateOffsetPeriod?: number// 41120
+  OptionExerciseEarliestDateOffsetUnit?: string// 41121
+  OptionExerciseFrequencyPeriod?: number// 41122
+  OptionExerciseFrequencyUnit?: string// 41123
+  OptionExerciseStartDateUnadjusted?: Date// 41124
+  OptionExerciseStartDateRelativeTo?: number// 41125
+  OptionExerciseStartDateOffsetPeriod?: number// 41126
+  OptionExerciseStartDateOffsetUnit?: string// 41127
+  OptionExerciseStartDateOffsetDayType?: number// 41128
+  OptionExerciseStartDateAdjusted?: Date// 41129
+  OptionExerciseSkip?: number// 41130
+  OptionExerciseNominationDeadline?: Date// 41131
+  OptionExerciseFirstDateUnadjusted?: Date// 41132
+  OptionExerciseLastDateUnadjusted?: Date// 41133
+  OptionExerciseEarliestTime?: string// 41134
+  OptionExerciseLatestTime?: string// 41135
+  OptionExerciseTimeBusinessCenter?: string// 41136
   OptionExerciseBusinessCenterGrp?: IOptionExerciseBusinessCenterGrp[]
   OptionExerciseDateGrp?: IOptionExerciseDateGrp[]
 }

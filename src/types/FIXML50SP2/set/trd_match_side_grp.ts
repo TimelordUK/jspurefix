@@ -6,9 +6,9 @@ import { ITrdInstrmtLegExecGrp } from './trd_instrmt_leg_exec_grp'
 export interface ITrdMatchSideGrp {
   RelativeValueSide?: number// 2532
   SideExecID?: string// 1427
-  LegExecRefID?: string// 1901
-  LegTradeID?: string// 1894
-  MDStatisticRptID?: string// 2453
+  SideExecRefID?: string// 1900
+  SideTradeID?: string// 1506
+  SideTradeReportID?: string// 1005
   OrderDelay?: number// 1428
   OrderDelayUnit?: number// 1429
   SideLastQty?: number// 1009
@@ -19,37 +19,37 @@ export interface ITrdMatchSideGrp {
   SideReasonCd?: string// 1007
   SideTrdSubTyp?: number// 1008
   NetGrossInd?: number// 430
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  InputSource?: string// 979
+  SideCurrency?: string// 1154
+  SideSettlCurrency?: string// 1155
+  TradeInputSource?: string// 578
   TradeInputDevice?: string// 579
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  SolicitedFlag?: string// 377
-  AllocCustomerCapacity?: string// 993
+  SolicitedFlag?: boolean// 377
+  CustOrderCapacity?: number// 582
   TimeBracket?: string// 943
-  LegPositionEffect?: string// 564
+  PositionEffect?: string// 77
   ExchangeRule?: string// 825
   TradeAllocIndicator?: number// 826
   PreallocMethod?: string// 591
   AllocID?: string// 70
   SideGrossTradeAmt?: number// 1072
-  AggressorIndicator?: string// 1057
+  AggressorIndicator?: boolean// 1057
   ExchangeSpecialInstructions?: string// 1139
   SideShortSaleExemptionReason?: number// 1690
   OrderCategory?: string// 1115
-  SideAvgPxIndicator?: number// 1853
-  SideAvgPxGroupID?: string// 1854
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  AvgPxIndicator?: number// 819
+  AvgPxGroupID?: string// 1731
+  SideMarketSegmentID?: string// 1898
   SideVenueType?: string// 1899
-  AllocClearingFeeIndicator?: string// 1136
+  ClearingFeeIndicator?: string// 635
   CustOrderHandlingInst?: string// 1031
   OrderHandlingInstSource?: number// 1032
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   Parties?: IParties[]
   TrdAllocGrp?: ITrdAllocGrp[]
   TradeReportOrderDetail?: ITradeReportOrderDetail

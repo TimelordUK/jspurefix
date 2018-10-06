@@ -2,11 +2,11 @@ import { IUnderlyingDividendPeriodBusinessCenterGrp } from './underlying_dividen
 
 export interface IUnderlyingDividendPeriodGrp {
   UnderlyingDividendPeriodSequence?: number// 42863
-  UnderlyingReturnRateValuationStartDateUnadjusted?: Date// 43014
-  UnderlyingReturnRateValuationEndDateUnadjusted?: Date// 43020
-  UnderlyingPaymentStreamUnderlierRefID?: string// 42962
+  UnderlyingDividendPeriodStartDateUnadjusted?: Date// 42864
+  UnderlyingDividendPeriodEndDateUnadjusted?: Date// 42865
+  UnderlyingDividendPeriodUnderlierRefID?: string// 42866
   UnderlyingDividendPeriodStrikePrice?: number// 42867
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
+  UnderlyingDividendPeriodBusinessDayConvention?: number// 42868
   UnderlyingDividendPeriodValuationDateUnadjusted?: Date// 42869
   UnderlyingDividendPeriodValuationDateRelativeTo?: number// 42870
   UnderlyingDividendPeriodValuationDateOffsetPeriod?: number// 42871

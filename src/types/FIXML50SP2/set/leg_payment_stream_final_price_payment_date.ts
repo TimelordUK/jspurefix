@@ -1,8 +1,8 @@
 export interface ILegPaymentStreamFinalPricePaymentDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  LegPaymentStreamFinalPricePaymentDateUnadjusted?: Date// 42453
+  LegPaymentStreamFinalPricePaymentDateRelativeTo?: number// 42454
+  LegPaymentStreamFinalPricePaymentDateOffsetPeriod?: number// 42455
+  LegPaymentStreamFinalPricePaymentDateOffsetUnit?: string// 42456
+  LegPaymentStreamFinalPricePaymentDateOffsetDayType?: number// 42457
+  LegPaymentStreamFinalPricePaymentDateAdjusted?: Date// 42458
 }

@@ -16,44 +16,44 @@ import { IRelatedPositionGrp } from './related_position_grp'
 export interface ITrdCapRptAckSideGrp {
   RelativeValueSide: number// 2532
   SideExecID?: string// 1427
-  LegTradeID?: string// 1894
+  SideTradeID?: string// 1506
   SideOrigTradeID?: string// 1507
   OrderDelay?: number// 1428
   OrderDelayUnit?: number// 1429
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   ProcessCode?: string// 81
-  OddLot?: string// 575
-  InputSource?: string// 979
+  OddLot?: boolean// 575
+  TradeInputSource?: string// 578
   TradeInputDevice?: string// 579
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  SolicitedFlag?: string// 377
-  AllocCustomerCapacity?: string// 993
+  SolicitedFlag?: boolean// 377
+  CustOrderCapacity?: number// 582
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   TimeBracket?: string// 943
   NetGrossInd?: number// 430
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  SideCurrency?: string// 1154
+  SideSettlCurrency?: string// 1155
   NumDaysInterest?: number// 157
   ExDate?: Date// 230
   AccruedInterestRate?: number// 158
-  AllocAccruedInterestAmt?: number// 742
-  AllocInterestAtMaturity?: number// 741
+  AccruedInterestAmt?: number// 159
+  InterestAtMaturity?: number// 738
   EndAccruedInterestAmt?: number// 920
   StartCash?: number// 921
   EndCash?: number// 922
   Concession?: number// 238
   TotalTakedown?: number// 237
-  AllocNetMoney?: number// 154
+  NetMoney?: number// 118
   SettlCurrAmt?: number// 119
-  SettlCurrFxRate?: string// 155
+  SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
-  LegPositionEffect?: string// 564
+  PositionEffect?: string// 77
   SideMultiLegReportingType?: number// 752
   ExchangeRule?: string// 825
   TradeAllocIndicator?: number// 826
@@ -63,9 +63,9 @@ export interface ITrdCapRptAckSideGrp {
   PreallocMethod?: string// 591
   AllocID?: string// 70
   SideGrossTradeAmt?: number// 1072
-  AggressorIndicator?: string// 1057
+  AggressorIndicator?: boolean// 1057
   SideLastQty?: number// 1009
-  MDStatisticRptID?: string// 2453
+  SideTradeReportID?: string// 1005
   SideFillStationCd?: string// 1006
   SideReasonCd?: string// 1007
   RptSeq?: number// 83
@@ -74,7 +74,7 @@ export interface ITrdCapRptAckSideGrp {
   StrategyLinkID?: string// 1851
   CustOrderHandlingInst?: string// 1031
   OrderHandlingInstSource?: number// 1032
-  AllocRiskLimitCheckStatus?: number// 2483
+  SideRiskLimitCheckStatus?: number// 2344
   Parties?: IParties[]
   LimitAmts?: ILimitAmts[]
   ClrInstGrp?: IClrInstGrp[]

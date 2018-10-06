@@ -12,21 +12,21 @@ import { IMarginAmount } from './set/margin_amount'
 ***********************************************************
 */
 export interface IMarginRequirementReport {
-  MDStatisticRptID: string// 2453
-  BatchID?: string// 50000
-  TransferReportType: number// 2444
+  MarginReqmtRptID: string// 1642
+  MarginReqmtInqID?: string// 1635
+  MarginReqmtRptType: number// 1638
   TotNumReports?: number// 911
-  LastRptRequested?: string// 912
-  UnsolicitedIndicator?: string// 325
+  LastRptRequested?: boolean// 912
+  UnsolicitedIndicator?: boolean// 325
   ClearingBusinessDate?: Date// 715
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  UnderlyingSecondaryAssetClass?: number// 2081
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  MarginClass?: string// 1639
+  Currency?: string// 15
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Parties?: IParties[]

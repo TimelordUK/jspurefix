@@ -2,8 +2,8 @@ export interface IUnderlyingPaymentStreamCompoundingFloatingRate {
   UnderlyingPaymentStreamCompoundingRateIndex?: string// 42923
   UnderlyingPaymentStreamCompoundingRateIndexCurvePeriod?: number// 42924
   UnderlyingPaymentStreamCompoundingRateIndexCurveUnit?: string// 42925
-  UnderlyingPaymentStreamCompoundingRateMultiplier?: string// 42926
-  UnderlyingPaymentStreamCompoundingRateSpread?: string// 42927
+  UnderlyingPaymentStreamCompoundingRateMultiplier?: number// 42926
+  UnderlyingPaymentStreamCompoundingRateSpread?: number// 42927
   UnderlyingPaymentStreamCompoundingRateSpreadPositionType?: number// 42928
   UnderlyingPaymentStreamCompoundingRateTreatment?: number// 42929
   UnderlyingPaymentStreamCompoundingCapRate?: number// 42930

@@ -13,14 +13,14 @@ export interface IConfirmationRequest {
   ConfirmType: number// 773
   AllocID?: string// 70
   SecondaryAllocID?: string// 793
-  LegIndividualAllocID?: string// 672
-  RelSymTransactTime: Date// 1504
-  LegAccount?: string// 2680
+  IndividualAllocID?: string// 467
+  TransactTime: Date// 60
+  AllocAccount?: string// 79
   AllocAcctIDSource?: number// 661
   AllocAccountType?: number// 798
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   OrdAllocGrp?: IOrdAllocGrp[]
 }

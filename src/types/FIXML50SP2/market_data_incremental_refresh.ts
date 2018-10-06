@@ -15,9 +15,9 @@ export interface IMarketDataIncrementalRefresh {
   MDFeedType?: string// 1022
   MDSubFeedType?: string// 1683
   TradeDate?: Date// 75
-  MDStatisticReqID?: string// 2452
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MDReqID?: string// 262
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   ApplQueueDepth?: number// 813
   ApplQueueResolution?: number// 814
   StandardHeader?: IStandardHeader

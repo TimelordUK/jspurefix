@@ -1,4 +1,4 @@
 export interface ILegPaymentStreamPaymentDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  LegPaymentStreamPaymentDate?: Date// 41590
+  LegPaymentStreamPaymentDateType?: number// 41591
 }

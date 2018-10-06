@@ -4,14 +4,14 @@ import { IUndInstrmtGrp } from './und_instrmt_grp'
 import { ITrdMatchSideGrp } from './trd_match_side_grp'
 
 export interface IInstrmtMatchSideGrp {
-  FillMatchSubID?: string// 2674
-  RelatedTradeQuantity?: number// 1860
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  LegQtyType?: number// 1591
-  LegLastQty?: number// 1418
-  UnderlyingReturnRatePriceType?: number// 43068
-  LegLastPx?: number// 637
+  TrdMatchSubID?: string// 1891
+  Quantity?: number// 53
+  Currency?: string// 15
+  SettlCurrency?: string// 120
+  QtyType?: number// 854
+  LastQty?: number// 32
+  PriceType?: number// 423
+  LastPx?: number// 31
   LastMkt?: string// 30
   Instrument?: IInstrument
   InstrmtLegGrp?: IInstrmtLegGrp[]

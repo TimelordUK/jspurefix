@@ -1,11 +1,11 @@
 export interface IPositionAmountData {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingMakeWholeAmount?: number// 42889
+  PosAmtType?: string// 707
+  PosAmt?: number// 708
   PosAmtStreamDesc?: string// 2096
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingReturnRateFXRate?: string// 43032
-  UnderlyingReturnRateFXRateCalc?: string// 43033
+  PositionCurrency?: string// 1055
+  PositionFXRate?: number// 2097
+  PositionFXRateCalc?: string// 2098
   NotAffectedReason?: number// 2677
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  SideCollateralAmountMarketID?: string// 2692
+  PosAmtMarketSegmentID?: string// 2099
+  PosAmtMarketID?: string// 2100
 }

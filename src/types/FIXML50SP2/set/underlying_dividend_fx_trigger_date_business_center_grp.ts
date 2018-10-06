@@ -1,3 +1,3 @@
 export interface IUnderlyingDividendFXTriggerDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  UnderlyingDividendFXTriggerDateBusinessCenter?: string// 42854
 }

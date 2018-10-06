@@ -6,11 +6,11 @@ export interface IInstrmtStrkPxGrp {
   ClOrdID?: string// 11
   SecondaryClOrdID?: string// 526
   RelativeValueSide?: number// 2532
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Price?: number// 44
+  Currency?: string// 15
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   Instrument: IInstrument
   UndInstrmtGrp?: IUndInstrmtGrp[]
 }

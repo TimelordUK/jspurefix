@@ -1,4 +1,4 @@
 export interface IPaymentStreamPricingDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  PaymentStreamPricingDate?: Date// 41225
+  PaymentStreamPricingDateType?: number// 41226
 }

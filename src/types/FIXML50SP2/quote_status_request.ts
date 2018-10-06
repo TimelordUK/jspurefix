@@ -14,11 +14,11 @@ import { ITargetParties } from './set/target_parties'
 ******************************************************
 */
 export interface IQuoteStatusRequest {
-  OrdStatusReqID?: string// 790
+  QuoteStatusReqID?: string// 649
   QuoteID?: string// 117
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   SubscriptionRequestType?: string// 263

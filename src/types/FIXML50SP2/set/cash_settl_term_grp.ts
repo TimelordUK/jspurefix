@@ -2,26 +2,26 @@ import { ICashSettlDealerGrp } from './cash_settl_dealer_grp'
 import { ICashSettlDate } from './cash_settl_date'
 
 export interface ICashSettlTermGrp {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingCashSettlValuationFirstBusinessDayOffset?: number// 42043
-  UnderlyingCashSettlValuationSubsequentBusinessDaysOffset?: number// 42044
-  UnderlyingCashSettlNumOfValuationDates?: number// 42045
-  UnderlyingReturnRateValuationTime?: string// 43056
-  UnderlyingProtectionTermEventBusinessCenter?: string// 42073
-  UnderlyingReturnRateQuoteMethod?: number// 43044
-  UnderlyingCashSettlQuoteAmount?: number// 42049
-  UnderlyingReturnRateQuoteCurrency?: string// 43045
-  UnderlyingCashSettlMinimumQuoteAmount?: number// 42051
-  UnderlyingCashSettlMinimumQuoteCurrency?: string// 42052
-  UnderlyingCashSettlPriceSource?: string// 42797
-  UnderlyingCashSettlPriceDefault?: number// 42798
-  UnderlyingPhysicalSettlBusinessDays?: number// 42062
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingCashSettlRecoveryFactor?: string// 42055
-  UnderlyingCashSettlFixedTermIndicator?: string// 42056
-  UnderlyingCashSettlAccruedInterestIndicator?: string// 42057
-  UnderlyingCashSettlValuationMethod?: number// 42058
-  UnderlyingDividendPeriodXID?: string// 42881
+  CashSettlCurrency?: string// 40023
+  CashSettlValuationFirstBusinessDayOffset?: number// 40024
+  CashSettlValuationSubsequentBusinessDaysOffset?: number// 40916
+  CashSettlNumOfValuationDates?: number// 40917
+  CashSettlValuationTime?: string// 40025
+  CashSettlBusinessCenter?: string// 40026
+  CashSettlQuoteMethod?: number// 40027
+  CashSettlQuoteAmount?: number// 40028
+  CashSettlQuoteCurrency?: string// 40029
+  CashSettlMinimumQuoteAmount?: number// 40030
+  CashSettlMinimumQuoteCurrency?: string// 40031
+  CashSettlPriceSource?: string// 42216
+  CashSettlPriceDefault?: number// 42217
+  CashSettlBusinessDays?: number// 40033
+  CashSettlAmount?: number// 40034
+  CashSettlRecoveryFactor?: number// 40035
+  CashSettlFixedTermIndicator?: boolean// 40036
+  CashSettlAccruedInterestIndicator?: boolean// 40037
+  CashSettlValuationMethod?: number// 40038
+  CashSettlTermXID?: string// 40039
   CashSettlDealerGrp?: ICashSettlDealerGrp[]
   CashSettlDate?: ICashSettlDate
 }

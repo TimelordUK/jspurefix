@@ -1,5 +1,5 @@
 export interface IUnderlyingAssetAttributeGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
-  UnderlyingStreamAssetAttributeLimit?: string// 41803
+  UnderlyingAssetAttributeType?: string// 2313
+  UnderlyingAssetAttributeValue?: string// 2314
+  UnderlyingAssetAttributeLimit?: string// 2315
 }

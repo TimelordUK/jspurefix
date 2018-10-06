@@ -8140,7 +8140,7 @@ export enum CustOrderHandlingInst {
 /*
 ****************************************************************
 * Identifies the class or source of the order handling         *
-* instruction values. �Scope of this will apply to both        *
+* instruction values.  Scope of this will apply to both        *
 * CustOrderHandlingInst(1031) and DeskOrderHandlingInst(1035). *
 * Conditionally required when CustOrderHandlingInst(1031) or   *
 * DeskOrderHandlingInst(1035) is specified.                    *
@@ -38065,3 +38065,4 @@ export enum ExecutingClaimingIndicator {
   ExecutingFirm = 0,
   ClaimingFirm = 1
 }
+

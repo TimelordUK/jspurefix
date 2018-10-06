@@ -1,4 +1,4 @@
 export interface INewsRefGrp {
-  EntitlementRefID?: string// 1885
+  NewsRefID?: string// 1476
   NewsRefType?: number// 1477
 }

@@ -1,4 +1,4 @@
 export interface INestedInstrumentAttribute {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  NestedInstrAttribType?: number// 1210
+  NestedInstrAttribValue?: string// 1211
 }

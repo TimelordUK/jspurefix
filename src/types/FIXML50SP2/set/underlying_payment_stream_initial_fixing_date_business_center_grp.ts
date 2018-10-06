@@ -1,3 +1,3 @@
 export interface IUnderlyingPaymentStreamInitialFixingDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  UnderlyingPaymentStreamInitialFixingDateBusinessCenter?: string// 40600
 }

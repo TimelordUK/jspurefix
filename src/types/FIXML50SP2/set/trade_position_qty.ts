@@ -1,8 +1,8 @@
 export interface ITradePositionQty {
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  PosType?: string// 703
   LongQty?: number// 704
   ShortQty?: number// 705
   CoveredQty?: number// 1654
-  MDStatisticStatus?: number// 2477
+  PosQtyStatus?: number// 706
   QuantityDate?: Date// 976
 }

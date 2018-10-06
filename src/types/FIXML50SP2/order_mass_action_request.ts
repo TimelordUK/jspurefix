@@ -18,20 +18,20 @@ export interface IOrderMassActionRequest {
   MassActionType: number// 1373
   MassActionScope: number// 1374
   MassActionReason?: number// 2675
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   RelativeValueSide?: number// 2532
-  UnderlyingReturnRatePrice?: number// 43066
-  RelSymTransactTime: Date// 1504
+  Price?: number// 44
+  TransactTime: Date// 60
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   TargetMarketSegmentGrp?: ITargetMarketSegmentGrp[]
   Parties?: IParties[]

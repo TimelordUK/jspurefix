@@ -1,3 +1,3 @@
 export interface IUnderlyingPricingDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  UnderlyingPricingDateBusinessCenter?: string// 41948
 }

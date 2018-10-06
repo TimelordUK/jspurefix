@@ -17,13 +17,13 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 export interface IPartyRiskLimitCheckRequestAck {
   RiskLimitCheckRequestID?: string// 2318
   RiskLimitCheckID?: string// 2319
-  MassOrderRequestStatus: number// 2425
-  MDStatisticRequestResult?: number// 2473
-  TransferTransType: number// 2439
+  RiskLimitCheckRequestStatus: number// 2325
+  RiskLimitCheckRequestResult?: number// 2326
+  RiskLimitCheckTransType: number// 2320
   RiskLimitCheckType: number// 2321
   RiskLimitCheckRequestRefID?: number// 2322
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   RefOrderID?: string// 1080
   RefOrderIDSource?: string// 1081
@@ -31,12 +31,12 @@ export interface IPartyRiskLimitCheckRequestAck {
   RiskLimitApprovedAmount?: number// 2327
   RiskLimitCheckAmount?: number// 2324
   RiskLimitID?: string// 1670
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   ExpireTime?: Date// 126
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   Parties?: IParties[]

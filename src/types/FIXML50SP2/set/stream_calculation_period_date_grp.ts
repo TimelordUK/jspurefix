@@ -1,4 +1,4 @@
 export interface IStreamCalculationPeriodDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  StreamCalculationPeriodDate?: Date// 41242
+  StreamCalculationPeriodDateType?: number// 41243
 }

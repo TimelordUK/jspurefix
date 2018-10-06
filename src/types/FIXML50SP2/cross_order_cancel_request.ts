@@ -13,15 +13,15 @@ import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 ***********************************************************
 */
 export interface ICrossOrderCancelRequest {
-  NotAffectedOrderID?: string// 1371
+  OrderID?: string// 37
   OrderRequestID?: number// 2422
   CrossID: string// 548
   OrigCrossID: string// 551
   HostCrossID?: string// 961
   CrossType: number// 549
   CrossPrioritization: number// 550
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  RelSymTransactTime: Date// 1504
+  MarketSegmentID?: string// 1300
+  TransactTime: Date// 60
   StandardHeader?: IStandardHeader
   RootParties?: IRootParties[]
   SideCrossOrdCxlGrp?: ISideCrossOrdCxlGrp[]

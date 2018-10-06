@@ -1,9 +1,9 @@
 import { IPaymentSettlPtysSubGrp } from './payment_settl_ptys_sub_grp'
 
 export interface IPaymentSettlParties {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  PaymentSettlPartyID?: string// 40234
+  PaymentSettlPartyIDSource?: string// 40235
+  PaymentSettlPartyRole?: number// 40236
+  PaymentSettlPartyRoleQualifier?: number// 40237
   PaymentSettlPtysSubGrp?: IPaymentSettlPtysSubGrp[]
 }

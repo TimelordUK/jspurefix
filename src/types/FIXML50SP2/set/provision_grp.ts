@@ -8,31 +8,31 @@ import { IProvisionCashSettlQuoteSource } from './provision_cash_settl_quote_sou
 import { IProvisionParties } from './provision_parties'
 
 export interface IProvisionGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingProvisionDateTenorPeriod?: number// 42154
-  UnderlyingProvisionDateTenorUnit?: string// 42155
-  UnderlyingProvisionBreakFeeElection?: number// 43002
-  UnderlyingProvisionBreakFeeRate?: number// 43003
-  UnderlyingProvisionCalculationAgent?: number// 42156
-  UnderlyingProvisionOptionSinglePartyBuyerSide?: number// 42157
-  UnderlyingProvisionOptionSinglePartySellerSide?: number// 42158
+  ProvisionType?: number// 40091
+  ProvisionDateUnadjusted?: Date// 40092
+  ProvisionDateBusinessDayConvention?: number// 40093
+  ProvisionDateAdjusted?: Date// 40095
+  ProvisionDateTenorPeriod?: number// 40096
+  ProvisionDateTenorUnit?: string// 40097
+  ProvisionBreakFeeElection?: number// 42707
+  ProvisionBreakFeeRate?: number// 42708
+  ProvisionCalculationAgent?: number// 40098
+  ProvisionOptionSinglePartyBuyerSide?: number// 40099
+  ProvisionOptionSinglePartySellerSide?: number// 40100
   UnderlyingProvisionOptionExerciseStyle?: number// 42159
-  UnderlyingProvisionOptionExerciseMultipleNotional?: number// 42160
-  UnderlyingProvisionOptionExerciseMinimumNotional?: number// 42161
-  UnderlyingProvisionOptionExerciseMaximumNotional?: number// 42162
-  UnderlyingProvisionOptionMinimumNumber?: number// 42163
-  UnderlyingProvisionOptionMaximumNumber?: number// 42164
-  UnderlyingProvisionOptionExerciseConfirmation?: string// 42165
-  UnderlyingProvisionCashSettlMethod?: number// 42166
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  UnderlyingProvisionCashSettlCurrency2?: string// 42168
-  UnderlyingProvisionCashSettlQuoteType?: number// 42169
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  ProvisionOptionExerciseMultipleNotional?: number// 40102
+  ProvisionOptionExerciseMinimumNotional?: number// 40103
+  ProvisionOptionExerciseMaximumNotional?: number// 40104
+  ProvisionOptionMinimumNumber?: number// 40105
+  ProvisionOptionMaximumNumber?: number// 40106
+  ProvisionOptionExerciseConfirmation?: boolean// 40107
+  ProvisionCashSettlMethod?: number// 40108
+  ProvisionCashSettlCurrency?: string// 40109
+  ProvisionCashSettlCurrency2?: string// 40110
+  ProvisionCashSettlQuoteType?: number// 40111
+  ProvisionText?: string// 40113
+  EncodedProvisionTextLen?: number// 40986
+  EncodedProvisionText?: Buffer// 40987
   ProvisionDateBusinessCenterGrp?: IProvisionDateBusinessCenterGrp[]
   ProvisionCashSettlValueDates?: IProvisionCashSettlValueDates
   ProvisionOptionExerciseDates?: IProvisionOptionExerciseDates

@@ -13,14 +13,14 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 ***********************************************************
 */
 export interface IContraryIntentionReport {
-  MDStatisticRptID: string// 2453
-  RelSymTransactTime?: Date// 1504
-  LateIndicator?: string// 978
+  ContIntRptID: string// 977
+  TransactTime?: Date// 60
+  LateIndicator?: boolean// 978
   InputSource?: string// 979
   ClearingBusinessDate: Date// 715
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Parties?: IParties[]

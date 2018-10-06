@@ -5,7 +5,7 @@ export interface IBidCompReqGrp {
   TradingSessionSubID?: string// 625
   NetGrossInd?: number// 430
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
-  LegAccount?: string// 2680
+  SettlDate?: Date// 64
+  Account?: string// 1
   AcctIDSource?: number// 660
 }

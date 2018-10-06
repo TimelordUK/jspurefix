@@ -1,12 +1,12 @@
 import { IStreamTerminationDateBusinessCenterGrp } from './stream_termination_date_business_center_grp'
 
 export interface IStreamTerminationDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  StreamTerminationDateUnadjusted?: Date// 40065
+  StreamTerminationDateBusinessDayConvention?: number// 40066
+  StreamTerminationDateRelativeTo?: number// 40068
+  StreamTerminationDateOffsetPeriod?: number// 40069
+  StreamTerminationDateOffsetUnit?: string// 40070
+  StreamTerminationDateOffsetDayType?: number// 40071
+  StreamTerminationDateAdjusted?: Date// 40072
   StreamTerminationDateBusinessCenterGrp?: IStreamTerminationDateBusinessCenterGrp[]
 }

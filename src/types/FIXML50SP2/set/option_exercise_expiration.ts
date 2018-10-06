@@ -2,16 +2,16 @@ import { IOptionExerciseExpirationDateBusinessCenterGrp } from './option_exercis
 import { IOptionExerciseExpirationDateGrp } from './option_exercise_expiration_date_grp'
 
 export interface IOptionExerciseExpiration {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
-  UnderlyingProvisionCashSettlValueTimeBusinessCenter?: string// 42105
+  OptionExerciseExpirationDateBusinessDayConvention?: number// 41142
+  OptionExerciseExpirationDateRelativeTo?: number// 41143
+  OptionExerciseExpirationDateOffsetPeriod?: number// 41144
+  OptionExerciseExpirationDateOffsetUnit?: string// 41145
+  OptionExerciseExpirationFrequencyPeriod?: number// 41146
+  OptionExerciseExpirationFrequencyUnit?: string// 41147
+  OptionExerciseExpirationRollConvention?: string// 41148
+  OptionExerciseExpirationDateOffsetDayType?: number// 41149
+  OptionExerciseExpirationTime?: string// 41150
+  OptionExerciseExpirationTimeBusinessCenter?: string// 41151
   OptionExerciseExpirationDateBusinessCenterGrp?: IOptionExerciseExpirationDateBusinessCenterGrp[]
   OptionExerciseExpirationDateGrp?: IOptionExerciseExpirationDateGrp[]
 }

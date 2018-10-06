@@ -1,7 +1,7 @@
 import { IPartyDetailAltSubGrp } from './party_detail_alt_sub_grp'
 
 export interface IPartyDetailAltIDGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
+  PartyDetailAltID?: string// 1517
+  PartyDetailAltIDSource?: string// 1518
   PartyDetailAltSubGrp?: IPartyDetailAltSubGrp[]
 }

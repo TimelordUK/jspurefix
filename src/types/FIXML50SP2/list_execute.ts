@@ -11,9 +11,9 @@ export interface IListExecute {
   ListID: string// 66
   ClientBidID?: string// 391
   BidID?: string// 390
-  RelSymTransactTime: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
 }

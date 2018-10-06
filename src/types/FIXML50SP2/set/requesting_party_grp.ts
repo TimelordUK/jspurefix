@@ -1,9 +1,9 @@
 import { IRequestingPartySubGrp } from './requesting_party_sub_grp'
 
 export interface IRequestingPartyGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  RequestingPartyID?: string// 1658
+  RequestingPartyIDSource?: string// 1659
+  RequestingPartyRole?: number// 1660
+  RequestingPartyRoleQualifier?: number// 2338
   RequestingPartySubGrp?: IRequestingPartySubGrp[]
 }

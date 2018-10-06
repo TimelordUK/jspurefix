@@ -1,6 +1,6 @@
 export interface IReturnRatePriceGrp {
-  UnderlyingReturnRatePriceBasis?: number// 43065
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingReturnRatePriceType?: number// 43068
+  ReturnRatePriceBasis?: number// 42766
+  ReturnRatePrice?: number// 42767
+  ReturnRatePriceCurrency?: string// 42768
+  ReturnRatePriceType?: number// 42769
 }

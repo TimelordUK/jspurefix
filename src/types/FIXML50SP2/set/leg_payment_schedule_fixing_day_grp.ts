@@ -1,4 +1,4 @@
 export interface ILegPaymentScheduleFixingDayGrp {
-  UnderlyingPaymentStreamPricingDayOfWeek?: number// 41945
-  UnderlyingPaymentStreamPricingDayNumber?: number// 41946
+  LegPaymentScheduleFixingDayOfWeek?: number// 41531
+  LegPaymentScheduleFixingDayNumber?: number// 41532
 }

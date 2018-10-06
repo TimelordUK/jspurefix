@@ -1,3 +1,3 @@
 export interface IIOIQualGrp {
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  IOIQualifier?: string// 104
 }

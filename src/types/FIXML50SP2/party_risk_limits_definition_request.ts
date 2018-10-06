@@ -11,10 +11,10 @@ import { IPartyRiskLimitsUpdateGrp } from './set/party_risk_limits_update_grp'
 ****************************************************************
 */
 export interface IPartyRiskLimitsDefinitionRequest {
-  MDStatisticReqID: string// 2452
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  RiskLimitRequestID: string// 1666
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   PartyRiskLimitsUpdateGrp?: IPartyRiskLimitsUpdateGrp[]

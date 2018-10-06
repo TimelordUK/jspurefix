@@ -11,12 +11,12 @@ import { IPartyEntitlementAckGrp } from './set/party_entitlement_ack_grp'
 ****************************************************************
 */
 export interface IPartyEntitlementsDefinitionRequestAck {
-  MDStatisticReqID: string// 2452
-  MassOrderRequestStatus: number// 2425
+  EntitlementRequestID: string// 1770
+  EntitlementRequestStatus: number// 1882
   MDStatisticRequestResult?: number// 2473
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   PartyEntitlementAckGrp?: IPartyEntitlementAckGrp[]

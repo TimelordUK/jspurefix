@@ -1,3 +1,3 @@
 export interface IUnderlyingDividendPeriodBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  UnderlyingDividendPeriodBusinessCenter?: string// 42883
 }

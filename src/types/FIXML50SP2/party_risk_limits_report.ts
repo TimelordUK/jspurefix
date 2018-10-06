@@ -10,19 +10,19 @@ import { IPartyRiskLimitsGrp } from './set/party_risk_limits_grp'
 *********************************************************
 */
 export interface IPartyRiskLimitsReport {
-  MDStatisticRptID: string// 2453
-  MDStatisticReqID?: string// 2452
+  RiskLimitReportID: string// 1667
+  RiskLimitRequestID?: string// 1666
   RiskLimitRequestType?: number// 1760
   MDStatisticRequestResult?: number// 2473
-  UnsolicitedIndicator?: string// 325
+  UnsolicitedIndicator?: boolean// 325
   TotNoParties?: number// 1512
-  LastFragment?: string// 893
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  LastFragment?: boolean// 893
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl

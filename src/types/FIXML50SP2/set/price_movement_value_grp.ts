@@ -1,5 +1,5 @@
 export interface IPriceMovementValueGrp {
-  PriceMovementValue?: string// 1921
+  PriceMovementValue?: number// 1921
   PriceMovementPoint?: number// 1922
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  PriceMovementType?: number// 1923
 }

@@ -1,14 +1,14 @@
 import { ILegComplexEventDateBusinessCenterGrp } from './leg_complex_event_date_business_center_grp'
 
 export interface ILegComplexEventRelativeDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingComplexEventFixingTime?: string// 41746
-  UnderlyingComplexEventFixingTimeBusinessCenter?: string// 41747
+  LegComplexEventDateUnadjusted?: Date// 41389
+  LegComplexEventDateRelativeTo?: number// 41390
+  LegComplexEventDateOffsetPeriod?: number// 41391
+  LegComplexEventDateOffsetUnit?: string// 41392
+  LegComplexEventDateOffsetDayType?: number// 41393
+  LegComplexEventDateBusinessDayConvention?: number// 41394
+  LegComplexEventDateAdjusted?: Date// 41395
+  LegComplexEventFixingTime?: string// 41396
+  LegComplexEventFixingTimeBusinessCenter?: string// 41397
   LegComplexEventDateBusinessCenterGrp?: ILegComplexEventDateBusinessCenterGrp[]
 }

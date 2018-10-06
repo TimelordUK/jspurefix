@@ -1,3 +1,3 @@
 export interface ILegPaymentStreamPaymentDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegPaymentStreamPaymentDateBusinessCenter?: string// 40293
 }

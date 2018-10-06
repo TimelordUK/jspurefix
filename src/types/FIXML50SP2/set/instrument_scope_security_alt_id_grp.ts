@@ -1,4 +1,4 @@
 export interface IInstrumentScopeSecurityAltIDGrp {
-  UnderlyingStreamCommodityAltID?: string// 41991
-  UnderlyingStreamCommodityAltIDSource?: string// 41992
+  InstrumentScopeSecurityAltID?: string// 1541
+  InstrumentScopeSecurityAltIDSource?: string// 1542
 }

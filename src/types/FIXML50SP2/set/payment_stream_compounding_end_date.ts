@@ -1,8 +1,8 @@
 export interface IPaymentStreamCompoundingEndDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  PaymentStreamCompoundingEndDateUnadjusted?: Date// 42622
+  PaymentStreamCompoundingEndDateRelativeTo?: number// 42623
+  PaymentStreamCompoundingEndDateOffsetPeriod?: number// 42624
+  PaymentStreamCompoundingEndDateOffsetUnit?: string// 42625
+  PaymentStreamCompoundingEndDateOffsetDayType?: number// 42626
+  PaymentStreamCompoundingEndDateAdjusted?: Date// 42627
 }

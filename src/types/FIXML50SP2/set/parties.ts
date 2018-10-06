@@ -1,9 +1,9 @@
 import { IPtysSubGrp } from './ptys_sub_grp'
 
 export interface IParties {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  PartyID?: string// 448
+  PartyIDSource?: string// 447
+  PartyRole?: number// 452
+  PartyRoleQualifier?: number// 2376
   PtysSubGrp?: IPtysSubGrp[]
 }

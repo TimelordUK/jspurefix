@@ -6,10 +6,10 @@ import { IUnderlyingDividendConditions } from './underlying_dividend_conditions'
 import { IUnderlyingReturnRateGrp } from './underlying_return_rate_grp'
 
 export interface IUnderlyingPaymentStreamFloatingRate {
-  UnderlyingPaymentStreamCompoundingRateIndex?: string// 42923
-  PaymentStubIndexSource?: number// 40879
-  UnderlyingPaymentStreamCompoundingRateIndexCurveUnit?: string// 42925
-  UnderlyingPaymentStreamCompoundingRateIndexCurvePeriod?: number// 42924
+  UnderlyingPaymentStreamRateIndex?: string// 40620
+  UnderlyingPaymentStreamRateIndexSource?: number// 40621
+  UnderlyingPaymentStreamRateIndexCurveUnit?: string// 40622
+  UnderlyingPaymentStreamRateIndexCurvePeriod?: number// 40623
   UnderlyingPaymentStreamRateIndex2CurveUnit?: string// 41911
   UnderlyingPaymentStreamRateIndex2CurvePeriod?: number// 41912
   UnderlyingPaymentStreamRateIndexLocation?: string// 41913
@@ -18,28 +18,28 @@ export interface IUnderlyingPaymentStreamFloatingRate {
   UnderlyingPaymentStreamSettlLevel?: number// 41916
   UnderlyingPaymentStreamReferenceLevel?: number// 41917
   UnderlyingPaymentStreamReferenceLevelUnitOfMeasure?: string// 41918
-  UnderlyingPaymentStreamReferenceLevelEqualsZeroIndicator?: string// 41919
-  UnderlyingPaymentStreamCompoundingRateMultiplier?: string// 42926
-  UnderlyingPaymentStreamCompoundingRateSpread?: string// 42927
+  UnderlyingPaymentStreamReferenceLevelEqualsZeroIndicator?: boolean// 41919
+  UnderlyingPaymentStreamRateMultiplier?: number// 40624
+  UnderlyingPaymentStreamRateSpread?: number// 40625
   UnderlyingPaymentStreamRateSpreadCurrency?: string// 41920
   UnderlyingPaymentStreamRateSpreadUnitOfMeasure?: string// 41921
-  UnderlyingPaymentStreamRateConversionFactor?: string// 41922
+  UnderlyingPaymentStreamRateConversionFactor?: number// 41922
   UnderlyingPaymentStreamRateSpreadType?: number// 41923
-  UnderlyingPaymentStreamCompoundingRateSpreadPositionType?: number// 42928
-  UnderlyingPaymentStreamCompoundingRateTreatment?: number// 42929
-  UnderlyingPaymentStreamCompoundingCapRate?: number// 42930
-  UnderlyingPaymentStreamCompoundingCapRateBuySide?: number// 42931
-  UnderlyingPaymentStreamCompoundingCapRateSellSide?: number// 42932
-  UnderlyingPaymentStreamCompoundingFloorRate?: number// 42933
-  UnderlyingPaymentStreamCompoundingFloorRateBuySide?: number// 42934
-  UnderlyingPaymentStreamCompoundingFloorRateSellSide?: number// 42935
-  UnderlyingPaymentStreamCompoundingInitialRate?: number// 42936
+  UnderlyingPaymentStreamRateSpreadPositionType?: number// 40626
+  UnderlyingPaymentStreamRateTreatment?: number// 40627
+  UnderlyingPaymentStreamCapRate?: number// 40628
+  UnderlyingPaymentStreamCapRateBuySide?: number// 40629
+  UnderlyingPaymentStreamCapRateSellSide?: number// 40630
+  UnderlyingPaymentStreamFloorRate?: number// 40631
+  UnderlyingPaymentStreamFloorRateBuySide?: number// 40632
+  UnderlyingPaymentStreamFloorRateSellSide?: number// 40633
+  UnderlyingPaymentStreamInitialRate?: number// 40634
   UnderlyingPaymentStreamLastResetRate?: number// 41924
   UnderlyingPaymentStreamFinalRate?: number// 41925
-  UnderlyingPaymentStreamCompoundingFinalRateRoundingDirection?: string// 42937
-  UnderlyingPaymentStreamCompoundingFinalRatePrecision?: number// 42938
-  UnderlyingPaymentStreamCompoundingAveragingMethod?: number// 42939
-  UnderlyingPaymentStreamCompoundingNegativeRateTreatment?: number// 42940
+  UnderlyingPaymentStreamFinalRateRoundingDirection?: string// 40635
+  UnderlyingPaymentStreamFinalRatePrecision?: number// 40636
+  UnderlyingPaymentStreamAveragingMethod?: number// 40637
+  UnderlyingPaymentStreamNegativeRateTreatment?: number// 40638
   UnderlyingPaymentStreamCalculationLagPeriod?: number// 41926
   UnderlyingPaymentStreamCalculationLagUnit?: string// 41927
   UnderlyingPaymentStreamFirstObservationDateUnadjusted?: Date// 42958
@@ -53,31 +53,31 @@ export interface IUnderlyingPaymentStreamFloatingRate {
   UnderlyingPaymentStreamPricingDayCount?: number// 41932
   UnderlyingPaymentStreamPricingBusinessCalendar?: string// 41933
   UnderlyingPaymentStreamPricingBusinessDayConvention?: number// 41934
-  PaymentStreamInflationLagPeriod?: number// 40808
-  PaymentStreamInflationLagUnit?: string// 40809
-  PaymentStreamInflationLagDayType?: number// 40810
-  UnderlyingPaymentStreamInterpolationMethod?: number// 42898
-  PaymentStreamInflationIndexSource?: number// 40812
-  PaymentStreamInflationPublicationSource?: string// 40813
-  PaymentStreamInflationInitialIndexLevel?: string// 40814
-  PaymentStreamInflationFallbackBondApplicable?: string// 40815
-  PaymentStreamFRADiscounting?: number// 40816
+  UnderlyingPaymentStreamInflationLagPeriod?: number// 40639
+  UnderlyingPaymentStreamInflationLagUnit?: string// 40640
+  UnderlyingPaymentStreamInflationLagDayType?: number// 40641
+  UnderlyingPaymentStreamInflationInterpolationMethod?: number// 40642
+  UnderlyingPaymentStreamInflationIndexSource?: number// 40643
+  UnderlyingPaymentStreamInflationPublicationSource?: string// 40644
+  UnderlyingPaymentStreamInflationInitialIndexLevel?: number// 40645
+  UnderlyingPaymentStreamInflationFallbackBondApplicable?: boolean// 40646
+  UnderlyingPaymentStreamFRADiscounting?: number// 40647
   UnderlyingPaymentStreamUnderlierRefID?: string// 42962
-  UnderlyingReturnRateNotionalReset?: string// 42963
+  UnderlyingReturnRateNotionalReset?: boolean// 42963
   UnderlyingPaymentStreamLinkInitialLevel?: number// 42964
-  UnderlyingPaymentStreamLinkClosingLevelIndicator?: string// 42965
-  UnderlyingPaymentStreamLinkExpiringLevelIndicator?: string// 42966
+  UnderlyingPaymentStreamLinkClosingLevelIndicator?: boolean// 42965
+  UnderlyingPaymentStreamLinkExpiringLevelIndicator?: boolean// 42966
   UnderlyingPaymentStreamLinkEstimatedTradingDays?: number// 42967
   UnderlyingPaymentStreamLinkStrikePrice?: number// 42968
   UnderlyingPaymentStreamLinkStrikePriceType?: number// 42969
-  UnderlyingPaymentStreamLinkMaximumBoundary?: string// 42970
-  UnderlyingPaymentStreamLinkMinimumBoundary?: string// 42971
+  UnderlyingPaymentStreamLinkMaximumBoundary?: number// 42970
+  UnderlyingPaymentStreamLinkMinimumBoundary?: number// 42971
   UnderlyingPaymentStreamLinkNumberOfDataSeries?: number// 42972
-  UnderlyingPaymentStreamVarianceUnadjustedCap?: string// 42973
+  UnderlyingPaymentStreamVarianceUnadjustedCap?: number// 42973
   UnderlyingPaymentStreamRealizedVarianceMethod?: number// 42974
-  UnderlyingPaymentStreamDaysAdjustmentIndicator?: string// 42975
+  UnderlyingPaymentStreamDaysAdjustmentIndicator?: boolean// 42975
   UnderlyingPaymentStreamNearestExchangeContractRefID?: string// 42976
-  UnderlyingPaymentStreamVegaNotionalAmount?: string// 42977
+  UnderlyingPaymentStreamVegaNotionalAmount?: number// 42977
   UnderlyingPaymentStreamPricingBusinessCenterGrp?: IUnderlyingPaymentStreamPricingBusinessCenterGrp[]
   UnderlyingPaymentStreamPricingDayGrp?: IUnderlyingPaymentStreamPricingDayGrp[]
   UnderlyingPaymentStreamPricingDateGrp?: IUnderlyingPaymentStreamPricingDateGrp[]

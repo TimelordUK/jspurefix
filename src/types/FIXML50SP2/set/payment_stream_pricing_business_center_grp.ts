@@ -1,3 +1,3 @@
 export interface IPaymentStreamPricingBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  PaymentStreamPricingBusinessCenter?: string// 41193
 }

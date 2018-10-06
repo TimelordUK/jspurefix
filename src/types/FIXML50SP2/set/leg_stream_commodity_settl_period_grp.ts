@@ -1,18 +1,18 @@
 import { ILegStreamCommoditySettlDayGrp } from './leg_stream_commodity_settl_day_grp'
 
 export interface ILegStreamCommoditySettlPeriodGrp {
-  UnderlyingStreamCommoditySettlCountry?: string// 42003
-  UnderlyingStreamCommoditySettlTimeZone?: string// 42004
-  UnderlyingStreamCommoditySettlFlowType?: number// 42005
-  UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingStreamNotionalUnitOfMeasure?: string// 42022
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingStreamCommoditySettlPeriodPriceUnitOfMeasure?: string// 42011
-  UnderlyingStreamCommoditySettlPeriodPriceCurrency?: string// 42012
-  UnderlyingStreamCommoditySettlHolidaysProcessingInstruction?: number// 42013
-  UnderlyingDividendPeriodXID?: string// 42881
-  UnderlyingStreamCommoditySettlPeriodXIDRef?: string// 42015
+  LegStreamCommoditySettlCountry?: string// 41687
+  LegStreamCommoditySettlTimeZone?: string// 41688
+  LegStreamCommoditySettlFlowType?: number// 41689
+  LegStreamCommoditySettlPeriodNotional?: number// 41690
+  LegStreamCommoditySettlPeriodNotionalUnitOfMeasure?: string// 41691
+  LegStreamCommoditySettlPeriodFrequencyPeriod?: number// 41692
+  LegStreamCommoditySettlPeriodFrequencyUnit?: string// 41693
+  LegStreamCommoditySettlPeriodPrice?: number// 41694
+  LegStreamCommoditySettlPeriodPriceUnitOfMeasure?: string// 41695
+  LegStreamCommoditySettlPeriodPriceCurrency?: string// 41696
+  LegStreamCommoditySettlHolidaysProcessingInstruction?: number// 41697
+  LegStreamCommoditySettlPeriodXID?: string// 41698
+  LegStreamCommoditySettlPeriodXIDRef?: string// 41699
   LegStreamCommoditySettlDayGrp?: ILegStreamCommoditySettlDayGrp[]
 }

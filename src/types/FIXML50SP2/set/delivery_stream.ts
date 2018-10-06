@@ -2,32 +2,32 @@ import { IDeliveryStreamCommoditySourceGrp } from './delivery_stream_commodity_s
 import { IDeliveryStreamCycleGrp } from './delivery_stream_cycle_grp'
 
 export interface IDeliveryStream {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingDeliveryStreamPipeline?: string// 41778
-  UnderlyingDeliveryStreamEntryPoint?: string// 41779
-  UnderlyingDeliveryStreamWithdrawalPoint?: string// 41780
-  UnderlyingDeliveryStreamDeliveryPoint?: string// 41781
-  UnderlyingDeliveryStreamDeliveryPointSource?: number// 42196
-  UnderlyingDeliveryStreamDeliveryPointDesc?: string// 42197
-  UnderlyingDeliveryStreamDeliveryRestriction?: number// 41782
-  UnderlyingDeliveryStreamDeliveryContingency?: string// 41783
-  UnderlyingDeliveryStreamDeliveryContingentPartySide?: number// 41784
-  UnderlyingDeliveryStreamDeliverAtSourceIndicator?: string// 41785
-  UnderlyingDeliveryStreamRiskApportionment?: string// 41786
-  UnderlyingDeliveryStreamRiskApportionmentSource?: string// 41587
-  UnderlyingDeliveryStreamTitleTransferLocation?: string// 41787
-  LegDeliveryStreamTitleTransferCondition?: number// 41440
-  UnderlyingDeliveryStreamImporterOfRecord?: string// 41789
-  UnderlyingDeliveryStreamNegativeTolerance?: string// 41790
-  UnderlyingDeliveryStreamPositiveTolerance?: string// 41791
-  UnderlyingDeliveryStreamToleranceUnitOfMeasure?: string// 41792
-  UnderlyingDeliveryStreamToleranceType?: number// 41793
-  UnderlyingDeliveryStreamToleranceOptionSide?: number// 41794
-  UnderlyingDeliveryStreamTotalPositiveTolerance?: number// 41795
-  UnderlyingDeliveryStreamTotalNegativeTolerance?: number// 41796
-  UnderlyingDeliveryStreamNotionalConversionFactor?: string// 41797
-  UnderlyingDeliveryStreamTransportEquipment?: string// 41798
-  UnderlyingDeliveryStreamElectingPartySide?: number// 41799
+  DeliveryStreamType?: number// 41058
+  DeliveryStreamPipeline?: string// 41059
+  DeliveryStreamEntryPoint?: string// 41060
+  DeliveryStreamWithdrawalPoint?: string// 41061
+  DeliveryStreamDeliveryPoint?: string// 41062
+  DeliveryStreamDeliveryPointSource?: number// 42192
+  DeliveryStreamDeliveryPointDesc?: string// 42193
+  DeliveryStreamDeliveryRestriction?: number// 41063
+  DeliveryStreamDeliveryContingency?: string// 41064
+  DeliveryStreamDeliveryContingentPartySide?: number// 41065
+  DeliveryStreamDeliverAtSourceIndicator?: boolean// 41066
+  DeliveryStreamRiskApportionment?: string// 41067
+  DeliveryStreamRiskApportionmentSource?: string// 41218
+  DeliveryStreamTitleTransferLocation?: string// 41068
+  DeliveryStreamTitleTransferCondition?: number// 41069
+  DeliveryStreamImporterOfRecord?: string// 41070
+  DeliveryStreamNegativeTolerance?: number// 41071
+  DeliveryStreamPositiveTolerance?: number// 41072
+  DeliveryStreamToleranceUnitOfMeasure?: string// 41073
+  DeliveryStreamToleranceType?: number// 41074
+  DeliveryStreamToleranceOptionSide?: number// 41075
+  DeliveryStreamTotalPositiveTolerance?: number// 41076
+  DeliveryStreamTotalNegativeTolerance?: number// 41077
+  DeliveryStreamNotionalConversionFactor?: number// 41078
+  DeliveryStreamTransportEquipment?: string// 41079
+  DeliveryStreamElectingPartySide?: number// 41080
   DeliveryStreamCommoditySourceGrp?: IDeliveryStreamCommoditySourceGrp[]
   DeliveryStreamCycleGrp?: IDeliveryStreamCycleGrp[]
 }

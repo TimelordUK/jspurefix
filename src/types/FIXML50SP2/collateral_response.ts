@@ -21,33 +21,33 @@ import { IStipulations } from './set/stipulations'
 */
 export interface ICollateralResponse {
   CollRespID: string// 904
-  BatchID?: string// 50000
-  MDStatisticReqID?: string// 2452
+  CollAsgnID?: string// 902
+  CollReqID?: string// 894
   CollAsgnReason?: number// 895
-  TransferTransType?: number// 2439
+  CollAsgnTransType?: number// 903
   CollAsgnRespType: number// 905
   CollRptRejectReason?: number// 2487
-  RelSymTransactTime: Date// 1504
+  TransactTime: Date// 60
   CollApplType?: number// 1043
   FinancialStatus?: string// 291
   ClearingBusinessDate?: Date// 715
-  LegAccount?: string// 2680
-  AllocAccountType?: number// 798
+  Account?: string// 1
+  AccountType?: number// 581
   ClOrdID?: string// 11
-  NotAffectedOrderID?: string// 1371
-  NotAffSecondaryOrderID?: string// 1825
+  OrderID?: string// 37
+  SecondaryOrderID?: string// 198
   SecondaryClOrdID?: string// 526
-  LegSettlDate?: Date// 588
-  RelatedTradeQuantity?: number// 1860
-  LegQtyType?: number// 1591
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  SettlDate?: Date// 64
+  Quantity?: number// 53
+  QtyType?: number// 854
+  Currency?: string// 15
   MarginExcess?: number// 899
   TotalNetValue?: number// 900
   CashOutstanding?: number// 901
   RelativeValueSide?: number// 2532
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceType?: number// 43068
-  AllocAccruedInterestAmt?: number// 742
+  Price?: number// 44
+  PriceType?: number// 423
+  AccruedInterestAmt?: number// 159
   EndAccruedInterestAmt?: number// 920
   StartCash?: number// 921
   EndCash?: number// 922
@@ -59,14 +59,14 @@ export interface ICollateralResponse {
   TotNumCollateralRequests?: number// 2519
   CollateralRequestNumber?: number// 2518
   CollateralRequestInstruction?: string// 2516
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   WarningText?: string// 2520
-  EncodedWarningTextLen?: string// 2522
+  EncodedWarningTextLen?: number// 2522
   EncodedWarningText?: Buffer// 2521
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   StandardHeader?: IStandardHeader
   Parties?: IParties[]

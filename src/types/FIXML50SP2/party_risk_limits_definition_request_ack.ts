@@ -11,12 +11,12 @@ import { IPartyRiskLimitsAckGrp } from './set/party_risk_limits_ack_grp'
 ****************************************************************
 */
 export interface IPartyRiskLimitsDefinitionRequestAck {
-  MDStatisticReqID: string// 2452
+  RiskLimitRequestID: string// 1666
   MDStatisticRequestResult?: number// 2473
-  MassOrderRequestStatus: number// 2425
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  RiskLimitRequestStatus: number// 1762
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   PartyRiskLimitsAckGrp?: IPartyRiskLimitsAckGrp[]

@@ -1,4 +1,4 @@
 export interface ILegExtraordinaryEventGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  LegExtraordinaryEventType?: string// 42389
+  LegExtraordinaryEventValue?: string// 42390
 }

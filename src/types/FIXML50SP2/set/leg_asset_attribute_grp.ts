@@ -1,5 +1,5 @@
 export interface ILegAssetAttributeGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
-  UnderlyingStreamAssetAttributeLimit?: string// 41803
+  LegAssetAttributeType?: string// 2309
+  LegAssetAttributeValue?: string// 2310
+  LegAssetAttributeLimit?: string// 2311
 }

@@ -12,29 +12,29 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 **********************************************************
 */
 export interface IRequestForPositionsAck {
-  MDStatisticRptID: string// 2453
-  MDStatisticReqID?: string// 2452
+  PosMaintRptID: string// 721
+  PosReqID?: string// 710
   TotalNumPosReports?: number// 727
   TotNumReports?: number// 911
-  UnsolicitedIndicator?: string// 325
+  UnsolicitedIndicator?: boolean// 325
   EntitlementResult: number// 1884
-  MDStatisticStatus: number// 2477
-  RiskLimitRequestType?: number// 1760
+  PosReqStatus: number// 729
+  PosReqType?: number// 724
   MatchStatus?: string// 573
   ClearingBusinessDate?: Date// 715
   SubscriptionRequestType?: string// 263
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  LegAccount?: string// 2680
+  SettlCurrency?: string// 120
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  AccountType?: number// 581
+  Currency?: string// 15
   ResponseTransportType?: number// 725
   ResponseDestination?: string// 726
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   Instrument?: IInstrument

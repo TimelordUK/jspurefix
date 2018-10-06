@@ -33,17 +33,17 @@ export interface INewOrderMultileg {
   ClOrdLinkID?: string// 583
   TradeOriginationDate?: Date// 229
   TradeDate?: Date// 75
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   DayBookingInst?: string// 589
   BookingUnit?: string// 590
   PreallocMethod?: string// 591
   AllocID?: string// 70
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   CashMargin?: string// 544
-  AllocClearingFeeIndicator?: string// 1136
+  ClearingFeeIndicator?: string// 635
   AllocHandlInst?: number// 209
   ExecInst?: string// 18
   AuctionInstruction?: number// 1805
@@ -54,34 +54,34 @@ export interface INewOrderMultileg {
   MaximumPricePercentage?: number// 2676
   SelfMatchPreventionID?: string// 2362
   MaxFloor?: number// 111
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketSegmentID?: string// 1300
   ExDestination?: string// 100
   ExDestinationIDSource?: string// 1133
   ExDestinationType?: number// 2704
   ProcessCode?: string// 81
   RelativeValueSide: number// 2532
-  ShortMarkingExemptIndicator?: string// 2102
+  ShortMarkingExemptIndicator?: boolean// 2102
   PrevClosePx?: number// 140
-  SwapPoints?: string// 1069
-  LocateReqd?: string// 114
-  RelSymTransactTime: Date// 1504
-  LegQtyType?: number// 1591
+  SwapPoints?: number// 1069
+  LocateReqd?: boolean// 114
+  TransactTime: Date// 60
+  QtyType?: number// 854
   OrdType: string// 40
   MultilegModel?: number// 1377
   MultilegPriceMethod?: number// 1378
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingReturnRatePrice?: number// 43066
+  PriceType?: number// 423
+  Price?: number// 44
   PriceProtectionScope?: string// 1092
   StopPx?: number// 99
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   TradePriceNegotiationMethod?: number// 1740
   UpfrontPriceType?: number// 1741
   UpfrontPrice?: number// 1742
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  SolicitedFlag?: string// 377
+  SolicitedFlag?: boolean// 377
   IOIID?: string// 23
   QuoteID?: string// 117
   RefOrderID?: string// 1080
@@ -97,23 +97,23 @@ export interface INewOrderMultileg {
   OrderCapacity?: string// 528
   OrderRestrictions?: string// 529
   TradingCapacity?: number// 1815
-  PreTradeAnonymity?: string// 1091
+  PreTradeAnonymity?: boolean// 1091
   TradePublishIndicator?: number// 1390
-  AllocCustomerCapacity?: string// 993
+  CustOrderCapacity?: number// 582
   OrderOrigination?: number// 1724
-  ForexReq?: string// 121
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  ForexReq?: boolean// 121
+  SettlCurrency?: string// 120
   BookingType?: number// 775
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  LegClearingAccountType?: number// 1817
-  LegPositionEffect?: string// 564
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  ClearingAccountType?: number// 1816
+  PositionEffect?: string// 77
   CoveredOrUncovered?: number// 203
   MaxShow?: number// 210
   TargetStrategy?: number// 847
   TargetStrategyParameters?: string// 848
-  RiskFreeRate?: string// 1190
+  RiskFreeRate?: number// 1190
   ParticipationRate?: number// 849
   CancellationRights?: string// 480
   MoneyLaunderingStatus?: string// 481

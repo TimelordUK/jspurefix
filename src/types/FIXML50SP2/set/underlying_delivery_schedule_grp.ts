@@ -1,18 +1,18 @@
 import { IUnderlyingDeliveryScheduleSettlDayGrp } from './underlying_delivery_schedule_settl_day_grp'
 
 export interface IUnderlyingDeliveryScheduleGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingDividendPeriodXID?: string// 42881
-  UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingStreamNotionalUnitOfMeasure?: string// 42022
-  UnderlyingStreamNotionalCommodityFrequency?: number// 42021
-  UnderlyingDeliveryStreamNegativeTolerance?: string// 41790
-  UnderlyingDeliveryStreamPositiveTolerance?: string// 41791
-  UnderlyingDeliveryStreamToleranceUnitOfMeasure?: string// 41792
-  UnderlyingDeliveryStreamToleranceType?: number// 41793
-  UnderlyingStreamCommoditySettlCountry?: string// 42003
-  UnderlyingStreamCommoditySettlTimeZone?: string// 42004
-  UnderlyingStreamCommoditySettlFlowType?: number// 42005
-  UnderlyingStreamCommoditySettlHolidaysProcessingInstruction?: number// 42013
+  UnderlyingDeliveryScheduleType?: number// 41757
+  UnderlyingDeliveryScheduleXID?: string// 41758
+  UnderlyingDeliveryScheduleNotional?: number// 41759
+  UnderlyingDeliveryScheduleNotionalUnitOfMeasure?: string// 41760
+  UnderlyingDeliveryScheduleNotionalCommodityFrequency?: number// 41761
+  UnderlyingDeliveryScheduleNegativeTolerance?: number// 41762
+  UnderlyingDeliverySchedulePositiveTolerance?: number// 41763
+  UnderlyingDeliveryScheduleToleranceUnitOfMeasure?: string// 41764
+  UnderlyingDeliveryScheduleToleranceType?: number// 41765
+  UnderlyingDeliveryScheduleSettlCountry?: string// 41766
+  UnderlyingDeliveryScheduleSettlTimeZone?: string// 41767
+  UnderlyingDeliveryScheduleSettlFlowType?: number// 41768
+  UnderlyingDeliveryScheduleSettlHolidaysProcessingInstruction?: number// 41769
   UnderlyingDeliveryScheduleSettlDayGrp?: IUnderlyingDeliveryScheduleSettlDayGrp[]
 }

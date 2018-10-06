@@ -8,16 +8,16 @@ import { IStandardHeader } from './set/standard_header'
 *******************************************************
 */
 export interface ISecurityTypeRequest {
-  MDStatisticReqID: string// 2452
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  SecurityReqID: string// 320
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  InstrumentScopeProduct?: number// 1543
-  RelatedSecurityType?: string// 1652
-  PaymentSubType?: number// 40993
+  Product?: number// 460
+  SecurityType?: string// 167
+  SecuritySubType?: string// 762
   StandardHeader?: IStandardHeader
 }

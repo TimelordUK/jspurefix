@@ -20,25 +20,25 @@ import { IMarketSegmentGrp } from './set/market_segment_grp'
 **************************************************************
 */
 export interface ISecurityDefinitionUpdateReport {
-  MDStatisticRptID?: string// 2453
-  MDStatisticReqID?: string// 2452
-  QuoteRespID?: string// 693
-  QuoteRespType?: number// 694
+  SecurityReportID?: number// 964
+  SecurityReqID?: string// 320
+  SecurityResponseID?: string// 322
+  SecurityResponseType?: number// 323
   ClearingBusinessDate?: Date// 715
   SecurityUpdateAction?: string// 980
   CorporateAction?: string// 292
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   PreviousAdjustedOpenInterest?: number// 2572
   PreviousUnadjustedOpenInterest?: number// 2573
   PriorSettlPrice?: number// 734
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   NumOfSimpleInstruments?: number// 1606
   NumOfComplexInstruments?: number// 2562
   LastUpdateTime?: Date// 779
   EffectiveBusinessDate?: Date// 2400
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Instrument?: IInstrument

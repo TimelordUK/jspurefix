@@ -1,8 +1,8 @@
 export interface ICommissionData {
   Commission?: number// 12
   CommType?: string// 13
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  PaymentStubRate?: number// 40875
-  UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
+  CommCurrency?: string// 479
+  CommRate?: number// 1233
+  CommUnitOfMeasure?: string// 1238
   FundRenewWaiv?: string// 497
 }

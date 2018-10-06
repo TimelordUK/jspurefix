@@ -1,4 +1,4 @@
 export interface IPaymentSettlPtysSubGrp {
-  BatchID?: string// 50000
+  PaymentSettlPartySubID?: string// 40239
   UnderlyingReturnRateValuationDateType?: number// 43073
 }

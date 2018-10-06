@@ -17,18 +17,18 @@ import { IYieldData } from './set/yield_data'
 *************************************************************
 */
 export interface ISecurityDefinitionRequest {
-  MDStatisticReqID: string// 2452
-  RiskLimitRequestType: number// 1760
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  SecurityReqID: string// 320
+  SecurityRequestType: number// 321
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  Currency?: string// 15
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   ExpirationCycle?: number// 827

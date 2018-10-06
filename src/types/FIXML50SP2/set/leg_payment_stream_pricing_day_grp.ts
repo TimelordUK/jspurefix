@@ -1,4 +1,4 @@
 export interface ILegPaymentStreamPricingDayGrp {
-  UnderlyingPaymentStreamPricingDayOfWeek?: number// 41945
-  UnderlyingPaymentStreamPricingDayNumber?: number// 41946
+  LegPaymentStreamPricingDayOfWeek?: number// 41597
+  LegPaymentStreamPricingDayNumber?: number// 41598
 }

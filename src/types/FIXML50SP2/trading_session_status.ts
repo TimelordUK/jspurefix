@@ -10,30 +10,30 @@ import { IInstrument } from './set/instrument'
 ********************************************************
 */
 export interface ITradingSessionStatus {
-  MDStatisticReqID?: string// 2452
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  TradSesReqID?: string// 335
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradeDate?: Date// 75
   TradingSessionID: string// 336
   TradingSessionSubID?: string// 625
   TradSesMethod?: number// 338
-  UnderlyingReturnRateDateMode?: number// 43009
-  UnsolicitedIndicator?: string// 325
+  TradSesMode?: number// 339
+  UnsolicitedIndicator?: boolean// 325
   MDStatisticStatus: number// 2477
   TradSesEvent?: number// 1368
-  FastMarketIndicator?: string// 2447
+  FastMarketIndicator?: boolean// 2447
   TradSesStatusRejReason?: number// 567
-  MDStatisticStartTime?: string// 2470
+  TradSesStartTime?: Date// 341
   TradSesOpenTime?: Date// 342
   TradSesPreCloseTime?: Date// 343
   TradSesCloseTime?: Date// 344
-  MDStatisticEndTime?: string// 2471
+  TradSesEndTime?: Date// 345
   TradSesControl?: number// 1785
   TotalVolumeTraded?: number// 387
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Instrument?: IInstrument

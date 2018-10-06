@@ -1,8 +1,8 @@
 export interface IRegulatoryTradeIDGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingMarketDisruptionEvent?: string// 41865
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  PaymentLegRefID?: string// 41304
-  MDStatisticScope?: number// 2457
+  RegulatoryTradeID?: string// 1903
+  RegulatoryTradeIDSource?: string// 1905
+  RegulatoryTradeIDEvent?: number// 1904
+  RegulatoryTradeIDType?: number// 1906
+  RegulatoryLegRefID?: string// 2411
+  RegulatoryTradeIDScope?: number// 2397
 }

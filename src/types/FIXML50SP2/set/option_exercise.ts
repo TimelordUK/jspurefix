@@ -4,17 +4,17 @@ import { IOptionExerciseExpiration } from './option_exercise_expiration'
 import { IOptionExerciseMakeWholeProvision } from './option_exercise_make_whole_provision'
 
 export interface IOptionExercise {
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
-  UnderlyingAutomaticExerciseIndicator?: string// 41813
-  UnderlyingAutomaticExerciseThresholdRate?: string// 41814
-  UnderlyingProvisionOptionExerciseConfirmation?: string// 42165
-  UnderlyingManualNoticeBusinessCenter?: string// 41816
-  UnderlyingFallbackExerciseIndicator?: string// 41817
-  UnderlyingLimitedRightToConfirmIndicator?: string// 41818
-  UnderlyingExerciseSplitTicketIndicator?: string// 41819
-  UnderlyingSettlMethodElectingPartySide?: number// 42887
+  ExerciseDesc?: string// 41106
+  EncodedExerciseDescLen?: number// 41107
+  EncodedExerciseDesc?: Buffer// 41108
+  AutomaticExerciseIndicator?: boolean// 41109
+  AutomaticExerciseThresholdRate?: number// 41110
+  ExerciseConfirmationMethod?: number// 41111
+  ManualNoticeBusinessCenter?: string// 41112
+  FallbackExerciseIndicator?: boolean// 41113
+  LimitedRightToConfirmIndicator?: boolean// 41114
+  ExerciseSplitTicketIndicator?: boolean// 41115
+  SettlMethodElectingPartySide?: number// 42590
   SettlMethodElectionDate?: ISettlMethodElectionDate
   OptionExerciseDates?: IOptionExerciseDates
   OptionExerciseExpiration?: IOptionExerciseExpiration

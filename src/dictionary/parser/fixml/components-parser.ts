@@ -348,9 +348,9 @@ export class ComponentsParser extends XsdParser {
   }
 
   private addSimpleAttribute (set: ContainedFieldSet, attribute: IAttribute): void {
-    let sf: SimpleFieldDefinition = this.definitions.getSimple(attribute.name, set.category)
+    let sf: SimpleFieldDefinition = this.definitions.getSimple(attribute.type)
     if (!sf) {
-      sf = this.definitions.simple.get(attribute.type)
+      sf = this.definitions.getSimple(attribute.name, set.category)
     }
     if (sf) {
       const contained: ContainedSimpleField = new ContainedSimpleField(sf,
@@ -365,6 +365,7 @@ export class ComponentsParser extends XsdParser {
   }
 
   private addAttributes (set: ContainedFieldSet, attributes: IAttribute[]) {
+
     attributes.forEach((attribute: IAttribute) => {
       switch (attribute.type) {
         case 'xs:attributeGroup': {

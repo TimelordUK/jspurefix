@@ -1,3 +1,3 @@
 export interface IPaymentStreamFormulaMathGrp {
-  PaymentDesc?: string// 43087
+  PaymentStreamFormulaDesc?: string// 42685
 }

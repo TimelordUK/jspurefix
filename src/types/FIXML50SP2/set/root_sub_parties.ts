@@ -1,4 +1,4 @@
 export interface IRootSubParties {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  RootPartySubID?: string// 1121
+  RootPartySubIDType?: number// 1122
 }

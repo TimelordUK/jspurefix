@@ -11,15 +11,15 @@ import { IDerivativeInstrument } from './set/derivative_instrument'
 *************************************************************
 */
 export interface IDerivativeSecurityListRequest {
-  MDStatisticReqID: string// 2452
+  SecurityReqID: string// 320
   SecurityListRequestType: number// 559
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  PaymentSubType?: number// 40993
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  SecuritySubType?: string// 762
+  Currency?: string// 15
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   SubscriptionRequestType?: string// 263

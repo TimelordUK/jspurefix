@@ -11,10 +11,10 @@ import { IPartyEntitlementUpdateGrp } from './set/party_entitlement_update_grp'
 ***************************************************************
 */
 export interface IPartyEntitlementsDefinitionRequest {
-  MDStatisticReqID: string// 2452
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  EntitlementRequestID: string// 1770
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   PartyEntitlementUpdateGrp?: IPartyEntitlementUpdateGrp[]

@@ -2,13 +2,13 @@ import { ILegProvisionCashSettlPaymentDateBusinessCenterGrp } from './leg_provis
 import { ILegProvisionCashSettlPaymentFixedDateGrp } from './leg_provision_cash_settl_payment_fixed_date_grp'
 
 export interface ILegProvisionCashSettlPaymentDates {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingProvisionCashSettlPaymentDateRangeFirst?: Date// 42097
-  UnderlyingProvisionCashSettlPaymentDateRangeLast?: Date// 42098
+  LegProvisionCashSettlPaymentDateBusinessDayConvention?: number// 40516
+  LegProvisionCashSettlPaymentDateRelativeTo?: number// 40518
+  LegProvisionCashSettlPaymentDateOffsetPeriod?: number// 40519
+  LegProvisionCashSettlPaymentDateOffsetUnit?: string// 40520
+  LegProvisionCashSettlPaymentDateOffsetDayType?: number// 40521
+  LegProvisionCashSettlPaymentDateRangeFirst?: Date// 40522
+  LegProvisionCashSettlPaymentDateRangeLast?: Date// 40523
   LegProvisionCashSettlPaymentDateBusinessCenterGrp?: ILegProvisionCashSettlPaymentDateBusinessCenterGrp[]
   LegProvisionCashSettlPaymentFixedDateGrp?: ILegProvisionCashSettlPaymentFixedDateGrp[]
 }

@@ -3,7 +3,7 @@ import { ILegPreAllocGrp } from './leg_pre_alloc_grp'
 import { INestedParties3 } from './nested_parties_3'
 
 export interface ISideCrossLegGrp {
-  EntitlementRefID?: string// 1885
+  LegRefID?: string// 654
   LegOrderQty?: number// 685
   LegSwapType?: number// 690
   LegAllocID?: string// 1366
@@ -12,12 +12,12 @@ export interface ISideCrossLegGrp {
   LegCoveredOrUncovered?: number// 565
   InstrumentScopeSettlType?: string// 1557
   LegSettlDate?: Date// 588
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  LegVolatility?: string// 1379
+  LegSettlCurrency?: string// 675
+  LegVolatility?: number// 1379
   LegDividendYield?: number// 1381
-  LegCurrencyRatio?: string// 1383
+  LegCurrencyRatio?: number// 1383
   LegExecInst?: string// 1384
-  SideShortSaleExemptionReason?: number// 1690
+  LegShortSaleExemptionReason?: number// 1689
   LegStipulations?: ILegStipulations[]
   LegPreAllocGrp?: ILegPreAllocGrp[]
   NestedParties3?: INestedParties3[]

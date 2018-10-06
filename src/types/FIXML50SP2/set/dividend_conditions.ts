@@ -4,26 +4,26 @@ import { IDividendAccrualFloatingRate } from './dividend_accrual_floating_rate'
 import { IDividendAccrualPaymentDate } from './dividend_accrual_payment_date'
 
 export interface IDividendConditions {
-  UnderlyingDividendReinvestmentIndicator?: string// 42826
-  UnderlyingDividendEntitlementEvent?: number// 42827
-  UnderlyingDividendAmountType?: number// 42828
-  UnderlyingPaymentStreamUnderlierRefID?: string// 42962
-  UnderlyingExtraordinaryDividendPartySide?: number// 42830
-  UnderlyingExtraordinaryDividendAmountType?: number// 42831
-  UnderlyingExtraordinaryDividendCurrency?: string// 42832
-  UnderlyingExtraordinaryDividendDeterminationMethod?: string// 42833
-  UnderlyingDividendAccrualFixedRate?: number// 42834
-  UnderlyingDividendCompoundingMethod?: number// 42835
-  UnderlyingDividendNumOfIndexUnits?: number// 42836
-  UnderlyingDividendCashPercentage?: number// 42837
-  UnderlyingDividendCashEquivalentPercentage?: number// 42838
-  UnderlyingNonCashDividendTreatment?: number// 42839
-  UnderlyingDividendComposition?: number// 42840
-  UnderlyingSpecialDividendsIndicator?: string// 42841
-  UnderlyingMaterialDividendsIndicator?: string// 42842
-  UnderlyingOptionsExchangeDividendsIndicator?: string// 42843
-  UnderlyingAdditionalDividendsIndicator?: string// 42844
-  UnderlyingAllDividendsIndicator?: string// 42845
+  DividendReinvestmentIndicator?: boolean// 42245
+  DividendEntitlementEvent?: number// 42246
+  DividendAmountType?: number// 42247
+  DividendUnderlierRefID?: string// 42248
+  ExtraordinaryDividendPartySide?: number// 42249
+  ExtraordinaryDividendAmountType?: number// 42250
+  ExtraordinaryDividendCurrency?: string// 42251
+  ExtraordinaryDividendDeterminationMethod?: string// 42252
+  DividendAccrualFixedRate?: number// 42253
+  DividendCompoundingMethod?: number// 42254
+  DividendNumOfIndexUnits?: number// 42255
+  DividendCashPercentage?: number// 42256
+  DividendCashEquivalentPercentage?: number// 42257
+  NonCashDividendTreatment?: number// 42258
+  DividendComposition?: number// 42259
+  SpecialDividendsIndicator?: boolean// 42260
+  MaterialDividendsIndicator?: boolean// 42261
+  OptionsExchangeDividendsIndicator?: boolean// 42262
+  AdditionalDividendsIndicator?: boolean// 42263
+  AllDividendsIndicator?: boolean// 42264
   DividendPeriodGrp?: IDividendPeriodGrp[]
   DividendFXTriggerDate?: IDividendFXTriggerDate
   DividendAccrualFloatingRate?: IDividendAccrualFloatingRate

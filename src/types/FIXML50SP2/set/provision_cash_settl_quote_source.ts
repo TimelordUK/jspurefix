@@ -1,4 +1,4 @@
 export interface IProvisionCashSettlQuoteSource {
-  UnderlyingProvisionCashSettlQuoteSource?: number// 42102
-  UnderlyingReturnRateReferencePage?: string// 43062
+  ProvisionCashSettlQuoteSource?: number// 40112
+  ProvisionCashSettlQuoteReferencePage?: string// 41406
 }

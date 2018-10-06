@@ -1,4 +1,4 @@
 export interface IMarketDisruptionEventGrp {
-  UnderlyingMarketDisruptionEvent?: string// 41865
-  UnderlyingRateSpreadStepValue?: string// 43007
+  MarketDisruptionEvent?: string// 41093
+  MarketDisruptionValue?: string// 40991
 }

@@ -9,16 +9,16 @@ import { IUnderlyingDeliveryStream } from './underlying_delivery_stream'
 import { IUnderlyingDeliveryScheduleGrp } from './underlying_delivery_schedule_grp'
 
 export interface IUnderlyingStreamGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingDividendPeriodXID?: string// 42881
-  PaymentDesc?: string// 43087
+  UnderlyingStreamType?: number// 40541
+  UnderlyingStreamXID?: string// 42016
+  UnderlyingStreamDesc?: string// 40542
   UnderlyingStreamVersion?: string// 43083
   UnderlyingStreamVersionEffectiveDate?: Date// 43084
-  PaymentSchedulePaySide?: number// 40833
-  PaymentScheduleReceiveSide?: number// 40834
+  UnderlyingStreamPaySide?: number// 40543
+  UnderlyingStreamReceiveSide?: number// 40544
   UnderlyingStreamNotionalXIDRef?: string// 42018
-  UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  UnderlyingStreamNotional?: number// 40545
+  UnderlyingStreamCurrency?: string// 40546
   UnderlyingStreamNotionalDeterminationMethod?: string// 43085
   UnderlyingStreamNotionalAdjustments?: number// 43086
   UnderlyingStreamNotionalFrequencyPeriod?: number// 42019
@@ -27,9 +27,9 @@ export interface IUnderlyingStreamGrp {
   UnderlyingStreamNotionalUnitOfMeasure?: string// 42022
   UnderlyingStreamTotalNotional?: number// 42023
   UnderlyingStreamTotalNotionalUnitOfMeasure?: string// 42024
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  UnderlyingStreamText?: string// 40547
+  EncodedUnderlyingStreamTextLen?: number// 40988
+  EncodedUnderlyingStreamText?: Buffer// 40989
   UnderlyingStreamCommodity?: IUnderlyingStreamCommodity
   UnderlyingStreamEffectiveDate?: IUnderlyingStreamEffectiveDate
   UnderlyingStreamTerminationDate?: IUnderlyingStreamTerminationDate

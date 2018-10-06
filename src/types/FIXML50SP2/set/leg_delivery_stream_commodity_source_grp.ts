@@ -1,3 +1,3 @@
 export interface ILegDeliveryStreamCommoditySourceGrp {
-  LegContractualMatrixSource?: string// 42204
+  LegDeliveryStreamCommoditySource?: string// 41461
 }

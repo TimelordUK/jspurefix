@@ -1,5 +1,5 @@
 export interface IPaymentScheduleRateSourceGrp {
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingReturnRateReferencePage?: string// 43062
+  PaymentScheduleRateSource?: number// 40869
+  PaymentScheduleRateSourceType?: number// 40870
+  PaymentScheduleReferencePage?: string// 40871
 }

@@ -10,7 +10,7 @@ import { ITrdSessLstGrp } from './set/trd_sess_lst_grp'
 ******************************************************
 */
 export interface ITradingSessionList {
-  MDStatisticReqID?: string// 2452
+  TradSesReqID?: string// 335
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   TrdSessLstGrp?: ITrdSessLstGrp[]

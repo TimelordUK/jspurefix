@@ -8,10 +8,10 @@ import { IUnderlyingProvisionCashSettlQuoteSource } from './underlying_provision
 import { IUnderlyingProvisionParties } from './underlying_provision_parties'
 
 export interface IUnderlyingProvisionGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  UnderlyingProvisionType?: number// 42150
+  UnderlyingProvisionDateUnadjusted?: Date// 42151
+  UnderlyingProvisionDateBusinessDayConvention?: number// 42152
+  UnderlyingProvisionDateAdjusted?: Date// 42153
   UnderlyingProvisionDateTenorPeriod?: number// 42154
   UnderlyingProvisionDateTenorUnit?: string// 42155
   UnderlyingProvisionBreakFeeElection?: number// 43002
@@ -25,13 +25,13 @@ export interface IUnderlyingProvisionGrp {
   UnderlyingProvisionOptionExerciseMaximumNotional?: number// 42162
   UnderlyingProvisionOptionMinimumNumber?: number// 42163
   UnderlyingProvisionOptionMaximumNumber?: number// 42164
-  UnderlyingProvisionOptionExerciseConfirmation?: string// 42165
+  UnderlyingProvisionOptionExerciseConfirmation?: boolean// 42165
   UnderlyingProvisionCashSettlMethod?: number// 42166
   UnderlyingProvisionCashSettlCurrency?: string// 42167
   UnderlyingProvisionCashSettlCurrency2?: string// 42168
   UnderlyingProvisionCashSettlQuoteType?: number// 42169
   UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
+  EncodedUnderlyingProvisionTextLen?: number// 42171
   EncodedUnderlyingProvisionText?: Buffer// 42172
   UnderlyingProvisionDateBusinessCenterGrp?: IUnderlyingProvisionDateBusinessCenterGrp[]
   UnderlyingProvisionCashSettlValueDates?: IUnderlyingProvisionCashSettlValueDates

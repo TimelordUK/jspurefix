@@ -1,9 +1,9 @@
 import { ILegProvisionPtysSubGrp } from './leg_provision_ptys_sub_grp'
 
 export interface ILegProvisionParties {
-  BatchID?: string// 50000
+  LegProvisionPartyID?: string// 40534
   LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  LegProvisionPartyRole?: number// 40536
+  LegProvisionPartyRoleQualifier?: number// 2380
   LegProvisionPtysSubGrp?: ILegProvisionPtysSubGrp[]
 }

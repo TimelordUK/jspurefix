@@ -1,6 +1,6 @@
 export interface ILegReturnRatePriceGrp {
-  UnderlyingReturnRatePriceBasis?: number// 43065
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingReturnRatePriceType?: number// 43068
+  LegReturnRatePriceBasis?: number// 42565
+  LegReturnRatePrice?: number// 42566
+  LegReturnRatePriceCurrency?: string// 42567
+  LegReturnRatePriceType?: number// 42568
 }

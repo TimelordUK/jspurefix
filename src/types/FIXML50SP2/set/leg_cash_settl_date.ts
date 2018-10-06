@@ -1,12 +1,12 @@
 import { ILegCashSettlDateBusinessCenterGrp } from './leg_cash_settl_date_business_center_grp'
 
 export interface ILegCashSettlDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  LegCashSettlDateUnadjusted?: Date// 42299
+  LegCashSettlDateBusinessDayConvention?: number// 42300
+  LegCashSettlDateRelativeTo?: number// 42301
+  LegCashSettlDateOffsetPeriod?: number// 42302
+  LegCashSettlDateOffsetUnit?: string// 42303
+  LegCashSettlDateOffsetDayType?: number// 42304
+  LegCashSettlDateAdjusted?: Date// 42305
   LegCashSettlDateBusinessCenterGrp?: ILegCashSettlDateBusinessCenterGrp[]
 }

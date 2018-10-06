@@ -1,3 +1,3 @@
 export interface IMarginReqmtInqQualGrp {
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  MarginReqmtInqQualifier?: number// 1637
 }

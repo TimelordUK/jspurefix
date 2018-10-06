@@ -4,8 +4,8 @@ import { IInstrmtLegGrp } from './instrmt_leg_grp'
 
 export interface IRFQReqGrp {
   PrevClosePx?: number// 140
-  RiskLimitRequestType?: number// 1760
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  QuoteRequestType?: number// 303
+  QuoteType?: number// 537
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   Instrument: IInstrument

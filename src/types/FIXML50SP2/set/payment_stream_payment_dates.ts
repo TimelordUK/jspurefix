@@ -3,17 +3,17 @@ import { IPaymentStreamPaymentDateGrp } from './payment_stream_payment_date_grp'
 import { IPaymentStreamFinalPricePaymentDate } from './payment_stream_final_price_payment_date'
 
 export interface IPaymentStreamPaymentDates {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingPaymentStreamBoundsFirstDateUnadjusted?: Date// 42913
+  PaymentStreamPaymentDateBusinessDayConvention?: number// 40751
+  PaymentStreamPaymentFrequencyPeriod?: number// 40753
+  PaymentStreamPaymentFrequencyUnit?: string// 40754
+  PaymentStreamPaymentRollConvention?: string// 40755
+  PaymentStreamFirstPaymentDateUnadjusted?: Date// 40756
   PaymentStreamLastRegularPaymentDateUnadjusted?: Date// 40757
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingPaymentStreamMasterAgreementPaymentDatesIndicator?: string// 41940
+  PaymentStreamPaymentDateRelativeTo?: number// 40758
+  PaymentStreamPaymentDateOffsetPeriod?: number// 40759
+  PaymentStreamPaymentDateOffsetUnit?: string// 40760
+  PaymentStreamPaymentDateOffsetDayType?: number// 40920
+  PaymentStreamMasterAgreementPaymentDatesIndicator?: boolean// 41223
   PaymentStreamPaymentDateBusinessCenterGrp?: IPaymentStreamPaymentDateBusinessCenterGrp[]
   PaymentStreamPaymentDateGrp?: IPaymentStreamPaymentDateGrp[]
   PaymentStreamFinalPricePaymentDate?: IPaymentStreamFinalPricePaymentDate

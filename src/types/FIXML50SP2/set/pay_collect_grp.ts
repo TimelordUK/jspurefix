@@ -1,10 +1,10 @@
 export interface IPayCollectGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingReturnRateFXRate?: string// 43032
-  UnderlyingReturnRateFXRateCalc?: string// 43033
+  PayCollectType?: string// 1708
+  PayCollectCurrency?: string// 1709
+  PayCollectFXRate?: number// 2094
+  PayCollectFXRateCalc?: string// 2095
   PayAmount?: number// 1710
   CollectAmount?: number// 1711
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  SideCollateralAmountMarketID?: string// 2692
+  PayCollectMarketSegmentID?: string// 1712
+  PayCollectMarketID?: string// 1713
 }

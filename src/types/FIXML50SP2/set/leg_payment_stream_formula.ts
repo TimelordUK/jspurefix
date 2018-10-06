@@ -2,9 +2,9 @@ import { ILegPaymentStreamFormulaMathGrp } from './leg_payment_stream_formula_ma
 import { ILegPaymentStreamFormulaImage } from './leg_payment_stream_formula_image'
 
 export interface ILegPaymentStreamFormula {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingPaymentStreamFormulaCurrencyDeterminationMethod?: string// 42979
-  UnderlyingPaymentStreamFormulaReferenceAmount?: number// 42980
+  LegPaymentStreamFormulaCurrency?: string// 42482
+  LegPaymentStreamFormulaCurrencyDeterminationMethod?: string// 42483
+  LegPaymentStreamFormulaReferenceAmount?: number// 42484
   LegPaymentStreamFormulaMathGrp?: ILegPaymentStreamFormulaMathGrp
   LegPaymentStreamFormulaImage?: ILegPaymentStreamFormulaImage
 }

@@ -1,7 +1,7 @@
 export interface IOrderQtyData {
-  RelatedTradeQuantity?: number// 1860
+  OrderQty?: number// 38
   CashOrderQty?: number// 152
-  RiskWarningLevelPercent?: number// 1560
-  DiscretionRoundDirection?: number// 844
-  RoundingModulus?: string// 469
+  OrderPercent?: number// 516
+  RoundingDirection?: string// 468
+  RoundingModulus?: number// 469
 }

@@ -1,6 +1,6 @@
 export interface IPriceLimits {
   PriceLimitType?: number// 1306
-  SecondaryLowLimitPrice?: number// 1221
-  SecondaryHighLimitPrice?: number// 1230
-  SecondaryTradingReferencePrice?: number// 1240
+  LowLimitPrice?: number// 1148
+  HighLimitPrice?: number// 1149
+  TradingReferencePrice?: number// 1150
 }

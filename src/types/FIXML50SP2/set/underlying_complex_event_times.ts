@@ -1,4 +1,4 @@
 export interface IUnderlyingComplexEventTimes {
-  MDStatisticStartTime?: string// 2470
-  MDStatisticEndTime?: string// 2471
+  UnderlyingComplexEventStartTime?: Date// 2057
+  UnderlyingComplexEventEndTime?: Date// 2058
 }

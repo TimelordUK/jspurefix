@@ -1,4 +1,4 @@
 export interface IUnderlyingStipulations {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  UnderlyingStipType?: string// 888
+  UnderlyingStipValue?: string// 889
 }

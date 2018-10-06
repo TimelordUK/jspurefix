@@ -1,3 +1,3 @@
 export interface ISettlMethodElectionDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  SettlMethodElectionDateBusinessCenter?: string// 42776
 }

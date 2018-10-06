@@ -1,9 +1,9 @@
 export interface IOrderEventGrp {
   OrdType?: string// 40
-  ClOrdID?: string// 11
+  OrderEventExecID?: string// 1797
   NotAffectedReason?: number// 2677
-  UnderlyingReturnRatePrice?: number// 43066
-  RelatedTradeQuantity?: number// 1860
+  OrderEventPx?: number// 1799
+  OrderEventQty?: number// 1800
   OrderEventLiquidityIndicator?: number// 1801
-  UnderlyingProvisionText?: string// 42170
+  OrderEventText?: string// 1802
 }

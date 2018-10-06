@@ -15,18 +15,18 @@ import { ILinesOfTextGrp } from './set/lines_of_text_grp'
 ****************************************
 */
 export interface INews {
-  BatchID?: string// 50000
+  NewsID?: string// 1472
   NewsCategory?: number// 1473
   LanguageCode?: string// 1474
   OrigTime?: Date// 42
   Urgency?: string// 61
   Headline: string// 148
-  EncodedHeadlineLen?: string// 358
+  EncodedHeadlineLen?: number// 358
   EncodedHeadline?: Buffer// 359
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  AttachmentExternalURL?: string// 2108
-  RawDataLength?: string// 95
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  URLLink?: string// 149
+  RawDataLength?: number// 95
   RawData?: Buffer// 96
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl

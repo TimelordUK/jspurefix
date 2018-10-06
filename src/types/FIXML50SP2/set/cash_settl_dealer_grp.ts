@@ -1,3 +1,3 @@
 export interface ICashSettlDealerGrp {
-  UnderlyingCashSettlDealer?: string// 42040
+  CashSettlDealer?: string// 40032
 }

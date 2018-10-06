@@ -1,3 +1,3 @@
 export interface ILegDividendPeriodBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegDividendPeriodBusinessCenter?: string// 42387
 }

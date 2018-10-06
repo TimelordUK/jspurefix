@@ -11,9 +11,9 @@ export interface ISecMassStatGrp {
   MDHaltReason?: number// 1684
   FinancialStatus?: string// 291
   CorporateAction?: string// 292
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   Instrument?: IInstrument
   InstrumentExtension?: IInstrumentExtension
   FinancingDetails?: IFinancingDetails

@@ -1,10 +1,10 @@
 export interface ISpreadOrBenchmarkCurveData {
-  UnderlyingPaymentStreamCompoundingRateSpread?: string// 42927
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingMakeWholeBenchmarkCurveName?: string// 42890
-  UnderlyingMakeWholeBenchmarkCurvePoint?: string// 42891
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceType?: number// 43068
+  Spread?: number// 218
+  BenchmarkCurveCurrency?: string// 220
+  BenchmarkCurveName?: string// 221
+  BenchmarkCurvePoint?: string// 222
+  BenchmarkPrice?: number// 662
+  BenchmarkPriceType?: number// 663
   BenchmarkSecurityID?: string// 699
   BenchmarkSecurityIDSource?: string// 761
 }

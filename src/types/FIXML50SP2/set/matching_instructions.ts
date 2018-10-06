@@ -1,6 +1,6 @@
 export interface IMatchingInstructions {
-  DisclosureInstruction?: number// 1814
-  SideCollateralAmountMarketID?: string// 2692
-  BatchID?: string// 50000
-  PriceMovementValue?: string// 1921
+  MatchInst?: number// 1625
+  MatchInstMarketID?: string// 1673
+  MatchAttribTagID?: string// 1626
+  MatchAttribValue?: string// 1627
 }

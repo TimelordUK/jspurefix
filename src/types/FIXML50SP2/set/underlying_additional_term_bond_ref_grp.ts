@@ -1,12 +1,12 @@
 export interface IUnderlyingAdditionalTermBondRefGrp {
-  BatchID?: string// 50000
+  UnderlyingAdditionalTermBondSecurityID?: string// 41341
   LegContractualMatrixSource?: string// 42204
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  UnderlyingAdditionalTermBondDesc?: string// 41709
+  EncodedUnderlyingAdditionalTermBondDescLen?: number// 41710
+  EncodedUnderlyingAdditionalTermBondDesc?: Buffer// 41711
+  UnderlyingAdditionalTermBondCurrency?: string// 41712
   UnderlyingAdditionalTermBondIssuer?: string// 42017
-  EncodedUnderlyingAdditionalTermBondIssuerLen?: string// 42025
+  EncodedUnderlyingAdditionalTermBondIssuerLen?: number// 42025
   EncodedUnderlyingAdditionalTermBondIssuer?: Buffer// 42026
   UnderlyingAdditionalTermBondSeniority?: string// 42027
   UnderlyingAdditionalTermBondCouponType?: number// 42028

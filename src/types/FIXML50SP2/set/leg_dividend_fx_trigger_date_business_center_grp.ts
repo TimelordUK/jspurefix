@@ -1,3 +1,3 @@
 export interface ILegDividendFXTriggerDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegDividendFXTriggerDateBusinessCenter?: string// 42365
 }

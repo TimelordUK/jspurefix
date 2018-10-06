@@ -1,14 +1,14 @@
 import { INestedParties } from './nested_parties'
 
 export interface IPreAllocGrp {
-  LegAccount?: string// 2680
+  AllocAccount?: string// 79
   AllocAcctIDSource?: number// 661
-  LegAllocSettlCurrency?: string// 1367
-  LegIndividualAllocID?: string// 672
-  RelatedTradeQuantity?: number// 1860
-  LegCustodialLotID?: string// 1756
-  LegVersusPurchaseDate?: Date// 1757
-  LegVersusPurchasePrice?: number// 1758
-  LegCurrentCostBasis?: number// 1759
+  AllocSettlCurrency?: string// 736
+  IndividualAllocID?: string// 467
+  AllocQty?: number// 80
+  CustodialLotID?: string// 1752
+  VersusPurchaseDate?: Date// 1753
+  VersusPurchasePrice?: number// 1754
+  CurrentCostBasis?: number// 1755
   NestedParties?: INestedParties[]
 }

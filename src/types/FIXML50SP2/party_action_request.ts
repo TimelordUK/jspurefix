@@ -14,13 +14,13 @@ import { IRelatedPartyDetailGrp } from './set/related_party_detail_grp'
 export interface IPartyActionRequest {
   PartyActionRequestID: string// 2328
   PartyActionType: number// 2329
-  ApplTestMessageIndicator?: string// 2330
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  ApplTestMessageIndicator?: boolean// 2330
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   InstrumentScope?: IInstrumentScope
   RequestingPartyGrp?: IRequestingPartyGrp[]

@@ -16,22 +16,22 @@ import { IUnderlyingInstrument } from './set/underlying_instrument'
 export interface IOrderMassCancelReport {
   ClOrdID?: string// 11
   SecondaryClOrdID?: string// 526
-  NotAffectedOrderID: string// 1371
+  OrderID: string// 37
   MassActionReportID: string// 1369
-  NotAffSecondaryOrderID?: string// 1825
-  MassStatusReqType: number// 585
+  SecondaryOrderID?: string// 198
+  MassCancelRequestType: string// 530
   MassCancelResponse: string// 531
   MassCancelRejectReason?: number// 532
   TotalAffectedOrders?: number// 533
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   RelativeValueSide?: number// 2532
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   AffectedOrdGrp?: IAffectedOrdGrp[]
   NotAffectedOrdGrp?: INotAffectedOrdGrp[]

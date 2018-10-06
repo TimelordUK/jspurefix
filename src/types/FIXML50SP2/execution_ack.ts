@@ -13,22 +13,22 @@ import { IRegulatoryTradeIDGrp } from './set/regulatory_trade_id_grp'
 ************************************************
 */
 export interface IExecutionAck {
-  NotAffectedOrderID: string// 1371
-  NotAffSecondaryOrderID?: string// 1825
+  OrderID: string// 37
+  SecondaryOrderID?: string// 198
   ClOrdID?: string// 11
   ExecAckStatus: string// 1036
-  LegExecID: string// 1893
+  ExecID: string// 17
   DKReason?: string// 127
   RelativeValueSide: number// 2532
-  LegLastQty?: number// 1418
-  LegLastPx?: number// 637
-  UnderlyingReturnRatePriceType?: number// 43068
+  LastQty?: number// 32
+  LastPx?: number// 31
+  PriceType?: number// 423
   LastParPx?: number// 669
   CumQty?: number// 14
-  SideAvgPx?: number// 1852
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  AvgPx?: number// 6
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Instrument?: IInstrument
   UndInstrmtGrp?: IUndInstrmtGrp[]

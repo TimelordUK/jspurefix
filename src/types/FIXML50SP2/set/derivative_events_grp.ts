@@ -1,7 +1,7 @@
 export interface IDerivativeEventsGrp {
   DerivativeEventType?: number// 1287
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingProvisionText?: string// 42170
+  DerivativeEventDate?: Date// 1288
+  DerivativeEventTime?: Date// 1289
+  DerivativeEventPx?: number// 1290
+  DerivativeEventText?: string// 1291
 }

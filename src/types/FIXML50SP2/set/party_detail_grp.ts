@@ -3,11 +3,11 @@ import { IPartyDetailAltIDGrp } from './party_detail_alt_id_grp'
 import { IRelatedPartyDetailGrp } from './related_party_detail_grp'
 
 export interface IPartyDetailGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
-  MDStatisticStatus?: number// 2477
+  PartyDetailID?: string// 1691
+  PartyDetailIDSource?: string// 1692
+  PartyDetailRole?: number// 1693
+  PartyDetailRoleQualifier?: number// 1674
+  PartyDetailStatus?: number// 1672
   PartyDetailSubGrp?: IPartyDetailSubGrp[]
   PartyDetailAltIDGrp?: IPartyDetailAltIDGrp[]
   RelatedPartyDetailGrp?: IRelatedPartyDetailGrp[]

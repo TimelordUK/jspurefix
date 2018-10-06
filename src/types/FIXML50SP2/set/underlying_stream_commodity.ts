@@ -7,31 +7,31 @@ import { IUnderlyingStreamCommoditySettlPeriodGrp } from './underlying_stream_co
 export interface IUnderlyingStreamCommodity {
   UnderlyingStreamCommodityBase?: string// 41964
   UnderlyingStreamCommodityType?: string// 41965
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
+  UnderlyingStreamCommoditySecurityID?: string// 41966
+  UnderlyingStreamCommoditySecurityIDSource?: string// 41967
+  UnderlyingStreamCommodityDesc?: string// 41968
+  EncodedUnderlyingStreamCommodityDescLen?: number// 41969
   EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
   UnderlyingStreamCommodityDeliveryPricingRegion?: string// 42589
   UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  UnderlyingStreamCommodityCurrency?: string// 41972
   UnderlyingStreamCommodityExchange?: string// 41973
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingReturnRateReferencePage?: string// 43062
-  UnderlyingReturnRateReferencePageHeading?: string// 43063
+  UnderlyingStreamCommodityRateSource?: number// 41974
+  UnderlyingStreamCommodityRateReferencePage?: string// 41975
+  UnderlyingStreamCommodityRateReferencePageHeading?: string// 41976
   UnderlyingStreamDataProvider?: string// 41977
   UnderlyingStreamCommodityPricingType?: string// 41978
-  UnderlyingProtectionTermEventPeriod?: number// 42081
-  UnderlyingProtectionTermEventUnit?: string// 42082
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  UnderlyingStreamCommodityNearbySettlDayPeriod?: number// 41979
+  UnderlyingStreamCommodityNearbySettlDayUnit?: string// 41980
+  UnderlyingStreamCommoditySettlDateUnadjusted?: Date// 41981
+  UnderlyingStreamCommoditySettlDateBusinessDayConvention?: number// 41982
+  UnderlyingStreamCommoditySettlDateAdjusted?: Date// 41983
   UnderlyingStreamCommoditySettlMonth?: number// 41984
   UnderlyingStreamCommoditySettlDateRollPeriod?: number// 41985
   UnderlyingStreamCommoditySettlDateRollUnit?: string// 41986
-  UnderlyingProtectionTermEventDayType?: number// 42083
-  UnderlyingDividendPeriodXID?: string// 42881
-  UnderlyingStreamCommoditySettlPeriodXIDRef?: string// 42015
+  UnderlyingStreamCommoditySettlDayType?: number// 41987
+  UnderlyingStreamCommodityXID?: string// 41988
+  UnderlyingStreamCommodityXIDRef?: string// 41989
   UnderlyingStreamCommodityAltIDGrp?: IUnderlyingStreamCommodityAltIDGrp[]
   UnderlyingStreamAssetAttributeGrp?: IUnderlyingStreamAssetAttributeGrp[]
   UnderlyingStreamCommodityDataSourceGrp?: IUnderlyingStreamCommodityDataSourceGrp[]

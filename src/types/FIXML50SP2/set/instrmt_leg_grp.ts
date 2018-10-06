@@ -18,44 +18,44 @@ import { ILegPhysicalSettlTermGrp } from './leg_physical_settl_term_grp'
 import { ILegExtraordinaryEventGrp } from './leg_extraordinary_event_grp'
 
 export interface IInstrmtLegGrp {
-  RelatedSymbol?: string// 1649
-  InstrumentScopeSymbolSfx?: string// 1537
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
+  LegSymbol?: string// 600
+  LegSymbolSfx?: string// 601
+  LegSecurityID?: string// 602
+  LegSecurityIDSource?: string// 603
   LegID?: string// 1788
-  InstrumentScopeProduct?: number// 1543
-  UnderlyingSecurityGroup?: string// 2008
-  InstrumentScopeCFICode?: string// 1546
-  RelatedSecurityType?: string// 1652
-  InstrumentScopeSecuritySubType?: string// 1548
-  RelatedMaturityMonthYear?: string// 1653
+  LegProduct?: number// 607
+  LegSecurityGroup?: string// 1594
+  LegCFICode?: string// 608
+  LegSecurityType?: string// 609
+  LegSecuritySubType?: string// 764
+  LegMaturityMonthYear?: string// 610
   LegMaturityDate?: Date// 611
-  InstrumentScopeMaturityTime?: string// 1550
+  LegMaturityTime?: string// 1212
   LegSettleOnOpenFlag?: string// 2146
   LegInstrmtAssignmentMethod?: string// 2147
   LegSecurityStatus?: string// 2148
   LegCouponPaymentDate?: Date// 248
   LegRestructuringType?: string// 2149
-  UnderlyingAdditionalTermBondSeniority?: string// 42027
+  LegSeniority?: string// 2150
   LegNotionalPercentageOutstanding?: number// 2151
   LegOriginalNotionalPercentageOutstanding?: number// 2152
   LegAttachmentPoint?: number// 2153
   LegDetachmentPoint?: number// 2154
   LegObligationType?: string// 2155
-  UnderlyingAssetGroup?: number// 2491
+  LegAssetGroup?: number// 2348
   LegAssetClass?: number// 2067
   LegAssetSubClass?: number// 2068
   LegAssetType?: string// 2069
   LegSwapClass?: string// 2070
-  UnderlyingSwapSubClass?: string// 2289
+  LegSwapSubClass?: string// 2156
   LegNthToDefault?: number// 2157
   LegMthToDefault?: number// 2158
   LegSettledEntityMatrixSource?: string// 2159
   LegSettledEntityMatrixPublicationDate?: Date// 2160
-  UnderlyingAdditionalTermBondCouponType?: number// 42028
+  LegCouponType?: number// 2161
   LegTotalIssuedAmount?: number// 2162
-  UnderlyingAdditionalTermBondCouponFrequencyPeriod?: number// 42033
-  UnderlyingAdditionalTermBondCouponFrequencyUnit?: string// 42034
+  LegCouponFrequencyPeriod?: number// 2163
+  LegCouponFrequencyUnit?: string// 2164
   LegCouponDayCount?: number// 2165
   LegConvertibleBondEquityID?: string// 2166
   LegConvertibleBondEquityIDSource?: string// 2167
@@ -67,95 +67,95 @@ export interface IInstrmtLegGrp {
   LegIndexAnnexVersion?: number// 2173
   LegIndexAnnexDate?: Date// 2174
   LegIndexAnnexSource?: string// 2175
-  UnderlyingSettlRateIndex?: string// 2284
-  UnderlyingSettlRateIndexLocation?: string// 2285
-  UnderlyingOptionExpirationDesc?: string// 2286
-  EncodedUnderlyingOptionExpirationDescLen?: string// 2287
-  EncodedUnderlyingOptionExpirationDesc?: Buffer// 2288
+  LegSettlRateIndex?: string// 2176
+  LegSettlRateIndexLocation?: string// 2177
+  LegOptionExpirationDesc?: string// 2178
+  EncodedLegOptionExpirationDescLen?: number// 2179
+  EncodedLegOptionExpirationDesc?: Buffer// 2180
   LegIssueDate?: Date// 249
   LegRepoCollateralSecurityType?: string// 250
   LegRepurchaseTerm?: number// 251
   LegRepurchaseRate?: number// 252
-  LegFactor?: string// 253
+  LegFactor?: number// 253
   LegCreditRating?: string// 257
-  DerivativeInstrRegistry?: string// 1257
-  UnderlyingStreamCommoditySettlCountry?: string// 42003
+  LegInstrRegistry?: string// 599
+  LegCountryOfIssue?: string// 596
   LegStateOrProvinceOfIssue?: string// 597
-  DerivativeLocaleOfIssue?: string// 1260
+  LegLocaleOfIssue?: string// 598
   LegRedemptionDate?: Date// 254
   LegStrikePrice?: number// 612
-  DerivativeStrikeCurrency?: string// 1262
-  LegStrikeMultiplier?: string// 2181
-  LegStrikeValue?: string// 2182
-  UnderlyingStrikeUnitOfMeasure?: string// 2290
-  UnderlyingStrikeIndex?: string// 2291
-  UnderlyingStrikeIndexCurvePoint?: string// 2622
-  UnderlyingStrikeIndexSpread?: string// 2292
-  UnderlyingStrikeIndexQuote?: number// 2623
+  LegStrikeCurrency?: string// 942
+  LegStrikeMultiplier?: number// 2181
+  LegStrikeValue?: number// 2182
+  LegStrikeUnitOfMeasure?: string// 2183
+  LegStrikeIndex?: string// 2184
+  LegStrikeIndexCurvePoint?: string// 2604
+  LegStrikeIndexSpread?: number// 2185
+  LegStrikeIndexQuote?: number// 2605
   LegStrikePriceDeterminationMethod?: number// 2186
   LegStrikePriceBoundaryMethod?: number// 2187
   LegStrikePriceBoundaryPrecision?: number// 2188
   LegUnderlyingPriceDeterminationMethod?: number// 2189
   LegOptAttribute?: string// 613
-  LegContractMultiplier?: string// 614
-  DerivativeContractMultiplierUnit?: number// 1438
-  UnderlyingTradingUnitPeriodMultiplier?: number// 2363
+  LegContractMultiplier?: number// 614
+  LegContractMultiplierUnit?: number// 1436
+  LegTradingUnitPeriodMultiplier?: number// 2354
   DerivativeFlowScheduleType?: number// 1442
-  LegMinPriceIncrement?: string// 2190
+  LegMinPriceIncrement?: number// 2190
   LegMinPriceIncrementAmount?: number// 2191
-  UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
-  UnderlyingUnitOfMeasureQty?: number// 1423
-  AllocCommissionUnitOfMeasureCurrency?: string// 2659
-  UnderlyingStreamCommoditySettlPeriodPriceUnitOfMeasure?: string// 42011
-  UnderlyingPriceUnitOfMeasureQty?: number// 1425
-  DerivativePriceUnitOfMeasureCurrency?: string// 1723
-  UnderlyingProvisionCashSettlMethod?: number// 42166
-  LegEventTimeUnit?: string// 2063
-  UnderlyingProvisionOptionExerciseStyle?: number// 42159
+  LegUnitOfMeasure?: string// 999
+  LegUnitOfMeasureQty?: number// 1224
+  LegUnitOfMeasureCurrency?: string// 1720
+  LegPriceUnitOfMeasure?: string// 1421
+  LegPriceUnitOfMeasureQty?: number// 1422
+  LegPriceUnitOfMeasureCurrency?: string// 1721
+  LegSettlMethod?: string// 2192
+  LegTimeUnit?: string// 1001
+  LegExerciseStyle?: number// 1420
   LegOptPayoutType?: number// 2193
-  LegComplexOptPayoutAmount?: number// 2223
+  LegOptPayoutAmount?: number// 2194
   LegPriceQuoteMethod?: string// 2195
-  UnderlyingCashSettlValuationMethod?: number// 42058
-  UnderlyingValuationSource?: string// 2293
-  UnderlyingValuationReferenceModel?: string// 2294
-  DerivativePriceQuoteCurrency?: string// 1576
+  LegValuationMethod?: string// 2196
+  LegValuationSource?: string// 2197
+  LegValuationReferenceModel?: string// 2198
+  LegPriceQuoteCurrency?: string// 1528
   LegListMethod?: number// 2199
   LegCapPrice?: number// 2200
   LegFloorPrice?: number// 2201
-  LegFlexibleIndicator?: string// 2202
-  LegFlexProductEligibilityIndicator?: string// 2203
-  UnderlyingAdditionalTermBondCouponRate?: number// 42029
-  UnderlyingStreamCommodityExchange?: string// 41973
+  LegFlexibleIndicator?: boolean// 2202
+  LegFlexProductEligibilityIndicator?: boolean// 2203
+  LegCouponRate?: number// 615
+  LegSecurityExchange?: string// 616
   LegPositionLimit?: number// 2205
   LegNTPositionLimit?: number// 2206
-  UnderlyingAdditionalTermBondIssuer?: string// 42017
-  EncodedLegIssuerLen?: string// 618
+  LegIssuer?: string// 617
+  EncodedLegIssuerLen?: number// 618
   EncodedLegIssuer?: Buffer// 619
-  PaymentDesc?: string// 43087
-  EncodedLegSecurityDescLen?: string// 621
+  LegSecurityDesc?: string// 620
+  EncodedLegSecurityDescLen?: number// 621
   EncodedLegSecurityDesc?: Buffer// 622
   LegCPProgram?: number// 2207
   LegCPRegType?: string// 2208
-  LegRatioQty?: string// 623
-  RelativeValueSide?: number// 2532
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingPool?: string// 2039
-  UnderlyingDatedDate?: Date// 2041
-  UnderlyingContractSettlMonth?: string// 2040
-  UnderlyingInterestAccrualDate?: Date// 2042
-  InstrumentScopePutOrCall?: number// 1553
-  DerivativeInTheMoneyCondition?: number// 2684
-  DerivativeContraryInstructionEligibilityIndicator?: string// 2688
-  LegOptionRatio?: string// 1017
-  UnderlyingReturnRatePrice?: number// 43066
+  LegRatioQty?: number// 623
+  LegSide?: string// 624
+  LegCurrency?: string// 556
+  LegPool?: string// 740
+  LegDatedDate?: Date// 739
+  LegContractSettlMonth?: string// 955
+  LegInterestAccrualDate?: Date// 956
+  LegPutOrCall?: number// 1358
+  LegInTheMoneyCondition?: number// 2682
+  LegContraryInstructionEligibilityIndicator?: boolean// 2686
+  LegOptionRatio?: number// 1017
+  LegPrice?: number// 566
   LegShortSaleRestriction?: number// 2209
-  UnderlyingStrategyType?: string// 2295
-  UnderlyingCommonPricingIndicator?: string// 2296
-  UnderlyingSettlDisruptionProvision?: number// 2297
-  UnderlyingInstrumentRoundingDirection?: string// 2298
-  UnderlyingInstrumentRoundingPrecision?: number// 2299
-  UnderlyingExtraordinaryEventAdjustmentMethod?: number// 2624
-  UnderlyingExchangeLookAlike?: string// 2625
+  LegStrategyType?: string// 2211
+  LegCommonPricingIndicator?: boolean// 2212
+  LegSettlDisruptionProvision?: number// 2213
+  LegInstrumentRoundingDirection?: string// 2214
+  LegInstrumentRoundingPrecision?: number// 2215
+  LegExtraordinaryEventAdjustmentMethod?: number// 2606
+  LegExchangeLookAlike?: boolean// 2607
   LegSecAltIDGrp?: ILegSecAltIDGrp[]
   LegSecondaryAssetGrp?: ILegSecondaryAssetGrp[]
   LegAssetAttributeGrp?: ILegAssetAttributeGrp[]

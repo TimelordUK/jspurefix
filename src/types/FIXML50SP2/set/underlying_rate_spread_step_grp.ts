@@ -1,4 +1,4 @@
 export interface IUnderlyingRateSpreadStepGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingRateSpreadStepValue?: string// 43007
+  UnderlyingRateSpreadStepDate?: Date// 43006
+  UnderlyingRateSpreadStepValue?: number// 43007
 }

@@ -12,30 +12,30 @@ import { IAllocAckGrp } from './set/alloc_ack_grp'
 *******************************************************
 */
 export interface IAllocationReportAck {
-  MDStatisticRptID: string// 2453
+  AllocReportID: string// 755
   AllocID?: string// 70
   ClearingBusinessDate?: Date// 715
-  SideAvgPxIndicator?: number// 1853
-  RelatedTradeQuantity?: number// 1860
-  TransferTransType?: number// 2439
+  AvgPxIndicator?: number// 819
+  Quantity?: number// 53
+  AllocTransType?: string// 71
   SecondaryAllocID?: string// 793
   AllocGroupID?: string// 1730
   FirmGroupID?: string// 1728
-  SideAvgPxGroupID?: string// 1854
+  AvgPxGroupID?: string// 1731
   TradeDate?: Date// 75
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   AllocStatus?: number// 87
   AllocRejCode?: number// 88
-  TransferReportType?: number// 2444
+  AllocReportType?: number// 794
   AllocIntermedReqType?: number// 808
   MatchStatus?: string// 573
   CustOrderHandlingInst?: string// 1031
   OrderHandlingInstSource?: number// 1032
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   StandardHeader?: IStandardHeader
   Instrument?: IInstrument

@@ -1,6 +1,6 @@
 export interface ILegComplexEventRateSourceGrp {
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingComplexEventRateSourceType?: number// 41734
-  UnderlyingReturnRateReferencePage?: string// 43062
-  UnderlyingReturnRateReferencePageHeading?: string// 43063
+  LegComplexEventRateSource?: number// 41383
+  LegComplexEventRateSourceType?: number// 41384
+  LegComplexEventReferencePage?: string// 41385
+  LegComplexEvenReferencePageHeading?: string// 41386
 }

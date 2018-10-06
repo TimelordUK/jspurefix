@@ -18,27 +18,27 @@ export interface IMassOrderAck {
   MDStatisticRequestResult?: number// 2473
   OrderResponseLevel?: number// 2427
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradingCapacity: number// 1815
-  LegClearingAccountType?: number// 1817
-  LegAccount?: string// 2680
+  ClearingAccountType?: number// 1816
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   OrderCapacity?: string// 528
   OrderRestrictions?: string// 529
-  AllocCustomerCapacity?: string// 993
-  ManualOrderIndicator?: string// 1028
+  CustOrderCapacity?: number// 582
+  ManualOrderIndicator?: boolean// 1028
   CustOrderHandlingInst?: string// 1031
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  CopyMsgIndicator?: string// 797
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  CopyMsgIndicator?: boolean// 797
   TotNoOrderEntries?: number// 2432
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Parties?: IParties[]

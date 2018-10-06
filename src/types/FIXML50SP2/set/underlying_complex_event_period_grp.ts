@@ -3,8 +3,8 @@ import { IUnderlyingComplexEventPeriodDateGrp } from './underlying_complex_event
 import { IUnderlyingComplexEventAveragingObservationGrp } from './underlying_complex_event_averaging_observation_grp'
 
 export interface IUnderlyingComplexEventPeriodGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingProtectionTermEventBusinessCenter?: string// 42073
+  UnderlyingComplexEventPeriodType?: number// 41730
+  UnderlyingComplexEventBusinessCenter?: string// 41731
   UnderlyingComplexEventScheduleGrp?: IUnderlyingComplexEventScheduleGrp[]
   UnderlyingComplexEventPeriodDateGrp?: IUnderlyingComplexEventPeriodDateGrp[]
   UnderlyingComplexEventAveragingObservationGrp?: IUnderlyingComplexEventAveragingObservationGrp[]

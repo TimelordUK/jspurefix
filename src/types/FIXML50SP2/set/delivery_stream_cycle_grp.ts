@@ -1,5 +1,5 @@
 export interface IDeliveryStreamCycleGrp {
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
+  DeliveryStreamCycleDesc?: string// 41082
+  EncodedDeliveryStreamCycleDescLen?: number// 41083
+  EncodedDeliveryStreamCycleDesc?: Buffer// 41084
 }

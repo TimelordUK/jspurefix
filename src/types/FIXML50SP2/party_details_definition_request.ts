@@ -11,10 +11,10 @@ import { IPartyDetailsUpdateGrp } from './set/party_details_update_grp'
 *************************************************************
 */
 export interface IPartyDetailsDefinitionRequest {
-  MDStatisticReqID: string// 2452
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  PartyDetailsListRequestID: string// 1505
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   PartyDetailsUpdateGrp?: IPartyDetailsUpdateGrp[]

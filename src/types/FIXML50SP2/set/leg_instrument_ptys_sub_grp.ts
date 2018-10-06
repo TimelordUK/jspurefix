@@ -1,4 +1,4 @@
 export interface ILegInstrumentPtysSubGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  LegInstrumentPartySubID?: string// 2259
+  LegInstrumentPartySubIDType?: number// 2260
 }

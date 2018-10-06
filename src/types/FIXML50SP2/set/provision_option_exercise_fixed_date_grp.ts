@@ -1,4 +1,4 @@
 export interface IProvisionOptionExerciseFixedDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  ProvisionOptionExerciseFixedDate?: Date// 40143
+  ProvisionOptionExerciseFixedDateType?: number// 40144
 }

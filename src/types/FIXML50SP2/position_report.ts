@@ -21,62 +21,62 @@ import { IRelatedTradeGrp } from './set/related_trade_grp'
 **************************************************
 */
 export interface IPositionReport {
-  MDStatisticRptID: string// 2453
+  PosMaintRptID: string// 721
   PositionID?: string// 2618
-  MDStatisticReqID?: string// 2452
-  RiskLimitRequestType?: number// 1760
+  PosReqID?: string// 710
+  PosReqType?: number// 724
   PosReportAction?: number// 2364
-  BatchID?: string// 50000
+  MarginReqmtInqID?: string// 1635
   SubscriptionRequestType?: string// 263
   TotalNumPosReports?: number// 727
   TotNumReports?: number// 911
-  LastRptRequested?: string// 912
+  LastRptRequested?: boolean// 912
   EntitlementResult?: number// 1884
-  UnsolicitedIndicator?: string// 325
+  UnsolicitedIndicator?: boolean// 325
   ClearingBusinessDate: Date// 715
   PreviousClearingBusinessDate?: Date// 2084
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  PriceType?: number// 423
+  SettlCurrency?: string// 120
   MessageEventSource?: string// 1011
   ClearedIndicator?: number// 1832
   ContractRefPosType?: number// 1833
   PositionCapacity?: number// 1834
-  TerminatedIndicator?: string// 2101
-  IntraFirmTradeIndicator?: string// 2373
+  TerminatedIndicator?: boolean// 2101
+  IntraFirmTradeIndicator?: boolean// 2373
   TradeContinuation?: number// 1937
   TradeContinuationText?: string// 2374
-  EncodedTradeContinuationTextLen?: string// 2372
+  EncodedTradeContinuationTextLen?: number// 2372
   EncodedTradeContinuationText?: Buffer// 2371
   TradeCollateralization?: number// 1936
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   TaxonomyType?: string// 2375
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  LegSettlDate?: Date// 588
-  ClearingSettlPrice?: number// 2528
+  Currency?: string// 15
+  SettlDate?: Date// 64
+  SettlPrice?: number// 730
   SettlPriceFxRateCalc?: string// 2366
-  SettlForwardPoints?: string// 2365
+  SettlForwardPoints?: number// 2365
   SettlPriceUnitOfMeasure?: string// 1886
   SettlPriceUnitOfMeasureCurrency?: string// 1887
   SettlPriceType?: number// 731
   PriorSettlPrice?: number// 734
   PositionContingentPrice?: number// 1595
-  PaymentDiscountFactor?: string// 40224
-  UnderlyingDividendPeriodValuationDateAdjusted?: Date// 42874
-  UnderlyingReturnRateValuationTime?: string// 43056
+  DiscountFactor?: number// 1592
+  ValuationDate?: Date// 2085
+  ValuationTime?: string// 2086
   ValuationBusinessCenter?: string// 2087
   MatchStatus?: string// 573
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   RegistStatus?: string// 506
   DeliveryDate?: Date// 743
   ModelType?: number// 1434
-  PriceDelta?: string// 811
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  PriceDelta?: number// 811
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Parties?: IParties[]

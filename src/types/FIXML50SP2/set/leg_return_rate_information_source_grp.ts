@@ -1,5 +1,5 @@
 export interface ILegReturnRateInformationSourceGrp {
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingReturnRateReferencePage?: string// 43062
-  UnderlyingReturnRateReferencePageHeading?: string// 43063
+  LegReturnRateInformationSource?: number// 42561
+  LegReturnRateReferencePage?: string// 42562
+  LegReturnRateReferencePageHeading?: string// 42563
 }

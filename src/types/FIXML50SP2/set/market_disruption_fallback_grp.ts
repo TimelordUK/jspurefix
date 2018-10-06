@@ -1,4 +1,4 @@
 export interface IMarketDisruptionFallbackGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  MarketDisruptionFallbackType?: string// 41095
+  MarketDisruptionFallbackValue?: string// 40992
 }

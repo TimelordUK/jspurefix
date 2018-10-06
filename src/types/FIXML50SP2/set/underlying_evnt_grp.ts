@@ -1,12 +1,12 @@
 export interface IUnderlyingEvntGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
-  LegEventTimeUnit?: string// 2063
-  LegEventTimePeriod?: number// 2064
+  UnderlyingEventType?: number// 1982
+  UnderlyingEventDate?: Date// 1983
+  UnderlyingEventTime?: Date// 1984
+  UnderlyingEventTimeUnit?: string// 1985
+  UnderlyingEventTimePeriod?: number// 1986
   UnderlyingEventMonthYear?: string// 2342
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  UnderlyingEventPx?: number// 1987
+  UnderlyingEventText?: string// 2071
+  EncodedUnderlyingEventTextLen?: number// 2072
+  EncodedUnderlyingEventText?: Buffer// 2073
 }

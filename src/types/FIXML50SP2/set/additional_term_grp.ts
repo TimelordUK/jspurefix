@@ -1,7 +1,7 @@
 import { IAdditionalTermBondRefGrp } from './additional_term_bond_ref_grp'
 
 export interface IAdditionalTermGrp {
-  UnderlyingAdditionalTermConditionPrecedentBondIndicator?: string// 42037
-  UnderlyingAdditionalTermDiscrepancyClauseIndicator?: string// 42038
+  AdditionalTermConditionPrecedentBondIndicator?: boolean// 40020
+  AdditionalTermDiscrepancyClauseIndicator?: boolean// 40021
   AdditionalTermBondRefGrp?: IAdditionalTermBondRefGrp[]
 }

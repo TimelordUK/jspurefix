@@ -1,22 +1,19 @@
-
-
 {
-  "MDStatisticRptID": "12E251CB2133225C1CC112533311",
-  "TransferTransType": 0,
-  "TransferReportType": 16,
+  "AllocReportID": "12E251CB2133225C1CC112533311",
+  "AllocTransType": "0",
+  "AllocReportType": 16,
   "AllocStatus": 6,
   "TrdType": 2,
-  "SideMultiLegReportingType": 1,
-  "AllocCustomerCapacity": "4",
-  "InputSource": "FIRM",
+  "MultiLegReportingType": "1",
+  "TradeInputSource": "FIRM",
   "TradeInputDevice": "API",
   "RelativeValueSide": 2,
-  "RelatedTradeQuantity": 4,
+  "Quantity": 4,
   "TradingSessionID": "RTH",
   "TradingSessionSubID": "P",
-  "SideAvgPx": 95.5,
+  "AvgPx": 95.5,
   "TradeDate": "2015-08-04T23:00:00.000Z",
-  "RelSymTransactTime": "2015-08-13T15:12:09.000Z",
+  "TransactTime": "2015-08-13T15:12:09.000Z",
   "ClearDate": "2015-08-04T23:00:00.000Z",
   "ExecutingClaimingIndicator": 1,
   "PostTradeType": 0,
@@ -26,7 +23,7 @@
     "TargetCompID": "560",
     "SenderSubID": "CME",
     "TargetSubID": "CME",
-    "HopSendingTime": "2015-08-13T15:12:09.000Z"
+    "SendingTime": "2015-08-13T15:12:09.000Z"
   },
   "OrdAllocGrp": [
     {
@@ -34,32 +31,32 @@
     }
   ],
   "Instrument": {
-    "BatchID": "ED",
-    "InstrumentScopeCFICode": "FFDCSO",
-    "RelatedSecurityType": "FUT",
-    "RelatedMaturityMonthYear": "201512",
-    "DerivativePriceQuoteCurrency": "USD",
-    "UnderlyingStreamCommodityExchange": "CME"
+    "SecurityID": "ED",
+    "CFICode": "FFDCSO",
+    "SecurityType": "FUT",
+    "MaturityMonthYear": "201512",
+    "PriceQuoteCurrency": "USD",
+    "SecurityExchange": "CME"
   },
   "Parties": [
     {
-      "BatchID": "CME",
-      "UnderlyingProvisionPartyRole": 21
+      "PartyID": "CME",
+      "PartyRole": 21
     },
     {
-      "BatchID": "CME",
-      "UnderlyingProvisionPartyRole": 22
+      "PartyID": "CME",
+      "PartyRole": 22
     },
     {
-      "BatchID": "560",
-      "UnderlyingProvisionPartyRole": 1
+      "PartyID": "560",
+      "PartyRole": 1
     },
     {
-      "BatchID": "SSS",
-      "UnderlyingProvisionPartyRole": 24,
+      "PartyID": "SSS",
+      "PartyRole": 24,
       "PtysSubGrp": [
         {
-          "BatchID": "1",
+          "PartySubID": "1",
           "UnderlyingReturnRateValuationDateType": 26
         }
       ]
@@ -67,38 +64,38 @@
   ],
   "AllocGrp": [
     {
-      "RelatedTradeQuantity": 4,
-      "LegIndividualAllocID": "307006",
+      "AllocQty": 4,
+      "IndividualAllocID": "307006",
       "SecondaryIndividualAllocID": "178004",
       "AllocCustomerCapacity": "4",
       "SecondaryTradeID": "12A80D9ED85HI040083A",
       "OriginalSecondaryTradeID": "12A80D9ED85HI040083A",
       "NestedParties": [
         {
-          "BatchID": "CME",
-          "UnderlyingProvisionPartyRole": 22
+          "NestedPartyID": "CME",
+          "NestedPartyRole": 22
         },
         {
-          "BatchID": "560",
-          "UnderlyingProvisionPartyRole": 1
+          "NestedPartyID": "560",
+          "NestedPartyRole": 1
         },
         {
-          "BatchID": "CMECARRY1",
-          "UnderlyingProvisionPartyRole": 24,
+          "NestedPartyID": "CMECARRY1",
+          "NestedPartyRole": 24,
           "NstdPtysSubGrp": [
             {
-              "BatchID": "1",
-              "UnderlyingReturnRateValuationDateType": 26
+              "NestedPartySubID": "1",
+              "NestedPartySubIDType": 26
             }
           ]
         },
         {
-          "BatchID": "CME",
-          "UnderlyingProvisionPartyRole": 21
+          "NestedPartyID": "CME",
+          "NestedPartyRole": 21
         },
         {
-          "BatchID": "560",
-          "UnderlyingProvisionPartyRole": 4
+          "NestedPartyID": "560",
+          "NestedPartyRole": 4
         }
       ]
     }

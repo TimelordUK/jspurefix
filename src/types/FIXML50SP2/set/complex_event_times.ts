@@ -1,4 +1,4 @@
 export interface IComplexEventTimes {
-  MDStatisticStartTime?: string// 2470
-  MDStatisticEndTime?: string// 2471
+  ComplexEventStartTime?: Date// 1495
+  ComplexEventEndTime?: Date// 1496
 }

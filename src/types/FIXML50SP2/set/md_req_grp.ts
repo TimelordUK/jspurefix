@@ -1,3 +1,3 @@
 export interface IMDReqGrp {
-  UnderlyingReturnRateValuationDateType: number// 43073
+  MDEntryType: string// 269
 }

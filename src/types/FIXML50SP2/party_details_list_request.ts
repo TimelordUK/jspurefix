@@ -12,11 +12,11 @@ import { IPartyRelationshipGrp } from './set/party_relationship_grp'
 ***********************************************************
 */
 export interface IPartyDetailsListRequest {
-  MDStatisticReqID: string// 2452
+  PartyDetailsListRequestID: string// 1505
   SubscriptionRequestType?: string// 263
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   Parties?: IParties[]

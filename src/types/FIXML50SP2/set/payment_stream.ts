@@ -7,32 +7,32 @@ import { IPaymentStreamCompoundingDates } from './payment_stream_compounding_dat
 import { IPaymentStreamNonDeliverableSettlTerms } from './payment_stream_non_deliverable_settl_terms'
 
 export interface IPaymentStream {
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  PaymentStreamType?: number// 40738
   PaymentStreamMarketRate?: number// 40739
-  PaymentStreamDelayIndicator?: string// 40740
-  UnderlyingPaymentStreamCashSettlIndicator?: string// 42895
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  PaymentStreamDelayIndicator?: boolean// 40740
+  PaymentStreamCashSettlIndicator?: boolean// 42600
+  PaymentStreamSettlCurrency?: string// 40741
   UnderlyingAdditionalTermBondDayCount?: number// 42035
   PaymentStreamAccrualDays?: number// 40743
   PaymentStreamDiscountType?: number// 40744
   PaymentStreamDiscountRate?: number// 40745
   PaymentStreamDiscountRateDayCount?: number// 40746
-  UnderlyingDividendCompoundingMethod?: number// 42835
-  UnderlyingPaymentStreamCompoundingXIDRef?: string// 42896
-  UnderlyingPaymentStreamCompoundingSpread?: string// 42897
-  UnderlyingPaymentStreamInterpolationMethod?: number// 42898
-  UnderlyingPaymentStreamInterpolationPeriod?: number// 42899
-  PaymentStreamInitialPrincipalExchangeIndicator?: string// 40748
-  PaymentStreamInterimPrincipalExchangeIndicator?: string// 40749
-  PaymentStreamFinalPrincipalExchangeIndicator?: string// 40750
-  UnderlyingPaymentStreamFlatRateIndicator?: string// 41897
-  UnderlyingPaymentStreamFlatRateAmount?: number// 41898
-  UnderlyingPaymentStreamFlatRateCurrency?: string// 41899
-  UnderlyingPaymentStreamMaximumPaymentAmount?: number// 41900
-  UnderlyingPaymentStreamMaximumPaymentCurrency?: string// 41901
-  UnderlyingPaymentStreamMaximumTransactionAmount?: number// 41902
-  UnderlyingPaymentStreamMaximumTransactionCurrency?: string// 41903
-  UnderlyingPaymentStreamCompoundingFixedRate?: string// 42900
+  PaymentStreamCompoundingMethod?: number// 40747
+  PaymentStreamCompoundingXIDRef?: string// 42601
+  PaymentStreamCompoundingSpread?: number// 42602
+  PaymentStreamInterpolationMethod?: number// 42603
+  PaymentStreamInterpolationPeriod?: number// 42604
+  PaymentStreamInitialPrincipalExchangeIndicator?: boolean// 40748
+  PaymentStreamInterimPrincipalExchangeIndicator?: boolean// 40749
+  PaymentStreamFinalPrincipalExchangeIndicator?: boolean// 40750
+  PaymentStreamFlatRateIndicator?: boolean// 41180
+  PaymentStreamFlatRateAmount?: number// 41181
+  PaymentStreamFlatRateCurrency?: string// 41182
+  PaymentStreamMaximumPaymentAmount?: number// 41183
+  PaymentStreamMaximumPaymentCurrency?: string// 41184
+  PaymentStreamMaximumTransactionAmount?: number// 41185
+  PaymentStreamMaximumTransactionCurrency?: string// 41186
+  PaymentStreamCompoundingFixedRate?: number// 42605
   PaymentStreamPaymentDates?: IPaymentStreamPaymentDates
   PaymentStreamResetDates?: IPaymentStreamResetDates
   PaymentStreamFixedRate?: IPaymentStreamFixedRate

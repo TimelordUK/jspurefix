@@ -4,10 +4,10 @@ import { IUnderlyingDividendAccrualFloatingRate } from './underlying_dividend_ac
 import { IUnderlyingDividendAccrualPaymentDate } from './underlying_dividend_accrual_payment_date'
 
 export interface IUnderlyingDividendConditions {
-  UnderlyingDividendReinvestmentIndicator?: string// 42826
+  UnderlyingDividendReinvestmentIndicator?: boolean// 42826
   UnderlyingDividendEntitlementEvent?: number// 42827
   UnderlyingDividendAmountType?: number// 42828
-  UnderlyingPaymentStreamUnderlierRefID?: string// 42962
+  UnderlyingDividendUnderlierRefID?: string// 42829
   UnderlyingExtraordinaryDividendPartySide?: number// 42830
   UnderlyingExtraordinaryDividendAmountType?: number// 42831
   UnderlyingExtraordinaryDividendCurrency?: string// 42832
@@ -19,11 +19,11 @@ export interface IUnderlyingDividendConditions {
   UnderlyingDividendCashEquivalentPercentage?: number// 42838
   UnderlyingNonCashDividendTreatment?: number// 42839
   UnderlyingDividendComposition?: number// 42840
-  UnderlyingSpecialDividendsIndicator?: string// 42841
-  UnderlyingMaterialDividendsIndicator?: string// 42842
-  UnderlyingOptionsExchangeDividendsIndicator?: string// 42843
-  UnderlyingAdditionalDividendsIndicator?: string// 42844
-  UnderlyingAllDividendsIndicator?: string// 42845
+  UnderlyingSpecialDividendsIndicator?: boolean// 42841
+  UnderlyingMaterialDividendsIndicator?: boolean// 42842
+  UnderlyingOptionsExchangeDividendsIndicator?: boolean// 42843
+  UnderlyingAdditionalDividendsIndicator?: boolean// 42844
+  UnderlyingAllDividendsIndicator?: boolean// 42845
   UnderlyingDividendPeriodGrp?: IUnderlyingDividendPeriodGrp[]
   UnderlyingDividendFXTriggerDate?: IUnderlyingDividendFXTriggerDate
   UnderlyingDividendAccrualFloatingRate?: IUnderlyingDividendAccrualFloatingRate

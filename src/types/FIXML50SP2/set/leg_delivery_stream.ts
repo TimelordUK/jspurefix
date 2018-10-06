@@ -2,32 +2,32 @@ import { ILegDeliveryStreamCommoditySourceGrp } from './leg_delivery_stream_comm
 import { ILegDeliveryStreamCycleGrp } from './leg_delivery_stream_cycle_grp'
 
 export interface ILegDeliveryStream {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingDeliveryStreamPipeline?: string// 41778
-  UnderlyingDeliveryStreamEntryPoint?: string// 41779
-  UnderlyingDeliveryStreamWithdrawalPoint?: string// 41780
-  UnderlyingDeliveryStreamDeliveryPoint?: string// 41781
-  UnderlyingDeliveryStreamDeliveryPointSource?: number// 42196
-  UnderlyingDeliveryStreamDeliveryPointDesc?: string// 42197
-  UnderlyingDeliveryStreamDeliveryRestriction?: number// 41782
-  UnderlyingDeliveryStreamDeliveryContingency?: string// 41783
-  UnderlyingDeliveryStreamDeliveryContingentPartySide?: number// 41784
-  UnderlyingDeliveryStreamDeliverAtSourceIndicator?: string// 41785
-  UnderlyingDeliveryStreamRiskApportionment?: string// 41786
-  UnderlyingDeliveryStreamRiskApportionmentSource?: string// 41587
-  UnderlyingDeliveryStreamTitleTransferLocation?: string// 41787
+  LegDeliveryStreamType?: number// 41429
+  LegDeliveryStreamPipeline?: string// 41430
+  LegDeliveryStreamEntryPoint?: string// 41431
+  LegDeliveryStreamWithdrawalPoint?: string// 41432
+  LegDeliveryStreamDeliveryPoint?: string// 41433
+  LegDeliveryStreamDeliveryPointSource?: number// 42194
+  LegDeliveryStreamDeliveryPointDesc?: string// 42195
+  LegDeliveryStreamDeliveryRestriction?: number// 41434
+  LegDeliveryStreamDeliveryContingency?: string// 41435
+  LegDeliveryStreamDeliveryContingentPartySide?: number// 41436
+  LegDeliveryStreamDeliverAtSourceIndicator?: boolean// 41437
+  LegDeliveryStreamRiskApportionment?: string// 41438
+  LegDeliveryStreamRiskApportionmentSource?: string// 41219
+  LegDeliveryStreamTitleTransferLocation?: string// 41439
   LegDeliveryStreamTitleTransferCondition?: number// 41440
-  UnderlyingDeliveryStreamImporterOfRecord?: string// 41789
-  UnderlyingDeliveryStreamNegativeTolerance?: string// 41790
-  UnderlyingDeliveryStreamPositiveTolerance?: string// 41791
-  UnderlyingDeliveryStreamToleranceUnitOfMeasure?: string// 41792
-  UnderlyingDeliveryStreamToleranceType?: number// 41793
-  UnderlyingDeliveryStreamToleranceOptionSide?: number// 41794
-  UnderlyingDeliveryStreamTotalPositiveTolerance?: number// 41795
-  UnderlyingDeliveryStreamTotalNegativeTolerance?: number// 41796
-  UnderlyingDeliveryStreamNotionalConversionFactor?: string// 41797
-  UnderlyingDeliveryStreamTransportEquipment?: string// 41798
-  UnderlyingDeliveryStreamElectingPartySide?: number// 41799
+  LegDeliveryStreamImporterOfRecord?: string// 41441
+  LegDeliveryStreamNegativeTolerance?: number// 41442
+  LegDeliveryStreamPositiveTolerance?: number// 41443
+  LegDeliveryStreamToleranceUnitOfMeasure?: string// 41444
+  LegDeliveryStreamToleranceType?: number// 41445
+  LegDeliveryStreamToleranceOptionSide?: number// 41446
+  LegDeliveryStreamTotalPositiveTolerance?: number// 41447
+  LegDeliveryStreamTotalNegativeTolerance?: number// 41448
+  LegDeliveryStreamNotionalConversionFactor?: number// 41449
+  LegDeliveryStreamTransportEquipment?: string// 41450
+  LegDeliveryStreamElectingPartySide?: number// 41451
   LegDeliveryStreamCommoditySourceGrp?: ILegDeliveryStreamCommoditySourceGrp[]
   LegDeliveryStreamCycleGrp?: ILegDeliveryStreamCycleGrp[]
 }

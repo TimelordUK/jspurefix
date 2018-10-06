@@ -4,17 +4,17 @@ import { IPaymentStreamCompoundingStartDate } from './payment_stream_compounding
 import { IPaymentStreamCompoundingEndDate } from './payment_stream_compounding_end_date'
 
 export interface IPaymentStreamCompoundingDates {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingPaymentStreamCompoundingPeriodSkip?: number// 42909
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingPaymentStreamBoundsFirstDateUnadjusted?: Date// 42913
-  UnderlyingPaymentStreamBoundsLastDateUnadjusted?: Date// 42914
+  PaymentStreamCompoundingDatesBusinessDayConvention?: number// 42609
+  PaymentStreamCompoundingDatesRelativeTo?: number// 42610
+  PaymentStreamCompoundingDatesOffsetPeriod?: number// 42611
+  PaymentStreamCompoundingDatesOffsetUnit?: string// 42612
+  PaymentStreamCompoundingDatesOffsetDayType?: number// 42613
+  PaymentStreamCompoundingPeriodSkip?: number// 42614
+  PaymentStreamCompoundingFrequencyPeriod?: number// 42615
+  PaymentStreamCompoundingFrequencyUnit?: string// 42616
+  PaymentStreamCompoundingRollConvention?: string// 42617
+  PaymentStreamBoundsFirstDateUnadjusted?: Date// 42618
+  PaymentStreamBoundsLastDateUnadjusted?: Date// 42619
   PaymentStreamCompoundingDatesBusinessCenterGrp?: IPaymentStreamCompoundingDatesBusinessCenterGrp[]
   PaymentStreamCompoundingDateGrp?: IPaymentStreamCompoundingDateGrp
   PaymentStreamCompoundingStartDate?: IPaymentStreamCompoundingStartDate

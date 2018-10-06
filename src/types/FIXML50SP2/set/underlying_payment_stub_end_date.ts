@@ -1,12 +1,12 @@
 import { IUnderlyingPaymentStubEndDateBusinessCenterGrp } from './underlying_payment_stub_end_date_business_center_grp'
 
 export interface IUnderlyingPaymentStubEndDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  UnderlyingPaymentStubEndDateUnadjusted?: Date// 42984
+  UnderlyingPaymentStubEndDateBusinessDayConvention?: number// 42985
+  UnderlyingPaymentStubEndDateRelativeTo?: number// 42986
+  UnderlyingPaymentStubEndDateOffsetPeriod?: number// 42987
+  UnderlyingPaymentStubEndDateOffsetUnit?: string// 42988
+  UnderlyingPaymentStubEndDateOffsetDayType?: number// 42989
+  UnderlyingPaymentStubEndDateAdjusted?: Date// 42990
   UnderlyingPaymentStubEndDateBusinessCenterGrp?: IUnderlyingPaymentStubEndDateBusinessCenterGrp[]
 }

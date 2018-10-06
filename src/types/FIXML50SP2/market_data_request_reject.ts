@@ -10,11 +10,11 @@ import { IMDRjctGrp } from './set/md_rjct_grp'
 ***********************************************************
 */
 export interface IMarketDataRequestReject {
-  MDStatisticReqID: string// 2452
+  MDReqID: string// 262
   MDReqRejReason?: string// 281
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   MDRjctGrp?: IMDRjctGrp[]

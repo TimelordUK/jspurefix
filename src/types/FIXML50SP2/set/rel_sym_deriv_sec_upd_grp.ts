@@ -6,11 +6,11 @@ import { IInstrmtLegGrp } from './instrmt_leg_grp'
 export interface IRelSymDerivSecUpdGrp {
   ListUpdateAction?: string// 1324
   CorporateAction?: string// 292
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   Instrument?: IInstrument
   InstrumentExtension?: IInstrumentExtension
   SecondaryPriceLimits?: ISecondaryPriceLimits

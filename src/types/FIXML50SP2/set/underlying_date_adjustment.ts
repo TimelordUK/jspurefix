@@ -1,7 +1,7 @@
 import { IUnderlyingBusinessCenterGrp } from './underlying_business_center_grp'
 
 export interface IUnderlyingDateAdjustment {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
+  UnderlyingBusinessDayConvention?: number// 40964
+  UnderlyingDateRollConvention?: string// 40965
   UnderlyingBusinessCenterGrp?: IUnderlyingBusinessCenterGrp[]
 }

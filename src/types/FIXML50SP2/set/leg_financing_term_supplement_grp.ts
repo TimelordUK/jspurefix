@@ -1,4 +1,4 @@
 export interface ILegFinancingTermSupplementGrp {
-  PaymentDesc?: string// 43087
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  LegFinancingTermSupplementDesc?: string// 42201
+  LegFinancingTermSupplementDate?: Date// 42202
 }

@@ -4,12 +4,12 @@ import { ILegPaymentStreamNonDeliverableFixingDateGrp } from './leg_payment_stre
 import { ILegSettlRateDisruptionFallbackGrp } from './leg_settl_rate_disruption_fallback_grp'
 
 export interface ILegPaymentStreamNonDeliverableSettlTerms {
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  PaymentScheduleFixingDateRelativeTo?: number// 40852
-  PaymentScheduleFixingDateOffsetPeriod?: number// 40855
-  PaymentScheduleFixingDateOffsetUnit?: string// 40856
-  PaymentScheduleFixingDateOffsetDayType?: number// 40857
+  LegPaymentStreamNonDeliverableRefCurrency?: string// 40359
+  LegPaymentStreamNonDeliverableFixingDatesBusinessDayConvention?: number// 40360
+  LegPaymentStreamNonDeliverableFixingDatesRelativeTo?: number// 40362
+  LegPaymentStreamNonDeliverableFixingDatesOffsetPeriod?: number// 40363
+  LegPaymentStreamNonDeliverableFixingDatesOffsetUnit?: string// 40364
+  LegPaymentStreamNonDeliverableFixingDatesOffsetDayType?: number// 40365
   LegPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp?: ILegPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp[]
   LegPaymentStreamNonDeliverableSettlRateSource?: ILegPaymentStreamNonDeliverableSettlRateSource
   LegPaymentStreamNonDeliverableFixingDateGrp?: ILegPaymentStreamNonDeliverableFixingDateGrp

@@ -13,11 +13,11 @@ export interface ISettlementInstructions {
   SettlInstReqID?: string// 791
   SettlInstMode: string// 160
   SettlInstReqRejCode?: number// 792
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   ClOrdID?: string// 11
-  RelSymTransactTime: Date// 1504
+  TransactTime: Date// 60
   StandardHeader?: IStandardHeader
   SettlInstGrp?: ISettlInstGrp[]
 }

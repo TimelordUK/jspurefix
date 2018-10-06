@@ -1,4 +1,4 @@
 export interface IPtysSubGrp {
-  BatchID?: string// 50000
+  PartySubID?: string// 523
   UnderlyingReturnRateValuationDateType?: number// 43073
 }

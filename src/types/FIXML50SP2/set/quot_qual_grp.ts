@@ -1,3 +1,3 @@
 export interface IQuotQualGrp {
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  QuoteQualifier?: string// 695
 }

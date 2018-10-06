@@ -3,19 +3,19 @@ import { IUnderlyingStreamCalculationPeriodDateGrp } from './underlying_stream_c
 import { IUnderlyingStreamFirstPeriodStartDateBusinessCenterGrp } from './underlying_stream_first_period_start_date_business_center_grp'
 
 export interface IUnderlyingStreamCalculationPeriodDates {
-  UnderlyingDividendPeriodXID?: string// 42881
-  UnderlyingStreamCommoditySettlPeriodXIDRef?: string// 42015
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
+  UnderlyingStreamCalculationPeriodDatesXID?: string// 41957
+  UnderlyingStreamCalculationPeriodDatesXIDRef?: string// 41958
+  UnderlyingStreamCalculationPeriodBusinessDayConvention?: number// 40556
   UnderlyingStreamFirstPeriodStartDateUnadjusted?: Date// 40558
   UnderlyingStreamFirstPeriodStartDateBusinessDayConvention?: number// 40559
   UnderlyingStreamFirstPeriodStartDateAdjusted?: Date// 40561
   UnderlyingStreamFirstRegularPeriodStartDateUnadjusted?: Date// 40562
   UnderlyingStreamFirstCompoundingPeriodEndDateUnadjusted?: Date// 40563
   UnderlyingStreamLastRegularPeriodEndDateUnadjusted?: Date// 40564
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingStreamCalculationBalanceOfFirstPeriod?: string// 41959
+  UnderlyingStreamCalculationFrequencyPeriod?: number// 40565
+  UnderlyingStreamCalculationFrequencyUnit?: string// 40566
+  UnderlyingStreamCalculationRollConvention?: string// 40567
+  UnderlyingStreamCalculationBalanceOfFirstPeriod?: boolean// 41959
   UnderlyingStreamCalculationCorrectionPeriod?: number// 41960
   UnderlyingStreamCalculationCorrectionUnit?: string// 41961
   UnderlyingStreamCalculationPeriodBusinessCenterGrp?: IUnderlyingStreamCalculationPeriodBusinessCenterGrp[]

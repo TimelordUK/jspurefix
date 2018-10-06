@@ -1,4 +1,4 @@
 export interface IUnderlyingOptionExerciseDateGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  UnderlyingOptionExerciseDate?: Date// 41842
+  UnderlyingOptionExerciseDateType?: number// 41843
 }

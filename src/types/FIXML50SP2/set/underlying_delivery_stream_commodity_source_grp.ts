@@ -1,3 +1,3 @@
 export interface IUnderlyingDeliveryStreamCommoditySourceGrp {
-  LegContractualMatrixSource?: string// 42204
+  UnderlyingDeliveryStreamCommoditySource?: string// 41809
 }

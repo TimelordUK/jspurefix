@@ -12,23 +12,23 @@ import { IThrottleResponse } from './set/throttle_response'
 ************************************************
 */
 export interface IMassQuoteAck {
-  MDStatisticReqID?: string// 2452
+  QuoteReqID?: string// 131
   QuoteID?: string// 117
-  MDStatisticStatus: number// 2477
+  QuoteStatus: number// 297
   CollRptRejectReason?: number// 2487
   QuoteResponseLevel?: number// 301
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  QuoteType?: number// 537
   QuoteCancelType?: number// 298
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   TargetParties?: ITargetParties[]

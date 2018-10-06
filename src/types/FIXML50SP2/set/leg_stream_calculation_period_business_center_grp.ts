@@ -1,3 +1,3 @@
 export interface ILegStreamCalculationPeriodBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegStreamCalculationPeriodBusinessCenter?: string// 40266
 }

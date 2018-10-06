@@ -1,9 +1,9 @@
 export interface ILegOptionExerciseMakeWholeProvision {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingMakeWholeBenchmarkCurveName?: string// 42890
-  UnderlyingMakeWholeBenchmarkCurvePoint?: string// 42891
-  UnderlyingPaymentStreamCompoundingRateSpread?: string// 42927
-  UnderlyingMakeWholeBenchmarkQuote?: number// 42893
-  UnderlyingPaymentStreamInterpolationMethod?: number// 42898
+  LegMakeWholeDate?: Date// 42392
+  LegMakeWholeAmount?: number// 42393
+  LegMakeWholeBenchmarkCurveName?: string// 42394
+  LegMakeWholeBenchmarkCurvePoint?: string// 42395
+  LegMakeWholeRecallSpread?: number// 42396
+  LegMakeWholeBenchmarkQuote?: number// 42397
+  LegMakeWholeInterpolationMethod?: number// 42398
 }

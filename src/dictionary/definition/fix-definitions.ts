@@ -52,7 +52,14 @@ export class FixDefinitions {
     return sf
   }
 
-  public addSimpleFieldDef (field: SimpleFieldDefinition): void {
+  public addSimpleAlias (from: string, to: string): void {
+    const simple = this.simple.get(from)
+    if (simple) {
+      this.simple.addUpdate(to, simple)
+    }
+  }
+
+  public addSimpleFieldDef (field: SimpleFieldDefinition, typeName: string = null): void {
     this.assignCategory(field)
     const simple = this.simple
     simple.addUpdate(field.num, field)
@@ -60,6 +67,9 @@ export class FixDefinitions {
     this.tagToSimple[field.tag] = field
     if (field.abbreviation && field.abbreviation !== field.name) {
       simple.addUpdate(field.abbreviation, field)
+    }
+    if (typeName && typeName !== field.name && field.name && field.type) {
+      simple.addUpdate(typeName, field)
     }
   }
 

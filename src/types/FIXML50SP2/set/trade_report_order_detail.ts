@@ -4,17 +4,17 @@ import { IDisplayInstruction } from './display_instruction'
 import { IOrderAttributeGrp } from './order_attribute_grp'
 
 export interface ITradeReportOrderDetail {
-  NotAffectedOrderID?: string// 1371
-  NotAffSecondaryOrderID?: string// 1825
+  OrderID?: string// 37
+  SecondaryOrderID?: string// 198
   ClOrdID?: string// 11
   SecondaryClOrdID?: string// 526
-  SecurityListID?: string// 1465
+  ListID?: string// 66
   RefOrderID?: string// 1080
   RefOrderIDSource?: string// 1081
   RefOrdIDReason?: number// 1431
-  PreTradeAnonymity?: string// 1091
+  PreTradeAnonymity?: boolean// 1091
   OrdType?: string// 40
-  UnderlyingReturnRatePrice?: number// 43066
+  Price?: number// 44
   StopPx?: number// 99
   ExecInst?: string// 18
   OrdStatus?: string// 39

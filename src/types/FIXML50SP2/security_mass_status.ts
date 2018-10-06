@@ -11,21 +11,21 @@ import { ISecMassStatGrp } from './set/sec_mass_stat_grp'
 ******************************************************
 */
 export interface ISecurityMassStatus {
-  OrdStatusReqID?: string// 790
+  SecurityStatusReqID?: string// 324
   SecurityListID?: string// 1465
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradeDate?: Date// 75
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  UnsolicitedIndicator?: string// 325
-  MDSecurityTradingStatus?: number// 1682
-  FastMarketIndicator?: string// 2447
+  UnsolicitedIndicator?: boolean// 325
+  SecurityMassTradingStatus?: number// 1679
+  FastMarketIndicator?: boolean// 2447
   SecurityMassTradingEvent?: number// 1680
-  MDHaltReason?: number// 1684
+  MassHaltReason?: number// 1681
   MDBookType?: number// 1021
   MarketDepth?: number// 264
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   Adjustment?: number// 334
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl

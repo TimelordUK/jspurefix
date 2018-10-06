@@ -11,8 +11,8 @@ import { IInstrument } from './set/instrument'
 ***************************************************************
 */
 export interface IMarginRequirementInquiryAck {
-  BatchID: string// 50000
-  MDStatisticStatus: number// 2477
+  MarginReqmtInqID: string// 1635
+  MarginReqmtInqStatus: number// 1640
   EntitlementResult?: number// 1884
   TotNumReports?: number// 911
   SubscriptionRequestType?: string// 263
@@ -21,11 +21,11 @@ export interface IMarginRequirementInquiryAck {
   ClearingBusinessDate?: Date// 715
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  UnderlyingSecondaryAssetClass?: number// 2081
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  MarginClass?: string// 1639
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   MarginReqmtInqQualGrp?: IMarginReqmtInqQualGrp[]
   Parties?: IParties[]

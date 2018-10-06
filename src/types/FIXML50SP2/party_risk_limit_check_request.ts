@@ -16,20 +16,20 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 export interface IPartyRiskLimitCheckRequest {
   RiskLimitCheckRequestID?: string// 2318
   RiskLimitCheckID?: string// 2319
-  TransferTransType: number// 2439
+  RiskLimitCheckTransType: number// 2320
   RiskLimitCheckType: number// 2321
   RiskLimitCheckRequestRefID?: number// 2322
   RefOrderID?: string// 1080
   RefOrderIDSource?: string// 1081
   RiskLimitCheckRequestType?: number// 2323
   RiskLimitCheckAmount?: number// 2324
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   RiskLimitID?: string// 1670
   RelativeValueSide?: number// 2532
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   Parties?: IParties[]

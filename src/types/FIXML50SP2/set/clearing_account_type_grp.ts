@@ -1,3 +1,3 @@
 export interface IClearingAccountTypeGrp {
-  LegClearingAccountType?: number// 1817
+  ClearingAccountType?: number// 1816
 }

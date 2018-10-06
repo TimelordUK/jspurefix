@@ -29,53 +29,53 @@ export interface IConfirmation {
   ConfirmReqID?: string// 859
   ConfirmTransType: number// 666
   ConfirmType: number// 773
-  CopyMsgIndicator?: string// 797
-  LegalConfirm?: string// 650
+  CopyMsgIndicator?: boolean// 797
+  LegalConfirm?: boolean// 650
   ConfirmStatus: number// 665
   AffirmStatus?: number// 940
   TradeConfirmationReferenceID?: string// 2390
   ClearedIndicator?: number// 1832
   AllocID?: string// 70
   SecondaryAllocID?: string// 793
-  LegIndividualAllocID?: string// 672
-  RelSymTransactTime: Date// 1504
+  IndividualAllocID?: string// 467
+  TransactTime: Date// 60
   TradeDate: Date// 75
-  RelatedTradeQuantity: number// 1860
-  LegQtyType?: number// 1591
+  AllocQty: number// 80
+  QtyType?: number// 854
   RelativeValueSide: number// 2532
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   LastMkt?: string// 30
-  LegAccount: string// 2680
+  AllocAccount: string// 79
   AllocAcctIDSource?: number// 661
   AllocAccountType?: number// 798
-  SideAvgPx: number// 1852
+  AvgPx: number// 6
   AvgPxPrecision?: number// 74
-  UnderlyingReturnRatePriceType?: number// 43068
+  PriceType?: number// 423
   AvgParPx?: number// 860
   ReportedPx?: number// 861
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   ProcessCode?: string// 81
-  AllocGrossTradeAmt: number// 2300
+  GrossTradeAmt: number// 381
   NumDaysInterest?: number// 157
   ExDate?: Date// 230
   AccruedInterestRate?: number// 158
-  AllocAccruedInterestAmt?: number// 742
-  AllocInterestAtMaturity?: number// 741
+  AccruedInterestAmt?: number// 159
+  InterestAtMaturity?: number// 738
   EndAccruedInterestAmt?: number// 920
   StartCash?: number// 921
   EndCash?: number// 922
   Concession?: number// 238
   TotalTakedown?: number// 237
-  AllocNetMoney: number// 154
+  NetMoney: number// 118
   MaturityNetMoney?: number// 890
   SettlCurrAmt?: number// 119
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  SettlCurrFxRate?: string// 155
+  SettlCurrency?: string// 120
+  SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   SharedCommission?: number// 858
   StandardHeader?: IStandardHeader
   Parties?: IParties[]

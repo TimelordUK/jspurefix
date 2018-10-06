@@ -1,7 +1,7 @@
 export interface ILegComplexEventScheduleGrp {
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingReturnRateValuationEndDateAdjusted?: Date// 43025
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
+  LegComplexEventScheduleStartDate?: Date// 41401
+  LegComplexEventScheduleEndDate?: Date// 41402
+  LegComplexEventScheduleFrequencyPeriod?: number// 41403
+  LegComplexEventScheduleFrequencyUnit?: string// 41404
+  LegComplexEventScheduleRollConvention?: string// 41405
 }

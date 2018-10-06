@@ -4,26 +4,26 @@ import { ITradeAllocAmtGrp } from './trade_alloc_amt_grp'
 import { IAllocCommissionDataGrp } from './alloc_commission_data_grp'
 
 export interface ITrdAllocGrp {
-  LegAccount?: string// 2680
+  AllocAccount?: string// 79
   AllocAcctIDSource?: number// 661
-  LegAllocSettlCurrency?: string// 1367
-  LegIndividualAllocID?: string// 672
+  AllocSettlCurrency?: string// 736
+  IndividualAllocID?: string// 467
   ParentAllocID?: string// 1593
   FirmMnemonic?: string// 1729
-  RelatedTradeQuantity?: number// 1860
+  AllocQty?: number// 80
   AllocCalculatedCcyQty?: number// 2515
-  LegCustodialLotID?: string// 1756
-  LegVersusPurchaseDate?: Date// 1757
-  LegVersusPurchasePrice?: number// 1758
-  LegCurrentCostBasis?: number// 1759
+  CustodialLotID?: string// 1752
+  VersusPurchaseDate?: Date// 1753
+  VersusPurchasePrice?: number// 1754
+  CurrentCostBasis?: number// 1755
   AllocCustomerCapacity?: string// 993
-  UnderlyingComplexEventDeterminationMethod?: string// 2272
+  AllocMethod?: number// 1002
   SecondaryIndividualAllocID?: string// 989
   AllocClearingFeeIndicator?: string// 1136
-  MDStatisticStatus?: number// 2477
+  TradeAllocStatus?: number// 1840
   AllocationRollupInstruction?: number// 1735
-  UnderlyingProvisionText?: string// 42170
-  EncodedAllocTextLen?: string// 360
+  AllocText?: string// 161
+  EncodedAllocTextLen?: number// 360
   EncodedAllocText?: Buffer// 361
   FirmAllocText?: string// 1732
   AllocRefRiskLimitCheckID?: string// 2392

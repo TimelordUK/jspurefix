@@ -1,3 +1,3 @@
 export interface ISecurityXML {
-  UnderlyingSecurityXMLSchema?: string// 1876
+  SecurityXMLSchema?: string// 1186
 }

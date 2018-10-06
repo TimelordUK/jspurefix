@@ -16,41 +16,41 @@ import { IClearingPriceParametersGrp } from './set/clearing_price_parameters_grp
 **************************************************
 */
 export interface ISecurityStatus {
-  OrdStatusReqID?: string// 790
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  SecurityStatusReqID?: string// 324
+  Currency?: string// 15
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   TradeDate?: Date// 75
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  UnsolicitedIndicator?: string// 325
+  UnsolicitedIndicator?: boolean// 325
   MDSecurityTradingStatus?: number// 1682
   MarketMakerActivity?: number// 1655
-  FastMarketIndicator?: string// 2447
+  FastMarketIndicator?: boolean// 2447
   SecurityMassTradingEvent?: number// 1680
   NextAuctionTime?: Date// 2116
   FinancialStatus?: string// 291
   CorporateAction?: string// 292
   MDHaltReason?: number// 1684
-  InViewOfCommon?: string// 328
-  DueToRelated?: string// 329
+  InViewOfCommon?: boolean// 328
+  DueToRelated?: boolean// 329
   MDBookType?: number// 1021
   MarketDepth?: number// 264
   BuyVolume?: number// 330
   SellVolume?: number// 331
   HighPx?: number// 332
   LowPx?: number// 333
-  LegLastPx?: number// 637
-  ClearingSettlPrice?: number// 2528
+  LastPx?: number// 31
+  SettlPrice?: number// 730
   SettlPriceType?: number// 731
   SettlPriceDeterminationMethod?: number// 2451
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   Adjustment?: number// 334
   FirstPx?: number// 1025
-  LinkageHandlingIndicator?: string// 2448
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  LinkageHandlingIndicator?: boolean// 2448
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Instrument?: IInstrument

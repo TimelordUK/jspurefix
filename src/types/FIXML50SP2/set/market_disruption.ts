@@ -3,11 +3,11 @@ import { IMarketDisruptionFallbackGrp } from './market_disruption_fallback_grp'
 import { IMarketDisruptionFallbackReferencePriceGrp } from './market_disruption_fallback_reference_price_grp'
 
 export interface IMarketDisruption {
-  UnderlyingMarketDisruptionProvision?: number// 41859
-  UnderlyingMarketDisruptionFallbackProvision?: number// 41860
-  UnderlyingMarketDisruptionMaximumDays?: number// 41861
-  UnderlyingMarketDisruptionMaterialityPercentage?: number// 41862
-  UnderlyingMarketDisruptionMinimumFuturesContracts?: number// 41863
+  MarketDisruptionProvision?: number// 41087
+  MarketDisruptionFallbackProvision?: number// 41088
+  MarketDisruptionMaximumDays?: number// 41089
+  MarketDisruptionMaterialityPercentage?: number// 41090
+  MarketDisruptionMinimumFuturesContracts?: number// 41091
   MarketDisruptionEventGrp?: IMarketDisruptionEventGrp[]
   MarketDisruptionFallbackGrp?: IMarketDisruptionFallbackGrp[]
   MarketDisruptionFallbackReferencePriceGrp?: IMarketDisruptionFallbackReferencePriceGrp[]

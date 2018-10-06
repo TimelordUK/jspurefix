@@ -1,5 +1,5 @@
 export interface ILegStreamCommoditySettlTimeGrp {
-  UnderlyingStreamCommoditySettlStart?: string// 42000
-  UnderlyingStreamCommoditySettlEnd?: string// 42001
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  LegStreamCommoditySettlStart?: string// 41684
+  LegStreamCommoditySettlEnd?: string// 41685
+  LegStreamCommoditySettlTimeType?: number// 41935
 }

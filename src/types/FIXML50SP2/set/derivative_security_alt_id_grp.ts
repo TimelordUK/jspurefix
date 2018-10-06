@@ -1,4 +1,4 @@
 export interface IDerivativeSecurityAltIDGrp {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
+  DerivativeSecurityAltID?: string// 1219
+  DerivativeSecurityAltIDSource?: string// 1220
 }

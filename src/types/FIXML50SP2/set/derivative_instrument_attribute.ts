@@ -1,4 +1,4 @@
 export interface IDerivativeInstrumentAttribute {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  DerivativeInstrAttribType?: number// 1313
+  DerivativeInstrAttribValue?: string// 1314
 }

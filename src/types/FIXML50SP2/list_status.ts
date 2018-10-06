@@ -17,11 +17,11 @@ export interface IListStatus {
   ListRejectReason?: number// 1386
   RptSeq: number// 83
   ListStatusText?: string// 444
-  EncodedListStatusTextLen?: string// 445
+  EncodedListStatusTextLen?: number// 445
   EncodedListStatusText?: Buffer// 446
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   TotNoOrders: number// 68
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   StandardHeader?: IStandardHeader
   OrdListStatGrp?: IOrdListStatGrp[]
 }

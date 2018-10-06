@@ -11,28 +11,28 @@ import { IParties } from './parties'
 
 export interface IQuotReqRjctGrp {
   PrevClosePx?: number// 140
-  RiskLimitRequestType?: number// 1760
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  QuoteRequestType?: number// 303
+  QuoteType?: number// 537
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   TradeOriginationDate?: Date// 229
   RelativeValueSide?: number// 2532
-  LegQtyType?: number// 1591
+  QtyType?: number// 854
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  LegAccount?: string// 2680
+  Currency?: string// 15
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   NegotiationMethod?: number// 2115
   QuotePriceType?: number// 692
   OrdType?: string// 40
   ExpireTime?: Date// 126
-  RelSymTransactTime?: Date// 1504
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingReturnRatePrice?: number// 43066
+  TransactTime?: Date// 60
+  PriceType?: number// 423
+  Price?: number// 44
   Price2?: number// 640
   StrikeTime?: Date// 443
   Instrument: IInstrument

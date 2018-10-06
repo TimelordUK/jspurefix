@@ -7,36 +7,36 @@ import { ITradeCapLegUnderlyingsGrp } from './trade_cap_leg_underlyings_grp'
 
 export interface ITrdInstrmtLegGrp {
   LegOrderQty?: number// 685
-  RelatedTradeQuantity?: number// 1860
+  LegQty?: number// 687
   LegMidPx?: number// 2346
   LegSwapType?: number// 690
-  MDStatisticRptID?: string// 2453
+  LegReportID?: string// 990
   LegNumber?: number// 1152
   LegAccount?: string// 2680
   LegClearingAccountType?: number// 1817
   LegPositionEffect?: string// 564
   LegCoveredOrUncovered?: number// 565
-  EntitlementRefID?: string// 1885
+  LegRefID?: string// 654
   InstrumentScopeSettlType?: string// 1557
   LegSettlDate?: Date// 588
   LegLastPx?: number// 637
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  LegLastForwardPoints?: string// 1073
+  LegPriceType?: number// 686
+  LegSettlCurrency?: string// 675
+  LegLastForwardPoints?: number// 1073
   LegCalculatedCcyLastQty?: number// 1074
   LegGrossTradeAmt?: number// 1075
-  SideShortSaleExemptionReason?: number// 1690
-  LegVolatility?: string// 1379
+  LegShortSaleExemptionReason?: number// 1689
+  LegVolatility?: number// 1379
   LegDividendYield?: number// 1381
-  LegCurrencyRatio?: string// 1383
+  LegCurrencyRatio?: number// 1383
   LegExecInst?: string// 1384
   LegLastQty?: number// 1418
   LegQtyType?: number// 1591
-  LastMultipliedQty?: number// 2368
-  TotalTradeQty?: number// 2367
-  TotalTradeMultipliedQty?: number// 2370
-  TotalGrossTradeAmt?: number// 2369
-  LegDifferentialPrice?: string// 2492
+  LegLastMultipliedQty?: number// 2358
+  LegTotalTradeQty?: number// 2357
+  LegTotalTradeMultipliedQty?: number// 2360
+  LegTotalGrossTradeAmt?: number// 2359
+  LegDifferentialPrice?: number// 2492
   InstrumentLeg?: IInstrumentLeg
   LegFinancingDetails?: ILegFinancingDetails
   LegPositionAmountData?: ILegPositionAmountData[]

@@ -22,21 +22,21 @@ import { IParties } from './set/parties'
 export interface IMarketDefinition {
   MarketReportID: string// 1394
   MarketReqID?: string// 1393
-  SideCollateralAmountMarketID: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID: string// 1301
+  MarketSegmentID?: string// 1300
   MarketSegmentDesc?: string// 1396
-  EncodedMktSegmDescLen?: string// 1397
+  EncodedMktSegmDescLen?: number// 1397
   EncodedMktSegmDesc?: Buffer// 1398
   ParentMktSegmID?: string// 1325
   MarketSegmentStatus?: number// 2542
   MarketSegmentType?: number// 2543
   MarketSegmentSubType?: number// 2544
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   EffectiveBusinessDate?: Date// 2400
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   InstrumentScopeGrp?: IInstrumentScopeGrp[]

@@ -1,24 +1,24 @@
 import { ILegDividendPeriodBusinessCenterGrp } from './leg_dividend_period_business_center_grp'
 
 export interface ILegDividendPeriodGrp {
-  UnderlyingDividendPeriodSequence?: number// 42863
-  UnderlyingReturnRateValuationStartDateUnadjusted?: Date// 43014
-  UnderlyingReturnRateValuationEndDateUnadjusted?: Date// 43020
-  UnderlyingPaymentStreamUnderlierRefID?: string// 42962
-  UnderlyingDividendPeriodStrikePrice?: number// 42867
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingDividendPeriodValuationDateUnadjusted?: Date// 42869
-  UnderlyingDividendPeriodValuationDateRelativeTo?: number// 42870
-  UnderlyingDividendPeriodValuationDateOffsetPeriod?: number// 42871
-  UnderlyingDividendPeriodValuationDateOffsetUnit?: string// 42872
-  UnderlyingDividendPeriodValuationDateOffsetDayType?: number// 42873
-  UnderlyingDividendPeriodValuationDateAdjusted?: Date// 42874
-  UnderlyingDividendPeriodPaymentDateUnadjusted?: Date// 42875
-  UnderlyingDividendPeriodPaymentDateRelativeTo?: number// 42876
-  UnderlyingDividendPeriodPaymentDateOffsetPeriod?: number// 42877
-  UnderlyingDividendPeriodPaymentDateOffsetUnit?: string// 42878
-  UnderlyingDividendPeriodPaymentDateOffsetDayType?: number// 42879
-  UnderlyingDividendPeriodPaymentDateAdjusted?: Date// 42880
-  UnderlyingDividendPeriodXID?: string// 42881
+  LegDividendPeriodSequence?: number// 42367
+  LegDividendPeriodStartDateUnadjusted?: Date// 42368
+  LegDividendPeriodEndDateUnadjusted?: Date// 42369
+  LegDividendPeriodUnderlierRefID?: string// 42370
+  LegDividendPeriodStrikePrice?: number// 42371
+  LegDividendPeriodBusinessDayConvention?: number// 42372
+  LegDividendPeriodValuationDateUnadjusted?: Date// 42373
+  LegDividendPeriodValuationDateRelativeTo?: number// 42374
+  LegDividendPeriodValuationDateOffsetPeriod?: number// 42375
+  LegDividendPeriodValuationDateOffsetUnit?: string// 42376
+  LegDividendPeriodValuationDateOffsetDayType?: number// 42377
+  LegDividendPeriodValuationDateAdjusted?: Date// 42378
+  LegDividendPeriodPaymentDateUnadjusted?: Date// 42379
+  LegDividendPeriodPaymentDateRelativeTo?: number// 42380
+  LegDividendPeriodPaymentDateOffsetPeriod?: number// 42381
+  LegDividendPeriodPaymentDateOffsetUnit?: string// 42382
+  LegDividendPeriodPaymentDateOffsetDayType?: number// 42383
+  LegDividendPeriodPaymentDateAdjusted?: Date// 42384
+  LegDividendPeriodXID?: string// 42385
   LegDividendPeriodBusinessCenterGrp?: ILegDividendPeriodBusinessCenterGrp[]
 }

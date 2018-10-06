@@ -45,10 +45,10 @@ import { IThrottleResponse } from './set/throttle_response'
 ***************************************************
 */
 export interface IExecutionReport {
-  NotAffectedOrderID: string// 1371
+  OrderID: string// 37
   OrderRequestID?: number// 2422
   MassOrderRequestID?: string// 2423
-  NotAffSecondaryOrderID?: string// 1825
+  SecondaryOrderID?: string// 198
   SecondaryClOrdID?: string// 526
   SecondaryExecID?: string// 527
   ClOrdID?: string// 11
@@ -61,25 +61,25 @@ export interface IExecutionReport {
   MassStatusReqID?: string// 584
   HostCrossID?: string// 961
   TotNumReports?: number// 911
-  LastRptRequested?: string// 912
+  LastRptRequested?: boolean// 912
   TradeOriginationDate?: Date// 229
-  SecurityListID?: string// 1465
+  ListID?: string// 66
   CrossID?: string// 548
   OrigCrossID?: string// 551
   CrossType?: number// 549
-  AllocRefRiskLimitCheckID?: string// 2392
-  AllocRefRiskLimitCheckIDType?: number// 2393
-  TradeMatchID?: string// 1
-  FillMatchSubID?: string// 2674
-  LegExecID: string// 1893
-  LegExecRefID?: string// 1901
+  RefRiskLimitCheckID?: string// 2334
+  RefRiskLimitCheckIDType?: number// 2335
+  TrdMatchID?: string// 880
+  TrdMatchSubID?: string// 1891
+  ExecID: string// 17
+  ExecRefID?: string// 19
   ExecType: string// 150
   ExecTypeReason?: number// 2431
   OrdStatus: string// 39
-  WorkingIndicator?: string// 636
+  WorkingIndicator?: boolean// 636
   CollRptRejectReason?: number// 2487
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
   ExecRestatementReason?: number// 378
   AlgorithmicTradeIndicator?: number// 2667
@@ -87,29 +87,29 @@ export interface IExecutionReport {
   SideTrdSubTyp?: number// 1008
   SecondaryTrdType?: number// 855
   RegulatoryTransactionType?: number// 2347
-  PreviouslyReported?: string// 570
-  SideTradeReportingIndicator?: number// 2671
-  LegAccount?: string// 2680
+  PreviouslyReported?: boolean// 570
+  TradeReportingIndicator?: number// 2524
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   DayBookingInst?: string// 589
   BookingUnit?: string// 590
   PreallocMethod?: string// 591
   AllocID?: string// 70
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   MatchType?: string// 574
   OrderCategory?: string// 1115
   CashMargin?: string// 544
-  AllocClearingFeeIndicator?: string// 1136
+  ClearingFeeIndicator?: string// 635
   RelativeValueSide: number// 2532
-  ShortMarkingExemptIndicator?: string// 2102
-  SideShortSaleExemptionReason?: number// 1690
-  LegQtyType?: number// 1591
+  ShortMarkingExemptIndicator?: boolean// 2102
+  ShortSaleExemptionReason?: number// 1688
+  QtyType?: number// 854
   LotType?: string// 1093
   OrdType?: string// 40
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingReturnRatePrice?: number// 43066
+  PriceType?: number// 423
+  Price?: number// 44
   PriceProtectionScope?: string// 1092
   StopPx?: number// 99
   Triggered?: number// 1823
@@ -122,13 +122,13 @@ export interface IExecutionReport {
   TargetStrategy?: number// 847
   TargetStrategyParameters?: string// 848
   ParticipationRate?: number// 849
-  TargetStrategyPerformance?: string// 850
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  TargetStrategyPerformance?: number// 850
+  Currency?: string// 15
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  SolicitedFlag?: string// 377
+  SolicitedFlag?: boolean// 377
   TimeInForce?: string// 59
   EffectiveTime?: Date// 168
   ExpireDate?: Date// 432
@@ -137,28 +137,28 @@ export interface IExecutionReport {
   ExposureDurationUnit?: number// 1916
   ExecInst?: string// 18
   AuctionInstruction?: number// 1805
-  AggressorIndicator?: string// 1057
+  AggressorIndicator?: boolean// 1057
   OrderCapacity?: string// 528
   OrderRestrictions?: string// 529
   TradingCapacity?: number// 1815
-  PreTradeAnonymity?: string// 1091
+  PreTradeAnonymity?: boolean// 1091
   TradePublishIndicator?: number// 1390
-  AllocCustomerCapacity?: string// 993
-  LegLastQty?: number// 1418
+  CustOrderCapacity?: number// 582
+  LastQty?: number// 32
   CalculatedCcyLastQty?: number// 1056
-  LastSwapPoints?: string// 1071
+  LastSwapPoints?: number// 1071
   UnderlyingLastQty?: number// 652
   LastQtyVariance?: number// 1828
-  LegLastPx?: number// 637
+  LastPx?: number// 31
   UnderlyingLastPx?: number// 651
   LastParPx?: number// 669
-  LegMidPx?: number// 2346
+  MidPx?: number// 631
   LastSpotRate?: number// 194
-  LastForwardPoints?: string// 195
+  LastForwardPoints?: number// 195
   LastUpfrontPrice?: number// 1743
   LastMkt?: string// 30
-  SideVenueType?: string// 1899
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  VenueType?: string// 1430
+  MarketSegmentID?: string// 1300
   ExDestination?: string// 100
   ExDestinationIDSource?: string// 1133
   ExDestinationType?: number// 2704
@@ -169,34 +169,34 @@ export interface IExecutionReport {
   LeavesQty: number// 151
   CumQty: number// 14
   CxlQty?: number// 84
-  SideAvgPx?: number// 1852
+  AvgPx?: number// 6
   DayOrderQty?: number// 424
   DayCumQty?: number// 425
   DayAvgPx?: number// 426
   TotNoFills?: number// 1361
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   GTBookingInst?: number// 427
   TradeDate?: Date// 75
-  RelSymTransactTime?: Date// 1504
-  ReportToExch?: string// 113
-  AllocGrossTradeAmt?: number// 2300
+  TransactTime?: Date// 60
+  ReportToExch?: boolean// 113
+  GrossTradeAmt?: number// 381
   NumDaysInterest?: number// 157
   ExDate?: Date// 230
   AccruedInterestRate?: number// 158
-  AllocAccruedInterestAmt?: number// 742
-  AllocInterestAtMaturity?: number// 741
+  AccruedInterestAmt?: number// 159
+  InterestAtMaturity?: number// 738
   EndAccruedInterestAmt?: number// 920
   StartCash?: number// 921
   EndCash?: number// 922
-  TradedFlatSwitch?: string// 258
+  TradedFlatSwitch?: boolean// 258
   BasisFeatureDate?: Date// 259
   BasisFeaturePrice?: number// 260
   Concession?: number// 238
   TotalTakedown?: number// 237
-  AllocNetMoney?: number// 154
+  NetMoney?: number// 118
   SettlCurrAmt?: number// 119
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  SettlCurrFxRate?: string// 155
+  SettlCurrency?: string// 120
+  SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   AllocHandlInst?: number// 209
   MinQty?: number// 110
@@ -207,17 +207,17 @@ export interface IExecutionReport {
   SelfMatchPreventionID?: string// 2362
   CrossedIndicator?: number// 2523
   MaxFloor?: number// 111
-  LegClearingAccountType?: number// 1817
-  LegPositionEffect?: string// 564
+  ClearingAccountType?: number// 1816
+  PositionEffect?: string// 77
   MaxShow?: number// 210
   BookingType?: number// 775
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
-  LastForwardPoints2?: string// 641
-  SideMultiLegReportingType?: number// 752
+  LastForwardPoints2?: number// 641
+  MultiLegReportingType?: string// 442
   ContingencyType?: number// 1385
   CancellationRights?: string// 480
   MoneyLaunderingStatus?: string// 481
@@ -226,14 +226,14 @@ export interface IExecutionReport {
   TransBkdTime?: Date// 483
   ExecValuationPoint?: Date// 515
   ExecPriceType?: string// 484
-  ExecPriceAdjustment?: string// 485
+  ExecPriceAdjustment?: number// 485
   PriorityIndicator?: number// 638
-  PriceImprovement?: string// 639
+  PriceImprovement?: number// 639
   LastLiquidityInd?: number// 851
-  CopyMsgIndicator?: string// 797
+  CopyMsgIndicator?: boolean// 797
   DividendYield?: number// 1380
-  ManualOrderIndicator?: string// 1028
-  CustDirectedOrder?: string// 1029
+  ManualOrderIndicator?: boolean// 1028
+  CustDirectedOrder?: boolean// 1029
   ReceivedDeptID?: string// 1030
   CustOrderHandlingInst?: string// 1031
   OrderHandlingInstSource?: number// 1032
@@ -242,10 +242,10 @@ export interface IExecutionReport {
   ReceivingDeptID?: string// 1726
   OwnerType?: number// 522
   OrderOwnershipIndicator?: number// 2679
-  Volatility?: string// 1188
-  TimeToExpiration?: string// 1189
-  RiskFreeRate?: string// 1190
-  PriceDelta?: string// 811
+  Volatility?: number// 1188
+  TimeToExpiration?: number// 1189
+  RiskFreeRate?: number// 1190
+  PriceDelta?: number// 811
   CoverPrice?: number// 1917
   RefOrderID?: string// 1080
   RefOrderIDSource?: string// 1081

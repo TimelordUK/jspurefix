@@ -4,17 +4,17 @@ import { ILegOptionExerciseExpiration } from './leg_option_exercise_expiration'
 import { ILegOptionExerciseMakeWholeProvision } from './leg_option_exercise_make_whole_provision'
 
 export interface ILegOptionExercise {
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
-  UnderlyingAutomaticExerciseIndicator?: string// 41813
-  UnderlyingAutomaticExerciseThresholdRate?: string// 41814
-  UnderlyingProvisionOptionExerciseConfirmation?: string// 42165
-  UnderlyingManualNoticeBusinessCenter?: string// 41816
-  UnderlyingFallbackExerciseIndicator?: string// 41817
-  UnderlyingLimitedRightToConfirmIndicator?: string// 41818
-  UnderlyingExerciseSplitTicketIndicator?: string// 41819
-  UnderlyingSettlMethodElectingPartySide?: number// 42887
+  LegExerciseDesc?: string// 41481
+  EncodedLegExerciseDescLen?: number// 41482
+  EncodedLegExerciseDesc?: Buffer// 41483
+  LegAutomaticExerciseIndicator?: boolean// 41484
+  LegAutomaticExerciseThresholdRate?: number// 41485
+  LegExerciseConfirmationMethod?: number// 41486
+  LegManualNoticeBusinessCenter?: string// 41487
+  LegFallbackExerciseIndicator?: boolean// 41488
+  LegLimitRightToConfirmIndicator?: boolean// 41489
+  LegExerciseSplitTicketIndicator?: boolean// 41490
+  LegSettlMethodElectingPartySide?: number// 42391
   LegSettlMethodElectionDate?: ILegSettlMethodElectionDate
   LegOptionExerciseDates?: ILegOptionExerciseDates
   LegOptionExerciseExpiration?: ILegOptionExerciseExpiration

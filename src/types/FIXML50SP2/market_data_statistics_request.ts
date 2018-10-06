@@ -19,16 +19,16 @@ export interface IMarketDataStatisticsRequest {
   MDStatisticReqID: string// 2452
   SubscriptionRequestType: string// 263
   TradeDate?: Date// 75
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
   MarketSegmentDesc?: string// 1396
-  EncodedMktSegmDescLen?: string// 1397
+  EncodedMktSegmDescLen?: number// 1397
   EncodedMktSegmDesc?: Buffer// 1398
   SecurityListID?: string// 1465
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   Instrument?: IInstrument

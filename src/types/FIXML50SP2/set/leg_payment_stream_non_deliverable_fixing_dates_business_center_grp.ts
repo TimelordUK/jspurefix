@@ -1,3 +1,3 @@
 export interface ILegPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegPaymentStreamNonDeliverableFixingDatesBusinessCenter?: string// 40361
 }

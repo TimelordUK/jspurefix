@@ -1,9 +1,9 @@
 import { IInstrumentPtysSubGrp } from './instrument_ptys_sub_grp'
 
 export interface IInstrumentParties {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  InstrumentPartyID?: string// 1019
+  InstrumentPartyIDSource?: string// 1050
+  InstrumentPartyRole?: number// 1051
+  InstrumentPartyRoleQualifier?: number// 2378
   InstrumentPtysSubGrp?: IInstrumentPtysSubGrp[]
 }

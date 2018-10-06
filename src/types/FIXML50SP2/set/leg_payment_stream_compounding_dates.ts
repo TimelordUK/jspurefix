@@ -4,17 +4,17 @@ import { ILegPaymentStreamCompoundingStartDate } from './leg_payment_stream_comp
 import { ILegPaymentStreamCompoundingEndDate } from './leg_payment_stream_compounding_end_date'
 
 export interface ILegPaymentStreamCompoundingDates {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingPaymentStreamCompoundingPeriodSkip?: number// 42909
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingPaymentStreamBoundsFirstDateUnadjusted?: Date// 42913
-  UnderlyingPaymentStreamBoundsLastDateUnadjusted?: Date// 42914
+  LegPaymentStreamCompoundingDatesBusinessDayConvention?: number// 42408
+  LegPaymentStreamCompoundingDatesRelativeTo?: number// 42409
+  LegPaymentStreamCompoundingDatesOffsetPeriod?: number// 42410
+  LegPaymentStreamCompoundingDatesOffsetUnit?: string// 42411
+  LegPaymentStreamCompoundingDatesOffsetDayType?: number// 42412
+  LegPaymentStreamCompoundingPeriodSkip?: number// 42413
+  LegPaymentStreamCompoundingFrequencyPeriod?: number// 42414
+  LegPaymentStreamCompoundingFrequencyUnit?: string// 42415
+  LegPaymentStreamCompoundingRollConvention?: string// 42416
+  LegPaymentStreamBoundsFirstDateUnadjusted?: Date// 42417
+  LegPaymentStreamBoundsLastDateUnadjusted?: Date// 42418
   LegPaymentStreamCompoundingDatesBusinessCenterGrp?: ILegPaymentStreamCompoundingDatesBusinessCenterGrp[]
   LegPaymentStreamCompoundingDateGrp?: ILegPaymentStreamCompoundingDateGrp[]
   LegPaymentStreamCompoundingStartDate?: ILegPaymentStreamCompoundingStartDate

@@ -1,4 +1,4 @@
 export interface IUnderlyingProtectionTermObligationGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  UnderlyingProtectionTermObligationType?: string// 42088
+  UnderlyingProtectionTermObligationValue?: string// 42089
 }

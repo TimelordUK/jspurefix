@@ -3,11 +3,13 @@ import { MsgView } from '../../../buffer/msg-view'
 import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
 import {
+  OrdType,
   RiskLimitRequestType,
   SideMultiLegReportingType,
-  SubscriptionRequestType,
+  SubscriptionRequestType, TimeInForce,
   UnderlyingProvisionPartyRole
 } from '../../../types/FIXML50SP2/enum/all-enum'
+import { INewOrderSingle } from '../../../types/FIXML50SP2/new_order_single'
 
 export class HttpClient extends FixmlSession {
   private readonly logger: IJsFixLogger
@@ -42,21 +44,10 @@ export class HttpClient extends FixmlSession {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
     const req = {
-      MDStatisticReqID: 'REQ123',
-      RiskLimitRequestType: RiskLimitRequestType.DefinitionsAndUtilization,
-      SubscriptionRequestType: SubscriptionRequestType.SnapshotUpdatesSubscribe,
-      SideMultiLegReportingType: SideMultiLegReportingType.MultilegSecurity,
-      Parties: [
-        {
-          BatchID: 'FIRM1',
-          UnderlyingProvisionPartyRole: UnderlyingProvisionPartyRole.EnteringFirm
-        },
-        {
-          BatchID: 'FIRM2',
-          UnderlyingProvisionPartyRole: UnderlyingProvisionPartyRole.EnteringFirm
-        }
-      ]
-    }
+      ClOrdID: '1',
+      OrdType: OrdType.Limit,
+      TimeInForce: TimeInForce.GoodTillCancelGtc
+    } as INewOrderSingle
     this.send('TrdCaptRptReq', req)
     this.logger.info(`will logout after ${logoutSeconds}`)
     setTimeout(() => {

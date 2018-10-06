@@ -1,9 +1,9 @@
 import { ILegInstrumentPtysSubGrp } from './leg_instrument_ptys_sub_grp'
 
 export interface ILegInstrumentParties {
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingProvisionPartyRole?: number// 42176
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  LegInstrumentPartyID?: string// 2255
+  LegInstrumentPartyIDSource?: string// 2256
+  LegInstrumentPartyRole?: number// 2257
+  LegInstrumentPartyRoleQualifier?: number// 2379
   LegInstrumentPtysSubGrp?: ILegInstrumentPtysSubGrp[]
 }

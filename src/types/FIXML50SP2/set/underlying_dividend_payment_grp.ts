@@ -1,6 +1,6 @@
 export interface IUnderlyingDividendPaymentGrp {
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  UnderlyingDividendPaymentDate?: Date// 42856
+  UnderlyingDividendPaymentAmount?: number// 42857
+  UnderlyingDividendPaymentCurrency?: string// 42858
   UnderlyingDividendAccruedInterest?: number// 42859
 }

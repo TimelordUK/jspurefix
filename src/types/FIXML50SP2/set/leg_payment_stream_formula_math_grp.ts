@@ -1,3 +1,3 @@
 export interface ILegPaymentStreamFormulaMathGrp {
-  PaymentDesc?: string// 43087
+  LegPaymentStreamFormulaDesc?: string// 42487
 }

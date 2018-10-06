@@ -10,23 +10,23 @@ import { ISecLstUpdRelSymGrp } from './set/sec_lst_upd_rel_sym_grp'
 ************************************************************
 */
 export interface ISecurityListUpdateReport {
-  MDStatisticRptID?: string// 2453
+  SecurityReportID?: number// 964
   SecurityListID?: string// 1465
   SecurityListRefID?: string// 1466
   SecurityListDesc?: string// 1467
   SecurityListType?: number// 1470
   SecurityListTypeSource?: number// 1471
-  MDStatisticReqID?: string// 2452
-  QuoteRespID?: string// 693
-  MDStatisticRequestResult?: number// 2473
+  SecurityReqID?: string// 320
+  SecurityResponseID?: string// 322
+  SecurityRequestResult?: number// 560
   TotNoRelatedSym?: number// 393
   ClearingBusinessDate?: Date// 715
   SecurityUpdateAction?: string// 980
   CorporateAction?: string// 292
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  RelSymTransactTime?: Date// 1504
-  LastFragment?: string// 893
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  TransactTime?: Date// 60
+  LastFragment?: boolean// 893
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   SecLstUpdRelSymGrp?: ISecLstUpdRelSymGrp[]

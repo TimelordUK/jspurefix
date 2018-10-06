@@ -16,28 +16,28 @@ import { IPositionAmountData } from './set/position_amount_data'
 **************************************************************
 */
 export interface IPositionMaintenanceRequest {
-  MDStatisticReqID?: string// 2452
+  PosReqID?: string// 710
   PosTransType: number// 709
-  PosReportAction: number// 2364
+  PosMaintAction: number// 712
   OrigPosReqRefID?: string// 713
-  AllocReportRefID?: string// 795
+  PosMaintRptRefID?: string// 714
   ClearingBusinessDate: Date// 715
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  RelSymTransactTime?: Date// 1504
+  AccountType?: number// 581
+  Currency?: string// 15
+  TransactTime?: Date// 60
   AdjustmentType?: number// 718
-  ContraryInstructionIndicator?: string// 719
-  PriorSpreadIndicator?: string// 720
-  ThresholdAmount?: string// 834
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  ContraryInstructionIndicator?: boolean// 719
+  PriorSpreadIndicator?: boolean// 720
+  ThresholdAmount?: number// 834
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  SettlCurrency?: string// 120
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   Instrument?: IInstrument

@@ -1,3 +1,3 @@
 export interface IComplexEventCreditEventQualifierGrp {
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  ComplexEventCreditEventQualifier?: string// 41006
 }

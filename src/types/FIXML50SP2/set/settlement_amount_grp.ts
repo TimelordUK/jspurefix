@@ -1,4 +1,4 @@
 export interface ISettlementAmountGrp {
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  SettlementAmount?: number// 1701
+  SettlementAmountCurrency?: string// 1702
 }

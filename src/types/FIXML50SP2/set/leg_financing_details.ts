@@ -18,11 +18,11 @@ export interface ILegFinancingDetails {
   LegCreditSupportAgreementID?: string// 2503
   LegGoverningLaw?: string// 2507
   LegDocumentationText?: string// 2505
-  EncodedLegDocumentationTextLen?: string// 2494
+  EncodedLegDocumentationTextLen?: number// 2494
   EncodedLegDocumentationText?: Buffer// 2493
   LegTerminationType?: number// 2514
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingReturnRateValuationEndDateAdjusted?: Date// 43025
+  LegStartDate?: Date// 2513
+  LegEndDate?: Date// 2506
   LegDeliveryType?: number// 2504
   LegMarginRatio?: number// 2508
   LegFinancingContractualDefinitionsGrp?: ILegFinancingContractualDefinitionsGrp[]

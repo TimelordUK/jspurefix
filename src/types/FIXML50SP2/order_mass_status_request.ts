@@ -14,7 +14,7 @@ import { IUnderlyingInstrument } from './set/underlying_instrument'
 export interface IOrderMassStatusRequest {
   MassStatusReqID: string// 584
   MassStatusReqType: number// 585
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625

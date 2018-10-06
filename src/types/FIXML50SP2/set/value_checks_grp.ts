@@ -1,4 +1,4 @@
 export interface IValueChecksGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  PosReportAction?: number// 2364
+  ValueCheckType?: number// 1869
+  ValueCheckAction?: number// 1870
 }

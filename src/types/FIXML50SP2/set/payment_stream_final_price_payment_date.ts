@@ -1,8 +1,8 @@
 export interface IPaymentStreamFinalPricePaymentDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  PaymentStreamFinalPricePaymentDateUnadjusted?: Date// 42654
+  PaymentStreamFinalPricePaymentDateRelativeTo?: number// 42655
+  PaymentStreamFinalPricePaymentDateOffsetfPeriod?: number// 42656
+  PaymentStreamFinalPricePaymentDateOffsetUnit?: string// 42657
+  PaymentStreamFinalPricePaymentDateOffsetDayType?: number// 42658
+  PaymentStreamFinalPricePaymentDateAdjusted?: Date// 42659
 }

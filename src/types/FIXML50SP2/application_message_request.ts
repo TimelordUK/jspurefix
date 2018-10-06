@@ -12,9 +12,9 @@ import { IParties } from './set/parties'
 export interface IApplicationMessageRequest {
   ApplReqID: string// 1346
   ApplReqType: number// 1347
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   ApplIDRequestGrp?: IApplIDRequestGrp[]
   Parties?: IParties[]

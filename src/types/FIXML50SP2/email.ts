@@ -18,11 +18,11 @@ export interface IEmail {
   EmailType: string// 94
   OrigTime?: Date// 42
   Subject: string// 147
-  EncodedSubjectLen?: string// 356
+  EncodedSubjectLen?: number// 356
   EncodedSubject?: Buffer// 357
-  NotAffectedOrderID?: string// 1371
+  OrderID?: string// 37
   ClOrdID?: string// 11
-  RawDataLength?: string// 95
+  RawDataLength?: number// 95
   RawData?: Buffer// 96
   StandardHeader?: IStandardHeader
   RoutingGrp?: IRoutingGrp[]

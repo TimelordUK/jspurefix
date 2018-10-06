@@ -1,5 +1,5 @@
 export interface ILegDeliveryStreamCycleGrp {
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
+  LegDeliveryStreamCycleDesc?: string// 41457
+  EncodedLegDeliveryStreamCycleDescLen?: number// 41458
+  EncodedLegDeliveryStreamCycleDesc?: Buffer// 41459
 }

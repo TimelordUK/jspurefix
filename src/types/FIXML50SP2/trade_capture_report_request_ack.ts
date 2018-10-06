@@ -12,22 +12,22 @@ import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 ****************************************************************
 */
 export interface ITradeCaptureReportRequestAck {
-  MDStatisticReqID: string// 2452
-  LegTradeID?: string// 1894
+  TradeRequestID: string// 568
+  TradeID?: string// 1003
   SecondaryTradeID?: string// 1
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
-  RiskLimitRequestType: number// 1760
+  TradeRequestType: number// 569
   SubscriptionRequestType?: string// 263
   TotNumTradeReports?: number// 748
   MDStatisticRequestResult: number// 2473
-  MassOrderRequestStatus: number// 2425
-  SideMultiLegReportingType?: number// 752
+  TradeRequestStatus: number// 750
+  MultiLegReportingType?: string// 442
   ResponseTransportType?: number// 725
   ResponseDestination?: string// 726
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   MessageEventSource?: string// 1011
   StandardHeader?: IStandardHeader
   Instrument?: IInstrument

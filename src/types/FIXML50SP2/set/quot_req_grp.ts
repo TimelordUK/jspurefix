@@ -12,26 +12,26 @@ import { IParties } from './parties'
 
 export interface IQuotReqGrp {
   PrevClosePx?: number// 140
-  RiskLimitRequestType?: number// 1760
+  QuoteRequestType?: number// 303
   QuoteID?: string// 117
   SecondaryQuoteID?: string// 1751
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  QuoteType?: number// 537
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   TradeOriginationDate?: Date// 229
   NumOfCompetitors?: number// 1913
   RelativeValueSide?: number// 2532
-  LegQtyType?: number// 1591
+  QtyType?: number// 854
   MinQty?: number// 110
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
-  LegAccount?: string// 2680
+  Currency?: string// 15
+  SettlCurrency?: string// 120
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   TrdType?: number// 828
   RegulatoryTransactionType?: number// 2347
   NegotiationMethod?: number// 2115
@@ -43,10 +43,10 @@ export interface IQuotReqGrp {
   QuoteDisplayTime?: Date// 1915
   ExposureDuration?: number// 1629
   ExposureDurationUnit?: number// 1916
-  RelSymTransactTime?: Date// 1504
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingReturnRatePrice?: number// 43066
-  LegMidPx?: number// 2346
+  TransactTime?: Date// 60
+  PriceType?: number// 423
+  Price?: number// 44
+  MidPx?: number// 631
   Price2?: number// 640
   StrikeTime?: Date// 443
   Instrument: IInstrument

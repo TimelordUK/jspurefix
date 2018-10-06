@@ -1,3 +1,3 @@
 export interface INotAffectedMarketSegmentGrp {
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  NotAffectedMarketSegmentID?: string// 1794
 }

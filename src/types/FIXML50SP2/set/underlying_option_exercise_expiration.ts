@@ -2,16 +2,16 @@ import { IUnderlyingOptionExerciseExpirationDateBusinessCenterGrp } from './unde
 import { IUnderlyingOptionExerciseExpirationDateGrp } from './underlying_option_exercise_expiration_date_grp'
 
 export interface IUnderlyingOptionExerciseExpiration {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
-  UnderlyingProvisionCashSettlValueTimeBusinessCenter?: string// 42105
+  UnderlyingOptionExerciseExpirationDateBusinessDayConvention?: number// 41846
+  UnderlyingOptionExerciseExpirationDateRelativeTo?: number// 41847
+  UnderlyingOptionExerciseExpirationDateOffsetPeriod?: number// 41848
+  UnderlyingOptionExerciseExpirationDateOffsetUnit?: string// 41849
+  UnderlyingOptionExerciseExpirationFrequencyPeriod?: number// 41850
+  UnderlyingOptionExerciseExpirationFrequencyUnit?: string// 41851
+  UnderlyingOptionExerciseExpirationRollConvention?: string// 41852
+  UnderlyingOptionExerciseExpirationDateOffsetDayType?: number// 41853
+  UnderlyingOptionExerciseExpirationTime?: string// 41854
+  UnderlyingOptionExerciseExpirationTimeBusinessCenter?: string// 41855
   UnderlyingOptionExerciseExpirationDateBusinessCenterGrp?: IUnderlyingOptionExerciseExpirationDateBusinessCenterGrp[]
   UnderlyingOptionExerciseExpirationDateGrp?: IUnderlyingOptionExerciseExpirationDateGrp[]
 }

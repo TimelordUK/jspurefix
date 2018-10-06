@@ -4,26 +4,26 @@ import { ILegPaymentStreamFixingDateBusinessCenterGrp } from './leg_payment_stre
 import { ILegPaymentStreamFixingDateGrp } from './leg_payment_stream_fixing_date_grp'
 
 export interface ILegPaymentStreamResetDates {
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  PaymentStreamResetWeeklyRollConvention?: string// 40766
-  PaymentStreamInitialFixingDateRelativeTo?: number// 40767
-  PaymentStreamInitialFixingDateBusinessDayConvention?: number// 40768
-  PaymentStreamInitialFixingDateOffsetPeriod?: number// 40770
-  PaymentStreamInitialFixingDateOffsetUnit?: string// 40771
-  PaymentStreamInitialFixingDateOffsetDayType?: number// 40772
-  PaymentStreamInitialFixingDateAdjusted?: Date// 40773
-  PaymentScheduleFixingDateRelativeTo?: number// 40852
-  PaymentScheduleFixingDateBusinessDayConvention?: number// 40853
-  PaymentScheduleFixingDateOffsetPeriod?: number// 40855
-  PaymentScheduleFixingDateOffsetUnit?: string// 40856
-  PaymentScheduleFixingDateOffsetDayType?: number// 40857
-  PaymentScheduleFixingDateAdjusted?: Date// 40858
-  PaymentStreamRateCutoffDateOffsetPeriod?: number// 40781
-  PaymentStreamRateCutoffDateOffsetUnit?: string// 40782
-  PaymentStreamRateCutoffDateOffsetDayType?: number// 40783
+  LegPaymentStreamResetDateRelativeTo?: number// 40303
+  LegPaymentStreamResetDateBusinessDayConvention?: number// 40304
+  LegPaymentStreamResetFrequencyPeriod?: number// 40306
+  LegPaymentStreamResetFrequencyUnit?: string// 40307
+  LegPaymentStreamResetWeeklyRollConvention?: string// 40308
+  LegPaymentStreamInitialFixingDateRelativeTo?: number// 40309
+  LegPaymentStreamInitialFixingDateBusinessDayConvention?: number// 40310
+  LegPaymentStreamInitialFixingDateOffsetPeriod?: number// 40312
+  LegPaymentStreamInitialFixingDateOffsetUnit?: string// 40313
+  LegPaymentStreamInitialFixingDateOffsetDayType?: number// 40314
+  LegPaymentStreamInitialFixingDateAdjusted?: Date// 40315
+  LegPaymentStreamFixingDateRelativeTo?: number// 40316
+  LegPaymentStreamFixingDateBusinessDayConvention?: number// 40317
+  LegPaymentStreamFixingDateOffsetPeriod?: number// 40319
+  LegPaymentStreamFixingDateOffsetUnit?: string// 40320
+  LegPaymentStreamFixingDateOffsetDayType?: number// 40321
+  LegPaymentStreamFixingDateAdjusted?: Date// 40322
+  LegPaymentStreamRateCutoffDateOffsetPeriod?: number// 40323
+  LegPaymentStreamRateCutoffDateOffsetUnit?: string// 40324
+  LegPaymentStreamRateCutoffDateOffsetDayType?: number// 40325
   LegPaymentStreamResetDateBusinessCenterGrp?: ILegPaymentStreamResetDateBusinessCenterGrp[]
   LegPaymentStreamInitialFixingDateBusinessCenterGrp?: ILegPaymentStreamInitialFixingDateBusinessCenterGrp[]
   LegPaymentStreamFixingDateBusinessCenterGrp?: ILegPaymentStreamFixingDateBusinessCenterGrp[]

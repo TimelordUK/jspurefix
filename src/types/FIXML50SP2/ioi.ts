@@ -24,22 +24,22 @@ import { IYieldData } from './set/yield_data'
 */
 export interface IIOI {
   IOIID: string// 23
-  TransferTransType: number// 2439
-  EntitlementRefID?: string// 1885
+  IOITransType: string// 28
+  IOIRefID?: string// 26
   RelativeValueSide: number// 2532
-  LegQtyType?: number// 1591
+  QtyType?: number// 854
   RelatedTradeQuantity: number// 1860
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingReturnRatePrice?: number// 43066
+  Currency?: string// 15
+  PriceType?: number// 423
+  Price?: number// 44
   ValidUntilTime?: Date// 62
   IOIQltyInd?: string// 25
-  IOINaturalFlag?: string// 130
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  RelSymTransactTime?: Date// 1504
-  AttachmentExternalURL?: string// 2108
+  IOINaturalFlag?: boolean// 130
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  TransactTime?: Date// 60
+  URLLink?: string// 149
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   Instrument?: IInstrument

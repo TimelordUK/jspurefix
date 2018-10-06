@@ -1,11 +1,11 @@
 export interface IPegInstructions {
-  PegOffsetValue?: string// 211
+  PegOffsetValue?: number// 211
   PegPriceType?: number// 1094
-  DiscretionMoveType?: number// 841
-  DiscretionOffsetType?: number// 842
+  PegMoveType?: number// 835
+  PegOffsetType?: number// 836
   PegLimitType?: number// 837
-  DiscretionRoundDirection?: number// 844
-  MDStatisticScope?: number// 2457
+  PegRoundDirection?: number// 838
+  PegScope?: number// 840
   PegSecurityIDSource?: string// 1096
   PegSecurityID?: string// 1097
   PegSymbol?: string// 1098

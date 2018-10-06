@@ -1,12 +1,12 @@
 import { ILegDividendAccrualPaymentDateBusinessCenterGrp } from './leg_dividend_accrual_payment_date_business_center_grp'
 
 export interface ILegDividendAccrualPaymentDate {
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  LegDividendAccrualPaymentDateRelativeTo?: number// 42330
+  LegDividendAccrualPaymentDateOffsetPeriod?: number// 42331
+  LegDividendAccrualPaymentDateOffsetUnit?: string// 42332
+  LegDividendAccrualPaymentDateOffsetDayType?: number// 42333
+  LegDividendAccrualPaymentDateUnadjusted?: Date// 42334
+  LegDividendAccrualPaymentDateBusinessDayConvention?: number// 42335
+  LegDividendAccrualPaymentDateAdjusted?: Date// 42336
   LegDividendAccrualPaymentDateBusinessCenterGrp?: ILegDividendAccrualPaymentDateBusinessCenterGrp[]
 }

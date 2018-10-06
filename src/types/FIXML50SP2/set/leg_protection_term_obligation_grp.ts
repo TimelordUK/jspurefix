@@ -1,4 +1,4 @@
 export interface ILegProtectionTermObligationGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  LegProtectionTermObligationType?: string// 41636
+  LegProtectionTermObligationValue?: string// 41637
 }

@@ -11,7 +11,7 @@ import { IInstrmtStrkPxGrp } from './set/instrmt_strk_px_grp'
 export interface IListStrikePrice {
   ListID: string// 66
   TotNoStrikes: number// 422
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   StandardHeader?: IStandardHeader
   InstrmtStrkPxGrp?: IInstrmtStrkPxGrp[]
 }

@@ -1,4 +1,4 @@
 export interface IProvisionPtysSubGrp {
-  BatchID?: string// 50000
+  ProvisionPartySubID?: string// 40179
   UnderlyingReturnRateValuationDateType?: number// 43073
 }

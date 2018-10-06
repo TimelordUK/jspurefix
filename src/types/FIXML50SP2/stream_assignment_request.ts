@@ -9,7 +9,7 @@ import { IStrmAsgnReqGrp } from './set/strm_asgn_req_grp'
 ***********************************************************
 */
 export interface IStreamAssignmentRequest {
-  MDStatisticReqID: string// 2452
+  StreamAsgnReqID: string// 1497
   StreamAsgnReqType: number// 1498
   StandardHeader?: IStandardHeader
   StrmAsgnReqGrp?: IStrmAsgnReqGrp[]

@@ -4,33 +4,33 @@ import { IPaymentSettlGrp } from './payment_settl_grp'
 export interface IPaymentGrp {
   UnderlyingReturnRateValuationDateType?: number// 43073
   PaymentSubType?: number// 40993
-  PaymentSchedulePaySide?: number// 40833
-  PaymentScheduleReceiveSide?: number// 40834
+  PaymentPaySide?: number// 40214
+  PaymentReceiveSide?: number// 40215
   PaymentDesc?: string// 43087
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingReturnRateAmountRelativeTo?: number// 43041
+  PaymentCurrency?: string// 40216
+  PaymentAmount?: number// 40217
+  PaymentAmountRelativeTo?: number// 42598
   PaymentAmountDeterminationMethod?: string// 42599
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceType?: number// 43068
-  UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  PaymentPrice?: number// 40218
+  PaymentPriceType?: number// 40919
+  PaymentUnitOfMeasure?: string// 41155
+  PaymentDateUnadjusted?: Date// 40219
+  PaymentBusinessDayConvention?: number// 40220
+  PaymentDateRelativeTo?: number// 41156
+  PaymentDateOffsetPeriod?: number// 41157
+  PaymentDateOffsetUnit?: string// 41158
+  PaymentDateOffsetDayType?: number// 41159
+  PaymentDateAdjusted?: Date// 40222
   PaymentForwardStartType?: number// 41160
-  PaymentDiscountFactor?: string// 40224
+  PaymentDiscountFactor?: number// 40224
   PaymentPresentValueAmount?: number// 40225
   PaymentPresentValueCurrency?: string// 40226
   PaymentSettlStyle?: number// 40227
   PaymentMethod?: number// 492
   PaymentLegRefID?: string// 41304
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  PaymentText?: string// 40229
+  EncodedPaymentTextLen?: number// 40984
+  EncodedPaymentText?: Buffer// 40985
   PaymentBusinessCenterGrp?: IPaymentBusinessCenterGrp[]
   PaymentSettlGrp?: IPaymentSettlGrp[]
 }

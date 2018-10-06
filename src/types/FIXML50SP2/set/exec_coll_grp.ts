@@ -1,3 +1,3 @@
 export interface IExecCollGrp {
-  LegExecID?: string// 1893
+  ExecID?: string// 17
 }

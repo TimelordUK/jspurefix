@@ -1,4 +1,4 @@
 export interface IPartyDetailSubGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  PartyDetailSubID?: string// 1695
+  PartyDetailSubIDType?: number// 1696
 }

@@ -22,7 +22,7 @@ import { IAllocGrp } from './set/alloc_grp'
 */
 export interface IAllocationInstructionAlert {
   AllocID: string// 70
-  TransferTransType: number// 2439
+  AllocTransType: string// 71
   AllocType: number// 626
   SecondaryAllocID?: string// 793
   RefAllocID?: string// 72
@@ -34,57 +34,57 @@ export interface IAllocationInstructionAlert {
   FirmGroupID?: string// 1728
   BookingRefID?: string// 466
   AllocNoOrdersType?: number// 857
-  PreviouslyReported?: string// 570
-  ReversalIndicator?: string// 700
+  PreviouslyReported?: boolean// 570
+  ReversalIndicator?: boolean// 700
   MatchType?: string// 574
   RelativeValueSide: number// 2532
-  RelatedTradeQuantity?: number// 1860
-  LegQtyType?: number// 1591
+  Quantity?: number// 53
+  QtyType?: number// 854
   AllocGroupQuantity?: number// 1736
   AllocGroupRemainingQuantity?: number// 1737
   LastMkt?: string// 30
   TradeOriginationDate?: Date// 229
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
-  UnderlyingReturnRatePriceType?: number// 43068
-  SideAvgPx?: number// 1852
+  PriceType?: number// 423
+  AvgPx?: number// 6
   AvgParPx?: number// 860
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  Currency?: string// 15
   AvgPxPrecision?: number// 74
   TradeDate: Date// 75
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   AllocStatus?: number// 87
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   BookingType?: number// 775
-  AllocGrossTradeAmt?: number// 2300
+  GrossTradeAmt?: number// 381
   Concession?: number// 238
   TotalTakedown?: number// 237
-  AllocNetMoney?: number// 154
-  LegPositionEffect?: string// 564
-  AutoAcceptIndicator?: string// 754
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  NetMoney?: number// 118
+  PositionEffect?: string// 77
+  AutoAcceptIndicator?: boolean// 754
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   NumDaysInterest?: number// 157
   AccruedInterestRate?: number// 158
-  AllocAccruedInterestAmt?: number// 742
+  AccruedInterestAmt?: number// 159
   TotalAccruedInterestAmt?: number// 540
-  AllocInterestAtMaturity?: number// 741
+  InterestAtMaturity?: number// 738
   EndAccruedInterestAmt?: number// 920
   StartCash?: number// 921
   EndCash?: number// 922
-  LegalConfirm?: string// 650
+  LegalConfirm?: boolean// 650
   TotNoAllocs?: number// 892
-  LastFragment?: string// 893
-  SideAvgPxIndicator?: number// 1853
-  SideAvgPxGroupID?: string// 1854
+  LastFragment?: boolean// 893
+  AvgPxIndicator?: number// 819
+  AvgPxGroupID?: string// 1731
   ClearingBusinessDate?: Date// 715
   TrdType?: number// 828
   SideTrdSubTyp?: number// 1008
-  AllocCustomerCapacity?: string// 993
-  InputSource?: string// 979
-  SideMultiLegReportingType?: number// 752
+  CustOrderCapacity?: number// 582
+  TradeInputSource?: string// 578
+  MultiLegReportingType?: string// 442
   MessageEventSource?: string// 1011
   RndPx?: number// 991
   CustOrderHandlingInst?: string// 1031

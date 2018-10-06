@@ -13,14 +13,14 @@ import { IRelSymDerivSecUpdGrp } from './set/rel_sym_deriv_sec_upd_grp'
 ***************************************************************
 */
 export interface IDerivativeSecurityListUpdateReport {
-  MDStatisticReqID?: string// 2452
-  QuoteRespID?: string// 693
-  MDStatisticRequestResult?: number// 2473
+  SecurityReqID?: string// 320
+  SecurityResponseID?: string// 322
+  SecurityRequestResult?: number// 560
   SecurityUpdateAction?: string// 980
   LastUpdateTime?: Date// 779
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   TotNoRelatedSym?: number// 393
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   UnderlyingInstrument?: IUnderlyingInstrument

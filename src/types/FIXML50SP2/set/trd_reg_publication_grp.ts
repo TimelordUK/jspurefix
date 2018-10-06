@@ -1,4 +1,4 @@
 export interface ITrdRegPublicationGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  NotAffectedReason?: number// 2677
+  TrdRegPublicationType?: number// 2669
+  TrdRegPublicationReason?: number// 2670
 }

@@ -1,4 +1,4 @@
 export interface IRelatedPartyDetailAltSubGrp {
-  BatchID?: string// 50000
+  RelatedPartyDetailAltSubID?: string// 1573
   UnderlyingReturnRateValuationDateType?: number// 43073
 }

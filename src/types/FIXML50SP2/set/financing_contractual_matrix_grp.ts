@@ -1,5 +1,5 @@
 export interface IFinancingContractualMatrixGrp {
-  LegContractualMatrixSource?: string// 42204
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  LegContractualMatrixTerm?: string// 42206
+  ContractualMatrixSource?: string// 40043
+  ContractualMatrixDate?: Date// 40044
+  ContractualMatrixTerm?: string// 40045
 }

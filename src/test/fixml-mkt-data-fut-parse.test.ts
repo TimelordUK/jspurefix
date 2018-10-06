@@ -34,13 +34,13 @@ test('expect an instrument from fix msg', () => {
   expect(v0).toBeTruthy()
   const i: IInstrument = v0.toObject()
   expect(i).toBeTruthy()
-  expect(i.RelatedSymbol).toEqual('ZCZ9')
-  expect(i.BatchID).toEqual('01')
+  expect(i.Symbol).toEqual('ZCZ9')
+  expect(i.SecurityID).toEqual('01')
   expect(i.LegContractualMatrixSource).toEqual('H')
-  expect(i.InstrumentScopeCFICode).toEqual('FFCPSO')
-  expect(i.RelatedSecurityType).toEqual('FUT')
-  expect(i.RelatedMaturityMonthYear).toEqual('200906')
-  expect(i.UnderlyingStreamCommodityExchange).toEqual('CME')
+  expect(i.CFICode).toEqual('FFCPSO')
+  expect(i.SecurityType).toEqual('FUT')
+  expect(i.MaturityMonthYear).toEqual('200906')
+  expect(i.SecurityExchange).toEqual('CME')
 })
 
 test('expect an md group from fix msg', () => {
@@ -53,7 +53,7 @@ test('expect an md group from fix msg', () => {
   expect(fullGrp.length).toEqual(1)
   const first: IMDFullGrp = fullGrp[0]
   expect(first).toBeTruthy()
-  expect(first.UnderlyingReturnRatePrice).toEqual(18.97)
+  expect(first.MDEntryPx).toEqual(18.97)
   expect(first.OrdType).toEqual('6')
   expect(first.MDMkt).toEqual('CME')
 })

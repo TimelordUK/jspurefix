@@ -5,12 +5,12 @@ import { ILegBenchmarkCurveData } from './leg_benchmark_curve_data'
 
 export interface IQuotReqLegsGrp {
   LegOrderQty?: number// 685
-  RelatedTradeQuantity?: number// 1860
+  LegQty?: number// 687
   LegMidPx?: number// 2346
   LegSwapType?: number// 690
   InstrumentScopeSettlType?: string// 1557
   LegSettlDate?: Date// 588
-  EntitlementRefID?: string// 1885
+  LegRefID?: string// 654
   InstrumentLeg?: IInstrumentLeg
   LegStipulations?: ILegStipulations[]
   NestedParties?: INestedParties[]

@@ -5,33 +5,33 @@ import { ILegStreamCommoditySettlBusinessCenterGrp } from './leg_stream_commodit
 import { ILegStreamCommoditySettlPeriodGrp } from './leg_stream_commodity_settl_period_grp'
 
 export interface ILegStreamCommodity {
-  UnderlyingStreamCommodityBase?: string// 41964
-  UnderlyingStreamCommodityType?: string// 41965
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
-  UnderlyingStreamCommodityDeliveryPricingRegion?: string// 42589
-  UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingStreamCommodityExchange?: string// 41973
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingReturnRateReferencePage?: string// 43062
-  UnderlyingReturnRateReferencePageHeading?: string// 43063
-  UnderlyingStreamDataProvider?: string// 41977
-  UnderlyingStreamCommodityPricingType?: string// 41978
-  UnderlyingProtectionTermEventPeriod?: number// 42081
-  UnderlyingProtectionTermEventUnit?: string// 42082
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingStreamCommoditySettlMonth?: number// 41984
-  UnderlyingStreamCommoditySettlDateRollPeriod?: number// 41985
-  UnderlyingStreamCommoditySettlDateRollUnit?: string// 41986
-  UnderlyingProtectionTermEventDayType?: number// 42083
-  UnderlyingDividendPeriodXID?: string// 42881
-  UnderlyingStreamCommoditySettlPeriodXIDRef?: string// 42015
+  LegStreamCommodityBase?: string// 41648
+  LegStreamCommodityType?: string// 41649
+  LegStreamCommoditySecurityID?: string// 41650
+  LegStreamCommoditySecurityIDSource?: string// 41651
+  LegStreamCommodityDesc?: string// 41652
+  EncodedLegStreamCommodityDescLen?: number// 41653
+  EncodedLegStreamCommodityDesc?: Buffer// 41654
+  LegStreamCommodityDeliveryPricingRegion?: string// 42588
+  LegStreamCommodityUnitOfMeasure?: string// 41655
+  LegStreamCommodityCurrency?: string// 41656
+  LegStreamCommodityExchange?: string// 41657
+  LegStreamCommodityRateSource?: number// 41658
+  LegStreamCommodityRateReferencePage?: string// 41659
+  LegStreamCommodityRateReferencePageHeading?: string// 41660
+  LegStreamDataProvider?: string// 41661
+  LegStreamCommodityPricingType?: string// 41662
+  LegStreamCommodityNearbySettlDayPeriod?: number// 41663
+  LegStreamCommodityNearbySettlDayUnit?: string// 41664
+  LegStreamCommoditySettlDateUnadjusted?: Date// 41665
+  LegStreamCommoditySettlDateBusinessDayConvention?: number// 41666
+  LegStreamCommoditySettlDateAdjusted?: Date// 41667
+  LegStreamCommoditySettlMonth?: number// 41668
+  LegStreamCommoditySettlDateRollPeriod?: number// 41669
+  LegStreamCommoditySettlDateRollUnit?: string// 41670
+  LegStreamCommoditySettlDayType?: number// 41671
+  LegStreamCommodityXID?: string// 41672
+  LegStreamCommodityXIDRef?: string// 41673
   LegStreamCommodityAltIDGrp?: ILegStreamCommodityAltIDGrp[]
   LegStreamAssetAttributeGrp?: ILegStreamAssetAttributeGrp[]
   LegStreamCommodityDataSourceGrp?: ILegStreamCommodityDataSourceGrp[]

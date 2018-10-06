@@ -16,20 +16,20 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 ********************************************************
 */
 export interface ICollateralInquiryAck {
-  BatchID: string// 50000
-  MDStatisticStatus: number// 2477
+  CollInquiryID: string// 909
+  CollInquiryStatus: number// 945
   EntitlementResult?: number// 1884
   TotNumReports?: number// 911
-  LegAccount?: string// 2680
-  AllocAccountType?: number// 798
+  Account?: string// 1
+  AccountType?: number// 581
   ClOrdID?: string// 11
-  NotAffectedOrderID?: string// 1371
-  NotAffSecondaryOrderID?: string// 1825
+  OrderID?: string// 37
+  SecondaryOrderID?: string// 198
   SecondaryClOrdID?: string// 526
-  LegSettlDate?: Date// 588
-  RelatedTradeQuantity?: number// 1860
-  LegQtyType?: number// 1591
-  UnderlyingReturnRatePriceCurrency?: string// 43067
+  SettlDate?: Date// 64
+  Quantity?: number// 53
+  QtyType?: number// 854
+  Currency?: string// 15
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   SettlSessID?: string// 716
@@ -37,9 +37,9 @@ export interface ICollateralInquiryAck {
   ClearingBusinessDate?: Date// 715
   ResponseTransportType?: number// 725
   ResponseDestination?: string// 726
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   CollInqQualGrp?: ICollInqQualGrp[]
   Parties?: IParties[]

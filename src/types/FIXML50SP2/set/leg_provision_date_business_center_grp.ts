@@ -1,3 +1,3 @@
 export interface ILegProvisionDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  LegProvisionDateBusinessCenter?: string// 40452
 }

@@ -1,6 +1,6 @@
 export interface IRateSource {
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingComplexEventRateSourceType?: number// 41734
-  UnderlyingReturnRateReferencePage?: string// 43062
-  UnderlyingReturnRateReferencePageHeading?: string// 43063
+  RateSource?: number// 1446
+  RateSourceType?: number// 1447
+  ReferencePage?: string// 1448
+  RateSourceReferemcePageHeading?: string// 2412
 }

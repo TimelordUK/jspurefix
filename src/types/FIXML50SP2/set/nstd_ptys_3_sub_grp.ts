@@ -1,4 +1,4 @@
 export interface INstdPtys3SubGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  Nested3PartySubID?: string// 953
+  Nested3PartySubIDType?: number// 954
 }

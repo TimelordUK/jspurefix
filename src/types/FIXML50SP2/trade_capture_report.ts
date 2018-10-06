@@ -31,17 +31,17 @@ import { IAttachmentGrp } from './set/attachment_grp'
 ******************************************************
 */
 export interface ITradeCaptureReport {
-  MDStatisticRptID?: string// 2453
-  LegTradeID?: string// 1894
+  TradeReportID?: string// 571
+  TradeID?: string// 1003
   SecondaryTradeID?: string// 1
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
   PackageID?: string// 2489
   TradeNumber?: number// 2490
-  TransferTransType?: number// 2439
-  TransferReportType?: number// 2444
+  TradeReportTransType?: number// 487
+  TradeReportType?: number// 856
   TrdRptStatus?: number// 939
-  MDStatisticReqID?: string// 2452
+  TradeRequestID?: string// 568
   TrdType?: number// 828
   SideTrdSubTyp?: number// 1008
   SecondaryTrdType?: number// 855
@@ -50,84 +50,84 @@ export interface ITradeCaptureReport {
   TradeHandlingInstr?: string// 1123
   OrigTradeHandlingInstr?: string// 1124
   OrigTradeDate?: Date// 1125
-  SideOrigTradeID?: string// 1507
+  OrigTradeID?: string// 1126
   OrigSecondaryTradeID?: string// 1127
   TransferReason?: string// 830
   ExecType?: string// 150
   TotNumTradeReports?: number// 748
-  LastRptRequested?: string// 912
-  UnsolicitedIndicator?: string// 325
+  LastRptRequested?: boolean// 912
+  UnsolicitedIndicator?: boolean// 325
   SubscriptionRequestType?: string// 263
-  AllocReportRefID?: string// 795
+  TradeReportRefID?: string// 572
   SecondaryTradeReportRefID?: string// 881
   SecondaryTradeReportID?: string// 818
   TradeLinkID?: string// 820
-  TradeMatchID?: string// 1
-  LegExecID?: string// 1893
+  TrdMatchID?: string// 880
+  ExecID?: string// 17
   SecondaryExecID?: string// 527
   ExecRestatementReason?: number// 378
   RegulatoryTransactionType?: number// 2347
-  PreviouslyReported?: string// 570
-  UnderlyingReturnRatePriceType?: number// 43068
+  PreviouslyReported?: boolean// 570
+  PriceType?: number// 423
   CrossType?: number// 549
   AsOfIndicator?: string// 1015
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  SideVenueType?: string// 1899
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  SideCollateralAmountMarketID?: string// 2692
+  VenueType?: string// 1430
+  MarketSegmentID?: string// 1300
+  MarketID?: string// 1301
   TaxonomyType?: string// 2375
-  LegQtyType?: number// 1591
+  QtyType?: number// 854
   UnderlyingTradingSessionID?: string// 822
   UnderlyingTradingSessionSubID?: string// 823
-  LegLastQty?: number// 1418
+  LastQty?: number// 32
   LastQtyVariance?: number// 1828
   LastQtyChanged?: number// 2301
   LastMultipliedQty?: number// 2368
   TotalTradeQty?: number// 2367
   TotalTradeMultipliedQty?: number// 2370
-  LegLastPx?: number// 637
-  LegMidPx?: number// 2346
-  LegDifferentialPrice?: string// 2492
+  LastPx?: number// 31
+  MidPx?: number// 631
+  DifferentialPrice?: number// 1522
   CalculatedCcyLastQty?: number// 1056
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingProvisionCashSettlCurrency?: string// 42167
+  Currency?: string// 15
+  SettlCurrency?: string// 120
   SettlPriceFxRateCalc?: string// 2366
   LastParPx?: number// 669
   LastSpotRate?: number// 194
-  LastForwardPoints?: string// 195
-  LastSwapPoints?: string// 1071
-  InstrumentPricePrecision?: number// 2576
+  LastForwardPoints?: number// 195
+  LastSwapPoints?: number// 1071
+  PricePrecision?: number// 2349
   LastMkt?: string// 30
-  SideClearingTradePrice?: number// 1597
+  ClearingTradePrice?: number// 1596
   TradePriceNegotiationMethod?: number// 1740
   LastUpfrontPrice?: number// 1743
   UpfrontPriceType?: number// 1741
   TradeDate?: Date// 75
   ClearingBusinessDate?: Date// 715
-  SideAvgPx?: number// 1852
-  SideAvgPxGroupID?: string// 1854
-  SideAvgPxIndicator?: number// 1853
-  UnderlyingDividendPeriodValuationDateAdjusted?: Date// 42874
-  UnderlyingReturnRateValuationTime?: string// 43056
+  AvgPx?: number// 6
+  AvgPxGroupID?: string// 1731
+  AvgPxIndicator?: number// 819
+  ValuationDate?: Date// 2085
+  ValuationTime?: string// 2086
   ValuationBusinessCenter?: string// 2087
-  SideMultiLegReportingType?: number// 752
+  MultiLegReportingType?: string// 442
   TradeLegRefID?: string// 824
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   InstrumentScopeSettlType?: string// 1557
-  LegSettlDate?: Date// 588
+  SettlDate?: Date// 64
   UnderlyingSettlementDate?: Date// 987
   MatchStatus?: string// 573
   ExecMethod?: number// 2405
   MatchType?: string// 574
-  Volatility?: string// 1188
-  TimeToExpiration?: string// 1189
+  Volatility?: number// 1188
+  TimeToExpiration?: number// 1189
   DividendYield?: number// 1380
-  RiskFreeRate?: string// 1190
-  PriceDelta?: string// 811
-  CurrencyRatio?: string// 1382
-  CopyMsgIndicator?: string// 797
-  PublishTrdIndicator?: string// 852
+  RiskFreeRate?: number// 1190
+  PriceDelta?: number// 811
+  CurrencyRatio?: number// 1382
+  CopyMsgIndicator?: boolean// 797
+  PublishTrdIndicator?: boolean// 852
   TradePublishIndicator?: number// 1390
   ShortSaleReason?: number// 853
   TierCode?: string// 994
@@ -135,41 +135,41 @@ export interface ITradeCaptureReport {
   LastUpdateTime?: Date// 779
   RndPx?: number// 991
   TZTransactTime?: string// 1132
-  ReportedPxDiff?: string// 1134
-  AllocGrossTradeAmt?: number// 2300
+  ReportedPxDiff?: boolean// 1134
+  GrossTradeAmt?: number// 381
   TotalGrossTradeAmt?: number// 2369
   CollRptRejectReason?: number// 2487
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
-  FeeMultiplier?: string// 1329
+  FeeMultiplier?: number// 1329
   ClearedIndicator?: number// 1832
   ClearingIntention?: number// 1924
   TradeClearingInstruction?: number// 1925
-  BackloadedTradeIndicator?: string// 1926
+  BackloadedTradeIndicator?: boolean// 1926
   ConfirmationMethod?: number// 1927
-  MandatoryClearingIndicator?: string// 1928
-  MixedSwapIndicator?: string// 1929
-  MultiAssetSwapIndicator?: string// 2527
-  InternationalSwapIndicator?: string// 2526
-  OffMarketPriceIndicator?: string// 1930
+  MandatoryClearingIndicator?: boolean// 1928
+  MixedSwapIndicator?: boolean// 1929
+  MultiAssetSwapIndicator?: boolean// 2527
+  InternationalSwapIndicator?: boolean// 2526
+  OffMarketPriceIndicator?: boolean// 1930
   VerificationMethod?: number// 1931
   ClearingRequirementException?: number// 1932
   IRSDirection?: string// 1933
   RegulatoryReportType?: number// 1934
-  VoluntaryRegulatoryReport?: string// 1935
+  VoluntaryRegulatoryReport?: boolean// 1935
   TradeCollateralization?: number// 1936
   TradeContinuation?: number// 1937
-  UnderlyingDeliveryStreamDeliveryContingency?: string// 41783
+  TradeContingency?: number// 2387
   TradeVersion?: string// 2302
-  HistoricalReportIndicator?: string// 2303
-  DeltaCrossed?: string// 2596
+  HistoricalReportIndicator?: boolean// 2303
+  DeltaCrossed?: boolean// 2596
   TradeContinuationText?: string// 2374
-  EncodedTradeContinuationTextLen?: string// 2372
+  EncodedTradeContinuationTextLen?: number// 2372
   EncodedTradeContinuationText?: Buffer// 2371
-  IntraFirmTradeIndicator?: string// 2373
-  AffiliatedFirmsTradeIndicator?: string// 2525
-  AllocRiskLimitCheckStatus?: number// 2483
+  IntraFirmTradeIndicator?: boolean// 2373
+  AffiliatedFirmsTradeIndicator?: boolean// 2525
+  RiskLimitCheckStatus?: number// 2343
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   TradePriceConditionGrp?: ITradePriceConditionGrp[]

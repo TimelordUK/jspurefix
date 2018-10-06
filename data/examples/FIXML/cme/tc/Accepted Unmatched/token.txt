@@ -1,27 +1,27 @@
-[0] 2453 (MDStatisticRptID) = 1490793140603, [1] 2439 (TransferTransType) = 0[New]
+[0] 571 (TradeReportID) = 1490793140603, [1] 487 (TradeReportTransType) = 0[New]
 [2] 939 (TrdRptStatus) = 100[100], [3] 828 (TrdType) = 2[ExchangeForPhysicalEfp]
 [4] 1125 (OrigTradeDate) = 2017-03-17, [5] 75 (TradeDate) = 2017-03-17
-[6] 715 (ClearingBusinessDate) = 2017-03-17, [7] 1504 (RelSymTransactTime) = 2017-03-17T15:31:10.601-05:00
-[8] 1591 (LegQtyType) = 1[Contracts], [9] 1418 (LegLastQty) = 50
-[10] 637 (LegLastPx) = 370.0, [11] 2367 (TotalTradeQty) = 50
-[12] 2370 (TotalTradeMultipliedQty) = 250000, [13] 2444 (TransferReportType) = 0[Submit]
+[6] 715 (ClearingBusinessDate) = 2017-03-17, [7] 60 (TransactTime) = 2017-03-17T15:31:10.601-05:00
+[8] 854 (QtyType) = 1[Contracts], [9] 32 (LastQty) = 50
+[10] 31 (LastPx) = 370.0, [11] 2367 (TotalTradeQty) = 50
+[12] 2370 (TotalTradeMultipliedQty) = 250000, [13] 856 (TradeReportType) = 0[Submit]
 [14] 912 (LastRptRequested) = Y[LastMessage], [15] 748 (TotNumTradeReports) = 1
-[16] 2452 (MDStatisticReqID) = 123456, [17] 49 (SenderCompID) = CME
+[16] 568 (TradeRequestID) = 123456, [17] 49 (SenderCompID) = CME
 [18] 50 (SenderSubID) = CPAPI, [19] 56 (TargetCompID) = ABPLT
-[20] 57 (TargetSubID) = API_ABC, [21] 50000 (BatchID) = 1
-[22] 42204 (LegContractualMatrixSource) = C, [23] 1652 (RelatedSecurityType) = FUT
-[24] 1653 (RelatedMaturityMonthYear) = 201707, [25] 41973 (UnderlyingStreamCommodityExchange) = CBT
-[26] 2063 (LegEventTimeUnit) = Mo[Month], [27] 1012 (SideTrdRegTimestamp) = 2017-03-16T08:37:36-05:00
-[28] 43073 (UnderlyingReturnRateValuationDateType) = 5[5], [29] 2532 (RelativeValueSide) = 1[Bid]
+[20] 57 (TargetSubID) = API_ABC, [21] 48 (SecurityID) = C
+[22] 42204 (LegContractualMatrixSource) = H, [23] 167 (SecurityType) = FUT[Future]
+[24] 200 (MaturityMonthYear) = 201707, [25] 207 (SecurityExchange) = CBT
+[26] 997 (TimeUnit) = Mo[Month], [27] 769 (TrdRegTimestamp) = 2017-03-16T08:37:36-05:00
+[28] 770 (TrdRegTimestampType) = 1[ExecutionTime], [29] 2532 (RelativeValueSide) = 1[Bid]
 [30] -1 (unknown) = 98765, [31] 579 (TradeInputDevice) = API
-[32] 979 (InputSource) = ABPLT, [33] 1894 (LegTradeID) = 7799607
-[34] 993 (AllocCustomerCapacity) = 4, [35] 42176 (UnderlyingProvisionPartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
-[36] 50000 (BatchID) = 1, [37] 42176 (UnderlyingProvisionPartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
-[38] 50000 (BatchID) = 1, [39] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
-[40] 50000 (BatchID) = 1, [41] 42176 (UnderlyingProvisionPartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
-[42] 50000 (BatchID) = 1, [43] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
-[44] 50000 (BatchID) = 1, [45] 42176 (UnderlyingProvisionPartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
-[46] 50000 (BatchID) = 1, [47] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
-[48] 50000 (BatchID) = 1, [49] 42176 (UnderlyingProvisionPartyRole) = 1[ExecutingFirmFormerlyFix42ExecBroker]
-[50] 50000 (BatchID) = 1, [51] 42204 (LegContractualMatrixSource) = C
-[52] 43073 (UnderlyingReturnRateValuationDateType) = 5[5], [53] 50000 (BatchID) = 1
+[32] 578 (TradeInputSource) = ABPLT, [33] 1506 (SideTradeID) = 7799607
+[34] 582 (CustOrderCapacity) = 4[AllOther], [35] 452 (PartyRole) = 24[CustomerAccount]
+[36] 448 (PartyID) = API_ABC, [37] 452 (PartyRole) = 24[CustomerAccount]
+[38] 448 (PartyID) = API_ABC, [39] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
+[40] 523 (PartySubID) = Entering Firm Legal Name, [41] 452 (PartyRole) = 24[CustomerAccount]
+[42] 448 (PartyID) = API_ABC, [43] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
+[44] 523 (PartySubID) = Entering Firm Legal Name, [45] 452 (PartyRole) = 24[CustomerAccount]
+[46] 448 (PartyID) = API_ABC, [47] 43073 (UnderlyingReturnRateValuationDateType) = 5[5]
+[48] 523 (PartySubID) = Entering Firm Legal Name, [49] 452 (PartyRole) = 24[CustomerAccount]
+[50] 448 (PartyID) = API_ABC, [51] 447 (PartyIDSource) = C[GenerallyAcceptedMarketParticipantIdentifierEGNasdMnemonic]
+[52] 43073 (UnderlyingReturnRateValuationDateType) = 5[5], [53] 523 (PartySubID) = Entering Firm Legal Name

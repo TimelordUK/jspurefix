@@ -1,4 +1,4 @@
 export interface IPaymentScheduleFixingDayGrp {
-  UnderlyingPaymentStreamPricingDayOfWeek?: number// 41945
-  UnderlyingPaymentStreamPricingDayNumber?: number// 41946
+  PaymentScheduleFixingDayOfWeek?: number// 41162
+  PaymentScheduleFixingDayNumber?: number// 41163
 }

@@ -5,7 +5,7 @@ export interface IQuotSetGrp {
   QuoteSetID: string// 302
   QuoteSetValidUntilTime?: Date// 367
   TotNoQuoteEntries: number// 304
-  LastFragment?: string// 893
+  LastFragment?: boolean// 893
   UnderlyingInstrument?: IUnderlyingInstrument
   QuotEntryGrp: IQuotEntryGrp[]
 }

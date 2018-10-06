@@ -1,4 +1,4 @@
 export interface ILegPhysicalSettlDeliverableObligationGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingRateSpreadStepValue?: string// 43007
+  LegPhysicalSettlDeliverableObligationType?: string// 41605
+  LegPhysicalSettlDeliverableObligationValue?: string// 41606
 }

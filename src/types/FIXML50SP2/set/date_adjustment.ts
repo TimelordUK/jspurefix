@@ -1,7 +1,7 @@
 import { IBusinessCenterGrp } from './business_center_grp'
 
 export interface IDateAdjustment {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
+  BusinessDayConvention?: number// 40921
+  DateRollConvention?: string// 40922
   BusinessCenterGrp?: IBusinessCenterGrp[]
 }

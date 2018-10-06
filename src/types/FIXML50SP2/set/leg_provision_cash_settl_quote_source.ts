@@ -1,4 +1,4 @@
 export interface ILegProvisionCashSettlQuoteSource {
-  UnderlyingProvisionCashSettlQuoteSource?: number// 42102
-  UnderlyingReturnRateReferencePage?: string// 43062
+  LegProvisionCashSettlQuoteSource?: number// 40470
+  LegProvisionCashSettlQuoteReferencePage?: string// 41407
 }

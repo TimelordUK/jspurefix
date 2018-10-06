@@ -1,3 +1,3 @@
 export interface ILegCashSettlDealerGrp {
-  UnderlyingCashSettlDealer?: string// 42040
+  LegCashSettlDealer?: string// 41343
 }

@@ -1,3 +1,3 @@
 export interface IProtectionTermEventQualifierGrp {
-  UnderlyingProtectionTermEventQualifier?: string// 42086
+  ProtectionTermEventQualifier?: string// 40200
 }

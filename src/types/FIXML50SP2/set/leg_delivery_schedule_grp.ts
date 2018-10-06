@@ -1,18 +1,18 @@
 import { ILegDeliveryScheduleSettlDayGrp } from './leg_delivery_schedule_settl_day_grp'
 
 export interface ILegDeliveryScheduleGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  UnderlyingDividendPeriodXID?: string// 42881
-  UnderlyingProtectionTermNotional?: number// 42069
-  UnderlyingStreamNotionalUnitOfMeasure?: string// 42022
-  UnderlyingStreamNotionalCommodityFrequency?: number// 42021
-  UnderlyingDeliveryStreamNegativeTolerance?: string// 41790
-  UnderlyingDeliveryStreamPositiveTolerance?: string// 41791
-  UnderlyingDeliveryStreamToleranceUnitOfMeasure?: string// 41792
-  UnderlyingDeliveryStreamToleranceType?: number// 41793
-  UnderlyingStreamCommoditySettlCountry?: string// 42003
-  UnderlyingStreamCommoditySettlTimeZone?: string// 42004
-  UnderlyingStreamCommoditySettlFlowType?: number// 42005
-  UnderlyingStreamCommoditySettlHolidaysProcessingInstruction?: number// 42013
+  LegDeliveryScheduleType?: number// 41409
+  LegDeliveryScheduleXID?: string// 41410
+  LegDeliveryScheduleNotional?: number// 41411
+  LegDeliveryScheduleNotionalUnitOfMeasure?: string// 41412
+  LegDeliveryScheduleNotionalCommodityFrequency?: number// 41413
+  LegDeliveryScheduleNegativeTolerance?: number// 41414
+  LegDeliverySchedulePositiveTolerance?: number// 41415
+  LegDeliveryScheduleToleranceUnitOfMeasure?: string// 41416
+  LegDeliveryScheduleToleranceType?: number// 41417
+  LegDeliveryScheduleSettlCountry?: string// 41418
+  LegDeliveryScheduleSettlTimeZone?: string// 41419
+  LegDeliveryScheduleSettlFlowType?: number// 41420
+  LegDeliveryScheduleSettlHolidaysProcessingInstruction?: number// 41421
   LegDeliveryScheduleSettlDayGrp?: ILegDeliveryScheduleSettlDayGrp[]
 }

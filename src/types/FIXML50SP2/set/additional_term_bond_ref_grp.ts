@@ -1,20 +1,20 @@
 export interface IAdditionalTermBondRefGrp {
-  BatchID?: string// 50000
+  AdditionalTermBondSecurityID?: string// 40001
   LegContractualMatrixSource?: string// 42204
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingAdditionalTermBondIssuer?: string// 42017
-  EncodedUnderlyingAdditionalTermBondIssuerLen?: string// 42025
-  EncodedUnderlyingAdditionalTermBondIssuer?: Buffer// 42026
-  UnderlyingAdditionalTermBondSeniority?: string// 42027
-  UnderlyingAdditionalTermBondCouponType?: number// 42028
-  UnderlyingAdditionalTermBondCouponRate?: number// 42029
-  UnderlyingAdditionalTermBondMaturityDate?: Date// 42030
-  UnderlyingAdditionalTermBondParValue?: number// 42031
-  UnderlyingAdditionalTermBondCurrentTotalIssuedAmount?: number// 42032
-  UnderlyingAdditionalTermBondCouponFrequencyPeriod?: number// 42033
-  UnderlyingAdditionalTermBondCouponFrequencyUnit?: string// 42034
+  AdditionalTermBondDesc?: string// 40003
+  EncodedAdditionalTermBondDescLen?: number// 40004
+  EncodedAdditionalTermBondDesc?: Buffer// 40005
+  AdditionalTermBondCurrency?: string// 40006
+  AdditionalTermBondIssuer?: string// 40007
+  EncodedAdditionalTermBondIssuerLen?: number// 40008
+  EncodedAdditionalTermBondIssuer?: Buffer// 40009
+  AdditionalTermBondSeniority?: string// 40010
+  AdditionalTermBondCouponType?: number// 40011
+  AdditionalTermBondCouponRate?: number// 40012
+  AdditionalTermBondMaturityDate?: Date// 40013
+  AdditionalTermBondParValue?: number// 40014
+  AdditionalTermBondCurrentTotalIssuedAmount?: number// 40015
+  AdditionalTermBondCouponFrequencyPeriod?: number// 40016
+  AdditionalTermBondCouponFrequencyUnit?: string// 40017
   UnderlyingAdditionalTermBondDayCount?: number// 42035
 }

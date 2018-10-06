@@ -1,12 +1,12 @@
 export interface IEvntGrp {
   DerivativeEventType?: number// 1287
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingProvisionCashSettlValueTime?: string// 42104
-  LegEventTimeUnit?: string// 2063
-  LegEventTimePeriod?: number// 2064
-  UnderlyingEventMonthYear?: string// 2342
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  EventDate?: Date// 866
+  EventTime?: Date// 1145
+  EventTimeUnit?: string// 1827
+  EventTimePeriod?: number// 1826
+  EventMonthYear?: string// 2340
+  EventPx?: number// 867
+  EventText?: string// 868
+  EncodedEventTextLen?: number// 1578
+  EncodedEventText?: Buffer// 1579
 }

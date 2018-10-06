@@ -2,24 +2,24 @@ import { IProvisionOptionExerciseBusinessCenterGrp } from './provision_option_ex
 import { IProvisionOptionExerciseFixedDateGrp } from './provision_option_exercise_fixed_date_grp'
 
 export interface IProvisionOptionExerciseDates {
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingProvisionOptionExerciseEarliestDateOffsetPeriod?: number// 42116
-  UnderlyingProvisionOptionExerciseEarliestDateOffsetUnit?: string// 42117
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationStartDateUnadjusted?: Date// 43014
-  UnderlyingReturnRateValuationStartDateRelativeTo?: number// 43015
-  UnderlyingReturnRateValuationStartDateOffsetPeriod?: number// 43016
-  UnderlyingReturnRateValuationStartDateOffsetUnit?: string// 43017
-  UnderlyingReturnRateValuationStartDateOffsetDayType?: number// 43018
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingPaymentStreamCompoundingPeriodSkip?: number// 42909
-  UnderlyingPaymentStreamBoundsFirstDateUnadjusted?: Date// 42913
-  UnderlyingPaymentStreamBoundsLastDateUnadjusted?: Date// 42914
-  UnderlyingProvisionOptionExerciseEarliestTime?: string// 42129
-  UnderlyingProvisionOptionExerciseEarliestTimeBusinessCenter?: string// 42130
-  UnderlyingProvisionOptionExerciseLatestTime?: string// 42131
-  UnderlyingProvisionOptionExerciseLatestTimeBusinessCenter?: string// 42132
+  ProvisionOptionExerciseBusinessDayConvention?: number// 40123
+  ProvisionOptionExerciseEarliestDateOffsetPeriod?: number// 40125
+  ProvisionOptionExerciseEarliestDateOffsetUnit?: string// 40126
+  ProvisionOptionExerciseFrequencyPeriod?: number// 40127
+  ProvisionOptionExerciseFrequencyUnit?: string// 40128
+  ProvisionOptionExerciseStartDateUnadjusted?: Date// 40129
+  ProvisionOptionExerciseStartDateRelativeTo?: number// 40130
+  ProvisionOptionExerciseStartDateOffsetPeriod?: number// 40131
+  ProvisionOptionExerciseStartDateOffsetUnit?: string// 40132
+  ProvisionOptionExerciseStartDateOffsetDayType?: number// 40133
+  ProvisionOptionExerciseStartDateAdjusted?: Date// 40134
+  ProvisionOptionExercisePeriodSkip?: number// 40135
+  ProvisionOptionExerciseBoundsFirstDateUnadjusted?: Date// 40136
+  ProvisionOptionExerciseBoundsLastDateUnadjusted?: Date// 40137
+  ProvisionOptionExerciseEarliestTime?: string// 40138
+  ProvisionOptionExerciseEarliestTimeBusinessCenter?: string// 40139
+  ProvisionOptionExerciseLatestTime?: string// 40140
+  ProvisionOptionExerciseLatestTimeBusinessCenter?: string// 40141
   ProvisionOptionExerciseBusinessCenterGrp?: IProvisionOptionExerciseBusinessCenterGrp[]
   ProvisionOptionExerciseFixedDateGrp?: IProvisionOptionExerciseFixedDateGrp[]
 }

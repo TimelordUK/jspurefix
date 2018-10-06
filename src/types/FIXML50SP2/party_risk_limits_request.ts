@@ -13,13 +13,13 @@ import { IRiskInstrumentScopeGrp } from './set/risk_instrument_scope_grp'
 **********************************************************
 */
 export interface IPartyRiskLimitsRequest {
-  MDStatisticReqID: string// 2452
+  RiskLimitRequestID: string// 1666
   RiskLimitRequestType?: number// 1760
   SubscriptionRequestType?: string// 263
-  EntitlementPlatform?: string// 1784
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  RiskLimitPlatform?: string// 1533
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   RequestingPartyGrp?: IRequestingPartyGrp[]
   Parties?: IParties[]

@@ -1,3 +1,3 @@
 export interface IProvisionCashSettlPaymentDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  ProvisionCashSettlPaymentDateBusinessCenter?: string// 40164
 }

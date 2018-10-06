@@ -1,3 +1,3 @@
 export interface IDerivativeSecurityXML {
-  UnderlyingSecurityXMLSchema?: string// 1876
+  DerivativeSecurityXMLSchema?: string// 1284
 }

@@ -1,4 +1,4 @@
 export interface ILegMarketDisruptionEventGrp {
-  UnderlyingMarketDisruptionEvent?: string// 41865
-  UnderlyingRateSpreadStepValue?: string// 43007
+  LegMarketDisruptionEvent?: string// 41468
+  LegMarketDisruptionValue?: string// 40223
 }

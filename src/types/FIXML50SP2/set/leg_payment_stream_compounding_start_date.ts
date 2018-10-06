@@ -1,8 +1,8 @@
 export interface ILegPaymentStreamCompoundingStartDate {
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
+  LegPaymentStreamCompoundingStartDateUnadjusted?: Date// 42445
+  LegPaymentStreamCompoundingStartDateRelativeTo?: number// 42446
+  LegPaymentStreamCompoundingStartDateOffsetPeriod?: number// 42447
+  LegPaymentStreamCompoundingStartDateOffsetUnit?: string// 42448
+  LegPaymentStreamCompoundingStartDateOffsetDayType?: number// 42449
+  LegPaymentStreamCompoundingStartDateAdjusted?: Date// 42450
 }

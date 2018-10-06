@@ -10,13 +10,13 @@ import { IStandardHeader } from './set/standard_header'
 export interface IConfirmationAck {
   ConfirmID: string// 664
   TradeDate: Date// 75
-  RelSymTransactTime: Date// 1504
+  TransactTime: Date// 60
   AffirmStatus: number// 940
   TradeConfirmationReferenceID?: string// 2390
   ConfirmRejReason?: number// 774
   MatchStatus?: string// 573
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
 }

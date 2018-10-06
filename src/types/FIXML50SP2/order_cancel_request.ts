@@ -15,27 +15,27 @@ import { IOrderQtyData } from './set/order_qty_data'
 export interface IOrderCancelRequest {
   OrderRequestID?: number// 2422
   OrigClOrdID?: string// 41
-  NotAffectedOrderID?: string// 1371
+  OrderID?: string// 37
   ClOrdID: string// 11
   SecondaryClOrdID?: string// 526
   ClOrdLinkID?: string// 583
-  SecurityListID?: string// 1465
+  ListID?: string// 66
   OrigOrdModTime?: Date// 586
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
-  SideCollateralAmountMarketSegmentID?: string// 2693
+  AccountType?: number// 581
+  MarketSegmentID?: string// 1300
   ExDestination?: string// 100
   ExDestinationIDSource?: string// 1133
   RelativeValueSide: number// 2532
-  RelSymTransactTime: Date// 1504
+  TransactTime: Date// 60
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
   Parties?: IParties[]
   Instrument?: IInstrument

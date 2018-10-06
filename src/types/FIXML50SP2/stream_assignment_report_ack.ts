@@ -9,10 +9,10 @@ import { IStandardHeader } from './set/standard_header'
 */
 export interface IStreamAssignmentReportACK {
   StreamAsgnAckType: number// 1503
-  MDStatisticRptID: string// 2453
+  StreamAsgnRptID: string// 1501
   CollRptRejectReason?: number// 2487
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
   StandardHeader?: IStandardHeader
 }

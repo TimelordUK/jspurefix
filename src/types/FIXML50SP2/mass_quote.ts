@@ -10,21 +10,21 @@ import { IQuotSetGrp } from './set/quot_set_grp'
 *********************************************
 */
 export interface IMassQuote {
-  MDStatisticReqID?: string// 2452
+  QuoteReqID?: string// 131
   QuoteID: string// 117
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  QuoteType?: number// 537
   QuoteModelType?: number// 2403
   QuoteResponseLevel?: number// 301
-  LegAccount?: string// 2680
+  Account?: string// 1
   AcctIDSource?: number// 660
-  AllocAccountType?: number// 798
+  AccountType?: number// 581
   DefBidSize?: number// 293
   DefOfferSize?: number// 294
   SelfMatchPreventionID?: string// 2362
   ThrottleInst?: number// 1685
   ComplianceID?: string// 376
   ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: string// 2351
+  EncodedComplianceTextLen?: number// 2351
   EncodedComplianceText?: Buffer// 2352
   StandardHeader?: IStandardHeader
   Parties?: IParties[]

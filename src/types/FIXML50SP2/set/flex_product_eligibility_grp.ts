@@ -1,4 +1,4 @@
 export interface IFlexProductEligibilityGrp {
-  LegFlexProductEligibilityIndicator?: string// 2203
+  FlexProductEligibilityIndicator?: boolean// 1242
   FlexProductEligibilityComplex?: string// 2561
 }

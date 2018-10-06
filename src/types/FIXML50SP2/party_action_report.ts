@@ -17,18 +17,18 @@ export interface IPartyActionReport {
   PartyActionReportID: string// 2331
   PartyActionType: number// 2329
   PartyActionResponse: number// 2332
-  CollRptRejectReason?: number// 2487
-  ApplTestMessageIndicator?: string// 2330
+  PartyActionRejectReason?: number// 2333
+  ApplTestMessageIndicator?: boolean// 2330
   RejectText?: string// 1328
-  EncodedRejectTextLen?: string// 1664
+  EncodedRejectTextLen?: number// 1664
   EncodedRejectText?: Buffer// 1665
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  RelSymTransactTime?: Date// 1504
-  UnderlyingProvisionText?: string// 42170
-  EncodedUnderlyingProvisionTextLen?: string// 42171
-  EncodedUnderlyingProvisionText?: Buffer// 42172
-  CopyMsgIndicator?: string// 797
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  TransactTime?: Date// 60
+  Text?: string// 58
+  EncodedTextLen?: number// 354
+  EncodedText?: Buffer// 355
+  CopyMsgIndicator?: boolean// 797
   StandardHeader?: IStandardHeader
   InstrumentScope?: IInstrumentScope
   RequestingPartyGrp?: IRequestingPartyGrp[]

@@ -2,35 +2,35 @@ import { IUnderlyingPaymentStubStartDate } from './underlying_payment_stub_start
 import { IUnderlyingPaymentStubEndDate } from './underlying_payment_stub_end_date'
 
 export interface IUnderlyingPaymentStubGrp {
-  UnderlyingReturnRateValuationDateType?: number// 43073
-  PaymentStubLength?: number// 40874
-  PaymentStubRate?: number// 40875
-  UnderlyingPaymentStreamTotalFixedAmount?: number// 41905
-  PaymentStubFixedCurrency?: string// 40877
-  UnderlyingPaymentStreamCompoundingRateIndex?: string// 42923
-  PaymentStubIndexSource?: number// 40879
-  UnderlyingPaymentStreamCompoundingRateIndexCurvePeriod?: number// 42924
-  UnderlyingPaymentStreamCompoundingRateIndexCurveUnit?: string// 42925
-  UnderlyingPaymentStreamCompoundingRateMultiplier?: string// 42926
-  UnderlyingPaymentStreamCompoundingRateSpread?: string// 42927
-  UnderlyingPaymentStreamCompoundingRateSpreadPositionType?: number// 42928
-  UnderlyingPaymentStreamCompoundingRateTreatment?: number// 42929
-  UnderlyingPaymentStreamCompoundingCapRate?: number// 42930
-  UnderlyingPaymentStreamCompoundingCapRateBuySide?: number// 42931
-  UnderlyingPaymentStreamCompoundingCapRateSellSide?: number// 42932
-  UnderlyingPaymentStreamCompoundingFloorRate?: number// 42933
-  UnderlyingPaymentStreamCompoundingFloorRateBuySide?: number// 42934
-  UnderlyingPaymentStreamCompoundingFloorRateSellSide?: number// 42935
-  PaymentStubIndex2?: string// 40892
-  PaymentStubIndex2Source?: number// 40893
-  UnderlyingPaymentStreamRateIndex2CurvePeriod?: number// 41912
-  UnderlyingPaymentStreamRateIndex2CurveUnit?: string// 41911
-  PaymentStubIndex2RateMultiplier?: string// 40896
-  PaymentStubIndex2RateSpread?: string// 40897
-  PaymentStubIndex2RateSpreadPositionType?: number// 40898
-  PaymentStubIndex2RateTreatment?: number// 40899
-  PaymentStubIndex2CapRate?: number// 40900
-  PaymentStubIndex2FloorRate?: number// 40901
+  UnderlyingPaymentStubType?: number// 40709
+  UnderlyingPaymentStubLength?: number// 40710
+  UnderlyingPaymentStubRate?: number// 40711
+  UnderlyingPaymentStubFixedAmount?: number// 40712
+  UnderlyingPaymentStubFixedCurrency?: string// 40713
+  UnderlyingPaymentStubIndex?: string// 40714
+  UnderlyingPaymentStubIndexSource?: number// 40715
+  UnderlyingPaymentStubIndexCurvePeriod?: number// 40716
+  UnderlyingPaymentStubIndexCurveUnit?: string// 40717
+  UnderlyingPaymentStubIndexRateMultiplier?: number// 40718
+  UnderlyingPaymentStubIndexRateSpread?: number// 40719
+  UnderlyingPaymentStubIndexRateSpreadPositionType?: number// 40720
+  UnderlyingPaymentStubIndexRateTreatment?: number// 40721
+  UnderlyingPaymentStubIndexCapRate?: number// 40722
+  UnderlyingPaymentStubIndexCapRateBuySide?: number// 40723
+  UnderlyingPaymentStubIndexCapRateSellSide?: number// 40724
+  UnderlyingPaymentStubIndexFloorRate?: number// 40725
+  UnderlyingPaymentStubIndexFloorRateBuySide?: number// 40726
+  UnderlyingPaymentStubIndexFloorRateSellSide?: number// 40727
+  UnderlyingPaymentStubIndex2?: string// 40728
+  UnderlyingPaymentStubIndex2Source?: number// 40729
+  UnderlyingPaymentStubIndex2CurvePeriod?: number// 40730
+  UnderlyingPaymentStubIndex2CurveUnit?: string// 40731
+  UnderlyingPaymentStubIndex2RateMultiplier?: number// 40732
+  UnderlyingPaymentStubIndex2RateSpread?: number// 40733
+  UnderlyingPaymentStubIndex2RateSpreadPositionType?: number// 40734
+  UnderlyingPaymentStubIndex2RateTreatment?: number// 40735
+  UnderlyingPaymentStubIndex2CapRate?: number// 40736
+  UnderlyingPaymentStubIndex2FloorRate?: number// 40737
   UnderlyingPaymentStubStartDate?: IUnderlyingPaymentStubStartDate
   UnderlyingPaymentStubEndDate?: IUnderlyingPaymentStubEndDate
 }

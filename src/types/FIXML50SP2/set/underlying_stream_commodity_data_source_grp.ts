@@ -1,4 +1,4 @@
 export interface IUnderlyingStreamCommodityDataSourceGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  UnderlyingStreamCommodityDataSourceID?: string// 41994
+  UnderlyingStreamCommodityDataSourceIDType?: number// 41995
 }

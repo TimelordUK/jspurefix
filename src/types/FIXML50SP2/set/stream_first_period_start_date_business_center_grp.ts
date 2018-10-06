@@ -1,3 +1,3 @@
 export interface IStreamFirstPeriodStartDateBusinessCenterGrp {
-  UnderlyingSettlMethodElectionDateBusinessCenter?: string// 43075
+  StreamFirstPeriodStartDateBusinessCenter?: string// 40077
 }

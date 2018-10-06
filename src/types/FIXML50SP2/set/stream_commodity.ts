@@ -5,33 +5,33 @@ import { IStreamCommoditySettlBusinessCenterGrp } from './stream_commodity_settl
 import { IStreamCommoditySettlPeriodGrp } from './stream_commodity_settl_period_grp'
 
 export interface IStreamCommodity {
-  UnderlyingStreamCommodityBase?: string// 41964
-  UnderlyingStreamCommodityType?: string// 41965
-  BatchID?: string// 50000
-  LegContractualMatrixSource?: string// 42204
-  PaymentDesc?: string// 43087
-  EncodedUnderlyingStreamCommodityDescLen?: string// 41969
-  EncodedUnderlyingStreamCommodityDesc?: Buffer// 41970
-  UnderlyingStreamCommodityDeliveryPricingRegion?: string// 42589
-  UnderlyingStreamCommodityUnitOfMeasure?: string// 41971
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingStreamCommodityExchange?: string// 41973
-  UnderlyingReturnRateInformationSource?: number// 43061
-  UnderlyingReturnRateReferencePage?: string// 43062
-  UnderlyingReturnRateReferencePageHeading?: string// 43063
-  UnderlyingStreamDataProvider?: string// 41977
-  UnderlyingStreamCommodityPricingType?: string// 41978
-  UnderlyingProtectionTermEventPeriod?: number// 42081
-  UnderlyingProtectionTermEventUnit?: string// 42082
-  UnderlyingSettlMethodElectionDateUnadjusted?: Date// 43076
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
-  UnderlyingSettlMethodElectionDateAdjusted?: Date// 43082
-  UnderlyingStreamCommoditySettlMonth?: number// 41984
-  UnderlyingStreamCommoditySettlDateRollPeriod?: number// 41985
-  UnderlyingStreamCommoditySettlDateRollUnit?: string// 41986
-  UnderlyingProtectionTermEventDayType?: number// 42083
-  UnderlyingDividendPeriodXID?: string// 42881
-  UnderlyingStreamCommoditySettlPeriodXIDRef?: string// 42015
+  StreamCommodityBase?: string// 41251
+  StreamCommodityType?: string// 41252
+  StreamCommoditySecurityID?: string// 41253
+  StreamCommoditySecurityIDSource?: string// 41254
+  StreamCommodityDesc?: string// 41255
+  EncodedStreamCommodityDescLen?: number// 41256
+  EncodedStreamCommodityDesc?: Buffer// 41257
+  StreamCommodityDeliveryPricingRegion?: string// 42587
+  StreamCommodityUnitOfMeasure?: string// 41258
+  StreamCommodityCurrency?: string// 41259
+  StreamCommodityExchange?: string// 41260
+  StreamCommodityRateSource?: number// 41261
+  StreamCommodityRateReferencePage?: string// 41262
+  StreamCommodityRateReferencePageHeading?: string// 41263
+  StreamDataProvider?: string// 41264
+  StreamCommodityPricingType?: string// 41265
+  StreamCommodityNearbySettlDayPeriod?: number// 41266
+  StreamCommodityNearbySettlDayUnit?: string// 41267
+  StreamCommoditySettlDateUnadjusted?: Date// 41268
+  StreamCommoditySettlDateBusinessDayConvention?: number// 41269
+  StreamCommoditySettlDateAdjusted?: Date// 41270
+  StreamCommoditySettlMonth?: number// 41271
+  StreamCommoditySettlDateRollPeriod?: number// 41272
+  StreamCommoditySettlDateRollUnit?: string// 41273
+  StreamCommoditySettlDayType?: number// 41274
+  StreamCommodityXID?: string// 41275
+  StreamCommodityXIDRef?: string// 41276
   StreamCommodityAltIDGrp?: IStreamCommodityAltIDGrp[]
   StreamAssetAttributeGrp?: IStreamAssetAttributeGrp[]
   StreamCommodityDataSourceGrp?: IStreamCommodityDataSourceGrp[]

@@ -1,7 +1,7 @@
 export interface IUnderlyingComplexEventScheduleGrp {
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingReturnRateValuationEndDateAdjusted?: Date// 43025
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
+  UnderlyingComplexEventScheduleStartDate?: Date// 41751
+  UnderlyingComplexEventScheduleEndDate?: Date// 41752
+  UnderlyingComplexEventScheduleFrequencyPeriod?: number// 41753
+  UnderlyingComplexEventScheduleFrequencyUnit?: string// 41754
+  UnderlyingComplexEventScheduleRollConvention?: string// 41755
 }

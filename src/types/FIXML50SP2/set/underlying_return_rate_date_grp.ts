@@ -3,10 +3,10 @@ import { IUnderlyingReturnRateValuationDateBusinessCenterGrp } from './underlyin
 
 export interface IUnderlyingReturnRateDateGrp {
   UnderlyingReturnRateDateMode?: number// 43009
-  UnderlyingSettlMethodElectionDateRelativeTo?: number// 43078
-  UnderlyingSettlMethodElectionDateOffsetPeriod?: number// 43079
-  UnderlyingSettlMethodElectionDateOffsetUnit?: string// 43080
-  UnderlyingSettlMethodElectionDateOffsetDayType?: number// 43081
+  UnderlyingReturnRateValuationDateRelativeTo?: number// 43010
+  UnderlyingReturnRateValuationDateOffsetPeriod?: number// 43011
+  UnderlyingReturnRateValuationDateOffsetUnit?: string// 43012
+  UnderlyingReturnRateValuationDateOffsetDayType?: number// 43013
   UnderlyingReturnRateValuationStartDateUnadjusted?: Date// 43014
   UnderlyingReturnRateValuationStartDateRelativeTo?: number// 43015
   UnderlyingReturnRateValuationStartDateOffsetPeriod?: number// 43016
@@ -22,7 +22,7 @@ export interface IUnderlyingReturnRateDateGrp {
   UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
   UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
   UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingSettlMethodElectionDateBusinessDayConvention?: number// 43077
+  UnderlyingReturnRateValuationDateBusinessDayConvention?: number// 43029
   UnderlyingReturnRateValuationDateGrp?: IUnderlyingReturnRateValuationDateGrp[]
   UnderlyingReturnRateValuationDateBusinessCenterGrp?: IUnderlyingReturnRateValuationDateBusinessCenterGrp[]
 }

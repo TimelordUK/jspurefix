@@ -10,22 +10,22 @@ import { ISecListGrp } from './set/sec_list_grp'
 ************************************************
 */
 export interface ISecurityList {
-  MDStatisticRptID?: string// 2453
+  SecurityReportID?: number// 964
   ClearingBusinessDate?: Date// 715
   SecurityListID?: string// 1465
   SecurityListRefID?: string// 1466
   SecurityListDesc?: string// 1467
   SecurityListType?: number// 1470
   SecurityListTypeSource?: number// 1471
-  MDStatisticReqID?: string// 2452
-  QuoteRespID?: string// 693
-  MDStatisticRequestResult?: number// 2473
+  SecurityReqID?: string// 320
+  SecurityResponseID?: string// 322
+  SecurityRequestResult?: number// 560
   SecurityRejectReason?: number// 1607
-  RelSymTransactTime?: Date// 1504
+  TransactTime?: Date// 60
   TotNoRelatedSym?: number// 393
-  SideCollateralAmountMarketID?: string// 2692
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  LastFragment?: string// 893
+  MarketID?: string// 1301
+  MarketSegmentID?: string// 1300
+  LastFragment?: boolean// 893
   StandardHeader?: IStandardHeader
   ApplicationSequenceControl?: IApplicationSequenceControl
   SecListGrp?: ISecListGrp[]

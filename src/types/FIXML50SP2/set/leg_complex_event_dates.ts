@@ -1,7 +1,7 @@
 import { ILegComplexEventTimes } from './leg_complex_event_times'
 
 export interface ILegComplexEventDates {
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingReturnRateValuationEndDateAdjusted?: Date// 43025
+  LegComplexEventStartDate?: Date// 2251
+  LegComplexEventEndDate?: Date// 2252
   LegComplexEventTimes?: ILegComplexEventTimes[]
 }

@@ -1,4 +1,4 @@
 export interface IInstrumentPtysSubGrp {
-  BatchID?: string// 50000
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  InstrumentPartySubID?: string// 1053
+  InstrumentPartySubIDType?: number// 1054
 }
