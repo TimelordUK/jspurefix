@@ -44,7 +44,8 @@ export class HttpAcceptor extends FixAcceptor {
   }
 
   public close (cb: Function): void {
-    const port = this.config.description.application.tcp.port
+    const app = this.config.description.application
+    const port = app.http.port
     this.logger.info(`close listener on port ${port}`)
     this.server.close(cb)
   }
@@ -68,29 +69,33 @@ export class HttpAcceptor extends FixAcceptor {
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
   }
 
-  private respond (duplex: FixDuplex, res: express.Response, token: string = null) {
-    res.setHeader('Content-Type', 'application/json')
-    const timer = setTimeout(() => {
-      const businessReject = `<FIXML><BizMsgRej BizRejRsn="4" Txt="no response from application"/></FIXML>`
-      const b = Buffer.from(businessReject, 'utf-8')
-      duplex.writable.removeListener('data', transmit)
-      res.send(b)
-    }, 5000)
+  private respond (duplex: FixDuplex, res: express.Response, token: string = null): Promise<any> {
+    return new Promise<any>((accept, reject) => {
+      res.setHeader('Content-Type', 'application/json')
+      const timer = setTimeout(() => {
+        const businessReject = `<FIXML><BizMsgRej BizRejRsn="4" Txt="no response from application"/></FIXML>`
+        const b = Buffer.from(businessReject, 'utf-8')
+        duplex.writable.removeListener('data', transmit)
+        res.send(b)
+        reject(new Error('no response'))
+      }, 5000)
 
-    const transmit = (d: Buffer) => {
-      this.logger.info('responding to request')
-      clearTimeout(timer)
-      if (token) {
-        res.setHeader('authorization', token)
+      const transmit = (d: Buffer) => {
+        this.logger.info('responding to request')
+        clearTimeout(timer)
+        if (token) {
+          res.setHeader('authorization', token)
+        }
+        duplex.writable.removeListener('data', transmit)
+        res.send(d)
+        accept()
       }
-      duplex.writable.removeListener('data', transmit)
-      res.send(d)
-    }
 
-    duplex.writable.on('data', transmit)
+      duplex.writable.on('data', transmit)
+    })
   }
 
-  private logon (req: express.Request, res: express.Response) {
+  private async logon (req: express.Request, res: express.Response) {
     const body: IFixmlRequest = req.body
     const id = this.nextId++
     this.logger.info(JSON.stringify(body, null,4))
@@ -98,11 +103,15 @@ export class HttpAcceptor extends FixAcceptor {
     const d = new StringDuplex()
     const transport = new MsgTransport(id, this.config, d)
     const token = this.saveTransport(id, transport)
-    this.respond(d, res, token)
+    this.respond(d, res, token).then(() => {
+      this.logger.info('responded to logon')
+    }).catch((e: Error) => {
+      this.logger.error(e)
+    })
     d.readable.push(body.fixml)
   }
 
-  private logout (req: express.Request, res: express.Response) {
+  private async logout (req: express.Request, res: express.Response) {
     const headers = req.headers
     const body: IFixmlRequest = req.body
     const t: MsgTransport = this.keys.get(headers.authorization)
@@ -110,7 +119,12 @@ export class HttpAcceptor extends FixAcceptor {
       const token = req.headers.authorization
       this.harvestTransport(token, t.id)
       const d = t.duplex
-      this.respond(d, res, token)
+      this.respond(d, res, token).then(() => {
+        this.logger.info('responded to logout')
+        t.end()
+      }).catch((e: Error) => {
+        this.logger.error(e)
+      })
       d.readable.push(body.fixml)
     }
   }
@@ -132,7 +146,7 @@ export class HttpAcceptor extends FixAcceptor {
       }
     })
 
-    router.get(query, (req: express.Request, res: express.Response) => {
+    router.get(query, async (req: express.Request, res: express.Response) => {
       const headers = req.headers
       const body: IFixmlRequest = req.body
       const t: MsgTransport = this.keys.get(headers.authorization)
@@ -143,7 +157,9 @@ export class HttpAcceptor extends FixAcceptor {
         })
       } else {
         const d = t.duplex
-        this.respond(d, res)
+        this.respond(d, res).then(() => {
+          this.logger.info(`responded to ${req.url}`)
+        })
         d.readable.push(body.fixml)
       }
     })

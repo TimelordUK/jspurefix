@@ -121,6 +121,9 @@ export abstract class FixmlSession {
     })
 
     rx.on('done', () => this.done())
+    rx.on('end', () => {
+      this.done()
+    })
 
     rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
       logger.debug(`rx: [${msgType}] ${ptr} bytes`)
@@ -206,6 +209,7 @@ export abstract class FixmlSession {
           }
 
           case UserStatus.NotLoggedIn: {
+            this.peerLogout(view)
             break
           }
         }
