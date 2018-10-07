@@ -4,7 +4,6 @@ import { MsgType } from '../../types/enum/msg_type'
 import { MsgTag } from '../../types/enum/msg_tag'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IMsgApplication } from '../session-description'
-import { ElasticBuffer } from '../../buffer/elastic-buffer'
 import { SessionState, TickAction } from '../fix-session-state'
 import { SessionRejectReason } from '../../types/enum/sess_rej_rsn'
 import { SegmentType } from '../../buffer/segment-description'
@@ -43,51 +42,6 @@ export abstract class AsciiSession extends FixSession {
       this.emitter.on('done', () => {
         accept()
       })
-    })
-  }
-
-  private subscribe () {
-
-    const transport = this.transport
-    const logger = this.sessionLogger
-
-    const rx = transport.receiver
-    const tx = transport.transmitter
-
-    rx.on('msg', (msgType: string, view: MsgView) => {
-      if (this.logReceivedMsgs) {
-        const name = view.segment.type !== SegmentType.Unknown ? view.segment.set.name : 'unknown'
-        logger.info(`${msgType}: ${name}`)
-        logger.info(`${view.toString()}`)
-      }
-      this.sessionState.lastReceivedAt = new Date()
-      if (this.manageSession) {
-        this.onMsg(msgType, view)
-      } else {
-        this.checkForwardMsg(msgType, view)
-      }
-    })
-
-    rx.on('error', (e: Error) => {
-      logger.warning(`rx error event: ${e.message} ${e.stack || ''}`)
-      this.terminate(e)
-    })
-
-    rx.on('done', () => this.done())
-
-    rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
-      logger.debug(`rx: [${msgType}] ${ptr} bytes`)
-      this.onDecoded(msgType, data.toString(ptr))
-    })
-
-    tx.on('error', (e: Error) => {
-      logger.warning(`tx error event: ${e.message} ${e.stack || ''}`)
-      this.terminate(e)
-    })
-
-    tx.on('encoded', (msgType: string, data: Buffer) => {
-      logger.debug(`tx: [${msgType}] ${data.length} bytes`)
-      this.onEncoded(msgType, data.toString())
     })
   }
 
@@ -245,7 +199,7 @@ export abstract class AsciiSession extends FixSession {
     }
   }
 
-  private onMsg (msgType: string, view: MsgView): void {
+  protected onMsg (msgType: string, view: MsgView): void {
 
     if (!this.checkSeqNo(msgType, view)) {
       this.sessionLogger.info(`message '${msgType}' failed checkSeqNo.`)
@@ -283,11 +237,6 @@ export abstract class AsciiSession extends FixSession {
         break
       }
     }
-  }
-
-  private checkForwardMsg (msgType: string, view: MsgView): void {
-    this.sessionLogger.info(`forwarding msgType = '${msgType}' to application`)
-    this.onApplicationMsg(msgType, view)
   }
 
   private peerLogon (view: MsgView) {

@@ -6,6 +6,8 @@ import { MsgTransport } from './msg-transport'
 import { MsgView } from '../buffer/msg-view'
 import { MsgTag } from '../types/enum/msg_tag'
 import { ILooseObject } from '../collections/collection'
+import { SegmentType } from '../buffer/segment-description'
+import { ElasticBuffer } from '../buffer/elastic-buffer'
 
 export abstract class FixSession {
   public logReceivedMsgs: boolean = false
@@ -32,6 +34,57 @@ export abstract class FixSession {
     this.acceptor = !this.initiator
     this.checkMsgIntegrity = this.acceptor
     this.sessionState.compId = description.SenderCompId
+  }
+
+  protected subscribe () {
+
+    const transport = this.transport
+    const logger = this.sessionLogger
+
+    const rx = transport.receiver
+    const tx = transport.transmitter
+
+    rx.on('msg', (msgType: string, view: MsgView) => {
+      if (this.logReceivedMsgs) {
+        const name = view.segment.type !== SegmentType.Unknown ? view.segment.set.name : 'unknown'
+        logger.info(`${msgType}: ${name}`)
+        logger.info(`${view.toString()}`)
+      }
+      this.sessionState.lastReceivedAt = new Date()
+      if (this.manageSession) {
+        this.onMsg(msgType, view)
+      } else {
+        this.checkForwardMsg(msgType, view)
+      }
+    })
+
+    rx.on('error', (e: Error) => {
+      logger.warning(`rx error event: ${e.message} ${e.stack || ''}`)
+      this.terminate(e)
+    })
+
+    rx.on('done', () => this.done())
+    rx.on('end', () => this.done())
+
+    rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
+      logger.debug(`rx: [${msgType}] ${ptr} bytes`)
+      this.onDecoded(msgType, data.toString(ptr))
+    })
+
+    tx.on('error', (e: Error) => {
+      logger.warning(`tx error event: ${e.message} ${e.stack || ''}`)
+      this.terminate(e)
+    })
+
+    tx.on('encoded', (msgType: string, data: Buffer) => {
+      logger.debug(`tx: [${msgType}] ${data.length} bytes`)
+      this.onEncoded(msgType, data.toString())
+    })
+  }
+
+  protected checkForwardMsg (msgType: string, view: MsgView): void {
+    this.sessionLogger.info(`forwarding msgType = '${msgType}' to application`)
+    this.onApplicationMsg(msgType, view)
   }
 
   protected terminate (error: Error): void {
@@ -142,6 +195,7 @@ export abstract class FixSession {
     this.transport = null
   }
 
+  protected abstract onMsg (msgType: string, view: MsgView): void
   // application responsible for writing its own log
   protected abstract onDecoded (msgType: string, txt: string): void
   protected abstract onEncoded (msgType: string, txt: string): void
