@@ -80,7 +80,7 @@ Both examples will automatically close down after ~1 minute or can be terminated
 ensure the repo dictionary has been unpacked above.  This provides the data dictionary
 used to parse messages.
 
-run a full application example the trade capture or a simple skeleton
+run examples such as the trade capture, simple skeleton or http.
 
 ```shell
 npm run tcp-tc
@@ -88,6 +88,12 @@ npm run tcp-tc
 
 ```shell
 npm run tcp-sk
+```
+
+included is an example fixml over http application where an order is submitted and execution report returned.
+
+```shell
+npm run http-oms
 ```
 
 ## Unit Tests
@@ -274,6 +280,109 @@ get a component from parent - this is very low cost
  const instrumentObject: IInstrument = view.getView('Instrument').toObject()
 ```
 
+## FIXML
+
+Please see sample code src/sample/http for an example of how fixml can be used. Note regardless of using Ascii or Fixml application code looks very similar for example the client in this case.
+
+```typescript
+  protected onReady (view: MsgView): void {
+    this.logger.info('onReady')
+    const logoutSeconds = this.logoutSeconds
+    const req = this.factory.createOrder('IBM', Side.Buy, 10000, 100.12)
+    this.send('NewOrderSingle', req)
+    this.logger.info(`will logout after ${logoutSeconds}`)
+    setTimeout(() => {
+      this.done()
+    }, 11 * 1000)
+  }
+
+    public createOrder (symbol: string, side: Side, qty: number, price: number): INewOrderSingle {
+    const id: number = this.id++
+    return {
+      ClOrdID: `Cli${id}`,
+      Account: this.account,
+      Side: side,
+      Price: price,
+      OrdType: OrdType.Limit,
+      OrderQtyData: {
+        OrderQty: qty
+      } as IOrderQtyData,
+      Instrument: {
+        Symbol: symbol,
+        SecurityID: '459200101',
+        SecurityIDSource: SecurityIDSource.IsinNumber
+      } as IInstrument,
+      TimeInForce: TimeInForce.GoodTillCancelGtc
+    } as INewOrderSingle
+  }
+```
+
+this renders to this message sent over http
+
+```xml
+<FIXML>
+	<Order ID="Cli1" Acct="TradersRUs" Side="1" Typ="2" Px="100.12" TmInForce="1">
+		<Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
+		<Instrmt Sym="IBM" ID="459200101" Src="4"/>
+		<OrdQty Qty="10000"/>
+	</Order>
+</FIXML>
+```
+
+the server receives this message and sends back an execution report :-
+
+```typescript
+  protected onApplicationMsg (msgType: string, view: MsgView): void {
+    // dispatch messages
+    this.logger.info(view.toJson())
+    switch (msgType) {
+      case 'Order': {
+        const order: INewOrderSingle = view.toObject()
+        this.logger.info(`received order id ${order.ClOrdID}`)
+        const fill: IExecutionReport = this.factory.fillOrder(order)
+        this.send('ExecutionReport', fill)
+      }
+    }
+  }
+
+   public fillOrder (order: INewOrderSingle): IExecutionReport {
+    const id: number = this.execId++
+    return {
+      ClOrdID: order.ClOrdID,
+      OrdType: order.OrdType,
+      TransactTime: new Date(),
+      AvgPx: order.Price,
+      LeavesQty: 0,
+      LastPx: order.Price,
+      ExecType: ExecType.OrderStatus,
+      OrdStatus: OrdStatus.Filled,
+      ExecID: `exec${id}`,
+      Side: order.Side,
+      Price: order.Price,
+      OrderQtyData: {
+        OrderQty: order.OrderQtyData.OrderQty
+      } as IOrderQtyData,
+      Instrument: {
+        Symbol: order.Instrument.Symbol,
+        SecurityID: order.Instrument.SecurityID,
+        SecurityIDSource: SecurityIDSource.IsinNumber
+      } as IInstrument
+    } as IExecutionReport
+  }
+```
+
+the fixml is sent back to the client :-
+
+```xml
+<FIXML>
+	<ExecRpt ID="Cli1" ExecID="exec1" ExecTyp="I" Stat="2" Side="1" Typ="2" Px="100.12" LastPx="100.12" LeavesQty="0" AvgPx="100.12" TxnTm="2018-10-07T12:16:12.584">
+		<Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
+		<Instrmt Sym="IBM" ID="459200101" Src="4"/>
+		<OrdQty Qty="10000"/>
+	</ExecRpt>
+</FIXML>
+```
+
 ## performance on Windows Intel Core I7-4770 @ 3.5 GHz
 
 These messages have been randomly generated with command line tool. They are syntactically valid.
@@ -352,7 +461,7 @@ messages 13 elapsed ms 8
 npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --delimiter="|" --stats --repeats=20
 ```
 
-```cmd
+```json
 messages 13 elapsed ms 0
 {
     "0": 1,
