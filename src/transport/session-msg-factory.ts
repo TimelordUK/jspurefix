@@ -48,11 +48,11 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     }
   }
 
-  public logout (text: string, isResponse: boolean = false): ILooseObject {
+  public logout (msgType: string, text: string): ILooseObject {
     if (this.isAscii) {
       return this.asciiLogout(text)
     } else {
-      return this.fixmlLogout(text, isResponse)
+      return this.fixmlLogout(text, msgType !== 'UserReq')
     }
   }
 
