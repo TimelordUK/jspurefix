@@ -1,16 +1,16 @@
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { MsgTransport } from '../msg-transport'
-import { MakeFixmlSession } from '../fixml/make-fixml-session'
-import { FixmlSession } from '../fixml/fixml-session'
 import { HttpDuplex } from '../duplex/http-duplex'
+import { MakeFixSession } from '../make-fixl-session'
+import { FixSession } from '../fix-session'
 
-export function httpInitiator (config: IJsFixConfig, sessionFactory: MakeFixmlSession): Promise<any> {
+export function httpInitiator (config: IJsFixConfig, sessionFactory: MakeFixSession): Promise<any> {
   const initiatorSession = sessionFactory(config)
   return once(config, initiatorSession)
 }
 
 // the adapter will be provided on config
-function once (config: IJsFixConfig, initiatorSession: FixmlSession): Promise<any> {
+function once (config: IJsFixConfig, initiatorSession: FixSession): Promise<any> {
   return new Promise<any>(async (accept, reject) => {
     const logger = config.logFactory.logger('initiator')
     const adapter = config.description.application.http.adapter

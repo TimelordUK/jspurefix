@@ -2,9 +2,9 @@ import { IJsFixConfig } from '../../config/js-fix-config'
 import { FixAcceptor } from '../fix-acceptor'
 import { TcpAcceptor } from './tcp-acceptor'
 import { MsgTransport } from '../msg-transport'
-import { MakeAsciiSession } from '../ascii/make-ascii-session'
+import { MakeFixSession } from '../make-fixl-session'
 
-export function acceptor (config: IJsFixConfig, sessionFactory: MakeAsciiSession): Promise<any> {
+export function acceptor (config: IJsFixConfig, sessionFactory: MakeFixSession): Promise<any> {
   return new Promise<any>(async (accept, reject) => {
     const logger = config.logFactory.logger('acceptor')
     logger.info('starting.')

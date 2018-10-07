@@ -2,10 +2,10 @@ import { IJsFixConfig } from '../../config/js-fix-config'
 import { FixInitiator } from '../fix-initiator'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../msg-transport'
-import { MakeAsciiSession } from '../ascii/make-ascii-session'
-import { AsciiSession } from '../ascii/ascii-session'
+import { MakeFixSession } from '../make-fixl-session'
+import { FixSession } from '../fix-session'
 
-export function initiator (config: IJsFixConfig, sessionFactory: MakeAsciiSession, reconnectTimeout: number = 0): Promise<any> {
+export function initiator (config: IJsFixConfig, sessionFactory: MakeFixSession, reconnectTimeout: number = 0): Promise<any> {
   return new Promise<any>(async (accept, reject) => {
     const logger = config.logFactory.logger('initiator')
     logger.info('create session')
@@ -40,7 +40,7 @@ function delay (p: number): Promise<any> {
   })
 }
 
-function once (config: IJsFixConfig, initiatorSession: AsciiSession): Promise<any> {
+function once (config: IJsFixConfig, initiatorSession: FixSession): Promise<any> {
   return new Promise<any>(async (accept, reject) => {
     const logger = config.logFactory.logger('initiator')
     const initiator: FixInitiator = new TcpInitiator(config)

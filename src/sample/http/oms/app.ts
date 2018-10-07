@@ -1,27 +1,29 @@
 import { HttpServer } from './http-server'
 import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config/js-fix-config'
+import { Launcher } from '../../launcher'
 import { HttpJsonSampleAdapter } from '../../../transport/http/http-json-sample-adapter'
-import { runner } from '../launcher'
+import { httpInitiator } from '../../../transport/http/http-initiator'
+import { acceptor } from '../../../transport/fixml/acceptor'
 
-runner((config: IJsFixConfig) => {
-  const logger = config.logFactory.logger('sessionFactory')
-  const type = config.description.application.type
-  switch (type) {
-    case 'initiator': {
-      logger.info('creating HttpClient')
-      config.description.application.http.adapter = new HttpJsonSampleAdapter(config)
-      return new HttpClient(config)
-    }
-    case 'acceptor': {
-      logger.info('creating HttpServer')
-      return new HttpServer(config)
-    }
-    default: {
-      logger.info(`unknown type ${type} in config`)
-      break
-    }
+class AppLauncher extends Launcher {
+  public constructor () {
+    super(
+      'data/session/test-http-initiator.json',
+      'data/session/test-http-acceptor.json')
   }
-}).then(() => {
+
+  protected getAcceptor (config: IJsFixConfig): Promise<any> {
+    return acceptor(config, (c) => new HttpServer(c))
+  }
+
+  protected getInitiator (config: IJsFixConfig): Promise<any> {
+    config.description.application.http.adapter = new HttpJsonSampleAdapter(config)
+    return httpInitiator(config, (c) => new HttpClient(c))
+  }
+}
+
+const l = new AppLauncher()
+l.run().then(() => {
   console.log('finished.')
 })
