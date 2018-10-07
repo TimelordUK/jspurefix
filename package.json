@@ -36,6 +36,7 @@
     "fixml": "cd dist && node jsfix-cmd --dict=repofixml",
     "tcp-tc": "cd dist/sample/tcp/trade_capture && node app",
     "tcp-sk": "cd dist/sample/tcp/skeleton && node app",
+    "http-oms": "cd dist/sample/http/oms && node app",
     "repo40-compile": "cd dist && node jsfix-cmd \"--dict=repo40\" \"--compile\"",
     "repo41-compile": "cd dist && node jsfix-cmd \"--dict=repo41\" \"--compile\"",
     "repo42-compile": "cd dist && node jsfix-cmd \"--dict=repo42\" \"--compile\"",

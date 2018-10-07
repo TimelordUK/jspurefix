@@ -1,6 +1,4 @@
-import * as events from 'events'
-import { IJsFixLogger } from '../../config/js-fix-logger'
-import { FixSessionState, SessionState } from '../fix-session-state'
+import { SessionState } from '../fix-session-state'
 import { MsgTransport } from '../msg-transport'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { MsgView } from '../../buffer/msg-view'
@@ -9,31 +7,15 @@ import { ElasticBuffer } from '../../buffer/elastic-buffer'
 import { ILooseObject } from '../../collections/collection'
 import { UserRequestType, UserStatus } from '../../types/FIXML50SP2/enum/all-enum'
 import { MsgTag } from '../../types/enum/msg_tag'
+import {FixSession} from '../fix-session'
 
-export abstract class FixmlSession {
+export abstract class FixmlSession extends FixSession {
 
-  public readonly me: string
-  public logReceivedMsgs: boolean = false
-
-  public manageSession: boolean = true
-  private readonly initiator: boolean
-  private readonly acceptor: boolean
-  private readonly emitter: events.EventEmitter
-  private readonly sessionLogger: IJsFixLogger
-  private readonly sessionState: FixSessionState
   private transport: MsgTransport = null
-
   private timer: NodeJS.Timer = null
 
   protected constructor (public readonly config: IJsFixConfig) {
-    const description = config.description
-    this.emitter = new events.EventEmitter()
-    this.me = description.application.name
-    this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`)
-    this.initiator = description.application.type === 'initiator'
-    this.acceptor = !this.initiator
-    this.sessionState = new FixSessionState(description.HeartBtInt)
-    this.sessionState.compId = description.SenderCompId
+    super(config)
   }
 
   protected send (msgType: string, obj: ILooseObject) {

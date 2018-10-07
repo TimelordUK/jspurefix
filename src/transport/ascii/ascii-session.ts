@@ -3,42 +3,23 @@ import { MsgView } from '../../buffer/msg-view'
 import { ILooseObject } from '../../collections/collection'
 import { MsgType } from '../../types/enum/msg_type'
 import { MsgTag } from '../../types/enum/msg_tag'
-import { IJsFixLogger } from '../../config/js-fix-logger'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { IMsgApplication } from '../session-description'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
-import { FixSessionState, SessionState, TickAction } from '../fix-session-state'
+import { SessionState, TickAction } from '../fix-session-state'
 import { SessionRejectReason } from '../../types/enum/sess_rej_rsn'
 import { SegmentType } from '../../buffer/segment-description'
-import * as events from 'events'
+import { FixSession } from '../fix-session'
 
-export abstract class AsciiSession {
+export abstract class AsciiSession extends FixSession {
 
-  public readonly me: string
-  public manageSession: boolean = true
   public heartbeat: boolean = true
-  public logReceivedMsgs: boolean = false
-  public checkMsgIntegrity: boolean = false
 
-  private readonly initiator: boolean
-  private readonly acceptor: boolean
-  private readonly emitter: events.EventEmitter
-  private readonly sessionLogger: IJsFixLogger
-  private readonly sessionState: FixSessionState
   private transport: MsgTransport = null
-
   private timer: NodeJS.Timer = null
 
   protected constructor (public readonly config: IJsFixConfig) {
-    const description = config.description
-    this.emitter = new events.EventEmitter()
-    this.me = description.application.name
-    this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`)
-    this.initiator = description.application.type === 'initiator'
-    this.acceptor = !this.initiator
-    this.checkMsgIntegrity = this.acceptor
-    this.sessionState = new FixSessionState(description.HeartBtInt)
-    this.sessionState.compId = description.SenderCompId
+    super(config)
   }
 
   public static asPiped (txt: string) {
