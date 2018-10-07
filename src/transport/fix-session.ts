@@ -23,6 +23,7 @@ export abstract class FixSession {
   protected readonly sessionLogger: IJsFixLogger
   protected requestLogoutType: string
   protected respondLogoutType: string
+  protected requestLogonType: string
 
   protected constructor (public readonly config: IJsFixConfig) {
     const description = config.description
@@ -34,6 +35,29 @@ export abstract class FixSession {
     this.acceptor = !this.initiator
     this.checkMsgIntegrity = this.acceptor
     this.sessionState.compId = description.SenderCompId
+  }
+
+  public run (transport: MsgTransport): Promise<any> {
+    const logger = this.sessionLogger
+    if (this.transport) {
+      logger.info('reset from previous transport.')
+      this.reset()
+    }
+    this.transport = transport
+    this.subscribe()
+    return new Promise<any>((accept, reject) => {
+      if (this.initiator) {
+        logger.debug('sending logon')
+        this.send(this.requestLogonType, this.config.factory.logon())
+      }
+      this.emitter.on('error', (e: Error) => {
+        logger.error(e)
+        reject(e)
+      })
+      this.emitter.on('done', () => {
+        accept()
+      })
+    })
   }
 
   protected subscribe () {

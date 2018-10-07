@@ -1,5 +1,4 @@
 import { SessionState } from '../fix-session-state'
-import { MsgTransport } from '../msg-transport'
 import { IJsFixConfig } from '../../config/js-fix-config'
 import { MsgView } from '../../buffer/msg-view'
 import { UserRequestType, UserStatus } from '../../types/FIXML50SP2/enum/all-enum'
@@ -11,30 +10,8 @@ export abstract class FixmlSession extends FixSession {
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.requestLogoutType = 'UserReq'
+    this.requestLogonType = 'UserReq'
     this.respondLogoutType = 'UserRsp'
-  }
-
-  public run (transport: MsgTransport): Promise<any> {
-    const logger = this.sessionLogger
-    if (this.transport) {
-      logger.info('reset from previous transport.')
-      this.reset()
-    }
-    this.transport = transport
-    this.subscribe()
-    return new Promise<any>((accept, reject) => {
-      if (this.initiator) {
-        logger.debug('sending logon')
-        this.send('UserReq', this.config.factory.logon())
-      }
-      this.emitter.on('error', (e: Error) => {
-        logger.error(e)
-        reject(e)
-      })
-      this.emitter.on('done', () => {
-        accept()
-      })
-    })
   }
 
   protected onMsg (msgType: string, view: MsgView): void {

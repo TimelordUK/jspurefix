@@ -1,4 +1,3 @@
-import { MsgTransport } from '../msg-transport'
 import { MsgView } from '../../buffer/msg-view'
 import { MsgType } from '../../types/enum/msg_type'
 import { MsgTag } from '../../types/enum/msg_tag'
@@ -16,33 +15,11 @@ export abstract class AsciiSession extends FixSession {
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.requestLogoutType = this.respondLogoutType = MsgType.Logout
+    this.requestLogonType = MsgType.Logon
   }
 
   public static asPiped (txt: string) {
     return txt.replace(/\x01/g,'|')
-  }
-
-  public run (transport: MsgTransport): Promise<any> {
-    const logger = this.sessionLogger
-    if (this.transport) {
-      logger.info('reset from previous transport.')
-      this.reset()
-    }
-    this.transport = transport
-    this.subscribe()
-    return new Promise<any>((accept, reject) => {
-      if (this.initiator) {
-        logger.debug('sending logon')
-        this.send(MsgType.Logon, this.config.factory.logon())
-      }
-      this.emitter.on('error', (e: Error) => {
-        logger.error(e)
-        reject(e)
-      })
-      this.emitter.on('done', () => {
-        accept()
-      })
-    })
   }
 
   private checkSeqNo (msgType: string, view: MsgView): boolean {
