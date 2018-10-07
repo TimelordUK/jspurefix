@@ -1,0 +1,9 @@
+[0] 11 (ClOrdID) = Cli1, [1] 17 (ExecID) = exec1
+[2] 150 (ExecType) = I[OrderStatus], [3] 39 (OrdStatus) = 2[Filled]
+[4] 54 (Side) = 1[Buy], [5] 40 (OrdType) = 2[Limit]
+[6] 44 (Price) = 100.12, [7] 31 (LastPx) = 100.12
+[8] 151 (LeavesQty) = 0, [9] 6 (AvgPx) = 100.12
+[10] 60 (TransactTime) = 2018-10-07T18:56:15.572, [11] 49 (SenderCompID) = accept-comp
+[12] 56 (TargetCompID) = init-comp, [13] 57 (TargetSubID) = fix
+[14] 55 (Symbol) = IBM, [15] 48 (SecurityID) = 459200101
+[16] 22 (SecurityIDSource) = 4[IsinNumber], [17] 38 (OrderQty) = 10000

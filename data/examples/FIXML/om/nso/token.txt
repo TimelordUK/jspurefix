@@ -1,0 +1,7 @@
+[0] 11 (ClOrdID) = Cli1, [1] 1 (OriginalSecondaryTradeID) = TradersRUs
+[2] 54 (Side) = 1[Buy], [3] 40 (OrdType) = 2[Limit]
+[4] 44 (Price) = 100.12, [5] 59 (TimeInForce) = 1[GoodTillCancelGtc]
+[6] 49 (SenderCompID) = accept-comp, [7] 56 (TargetCompID) = init-comp
+[8] 50 (SenderSubID) = user123, [9] 57 (TargetSubID) = INC
+[10] 55 (Symbol) = IBM, [11] 48 (SecurityID) = 459200101
+[12] 22 (SecurityIDSource) = 4[IsinNumber], [13] 38 (OrderQty) = 10000

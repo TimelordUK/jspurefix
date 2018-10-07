@@ -1,0 +1,7 @@
+<FIXML>
+    <Order ID="Cli1" Acct="TradersRUs" Side="1" Typ="2" Px="100.12" TmInForce="1">
+        <Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
+        <Instrmt Sym="IBM" ID="459200101" Src="4"/>
+        <OrdQty Qty="10000"/>
+    </Order>
+</FIXML>

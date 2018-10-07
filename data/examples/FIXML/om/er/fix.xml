@@ -1,0 +1,7 @@
+<FIXML>
+    <ExecRpt ID="Cli1" ExecID="exec1" ExecTyp="I" Stat="2" Side="1" Typ="2" Px="100.12" LastPx="100.12" LeavesQty="0" AvgPx="100.12" TxnTm="2018-10-07T18:56:15.572">
+        <Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
+        <Instrmt Sym="IBM" ID="459200101" Src="4"/>
+        <OrdQty Qty="10000"/>
+    </ExecRpt>
+</FIXML>

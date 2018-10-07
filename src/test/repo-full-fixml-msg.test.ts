@@ -131,3 +131,19 @@ test('TrdCaptRptReq fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
+
+test('Order fixml object', async () => {
+  const msgType: string = 'Order'
+  const file: string = path.join(root,'examples/FIXML/om/nso')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
+
+test('ExecRpt fixml object', async () => {
+  const msgType: string = 'ExecRpt'
+  const file: string = path.join(root,'examples/FIXML/om/er')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)

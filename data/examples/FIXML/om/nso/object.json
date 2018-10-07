@@ -1,0 +1,22 @@
+{
+  "ClOrdID": "Cli1",
+  "Account": "TradersRUs",
+  "Side": "1",
+  "OrdType": "2",
+  "Price": 100.12,
+  "TimeInForce": "1",
+  "StandardHeader": {
+    "SenderCompID": "accept-comp",
+    "TargetCompID": "init-comp",
+    "SenderSubID": "user123",
+    "TargetSubID": "INC"
+  },
+  "Instrument": {
+    "Symbol": "IBM",
+    "SecurityID": "459200101",
+    "SecurityIDSource": "4"
+  },
+  "OrderQtyData": {
+    "OrderQty": 10000
+  }
+}
