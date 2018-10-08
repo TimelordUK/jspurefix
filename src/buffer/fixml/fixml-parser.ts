@@ -18,7 +18,7 @@ import { Readable } from 'stream'
 
 export class FiXmlParser extends MsgParser {
   private readonly locations: Tags
-  private readonly values: string[] = []
+  private values: string[] = []
   private readonly saxStream: SAXStream
   private readonly definitions: FixDefinitions
   private readonly segments: SegmentDescription[] = []
@@ -71,6 +71,8 @@ export class FiXmlParser extends MsgParser {
         case 'FIXML':
           this.last = null
           this.raw = null
+          this.values = []
+          this.locations.reset()
           while (stack.length) {
             stack.pop()
           }
