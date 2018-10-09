@@ -19,6 +19,7 @@ import { Readable } from 'stream'
 export class FiXmlParser extends MsgParser {
   private readonly locations: Tags
   private values: string[] = []
+  private views: MsgView[] = []
   private readonly saxStream: SAXStream
   private readonly definitions: FixDefinitions
   private readonly segments: SegmentDescription[] = []
@@ -40,6 +41,25 @@ export class FiXmlParser extends MsgParser {
     this.subscribe()
   }
 
+  private reset (): void {
+    const views = this.views
+    while (views.length > 0) {
+      views.pop()
+    }
+    this.last = null
+    this.raw = null
+    this.values = []
+    this.locations.reset()
+    const stack = this.segmentStack
+    while (stack.length) {
+      stack.pop()
+    }
+    const segments = this.segments
+    while (segments.length) {
+      segments.pop()
+    }
+  }
+
   private subscribe (): void {
     const writeStream = this.saxStream
     const readStream = this.readStream
@@ -57,8 +77,13 @@ export class FiXmlParser extends MsgParser {
       this.emit('end')
     })
     writeStream.on('data', (i: Buffer) => {
-      if (instance.last) {
-        instance.emit('decoded', instance.last.name, i.toString())
+      const views = this.views
+      if (views.length > 0) {
+        while (views.length > 0) {
+          const view = views.pop()
+          instance.emit('decoded', instance.last.name, i.toString())
+          this.emit('msg', this.last.name, view)
+        }
       } else {
         this.raw = i.toString()
       }
@@ -69,13 +94,7 @@ export class FiXmlParser extends MsgParser {
       const saxNode: ISaxNode = node as ISaxNode
       switch (saxNode.name) {
         case 'FIXML':
-          this.last = null
-          this.raw = null
-          this.values = []
-          this.locations.reset()
-          while (stack.length) {
-            stack.pop()
-          }
+          this.reset()
           break
 
         case 'Batch': {
@@ -180,11 +199,14 @@ export class FiXmlParser extends MsgParser {
           // raise msg event
           const last = segments[segments.length - 1]
           this.last = last
-          this.emit('msg', last.name, this.getView())
+          const view = this.getView()
           if (this.raw) {
             this.emit('decoded', this.last.name, this.raw)
-            this.raw = null
+            this.emit('msg', last.name, view)
+          } else {
+            this.views.push(view)
           }
+          this.raw = null
           break
         }
         case SegmentType.Batch: {

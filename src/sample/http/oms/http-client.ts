@@ -4,6 +4,7 @@ import { IJsFixLogger } from '../../../config/js-fix-logger'
 import { IJsFixConfig } from '../../../config/js-fix-config'
 import { Side } from '../../../types/FIXML50SP2/enum/all-enum'
 import { OmsFactory } from './oms-factory'
+import { IExecutionReport } from '../../../types/FIXML50SP2/execution_report'
 
 export class HttpClient extends FixmlSession {
   private readonly logger: IJsFixLogger
@@ -23,6 +24,12 @@ export class HttpClient extends FixmlSession {
     switch (msgType) {
       case 'BizMsgRej': {
         this.logger.warning('received rejection')
+        break
+      }
+
+      case 'ExecRpt': {
+        const fill: IExecutionReport = view.toObject()
+        this.logger.warning(`received execution report ${fill.OrderQtyData.OrderQty}@${fill.Price}`)
         break
       }
     }
