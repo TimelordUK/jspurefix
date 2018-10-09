@@ -389,7 +389,8 @@ export class JsfixCmd {
       case PrintMode.Object: {
         const asObject: ILooseObject = m.toObject()
         if (print) {
-          console.log(JSON.stringify(asObject, null, 4))
+          console.log(`${msgType} = ${JSON.stringify(asObject, null, 4)}`)
+          console.log()
         }
         break
       }
