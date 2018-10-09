@@ -40,6 +40,21 @@ export class FiXmlParser extends MsgParser {
     this.subscribe()
   }
 
+  private reset (): void {
+    const segments = this.segments
+    while (segments.length > 0) {
+      segments.pop()
+    }
+    const stack = this.segmentStack
+    this.last = null
+    this.raw = null
+    this.values = []
+    this.locations.reset()
+    while (stack.length) {
+      stack.pop()
+    }
+  }
+
   private subscribe (): void {
     const writeStream = this.saxStream
     const readStream = this.readStream
@@ -69,13 +84,7 @@ export class FiXmlParser extends MsgParser {
       const saxNode: ISaxNode = node as ISaxNode
       switch (saxNode.name) {
         case 'FIXML':
-          this.last = null
-          this.raw = null
-          this.values = []
-          this.locations.reset()
-          while (stack.length) {
-            stack.pop()
-          }
+          this.reset()
           break
 
         case 'Batch': {
