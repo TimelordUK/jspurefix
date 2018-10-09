@@ -1,0 +1,34 @@
+<FIXML>
+	<UserReq UserReqID="" UserReqTyp="1" Username="http-server" Password="http-server">
+		<Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
+	</UserReq>
+</FIXML>
+<FIXML>
+	<UserRsp UserReqID="" Username="http-server" UserStat="1">
+		<Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
+	</UserRsp>
+</FIXML>
+<FIXML>
+	<Order ID="Cli1" Acct="TradersRUs" Side="1" Typ="2" Px="100.12" TmInForce="1">
+		<Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
+		<Instrmt Sym="IBM" ID="459200101" Src="4"/>
+		<OrdQty Qty="10000"/>
+	</Order>
+</FIXML>
+<FIXML>
+	<ExecRpt ID="Cli1" ExecID="exec1" ExecTyp="I" Stat="2" Side="1" Typ="2" Px="100.12" LastPx="100.12" LeavesQty="0" AvgPx="100.12" TxnTm="2018-10-09T20:58:27.737">
+		<Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
+		<Instrmt Sym="IBM" ID="459200101" Src="4"/>
+		<OrdQty Qty="10000"/>
+	</ExecRpt>
+</FIXML>
+<FIXML>
+	<UserReq UserReqID="test_http-client initiate logout" UserReqTyp="2" Username="http-server">
+		<Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
+	</UserReq>
+</FIXML>
+<FIXML>
+	<UserRsp UserReqID="test_http-server confirming logout" Username="http-server" UserStat="2">
+		<Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
+	</UserRsp>
+</FIXML>
