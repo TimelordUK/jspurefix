@@ -16,9 +16,9 @@
 1. socket session management for login, heartbeat etc
 1. implement httpInitiator or acceptor
 
-## Native Typescript FIX Engine
+## Typescript FIX Engine for Node JS
 
-This fix engine provides a fast easy API to parse or send finacial protocol FIX messages. It is implemented entirely in typescript. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc. 
+This fix engine provides a fast easy API to parse or send finacial protocol FIX messages. It is implemented entirely in typescript and runs in Node JS. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc. 
 
 ### extensive documentation coming soon.
 
@@ -265,6 +265,17 @@ get first in group fetched from object where group is array
   expect(undInstrmtGrpViewAsObject.NoUnderlyings.length).toEqual(2)
   const underlying0: IUnderlyingInstrument = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
   expect(underlying0.UnderlyingSymbol).toEqual('massa.')
+```
+
+fetch nested structure in one call
+
+```typescript
+  const legGrpView = view.getView('InstrmtLegGrp.NoLegs')
+  expect(legGrpView).toBeTruthy()
+  const legGrp: IInstrumentLeg[] = legGrpView.toObject()
+  expect(legGrp).toBeTruthy()
+  expect(Array.isArray(legGrp))
+  expect(legGrp.length).toEqual(2)
 ```
 
 get a tokenised view of tags in view

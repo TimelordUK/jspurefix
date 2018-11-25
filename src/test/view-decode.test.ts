@@ -7,6 +7,7 @@ import { MsgView } from '../buffer/msg-view'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { ISessionDescription } from '../transport/session-description'
 import { JsFixConfig } from '../config/js-fix-config'
+import { IInstrumentLeg } from '../types/FIX4.4/quickfix/set/instrument_leg'
 import { getDefinitions } from '../util/dictionary-definitions'
 import { replayFixFile } from '../util/replay'
 
@@ -150,4 +151,13 @@ test('get selection tags one call - tag names', () => {
   expect(d).toEqual(1)
   expect(e).toEqual('ipsum')
   expect(f).toEqual('sit')
+})
+
+test('nested view fetch' , () => {
+  const legGrpView = view.getView('InstrmtLegGrp.NoLegs')
+  expect(legGrpView).toBeTruthy()
+  const legGrp: IInstrumentLeg[] = legGrpView.toObject()
+  expect(legGrp).toBeTruthy()
+  expect(Array.isArray(legGrp))
+  expect(legGrp.length).toEqual(2)
 })

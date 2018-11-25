@@ -5,9 +5,9 @@ export class ElasticBuffer {
   private ptr: number = 0
   private stretched: number
 
-  constructor (public readonly size: number = 10 * 1024, public readonly returnTo: number = 50 * 1024) {
+  constructor (public readonly size: number = 6 * 1024, public readonly returnTo: number = 6 * 1024) {
     this.size = Math.max(1, this.size)
-    this.buffer = Buffer.alloc(this.size)
+    this.buffer = Buffer.allocUnsafe(this.size)
     this.returnTo = Math.max(this.size, this.returnTo)
     this.stretched = this.size
   }
@@ -121,7 +121,7 @@ export class ElasticBuffer {
     this.ptr = 0
     const shrink = this.stretched > this.returnTo
     if (shrink) {
-      this.buffer = Buffer.alloc(this.returnTo)
+      this.buffer = Buffer.allocUnsafe(this.returnTo)
       this.stretched = this.size
     }
     return shrink
@@ -292,7 +292,7 @@ export class ElasticBuffer {
       size *= 2
     }
     const old = buffer
-    buffer = Buffer.alloc(size)
+    buffer = Buffer.allocUnsafe(size)
     old.copy(buffer, 0, 0, this.ptr)
     this.buffer = buffer
     this.stretched = size
