@@ -4,7 +4,7 @@
 
 # jspurefix
 
-1. fast 100% native clean fix engine
+1. fast 100% native clean fix engine for Node JS
 1. represent data dictionary as quickfix or repo notation 
 1. compile interface types against definitions
 1. ascii / fixml supported
