@@ -4,9 +4,19 @@ import { FixDefinitions } from '../definition/fix-definitions'
 import { FixDefinitionSource } from '../fix-versions'
 import { ContainedGroupField } from '../contained/contained-group-field'
 import { ContainedComponentField } from '../contained/contained-component-field'
+import { ContainedSetType } from '../dict-primitive'
+
+import _ = require('lodash')
 
 export class CompilerType {
-  constructor (public definitions: FixDefinitions, public set: ContainedFieldSet, public qualifiedName: string) {
+  public readonly snaked: string
+  constructor (public readonly definitions: FixDefinitions, public readonly set: ContainedFieldSet, public readonly qualifiedName: string) {
+    const snake = _.snakeCase(this.qualifiedName)
+    if (set.type === ContainedSetType.Msg) {
+      this.snaked = `./${snake}`
+    } else {
+      this.snaked = `./set/${snake}`
+    }
   }
 
   public getExtended (field: ContainedField): string {

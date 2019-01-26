@@ -1,3 +1,4 @@
+export * from './enum'
 export * from './advertisement'
 export * from './allocation_instruction'
 export * from './allocation_instruction_ack'

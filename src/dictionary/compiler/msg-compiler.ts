@@ -13,7 +13,6 @@ import { Ascii } from '../../buffer/ascii'
 import * as fs from 'fs'
 import * as Util from 'util'
 import * as Path from 'path'
-import * as _ from 'lodash'
 import { dispatchFields } from '../fields-dispatch'
 import { reduceSet } from '../set-reduce'
 
@@ -21,10 +20,10 @@ export class MsgCompiler {
   readonly queue: CompilerType[] = []
   readonly snippets: StandardSnippet
   readonly buffer: ElasticBuffer = new ElasticBuffer()
-  readonly completed: Dictionary<boolean>
+  readonly completed: Dictionary<CompilerType>
 
   constructor (public readonly definitions: FixDefinitions, public readonly settings: ICompilerSettings) {
-    this.completed = new Dictionary<boolean>()
+    this.completed = new Dictionary<CompilerType>()
     this.snippets = new StandardSnippet(this.settings)
   }
 
@@ -34,17 +33,9 @@ export class MsgCompiler {
   }
 
   private getFileName (compilerType: CompilerType): string {
-    const definition = compilerType.set
-    const snake = _.snakeCase(compilerType.qualifiedName)
     const settings = this.settings
-    const fileName = `${snake}.ts`
-    let path: string
-    if (definition.type === ContainedSetType.Msg) {
-      path = `${settings.output}`
-    } else {
-      path = `${settings.output}/set/`
-    }
-    return Path.join(path, fileName)
+    const fileName = `${compilerType.snaked}.ts`
+    return Path.join(settings.output, fileName)
   }
 
   private async createTypes (types: string[]) {
@@ -55,9 +46,11 @@ export class MsgCompiler {
       if (!definition) {
         throw new Error(`no type ${type} defined`)
       }
-      q.unshift(new CompilerType(this.definitions, definition, definition.name))
+      const ct = new CompilerType(this.definitions, definition, definition.name)
+      this.enqueue(ct)
     })
     await this.work()
+    await this.index()
   }
 
   private async work () {
@@ -71,6 +64,25 @@ export class MsgCompiler {
         encoding: 'utf8'}
       )
     }
+  }
+
+  private async index () {
+    const writeFile = Util.promisify(fs.writeFile)
+    const settings = this.settings
+    const fileName = 'index.ts'
+    const done = this.completed.values()
+    const exports: string[] = done.reduce((prev: string[], current: CompilerType) => {
+      prev.push(`export * from '${current.snaked}'`)
+      return prev
+    }, [`export * from './enum'`] as string[])
+    const newLine = require('os').EOL
+    exports.sort()
+    exports.push('')
+    const api: string = exports.join(newLine)
+    const fullName: string = Path.join(settings.output, fileName)
+    await writeFile(fullName, api, {
+      encoding: 'utf8'}
+    )
   }
 
   private generateMessages (compilerType: CompilerType): string {
@@ -112,7 +124,7 @@ export class MsgCompiler {
       return
     }
     this.queue.push(ct)
-    completed.addUpdate(fullName, true)
+    completed.addUpdate(fullName, ct)
   }
 
   private fieldSimple (simple: ContainedSimpleField): void {
