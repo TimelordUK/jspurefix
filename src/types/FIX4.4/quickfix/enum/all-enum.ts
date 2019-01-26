@@ -2440,3 +2440,4 @@ export enum CollInquiryResult {
   UnauthorizedForCollateralInquiry = 9,
   Other = 99
 }
+

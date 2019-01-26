@@ -13,14 +13,14 @@ import { IStipulations } from './set/stipulations'
 import { IStandardTrailer } from './set/standard_trailer'
 
 /*
-***************************************************************
-* An httpInitiator that requires collateral from a respondent *
-* sends a Collateral Request. The httpInitiator can be either *
-* counterparty to a trade in a two party model or an          *
-* intermediary such as an ATS or clearinghouse in a three     *
-* party model. A Collateral Assignment is expected as a       *
-* response to a request for collateral.                       *
-***************************************************************
+***********************************************************
+* An initiator that requires collateral from a respondent *
+* sends a Collateral Request. The initiator can be either *
+* counterparty to a trade in a two party model or an      *
+* intermediary such as an ATS or clearinghouse in a three *
+* party model. A Collateral Assignment is expected as a   *
+* response to a request for collateral.                   *
+***********************************************************
 */
 export interface ICollateralRequest {
   StandardHeader: IStandardHeader

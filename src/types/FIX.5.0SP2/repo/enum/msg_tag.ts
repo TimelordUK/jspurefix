@@ -7447,10 +7447,10 @@ export enum MsgTag {
 */
   CalculatedCcyLastQty = 1056,
 /*
-**********************************************************
-* Used to identify whether the order httpInitiator is an *
-* aggressor or not in the trade.                         *
-**********************************************************
+****************************************************************
+* Used to identify whether the order initiator is an aggressor *
+* or not in the trade.                                         *
+****************************************************************
 */
   AggressorIndicator = 1057,
 /*

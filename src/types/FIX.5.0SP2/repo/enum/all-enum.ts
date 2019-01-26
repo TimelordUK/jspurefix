@@ -5011,10 +5011,10 @@ export enum InstrmtAssignmentMethod {
 }
 
 /*
-**********************************************************
-* Used to identify whether the order httpInitiator is an *
-* aggressor or not in the trade.                         *
-**********************************************************
+****************************************************************
+* Used to identify whether the order initiator is an aggressor *
+* or not in the trade.                                         *
+****************************************************************
 */
 export enum AggressorIndicator {
   OrderInitiatorIsAggressor = 'Y',
