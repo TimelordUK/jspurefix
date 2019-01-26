@@ -12,7 +12,8 @@
     "protocol",
     "trading"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "homepage": "https://github.com/TimelordUK/jspurefix",
   "bugs": {
     "url": "https://github.com/TimelordUK/jspurefix/issues"

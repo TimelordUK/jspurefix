@@ -3,6 +3,7 @@
     "target": "es6",
     "module": "commonjs",
     "noImplicitAny": true,
+    "declaration": true,
     "removeComments": true,
     "preserveConstEnums": true,
     "sourceMap": true,
@@ -12,8 +13,7 @@
   },
   "compileOnSave": true,
   "include": [
-    "src/dict-parser.txt",
-    "src/buffer/*.ts",
-    "src/**/*"
+    "src/**/*",
+    "src/*"
   ]
 }
