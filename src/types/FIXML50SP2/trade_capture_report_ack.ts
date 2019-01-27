@@ -21,7 +21,7 @@ import { ITrdCapRptAckSideGrp } from './set/trd_cap_rpt_ack_side_grp'
 export interface ITradeCaptureReportAck {
   TradeReportID?: string// 571
   TradeID?: string// 1003
-  SecondaryTradeID?: string// 1
+  SecondaryTradeID?: string// 1040
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
   TradeReportTransType?: number// 487

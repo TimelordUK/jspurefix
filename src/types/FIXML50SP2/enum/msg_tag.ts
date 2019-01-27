@@ -1,10 +1,12 @@
 export enum MsgTag {
 /*
-****************************************
-* Trade part ID of the original trade. *
-****************************************
+***************************************************************
+* Account mnemonic as agreed between buy and sell sides, e.g. *
+* broker and institution or investor/intermediary and fund    *
+* manager.                                                    *
+***************************************************************
 */
-  OriginalSecondaryTradeID = 1,
+  Account = 1,
 /*
 *************************************************
 * Unique identifier of advertisement message.   *
@@ -38784,5 +38786,17 @@ export enum MsgTag {
 * The Clearing Date for the allocation or trade. *
 **************************************************
 */
-  ClearDate = 60003
+  ClearDate = 60003,
+/*
+********************************************************
+* Identifier assigned to a trade by a matching system. *
+********************************************************
+*/
+  TradeMatchID = 60004,
+/*
+****************************************
+* Trade part ID of the original trade. *
+****************************************
+*/
+  OriginalSecondaryTradeID = 60006
 }

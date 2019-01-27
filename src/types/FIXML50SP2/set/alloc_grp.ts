@@ -50,6 +50,8 @@ export interface IAllocGrp {
   AllocRefRiskLimitCheckID?: string// 2392
   AllocRefRiskLimitCheckIDType?: number// 2393
   AllocRiskLimitCheckStatus?: number// 2483
+  SecondaryTradeID?: string// 1
+  OriginalSecondaryTradeID?: string// 1
   AllocRegulatoryTradeIDGrp?: IAllocRegulatoryTradeIDGrp[]
   NestedParties?: INestedParties[]
   CommissionData?: ICommissionData

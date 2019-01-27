@@ -33,7 +33,7 @@ import { IAttachmentGrp } from './set/attachment_grp'
 export interface ITradeCaptureReport {
   TradeReportID?: string// 571
   TradeID?: string// 1003
-  SecondaryTradeID?: string// 1
+  SecondaryTradeID?: string// 1040
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
   PackageID?: string// 2489

@@ -14,7 +14,7 @@ import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 export interface ITradeCaptureReportRequestAck {
   TradeRequestID: string// 568
   TradeID?: string// 1003
-  SecondaryTradeID?: string// 1
+  SecondaryTradeID?: string// 1040
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
   TradeRequestType: number// 569

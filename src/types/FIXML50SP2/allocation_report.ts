@@ -103,7 +103,7 @@ export interface IAllocationReport {
   ClearDate?: Date// 60003
   ExecutingClaimingIndicator?: number// 60002
   PostTradeType?: number// 60001
-  TradeMatchID?: string// 1
+  TradeMatchID?: string// 60004
   StandardHeader?: IStandardHeader
   OrdAllocGrp?: IOrdAllocGrp[]
   ExecAllocGrp?: IExecAllocGrp[]

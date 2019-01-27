@@ -17,7 +17,7 @@ import { ITrdCapDtGrp } from './set/trd_cap_dt_grp'
 export interface ITradeCaptureReportRequest {
   TradeRequestID: string// 568
   TradeID?: string// 1003
-  SecondaryTradeID?: string// 1
+  SecondaryTradeID?: string// 1040
   FirmTradeID?: string// 1041
   SecondaryFirmTradeID?: string// 1042
   TradeRequestType: number// 569
