@@ -24,13 +24,42 @@ This fix engine provides a fast easy API to parse or send finacial protocol FIX 
 
 ## Installing
 
-Install the package from npm:
+compiled typescript is now included. Install the package from npm:
 
 ```shell
   npm install jspurefix
+  npm run unzip-repo
 ```
 
-please complete installation by running either script/build.sh or script/build.cmd.  It is a requirement to unzip the repo and compile the typescript before using the library or running the test.
+import types for usage with a client
+
+```typescript
+
+import {
+  AsciiSession,
+  MsgView,
+  IJsFixConfig,
+  IJsFixLogger,
+  Dictionary,
+  MsgType,
+  IJsFixConfig, 
+  initiator,
+  acceptor,
+  makeConfig 
+} from 'jspurefix'
+// types for the specific FIX dialect
+import {
+  ITradeCaptureReport,
+  ITradeCaptureReportRequest,
+  ITradeCaptureReportRequestAck
+} from 'jspurefix/dist/types/FIX4.4/repo'
+
+```
+
+see example trade-capture-client - use 
+
+
+### getting started
 
 clone from git
 
