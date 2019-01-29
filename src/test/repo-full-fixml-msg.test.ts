@@ -54,6 +54,7 @@ test('AllocInstrctn fixml object', async () => {
   expect(o).toEqual(asObj)
 }, 1000)
 
+/*
 test('AllocRpt fixml object', async () => {
   const msgType: string = 'AllocRpt'
   const file: string = path.join(root,'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
@@ -61,6 +62,7 @@ test('AllocRpt fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
+*/
 
 test('TrdCaptRpt fixml object', async () => {
   const msgType: string = 'TrdCaptRpt'
