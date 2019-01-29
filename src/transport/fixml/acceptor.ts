@@ -1,7 +1,7 @@
-import { IJsFixConfig } from '../../config/js-fix-config'
+import { IJsFixConfig } from '../../config'
 import { FixAcceptor } from '../fix-acceptor'
 import { MsgTransport } from '../msg-transport'
-import { HttpAcceptor } from '../http/http-acceptor'
+import { HttpAcceptor } from '../http'
 import { MakeFixSession } from '../make-fixl-session'
 
 export function acceptor (config: IJsFixConfig, sessionFactory: MakeFixSession): Promise<any> {

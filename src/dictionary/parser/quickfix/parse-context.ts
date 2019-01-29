@@ -1,7 +1,5 @@
-import { ComponentFieldDefinition } from '../../definition/component-field-definition'
-import { ContainedFieldSet } from '../../contained/contained-field-set'
-import { GroupFieldDefinition } from '../../definition/group-field-definition'
-import { MessageDefinition } from '../../definition/message-definition'
+import { ContainedFieldSet } from '../../contained'
+import { ComponentFieldDefinition, GroupFieldDefinition, MessageDefinition } from '../../definition'
 
 export class ParseContext {
   public required: boolean

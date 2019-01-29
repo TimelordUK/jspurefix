@@ -1,10 +1,9 @@
-import { FixmlSession } from '../../../transport/fixml/fixml-session'
-import { MsgView } from '../../../buffer/msg-view'
-import { IJsFixLogger } from '../../../config/js-fix-logger'
-import { IJsFixConfig } from '../../../config/js-fix-config'
-import { Side } from '../../../types/FIXML50SP2/enum/all-enum'
+import { FixmlSession } from '../../../transport/fixml'
+import { MsgView } from '../../../buffer'
+import { IJsFixLogger, IJsFixConfig } from '../../../config'
+import { Side } from '../../../types/FIXML50SP2/enum'
 import { OmsFactory } from './oms-factory'
-import { IExecutionReport } from '../../../types/FIXML50SP2/execution_report'
+import { IExecutionReport } from '../../../types/FIXML50SP2'
 
 export class HttpClient extends FixmlSession {
   private readonly logger: IJsFixLogger

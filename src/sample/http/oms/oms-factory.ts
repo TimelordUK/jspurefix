@@ -1,15 +1,15 @@
-import { INewOrderSingle } from '../../../types/FIXML50SP2/new_order_single'
 import {
+  INewOrderSingle,
   ExecType,
   OrdStatus,
   OrdType,
   SecurityIDSource,
   Side,
-  TimeInForce
-} from '../../../types/FIXML50SP2/enum/all-enum'
-import { IOrderQtyData } from '../../../types/FIX.5.0SP2/repo/set/order_qty_data'
-import { IInstrument } from '../../../types/FIXML50SP2/set/instrument'
-import { IExecutionReport } from '../../../types/FIXML50SP2/execution_report'
+  TimeInForce,
+  IOrderQtyData,
+  IInstrument,
+  IExecutionReport
+} from '../../../types/FIXML50SP2'
 
 export class OmsFactory {
   private id: number = 1

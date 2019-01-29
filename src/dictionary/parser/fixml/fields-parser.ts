@@ -1,9 +1,8 @@
 import { ILooseObject } from '../../../collections/collection'
 import { ISaxNode } from '../../dict-primitive'
-import { Dictionary } from '../../../collections/dictionary'
-import { SimpleFieldDefinition } from '../../definition/simple-field-definition'
+import { Dictionary } from '../../../collections'
+import { SimpleFieldDefinition, FixDefinitions } from '../../definition'
 import { XsdParser } from './xsd-parser'
-import { FixDefinitions } from '../../definition/fix-definitions'
 
 interface ISimpleField extends ILooseObject {
   restrictionBase: string

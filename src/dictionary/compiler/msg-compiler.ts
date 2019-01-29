@@ -1,15 +1,11 @@
 import { ICompilerSettings } from './compiler-settings'
-import { FixDefinitions } from '../definition/fix-definitions'
-import { ContainedComponentField } from '../contained/contained-component-field'
-import { ContainedGroupField } from '../contained/contained-group-field'
+import { FixDefinitions } from '../definition'
+import { ContainedGroupField, ContainedSimpleField, ContainedComponentField } from '../contained'
 import { StandardSnippet } from './standard-snippet'
-import { Tags } from '../../buffer/tags'
-import { ContainedSimpleField } from '../contained/contained-simple-field'
 import { ContainedSetType } from '../dict-primitive'
 import { CompilerType } from './compiler-type'
-import { Dictionary } from '../../collections/dictionary'
-import { ElasticBuffer } from '../../buffer/elastic-buffer'
-import { Ascii } from '../../buffer/ascii'
+import { Dictionary } from '../../collections'
+import { ElasticBuffer, Ascii, Tags } from '../../buffer'
 import * as fs from 'fs'
 import * as Util from 'util'
 import * as Path from 'path'
@@ -40,7 +36,6 @@ export class MsgCompiler {
 
   private async createTypes (types: string[]) {
     const definitions = this.definitions
-    const q = this.queue
     types.forEach((type: string) => {
       const definition = definitions.containedSet(type)
       if (!definition) {

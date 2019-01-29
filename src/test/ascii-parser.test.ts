@@ -1,14 +1,11 @@
 import { Ascii } from '../buffer/ascii'
 import { AsciiParser } from '../buffer/ascii/ascii-parser'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { JsonHelper } from '../util/json-helper'
-import { ISessionDescription } from '../transport/session-description'
-import { StringDuplex } from '../transport/duplex/string-duplex'
-import { getDefinitions } from '../util/dictionary-definitions'
+import { FixDefinitions } from '../dictionary/definition'
+import { JsonHelper, getDefinitions } from '../util'
+import { ISessionDescription } from '../transport'
+import { StringDuplex } from '../transport/duplex'
 import * as path from 'path'
-import { MsgView } from '../buffer/msg-view'
-import { TagPos } from '../buffer/tag-pos'
-import { SegmentType } from '../buffer/segment-description'
+import { TagPos, SegmentType, MsgView } from '../buffer'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper

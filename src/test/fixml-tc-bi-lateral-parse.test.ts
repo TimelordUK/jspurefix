@@ -1,8 +1,6 @@
 // use the compiled interfaces for intelisense
 import { ILooseObject } from '../collections/collection'
-import { IStandardHeader } from '../types/FIXML50SP2/set/standard_header'
-import { ITradeCaptureReport } from '../types/FIXML50SP2/trade_capture_report'
-import { IInstrument } from '../types/FIXML50SP2/set/instrument'
+import { ITradeCaptureReport, IInstrument, IStandardHeader } from '../types/FIXML50SP2'
 import { IBatch } from '../types/FIXML50SP2/set/batch'
 import { ToViews } from './to-views'
 

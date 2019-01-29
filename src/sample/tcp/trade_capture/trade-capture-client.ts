@@ -1,13 +1,10 @@
-import { AsciiSession } from '../../../transport/ascii/ascii-session'
-import { MsgType } from '../../../types/enum/msg_type'
-import { ITradeCaptureReport } from '../../../types/FIX4.4/repo/trade_capture_report'
-import { ITradeCaptureReportRequest } from '../../../types/FIX4.4/repo/trade_capture_report_request'
-import { ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo/trade_capture_report_request_ack'
-import { IJsFixLogger } from '../../../config/js-fix-logger'
-import { Dictionary } from '../../../collections/dictionary'
+import { AsciiSession } from '../../../transport/ascii'
+import { MsgType } from '../../../types/enum'
+import { ITradeCaptureReport, ITradeCaptureReportRequest, ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo'
+import { IJsFixLogger, IJsFixConfig } from '../../../config'
+import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
-import { IJsFixConfig } from '../../../config/js-fix-config'
-import { MsgView } from '../../../buffer/msg-view'
+import { MsgView } from '../../../buffer'
 
 export class TradeCaptureClient extends AsciiSession {
   private readonly logger: IJsFixLogger

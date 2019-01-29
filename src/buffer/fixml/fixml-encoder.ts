@@ -1,16 +1,12 @@
-import { FixDefinitions } from '../../dictionary/definition/fix-definitions'
+import { FixDefinitions } from '../../dictionary/definition'
 import { ILooseObject } from '../../collections/collection'
-import { ContainedFieldSet } from '../../dictionary/contained/contained-field-set'
-import { ContainedField } from '../../dictionary/contained/contained-field'
-import { ContainedGroupField } from '../../dictionary/contained/contained-group-field'
-import { ContainedComponentField } from '../../dictionary/contained/contained-component-field'
-import { ContainedSimpleField } from '../../dictionary/contained/contained-simple-field'
+import { ContainedFieldSet, ContainedField, ContainedGroupField, ContainedComponentField, ContainedSimpleField } from '../../dictionary/contained'
 import { Ascii } from '../ascii'
 import { TagType } from '../tags'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import moment = require('moment')
-import { dispatchFields, IFieldDispatcher } from '../../dictionary/fields-dispatch'
+import { dispatchFields, IFieldDispatcher } from '../../dictionary'
 
 interface IPopulatedAttributes {
   fields: ContainedSimpleField[],

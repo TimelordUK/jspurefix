@@ -1,4 +1,4 @@
-import { ElasticBuffer } from '../buffer/elastic-buffer'
+import { ElasticBuffer } from '../buffer'
 import moment = require('moment')
 
 export enum SessionState {

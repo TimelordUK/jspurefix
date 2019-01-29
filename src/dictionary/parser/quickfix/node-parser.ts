@@ -1,11 +1,6 @@
-import { ComponentFieldDefinition } from '../../definition/component-field-definition'
-import { ContainedComponentField } from '../../contained/contained-component-field'
-import { ContainedGroupField } from '../../contained/contained-group-field'
-import { ContainedSimpleField } from '../../contained/contained-simple-field'
+import { ContainedGroupField, ContainedSimpleField, ContainedComponentField } from '../../contained'
 import { ISaxNode } from '../../dict-primitive'
-import { FixDefinitions } from '../../definition/fix-definitions'
-import { GroupFieldDefinition } from '../../definition/group-field-definition'
-import { SimpleFieldDefinition } from '../../definition/simple-field-definition'
+import { FixDefinitions, GroupFieldDefinition, SimpleFieldDefinition, ComponentFieldDefinition } from '../../definition'
 import { ParseContext } from './parse-context'
 import { QuickFixXmlFileParser } from './quick-fix-xml-file-parser'
 

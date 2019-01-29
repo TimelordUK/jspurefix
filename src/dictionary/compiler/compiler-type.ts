@@ -1,9 +1,6 @@
-import { ContainedFieldSet } from '../contained/contained-field-set'
-import { ContainedField, ContainedFieldType } from '../contained/contained-field'
-import { FixDefinitions } from '../definition/fix-definitions'
+import { ContainedField, ContainedFieldType, ContainedFieldSet, ContainedGroupField, ContainedComponentField } from '../contained'
+import { FixDefinitions } from '../definition'
 import { FixDefinitionSource } from '../fix-versions'
-import { ContainedGroupField } from '../contained/contained-group-field'
-import { ContainedComponentField } from '../contained/contained-component-field'
 import { ContainedSetType } from '../dict-primitive'
 
 import _ = require('lodash')

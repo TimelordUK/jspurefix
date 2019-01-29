@@ -1,4 +1,4 @@
-import { ContainedFieldSet } from '../contained/contained-field-set'
+import { ContainedFieldSet } from '../contained'
 import { ContainedSetType } from '../dict-primitive'
 
 export class MessageDefinition extends ContainedFieldSet {

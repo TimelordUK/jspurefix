@@ -1,13 +1,8 @@
-import { TagType } from '../buffer/tags'
+import { TagType } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
-import { ContainedSimpleField } from '../dictionary/contained/contained-simple-field'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { MessageDefinition } from '../dictionary/definition/message-definition'
-import { SimpleFieldDefinition } from '../dictionary/definition/simple-field-definition'
-import { ContainedComponentField } from '../dictionary/contained/contained-component-field'
-import { ContainedGroupField } from '../dictionary/contained/contained-group-field'
-import { reduceSet } from '../dictionary/set-reduce'
+import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
+import { ContainedComponentField, ContainedGroupField, ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
+import { reduceSet } from '../dictionary'
 
 export class MessageGenerator {
   private word: number = 0

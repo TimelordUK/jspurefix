@@ -1,6 +1,6 @@
-import { IJsFixConfig } from '../../config/js-fix-config'
+import { IJsFixConfig } from '../../config'
 import { MsgTransport } from '../msg-transport'
-import { HttpDuplex } from '../duplex/http-duplex'
+import { HttpDuplex } from '../duplex'
 import { MakeFixSession } from '../make-fixl-session'
 import { FixSession } from '../fix-session'
 

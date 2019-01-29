@@ -1,5 +1,5 @@
 import { ComponentFieldDefinition } from '../../dictionary/definition/component-field-definition'
-import { ContainedComponentField } from '../../dictionary/contained/contained-component-field'
+import { ContainedComponentField } from '../../dictionary/contained'
 import { ContainedFieldType } from '../../dictionary/contained/contained-field'
 import { ContainedGroupField } from '../../dictionary/contained/contained-group-field'
 import { ContainedSimpleField } from '../../dictionary/contained/contained-simple-field'

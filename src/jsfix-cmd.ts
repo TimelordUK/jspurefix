@@ -1,25 +1,12 @@
-import { Ascii } from './buffer/ascii'
-import { AsciiView } from './buffer/ascii/ascii-view'
+import { ElasticBuffer, MsgView, MsgParser, AsciiParser, AsciiView, Ascii } from './buffer'
 import { ILooseObject } from './collections/collection'
-import { FixDefinitions } from './dictionary/definition/fix-definitions'
-import { SimpleFieldDefinition } from './dictionary/definition/simple-field-definition'
-import { MsgTransport } from './transport/msg-transport'
-import { MessageGenerator } from './util/message-generator'
-import { JsonHelper } from './util/json-helper'
-import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
-import { ISessionDescription } from './transport/session-description'
-import { FileDuplex } from './transport/duplex/file-duplex'
-import { StringDuplex } from './transport/duplex/string-duplex'
-import { MsgView } from './buffer/msg-view'
-import { MsgTag } from './types/enum/msg_tag'
-import { ElasticBuffer } from './buffer/elastic-buffer'
-import { JsFixConfig } from './config/js-fix-config'
-import { SessionMsgFactory } from './transport/session-msg-factory'
-import { MsgParser } from './buffer/msg-parser'
-import { AsciiParser } from './buffer/ascii/ascii-parser'
-import { ICompilerSettings } from './dictionary/compiler/compiler-settings'
-import { MsgCompiler } from './dictionary/compiler/msg-compiler'
-import { EnumCompiler } from './dictionary/compiler/enum-compiler'
+import { SimpleFieldDefinition, FixDefinitions } from './dictionary/definition'
+import { MessageGenerator, JsonHelper, getDefinitions, getDictPath } from './util'
+import { AsciiMsgTransmitter, ISessionDescription, SessionMsgFactory, MsgTransport, FileDuplex, StringDuplex } from './transport'
+import { MsgCompiler, EnumCompiler, ICompilerSettings } from './dictionary'
+import { MsgTag } from './types/enum'
+import { JsFixConfig } from './config'
+
 import * as util from 'util'
 const fs = require('node-fs-extra')
 import * as minimist from 'minimist'
@@ -27,7 +14,6 @@ import * as path from 'path'
 
 const argv: any = minimist(process.argv.slice(2))
 import { getWords } from './util/buffer-helper'
-import { getDefinitions, getDictPath } from './util/dictionary-definitions'
 
 enum PrintMode {
   Structure = 1,

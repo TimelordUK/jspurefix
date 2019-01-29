@@ -1,14 +1,10 @@
 import * as path from 'path'
-import { Structure } from '../buffer/structure'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { Ascii } from '../buffer/ascii'
-import { MsgView } from '../buffer/msg-view'
-import { TagPos } from '../buffer/tag-pos'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { ISessionDescription } from '../transport/session-description'
-import { JsFixConfig } from '../config/js-fix-config'
-import { getDefinitions } from '../util/dictionary-definitions'
-import { replayFixFile } from '../util/replay'
+import { FixDefinitions } from '../dictionary/definition'
+import { Ascii, MsgView, TagPos, Structure } from '../buffer'
+import { AsciiMsgTransmitter } from '../transport/ascii'
+import { ISessionDescription } from '../transport'
+import { JsFixConfig } from '../config'
+import { getDefinitions, replayFixFile } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
 

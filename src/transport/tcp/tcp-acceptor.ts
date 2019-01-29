@@ -1,9 +1,8 @@
 import * as net from 'net'
 import { MsgTransport } from '../msg-transport'
 import { FixAcceptor } from '../fix-acceptor'
-import { IJsFixConfig } from '../../config/js-fix-config'
-import { IJsFixLogger } from '../../config/js-fix-logger'
-import { TcpDuplex } from '../duplex/tcp-duplex'
+import { IJsFixConfig, IJsFixLogger } from '../../config'
+import { TcpDuplex } from '../duplex'
 
 export class TcpAcceptor extends FixAcceptor {
   private server: net.Server

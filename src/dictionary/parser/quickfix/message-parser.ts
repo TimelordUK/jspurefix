@@ -1,5 +1,5 @@
 import { ISaxNode } from '../../dict-primitive'
-import { MessageDefinition } from '../../definition/message-definition'
+import { MessageDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
 import { QuickFixXmlFileParser } from './quick-fix-xml-file-parser'

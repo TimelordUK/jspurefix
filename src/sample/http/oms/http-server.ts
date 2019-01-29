@@ -1,9 +1,7 @@
-import { FixmlSession } from '../../../transport/fixml/fixml-session'
-import { MsgView } from '../../../buffer/msg-view'
-import { IJsFixLogger } from '../../../config/js-fix-logger'
-import { IJsFixConfig } from '../../../config/js-fix-config'
-import { INewOrderSingle } from '../../../types/FIXML50SP2/new_order_single'
-import { IExecutionReport } from '../../../types/FIXML50SP2/execution_report'
+import { FixmlSession } from '../../../transport/fixml'
+import { MsgView } from '../../../buffer'
+import { IJsFixLogger, IJsFixConfig } from '../../../config'
+import { INewOrderSingle, IExecutionReport } from '../../../types/FIXML50SP2'
 import { OmsFactory } from './oms-factory'
 
 export class HttpServer extends FixmlSession {

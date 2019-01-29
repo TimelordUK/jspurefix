@@ -1,5 +1,5 @@
 import { ISaxNode } from '../../dict-primitive'
-import { SimpleFieldDefinition } from '../../definition/simple-field-definition'
+import { SimpleFieldDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
 import { QuickFixXmlFileParser } from './quick-fix-xml-file-parser'
 

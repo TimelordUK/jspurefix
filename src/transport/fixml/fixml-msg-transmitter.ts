@@ -1,7 +1,7 @@
 import { ILooseObject } from '../../collections/collection'
 import { MsgTransmitter } from '../msg-transmitter'
-import { FixmlEncoder } from '../../buffer/fixml/fixml-encoder'
-import { IJsFixConfig } from '../../config/js-fix-config'
+import { FixmlEncoder } from '../../buffer/fixml'
+import { IJsFixConfig } from '../../config'
 
 export class FixmlMsgTransmitter extends MsgTransmitter {
   public time: Date

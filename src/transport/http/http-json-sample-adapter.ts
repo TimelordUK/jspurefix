@@ -1,8 +1,7 @@
-import { IJsFixConfig } from '../../config/js-fix-config'
-import { IJsFixLogger } from '../../config/js-fix-logger'
+import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { IHtmlOptions, IHtmlRoute, IHttpAdapter } from '../session-description'
 import { HttpTransaction } from './http-transaction'
-import { Dictionary } from '../../collections/dictionary'
+import { Dictionary } from '../../collections'
 
 export class HttpJsonSampleAdapter implements IHttpAdapter {
   private logger: IJsFixLogger

@@ -1,17 +1,10 @@
 import { ILooseObject } from '../../../collections/collection'
-import { FixDefinitions } from '../../definition/fix-definitions'
-import { SimpleFieldDefinition } from '../../definition/simple-field-definition'
-import { Dictionary } from '../../../collections/dictionary'
-import { GroupFieldDefinition } from '../../definition/group-field-definition'
-import { ComponentFieldDefinition } from '../../definition/component-field-definition'
-import { ContainedSimpleField } from '../../contained/contained-simple-field'
-import { ContainedFieldSet } from '../../contained/contained-field-set'
-import { ContainedComponentField } from '../../contained/contained-component-field'
+import { SimpleFieldDefinition, GroupFieldDefinition, ComponentFieldDefinition, MessageDefinition, FixDefinitions } from '../../definition'
+import { Dictionary } from '../../../collections'
+import { ContainedFieldSet, ContainedComponentField, ContainedGroupField, ContainedSimpleField } from '../../contained'
 import { ContainedSetType } from '../../dict-primitive'
-import { ContainedGroupField } from '../../contained/contained-group-field'
-import { MessageDefinition } from '../../definition/message-definition'
 import { FixDefinitionSource, FixVersion } from '../../fix-versions'
-import { GetJsFixLogger, IJsFixLogger } from '../../../config/js-fix-logger'
+import { GetJsFixLogger, IJsFixLogger } from '../../../config'
 
 export interface IRepositoryField extends ILooseObject {
   Tag: string

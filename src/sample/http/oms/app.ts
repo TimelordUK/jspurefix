@@ -1,10 +1,9 @@
 import { HttpServer } from './http-server'
 import { HttpClient } from './http-client'
-import { IJsFixConfig } from '../../../config/js-fix-config'
+import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
-import { HttpJsonSampleAdapter } from '../../../transport/http/http-json-sample-adapter'
-import { httpInitiator } from '../../../transport/http/http-initiator'
-import { acceptor } from '../../../transport/fixml/acceptor'
+import { httpInitiator, HttpJsonSampleAdapter } from '../../../transport/http'
+import { acceptor } from '../../../transport/fixml'
 
 class AppLauncher extends Launcher {
   public constructor () {

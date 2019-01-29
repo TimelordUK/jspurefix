@@ -1,4 +1,3 @@
-import { ITradeCaptureReportRequest } from '../../../types/FIX4.4/repo/trade_capture_report_request'
 import {
   OrdStatus,
   SubscriptionRequestType,
@@ -6,11 +5,13 @@ import {
   TradeRequestResult,
   TradeRequestStatus,
   TradeRequestType,
-  TrdType
-} from '../../../types/FIX4.4/repo/enum/all-enum'
-import { ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo/trade_capture_report_request_ack'
-import { ITradeCaptureReport } from '../../../types/FIX4.4/repo/trade_capture_report'
-import { TradeReportTransType } from '../../../types/FIXML50SP2/enum/all-enum'
+  TrdType,
+  ITradeCaptureReportRequestAck,
+  ITradeCaptureReport,
+  ITradeCaptureReportRequest
+} from '../../../types/FIX4.4/repo'
+
+import { TradeReportTransType } from '../../../types/FIXML50SP2/enum'
 
 export class TradeFactory {
   private nextTradeId: number = 100000

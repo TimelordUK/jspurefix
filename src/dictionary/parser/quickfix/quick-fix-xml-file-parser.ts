@@ -1,14 +1,14 @@
 import * as fs from 'fs'
 import { SAXParser } from 'sax'
 import { IDictDoneCb, ISaxNode, SAXStream } from '../../dict-primitive'
-import { FixDefinitions } from '../../definition/fix-definitions'
+import { FixDefinitions } from '../../definition'
 import { FieldDefinitionParser } from './field-definition-parser'
 import { FieldSetParser } from './field-set-parser'
 import { MessageParser } from './message-parser'
 import { NodeParser } from './node-parser'
 import { FixParser } from '../../fix-parser'
 import { FixDefinitionSource, VersionUtil } from '../../fix-versions'
-import { GetJsFixLogger } from '../../../config/js-fix-logger'
+import { GetJsFixLogger } from '../../../config'
 import { promisify } from 'util'
 
 enum ParseState {

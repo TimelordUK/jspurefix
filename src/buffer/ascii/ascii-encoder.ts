@@ -1,18 +1,13 @@
 import { ILooseObject } from '../../collections/collection'
-import { ContainedComponentField } from '../../dictionary/contained/contained-component-field'
-import { ContainedField, ContainedFieldType } from '../../dictionary/contained/contained-field'
-import { ContainedFieldSet } from '../../dictionary/contained/contained-field-set'
-import { ContainedGroupField } from '../../dictionary/contained/contained-group-field'
-import { ContainedSimpleField } from '../../dictionary/contained/contained-simple-field'
-import { SimpleFieldDefinition } from '../../dictionary/definition/simple-field-definition'
+import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField, ContainedFieldType, ContainedComponentField } from '../../dictionary/contained'
+import { SimpleFieldDefinition, FixDefinitions } from '../../dictionary/definition'
 import { MsgEncoder } from '../msg-encoder'
-import { FixDefinitions } from '../../dictionary/definition/fix-definitions'
 import { ElasticBuffer } from '../elastic-buffer'
 import { TimeFormatter } from './time-formatter'
 import { ITimeFormatter } from '../time-formatter'
 import { Ascii } from '../ascii'
 import { Tags, TagType } from '../tags'
-import { dispatchFields } from '../../dictionary/fields-dispatch'
+import { dispatchFields } from '../../dictionary'
 
 export class AsciiEncoder extends MsgEncoder {
 

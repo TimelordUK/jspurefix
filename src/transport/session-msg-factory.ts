@@ -1,23 +1,13 @@
 import { ISessionMsgFactory } from './fix-msg-factory'
 import { ISessionDescription } from './session-description'
 import { ILooseObject } from '../collections/collection'
-import { MsgType } from '../types/enum/msg_type'
+import { MsgType } from '../types/enum'
 
-import { ILogon } from '../types/FIX4.4/repo/logon'
-import { ITestRequest } from '../types/FIX4.4/repo/test_request'
-import { IHeartbeat } from '../types/FIX4.4/repo/heartbeat'
-import { ILogout } from '../types/FIX4.4/repo/logout'
-import { IResendRequest } from '../types/FIX4.4/repo/resend_request'
-import { ISequenceReset } from '../types/FIX4.4/repo/sequence_reset'
-import { IReject } from '../types/FIX4.4/repo/reject'
-import { IStandardHeader } from '../types/FIX4.4/repo/set/standard_header'
-import { IStandardTrailer } from '../types/FIX4.4/repo/set/standard_trailer'
-import { EncryptMethod } from '../types/FIX4.4/repo/enum/all-enum'
+import { ILogon, ITestRequest, IHeartbeat, ILogout,
+  IResendRequest, ISequenceReset, IReject, IStandardHeader, IStandardTrailer, EncryptMethod } from '../types/FIX4.4/repo'
 
-import { IUserRequest } from '../types/FIXML50SP2/user_request'
-import { UserRequestType, UserStatus } from '../types/FIXML50SP2/enum/all-enum'
+import { IUserRequest, IUserResponse, UserRequestType, UserStatus } from '../types/FIXML50SP2'
 import { IStandardHeader as IStandardHeaderFixml } from '../types/FIXML50SP2/set/standard_header'
-import { IUserResponse } from '../types/FIXML50SP2/user_response'
 
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }

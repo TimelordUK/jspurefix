@@ -1,4 +1,4 @@
-import { SimpleFieldDefinition } from '../../dictionary/definition/simple-field-definition'
+import { SimpleFieldDefinition } from '../../dictionary/definition'
 import { SegmentDescription } from '../segment-description'
 import { Structure } from '../structure'
 import { TagType } from '../tags'
@@ -7,7 +7,7 @@ import { ElasticBuffer } from '../elastic-buffer'
 import { ITimeFormatter } from '../time-formatter'
 import { TimeFormatter } from './time-formatter'
 import { TagPos } from '../tag-pos'
-import { MsgTag } from '../../types/enum/msg_tag'
+import { MsgTag } from '../../types/enum'
 
 export class AsciiView extends MsgView {
   private readonly timeFormatter: ITimeFormatter = new TimeFormatter(this.buffer)

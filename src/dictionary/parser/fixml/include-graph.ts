@@ -1,8 +1,8 @@
 import { ISaxNode, SAXStream } from '../../dict-primitive'
-import { Dictionary } from '../../../collections/dictionary'
+import { Dictionary } from '../../../collections'
+import { INumericKeyed } from '../../../collections/collection'
 import * as path from 'path'
 import * as fs from 'fs'
-import { INumericKeyed } from '../../../collections/collection'
 
 export interface IInclude {
   parent: string

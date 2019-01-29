@@ -1,10 +1,6 @@
 import * as path from 'path'
-import { JsFixWinstonLogFactory } from '../config/js-fix-winston-log-factory'
-import { WinstonLogger } from '../config/winston-logger'
-import { IJsFixConfig } from '../config/js-fix-config'
-import { SessionMsgFactory } from '../transport/session-msg-factory'
-import { IJsFixLogger } from '../config/js-fix-logger'
-import { makeConfig } from '../transport/make-config'
+import { WinstonLogger, IJsFixConfig, JsFixWinstonLogFactory, IJsFixLogger } from '../config'
+import { SessionMsgFactory, makeConfig } from '../transport'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))

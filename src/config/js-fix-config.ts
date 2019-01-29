@@ -1,9 +1,8 @@
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { ISessionDescription } from '../transport/session-description'
-import { ISessionMsgFactory } from '../transport/fix-msg-factory'
+import { FixDefinitions } from '../dictionary/definition'
+import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { JsFixLoggerFactory } from './js-fix-logger-factory'
 import { EmptyLogFactory } from './empty-log-factory'
-import { Ascii } from '../buffer/ascii'
+import { Ascii } from '../buffer'
 
 export interface IJsFixConfig {
   factory: ISessionMsgFactory

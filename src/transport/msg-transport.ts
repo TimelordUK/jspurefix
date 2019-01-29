@@ -1,12 +1,11 @@
 import { AsciiParser } from '../buffer/ascii/ascii-parser'
-import { AsciiMsgTransmitter } from './ascii/ascii-msg-transmitter'
-import { MsgParser } from '../buffer/msg-parser'
-import { FiXmlParser } from '../buffer/fixml/fixml-parser'
+import { AsciiMsgTransmitter } from './ascii'
+import { MsgParser, Ascii } from '../buffer'
+import { FiXmlParser } from '../buffer/fixml'
 import { MsgTransmitter } from './msg-transmitter'
-import { FixmlMsgTransmitter } from './fixml/fixml-msg-transmitter'
-import { FixDuplex } from './duplex/fix-duplex'
-import { Ascii } from '../buffer/ascii'
-import { IJsFixConfig } from '../config/js-fix-config'
+import { FixmlMsgTransmitter } from './fixml'
+import { FixDuplex } from './duplex'
+import { IJsFixConfig } from '../config'
 
 export class MsgTransport {
   public readonly transmitter: MsgTransmitter

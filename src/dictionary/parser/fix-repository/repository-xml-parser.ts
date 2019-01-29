@@ -3,7 +3,7 @@ import * as path from 'path'
 import { SAXParser } from 'sax'
 import { promisify } from 'util'
 import { IDictDoneCb, ISaxNode, SAXStream } from '../../dict-primitive'
-import { FixDefinitions } from '../../definition/fix-definitions'
+import { FixDefinitions } from '../../definition'
 import { AbbreviationsParser } from './abbreviations-parser'
 import { BaseParser } from './base-parser'
 import { ComponentsParser } from './components-parser'
@@ -14,7 +14,7 @@ import { MsgContentsParser } from './msg-contents-parser'
 import { Repository } from './repository'
 import { FixParser } from '../../fix-parser'
 import { VersionUtil } from '../../fix-versions'
-import { GetJsFixLogger, IJsFixLogger } from '../../../config/js-fix-logger'
+import { GetJsFixLogger, IJsFixLogger } from '../../../config'
 
 export class RepositoryXmlParser extends FixParser {
   public readonly repository: Repository

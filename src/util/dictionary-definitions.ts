@@ -1,9 +1,9 @@
 import { QuickFixXmlFileParser } from '../dictionary/parser/quickfix/quick-fix-xml-file-parser'
-import { FixParser } from '../dictionary/fix-parser'
+import { FixParser } from '../dictionary'
 import { RepositoryXmlParser } from '../dictionary/parser/fix-repository/repository-xml-parser'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { FixDefinitions } from '../dictionary/definition'
 import { FixXsdParser } from '../dictionary/parser/fixml/fix-xsd-parser'
-import { GetJsFixLogger, makeEmptyLogger } from '../config/js-fix-logger'
+import { GetJsFixLogger, makeEmptyLogger } from '../config'
 import * as path from 'path'
 import * as fs from 'fs'
 

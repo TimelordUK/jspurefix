@@ -1,4 +1,4 @@
-import { IJsFixConfig } from '../../config/js-fix-config'
+import { IJsFixConfig } from '../../config'
 import { FixInitiator } from '../fix-initiator'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../msg-transport'

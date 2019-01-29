@@ -1,9 +1,9 @@
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { FixDefinitions } from '../dictionary/definition'
 import { MsgTransport } from '../transport/msg-transport'
-import { MsgView } from '../buffer/msg-view'
-import { ISessionDescription } from '../transport/session-description'
+import { MsgView } from '../buffer'
+import { ISessionDescription } from '../transport'
 import { FileDuplex } from '../transport/duplex/file-duplex'
-import { JsFixConfig } from '../config/js-fix-config'
+import { JsFixConfig } from '../config'
 
 export async function replayFixFile (definitions: FixDefinitions,
                                     sessionDescription: ISessionDescription,

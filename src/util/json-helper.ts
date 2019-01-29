@@ -1,13 +1,9 @@
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { ContainedGroupField } from '../dictionary/contained/contained-group-field'
-import { MessageDefinition } from '../dictionary/definition/message-definition'
-import { ContainedComponentField } from '../dictionary/contained/contained-component-field'
+import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
-import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
-import { ContainedSimpleField } from '../dictionary/contained/contained-simple-field'
-import { TagType } from '../buffer/tags'
+import { ContainedSimpleField, ContainedFieldSet, ContainedGroupField, ContainedComponentField } from '../dictionary/contained'
+import { TagType } from '../buffer'
 import moment = require('moment')
-import { dispatchFields, IFieldDispatcher } from '../dictionary/fields-dispatch'
+import { dispatchFields, IFieldDispatcher } from '../dictionary'
 
 export class JsonHelper {
   constructor (public readonly definitions: FixDefinitions) {

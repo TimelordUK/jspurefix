@@ -1,4 +1,4 @@
-import { FixDefinitions } from './definition/fix-definitions'
+import { FixDefinitions } from './definition'
 import * as events from 'events'
 
 export abstract class FixParser extends events.EventEmitter {

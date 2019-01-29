@@ -1,13 +1,7 @@
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
-import { MessageDefinition } from '../dictionary/definition/message-definition'
-import { ContainedField, ContainedFieldType } from '../dictionary/contained/contained-field'
-import { ContainedSimpleField } from '../dictionary/contained/contained-simple-field'
+import { ContainedField, ContainedFieldType, ContainedSimpleField, ContainedComponentField, ContainedGroupField, ContainedFieldSet } from '../dictionary/contained'
 import { TagType } from './tags'
-import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
-import { ContainedComponentField } from '../dictionary/contained/contained-component-field'
-import { SimpleFieldDefinition } from '../dictionary/definition/simple-field-definition'
-import { ContainedGroupField } from '../dictionary/contained/contained-group-field'
 
 export class EncodeProxy {
   constructor (public readonly definitions: FixDefinitions) {

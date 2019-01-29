@@ -1,13 +1,9 @@
-import { MsgView } from '../buffer/msg-view'
+import { MsgView } from '../buffer'
 // use the compiled interfaces for intelisense
-import { IStandardHeader } from '../types/FIXML50SP2/set/standard_header'
-import { IInstrument } from '../types/FIXML50SP2/set/instrument'
-import { IPtysSubGrp } from '../types/FIXML50SP2/set/ptys_sub_grp'
-import { IParties } from '../types/FIXML50SP2/set/parties'
-import { INstdPtysSubGrp } from '../types/FIXML50SP2/set/nstd_ptys_sub_grp'
-import { IAllocationInstruction } from '../types/FIXML50SP2/allocation_instruction'
-import { IAllocationReport } from '../types/FIXML50SP2/allocation_report'
-import { IOrdAllocGrp } from '../types/FIXML50SP2/set/ord_alloc_grp'
+
+import {
+  IStandardHeader, IInstrument, IPtysSubGrp, IParties, INstdPtysSubGrp,
+  IAllocationInstruction, IAllocationReport, IOrdAllocGrp } from '../types/FIXML50SP2'
 
 import { ToViews } from './to-views'
 import * as moment from 'moment'
@@ -126,7 +122,6 @@ test('test complex sub structure AllocGrp', () => {
   expect(allocInstruction.AllocGrp[0].IndividualAllocID).toEqual('307006')
   expect(allocInstruction.AllocGrp[0].SecondaryIndividualAllocID).toEqual('178004')
   expect(allocInstruction.AllocGrp[0].AllocCustomerCapacity).toEqual('4')
-  // expect(allocInstruction.AllocGrp[0].SecondaryTradeID).toEqual('12A80D9ED85HI040083A')
   expect(allocInstruction.AllocGrp[0].OriginalSecondaryTradeID).toEqual('12A80D9ED85HI040083A')
 
 })

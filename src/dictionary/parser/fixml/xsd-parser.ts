@@ -1,4 +1,4 @@
-import { FixDefinitions } from '../../definition/fix-definitions'
+import { FixDefinitions } from '../../definition'
 import { ILooseObject } from '../../../collections/collection'
 import { ISaxNode, SAXStream } from '../../dict-primitive'
 import * as fs from 'fs'

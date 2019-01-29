@@ -1,6 +1,6 @@
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { FixDefinitions } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
-import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
+import { ContainedFieldSet } from '../dictionary/contained'
 import * as events from 'events'
 
 export abstract class MsgEncoder extends events.EventEmitter {

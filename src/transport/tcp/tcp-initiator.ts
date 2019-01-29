@@ -1,10 +1,8 @@
 import { MsgTransport } from '../msg-transport'
 import { ITcpTransportDescription } from '../session-description'
 import { FixInitiator } from '../fix-initiator'
-import { IJsFixConfig } from '../../config/js-fix-config'
-import { IJsFixLogger } from '../../config/js-fix-logger'
-import { TcpDuplex } from '../duplex/tcp-duplex'
-import { FixDuplex } from '../duplex/fix-duplex'
+import { IJsFixConfig, IJsFixLogger } from '../../config'
+import { TcpDuplex, FixDuplex } from '../duplex'
 
 import * as util from 'util'
 import * as net from 'net'

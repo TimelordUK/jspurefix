@@ -1,12 +1,9 @@
 import * as path from 'path'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { MsgView } from '../buffer/msg-view'
-import { ISessionDescription } from '../transport/session-description'
-import { Ascii } from '../buffer/ascii'
+import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
+import { MsgView, Ascii } from '../buffer'
+import { ISessionDescription } from '../transport'
 import { ILooseObject } from '../collections/collection'
-import { MessageDefinition } from '../dictionary/definition/message-definition'
-import { replayFixFile } from '../util/replay'
-import { getDefinitions } from '../util/dictionary-definitions'
+import { replayFixFile, getDefinitions } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
 

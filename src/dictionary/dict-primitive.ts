@@ -1,7 +1,7 @@
 import { SAXOptions, SAXParser } from 'sax'
 import * as stream from 'stream'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from './definition/fix-definitions'
+import { FixDefinitions } from './definition'
 
 export enum ContainedSetType {
     Msg,

@@ -1,10 +1,9 @@
 import { ISessionDescription } from './session-description'
-import { JsFixLoggerFactory } from '../config/js-fix-logger-factory'
 import { ISessionMsgFactory } from './fix-msg-factory'
-import { IJsFixConfig, JsFixConfig } from '../config/js-fix-config'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { getDefinitions } from '../util/dictionary-definitions'
-import { Ascii } from '../buffer/ascii'
+import { IJsFixConfig, JsFixConfig, JsFixLoggerFactory } from '../config'
+import { FixDefinitions } from '../dictionary/definition'
+import { getDefinitions } from '../util'
+import { Ascii } from '../buffer'
 
 export async function makeConfig (description: ISessionDescription, logFactory: JsFixLoggerFactory, msgFactory: ISessionMsgFactory): Promise<IJsFixConfig> {
   return new Promise<IJsFixConfig>(async (accept, reject) => {

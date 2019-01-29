@@ -1,13 +1,10 @@
-import { IJsFixConfig } from '../config/js-fix-config'
+import { IJsFixConfig, IJsFixLogger } from '../config'
 import * as events from 'events'
-import { IJsFixLogger } from '../config/js-fix-logger'
 import { FixSessionState, SessionState } from './fix-session-state'
 import { MsgTransport } from './msg-transport'
-import { MsgView } from '../buffer/msg-view'
-import { MsgTag } from '../types/enum/msg_tag'
+import { MsgTag } from '../types/enum'
 import { ILooseObject } from '../collections/collection'
-import { SegmentType } from '../buffer/segment-description'
-import { ElasticBuffer } from '../buffer/elastic-buffer'
+import { SegmentType, ElasticBuffer, MsgView } from '../buffer'
 
 export abstract class FixSession {
   public logReceivedMsgs: boolean = false

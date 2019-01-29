@@ -1,16 +1,14 @@
 import * as path from 'path'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { FixDefinitions, MessageDefinition, ComponentFieldDefinition } from '../dictionary/definition'
 import { AsciiEncoder } from '../buffer/ascii/ascii-encoder'
-import { Ascii } from '../buffer/ascii'
-import { MessageDefinition } from '../dictionary/definition/message-definition'
+import { Ascii } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { ComponentFieldDefinition } from '../dictionary/definition/component-field-definition'
-import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { ISessionDescription } from '../transport/session-description'
+import { ContainedFieldSet } from '../dictionary/contained'
+import { AsciiMsgTransmitter } from '../transport/ascii'
+import { ISessionDescription } from '../transport'
 import { TimeFormatter } from '../buffer/ascii/time-formatter'
-import { JsFixConfig } from '../config/js-fix-config'
-import { getDefinitions } from '../util/dictionary-definitions'
+import { JsFixConfig } from '../config'
+import { getDefinitions } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
 

@@ -1,11 +1,11 @@
 import { INumericKeyed } from '../../collections/collection'
-import { Dictionary } from '../../collections/dictionary'
+import { Dictionary } from '../../collections'
 import { ComponentFieldDefinition } from './component-field-definition'
 import { MessageDefinition } from './message-definition'
 import { SimpleFieldDefinition } from './simple-field-definition'
 import { FixDefinitionSource, FixVersion } from '../fix-versions'
 import { CategorySimpleSet } from './category-simple-set'
-import { ContainedFieldSet } from '../contained/contained-field-set'
+import { ContainedFieldSet } from '../contained'
 
 export class FixDefinitions {
   public readonly simple: Dictionary<SimpleFieldDefinition> = new Dictionary<SimpleFieldDefinition>()

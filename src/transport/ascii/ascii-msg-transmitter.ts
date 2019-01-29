@@ -1,10 +1,10 @@
 import { AsciiEncoder } from '../../buffer/ascii/ascii-encoder'
 import { ILooseObject } from '../../collections/collection'
-import { ContainedFieldSet } from '../../dictionary/contained/contained-field-set'
-import { MessageDefinition } from '../../dictionary/definition/message-definition'
+import { ContainedFieldSet } from '../../dictionary/contained'
+import { MessageDefinition } from '../../dictionary/definition'
 import { MsgTransmitter } from '../msg-transmitter'
 import { TimeFormatter } from '../../buffer/ascii/time-formatter'
-import { IJsFixConfig } from '../../config/js-fix-config'
+import { IJsFixConfig } from '../../config'
 
 export class AsciiMsgTransmitter extends MsgTransmitter {
   public msgSeqNum: number = 1

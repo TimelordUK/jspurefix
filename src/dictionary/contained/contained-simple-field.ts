@@ -1,5 +1,5 @@
 import { ContainedField, ContainedFieldType } from './contained-field'
-import { SimpleFieldDefinition } from '../definition/simple-field-definition'
+import { SimpleFieldDefinition } from '../definition'
 
 export class ContainedSimpleField extends ContainedField {
   constructor (public readonly definition: SimpleFieldDefinition,

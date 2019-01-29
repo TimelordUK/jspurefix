@@ -1,10 +1,9 @@
-import { MsgEncoder } from '../buffer/msg-encoder'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { MsgEncoder, ElasticBuffer } from '../buffer'
+import { FixDefinitions } from '../dictionary/definition'
 import { Transform } from 'stream'
 import { MsgPayload } from './msg-payload'
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription } from './session-description'
-import { ElasticBuffer } from '../buffer/elastic-buffer'
 import * as events from 'events'
 
 export abstract class MsgTransmitter extends events.EventEmitter {

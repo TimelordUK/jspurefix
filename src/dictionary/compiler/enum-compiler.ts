@@ -1,9 +1,7 @@
-import { FixDefinitions } from '../definition/fix-definitions'
+import { FixDefinitions, SimpleFieldDefinition } from '../definition'
 import { ICompilerSettings } from './compiler-settings'
-import { SimpleFieldDefinition } from '../definition/simple-field-definition'
 import { StandardSnippet } from './standard-snippet'
-import { TagType } from '../../buffer/tags'
-import { ElasticBuffer } from '../../buffer/elastic-buffer'
+import { TagType, ElasticBuffer } from '../../buffer'
 import { ILooseObject } from '../../collections/collection'
 
 import * as fs from 'fs'

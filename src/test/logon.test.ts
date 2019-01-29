@@ -1,15 +1,11 @@
 import * as path from 'path'
-import { SegmentDescription, SegmentType } from '../buffer/segment-description'
-import { Structure } from '../buffer/structure'
+import { SegmentDescription, SegmentType, Structure, Ascii, MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { Ascii } from '../buffer/ascii'
-import { MsgView } from '../buffer/msg-view'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { ISessionDescription } from '../transport/session-description'
-import { replayFixFile } from '../util/replay'
-import { getDefinitions } from '../util/dictionary-definitions'
-import { JsFixConfig } from '../config/js-fix-config'
+import { FixDefinitions } from '../dictionary/definition'
+import { AsciiMsgTransmitter } from '../transport/ascii'
+import { ISessionDescription } from '../transport'
+import { replayFixFile, getDefinitions } from '../util'
+import { JsFixConfig } from '../config'
 
 const root: string = path.join(__dirname, '../../data')
 

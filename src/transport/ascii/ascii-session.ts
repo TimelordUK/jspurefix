@@ -1,10 +1,8 @@
-import { MsgView } from '../../buffer/msg-view'
-import { MsgType } from '../../types/enum/msg_type'
-import { MsgTag } from '../../types/enum/msg_tag'
-import { IJsFixConfig } from '../../config/js-fix-config'
+import { MsgView } from '../../buffer'
+import { MsgType, MsgTag, SessionRejectReason } from '../../types/enum'
+import { IJsFixConfig } from '../../config'
 import { IMsgApplication } from '../session-description'
 import { SessionState, TickAction } from '../fix-session-state'
-import { SessionRejectReason } from '../../types/enum/sess_rej_rsn'
 import { SegmentType } from '../../buffer/segment-description'
 import { FixSession } from '../fix-session'
 

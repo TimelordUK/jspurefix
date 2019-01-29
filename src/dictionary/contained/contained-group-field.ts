@@ -1,5 +1,5 @@
 import { ContainedField, ContainedFieldType } from './contained-field'
-import { GroupFieldDefinition } from '../definition/group-field-definition'
+import { GroupFieldDefinition } from '../definition'
 
 export class ContainedGroupField extends ContainedField {
   constructor (public readonly definition: GroupFieldDefinition,
@@ -10,6 +10,11 @@ export class ContainedGroupField extends ContainedField {
   }
 
   public toString (): string {
-    return `[${this.position}]=G.${this.definition.fields.length}(0=${this.definition.noOfField.tag})(${this.name})`
+    const definition = this.definition
+    if (!definition) {
+      return ''
+    }
+    const tag = definition.noOfField ? definition.noOfField.tag : -1
+    return `[${this.position}]=G.${this.definition.fields.length}(0=${tag})(${this.name})`
   }
 }

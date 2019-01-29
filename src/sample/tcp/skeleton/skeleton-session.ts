@@ -1,7 +1,6 @@
-import { AsciiSession } from '../../../transport/ascii/ascii-session'
-import { MsgView } from '../../../buffer/msg-view'
-import { IJsFixLogger } from '../../../config/js-fix-logger'
-import { IJsFixConfig } from '../../../config/js-fix-config'
+import { AsciiSession } from '../../../transport/ascii'
+import { MsgView } from '../../../buffer'
+import { IJsFixLogger, IJsFixConfig } from '../../../config'
 
 export class SkeletonSession extends AsciiSession {
   private readonly logger: IJsFixLogger

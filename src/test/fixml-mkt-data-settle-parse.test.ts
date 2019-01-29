@@ -1,9 +1,6 @@
 // use the compiled interfaces for intelisense
 
 import { ToViews } from './to-views'
-import { IInstrument } from '../types/FIXML50SP2/set/instrument'
-import { IMDFullGrp } from '../types/FIXML50SP2/set/md_full_grp'
-import { IMarketDataSnapshotFullRefresh } from '../types/FIXML50SP2/market_data_snapshot_full_refresh'
 import { IBatch } from '../types/FIXML50SP2/set/batch'
 
 const testFolder: string = 'examples/FIXML/cme/md/settle/'

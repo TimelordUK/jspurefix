@@ -1,5 +1,5 @@
 import { INumericKeyed } from '../collections/collection'
-import { ContainedField } from '../dictionary/contained/contained-field'
+import { ContainedField } from '../dictionary/contained'
 import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
 import { GroupFieldDefinition } from '../dictionary/definition/group-field-definition'
 

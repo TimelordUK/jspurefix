@@ -1,4 +1,4 @@
-import { ComponentFieldDefinition } from '../../definition/component-field-definition'
+import { ComponentFieldDefinition } from '../../definition'
 import { ISaxNode } from '../../dict-primitive'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'

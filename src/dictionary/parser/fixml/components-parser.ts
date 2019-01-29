@@ -1,15 +1,8 @@
 import { ISaxNode } from '../../dict-primitive'
-import { Dictionary } from '../../../collections/dictionary'
+import { Dictionary } from '../../../collections'
 import { XsdParser } from './xsd-parser'
-import { ComponentFieldDefinition } from '../../definition/component-field-definition'
-import { SimpleFieldDefinition } from '../../definition/simple-field-definition'
-import { ContainedSimpleField } from '../../contained/contained-simple-field'
-import { ContainedComponentField } from '../../contained/contained-component-field'
-import { ContainedFieldSet } from '../../contained/contained-field-set'
-import { GroupFieldDefinition } from '../../definition/group-field-definition'
-import { ContainedGroupField } from '../../contained/contained-group-field'
-import { FixDefinitions } from '../../definition/fix-definitions'
-import { MessageDefinition } from '../../definition/message-definition'
+import { ComponentFieldDefinition, SimpleFieldDefinition, GroupFieldDefinition, FixDefinitions, MessageDefinition } from '../../definition'
+import { ContainedSimpleField, ContainedComponentField, ContainedFieldSet, ContainedGroupField } from '../../contained'
 
 interface IElement {
   ref: string

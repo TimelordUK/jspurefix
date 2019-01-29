@@ -1,11 +1,11 @@
-import { FixDefinitions } from '../../definition/fix-definitions'
+import { FixDefinitions } from '../../definition'
 import { FixParser } from '../../fix-parser'
 import { FixDefinitionSource, FixVersion } from '../../fix-versions'
 import { FieldsParser } from './fields-parser'
 import { IncludeGraph } from './include-graph'
 import { ComponentsParser } from './components-parser'
 import { XsdParser } from './xsd-parser'
-import { GetJsFixLogger, IJsFixLogger } from '../../../config/js-fix-logger'
+import { GetJsFixLogger, IJsFixLogger } from '../../../config'
 import * as path from 'path'
 
 export class FixXsdParser extends FixParser {
