@@ -1,7 +1,7 @@
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
+import { FixDefinitions } from '../dictionary/definition'
 import { TagPos } from './tag-pos'
-import { ContainedSimpleField } from '../dictionary/contained/contained-simple-field'
-import { MsgTag } from '../types/enum/msg_tag'
+import { ContainedSimpleField } from '../dictionary/contained'
+import { MsgTag } from '../types/enum'
 
 export enum TagType {
     String = 1,
