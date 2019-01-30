@@ -1,13 +1,12 @@
 import * as path from 'path'
 import { ReadStream } from 'fs'
-import { ISessionDescription } from '../transport/session-description'
-import { JsFixConfig } from '../config/js-fix-config'
+import { ISessionDescription } from '../transport'
+import { JsFixConfig } from '../config'
 import { Ascii } from '../buffer/ascii'
-import { MsgParser } from '../buffer/msg-parser'
-import { FiXmlParser } from '../buffer/fixml/fixml-parser'
-import { MsgView } from '../buffer/msg-view'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { getDefinitions } from '../util/dictionary-definitions'
+import { MsgParser, MsgView } from '../buffer'
+import { FiXmlParser } from '../buffer/fixml'
+import { FixDefinitions } from '../dictionary/definition'
+import { getDefinitions } from '../util'
 
 export class ToViews {
   public definitions: FixDefinitions

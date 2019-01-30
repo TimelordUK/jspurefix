@@ -1,15 +1,12 @@
 import * as path from 'path'
-import { Structure } from '../buffer/structure'
+import { Structure, Ascii, MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary/definition/fix-definitions'
-import { Ascii } from '../buffer/ascii'
-import { MsgView } from '../buffer/msg-view'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { ISessionDescription } from '../transport/session-description'
-import { JsFixConfig } from '../config/js-fix-config'
-import { IInstrumentLeg } from '../types/FIX4.4/quickfix/set/instrument_leg'
-import { getDefinitions } from '../util/dictionary-definitions'
-import { replayFixFile } from '../util/replay'
+import { FixDefinitions } from '../dictionary/definition'
+import { AsciiMsgTransmitter } from '../transport/ascii'
+import { ISessionDescription } from '../transport'
+import { JsFixConfig } from '../config'
+import { IInstrumentLeg } from '../types/FIX4.4/quickfix'
+import { getDefinitions, replayFixFile } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
 
