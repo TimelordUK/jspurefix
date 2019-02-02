@@ -6,8 +6,7 @@ import { MsgType } from '../types/enum'
 import { ILogon, ITestRequest, IHeartbeat, ILogout,
   IResendRequest, ISequenceReset, IReject, IStandardHeader, IStandardTrailer, EncryptMethod } from '../types/FIX4.4/repo'
 
-import { IUserRequest, IUserResponse, UserRequestType, UserStatus } from '../types/FIXML50SP2'
-import { IStandardHeader as IStandardHeaderFixml } from '../types/FIXML50SP2/set/standard_header'
+import { IUserRequest, IUserResponse, UserRequestType, UserStatus, IStandardHeader as IStandardHeaderFixml } from '../types/FIXML50SP2'
 
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }

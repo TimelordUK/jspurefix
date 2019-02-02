@@ -1,7 +1,7 @@
 export * from './definition'
 export * from './compiler'
 export * from './contained'
-
+export * from './parser'
 export * from './dict-primitive'
 export * from './field-enum'
 export * from './fields-dispatch'

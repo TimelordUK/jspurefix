@@ -1,9 +1,9 @@
 import { ElasticBuffer, MsgView, MsgParser, AsciiParser, AsciiView, Ascii } from './buffer'
 import { ILooseObject } from './collections/collection'
-import { SimpleFieldDefinition, FixDefinitions } from './dictionary/definition'
-import { MessageGenerator, JsonHelper, getDefinitions, getDictPath } from './util'
+import { SimpleFieldDefinition, FixDefinitions, MsgCompiler, EnumCompiler, ICompilerSettings } from './dictionary'
+import { MessageGenerator, JsonHelper, getDefinitions, getDictPath, getWords } from './util'
 import { AsciiMsgTransmitter, ISessionDescription, SessionMsgFactory, MsgTransport, FileDuplex, StringDuplex } from './transport'
-import { MsgCompiler, EnumCompiler, ICompilerSettings } from './dictionary'
+
 import { MsgTag } from './types/enum'
 import { JsFixConfig } from './config'
 
@@ -13,7 +13,6 @@ import * as minimist from 'minimist'
 import * as path from 'path'
 
 const argv: any = minimist(process.argv.slice(2))
-import { getWords } from './util/buffer-helper'
 
 enum PrintMode {
   Structure = 1,
