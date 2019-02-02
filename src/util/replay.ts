@@ -1,8 +1,7 @@
 import { FixDefinitions } from '../dictionary/definition'
-import { MsgTransport } from '../transport/msg-transport'
 import { MsgView } from '../buffer'
-import { ISessionDescription } from '../transport'
-import { FileDuplex } from '../transport/duplex/file-duplex'
+import { ISessionDescription, MsgTransport } from '../transport'
+import { FileDuplex } from '../transport/duplex'
 import { JsFixConfig } from '../config'
 
 export async function replayFixFile (definitions: FixDefinitions,
