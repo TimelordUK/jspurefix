@@ -1,6 +1,6 @@
 import { ILooseObject } from '../../collections/collection'
 import { MsgTransmitter } from '../msg-transmitter'
-import { FixmlEncoder } from '../../buffer/fixml'
+import { FixmlEncoder } from '../../buffer'
 import { IJsFixConfig } from '../../config'
 
 export class FixmlMsgTransmitter extends MsgTransmitter {

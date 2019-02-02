@@ -1,13 +1,11 @@
 import { ILooseObject } from '../../collections/collection'
-import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField, ContainedFieldType, ContainedComponentField } from '../../dictionary/contained'
-import { SimpleFieldDefinition, FixDefinitions } from '../../dictionary/definition'
+import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField, ContainedFieldType, ContainedComponentField, SimpleFieldDefinition, FixDefinitions, dispatchFields } from '../../dictionary'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import { TimeFormatter } from './time-formatter'
 import { ITimeFormatter } from '../time-formatter'
 import { Ascii } from '../ascii'
 import { Tags, TagType } from '../tags'
-import { dispatchFields } from '../../dictionary'
 
 export class AsciiEncoder extends MsgEncoder {
 

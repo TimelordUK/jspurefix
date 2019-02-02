@@ -1,5 +1,4 @@
-import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../../dictionary/definition'
-import { ContainedComponentField, ContainedFieldType, ContainedGroupField, ContainedSimpleField } from '../../dictionary/contained'
+import { ContainedComponentField, ContainedFieldType, ContainedGroupField, ContainedSimpleField, ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../../dictionary'
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
