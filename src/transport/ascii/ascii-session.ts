@@ -1,9 +1,8 @@
-import { MsgView } from '../../buffer'
+import { MsgView, SegmentType } from '../../buffer'
 import { MsgType, MsgTag, SessionRejectReason } from '../../types/enum'
 import { IJsFixConfig } from '../../config'
 import { IMsgApplication } from '../session-description'
 import { SessionState, TickAction } from '../fix-session-state'
-import { SegmentType } from '../../buffer/segment-description'
 import { FixSession } from '../fix-session'
 
 export abstract class AsciiSession extends FixSession {
