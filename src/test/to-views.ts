@@ -2,9 +2,7 @@ import * as path from 'path'
 import { ReadStream } from 'fs'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
-import { Ascii } from '../buffer/ascii'
-import { MsgParser, MsgView } from '../buffer'
-import { FiXmlParser } from '../buffer/fixml'
+import { MsgParser, MsgView, AsciiChars, FiXmlParser } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
 import { getDefinitions } from '../util'
 
@@ -27,7 +25,7 @@ export class ToViews {
     const fullName = path.join(root, `${testFolder}/fix.xml`)
     const readStream: ReadStream = fs.createReadStream(fullName)
     const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-    const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+    const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
     const xmlParser: MsgParser = new FiXmlParser(config, readStream)
     return new Promise((accept, reject) => {
       xmlParser.on('msg', (msgType: string, v: MsgView) => {

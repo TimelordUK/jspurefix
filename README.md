@@ -322,7 +322,7 @@ get a component from parent - this is very low cost
 
 ## FIXML
 
-Please see sample code src/sample/http for an example of how fixml can be used. Note regardless of using Ascii or Fixml application code looks very similar for example the client in this case.
+Please see sample code src/sample/http for an example of how fixml can be used. Note regardless of using AsciiChars or Fixml application code looks very similar for example the client in this case.
 
 ```typescript
   protected onReady (view: MsgView): void {

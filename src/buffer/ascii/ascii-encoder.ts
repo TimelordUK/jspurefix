@@ -3,8 +3,8 @@ import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, Contained
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import { TimeFormatter } from './time-formatter'
-import { ITimeFormatter } from '../time-formatter'
-import { Ascii } from '../ascii'
+import { ITimeFormatter } from './itime-formatter'
+import { AsciiChars } from '../ascii-chars'
 import { Tags, TagType } from '../tags'
 
 export class AsciiEncoder extends MsgEncoder {
@@ -14,7 +14,7 @@ export class AsciiEncoder extends MsgEncoder {
   constructor (public readonly buffer: ElasticBuffer,
                public readonly definitions: FixDefinitions,
                public readonly timeFormatter: ITimeFormatter = new TimeFormatter(buffer),
-               public readonly delimiter: number = Ascii.Soh) {
+               public readonly delimiter: number = AsciiChars.Soh) {
     super(definitions)
   }
 
@@ -102,7 +102,7 @@ export class AsciiEncoder extends MsgEncoder {
   private WriteTagEquals (tag: number): void {
     const buffer = this.buffer
     buffer.writeWholeNumber(tag)
-    buffer.writeChar(Ascii.Equal)
+    buffer.writeChar(AsciiChars.Equal)
   }
 
   private encodeSimple (o: ILooseObject, set: ContainedFieldSet, sf: ContainedSimpleField, val: any): void {

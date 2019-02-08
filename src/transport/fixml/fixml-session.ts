@@ -1,6 +1,6 @@
+import { MsgView } from '../../buffer'
 import { SessionState } from '../fix-session-state'
 import { IJsFixConfig } from '../../config'
-import { MsgView } from '../../buffer'
 import { UserRequestType, UserStatus } from '../../types/FIXML50SP2/enum'
 import { MsgTag } from '../../types/enum'
 import { FixSession } from '../fix-session'

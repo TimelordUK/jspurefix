@@ -1,4 +1,4 @@
-export abstract class Ascii {
+export abstract class AsciiChars {
 
   public static readonly Minus: number = '-'.charCodeAt(0)
   public static readonly Equal: number = '='.charCodeAt(0)

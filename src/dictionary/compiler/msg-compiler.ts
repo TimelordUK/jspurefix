@@ -1,3 +1,4 @@
+import { ElasticBuffer, AsciiChars, Tags } from '../../buffer'
 import { ICompilerSettings } from './compiler-settings'
 import { FixDefinitions } from '../definition'
 import { ContainedGroupField, ContainedSimpleField, ContainedComponentField } from '../contained'
@@ -5,7 +6,7 @@ import { StandardSnippet } from './standard-snippet'
 import { ContainedSetType } from '../dict-primitive'
 import { CompilerType } from './compiler-type'
 import { Dictionary } from '../../collections'
-import { ElasticBuffer, Ascii, Tags } from '../../buffer'
+
 import * as fs from 'fs'
 import * as Util from 'util'
 import * as Path from 'path'
@@ -102,7 +103,7 @@ export class MsgCompiler {
       buffer.writeString(newLine)
     }
     buffer.writeString(snippets.interface(compilerType.qualifiedName, 0))
-    buffer.writeChar(Ascii.Space)
+    buffer.writeChar(AsciiChars.Space)
     buffer.writeString(snippets.startBlock(0))
     buffer.writeString(newLine)
     this.fields(compilerType)

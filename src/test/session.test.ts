@@ -1,15 +1,12 @@
-import { StringDuplex } from '../transport/duplex/string-duplex'
-import { Ascii } from '../buffer/ascii'
-import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription, MsgTransport, SessionMsgFactory } from '../transport'
+import { MsgView, ElasticBuffer, AsciiChars } from '../buffer'
+import { FixDefinitions } from '../dictionary'
+import { ISessionDescription, MsgTransport, SessionMsgFactory, AsciiMsgTransmitter, StringDuplex, FixDuplex } from '../transport'
 import { MsgType, SessionRejectReason } from '../types/enum'
-import { MsgView, ElasticBuffer } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { FixDuplex } from '../transport/duplex'
 import { IJsFixConfig, JsFixConfig } from '../config'
 import { SkeletonSession } from '../sample/tcp/skeleton/skeleton-session'
 import { IStandardHeader, IReject, ILogon } from '../types/FIX4.4/repo'
-import { AsciiMsgTransmitter } from '../transport/ascii'
+
 import * as path from 'path'
 import { getDefinitions } from '../util'
 
@@ -50,8 +47,8 @@ beforeEach(async () => {
   clientFactory = new SessionMsgFactory(clientDescription)
   serverFactory = new SessionMsgFactory(serverDescription)
 
-  const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, Ascii.Pipe)
-  const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, Ascii.Pipe)
+  const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, AsciiChars.Pipe)
+  const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, AsciiChars.Pipe)
 
   client = new FixEntity(clientConfig)
   server = new FixEntity(serverConfig)

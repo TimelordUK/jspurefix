@@ -1,5 +1,5 @@
 import { FixDefinitions } from '../../dictionary/definition'
-import { Ascii } from '../ascii'
+import { AsciiChars } from '../ascii-chars'
 import { AsciiView } from './ascii-view'
 import { AsciiSegmentParser } from './ascii-segment-parser'
 import { AsciiParserState, ParseState } from './ascii-parser-state'
@@ -79,9 +79,9 @@ export class AsciiParser extends MsgParser {
 
   private parse (readBuffer: Buffer, end: number): void {
     const state = this.state
-    const eq: number = Ascii.Eq
-    const zero: number = Ascii.Zero
-    const nine: number = Ascii.Nine
+    const eq: number = AsciiChars.Eq
+    const zero: number = AsciiChars.Zero
+    const nine: number = AsciiChars.Nine
     const delimiter: number = this.delimiter
     const writeDelimiter: number = this.writeDelimiter
     const receivingBuffer: ElasticBuffer = this.receivingBuffer

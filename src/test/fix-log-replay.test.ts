@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { MsgView, Ascii } from '../buffer'
+import { MsgView, AsciiChars } from '../buffer'
 import { ISessionDescription } from '../transport'
 import { ILooseObject } from '../collections/collection'
 import { replayFixFile, getDefinitions } from '../util'
@@ -15,7 +15,7 @@ beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
-  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/fix.txt'), Ascii.Pipe)
+  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/fix.txt'), AsciiChars.Pipe)
 }, 45000)
 
 test('expect 50 messages in log', () => {

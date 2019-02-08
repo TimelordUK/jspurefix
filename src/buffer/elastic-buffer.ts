@@ -1,4 +1,4 @@
-import { Ascii } from './ascii'
+import { AsciiChars } from './ascii-chars'
 
 export class ElasticBuffer {
   private buffer: Buffer
@@ -41,7 +41,7 @@ export class ElasticBuffer {
   }
 
   public writeBoolean (v: boolean): number {
-    this.writeChar(v ? Ascii.Y : Ascii.N)
+    this.writeChar(v ? AsciiChars.Y : AsciiChars.N)
     return this.ptr
   }
 
@@ -91,13 +91,13 @@ export class ElasticBuffer {
     this.checkGrowBuffer(reserve)
     const buffer = this.buffer
     if (sign < 0) {
-      buffer[this.ptr++] = Ascii.Minus
+      buffer[this.ptr++] = AsciiChars.Minus
     }
     while (p >= 1) {
       const d: number = Math.floor(v / p)
       v -= d * p
       p /= 10
-      buffer[this.ptr++] = Ascii.Zero + d
+      buffer[this.ptr++] = AsciiChars.Zero + d
     }
 
     return this.ptr
@@ -141,7 +141,7 @@ export class ElasticBuffer {
     if (v > 999) throw new Error(`can't write ${v} as hundreds padding`)
     this.checkGrowBuffer(3)
     const buffer = this.buffer
-    const zero: number = Ascii.Zero
+    const zero: number = AsciiChars.Zero
     const units: number = v % 10 + zero
     v = v / 10
     const tens: number = v % 10 + zero
@@ -156,7 +156,7 @@ export class ElasticBuffer {
     if (v > 99) throw new Error(`can't write ${v} as hundreds padding`)
     this.checkGrowBuffer(2)
     const buffer = this.buffer
-    const zero: number = Ascii.Zero
+    const zero: number = AsciiChars.Zero
     const units: number = v % 10 + zero
     v = v / 10
     buffer[this.ptr++] = v % 10 + zero
@@ -170,7 +170,7 @@ export class ElasticBuffer {
     this.ptr = ptr
     const buffer = this.buffer
     while (digits++ < padding) {
-      buffer[this.ptr++] = Ascii.Zero
+      buffer[this.ptr++] = AsciiChars.Zero
     }
     this.writeWholeNumber(numToWrite)
     this.ptr = saved
@@ -200,13 +200,13 @@ export class ElasticBuffer {
     let sign = 1
     let raised = vend - start
     switch (buffer[start]) {
-      case Ascii.Minus: {
+      case AsciiChars.Minus: {
         --raised
         sign = -1
         ++start
         break
       }
-      case Ascii.Plus: {
+      case AsciiChars.Plus: {
         --raised
         ++start
         break
@@ -218,7 +218,7 @@ export class ElasticBuffer {
 
     while (scan <= vend) {
       const p: number = buffer[scan++]
-      const d: number = p - Ascii.Zero
+      const d: number = p - AsciiChars.Zero
       num += d * i
       i /= 10
     }
@@ -236,7 +236,7 @@ export class ElasticBuffer {
 
   public getBoolean (start: number): boolean {
     const b: number = this.buffer[start]
-    return b === Ascii.Y
+    return b === AsciiChars.Y
   }
 
   public getFloat (start: number, vend: number): number {
@@ -246,12 +246,12 @@ export class ElasticBuffer {
     const buffer = this.buffer
     let sign = 1
     switch (buffer[start]) {
-      case Ascii.Minus: {
+      case AsciiChars.Minus: {
         sign = -1
         start++
         break
       }
-      case Ascii.Plus: {
+      case AsciiChars.Plus: {
         start++
         break
       }
@@ -260,12 +260,12 @@ export class ElasticBuffer {
     let i: number = Math.pow(10, len - 1)
     for (let j: number = start; j <= vend; ++j) {
       const p: number = buffer[j]
-      if (p >= Ascii.Zero && p <= Ascii.Nine) {
-        const d: number = p - Ascii.Zero
+      if (p >= AsciiChars.Zero && p <= AsciiChars.Nine) {
+        const d: number = p - AsciiChars.Zero
         ++digits
         n += d * i
         i /= 10
-      } else if (p === Ascii.Dot) {
+      } else if (p === AsciiChars.Dot) {
         if (dotPosition > 0) {
           return null
         }

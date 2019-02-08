@@ -3,7 +3,7 @@ import { SimpleFieldDefinition } from '../../dictionary'
 import { Structure } from '../structure'
 import { SegmentDescription } from '../segment-description'
 import { TagType } from '../tags'
-import { Ascii } from '../ascii'
+import { AsciiChars } from '../ascii-chars'
 import * as moment from 'moment'
 
 export class FixmlView extends MsgView {
@@ -77,7 +77,7 @@ export class FixmlView extends MsgView {
         }
 
         case TagType.Boolean: {
-          return s && s.length > 0 && Ascii.firstChar(s) === Ascii.Y
+          return s && s.length > 0 && AsciiChars.firstChar(s) === AsciiChars.Y
         }
 
         case TagType.UtcTimestamp: {

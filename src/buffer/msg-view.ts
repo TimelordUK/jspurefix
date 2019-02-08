@@ -3,11 +3,9 @@ import { SegmentDescription } from './segment-description'
 import { Structure } from './structure'
 import { Dictionary } from '../collections'
 import { Tags } from './tags'
-import { ContainedGroupField, ContainedComponentField, ContainedField, ContainedFieldSet, ContainedSimpleField, SimpleFieldDefinition, GroupFieldDefinition } from '../dictionary'
+import { ContainedGroupField, ContainedComponentField, ContainedField, ContainedFieldSet, ContainedSimpleField, SimpleFieldDefinition, GroupFieldDefinition, ITypeDispatcher, reduceSet, ContainedSetType } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
-import { ITypeDispatcher, reduceSet } from '../dictionary/set-reduce'
-import { ContainedSetType } from '../dictionary/dict-primitive'
 
 export abstract class MsgView {
   protected sortedTagPosForwards: TagPos[]

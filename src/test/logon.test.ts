@@ -1,9 +1,8 @@
 import * as path from 'path'
-import { SegmentDescription, SegmentType, Structure, Ascii, MsgView } from '../buffer'
+import { SegmentDescription, SegmentType, Structure, AsciiChars, MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { AsciiMsgTransmitter } from '../transport/ascii'
-import { ISessionDescription } from '../transport'
+import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { replayFixFile, getDefinitions } from '../util'
 import { JsFixConfig } from '../config'
 
@@ -42,9 +41,9 @@ const asStrings: string[] = [
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
-  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'), Ascii.Pipe)
+  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'), AsciiChars.Pipe)
   if (views && views.length > 0) {
     structure = views[0].structure
   }

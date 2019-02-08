@@ -1,8 +1,8 @@
-import { ElasticBuffer, Ascii } from '../buffer'
+import { ElasticBuffer, AsciiChars } from '../buffer'
 
 test('1 char in buffer length 1', () => {
   const buffer = new ElasticBuffer(1)
-  buffer.writeChar(Ascii.Dot)
+  buffer.writeChar(AsciiChars.Dot)
   expect(buffer.getPos()).toEqual(1)
   expect(buffer.toString()).toEqual('.')
   expect(buffer.currentSize()).toEqual(1)

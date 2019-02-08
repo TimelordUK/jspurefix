@@ -1,12 +1,10 @@
 import * as path from 'path'
 import { FixDefinitions, MessageDefinition, ComponentFieldDefinition } from '../dictionary/definition'
-import { AsciiEncoder } from '../buffer/ascii/ascii-encoder'
-import { Ascii } from '../buffer'
+import { AsciiEncoder, TimeFormatter, AsciiChars } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { ContainedFieldSet } from '../dictionary/contained'
 import { AsciiMsgTransmitter } from '../transport/ascii'
 import { ISessionDescription } from '../transport'
-import { TimeFormatter } from '../buffer/ascii/time-formatter'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
 
@@ -26,9 +24,9 @@ const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
-  encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), Ascii.Pipe)
+  encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Pipe)
   nos = definitions.message.get('NewOrderSingle')
   er = definitions.message.get('ExecutionReport')
 }, 45000)

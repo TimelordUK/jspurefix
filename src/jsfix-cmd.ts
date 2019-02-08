@@ -1,4 +1,4 @@
-import { ElasticBuffer, MsgView, MsgParser, AsciiParser, AsciiView, Ascii } from './buffer'
+import { ElasticBuffer, MsgView, MsgParser, AsciiParser, AsciiView, AsciiChars } from './buffer'
 import { ILooseObject } from './collections/collection'
 import { SimpleFieldDefinition, FixDefinitions, MsgCompiler, EnumCompiler, ICompilerSettings } from './dictionary'
 import { MessageGenerator, JsonHelper, getDefinitions, getDictPath, getWords } from './util'
@@ -39,7 +39,7 @@ export class JsfixCmd {
   private jsonHelper: JsonHelper
   private session: AsciiMsgTransmitter
   private sessionDescription: ISessionDescription
-  private delimiter: number = Ascii.Soh
+  private delimiter: number = AsciiChars.Soh
   private stats: ILooseObject = {}
   private filter: string = null
   private messages: number = 0
@@ -301,7 +301,7 @@ export class JsfixCmd {
     this.definitions = await getDefinitions(dict)
     const definitions = this.definitions
     if (argv.delimiter) {
-      this.delimiter = Ascii.firstChar(argv.delimiter)
+      this.delimiter = AsciiChars.firstChar(argv.delimiter)
     }
     this.jsonHelper = new JsonHelper(definitions)
     if (argv.session) {

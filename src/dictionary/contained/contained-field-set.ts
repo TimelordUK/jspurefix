@@ -5,8 +5,7 @@ import { ContainedField, ContainedFieldType } from './contained-field'
 import { ContainedGroupField } from './contained-group-field'
 import { ContainedSimpleField } from './contained-simple-field'
 import { ContainedSetType } from '../dict-primitive'
-import { TagType } from '../../buffer/tags'
-import { ElasticBuffer } from '../../buffer/elastic-buffer'
+import { ElasticBuffer, TagType } from '../../buffer'
 
 export abstract class ContainedFieldSet {
   public readonly groups: Dictionary<ContainedGroupField> = new Dictionary<ContainedGroupField>()

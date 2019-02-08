@@ -1,9 +1,7 @@
-import { Ascii } from '../buffer/ascii'
-import { AsciiParser } from '../buffer/ascii/ascii-parser'
+import { AsciiParser, AsciiChars, MsgView, SegmentDescription } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
 import { StringDuplex } from '../transport/duplex'
-import { MsgView, SegmentDescription } from '../buffer'
 import { ILogon } from '../types/FIX4.4/repo'
 import { getDefinitions, JsonHelper } from '../util'
 import * as path from 'path'
@@ -30,7 +28,7 @@ class ParsingResult {
 
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
-    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, Ascii.Pipe)
+    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, AsciiChars.Pipe)
     parser.on('error', (e: Error) => {
       reject(e)
     })

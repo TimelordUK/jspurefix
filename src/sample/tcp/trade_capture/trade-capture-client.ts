@@ -1,10 +1,10 @@
-import { AsciiSession } from '../../../transport/ascii'
+import { MsgView } from '../../../buffer'
+import { AsciiSession } from '../../../transport'
 import { MsgType } from '../../../types/enum'
 import { ITradeCaptureReport, ITradeCaptureReportRequest, ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
-import { MsgView } from '../../../buffer'
 
 export class TradeCaptureClient extends AsciiSession {
   private readonly logger: IJsFixLogger

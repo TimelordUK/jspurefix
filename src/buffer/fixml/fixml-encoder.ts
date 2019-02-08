@@ -1,6 +1,6 @@
 import { ILooseObject } from '../../collections/collection'
 import { ContainedFieldSet, ContainedField, ContainedGroupField, ContainedComponentField, ContainedSimpleField, FixDefinitions, dispatchFields, IFieldDispatcher } from '../../dictionary'
-import { Ascii } from '../ascii'
+import { AsciiChars } from '../ascii-chars'
 import { TagType } from '../tags'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
@@ -143,10 +143,10 @@ export class FixmlEncoder extends MsgEncoder {
     }
     const buffer = this.buffer
     buffer.writeString(name)
-    buffer.writeChar(Ascii.Equal)
-    buffer.writeChar(Ascii.Dq)
+    buffer.writeChar(AsciiChars.Equal)
+    buffer.writeChar(AsciiChars.Dq)
     buffer.writeString(val)
-    buffer.writeChar(Ascii.Dq)
+    buffer.writeChar(AsciiChars.Dq)
   }
 
   private attributes (o: ILooseObject, set: ContainedFieldSet, depth: number, attributePerLine: boolean): void {
@@ -162,7 +162,7 @@ export class FixmlEncoder extends MsgEncoder {
     for (let a = 0; a < populatedAttributes.values.length; ++a) {
       const last = a === populatedAttributes.values.length - 1
       const f = populatedAttributes.fields[a]
-      if (a || this.attributePerLine) buffer.writeChar(Ascii.Space)
+      if (a || this.attributePerLine) buffer.writeChar(AsciiChars.Space)
       this.encodeAttribute(f.name, FixmlEncoder.asString(f, populatedAttributes.values[a]))
       if (!last && attributePerLine) {
         buffer.writeString(newLine)

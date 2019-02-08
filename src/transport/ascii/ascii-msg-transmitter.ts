@@ -1,9 +1,7 @@
-import { AsciiEncoder } from '../../buffer/ascii/ascii-encoder'
-import { ILooseObject } from '../../collections/collection'
-import { ContainedFieldSet } from '../../dictionary/contained'
-import { MessageDefinition } from '../../dictionary/definition'
+import { TimeFormatter, AsciiEncoder } from '../../buffer/ascii/'
 import { MsgTransmitter } from '../msg-transmitter'
-import { TimeFormatter } from '../../buffer/ascii/time-formatter'
+import { ILooseObject } from '../../collections/collection'
+import { MessageDefinition, ContainedFieldSet } from '../../dictionary'
 import { IJsFixConfig } from '../../config'
 
 export class AsciiMsgTransmitter extends MsgTransmitter {
@@ -17,7 +15,8 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
 
     super(config.definitions, config.description)
     const buffer = this.buffer
-    this.encoder = new AsciiEncoder(buffer, config.definitions, new TimeFormatter(buffer), config.delimiter)
+    const tf: TimeFormatter = new TimeFormatter(buffer)
+    this.encoder = new AsciiEncoder(buffer, config.definitions, tf, config.delimiter)
     this.header = config.definitions.component.get('header')
     this.trailer = config.definitions.component.get('trailer')
   }

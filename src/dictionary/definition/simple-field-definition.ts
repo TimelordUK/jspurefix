@@ -2,7 +2,7 @@ import { Dictionary } from '../../collections'
 import { FieldEnum } from '../field-enum'
 import { Tags, TagType } from '../../buffer/tags'
 import * as _ from 'lodash'
-import { Ascii } from '../../buffer'
+import { AsciiChars } from '../../buffer'
 
 export class SimpleFieldDefinition {
   public readonly tag: number
@@ -48,8 +48,8 @@ export class SimpleFieldDefinition {
   public patchEnumValue (v: string): string {
     let converted = _.upperFirst(_.camelCase(v))
     const charAtPos = converted.charCodeAt(0)
-    const zero: number = Ascii.Zero
-    const nine: number = Ascii.Nine
+    const zero: number = AsciiChars.Zero
+    const nine: number = AsciiChars.Nine
     const atDigit: boolean = charAtPos >= zero && charAtPos <= nine
     if (atDigit) {
       converted = `E${converted}`

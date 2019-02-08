@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { ILooseObject } from './collections/collection'
 import { MessageGenerator, JsonHelper, getDefinitions, getWords } from './util'
-import { Ascii, MsgView, MsgParser, ElasticBuffer, AsciiParser, AsciiView, FiXmlParser, FixmlEncoder } from './buffer'
+import { AsciiChars, MsgView, MsgParser, ElasticBuffer, AsciiParser, AsciiView, FiXmlParser, FixmlEncoder } from './buffer'
 import { ReadStream } from 'fs'
 import { ISessionDescription, AsciiMsgTransmitter, StringDuplex, MsgPayload } from './transport'
 import { EnumCompiler, MsgCompiler, ICompilerSettings, FixDefinitions } from './dictionary'
@@ -17,13 +17,13 @@ async function testEncodeDecode (): Promise<any> {
   const definitions = await getDefinitions(path.join(root, sessionDescription.application.dictionary))
   const jh: JsonHelper = new JsonHelper(definitions)
   const msg: ILooseObject = jh.fromJson(path.join(root, 'data/examples/FIXML/cme/tc/Initial Single Side Submission/fix.xml'), msgType)
-  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
   const payload: MsgPayload = new MsgPayload(msgType, msg)
   const encoderStream = session.encodeStream
   encoderStream.write(payload)
   session.encodeMessage(msgType, msg)
-  const parser: MsgParser = new AsciiParser(definitions, encoderStream, Ascii.Pipe)
+  const parser: MsgParser = new AsciiParser(definitions, encoderStream, AsciiChars.Pipe)
   const fix: string = session.buffer.toString()
   console.log(fix)
   return new Promise(async (resolve, reject) => {
@@ -45,14 +45,14 @@ async function testGenerator (): Promise<any> {
   const msgType: string = MsgType.NewOrderSingle
   const example: ILooseObject = generator.generate(msgType)
   console.log(JSON.stringify(example, null, 4))
-  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
   session.encodeMessage(msgType, example)
   const fix: string = session.buffer.toString()
   const encoderStream = session.encodeStream
   const payload: MsgPayload = new MsgPayload(msgType, example)
   encoderStream.write(payload)
-  const parser: MsgParser = new AsciiParser(definitions, encoderStream, Ascii.Pipe)
+  const parser: MsgParser = new AsciiParser(definitions, encoderStream, AsciiChars.Pipe)
   parser.on('msg', (mt: string, view: MsgView) => {
     console.log(view.toString())
   })
@@ -101,7 +101,7 @@ async function repository (): Promise<any> {
   const fs: any = require('fs')
   let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
   const sessionDescription: ISessionDescription = require('../data/session/test-initiator.json')
-  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   const xmlParser: MsgParser = new FiXmlParser(config, readStream)
   xmlParser.on('batch', (msgType: string, v: MsgView) => {
     console.log(`received message ${msgType}`)
@@ -185,7 +185,7 @@ async function decode (): Promise<any> {
   const startsAt: Date = new Date()
   let i = 0
   const repeats = 10 * 1000
-  const asciiParser: MsgParser = new AsciiParser(definitions, new StringDuplex(txt.repeat(repeats)).readable, Ascii.Pipe)
+  const asciiParser: MsgParser = new AsciiParser(definitions, new StringDuplex(txt.repeat(repeats)).readable, AsciiChars.Pipe)
   asciiParser.on('msg', (msgType: string, v: MsgView) => {
     ++i
     if (i === repeats) {
@@ -199,7 +199,7 @@ async function http (): Promise<any> {
   const sessionDescription: ISessionDescription = require('../data/session/test-http-acceptor.json')
   const definitions = await getDefinitions(sessionDescription.application.dictionary)
   const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
-  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe, logFactory)
+  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe, logFactory)
   // const acceptor = acceptor(config)
   const xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
     '<FIXML v="5.0 SP2" s="20090815" xv="109" cv="CME.0001">\n' +

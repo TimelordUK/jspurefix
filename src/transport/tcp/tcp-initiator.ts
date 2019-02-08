@@ -1,6 +1,7 @@
-import { MsgTransport } from '../msg-transport'
 import { ITcpTransportDescription } from '../session-description'
 import { FixInitiator } from '../fix-initiator'
+import { MsgTransport } from '../msg-transport'
+
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { TcpDuplex, FixDuplex } from '../duplex'
 

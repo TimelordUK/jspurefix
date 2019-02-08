@@ -1,6 +1,6 @@
-import { Ascii } from '../ascii'
+import { AsciiChars } from '../ascii-chars'
 import { ElasticBuffer } from '../elastic-buffer'
-import { ITimeFormatter } from '../time-formatter'
+import { ITimeFormatter } from './itime-formatter'
 
 export class TimeFormatter implements ITimeFormatter {
   constructor (public readonly buffer: ElasticBuffer, public readonly adjustLocal: boolean = false) {
@@ -22,37 +22,37 @@ export class TimeFormatter implements ITimeFormatter {
 
   public writeUtcTimestamp (v: Date): void {
     this.writeUtcDate(v)
-    this.buffer.writeChar(Ascii.Hyphen)
+    this.buffer.writeChar(AsciiChars.Hyphen)
     this.writeUtcTime(v as Date)
   }
 
   public writeLocalTimestamp (v: Date): void {
     this.writeLocalDate(v)
-    this.buffer.writeChar(Ascii.Hyphen)
+    this.buffer.writeChar(AsciiChars.Hyphen)
     this.writeLocalTime(v as Date)
   }
 
   public writeUtcTime (v: Date): void {
     const buffer = this.buffer
     buffer.writePaddedTensUnits(v.getUTCHours())
-    buffer.writeChar(Ascii.Colon)
+    buffer.writeChar(AsciiChars.Colon)
     buffer.writePaddedTensUnits(v.getUTCMinutes())
-    buffer.writeChar(Ascii.Colon)
+    buffer.writeChar(AsciiChars.Colon)
     buffer.writePaddedTensUnits(v.getUTCSeconds())
     const ms: number = v.getUTCMilliseconds()
-    buffer.writeChar(Ascii.Dot)
+    buffer.writeChar(AsciiChars.Dot)
     buffer.writePaddedHundreds(ms)
   }
 
   public writeLocalTime (v: Date): void {
     const buffer = this.buffer
     buffer.writePaddedTensUnits(v.getHours())
-    buffer.writeChar(Ascii.Colon)
+    buffer.writeChar(AsciiChars.Colon)
     buffer.writePaddedTensUnits(v.getMinutes())
-    buffer.writeChar(Ascii.Colon)
+    buffer.writeChar(AsciiChars.Colon)
     buffer.writePaddedTensUnits(v.getSeconds())
     const ms: number = v.getMilliseconds()
-    buffer.writeChar(Ascii.Dot)
+    buffer.writeChar(AsciiChars.Dot)
     buffer.writePaddedHundreds(ms)
   }
 
@@ -105,7 +105,7 @@ export class TimeFormatter implements ITimeFormatter {
     }
 
     let offset: number = 8
-    if (buffer.get(start + offset) !== Ascii.Hyphen) {
+    if (buffer.get(start + offset) !== AsciiChars.Hyphen) {
       return null
     }
 
@@ -116,20 +116,20 @@ export class TimeFormatter implements ITimeFormatter {
     offset += 1
     const hh: number = buffer.getWholeNumber(start + offset, start + offset + 1)
     offset += 2
-    if (buffer.get(start + offset) !== Ascii.Colon) {
+    if (buffer.get(start + offset) !== AsciiChars.Colon) {
       return null
     }
     offset += 1
     const mm: number = buffer.getWholeNumber(start + offset, start + offset + 1)
     offset += 2
-    if (buffer.get(start + offset) !== Ascii.Colon) {
+    if (buffer.get(start + offset) !== AsciiChars.Colon) {
       return null
     }
     offset += 1
     const ss: number = buffer.getWholeNumber(start + offset, start + offset + 1)
     offset += 2
     let ms: number = 0
-    if (buffer.get(start + offset) === Ascii.Dot) {
+    if (buffer.get(start + offset) === AsciiChars.Dot) {
       offset += 1
       ms = buffer.getWholeNumber(start + offset, start + offset + 2)
     }
@@ -150,20 +150,20 @@ export class TimeFormatter implements ITimeFormatter {
     let offset = 0
     const hh: number = buffer.getWholeNumber(start + offset, start + offset + 1)
     offset += 2
-    if (buffer.get(start + offset) !== Ascii.Colon) {
+    if (buffer.get(start + offset) !== AsciiChars.Colon) {
       return null
     }
     offset += 1
     const mm: number = buffer.getWholeNumber(start + offset, start + offset + 1)
     offset += 2
-    if (buffer.get(start + offset) !== Ascii.Colon) {
+    if (buffer.get(start + offset) !== AsciiChars.Colon) {
       return null
     }
     offset += 1
     const ss: number = buffer.getWholeNumber(start + offset, start + offset + 1)
     offset += 2
     let ms: number = 0
-    if (buffer.get(start + offset) === Ascii.Dot) {
+    if (buffer.get(start + offset) === AsciiChars.Dot) {
       offset += 1
       ms = buffer.getWholeNumber(start + offset, start + offset + 2)
     }

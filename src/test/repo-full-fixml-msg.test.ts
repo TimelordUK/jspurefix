@@ -1,10 +1,9 @@
 import * as path from 'path'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { Ascii } from '../buffer/ascii'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
-import { MsgView, ElasticBuffer, MsgParser } from '../buffer'
+import { MsgView, ElasticBuffer, MsgParser, AsciiChars } from '../buffer'
 import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
 import { StringDuplex } from '../transport/duplex'
 import { getDefinitions, JsonHelper } from '../util'
@@ -26,7 +25,7 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
     const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
     fe.encode(asObj, msgType)
     const fixml: string = fe.buffer.toString()
-    const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+    const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
     const xmlParser: MsgParser = new FiXmlParser(config, new StringDuplex(fixml).readable)
     if (asObj.Batch) {
       xmlParser.on('batch', (msgType: string, v: MsgView) => {

@@ -1,6 +1,4 @@
-import { ITimeFormatter } from '../buffer/time-formatter'
-import { TimeFormatter } from '../buffer/ascii/time-formatter'
-import { ElasticBuffer } from '../buffer'
+import { ITimeFormatter, TimeFormatter, ElasticBuffer } from '../buffer'
 
 const buffer = new ElasticBuffer()
 let timeFormatter: ITimeFormatter

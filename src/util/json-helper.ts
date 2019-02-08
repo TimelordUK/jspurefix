@@ -1,9 +1,7 @@
-import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { ILooseObject } from '../collections/collection'
-import { ContainedSimpleField, ContainedFieldSet, ContainedGroupField, ContainedComponentField } from '../dictionary/contained'
 import { TagType } from '../buffer'
+import { ILooseObject } from '../collections/collection'
+import { ContainedSimpleField, ContainedFieldSet, ContainedGroupField, ContainedComponentField, dispatchFields, IFieldDispatcher, FixDefinitions, MessageDefinition } from '../dictionary'
 import moment = require('moment')
-import { dispatchFields, IFieldDispatcher } from '../dictionary'
 
 export class JsonHelper {
   constructor (public readonly definitions: FixDefinitions) {

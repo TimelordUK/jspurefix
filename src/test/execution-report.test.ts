@@ -1,10 +1,8 @@
 import * as path from 'path'
-import { SegmentDescription, SegmentType, MsgView, Structure } from '../buffer'
+import { SegmentDescription, SegmentType, MsgView, Structure, AsciiChars } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { Ascii } from '../buffer/ascii'
-import { AsciiMsgTransmitter } from '../transport/ascii'
-import { ISessionDescription } from '../transport'
+import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { JsFixConfig } from '../config'
 import { IUndInstrmtGrp, IUnderlyingInstrument } from '../types/FIX4.4/quickfix'
 import { replayFixFile, getDefinitions } from '../util'
@@ -19,9 +17,9 @@ let structure: Structure
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, Ascii.Pipe)
+  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
-  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/execution-report/fix.txt'), Ascii.Pipe)
+  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/execution-report/fix.txt'), AsciiChars.Pipe)
   if (views && views.length > 0) {
     structure = views[0].structure
   }

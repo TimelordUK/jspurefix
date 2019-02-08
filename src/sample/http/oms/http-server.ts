@@ -1,5 +1,5 @@
-import { FixmlSession } from '../../../transport/fixml'
 import { MsgView } from '../../../buffer'
+import { FixmlSession } from '../../../transport/fixml'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { INewOrderSingle, IExecutionReport } from '../../../types/FIXML50SP2'
 import { OmsFactory } from './oms-factory'

@@ -1,11 +1,9 @@
-import { Ascii } from '../buffer/ascii'
-import { AsciiParser } from '../buffer/ascii/ascii-parser'
+import { TagPos, SegmentType, MsgView, AsciiChars, AsciiParser } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
 import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription } from '../transport'
 import { StringDuplex } from '../transport/duplex'
 import * as path from 'path'
-import { TagPos, SegmentType, MsgView } from '../buffer'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -50,7 +48,7 @@ class ParsingResult {
 
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
-    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, Ascii.Pipe)
+    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, AsciiChars.Pipe)
     parser.on('error', (e: Error) => {
       reject(e)
     })

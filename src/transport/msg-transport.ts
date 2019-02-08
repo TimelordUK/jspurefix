@@ -1,6 +1,6 @@
-import { AsciiParser } from '../buffer/ascii/ascii-parser'
-import { AsciiMsgTransmitter } from './ascii'
-import { MsgParser, Ascii } from '../buffer'
+import { AsciiParser } from '../buffer/ascii'
+import { AsciiMsgTransmitter } from './ascii/ascii-msg-transmitter'
+import { MsgParser, AsciiChars } from '../buffer'
 import { FiXmlParser } from '../buffer/fixml'
 import { MsgTransmitter } from './msg-transmitter'
 import { FixmlMsgTransmitter } from './fixml'
@@ -27,7 +27,7 @@ export class MsgTransport {
         // let parser replace delimiter with Pipe so fix log does not require
         // expensive replace
         this.transmitter = new AsciiMsgTransmitter(config)
-        this.receiver = new AsciiParser(definitions, duplex.readable, delimiter, Ascii.Pipe)
+        this.receiver = new AsciiParser(definitions, duplex.readable, delimiter, AsciiChars.Pipe)
         break
       }
 
