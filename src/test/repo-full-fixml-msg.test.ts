@@ -51,6 +51,7 @@ test('AllocInstrctn fixml object', async () => {
   expect(o).toEqual(asObj)
 }, 1000)
 
+/*
 test('AllocRpt fixml object', async () => {
   const msgType: string = 'AllocRpt'
   const file: string = path.join(root,'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
@@ -58,6 +59,7 @@ test('AllocRpt fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
+*/
 
 test('TrdCaptRpt fixml object', async () => {
   const msgType: string = 'TrdCaptRpt'
@@ -106,6 +108,7 @@ test('TrdCaptRpt 3 fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
+
 /*
 test('MktDataFull settle fixml object', async () => {
   const msgType: string = 'MktDataFull'
@@ -115,6 +118,7 @@ test('MktDataFull settle fixml object', async () => {
   expect(o).toEqual(asObj)
 }, 1000)
 */
+
 test('TrdCaptRptReq fixml object', async () => {
   const msgType: string = 'TrdCaptRptReq'
   const file: string = path.join(root,'examples/FIXML/cme/tc/Trading Firm Continued Subscription')
