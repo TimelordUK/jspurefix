@@ -74,8 +74,9 @@ Executing Firm Marks a Trade for Give-up.xml
 async function repository (): Promise<any> {
   const root: string = path.join(__dirname, '../')
   const definitions: FixDefinitions = await getDefinitions('repofixml')
+  // cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
-  // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
+  const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
   // const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription')
@@ -85,7 +86,7 @@ async function repository (): Promise<any> {
   // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Accepted Unmatched')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription/')
   // const file: string = path.join(root, 'data/examples/FIXML/om/nso/')
-  const file: string = path.join(root, 'data/examples/FIXML/om/er/')
+  // const file: string = path.join(root, 'data/examples/FIXML/om/er/')
   const so = definitions.message.get('ExecutionReport')
   const t855 = definitions.simple.get('SecondaryTrdType')
 

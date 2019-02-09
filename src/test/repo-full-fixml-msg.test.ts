@@ -1,11 +1,9 @@
 import * as path from 'path'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription } from '../transport'
+import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
-import { MsgView, ElasticBuffer, MsgParser, AsciiChars } from '../buffer'
-import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
-import { StringDuplex } from '../transport/duplex'
+import { MsgView, ElasticBuffer, MsgParser, AsciiChars, FixmlEncoder, FiXmlParser } from '../buffer'
 import { getDefinitions, JsonHelper } from '../util'
 
 let definitions: FixDefinitions
@@ -53,7 +51,6 @@ test('AllocInstrctn fixml object', async () => {
   expect(o).toEqual(asObj)
 }, 1000)
 
-/*
 test('AllocRpt fixml object', async () => {
   const msgType: string = 'AllocRpt'
   const file: string = path.join(root,'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
@@ -61,7 +58,6 @@ test('AllocRpt fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
-*/
 
 test('TrdCaptRpt fixml object', async () => {
   const msgType: string = 'TrdCaptRpt'
@@ -110,7 +106,6 @@ test('TrdCaptRpt 3 fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
-
 /*
 test('MktDataFull settle fixml object', async () => {
   const msgType: string = 'MktDataFull'
@@ -120,7 +115,6 @@ test('MktDataFull settle fixml object', async () => {
   expect(o).toEqual(asObj)
 }, 1000)
 */
-
 test('TrdCaptRptReq fixml object', async () => {
   const msgType: string = 'TrdCaptRptReq'
   const file: string = path.join(root,'examples/FIXML/cme/tc/Trading Firm Continued Subscription')

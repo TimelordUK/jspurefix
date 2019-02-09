@@ -3,7 +3,7 @@ import { ReadStream } from 'fs'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { MsgParser, MsgView, AsciiChars, FiXmlParser } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../dictionary'
 import { getDefinitions } from '../util'
 
 export class ToViews {

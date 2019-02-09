@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { SegmentDescription, SegmentType, Structure, AsciiChars, MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { replayFixFile, getDefinitions } from '../util'
 import { JsFixConfig } from '../config'

@@ -1,8 +1,7 @@
 import { TagPos, SegmentType, MsgView, AsciiChars, AsciiParser } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../dictionary'
 import { JsonHelper, getDefinitions } from '../util'
-import { ISessionDescription } from '../transport'
-import { StringDuplex } from '../transport/duplex'
+import { ISessionDescription, StringDuplex } from '../transport'
 import * as path from 'path'
 
 let definitions: FixDefinitions

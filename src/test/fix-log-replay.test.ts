@@ -1,5 +1,5 @@
 import * as path from 'path'
-import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
+import { FixDefinitions, MessageDefinition } from '../dictionary'
 import { MsgView, AsciiChars } from '../buffer'
 import { ISessionDescription } from '../transport'
 import { ILooseObject } from '../collections/collection'

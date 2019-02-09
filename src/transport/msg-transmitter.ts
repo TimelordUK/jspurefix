@@ -1,5 +1,5 @@
 import { MsgEncoder, ElasticBuffer } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../dictionary'
 import { Transform } from 'stream'
 import { MsgPayload } from './msg-payload'
 import { ILooseObject } from '../collections/collection'

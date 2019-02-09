@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { Structure, AsciiChars, MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { JsFixConfig } from '../config'
 import { IInstrumentLeg } from '../types/FIX4.4/quickfix'
