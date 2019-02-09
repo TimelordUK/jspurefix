@@ -1,5 +1,5 @@
 import { Tags } from '../tags'
-import { MessageDefinition } from '../../dictionary/definition'
+import { MessageDefinition } from '../../dictionary'
 import { ElasticBuffer } from '../elastic-buffer'
 
 export enum ParseState {
