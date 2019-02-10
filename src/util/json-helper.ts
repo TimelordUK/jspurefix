@@ -27,28 +27,25 @@ export class JsonHelper {
 
       case TagType.UtcTimestamp:
         const m = moment(v)
-        const d = m.utc(true).toDate()
+        const d = m.toDate()
         object[name] = d
         break
 
       case TagType.UtcDateOnly: {
         const m = moment(v)
-        const d = m.utc().toDate()
-        object[name] = new Date(Date.UTC(d.getFullYear(), d.getMonth() - 1, d.getDay(), 0, 0, 0, 0))
+        object[name] = m.toDate()
         break
       }
 
       case TagType.UtcTimeOnly: {
         const m = moment(v)
-        const d = m.utc().toDate()
-        object[name] = new Date(Date.UTC(0, 0, 0, d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds()))
+        object[name] = m.toDate()
         break
       }
 
       case TagType.LocalDate: {
         const m = moment(v)
-        const d = m.toDate()
-        object[name] = new Date(d.getFullYear(), d.getMonth() - 1, d.getDay(), 0, 0, 0, 0)
+        object[name] = m.toDate()
         break
       }
 

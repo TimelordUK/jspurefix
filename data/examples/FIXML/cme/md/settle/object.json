@@ -46,19 +46,19 @@
         {
           "MDEntryType": "6",
           "MDEntryPx": 5.209,
-          "MDEntryDate": "2008-06-18T23:00:00.000Z",
+          "MDEntryDate": "2008-06-19T00:00:00.000Z",
           "MDMkt": "CME"
         },
         {
           "MDEntryType": "S",
           "MDEntryPx": 50896.5969622,
-          "MDEntryDate": "2008-06-18T23:00:00.000Z",
+          "MDEntryDate": "2008-06-19T00:00:00.000Z",
           "MDMkt": "CME"
         },
         {
           "MDEntryType": "4",
           "MDEntryPx": 5.209,
-          "MDEntryDate": "2008-06-19T23:00:00.000Z",
+          "MDEntryDate": "2008-06-20T00:00:00.000Z",
           "MDMkt": "CME",
           "OpenCloseSettlFlag": "5"
         }

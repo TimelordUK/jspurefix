@@ -47,9 +47,9 @@ test('fetch attributes from Hdr', () => {
   expect(v.getTyped('TID')).toEqual('560')
   expect(hdr.SenderSubID).toEqual('CME')
   expect(hdr.TargetSubID).toEqual('CME')
-  expect(hdr.SendingTime).toEqual(new Date('2015-08-13T10:12:09-05:00'))
+  expect(hdr.SendingTime).toEqual(new Date('2015-08-13T16:12:09.000Z'))
   const snt: Date = v.getTyped('SendingTime')
-  expect(snt).toEqual(new Date('2015-08-13T10:12:09-05:00'))
+  expect(snt).toEqual(new Date('2015-08-13T16:12:09.000Z'))
 })
 
 test('fetch attributes from main object', () => {

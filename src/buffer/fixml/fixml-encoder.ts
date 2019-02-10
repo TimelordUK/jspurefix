@@ -41,7 +41,7 @@ export class FixmlEncoder extends MsgEncoder {
 
       case TagType.UtcTimestamp: {
         const d: Date = v as Date
-        return moment(d).format('YYYY-MM-DDTHH:mm:ss.SSS')
+        return moment(d).utc().format('YYYY-MM-DDTHH:mm:ss.SSS')
       }
 
       case TagType.UtcTimeOnly: {
@@ -56,7 +56,7 @@ export class FixmlEncoder extends MsgEncoder {
 
       case TagType.UtcDateOnly: {
         const d: Date = v as Date
-        return moment(d).format('YYYY-MM-DD')
+        return moment(d).utc(true).format('YYYY-MM-DD')
       }
     }
   }

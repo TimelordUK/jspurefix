@@ -16,20 +16,20 @@ export class FixmlView extends MsgView {
 
   private static getTimestamp (s: string, useUtc: boolean): Date {
     let m = moment(s)
-    return useUtc ? m.utc().toDate() : m.toDate()
+    return useUtc ? m.utc(true).toDate() : m.toDate()
   }
 
   // 01:00:08.201
   private static getTimeOnly (s: string, useUtc: boolean): Date {
     let m = moment(s, [moment.HTML5_FMT.TIME_MS, moment.HTML5_FMT.TIME_SECONDS])
-    return useUtc ? m.utc().toDate() : m.toDate()
+    return useUtc ? m.utc(true).toDate() : m.toDate()
   }
 
   private static getDateOnly (s: string, useUtc: boolean): Date {
     let m = moment(s)
     let d: Date
     if (useUtc) {
-      d = m.utc().toDate()
+      d = m.utc(true).toDate()
     } else {
       d = m.toDate()
     }

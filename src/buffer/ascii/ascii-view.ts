@@ -84,7 +84,7 @@ export class AsciiView extends MsgView {
         }
 
         case TagType.LocalDate: {
-          return this.getDate(field.tag, false)
+          return this.getDate(field.tag, true)
         }
 
         case TagType.RawData: {

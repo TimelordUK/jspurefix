@@ -2,18 +2,18 @@
     "SecondaryClOrdID": "Lorem",
     "ClOrdID": "ipsum",
     "QuoteRespID": "dolor",
-    "TradeOriginationDate": "2018-09-08T23:00:00.000Z",
+    "TradeOriginationDate": "2018-09-09T00:00:00.000Z",
     "OrigCrossID": "sit",
     "OrdStatus": "E",
     "SettlType": "1",
     "Instrument": {
         "Symbol": "amet,",
         "SymbolSfx": "consectetur",
-        "CouponPaymentDate": "2018-09-08T23:00:00.000Z",
+        "CouponPaymentDate": "2018-09-09T00:00:00.000Z",
         "InstrRegistry": "adipiscing",
         "StateOrProvinceOfIssue": "elit.",
         "LocaleOfIssue": "Nunc",
-        "RedemptionDate": "2018-09-08T23:00:00.000Z",
+        "RedemptionDate": "2018-09-09T00:00:00.000Z",
         "EncodedSecurityDescLen": 8,
         "EncodedSecurityDesc": {
             "type": "Buffer",
@@ -29,14 +29,14 @@
             ]
         },
         "ContractSettlMonth": "odio",
-        "DatedDate": "2018-09-08T23:00:00.000Z",
-        "InterestAccrualDate": "2018-09-08T23:00:00.000Z"
+        "DatedDate": "2018-09-09T00:00:00.000Z",
+        "InterestAccrualDate": "2018-09-09T00:00:00.000Z"
     },
     "FinancingDetails": {
         "AgreementDesc": "orci,",
         "AgreementCurrency": -854.64,
         "TerminationType": 1,
-        "EndDate": "2018-09-08T23:00:00.000Z",
+        "EndDate": "2018-09-09T00:00:00.000Z",
         "MarginRatio": -0.0002212
     },
     "OrderQtyData": {
@@ -66,9 +66,9 @@
     },
     "YieldData": {
         "YieldType": "ANNUAL",
-        "YieldCalcDate": "2018-09-08T23:00:00.000Z"
+        "YieldCalcDate": "2018-09-09T00:00:00.000Z"
     },
-    "ExDate": "2018-09-08T23:00:00.000Z",
+    "ExDate": "2018-09-09T00:00:00.000Z",
     "InterestAtMaturity": 0.098745,
     "EndCash": -97.667,
     "Concession": -0.0034632,

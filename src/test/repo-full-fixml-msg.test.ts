@@ -43,7 +43,6 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
   })
 }
 
-/*
 test('MktDataFull settle fixml object', async () => {
   const msgType: string = 'MktDataFull'
   const file: string = path.join(root,'examples/FIXML/cme/md/settle')
@@ -51,7 +50,6 @@ test('MktDataFull settle fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
-*/
 
 test('AllocInstrctn fixml object', async () => {
   const msgType: string = 'AllocInstrctn'
