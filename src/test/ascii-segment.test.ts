@@ -1,5 +1,5 @@
 import { AsciiParser, AsciiChars, MsgView, SegmentDescription } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { ILogon } from '../types/FIX4.4/repo'
 import { getDefinitions, JsonHelper } from '../util'

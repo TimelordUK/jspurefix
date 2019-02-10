@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { MsgView, ElasticBuffer, MsgParser, AsciiChars, FixmlEncoder, FiXmlParser } from '../buffer'
@@ -42,6 +42,14 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
     })
   })
 }
+
+test('MktDataFull settle fixml object', async () => {
+  const msgType: string = 'MktDataFull'
+  const file: string = path.join(root,'examples/FIXML/cme/md/settle')
+  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
+  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
+  expect(o).toEqual(asObj)
+}, 1000)
 
 test('AllocInstrctn fixml object', async () => {
   const msgType: string = 'AllocInstrctn'
@@ -106,16 +114,6 @@ test('TrdCaptRpt 3 fixml object', async () => {
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
 }, 1000)
-
-/*
-test('MktDataFull settle fixml object', async () => {
-  const msgType: string = 'MktDataFull'
-  const file: string = path.join(root,'examples/FIXML/cme/md/settle')
-  const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
-  const o: ILooseObject = await testEncodeDecode(asObj, msgType)
-  expect(o).toEqual(asObj)
-}, 1000)
-*/
 
 test('TrdCaptRptReq fixml object', async () => {
   const msgType: string = 'TrdCaptRptReq'

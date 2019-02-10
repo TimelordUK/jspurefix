@@ -51,12 +51,12 @@ export class FixmlEncoder extends MsgEncoder {
 
       case TagType.LocalDate: {
         const d: Date = v as Date
-        return moment(d).format('YYYYMMDD')
+        return moment(d).format('YYYY-MM-DD')
       }
 
       case TagType.UtcDateOnly: {
         const d: Date = v as Date
-        return moment.utc(d).format('YYYYMMDD')
+        return moment(d).format('YYYY-MM-DD')
       }
     }
   }
