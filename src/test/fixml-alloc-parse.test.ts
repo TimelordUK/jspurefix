@@ -193,6 +193,6 @@ test('main attributes', () => {
   expect(v.getTyped('AllocReportType')).toEqual(16)
   expect(v.getTyped('TrdType')).toEqual(2)
   expect(v.getTyped('AvgPx')).toEqual(95.5)
-  expect(v.getTyped('TradeDate')).toEqual(moment('2015-08-05').toDate())
+  expect(v.getTyped('TradeDate')).toEqual(moment('2015-08-05').utc(true).toDate())
   expect(v.getTyped('TradeMatchID')).toEqual('12A80D9ED85HI04008310')
 })

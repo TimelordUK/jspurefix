@@ -76,9 +76,9 @@ async function repository (): Promise<any> {
   const definitions: FixDefinitions = await getDefinitions('repofixml')
   // cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
-  const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
+  // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
-  // const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
+  const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/futures')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap')
@@ -228,13 +228,13 @@ async function http (): Promise<any> {
 }
 
 // http()
-decode()
+// decode()
 // generateMessage()
 // compiler()
 // stronglyTyped()
 // streamExample()
 // testEncodeDecode()
-// repository()
+repository()
 // testEncodeDecode()
 // runTest();
 // testSocket()

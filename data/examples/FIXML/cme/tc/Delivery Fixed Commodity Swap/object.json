@@ -17,11 +17,11 @@
       "PriceType": 2,
       "VenueType": "X",
       "QtyType": 1,
-      "TradeDate": "2016-07-13T23:00:00.000Z",
+      "TradeDate": "2016-07-14T00:00:00.000Z",
       "MultiLegReportingType": "1",
-      "TransactTime": "2016-07-14T09:18:10.000Z",
+      "TransactTime": "2016-07-14T10:18:10.000Z",
       "ExecMethod": 2,
-      "LastUpdateTime": "2016-07-14T09:18:14.002Z",
+      "LastUpdateTime": "2016-07-14T10:18:14.002Z",
       "ClearedIndicator": 0,
       "ClearingIntention": 0,
       "ClearingRequirementException": 0,
@@ -44,10 +44,10 @@
               "StreamCommodityBase": "NG"
             },
             "StreamEffectiveDate": {
-              "StreamEffectiveDateAdjusted": "2019-07-31T23:00:00.000Z"
+              "StreamEffectiveDateAdjusted": "2019-08-01T00:00:00.000Z"
             },
             "StreamTerminationDate": {
-              "StreamTerminationDateAdjusted": "2019-08-30T23:00:00.000Z"
+              "StreamTerminationDateAdjusted": "2019-08-31T00:00:00.000Z"
             },
             "DeliveryStream": {
               "DeliveryStreamDeliveryPoint": "Northwest Pipeline Corp - Canadian Border (Huntingdon)",
@@ -68,10 +68,10 @@
               "StreamCommodityBase": "NG"
             },
             "StreamEffectiveDate": {
-              "StreamEffectiveDateAdjusted": "2019-07-31T23:00:00.000Z"
+              "StreamEffectiveDateAdjusted": "2019-08-01T00:00:00.000Z"
             },
             "StreamTerminationDate": {
-              "StreamTerminationDateAdjusted": "2019-08-30T23:00:00.000Z"
+              "StreamTerminationDateAdjusted": "2019-08-31T00:00:00.000Z"
             },
             "PaymentStream": {
               "PaymentStreamFixedRate": {
@@ -142,7 +142,7 @@
           ],
           "SideTrdRegTS": [
             {
-              "SideTrdRegTimestamp": "2016-07-14T09:18:07.000Z",
+              "SideTrdRegTimestamp": "2016-07-14T10:18:07.000Z",
               "SideTrdRegTimestampType": 1
             }
           ]
@@ -196,7 +196,7 @@
           ],
           "SideTrdRegTS": [
             {
-              "SideTrdRegTimestamp": "2016-07-14T09:18:07.000Z",
+              "SideTrdRegTimestamp": "2016-07-14T10:18:07.000Z",
               "SideTrdRegTimestampType": 1
             }
           ]

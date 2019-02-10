@@ -94,7 +94,7 @@ export class FixmlView extends MsgView {
         }
 
         case TagType.LocalDate: {
-          return FixmlView.getDateOnly(s, false)
+          return FixmlView.getDateOnly(s, true)
         }
 
         case TagType.RawData: {
