@@ -31,6 +31,12 @@ compiled typescript is now included. Install the package from npm:
   npm run unzip-repo
 ```
 
+see our demo application
+
+```shell
+  https://github.com/TimelordUK/jspf-demo.git
+```
+
 import types for usage with a client
 
 ```typescript
