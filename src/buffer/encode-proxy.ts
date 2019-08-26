@@ -1,4 +1,4 @@
-import { FixDefinitions, MessageDefinition, SimpleFieldDefinition, ContainedField, ContainedFieldType, ContainedSimpleField, ContainedComponentField, ContainedGroupField, ContainedFieldSet } from '../dictionary'
+import { FixDefinitions, MessageDefinition, SimpleFieldDefinition, ContainedField, ContainedFieldType, ContainedSimpleField, ContainedComponentField, ContainedGroupField, ContainedFieldSet } from '..'
 import { ILooseObject } from '../collections/collection'
 import { TagType } from './tags'
 

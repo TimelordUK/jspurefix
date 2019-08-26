@@ -36,10 +36,10 @@ export class TcpAcceptor extends FixAcceptor {
     this.server.listen(port)
   }
 
-  public close (cb: Function): void {
+  public close (callback?: (err?: Error) => void): void {
     const port = this.config.description.application.tcp.port
     this.logger.info(`close listener on port ${port}`)
-    this.server.close(cb)
+    this.server.close(callback)
   }
 
   private saveTransport (tid: number, transport: MsgTransport) {

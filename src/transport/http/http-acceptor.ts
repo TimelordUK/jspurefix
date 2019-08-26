@@ -41,11 +41,11 @@ export class HttpAcceptor extends FixAcceptor {
     }))
   }
 
-  public close (cb: Function): void {
+  public close (callback?: (err?: Error) => void): void {
     const app = this.config.description.application
     const port = app.http.port
     this.logger.info(`close listener on port ${port}`)
-    this.server.close(cb)
+    this.server.close(callback)
   }
 
   private saveTransport (tid: number, transport: MsgTransport): string {

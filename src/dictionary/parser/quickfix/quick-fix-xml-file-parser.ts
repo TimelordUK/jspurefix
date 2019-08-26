@@ -200,10 +200,10 @@ export class QuickFixXmlFileParser extends FixParser {
     })
   }
 
-  private async onePass (): Promise<any> {
+  private async onePass (): Promise<FixDefinitions> {
     const pass: fs.ReadStream = fs.createReadStream(this.xmlPath)
     const saxStream: SAXStream = require('sax').createStream(true, {})
     pass.pipe(saxStream)
-    await this.singlePass(this, saxStream)
+    return this.singlePass(this, saxStream)
   }
 }

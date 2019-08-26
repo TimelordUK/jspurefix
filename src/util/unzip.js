@@ -70,9 +70,9 @@ function mkdirp (dir, cb) {
 }
 
 if (offsetArg != null || lenArg != null || endArg != null) {
-  openMiddleOfFile(zipFilePath, {lazyEntries: true}, offsetArg, lenArg, endArg, handleZipFile)
+  openMiddleOfFile(zipFilePath, { lazyEntries: true }, offsetArg, lenArg, endArg, handleZipFile)
 } else {
-  yauzl.open(zipFilePath, {lazyEntries: true}, handleZipFile)
+  yauzl.open(zipFilePath, { lazyEntries: true }, handleZipFile)
 }
 
 function openMiddleOfFile (zipFilePath, options, offsetArg, lenArg, endArg, handleZipFile) {
@@ -92,10 +92,6 @@ function openMiddleOfFile (zipFilePath, options, offsetArg, lenArg, endArg, hand
       if (lenArg < 0) throw new Error('--len < 0')
       if (offsetArg > endArg) throw new Error('--offset > --end')
       if (endArg > stats.size) throw new Error('--end/--len goes past EOF')
-
-      function adjustOffset (n) {
-        return n + offsetArg
-      }
 
       // extend RandomAccessReader
       function MiddleOfFileReader () {
