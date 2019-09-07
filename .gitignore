@@ -65,4 +65,7 @@ typings/
 # compiled javascript
 dist/
 
+# idea folder
+.idea/
+
 data/fix_repo

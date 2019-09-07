@@ -77,7 +77,6 @@
     "@types/express": "^4.17.1",
     "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.137",
-    "@types/log4js": "^2.3.5",
     "@types/mathjs": "^4.4.5",
     "@types/minimist": "^1.2.0",
     "@types/node": "^12.7.2",
