@@ -57,6 +57,8 @@ export class JsfixCmd {
       command = Command.Lookup
     } else if (argv.json) {
       command = Command.Encode
+    } else if (argv.msg) {
+      command = Command.Lookup
     }
     return command
   }
@@ -133,7 +135,11 @@ export class JsfixCmd {
 
           case Command.Lookup: {
             // lookup a field
-            this.field()
+            if (argv.field) {
+              this.field()
+            } else {
+              this.msg()
+            }
             break
           }
 
@@ -237,6 +243,14 @@ export class JsfixCmd {
     const session: AsciiMsgTransmitter = this.session
     session.encodeMessage(msgType, object)
     return session.buffer.toString()
+  }
+
+  private msg (): void {
+    const definitions = this.definitions
+    const m = definitions.message.get(argv.msg)
+    if (m) {
+      console.log(m.toString())
+    }
   }
 
   private field (): void {
