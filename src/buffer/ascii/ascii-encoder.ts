@@ -6,11 +6,11 @@ import { TimeFormatter } from './time-formatter'
 import { ITimeFormatter } from './itime-formatter'
 import { AsciiChars } from '../ascii-chars'
 import { Tags, TagType } from '../tags'
-import { MsgTag } from '../../types'
 
 export class AsciiEncoder extends MsgEncoder {
 
   public bodyLengthPos: number
+  public msgTypePos: number
 
   constructor (public readonly buffer: ElasticBuffer,
                public readonly definitions: FixDefinitions,
@@ -211,6 +211,10 @@ export class AsciiEncoder extends MsgEncoder {
     switch (tag) {
       case Tags.BodyLengthTag:
         this.bodyLengthPos = pos + 2
+        break
+
+      case Tags.MsgTag:
+        this.msgTypePos = pos
         break
     }
   }

@@ -1,8 +1,8 @@
 import * as path from 'path'
 import { FixDefinitions, MessageDefinition, ComponentFieldDefinition, ContainedFieldSet } from '../dictionary'
-import { AsciiEncoder, TimeFormatter, AsciiChars } from '../buffer'
+import {AsciiEncoder, TimeFormatter, AsciiChars, MsgView, AsciiParser, Tags} from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
+import {ISessionDescription, AsciiMsgTransmitter, SessionMsgFactory, StringDuplex} from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
 
@@ -22,7 +22,7 @@ const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
+  const config = new JsFixConfig(new SessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Pipe)
   nos = definitions.message.get('NewOrderSingle')
@@ -42,6 +42,46 @@ function toFix (o: ILooseObject, set?: ContainedFieldSet): string {
   }
   return session.buffer.toString()
 }
+
+function toFixMessage (o: ILooseObject, msg: MessageDefinition): string {
+  session.encodeMessage(msg.msgType, o)
+  return session.buffer.toString()
+}
+
+class ParsingResult {
+  constructor (public readonly event: string, public readonly msgType: string, public readonly view: MsgView,
+               public readonly contents: string, public readonly parser: AsciiParser) {
+  }
+}
+
+function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
+  return new Promise<any>((resolve, reject) => {
+    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, AsciiChars.Pipe)
+    parser.on('error', (e: Error) => {
+      reject(e)
+    })
+    parser.on('msg', (msgType: string, view: MsgView) => {
+      resolve(new ParsingResult('msg', msgType, view.clone(), parser.state.elasticBuffer.toString(), parser))
+    })
+    parser.on('done', () => {
+      resolve(new ParsingResult('done', null,null, parser.state.elasticBuffer.toString(), parser))
+    })
+  })
+}
+
+test('encode heartbeat', async () => {
+  const factory = session.config.factory
+  const hb = factory.heartbeat('test01')
+  const hbd = definitions.message.get('Heartbeat')
+  const fix = toFixMessage(hb, hbd)
+  expect(fix).toBeTruthy()
+  const res: ParsingResult = await toParse(fix)
+  expect(res.event).toEqual('msg')
+  expect(res.msgType).toEqual('0')
+  const len = res.view.getTyped(Tags.BodyLengthTag)
+  const expected = fix.length - '8=FIX4.4|9=0000081|'.length - '10=159|'.length
+  expect(len).toEqual(expected)
+})
 
 test('encode string ClOrdID ', () => {
   const no: ILooseObject = {}
