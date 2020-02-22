@@ -84,8 +84,10 @@ export class SessionMsgFactory implements ISessionMsgFactory {
   }
 
   public trailer (checksum: number): ILooseObject {
+    const s = checksum.toString()
+    const padded = s.padStart(3, '0')
     return {
-      CheckSum: checksum.toString()
+      CheckSum: padded
     } as IStandardTrailer
   }
 

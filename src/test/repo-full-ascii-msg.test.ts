@@ -37,6 +37,24 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
   })
 }
 
+test('check 1 digit checksum format', async () => {
+  const factory = session.config.factory
+  const cs = factory.trailer(1)
+  await expect(cs.CheckSum).toEqual('001')
+})
+
+test('check 2 digit checksum format', async () => {
+  const factory = session.config.factory
+  const cs = factory.trailer(10)
+  await expect(cs.CheckSum).toEqual('010')
+})
+
+test('check 3 digit checksum format', async () => {
+  const factory = session.config.factory
+  const cs = factory.trailer(100)
+  await expect(cs.CheckSum).toEqual('100')
+})
+
 test('AE object to ascii fix to object', async () => {
   const msgType: string = 'AE'
   const file: string = path.join(root, 'examples/FIX.4.4/repo/trade-capture/object.json')
