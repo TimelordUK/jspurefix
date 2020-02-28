@@ -1,10 +1,10 @@
 import * as path from 'path'
-import { Structure, AsciiChars, MsgView } from '../buffer'
+import { Structure, AsciiChars, MsgView, AsciiParser } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary'
-import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
+import { FixDefinitions, MessageDefinition } from '../dictionary'
+import { ISessionDescription, AsciiMsgTransmitter, StringDuplex, SessionMsgFactory } from '../transport'
 import { JsFixConfig } from '../config'
-import { IInstrumentLeg } from '../types/FIX4.4/quickfix'
+import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
 import { getDefinitions, replayFixFile } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
@@ -18,7 +18,7 @@ let view: MsgView
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
+  const config = new JsFixConfig(new SessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'), AsciiChars.Pipe)
   if (views && views.length > 0) {
@@ -156,4 +156,75 @@ test('nested view fetch' , () => {
   expect(legGrp).toBeTruthy()
   expect(Array.isArray(legGrp))
   expect(legGrp.length).toEqual(2)
+})
+
+function toFixMessage (o: ILooseObject, msg: MessageDefinition): string {
+  session.encodeMessage(msg.msgType, o)
+  return session.buffer.toString()
+}
+
+class ParsingResult {
+  constructor (public readonly event: string, public readonly msgType: string, public readonly view: MsgView,
+               public readonly contents: string, public readonly parser: AsciiParser) {
+  }
+}
+
+function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
+  return new Promise<any>((resolve, reject) => {
+    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, AsciiChars.Pipe)
+    parser.on('error', (e: Error) => {
+      reject(e)
+    })
+    parser.on('msg', (msgType: string, view: MsgView) => {
+      resolve(new ParsingResult('msg', msgType, view.clone(), parser.state.elasticBuffer.toString(), parser))
+    })
+    parser.on('done', () => {
+      resolve(new ParsingResult('done', null,null, parser.state.elasticBuffer.toString(), parser))
+    })
+  })
+}
+
+function BidOfferRequest (symbol: string): IMarketDataRequest {
+  return {
+    MDReqID: '1',
+    SubscriptionRequestType: SubscriptionRequestType.SnapshotPlusUpdates,
+    MarketDepth: 0,
+    MDReqGrp: {
+      NoMDEntryTypes: [
+        {
+          MDEntryType: MDEntryType.Bid
+        },
+        {
+          MDEntryType: MDEntryType.Offer
+        }
+      ]
+    },
+    InstrmtMDReqGrp: {
+      NoRelatedSym: [
+        {
+          Instrument: {
+            Symbol: symbol
+          }
+        }
+      ]
+    }
+  } as IMarketDataRequest
+}
+
+test('market data request', async () => {
+  const mdr = BidOfferRequest('EUR/USD')
+  const def = definitions.message.get('MarketDataRequest')
+  const fix = toFixMessage(mdr, def)
+  expect(fix).toBeTruthy()
+  const res: ParsingResult = await toParse(fix)
+  expect(res.event).toEqual('msg')
+  expect(res.msgType).toEqual(def.msgType)
+  const gv = res.view.getView('MDReqGrp')
+  expect(gv).toBeTruthy()
+  const s = gv.toString()
+  expect(s).toEqual('[0] 267 (NoMDEntryTypes) = 2, [1] 269 (MDEntryType) = 0[Bid]\r\n[2] 269 (MDEntryType) = 1[Offer]')
+  const iv = res.view.getView('InstrmtMDReqGrp.NoRelatedSym')
+  expect(iv).toBeTruthy()
+  const s2 = iv.toString()
+  expect(s2).toEqual('[0] 146 (NoRelatedSym) = 1, [1] 55 (Symbol) = EUR/USD\r\n')
 })

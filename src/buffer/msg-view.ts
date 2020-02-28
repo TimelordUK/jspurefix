@@ -407,8 +407,8 @@ export abstract class MsgView {
     for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
       const tagPos: TagPos = tags.tagPos[i]
       const field: SimpleFieldDefinition = simple.get(tagPos.tag.toString())
-      const val: string = this.getString(tagPos.tag)
-      const token = getToken(field, val, i, count, tagPos)
+      const val: string = this.stringAtPosition(i)
+      const token = getToken(field, val, i - segment.startPosition, count, tagPos)
       buffer.writeString(token)
     }
 
