@@ -222,9 +222,10 @@ test('market data request', async () => {
   const gv = res.view.getView('MDReqGrp')
   expect(gv).toBeTruthy()
   const s = gv.toString()
-  expect(s).toEqual('[0] 267 (NoMDEntryTypes) = 2, [1] 269 (MDEntryType) = 0[Bid]\r\n[2] 269 (MDEntryType) = 1[Offer]')
+  const newLine = require('os').EOL
+  expect(s).toEqual(`[0] 267 (NoMDEntryTypes) = 2, [1] 269 (MDEntryType) = 0[Bid]${newLine}[2] 269 (MDEntryType) = 1[Offer]`)
   const iv = res.view.getView('InstrmtMDReqGrp.NoRelatedSym')
   expect(iv).toBeTruthy()
   const s2 = iv.toString()
-  expect(s2).toEqual('[0] 146 (NoRelatedSym) = 1, [1] 55 (Symbol) = EUR/USD\r\n')
+  expect(s2).toEqual(`[0] 146 (NoRelatedSym) = 1, [1] 55 (Symbol) = EUR/USD${newLine}`)
 })
