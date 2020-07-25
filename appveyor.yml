@@ -1,10 +1,18 @@
 version: 1.0.{build}
 image: Visual Studio 2015
+
 environment:
   matrix:
-  - nodejs_version: "14"
+    - nodejs_version: "14"
+    - nodejs_version: "12"
+
+platform:
+  - x86
+  - x64
+
 build_script:
   - node --version
   - cmd: script\build.cmd
+
 test_script:
   - cmd: script\test.cmd
