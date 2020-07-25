@@ -1,5 +1,8 @@
 version: 1.0.{build}
+environment:
+  matrix:
+    - nodejs_version: "14"
 build_script:
-- cmd: script\build.cmd
+  - cmd: script\build.cmd
 test_script:
-- cmd: script\test.cmd
+  - cmd: script\test.cmd
