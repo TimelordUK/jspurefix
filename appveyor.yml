@@ -1,5 +1,21 @@
 version: 1.0.{build}
+image: Visual Studio 2015
+
+environment:
+  matrix:
+    - nodejs_version: "14"
+    - nodejs_version: "12"
+
+platform:
+  - x64
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - npm install
+
 build_script:
-- cmd: script\build.cmd
+  - node --version
+  - cmd: script\build.cmd
+
 test_script:
-- cmd: script\test.cmd
+  - cmd: script\test.cmd
