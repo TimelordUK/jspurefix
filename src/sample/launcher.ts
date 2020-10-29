@@ -20,7 +20,7 @@ export abstract class Launcher {
       logger.info('launching ..')
       this.setup().then(() => {
         logger.info('.. done')
-        accept()
+        accept(true)
       }).catch((e: Error) => {
         logger.error(e)
         reject(e)

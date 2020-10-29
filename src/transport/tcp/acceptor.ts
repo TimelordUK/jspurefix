@@ -16,7 +16,7 @@ export function acceptor (config: IJsFixConfig, sessionFactory: MakeFixSession):
         logger.info('ends')
         acceptor.close(() => {
           logger.info('acceptor closed.')
-          accept()
+          accept(true)
         })
       }).catch((e: Error) => {
         logger.error(e)

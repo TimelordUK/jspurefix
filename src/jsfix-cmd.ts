@@ -273,7 +273,7 @@ export class JsfixCmd {
         if (err) {
           reject(err)
         } else {
-          accept()
+          accept(true)
         }
       })
     })
@@ -457,7 +457,7 @@ export class JsfixCmd {
             console.log(contents)
             console.log(v.toString())
             console.log(`[${msgType}]: repeats = ${repeats}, fields = ${v.structure.tags.nextTagPos}, length = ${contents.length} chars, elapsed ms ${elapsed}, ${(elapsed / repeats) * 1000} micros per msg`)
-            accept()
+            accept(true)
           }
         })
       })

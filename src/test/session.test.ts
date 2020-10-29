@@ -132,7 +132,7 @@ async function runSkeletons (logoutSeconds: number = 1, followOn: string = null)
     setTimeout(() => {
       s1.done()
       s2.done()
-      accept()
+      accept(true)
     }, (logoutSeconds + 2) * 1000)
   })])
 }

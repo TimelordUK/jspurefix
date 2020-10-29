@@ -44,7 +44,7 @@ export class EnumCompiler {
     const newLine = require('os').EOL
     const api = this.generateEnum(field)
     if (!asOneFile) {
-      await this.writeFile(name, api).catch((e: Error) => {
+      await this.writeFile(field.name, api).catch((e: Error) => {
         throw e
       })
     } else {

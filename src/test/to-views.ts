@@ -35,7 +35,7 @@ export class ToViews {
         this.batch = v.clone()
       })
       xmlParser.on('close', () => {
-        accept()
+        accept(true)
       })
       xmlParser.on('error', (e: Error) => {
         reject(e)

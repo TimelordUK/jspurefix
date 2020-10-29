@@ -53,7 +53,7 @@ export abstract class FixSession {
         reject(e)
       })
       this.emitter.on('done', () => {
-        accept()
+        accept(true)
       })
     })
   }

@@ -22,7 +22,7 @@ function once (config: IJsFixConfig, initiatorSession: FixSession): Promise<any>
     logger.info('... connected, run session')
     initiatorSession.run(initiatorTransport).then(() => {
       logger.info('ends')
-      accept()
+      accept(true)
     }).catch((e: Error) => {
       logger.error(e)
       reject(e)

@@ -16,7 +16,7 @@ export function initiator (config: IJsFixConfig, sessionFactory: MakeFixSession,
         await once(config, initiatorSession)
         logger.info('session has ended')
         connecting = false
-        accept()
+        accept(true)
       } catch (e) {
         if (!reconnectTimeout) {
           reject(e)
@@ -32,10 +32,10 @@ export function initiator (config: IJsFixConfig, sessionFactory: MakeFixSession,
 function delay (p: number): Promise<any> {
   return new Promise<any>((accept) => {
     if (!p) {
-      accept()
+      accept(true)
     }
     setTimeout(() => {
-      accept()
+      accept(true)
     }, p)
   })
 }
@@ -49,7 +49,7 @@ function once (config: IJsFixConfig, initiatorSession: FixSession): Promise<any>
     logger.info('... connected, run session')
     initiatorSession.run(initiatorTransport).then(() => {
       logger.info('ends')
-      accept()
+      accept(true)
     }).catch((e: Error) => {
       logger.error(e)
       reject(e)

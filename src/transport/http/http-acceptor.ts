@@ -86,7 +86,7 @@ export class HttpAcceptor extends FixAcceptor {
         }
         duplex.writable.removeListener('data', transmit)
         res.send(d)
-        accept()
+        accept(true)
       }
 
       duplex.writable.on('data', transmit)

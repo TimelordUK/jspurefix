@@ -53,7 +53,7 @@ export class MsgTransport {
   public wait (): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.receiver.on('end', () => {
-        resolve()
+        resolve(true)
       })
       this.receiver.on('error', (e) => {
         reject(e)
