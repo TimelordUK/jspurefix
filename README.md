@@ -1,11 +1,11 @@
+# jspurefix
+
 [![Build status](https://ci.appveyor.com/api/projects/status/2w2eag4trnijg5d3?svg=true)](https://ci.appveyor.com/project/TimelordUK/jsfix)
 [![Build Status](https://travis-ci.org/TimelordUK/jspurefix.svg?branch=master)](https://travis-ci.org/TimelordUK/jspurefix)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-# jspurefix
-
 1. fast 100% native clean fix engine for Node JS
-1. represent data dictionary as quickfix or repo notation 
+1. represent data dictionary as quickfix or repo notation
 1. compile interface types against definitions
 1. ascii / fixml supported
 1. parses repeat groups, components and raw data fields
@@ -18,9 +18,9 @@
 
 ## Typescript FIX Engine for Node JS
 
-This fix engine provides a fast easy API to parse or send finacial protocol FIX messages. It is implemented entirely in typescript and runs in Node JS. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc. 
+This fix engine provides a fast easy API to parse or send finacial protocol FIX messages. It is implemented entirely in typescript and runs in Node JS. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc.
 
-### extensive documentation coming soon.
+### extensive documentation coming soon
 
 ## Installing
 
@@ -31,10 +31,24 @@ compiled typescript is now included. Install the package from npm:
   npm run unzip-repo
 ```
 
-see our [demo application](https://github.com/TimelordUK/jspf-demo/) 
+see our [demo application](https://github.com/TimelordUK/jspf-demo/)
 
 ```shell
-  https://github.com/TimelordUK/jspf-demo.git
+  https://github.com/TimelordUK/jspf-demo
+```
+
+if you wish to generate custom messages this is easily doing using quick fix XML format - see [quickfix demo](https://github.com/TimelordUK/jspf-md-demo)
+
+edit the dictionary file data/generate and run the generator.
+
+```shell
+  npm run generate
+```
+
+check the messages generated in src\types
+
+```shell
+  https://github.com/TimelordUK/jspf-md-demo
 ```
 
 import types for usage with a client
@@ -48,10 +62,10 @@ import {
   IJsFixLogger,
   Dictionary,
   MsgType,
-  IJsFixConfig, 
+  IJsFixConfig,
   initiator,
   acceptor,
-  makeConfig 
+  makeConfig
 } from 'jspurefix'
 // types for the specific FIX dialect
 import {
@@ -62,8 +76,7 @@ import {
 
 ```
 
-see example trade-capture-client - use 
-
+see example trade-capture-client - use
 
 ### getting started
 
@@ -104,7 +117,7 @@ or
   npm run tcp-tc
 ```
 
-# Run Sample
+## Run Sample
 
 The code provided in src/sample/tcp/trade_capture is a good place to start in building an application with this library. In this case both client and server are run together communicating over a socket.  In reality a client is more likely connecting to an external acceptor such as CME, ICE.
 
@@ -367,11 +380,11 @@ this renders to this message sent over http
 
 ```xml
 <FIXML>
-	<Order ID="Cli1" Acct="TradersRUs" Side="1" Typ="2" Px="100.12" TmInForce="1">
-		<Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
-		<Instrmt Sym="IBM" ID="459200101" Src="4"/>
-		<OrdQty Qty="10000"/>
-	</Order>
+ <Order ID="Cli1" Acct="TradersRUs" Side="1" Typ="2" Px="100.12" TmInForce="1">
+  <Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
+  <Instrmt Sym="IBM" ID="459200101" Src="4"/>
+  <OrdQty Qty="10000"/>
+ </Order>
 </FIXML>
 ```
 
@@ -421,11 +434,11 @@ the fixml is sent back to the client :-
 
 ```xml
 <FIXML>
-	<ExecRpt ID="Cli1" ExecID="exec1" ExecTyp="I" Stat="2" Side="1" Typ="2" Px="100.12" LastPx="100.12" LeavesQty="0" AvgPx="100.12" TxnTm="2018-10-07T12:16:12.584">
-		<Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
-		<Instrmt Sym="IBM" ID="459200101" Src="4"/>
-		<OrdQty Qty="10000"/>
-	</ExecRpt>
+ <ExecRpt ID="Cli1" ExecID="exec1" ExecTyp="I" Stat="2" Side="1" Typ="2" Px="100.12" LastPx="100.12" LeavesQty="0" AvgPx="100.12" TxnTm="2018-10-07T12:16:12.584">
+  <Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
+  <Instrmt Sym="IBM" ID="459200101" Src="4"/>
+  <OrdQty Qty="10000"/>
+ </ExecRpt>
 </FIXML>
 ```
 
