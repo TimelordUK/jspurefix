@@ -1,4 +1,5 @@
 import { AsciiChars } from './ascii-chars'
+import { format } from 'mathjs'
 
 export class ElasticBuffer {
   private buffer: Buffer
@@ -110,9 +111,8 @@ export class ElasticBuffer {
       // integer
       return this.writeWholeNumber(v)
     } else {
-      const math = require('mathjs')
       // decimal with fraction turn to string
-      const s: string = math.format(v, { notation: 'fixed' })
+      const s: string = format(v, { notation: 'fixed' })
       return this.writeString(s)
     }
   }
