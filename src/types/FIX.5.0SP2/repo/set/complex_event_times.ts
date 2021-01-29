@@ -10,6 +10,6 @@
 ****************************************************************
 */
 export interface IComplexEventTimes {
-  ComplexEventStartTime?: Date// 1495
-  ComplexEventEndTime?: Date// 1496
+  ComplexEventStartTime?: string// 1495
+  ComplexEventEndTime?: string// 1496
 }

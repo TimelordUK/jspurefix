@@ -34,8 +34,8 @@ export interface IPositionMaintenanceReport {
   AccountType?: number// 581
   PosMaintRptRefID?: string// 714
   Instrument: IInstrument
-  Currency?: number// 15
-  SettlCurrency?: number// 120
+  Currency?: string// 15
+  SettlCurrency?: string// 120
   ContraryInstructionIndicator?: boolean// 719
   PriorSpreadIndicator?: boolean// 720
   InstrmtLegGrp?: IInstrmtLegGrp

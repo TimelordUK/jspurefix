@@ -16,7 +16,7 @@ export interface ILegOrdGrp {
   LegRefID?: string// 654
   LegSettlType?: string// 587
   LegSettlDate?: Date// 588
-  LegSettlCurrency?: number// 675
+  LegSettlCurrency?: string// 675
   LegOrderQty?: number// 685
   LegVolatility?: number// 1379
   LegDividendYield?: number// 1381

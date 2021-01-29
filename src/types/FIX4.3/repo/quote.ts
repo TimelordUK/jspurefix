@@ -34,7 +34,7 @@ export interface IQuote {
   OrdType?: string// 40
   FutSettDate2?: Date// 193
   OrderQty2?: number// 192
-  Currency?: number// 15
+  Currency?: string// 15
   SettlCurrFxRateCalc?: string// 156
   Commission?: number// 12
   CommType?: string// 13

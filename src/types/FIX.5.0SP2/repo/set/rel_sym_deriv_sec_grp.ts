@@ -6,7 +6,7 @@ import { IInstrmtLegGrp } from './instrmt_leg_grp'
 export interface IRelSymDerivSecGrp {
   Instrument?: IInstrument
   SecondaryPriceLimits?: ISecondaryPriceLimits
-  Currency?: number// 15
+  Currency?: string// 15
   CorporateAction?: string// 292
   InstrumentExtension?: IInstrumentExtension
   InstrmtLegGrp?: IInstrmtLegGrp

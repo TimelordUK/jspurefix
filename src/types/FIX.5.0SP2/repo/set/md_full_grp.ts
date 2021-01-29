@@ -12,12 +12,12 @@ export interface IMDFullGrp {
   YieldData?: IYieldData
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
   OrdType?: string// 40
-  Currency?: number// 15
+  Currency?: string// 15
   MDEntrySize?: number// 271
   SecSizesGrp?: ISecSizesGrp[]
   LotType?: string// 1093
   MDEntryDate?: Date// 272
-  MDEntryTime?: Date// 273
+  MDEntryTime?: string// 273
   TickDirection?: string// 274
   MDMkt?: string// 275
   TradingSessionID?: string// 336
@@ -62,7 +62,7 @@ export interface IMDFullGrp {
   MDEntrySpotRate?: number// 1026
   MDEntryForwardPoints?: number// 1027
   Parties?: IParties[]
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   RateSource?: IRateSource[]
   TrdType?: number// 828
   FirstPx?: number// 1025

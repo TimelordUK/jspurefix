@@ -31,14 +31,14 @@ export interface IPositionReport {
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
   PriceType?: number// 423
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   MessageEventSource?: string// 1011
   Parties: IParties[]
   Account?: string// 1
   AcctIDSource?: number// 660
   AccountType?: number// 581
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   SettlPrice?: number// 730
   SettlPriceType?: number// 731
   PriorSettlPrice?: number// 734

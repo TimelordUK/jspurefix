@@ -37,7 +37,7 @@ export interface ITradeCaptureReport {
   Parties?: IParties[]
   Account?: string// 1
   ProcessCode?: string// 81
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   TradingSessionID?: string// 336
@@ -48,7 +48,7 @@ export interface ITradeCaptureReport {
   AccruedInterestAmt?: number// 159
   NetMoney?: number// 118
   SettlCurrAmt?: number// 119
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   OpenClose?: string// 77
@@ -58,7 +58,7 @@ export interface ITradeCaptureReport {
   MultiLegReportingType?: string// 442
   NoMiscFees?: number// 136
   MiscFeeAmt?: number// 137
-  MiscFeeCurr?: number// 138
+  MiscFeeCurr?: string// 138
   MiscFeeType?: string// 139
   StandardTrailer: IStandardTrailer
 }

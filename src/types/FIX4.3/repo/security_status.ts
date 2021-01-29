@@ -12,7 +12,7 @@ export interface ISecurityStatus {
   StandardHeader: IStandardHeader
   SecurityStatusReqID?: string// 324
   Instrument: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   TradingSessionID?: string// 336
   UnsolicitedIndicator?: boolean// 325
   SecurityTradingStatus?: number// 326

@@ -73,8 +73,8 @@ export interface ITradeCaptureReport {
   LastQty: number// 32
   LastPx: number// 31
   CalculatedCcyLastQty?: number// 1056
-  Currency?: number// 15
-  SettlCurrency?: number// 120
+  Currency?: string// 15
+  SettlCurrency?: string// 120
   LastParPx?: number// 669
   LastSpotRate?: number// 194
   LastForwardPoints?: number// 195

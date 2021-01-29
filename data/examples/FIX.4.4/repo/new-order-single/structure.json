@@ -13,41 +13,38 @@
         "name": "PtysSubGrp",
         "depth": 2,
         "startTag": 802,
-        "startPosition": 14,
-        "endTag": 803,
-        "endPosition": 20,
+        "startPosition": 13,
+        "endTag": 523,
+        "endPosition": 14,
         "delimiterTag": 523,
         "delimiterPositions": [
-            15,
-            17,
-            19
+            14
         ]
     },
     {
         "name": "PtysSubGrp",
         "depth": 2,
         "startTag": 802,
-        "startPosition": 24,
-        "endTag": 803,
-        "endPosition": 30,
+        "startPosition": 17,
+        "endTag": 523,
+        "endPosition": 18,
         "delimiterTag": 523,
         "delimiterPositions": [
+            18
+        ]
+    },
+    {
+        "name": "PtysSubGrp",
+        "depth": 2,
+        "startTag": 802,
+        "startPosition": 22,
+        "endTag": 803,
+        "endPosition": 28,
+        "delimiterTag": 523,
+        "delimiterPositions": [
+            23,
             25,
-            27,
-            29
-        ]
-    },
-    {
-        "name": "PtysSubGrp",
-        "depth": 2,
-        "startTag": 802,
-        "startPosition": 34,
-        "endTag": 803,
-        "endPosition": 38,
-        "delimiterTag": 523,
-        "delimiterPositions": [
-            35,
-            37
+            27
         ]
     },
     {
@@ -56,98 +53,122 @@
         "startTag": 453,
         "startPosition": 10,
         "endTag": 803,
-        "endPosition": 38,
+        "endPosition": 28,
         "delimiterTag": 448,
         "delimiterPositions": [
             11,
-            21,
-            31
+            15,
+            19
         ]
     },
     {
         "name": "NstdPtysSubGrp",
         "depth": 3,
         "startTag": 804,
-        "startPosition": 55,
+        "startPosition": 46,
         "endTag": 805,
-        "endPosition": 61,
+        "endPosition": 50,
         "delimiterTag": 545,
         "delimiterPositions": [
-            56,
-            58,
-            60
+            47,
+            49
+        ]
+    },
+    {
+        "name": "NstdPtysSubGrp",
+        "depth": 3,
+        "startTag": 804,
+        "startPosition": 54,
+        "endTag": 805,
+        "endPosition": 57,
+        "delimiterTag": 545,
+        "delimiterPositions": [
+            55,
+            56
+        ]
+    },
+    {
+        "name": "NstdPtysSubGrp",
+        "depth": 3,
+        "startTag": 804,
+        "startPosition": 61,
+        "endTag": 805,
+        "endPosition": 65,
+        "delimiterTag": 545,
+        "delimiterPositions": [
+            62,
+            64
         ]
     },
     {
         "name": "NestedParties",
         "depth": 2,
         "startTag": 539,
-        "startPosition": 52,
+        "startPosition": 42,
         "endTag": 805,
-        "endPosition": 61,
+        "endPosition": 65,
         "delimiterTag": 524,
         "delimiterPositions": [
-            53
+            43,
+            51,
+            58
         ]
     },
     {
         "name": "PreAllocGrp",
         "depth": 1,
         "startTag": 78,
-        "startPosition": 47,
+        "startPosition": 37,
         "endTag": 80,
-        "endPosition": 62,
+        "endPosition": 66,
         "delimiterTag": 79,
         "delimiterPositions": [
-            48
+            38
         ]
     },
     {
         "name": "TrdgSesGrp",
         "depth": 1,
         "startTag": 386,
-        "startPosition": 69,
+        "startPosition": 74,
         "endTag": 625,
-        "endPosition": 74,
+        "endPosition": 76,
         "delimiterTag": 336,
         "delimiterPositions": [
-            70,
-            71,
-            73
+            75
         ]
     },
     {
         "name": "SecAltIDGrp",
         "depth": 2,
         "startTag": 454,
-        "startPosition": 80,
+        "startPosition": 81,
         "endTag": 456,
-        "endPosition": 84,
+        "endPosition": 83,
         "delimiterTag": 455,
         "delimiterPositions": [
-            81,
-            83
+            82
         ]
     },
     {
         "name": "EvntGrp",
         "depth": 2,
         "startTag": 864,
-        "startPosition": 113,
+        "startPosition": 111,
         "endTag": 868,
-        "endPosition": 117,
+        "endPosition": 115,
         "delimiterTag": 865,
         "delimiterPositions": [
-            114
+            112
         ]
     },
     {
         "name": "Instrument",
         "depth": 1,
         "startTag": 55,
-        "startPosition": 76,
+        "startPosition": 78,
         "endTag": 874,
-        "endPosition": 119,
+        "endPosition": 117,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -155,9 +176,9 @@
         "name": "FinancingDetails",
         "depth": 1,
         "startTag": 913,
-        "startPosition": 120,
+        "startPosition": 118,
         "endTag": 898,
-        "endPosition": 127,
+        "endPosition": 126,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -165,35 +186,35 @@
         "name": "UndSecAltIDGrp",
         "depth": 3,
         "startTag": 457,
-        "startPosition": 132,
-        "endTag": 459,
-        "endPosition": 134,
+        "startPosition": 131,
+        "endTag": 458,
+        "endPosition": 136,
         "delimiterTag": 458,
         "delimiterPositions": [
-            133
+            132,
+            134,
+            136
         ]
     },
     {
         "name": "UnderlyingStipulations",
         "depth": 3,
         "startTag": 887,
-        "startPosition": 171,
+        "startPosition": 170,
         "endTag": 889,
-        "endPosition": 175,
+        "endPosition": 172,
         "delimiterTag": 888,
         "delimiterPositions": [
-            172,
-            173,
-            174
+            171
         ]
     },
     {
         "name": "UnderlyingInstrument",
         "depth": 2,
         "startTag": 311,
-        "startPosition": 129,
+        "startPosition": 128,
         "endTag": 889,
-        "endPosition": 175,
+        "endPosition": 172,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -201,71 +222,36 @@
         "name": "UndSecAltIDGrp",
         "depth": 3,
         "startTag": 457,
-        "startPosition": 179,
-        "endTag": 459,
-        "endPosition": 183,
+        "startPosition": 177,
+        "endTag": 458,
+        "endPosition": 180,
         "delimiterTag": 458,
         "delimiterPositions": [
-            180,
-            182
+            178,
+            180
         ]
     },
     {
         "name": "UnderlyingStipulations",
         "depth": 3,
         "startTag": 887,
-        "startPosition": 220,
+        "startPosition": 210,
         "endTag": 889,
-        "endPosition": 223,
+        "endPosition": 215,
         "delimiterTag": 888,
         "delimiterPositions": [
-            221,
-            222
+            211,
+            213,
+            214
         ]
     },
     {
         "name": "UnderlyingInstrument",
         "depth": 2,
         "startTag": 311,
-        "startPosition": 176,
+        "startPosition": 173,
         "endTag": 889,
-        "endPosition": 223,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "UndSecAltIDGrp",
-        "depth": 3,
-        "startTag": 457,
-        "startPosition": 228,
-        "endTag": 459,
-        "endPosition": 232,
-        "delimiterTag": 458,
-        "delimiterPositions": [
-            229,
-            231
-        ]
-    },
-    {
-        "name": "UnderlyingStipulations",
-        "depth": 3,
-        "startTag": 887,
-        "startPosition": 264,
-        "endTag": 889,
-        "endPosition": 268,
-        "delimiterTag": 888,
-        "delimiterPositions": [
-            265,
-            267
-        ]
-    },
-    {
-        "name": "UnderlyingInstrument",
-        "depth": 2,
-        "startTag": 311,
-        "startPosition": 224,
-        "endTag": 889,
-        "endPosition": 268,
+        "endPosition": 215,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -273,37 +259,36 @@
         "name": "UndInstrmtGrp",
         "depth": 1,
         "startTag": 711,
-        "startPosition": 128,
+        "startPosition": 127,
         "endTag": 889,
-        "endPosition": 268,
+        "endPosition": 215,
         "delimiterTag": 311,
         "delimiterPositions": [
-            129,
-            176,
-            224
+            128,
+            173
         ]
     },
     {
         "name": "Stipulations",
         "depth": 1,
         "startTag": 232,
-        "startPosition": 273,
-        "endTag": 234,
-        "endPosition": 279,
+        "startPosition": 220,
+        "endTag": 233,
+        "endPosition": 225,
         "delimiterTag": 233,
         "delimiterPositions": [
-            274,
-            276,
-            278
+            221,
+            223,
+            225
         ]
     },
     {
         "name": "OrderQtyData",
         "depth": 1,
         "startTag": 38,
-        "startPosition": 281,
+        "startPosition": 227,
         "endTag": 469,
-        "endPosition": 284,
+        "endPosition": 230,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -311,9 +296,9 @@
         "name": "SpreadOrBenchmarkCurveData",
         "depth": 1,
         "startTag": 218,
-        "startPosition": 289,
+        "startPosition": 235,
         "endTag": 761,
-        "endPosition": 295,
+        "endPosition": 241,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -321,9 +306,9 @@
         "name": "YieldData",
         "depth": 1,
         "startTag": 235,
-        "startPosition": 296,
-        "endTag": 698,
-        "endPosition": 301,
+        "startPosition": 242,
+        "endTag": 697,
+        "endPosition": 245,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -331,9 +316,9 @@
         "name": "CommissionData",
         "depth": 1,
         "startTag": 12,
-        "startPosition": 309,
+        "startPosition": 255,
         "endTag": 497,
-        "endPosition": 312,
+        "endPosition": 258,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -341,9 +326,9 @@
         "name": "PegInstructions",
         "depth": 1,
         "startTag": 211,
-        "startPosition": 326,
+        "startPosition": 271,
         "endTag": 840,
-        "endPosition": 331,
+        "endPosition": 275,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -351,9 +336,9 @@
         "name": "DiscretionInstructions",
         "depth": 1,
         "startTag": 388,
-        "startPosition": 332,
+        "startPosition": 276,
         "endTag": 846,
-        "endPosition": 338,
+        "endPosition": 280,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -361,9 +346,9 @@
         "name": "StandardTrailer",
         "depth": 1,
         "startTag": 10,
-        "startPosition": 343,
+        "startPosition": 286,
         "endTag": 10,
-        "endPosition": 343,
+        "endPosition": 286,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -373,7 +358,7 @@
         "startTag": 8,
         "startPosition": 0,
         "endTag": 10,
-        "endPosition": 343,
+        "endPosition": 286,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -381,9 +366,9 @@
         "name": "StandardTrailer",
         "depth": 0,
         "startTag": 10,
-        "startPosition": 344,
+        "startPosition": 287,
         "endTag": 10,
-        "endPosition": 343,
+        "endPosition": 286,
         "delimiterTag": 0,
         "delimiterPositions": []
     }

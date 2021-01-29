@@ -9,8 +9,8 @@ export interface ISettlObligationInstructions {
   SettlObligRefID?: string// 1163
   CcyAmt?: number// 1157
   SettlCurrAmt?: number// 119
-  Currency?: number// 15
-  SettlCurrency?: number// 120
+  Currency?: string// 15
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlDate?: Date// 64
   Instrument?: IInstrument

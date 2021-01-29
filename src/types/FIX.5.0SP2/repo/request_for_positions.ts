@@ -21,13 +21,13 @@ export interface IRequestForPositions {
   PosReqType: number// 724
   MatchStatus?: string// 573
   SubscriptionRequestType?: string// 263
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   Parties: IParties[]
   Account?: string// 1
   AcctIDSource?: number// 660
   AccountType?: number// 581
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   InstrmtLegGrp?: IInstrmtLegGrp
   UndInstrmtGrp?: IUndInstrmtGrp
   ClearingBusinessDate: Date// 715

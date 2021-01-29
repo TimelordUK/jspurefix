@@ -28,7 +28,7 @@ export interface ISideCrossOrdModGrp {
   PreTradeAnonymity?: boolean// 1091
   CustOrderCapacity?: number// 582
   ForexReq?: boolean// 121
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   BookingType?: number// 775
   Text?: string// 58
   EncodedTextLen?: number// 354

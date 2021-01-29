@@ -25,7 +25,7 @@ export interface IMarketDefinitionUpdateReport {
   EncodedMktSegmDescLen?: number// 1397
   EncodedMktSegmDesc?: Buffer// 1398
   ParentMktSegmID?: string// 1325
-  Currency?: number// 15
+  Currency?: string// 15
   BaseTradingRules?: IBaseTradingRules
   OrdTypeRules?: IOrdTypeRules[]
   TimeInForceRules?: ITimeInForceRules[]

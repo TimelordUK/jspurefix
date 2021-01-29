@@ -36,7 +36,7 @@ export interface IAllocation {
   TradingSessionID?: string// 336
   PriceType?: number// 423
   AvgPx: number// 6
-  Currency?: number// 15
+  Currency?: string// 15
   AvgPrxPrecision?: number// 74
   Parties?: IParties[]
   TradeDate: Date// 75
@@ -66,14 +66,14 @@ export interface IAllocation {
   AllocAvgPx?: number// 153
   AllocNetMoney?: number// 154
   SettlCurrAmt?: number// 119
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   AccruedInterestAmt?: number// 159
   SettlInstMode?: string// 160
   NoMiscFees?: number// 136
   MiscFeeAmt?: number// 137
-  MiscFeeCurr?: number// 138
+  MiscFeeCurr?: string// 138
   MiscFeeType?: string// 139
   StandardTrailer: IStandardTrailer
 }

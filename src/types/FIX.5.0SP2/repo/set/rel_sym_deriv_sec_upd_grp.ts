@@ -9,7 +9,7 @@ export interface IRelSymDerivSecUpdGrp {
   Instrument?: IInstrument
   InstrumentExtension?: IInstrumentExtension
   SecondaryPriceLimits?: ISecondaryPriceLimits
-  Currency?: number// 15
+  Currency?: string// 15
   InstrmtLegGrp?: IInstrmtLegGrp
   Text?: string// 58
   EncodedTextLen?: number// 354

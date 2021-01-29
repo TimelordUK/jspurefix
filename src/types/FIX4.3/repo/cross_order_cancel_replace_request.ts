@@ -30,7 +30,7 @@ export interface ICrossOrderCancelReplaceRequest {
   OrderQtyData: IOrderQtyData
   CommissionData?: ICommissionData
   ForexReq?: boolean// 121
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
@@ -58,7 +58,7 @@ export interface ICrossOrderCancelReplaceRequest {
   StopPx?: number// 99
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
   YieldData?: IYieldData
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   IOIid?: string// 23
   QuoteID?: string// 117

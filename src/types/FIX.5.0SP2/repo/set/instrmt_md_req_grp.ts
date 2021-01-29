@@ -6,7 +6,7 @@ export interface IInstrmtMDReqGrp {
   Instrument: IInstrument
   UndInstrmtGrp?: IUndInstrmtGrp
   InstrmtLegGrp?: IInstrmtLegGrp
-  Currency?: number// 15
+  Currency?: string// 15
   QuoteType?: number// 537
   SettlType?: string// 63
   SettlDate?: Date// 64

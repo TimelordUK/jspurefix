@@ -18,7 +18,7 @@ export interface IInstrmtLegExecGrp {
   LegSettlType?: string// 587
   LegSettlDate?: Date// 588
   LegLastPx?: number// 637
-  LegSettlCurrency?: number// 675
+  LegSettlCurrency?: string// 675
   LegLastForwardPoints?: number// 1073
   LegCalculatedCcyLastQty?: number// 1074
   LegGrossTradeAmt?: number// 1075

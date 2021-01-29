@@ -21,7 +21,7 @@ export interface ISecurityDefinition {
   SecurityResponseID: string// 322
   SecurityResponseType: number// 323
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   TradingSessionID?: string// 336
   Text?: string// 58
   EncodedTextLen?: number// 354

@@ -18,8 +18,8 @@ export interface ITrdCapRptSideGrp {
   RptSeq?: number// 83
   SideTrdSubTyp?: number// 1008
   NetGrossInd?: number// 430
-  SideCurrency?: number// 1154
-  SideSettlCurrency?: number// 1155
+  SideCurrency?: string// 1154
+  SideSettlCurrency?: string// 1155
   Parties?: IParties[]
   Account?: string// 1
   AcctIDSource?: number// 660

@@ -15,6 +15,7 @@ import { Repository } from './repository'
 import { FixParser } from '../../fix-parser'
 import { VersionUtil } from '../../fix-versions'
 import { GetJsFixLogger, IJsFixLogger } from '../../../config'
+import { DataTypesParser } from './data-types-parser'
 
 export class RepositoryXmlParser extends FixParser {
   public readonly repository: Repository
@@ -39,6 +40,7 @@ export class RepositoryXmlParser extends FixParser {
     saxStream.on('closetag', (name) => {
 
       switch (name) {
+        case 'Datatypes':
         case 'Abbreviations':
         case 'Messages':
         case 'MsgContents':
@@ -53,6 +55,7 @@ export class RepositoryXmlParser extends FixParser {
           break
         }
 
+        case 'Datatype':
         case 'Abbreviation':
         case 'MsgContent':
         case 'Field':
@@ -82,6 +85,11 @@ export class RepositoryXmlParser extends FixParser {
     saxStream.on('opentag', (node) => {
       const saxNode: ISaxNode = node as ISaxNode
       switch (saxNode.name) {
+        case 'Datatypes': {
+          parser = new DataTypesParser(instance)
+          break
+        }
+
         case 'Fields': {
           parser = new FieldsParser(instance)
           break
@@ -112,6 +120,7 @@ export class RepositoryXmlParser extends FixParser {
           break
         }
 
+        case 'Datatype':
         case 'Abbreviation':
         case 'Field':
         case 'Message':
@@ -141,6 +150,7 @@ export class RepositoryXmlParser extends FixParser {
   public parse (): Promise<FixDefinitions> {
     return new Promise<FixDefinitions>(async (accept, reject) => {
       try {
+        await this.onePass('Datatypes.xml')
         await this.onePass('Fields.xml')
         await this.onePass('Enums.xml')
         await this.onePass('Components.xml')

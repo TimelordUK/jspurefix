@@ -20,7 +20,7 @@ export interface IIOI {
   IOIShares: string// 27
   PriceType?: number// 423
   Price?: number// 44
-  Currency?: number// 15
+  Currency?: string// 15
   ValidUntilTime?: Date// 62
   IOIQltyInd?: string// 25
   IOINaturalFlag?: boolean// 130

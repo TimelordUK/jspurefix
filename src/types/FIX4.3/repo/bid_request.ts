@@ -16,7 +16,7 @@ export interface IBidRequest {
   TotalNumSecurities: number// 393
   BidType: number// 394
   NumTickets?: number// 395
-  Currency?: number// 15
+  Currency?: string// 15
   SideValue1?: number// 396
   SideValue2?: number// 397
   NoBidDescriptors?: number// 398

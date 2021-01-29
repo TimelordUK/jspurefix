@@ -27,7 +27,7 @@ export interface INewOrderList {
   EncodedListExecInst?: Buffer// 353
   AllowableOneSidednessPct?: number// 765
   AllowableOneSidednessValue?: number// 766
-  AllowableOneSidednessCurr?: number// 767
+  AllowableOneSidednessCurr?: string// 767
   TotNoOrders: number// 68
   LastFragment?: boolean// 893
   RootParties?: IRootParties[]

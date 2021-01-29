@@ -33,7 +33,7 @@ export interface IOrderSingle {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206
@@ -55,7 +55,7 @@ export interface IOrderSingle {
   OrdType: string// 40
   Price?: number// 44
   StopPx?: number// 99
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   IOIid?: string// 23
@@ -69,7 +69,7 @@ export interface IOrderSingle {
   CommType?: string// 13
   Rule80A?: string// 47
   ForexReq?: boolean// 121
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355

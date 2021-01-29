@@ -62,8 +62,8 @@ export interface ITradeCaptureReportAck {
   LastParPx?: number// 669
   CalculatedCcyLastQty?: number// 1056
   LastSwapPoints?: number// 1071
-  Currency?: number// 15
-  SettlCurrency?: number// 120
+  Currency?: string// 15
+  SettlCurrency?: string// 120
   LastSpotRate?: number// 194
   LastForwardPoints?: number// 195
   LastMkt?: string// 30

@@ -65,7 +65,7 @@ export interface IAllocationInstruction {
   AvgPx?: number// 6
   AvgParPx?: number// 860
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  Currency?: number// 15
+  Currency?: string// 15
   AvgPxPrecision?: number// 74
   Parties?: IParties[]
   TradeDate: Date// 75

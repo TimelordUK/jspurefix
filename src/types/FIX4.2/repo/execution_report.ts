@@ -44,7 +44,7 @@ export interface IExecutionReport {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206
@@ -66,7 +66,7 @@ export interface IExecutionReport {
   PegDifference?: number// 211
   DiscretionInst?: string// 388
   DiscretionOffset?: number// 389
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   TimeInForce?: string// 59
@@ -96,7 +96,7 @@ export interface IExecutionReport {
   CommType?: string// 13
   GrossTradeAmt?: number// 381
   SettlCurrAmt?: number// 119
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   HandlInst?: string// 21

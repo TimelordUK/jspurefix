@@ -19,7 +19,7 @@ export interface IDerivativeSecurityList {
   TotalNumSecurities?: number// 393
   NoRelatedSym?: number// 146
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   InstrumentLeg?: IInstrumentLeg
   TradingSessionID?: string// 336
   Text?: string// 58

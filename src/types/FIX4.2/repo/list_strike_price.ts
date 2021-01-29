@@ -19,7 +19,7 @@ export interface IListStrikePrice {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206
@@ -36,7 +36,7 @@ export interface IListStrikePrice {
   ClOrdID?: string// 11
   Side?: string// 54
   Price: number// 44
-  Currency?: number// 15
+  Currency?: string// 15
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355

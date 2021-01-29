@@ -64,7 +64,7 @@ export interface IListOrdGrp {
   TriggeringInstruction?: ITriggeringInstruction
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
   YieldData?: IYieldData
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   IOIID?: string// 23
@@ -82,7 +82,7 @@ export interface IListOrdGrp {
   PreTradeAnonymity?: boolean// 1091
   CustOrderCapacity?: number// 582
   ForexReq?: boolean// 121
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   BookingType?: number// 775
   Text?: string// 58
   EncodedTextLen?: number// 354

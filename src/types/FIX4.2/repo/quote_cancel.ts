@@ -21,7 +21,7 @@ export interface IQuoteCancel {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206

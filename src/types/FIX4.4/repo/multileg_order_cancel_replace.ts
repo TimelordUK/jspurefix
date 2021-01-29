@@ -61,7 +61,7 @@ export interface IMultilegOrderCancelReplace {
   PriceType?: number// 423
   Price?: number// 44
   StopPx?: number// 99
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   IOIID?: string// 23
@@ -76,7 +76,7 @@ export interface IMultilegOrderCancelReplace {
   OrderRestrictions?: string// 529
   CustOrderCapacity?: number// 582
   ForexReq?: boolean// 121
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   BookingType?: number// 775
   Text?: string// 58
   EncodedTextLen?: number// 354

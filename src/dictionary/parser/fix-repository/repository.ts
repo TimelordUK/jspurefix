@@ -5,63 +5,12 @@ import { ContainedFieldSet, ContainedComponentField, ContainedGroupField, Contai
 import { ContainedSetType } from '../../dict-primitive'
 import { FixDefinitionSource, FixVersion } from '../../fix-versions'
 import { GetJsFixLogger, IJsFixLogger } from '../../../config'
-
-export interface IRepositoryField extends ILooseObject {
-  Tag: string
-  Name: string
-  Type: string
-  Description: string
-  AbbrName: string
-  NotReqXML: string
-  BaseCategory: string
-  BaseCategoryAbbrName: string
-}
-
-export interface IRepositoryEnum extends ILooseObject {
-  Tag: string
-  Value: string
-  SymbolicName: string
-  Description: string
-}
-
-export interface IRepositoryComponent extends ILooseObject {
-  ComponentID: string
-  ComponentType: string
-  CategoryID: string
-  Name: string
-  AbbrName: string
-  NotReqXML: string
-  Description: string
-}
-
-export interface IRepositoryMessage extends ILooseObject {
-  ComponentID: string
-  MsgType: string
-  Name: string
-  CategoryID: string
-  SectionID: string
-  AbbrName: string
-  NotReqXML: string
-  Description: string
-}
-
-export interface IRepositoryMsgContent extends ILooseObject {
-  ComponentID: string
-  TagText: string
-  Indent: string
-  Position: string
-  Reqd: string
-  Description: string
-}
-
-export interface IRepositoryAbbreviation extends ILooseObject {
-  Term: string
-  AbbrTerm: string
-}
+import { IRepositoryEnum, IRepositoryField, IRepositoryDataType, IRepositoryComponent, IRepositoryMessage, IRepositoryMsgContent, IRepositoryAbbreviation } from './repository-type'
 
 export class Repository {
   public Enums: IRepositoryEnum[]
   public Fields: IRepositoryField[]
+  public DataTypes: IRepositoryDataType[]
   public Components: IRepositoryComponent[]
   public Messages: IRepositoryMessage[]
   public MsgContents: IRepositoryMsgContent[]
@@ -72,6 +21,7 @@ export class Repository {
   private readonly groupLookup: Dictionary<GroupFieldDefinition> = new Dictionary<GroupFieldDefinition>()
   private contentLookup: Dictionary<IRepositoryMsgContent[]>
   private componentLookup: Dictionary<IRepositoryComponent>
+  private dataTypeLookup: Dictionary<IRepositoryDataType>
   private readonly logger: IJsFixLogger
 
   constructor (public readonly version: FixVersion, public readonly getLogger: GetJsFixLogger) {
@@ -101,6 +51,11 @@ export class Repository {
 
       case 'Enums': {
         this.Enums = data as IRepositoryEnum[]
+        break
+      }
+
+      case 'Datatypes': {
+        this.DataTypes = data as IRepositoryDataType[]
         break
       }
 
@@ -167,15 +122,30 @@ export class Repository {
   }
 
   private fields (): void {
+    this.dataTypeLookup = this.types()
     const definitions = this.definitions
+    const types = this.dataTypeLookup
+    types.remove('boolean')
+    types.remove('data')
     this.Fields.forEach((f: IRepositoryField) => {
+      const nativeType =
+        f.Type === 'Boolean' ||
+        f.Type === 'data' ||
+        f.Type === 'LocalMktDate' ||
+        f.Type === 'UTCDateOnly' ||
+        f.Type === 'UTCTimestamp'
+      let type = f.Type
+      const mapped = !nativeType && types.get(type)
+      if (mapped) {
+        type = mapped.BaseType ?? type
+      }
       definitions.addSimpleFieldDef(new SimpleFieldDefinition(
                 f.Tag,
                 f.Name,
                 f.AbbrName ? f.AbbrName : f.Name,
                 f.BaseCategory,
                 f.BaseCategoryAbbrName,
-                f.Type.toUpperCase(),
+                type.toUpperCase(),
                 f.Description))
     })
 
@@ -287,5 +257,12 @@ export class Repository {
       a.add(current.ComponentID, current)
       return a
     }, new Dictionary<IRepositoryComponent>())
+  }
+
+  private types (): Dictionary<IRepositoryDataType> {
+    return this.DataTypes.reduce((a: Dictionary<IRepositoryDataType>, current: IRepositoryDataType) => {
+      a.add(current.Name, current)
+      return a
+    }, new Dictionary<IRepositoryDataType>())
   }
 }

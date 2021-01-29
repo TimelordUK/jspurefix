@@ -19,7 +19,7 @@ export interface IIOI {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206
@@ -35,7 +35,7 @@ export interface IIOI {
   Side: string// 54
   IOIShares: string// 27
   Price?: number// 44
-  Currency?: number// 15
+  Currency?: string// 15
   ValidUntilTime?: Date// 62
   IOIQltyInd?: string// 25
   IOINaturalFlag?: boolean// 130

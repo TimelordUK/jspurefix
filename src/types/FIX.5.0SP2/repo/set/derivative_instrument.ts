@@ -28,7 +28,7 @@ export interface IDerivativeInstrument {
   DerivativeStateOrProvinceOfIssue?: string// 1259
   DerivativeLocaleOfIssue?: string// 1260
   DerivativeStrikePrice?: number// 1261
-  DerivativeStrikeCurrency?: number// 1262
+  DerivativeStrikeCurrency?: string// 1262
   DerivativeStrikeMultiplier?: number// 1263
   DerivativeStrikeValue?: number// 1264
   DerivativeOptAttribute?: string// 1265

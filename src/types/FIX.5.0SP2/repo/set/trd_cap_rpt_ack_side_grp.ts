@@ -27,8 +27,8 @@ export interface ITrdCapRptAckSideGrp {
   TradingSessionSubID?: string// 625
   TimeBracket?: string// 943
   NetGrossInd?: number// 430
-  SideCurrency?: number// 1154
-  SideSettlCurrency?: number// 1155
+  SideCurrency?: string// 1154
+  SideSettlCurrency?: string// 1155
   CommissionData?: ICommissionData
   NumDaysInterest?: number// 157
   ExDate?: Date// 230

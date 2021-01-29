@@ -58,7 +58,7 @@ export interface IConfirmation {
   AllocQty: number// 80
   QtyType?: number// 854
   Side: string// 54
-  Currency?: number// 15
+  Currency?: string// 15
   LastMkt?: string// 30
   CpctyConfGrp: ICpctyConfGrp[]
   AllocAccount: string// 79
@@ -88,7 +88,7 @@ export interface IConfirmation {
   NetMoney: number// 118
   MaturityNetMoney?: number// 890
   SettlCurrAmt?: number// 119
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   SettlType?: string// 63

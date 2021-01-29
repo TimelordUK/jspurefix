@@ -41,7 +41,7 @@ export interface IQuote {
   SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
-  Currency?: number// 15
+  Currency?: string// 15
   Stipulations?: IStipulations[]
   Account?: string// 1
   AcctIDSource?: number// 660
@@ -89,6 +89,6 @@ export interface IQuote {
   StandardTrailer: IStandardTrailer
   BookingType?: number// 775
   OrderRestrictions?: string// 529
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   RateSource?: IRateSource[]
 }

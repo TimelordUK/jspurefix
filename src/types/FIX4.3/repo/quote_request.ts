@@ -32,7 +32,7 @@ export interface IQuoteRequest {
   OrderQty2?: number// 192
   ExpireTime?: Date// 126
   TransactTime?: Date// 60
-  Currency?: number// 15
+  Currency?: string// 15
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
   PriceType?: number// 423
   Price?: number// 44

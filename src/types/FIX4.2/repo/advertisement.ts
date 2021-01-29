@@ -18,7 +18,7 @@ export interface IAdvertisement {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206
@@ -34,7 +34,7 @@ export interface IAdvertisement {
   AdvSide: string// 4
   Shares: number// 53
   Price?: number// 44
-  Currency?: number// 15
+  Currency?: string// 15
   TradeDate?: Date// 75
   TransactTime?: Date// 60
   Text?: string// 58

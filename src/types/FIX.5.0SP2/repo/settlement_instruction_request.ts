@@ -19,7 +19,7 @@ export interface ISettlementInstructionRequest {
   Product?: number// 460
   SecurityType?: string// 167
   CFICode?: string// 461
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   EffectiveTime?: Date// 168
   ExpireTime?: Date// 126
   LastUpdateTime?: Date// 779

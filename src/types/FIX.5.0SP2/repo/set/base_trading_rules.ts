@@ -11,7 +11,7 @@ export interface IBaseTradingRules {
   MaxTradeVol?: number// 1140
   MaxPriceVariation?: number// 1143
   ImpliedMarketIndicator?: number// 1144
-  TradingCurrency?: number// 1245
+  TradingCurrency?: string// 1245
   RoundLot?: number// 561
   MultilegModel?: number// 1377
   MultilegPriceMethod?: number// 1378

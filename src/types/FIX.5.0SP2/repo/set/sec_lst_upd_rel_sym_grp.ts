@@ -17,7 +17,7 @@ export interface ISecLstUpdRelSymGrp {
   SecurityTradingRules?: ISecurityTradingRules
   StrikeRules?: IStrikeRules[]
   UndInstrmtGrp?: IUndInstrmtGrp
-  Currency?: number// 15
+  Currency?: string// 15
   Stipulations?: IStipulations[]
   SecLstUpdRelSymsLegGrp?: ISecLstUpdRelSymsLegGrp[]
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData

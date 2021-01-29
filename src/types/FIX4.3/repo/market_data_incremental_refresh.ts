@@ -21,10 +21,10 @@ export interface IMarketDataIncrementalRefresh {
   FinancialStatus?: string// 291
   CorporateAction?: string// 292
   MDEntryPx?: number// 270
-  Currency?: number// 15
+  Currency?: string// 15
   MDEntrySize?: number// 271
   MDEntryDate?: string// 272
-  MDEntryTime?: Date// 273
+  MDEntryTime?: string// 273
   TickDirection?: string// 274
   MDMkt?: string// 275
   TradingSessionID?: string// 336

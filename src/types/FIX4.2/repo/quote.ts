@@ -19,7 +19,7 @@ export interface IQuote {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206
@@ -46,6 +46,6 @@ export interface IQuote {
   OrdType?: string// 40
   FutSettDate2?: Date// 193
   OrderQty2?: number// 192
-  Currency?: number// 15
+  Currency?: string// 15
   StandardTrailer: IStandardTrailer
 }

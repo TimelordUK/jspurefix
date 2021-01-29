@@ -28,7 +28,7 @@ export interface IQuotReqGrp {
   SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
-  Currency?: number// 15
+  Currency?: string// 15
   Stipulations?: IStipulations[]
   Account?: string// 1
   AcctIDSource?: number// 660
@@ -46,6 +46,6 @@ export interface IQuotReqGrp {
   Price2?: number// 640
   YieldData?: IYieldData
   Parties?: IParties[]
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   RateSource?: IRateSource[]
 }

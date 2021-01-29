@@ -6,5 +6,5 @@ export interface ILegPreAllocGrp {
   NestedParties2?: INestedParties2[]
   LegAllocQty?: number// 673
   LegAllocAcctIDSource?: string// 674
-  LegAllocSettlCurrency?: number// 1367
+  LegAllocSettlCurrency?: string// 1367
 }

@@ -26,7 +26,7 @@ export interface ISecurityDefinitionRequest {
   IDSource?: string// 22
   SecurityType?: string// 167
   MaturityMonthYear?: string// 200
-  MaturityDay?: string// 205
+  MaturityDay?: number// 205
   PutOrCall?: number// 201
   StrikePrice?: number// 202
   OptAttribute?: string// 206
@@ -39,7 +39,7 @@ export interface ISecurityDefinitionRequest {
   SecurityDesc?: string// 107
   EncodedSecurityDescLen?: number// 350
   EncodedSecurityDesc?: Buffer// 351
-  Currency?: number// 15
+  Currency?: string// 15
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
@@ -51,7 +51,7 @@ export interface ISecurityDefinitionRequest {
   UnderlyingIDSource?: string// 305
   UnderlyingSecurityType?: string// 310
   UnderlyingMaturityMonthYear?: string// 313
-  UnderlyingMaturityDay?: string// 314
+  UnderlyingMaturityDay?: number// 314
   UnderlyingPutOrCall?: number// 315
   UnderlyingStrikePrice?: number// 316
   UnderlyingOptAttribute?: string// 317
@@ -66,6 +66,6 @@ export interface ISecurityDefinitionRequest {
   EncodedUnderlyingSecurityDesc?: Buffer// 365
   RatioQty?: number// 319
   Side?: string// 54
-  UnderlyingCurrency?: number// 318
+  UnderlyingCurrency?: string// 318
   StandardTrailer: IStandardTrailer
 }

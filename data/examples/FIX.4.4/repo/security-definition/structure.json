@@ -13,35 +13,37 @@
         "name": "SecAltIDGrp",
         "depth": 2,
         "startTag": 454,
-        "startPosition": 14,
+        "startPosition": 13,
         "endTag": 456,
-        "endPosition": 18,
+        "endPosition": 19,
         "delimiterTag": 455,
         "delimiterPositions": [
-            15,
-            17
+            14,
+            16,
+            18
         ]
     },
     {
         "name": "EvntGrp",
         "depth": 2,
         "startTag": 864,
-        "startPosition": 43,
+        "startPosition": 49,
         "endTag": 868,
-        "endPosition": 48,
+        "endPosition": 58,
         "delimiterTag": 865,
         "delimiterPositions": [
-            44,
-            47
+            50,
+            51,
+            55
         ]
     },
     {
         "name": "Instrument",
         "depth": 1,
         "startTag": 55,
-        "startPosition": 11,
-        "endTag": 868,
-        "endPosition": 48,
+        "startPosition": 9,
+        "endTag": 874,
+        "endPosition": 59,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -49,60 +51,23 @@
         "name": "AttrbGrp",
         "depth": 2,
         "startTag": 870,
-        "startPosition": 51,
-        "endTag": 872,
-        "endPosition": 55,
+        "startPosition": 62,
+        "endTag": 871,
+        "endPosition": 66,
         "delimiterTag": 871,
         "delimiterPositions": [
-            52,
-            54
+            63,
+            64,
+            66
         ]
     },
     {
         "name": "InstrumentExtension",
         "depth": 1,
         "startTag": 668,
-        "startPosition": 49,
-        "endTag": 872,
-        "endPosition": 55,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "UndSecAltIDGrp",
-        "depth": 3,
-        "startTag": 457,
         "startPosition": 60,
-        "endTag": 459,
-        "endPosition": 64,
-        "delimiterTag": 458,
-        "delimiterPositions": [
-            61,
-            62,
-            63
-        ]
-    },
-    {
-        "name": "UnderlyingStipulations",
-        "depth": 3,
-        "startTag": 887,
-        "startPosition": 90,
-        "endTag": 889,
-        "endPosition": 95,
-        "delimiterTag": 888,
-        "delimiterPositions": [
-            91,
-            93,
-            94
-        ]
-    },
-    {
-        "name": "UnderlyingInstrument",
-        "depth": 2,
-        "startTag": 311,
-        "startPosition": 57,
-        "endTag": 889,
-        "endPosition": 95,
+        "endTag": 871,
+        "endPosition": 66,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -110,36 +75,34 @@
         "name": "UndSecAltIDGrp",
         "depth": 3,
         "startTag": 457,
-        "startPosition": 100,
+        "startPosition": 71,
         "endTag": 459,
-        "endPosition": 104,
+        "endPosition": 75,
         "delimiterTag": 458,
         "delimiterPositions": [
-            101,
-            103
+            72,
+            74
         ]
     },
     {
         "name": "UnderlyingStipulations",
         "depth": 3,
         "startTag": 887,
-        "startPosition": 135,
-        "endTag": 888,
-        "endPosition": 139,
+        "startPosition": 111,
+        "endTag": 889,
+        "endPosition": 113,
         "delimiterTag": 888,
         "delimiterPositions": [
-            136,
-            138,
-            139
+            112
         ]
     },
     {
         "name": "UnderlyingInstrument",
         "depth": 2,
         "startTag": 311,
-        "startPosition": 96,
-        "endTag": 888,
-        "endPosition": 139,
+        "startPosition": 68,
+        "endTag": 889,
+        "endPosition": 113,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -147,36 +110,33 @@
         "name": "UndInstrmtGrp",
         "depth": 1,
         "startTag": 711,
-        "startPosition": 56,
-        "endTag": 888,
-        "endPosition": 139,
+        "startPosition": 67,
+        "endTag": 889,
+        "endPosition": 113,
         "delimiterTag": 311,
         "delimiterPositions": [
-            57,
-            96
+            68
         ]
     },
     {
         "name": "LegSecAltIDGrp",
         "depth": 3,
         "startTag": 604,
-        "startPosition": 150,
+        "startPosition": 123,
         "endTag": 606,
-        "endPosition": 156,
+        "endPosition": 125,
         "delimiterTag": 605,
         "delimiterPositions": [
-            151,
-            153,
-            155
+            124
         ]
     },
     {
         "name": "InstrumentLeg",
         "depth": 2,
         "startTag": 600,
-        "startPosition": 146,
-        "endTag": 955,
-        "endPosition": 182,
+        "startPosition": 119,
+        "endTag": 956,
+        "endPosition": 153,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -184,23 +144,45 @@
         "name": "LegSecAltIDGrp",
         "depth": 3,
         "startTag": 604,
-        "startPosition": 186,
-        "endTag": 605,
-        "endPosition": 190,
+        "startPosition": 158,
+        "endTag": 606,
+        "endPosition": 164,
         "delimiterTag": 605,
         "delimiterPositions": [
-            187,
-            188,
-            190
+            159,
+            161,
+            163
         ]
     },
     {
         "name": "InstrumentLeg",
         "depth": 2,
         "startTag": 600,
-        "startPosition": 183,
-        "endTag": 955,
-        "endPosition": 218,
+        "startPosition": 154,
+        "endTag": 956,
+        "endPosition": 191,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "LegSecAltIDGrp",
+        "depth": 3,
+        "startTag": 604,
+        "startPosition": 196,
+        "endTag": 605,
+        "endPosition": 197,
+        "delimiterTag": 605,
+        "delimiterPositions": [
+            197
+        ]
+    },
+    {
+        "name": "InstrumentLeg",
+        "depth": 2,
+        "startTag": 600,
+        "startPosition": 192,
+        "endTag": 956,
+        "endPosition": 225,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -208,22 +190,23 @@
         "name": "InstrmtLegGrp",
         "depth": 1,
         "startTag": 555,
-        "startPosition": 145,
-        "endTag": 955,
-        "endPosition": 218,
+        "startPosition": 118,
+        "endTag": 956,
+        "endPosition": 225,
         "delimiterTag": 600,
         "delimiterPositions": [
-            146,
-            183
+            119,
+            154,
+            192
         ]
     },
     {
         "name": "StandardTrailer",
         "depth": 1,
         "startTag": 10,
-        "startPosition": 222,
+        "startPosition": 228,
         "endTag": 10,
-        "endPosition": 222,
+        "endPosition": 228,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -233,7 +216,7 @@
         "startTag": 8,
         "startPosition": 0,
         "endTag": 10,
-        "endPosition": 222,
+        "endPosition": 228,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -241,9 +224,9 @@
         "name": "StandardTrailer",
         "depth": 0,
         "startTag": 10,
-        "startPosition": 223,
+        "startPosition": 229,
         "endTag": 10,
-        "endPosition": 222,
+        "endPosition": 228,
         "delimiterTag": 0,
         "delimiterPositions": []
     }

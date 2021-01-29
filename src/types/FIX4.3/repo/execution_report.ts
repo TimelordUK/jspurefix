@@ -58,7 +58,7 @@ export interface IExecutionReport {
   PegDifference?: number// 211
   DiscretionInst?: string// 388
   DiscretionOffset?: number// 389
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   TimeInForce?: string// 59
@@ -93,7 +93,7 @@ export interface IExecutionReport {
   AccruedInterestAmt?: number// 159
   NetMoney?: number// 118
   SettlCurrAmt?: number// 119
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   HandlInst?: string// 21

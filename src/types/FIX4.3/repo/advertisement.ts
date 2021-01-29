@@ -17,7 +17,7 @@ export interface IAdvertisement {
   AdvSide: string// 4
   Shares: number// 53
   Price?: number// 44
-  Currency?: number// 15
+  Currency?: string// 15
   TradeDate?: Date// 75
   TransactTime?: Date// 60
   Text?: string// 58

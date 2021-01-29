@@ -28,13 +28,13 @@ export interface IRequestForPositionsAck {
   SubscriptionRequestType?: string// 263
   SettlSessID?: string// 716
   SettlSessSubID?: string// 717
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   Parties: IParties[]
   Account?: string// 1
   AcctIDSource?: number// 660
   AccountType?: number// 581
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   InstrmtLegGrp?: IInstrmtLegGrp
   UndInstrmtGrp?: IUndInstrmtGrp
   ResponseTransportType?: number// 725

@@ -12,7 +12,7 @@ export interface ISecurityStatusRequest {
   StandardHeader: IStandardHeader
   SecurityStatusReqID: string// 324
   Instrument: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   SubscriptionRequestType: string// 263
   TradingSessionID?: string// 336
   StandardTrailer: IStandardTrailer

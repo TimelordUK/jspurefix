@@ -25,7 +25,7 @@ export interface ISecurityStatus {
   InstrumentExtension?: IInstrumentExtension
   UndInstrmtGrp?: IUndInstrmtGrp
   InstrmtLegGrp?: IInstrmtLegGrp
-  Currency?: number// 15
+  Currency?: string// 15
   MarketID?: string// 1301
   MarketSegmentID?: string// 1300
   TradingSessionID?: string// 336

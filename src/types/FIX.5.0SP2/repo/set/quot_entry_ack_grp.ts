@@ -27,7 +27,7 @@ export interface IQuotEntryAckGrp {
   OrderQty2?: number// 192
   BidForwardPoints2?: number// 642
   OfferForwardPoints2?: number// 643
-  Currency?: number// 15
+  Currency?: string// 15
   QuoteEntryStatus?: number// 1167
   QuoteEntryRejectReason?: number// 368
   BookingType?: number// 775
