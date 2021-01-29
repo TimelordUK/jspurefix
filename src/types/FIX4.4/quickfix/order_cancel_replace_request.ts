@@ -60,7 +60,7 @@ export interface IOrderCancelReplaceRequest {
   ParticipationRate?: number// 849
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
-  Currency?: number// 15
+  Currency?: string// 15
   TimeInForce?: string// 59
   EffectiveTime?: Date// 168
   ExpireDate?: Date// 432
@@ -71,7 +71,7 @@ export interface IOrderCancelReplaceRequest {
   OrderRestrictions?: string// 529
   CustOrderCapacity?: number// 582
   ForexReq?: boolean// 121
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   BookingType?: number// 775
   Text?: string// 58
   EncodedTextLen?: number// 354

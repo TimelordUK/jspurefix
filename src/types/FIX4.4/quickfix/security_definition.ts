@@ -10,7 +10,7 @@ export interface ISecurityDefinition {
   Instrument?: IInstrument
   InstrumentExtension?: IInstrumentExtension
   UndInstrmtGrp?: IUndInstrmtGrp
-  Currency?: number// 15
+  Currency?: string// 15
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   Text?: string// 58

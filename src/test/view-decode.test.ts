@@ -66,24 +66,24 @@ test('get UTCDATEONLY from NoMDEntries instance 1', () => {
 
   const instance: ILooseObject = noMdEntriesAsObjects[1]
   const mmEntryDateAsString: string = mmEntryView.getString('MDEntryDate')
-  expect(mmEntryDateAsString).toEqual('20180608')
-  expect(mmEntryView.getString(272)).toEqual('20180608')
-  const asUtc: Date = new Date(Date.UTC(2018, 5, 8))
+  expect(mmEntryDateAsString).toEqual('20210129')
+  expect(mmEntryView.getString(272)).toEqual('20210129')
+  const asUtc: Date = new Date(Date.UTC(2021, 0, 29))
   expect(instance.MDEntryDate).toEqual(asUtc)
 })
 
 // <field number='273' name='MDEntryTime' type='UTCTIMEONLY' />
 
-test('get UTCTIMEONLY from NoMDEntries instance 1', () => {
+test('get UTCTIMEONLY from NoMDEntries instance 0', () => {
   const noMdEntriesAsObjects: ILooseObject[] = getMdEntriesObjects()
   const noMDEntriesView: MsgView = view.getView('NoMDEntries')
-  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(1)
+  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(0)
 
-  const instance: ILooseObject = noMdEntriesAsObjects[1]
+  const instance: ILooseObject = noMdEntriesAsObjects[0]
   const mmEntryTimeAsString: string = mmEntryView.getString('MDEntryTime')
-  expect(mmEntryTimeAsString).toEqual('20:53:14.717')
-  expect(mmEntryView.getString(273)).toEqual('20:53:14.717')
-  const asUtc: Date = new Date(Date.UTC(0, 0, 0, 20, 53, 14, 717))
+  expect(mmEntryTimeAsString).toEqual('19:45:19.852')
+  expect(mmEntryView.getString(273)).toEqual('19:45:19.852')
+  const asUtc: Date = new Date(Date.UTC(0, 0, 0, 19, 45, 19, 852))
   expect(instance.MDEntryTime).toEqual(asUtc)
 })
 
@@ -96,9 +96,9 @@ test('get UTCTIMESTAMP from NoMDEntries instance 1', () => {
 
   const instance: ILooseObject = noMdEntriesAsObjects[1]
   const mmEntryExpireTimeAsString: string = mmEntryView.getString('ExpireTime')
-  expect(mmEntryExpireTimeAsString).toEqual('20180608-20:53:14.000')
-  expect(mmEntryView.getString(126)).toEqual('20180608-20:53:14.000')
-  const asUtc: Date = new Date(Date.UTC(2018, 5, 8, 20, 53, 14, 0))
+  expect(mmEntryExpireTimeAsString).toEqual('20210129-19:45:19.000')
+  expect(mmEntryView.getString(126)).toEqual('20210129-19:45:19.000')
+  const asUtc: Date = new Date(Date.UTC(2021, 0, 29, 19, 45, 19, 0))
   const d: Date = instance.ExpireTime
   expect(d).toEqual(asUtc)
 })
@@ -112,17 +112,17 @@ test('get MinQty from NoMDEntries instance 1', () => {
 
   const instance: ILooseObject = noMdEntriesAsObjects[1]
   const mmEntryMinQtyAsString: string = mmEntryView.getString('MinQty')
-  expect(mmEntryMinQtyAsString).toEqual('53495')
-  expect(mmEntryView.getString(110)).toEqual('53495')
-  expect(instance.MinQty).toEqual(53495)
+  expect(mmEntryMinQtyAsString).toEqual('9.6478')
+  expect(mmEntryView.getString(110)).toEqual('9.6478')
+  expect(instance.MinQty).toEqual(9.6478)
 })
 
 test('get selection tags one call - tag ids', () => {
   const [a, b, c, d] = view.getTypedTags([8, 9, 35, 49])
   expect(a).toEqual('FIX4.4')
-  expect(b).toEqual(2955)
+  expect(b).toEqual(3957)
   expect(c).toEqual('W')
-  expect(d).toEqual('sender-10')
+  expect(d).toEqual('init-comp')
 })
 
 /*
@@ -142,11 +142,11 @@ test('get selection tags one call - tag names', () => {
     'MDReqID',
     'Symbol'])
   expect(a).toEqual('FIX4.4')
-  expect(b).toEqual(2955)
+  expect(b).toEqual(3957)
   expect(c).toEqual('W')
   expect(d).toEqual(1)
-  expect(e).toEqual('ipsum')
-  expect(f).toEqual('sit')
+  expect(e).toEqual('Lorem')
+  expect(f).toEqual('ipsum')
 })
 
 test('nested view fetch' , () => {
@@ -155,7 +155,7 @@ test('nested view fetch' , () => {
   const legGrp: IInstrumentLeg[] = legGrpView.toObject()
   expect(legGrp).toBeTruthy()
   expect(Array.isArray(legGrp))
-  expect(legGrp.length).toEqual(2)
+  expect(legGrp.length).toEqual(3)
 })
 
 function toFixMessage (o: ILooseObject, msg: MessageDefinition): string {

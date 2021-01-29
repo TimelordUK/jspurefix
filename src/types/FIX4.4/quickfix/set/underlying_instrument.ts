@@ -27,7 +27,7 @@ export interface IUnderlyingInstrument {
   UnderlyingLocaleOfIssue?: string// 594
   UnderlyingRedemptionDate?: Date// 247
   UnderlyingStrikePrice?: number// 316
-  UnderlyingStrikeCurrency?: number// 941
+  UnderlyingStrikeCurrency?: string// 941
   UnderlyingOptAttribute?: string// 317
   UnderlyingContractMultiplier?: number// 436
   UnderlyingCouponRate?: number// 435
@@ -40,7 +40,7 @@ export interface IUnderlyingInstrument {
   EncodedUnderlyingSecurityDesc?: Buffer// 365
   UnderlyingCPProgram?: string// 877
   UnderlyingCPRegType?: string// 878
-  UnderlyingCurrency?: number// 318
+  UnderlyingCurrency?: string// 318
   UnderlyingQty?: number// 879
   UnderlyingPx?: number// 810
   UnderlyingDirtyPrice?: number// 882

@@ -26,7 +26,7 @@ export interface IQuotReqRjctGrpNoRelatedSym {
   SettlDate?: Date// 64
   SettlDate2?: Date// 193
   OrderQty2?: number// 192
-  Currency?: number// 15
+  Currency?: string// 15
   Stipulations: IStipulations
   Account?: string// 1
   AcctIDSource?: number// 660

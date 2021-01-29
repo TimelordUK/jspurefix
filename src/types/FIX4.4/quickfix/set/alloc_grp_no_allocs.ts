@@ -23,8 +23,8 @@ export interface IAllocGrpNoAllocs {
   AllocNetMoney?: number// 154
   SettlCurrAmt?: number// 119
   AllocSettlCurrAmt?: number// 737
-  SettlCurrency?: number// 120
-  AllocSettlCurrency?: number// 736
+  SettlCurrency?: string// 120
+  AllocSettlCurrency?: string// 736
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   AllocAccruedInterestAmt?: number// 742

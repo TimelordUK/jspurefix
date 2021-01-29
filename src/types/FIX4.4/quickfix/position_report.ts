@@ -21,7 +21,7 @@ export interface IPositionReport {
   AcctIDSource?: number// 660
   AccountType: number// 581
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   SettlPrice: number// 730
   SettlPriceType: number// 731
   PriorSettlPrice: number// 734

@@ -13,7 +13,7 @@ export interface IAdvertisement {
   Quantity: number// 53
   QtyType?: number// 854
   Price?: number// 44
-  Currency?: number// 15
+  Currency?: string// 15
   TradeDate?: Date// 75
   TransactTime?: Date// 60
   Text?: string// 58

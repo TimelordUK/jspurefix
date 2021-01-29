@@ -36,7 +36,7 @@ export interface INewOrderCross {
   StopPx?: number// 99
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
   YieldData?: IYieldData
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   IOIID?: string// 23
   QuoteID?: string// 117

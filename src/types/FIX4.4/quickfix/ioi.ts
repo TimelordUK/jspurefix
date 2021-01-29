@@ -20,7 +20,7 @@ export interface IIOI {
   QtyType?: number// 854
   OrderQtyData?: IOrderQtyData
   IOIQty: string// 27
-  Currency?: number// 15
+  Currency?: string// 15
   Stipulations?: IStipulations
   InstrmtLegIOIGrp?: IInstrmtLegIOIGrp
   PriceType?: number// 423

@@ -23,4 +23,6 @@ class AppLauncher extends Launcher {
 const l = new AppLauncher()
 l.run().then(() => {
   console.log('finished.')
+}).catch(e => {
+  console.error(e)
 })

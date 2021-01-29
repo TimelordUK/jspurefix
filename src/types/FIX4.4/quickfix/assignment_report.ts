@@ -13,7 +13,7 @@ export interface IAssignmentReport {
   Account?: string// 1
   AccountType: number// 581
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   InstrmtLegGrp?: IInstrmtLegGrp
   UndInstrmtGrp?: IUndInstrmtGrp
   PositionQty?: IPositionQty

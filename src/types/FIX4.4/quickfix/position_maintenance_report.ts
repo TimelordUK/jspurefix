@@ -22,7 +22,7 @@ export interface IPositionMaintenanceReport {
   AcctIDSource?: number// 660
   AccountType: number// 581
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   InstrmtLegGrp?: IInstrmtLegGrp
   UndInstrmtGrp?: IUndInstrmtGrp
   TrdgSesGrp?: ITrdgSesGrp

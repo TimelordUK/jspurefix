@@ -56,11 +56,9 @@ export class Tags {
   }
 
   public static toType (type: string): TagType {
-    if (type === 'Currency') {
-      type = 'string'
-    }
     type = type || 'string'
     switch (type.toLowerCase()) {
+      case 'currency':
       case 'string':
       case 'char': {
         return TagType.String
@@ -72,7 +70,6 @@ export class Tags {
         return TagType.Int
       }
 
-      case 'currency':
       case 'qty':
       case 'percentage':
       case 'amt':

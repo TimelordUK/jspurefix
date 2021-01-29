@@ -17,7 +17,11 @@ function dispatchField (field: ContainedField, dispatcher: IFieldDispatcher): vo
 
     case ContainedFieldType.Simple: {
       if (dispatcher.simple) {
-        dispatcher.simple(field as ContainedSimpleField)
+        try {
+          dispatcher.simple(field as ContainedSimpleField)
+        } catch (ex) {
+          let x = 0
+        }
       }
       break
     }

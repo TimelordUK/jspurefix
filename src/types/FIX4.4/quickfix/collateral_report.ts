@@ -31,7 +31,7 @@ export interface ICollateralReport {
   SettlDate?: Date// 64
   Quantity?: number// 53
   QtyType?: number// 854
-  Currency?: number// 15
+  Currency?: string// 15
   InstrmtLegGrp?: IInstrmtLegGrp
   UndInstrmtGrp?: IUndInstrmtGrp
   MarginExcess?: number// 899

@@ -14,7 +14,7 @@ export interface IMDIncGrpNoMDEntries {
   FinancialStatus?: string// 291
   CorporateAction?: string// 292
   MDEntryPx?: number// 270
-  Currency?: number// 15
+  Currency?: string// 15
   MDEntrySize?: number// 271
   MDEntryDate?: Date// 272
   MDEntryTime?: Date// 273

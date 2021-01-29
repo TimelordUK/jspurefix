@@ -9,7 +9,7 @@ export interface ISecurityStatusRequest {
   InstrumentExtension?: IInstrumentExtension
   UndInstrmtGrp?: IUndInstrmtGrp
   InstrmtLegGrp?: IInstrmtLegGrp
-  Currency?: number// 15
+  Currency?: string// 15
   SubscriptionRequestType: string// 263
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625

@@ -1,7 +1,7 @@
 export interface IRgstDistInstGrpNoDistribInsts {
   DistribPaymentMethod?: number// 477
   DistribPercentage?: number// 512
-  CashDistribCurr?: number// 478
+  CashDistribCurr?: string// 478
   CashDistribAgentName?: string// 498
   CashDistribAgentCode?: string// 499
   CashDistribAgentAcctNumber?: string// 500

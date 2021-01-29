@@ -12,7 +12,7 @@ export interface ISecurityListRequest {
   FinancingDetails?: IFinancingDetails
   UndInstrmtGrp?: IUndInstrmtGrp
   InstrmtLegGrp?: IInstrmtLegGrp
-  Currency?: number// 15
+  Currency?: string// 15
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355

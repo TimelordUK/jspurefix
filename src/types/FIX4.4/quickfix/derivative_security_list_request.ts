@@ -5,7 +5,7 @@ export interface IDerivativeSecurityListRequest {
   SecurityListRequestType: number// 559
   UnderlyingInstrument?: IUnderlyingInstrument
   SecuritySubType?: string// 762
-  Currency?: number// 15
+  Currency?: string// 15
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355

@@ -25,7 +25,7 @@ export interface IInstrumentLeg {
   LegLocaleOfIssue?: string// 598
   LegRedemptionDate?: Date// 254
   LegStrikePrice?: number// 612
-  LegStrikeCurrency?: number// 942
+  LegStrikeCurrency?: string// 942
   LegOptAttribute?: string// 613
   LegContractMultiplier?: number// 614
   LegCouponRate?: number// 615
@@ -38,7 +38,7 @@ export interface IInstrumentLeg {
   EncodedLegSecurityDesc?: Buffer// 622
   LegRatioQty?: number// 623
   LegSide?: string// 624
-  LegCurrency?: number// 556
+  LegCurrency?: string// 556
   LegPool?: string// 740
   LegDatedDate?: Date// 739
   LegContractSettlMonth?: string// 955

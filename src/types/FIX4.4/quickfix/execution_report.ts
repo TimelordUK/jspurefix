@@ -70,7 +70,7 @@ export interface IExecutionReport {
   TargetStrategyParameters?: string// 848
   ParticipationRate?: number// 849
   TargetStrategyPerformance?: number// 850
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   TimeInForce?: string// 59
@@ -122,7 +122,7 @@ export interface IExecutionReport {
   TotalTakedown?: number// 237
   NetMoney?: number// 118
   SettlCurrAmt?: number// 119
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   HandlInst?: string// 21

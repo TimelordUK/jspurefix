@@ -110,6 +110,9 @@ export class TcpInitiator extends FixInitiator {
         const e = new Error(`${application.name}: timeout of ${timeoutSeconds} whilst connecting`)
         this.logger.warning(`repeatConnect reject with message ${e.message}`)
         reject(e)
+      }).catch(e => {
+        this.logger.error(e)
+        reject(e)
       })
     })
   }

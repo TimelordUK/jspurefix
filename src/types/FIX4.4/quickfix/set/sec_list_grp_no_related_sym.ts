@@ -12,7 +12,7 @@ export interface ISecListGrpNoRelatedSym {
   InstrumentExtension?: IInstrumentExtension
   FinancingDetails?: IFinancingDetails
   UndInstrmtGrp?: IUndInstrmtGrp
-  Currency?: number// 15
+  Currency?: string// 15
   Stipulations?: IStipulations
   InstrmtLegSecListGrp?: IInstrmtLegSecListGrp
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData

@@ -27,7 +27,7 @@ export interface IInstrument {
   LocaleOfIssue?: string// 472
   RedemptionDate?: Date// 240
   StrikePrice?: number// 202
-  StrikeCurrency?: number// 947
+  StrikeCurrency?: string// 947
   OptAttribute?: string// 206
   ContractMultiplier?: number// 231
   CouponRate?: number// 223

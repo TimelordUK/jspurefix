@@ -4,7 +4,7 @@ import { IInstrmtLegGrp } from './instrmt_leg_grp'
 
 export interface IRelSymDerivSecGrpNoRelatedSym {
   Instrument?: IInstrument
-  Currency?: number// 15
+  Currency?: string// 15
   ExpirationCycle?: number// 827
   InstrumentExtension?: IInstrumentExtension
   InstrmtLegGrp?: IInstrmtLegGrp

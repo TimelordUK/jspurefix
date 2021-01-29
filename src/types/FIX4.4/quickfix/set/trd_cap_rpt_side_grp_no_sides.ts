@@ -23,7 +23,7 @@ export interface ITrdCapRptSideGrpNoSides {
   TradeInputSource?: string// 578
   TradeInputDevice?: string// 579
   OrderInputDevice?: string// 821
-  Currency?: number// 15
+  Currency?: string// 15
   ComplianceID?: string// 376
   SolicitedFlag?: boolean// 377
   OrderCapacity?: string// 528
@@ -49,7 +49,7 @@ export interface ITrdCapRptSideGrpNoSides {
   TotalTakedown?: number// 237
   NetMoney?: number// 118
   SettlCurrAmt?: number// 119
-  SettlCurrency?: number// 120
+  SettlCurrency?: string// 120
   SettlCurrFxRate?: number// 155
   SettlCurrFxRateCalc?: string// 156
   PositionEffect?: string// 77
