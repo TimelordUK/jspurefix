@@ -31,7 +31,7 @@
     "repo44-replay": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/fix.txt --delimiter=\"|\" --session=data/session/test-initiator.json",
     "repo44-repscr": "cd dist && node jsfix-cmd --dict=repo44 --fix=dist/fix.txt --delimiter=\"|\" --stats",
     "repo44-bench": "cd dist && node jsfix-cmd --dict=repo44 --benchmark --delimiter=\"|\"",
-    "repo44-bench-er": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
+    "repo44-bench-er": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=125000",
     "repo44-bench-tc": "cd dist && node jsfix-cmd ---dict=repo44 --fix=data/examples/FIX.4.4/repo/trade-capture/fix.txt --benchmark --delimiter=\"|\" --repeats=30000",
     "repo44-bench-sd": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/security-definition/fix.txt --benchmark --delimiter=\"|\" --repeats=150000",
     "qf-bench-lo": "cd dist && node jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/quickfix/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
