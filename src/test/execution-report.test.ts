@@ -740,7 +740,7 @@ test('simple tag decoding', () => {
   expect(erView.getString(35)).toEqual('8')
   expect(erView.getString('MsgType')).toEqual('8')
   expect(erView.getString(8)).toEqual('FIX4.4')
-  expect(erView.getTyped(9)).toEqual(6542)
+  expect(erView.getTyped(9)).toEqual(6545)
   expect(erView.getTyped('TotNumReports')).toEqual(19404)
   expect(erView.getTyped('StrikePrice')).toEqual(52639)
 }, 1000)

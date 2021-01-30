@@ -4,7 +4,7 @@ import { SimpleFieldDefinition, FixDefinitions, MsgCompiler, EnumCompiler, IComp
 import { MessageGenerator, JsonHelper, getDefinitions, getDictPath, getWords } from './util'
 import { AsciiMsgTransmitter, ISessionDescription, SessionMsgFactory, MsgTransport, FileDuplex, StringDuplex } from './transport'
 
-import { MsgTag } from './types/enum'
+import { MsgTag } from './types'
 import { JsFixConfig } from './config'
 
 import * as util from 'util'

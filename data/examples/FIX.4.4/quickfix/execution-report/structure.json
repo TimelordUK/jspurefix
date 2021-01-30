@@ -1,12 +1,13 @@
 [
     {
         "name": "header",
-        "depth": 1,
+        "depth": 2,
         "startTag": 8,
         "startPosition": 0,
         "endTag": 52,
         "endPosition": 7,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoPartySubIDs",
@@ -28,7 +29,8 @@
         "startPosition": 24,
         "endTag": 803,
         "endPosition": 28,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoPartySubIDs",
@@ -51,7 +53,8 @@
         "startPosition": 32,
         "endTag": 803,
         "endPosition": 38,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoPartySubIDs",
@@ -72,7 +75,8 @@
         "startPosition": 42,
         "endTag": 803,
         "endPosition": 44,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoPartyIDs",
@@ -95,7 +99,8 @@
         "startPosition": 20,
         "endTag": 803,
         "endPosition": 44,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoContraBrokers",
@@ -118,7 +123,8 @@
         "startPosition": 46,
         "endTag": 655,
         "endPosition": 61,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoSecurityAltID",
@@ -140,7 +146,8 @@
         "startPosition": 87,
         "endTag": 456,
         "endPosition": 91,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoEvents",
@@ -161,7 +168,8 @@
         "startPosition": 127,
         "endTag": 868,
         "endPosition": 131,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "Instrument",
@@ -170,7 +178,8 @@
         "startPosition": 83,
         "endTag": 874,
         "endPosition": 133,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "FinancingDetails",
@@ -179,7 +188,8 @@
         "startPosition": 134,
         "endTag": 898,
         "endPosition": 142,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoUnderlyingSecurityAltID",
@@ -202,7 +212,8 @@
         "startPosition": 148,
         "endTag": 459,
         "endPosition": 154,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoUnderlyingStips",
@@ -225,7 +236,8 @@
         "startPosition": 196,
         "endTag": 889,
         "endPosition": 202,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "UnderlyingInstrument",
@@ -234,7 +246,8 @@
         "startPosition": 144,
         "endTag": 889,
         "endPosition": 202,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoUnderlyingSecurityAltID",
@@ -255,7 +268,8 @@
         "startPosition": 207,
         "endTag": 459,
         "endPosition": 209,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoUnderlyingStips",
@@ -278,7 +292,8 @@
         "startPosition": 251,
         "endTag": 889,
         "endPosition": 257,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "UnderlyingInstrument",
@@ -287,7 +302,8 @@
         "startPosition": 203,
         "endTag": 889,
         "endPosition": 257,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoUnderlyings",
@@ -309,7 +325,8 @@
         "startPosition": 143,
         "endTag": 889,
         "endPosition": 257,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoStipulations",
@@ -330,7 +347,8 @@
         "startPosition": 259,
         "endTag": 234,
         "endPosition": 261,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "OrderQtyData",
@@ -339,7 +357,8 @@
         "startPosition": 263,
         "endTag": 469,
         "endPosition": 267,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "PegInstructions",
@@ -348,7 +367,8 @@
         "startPosition": 272,
         "endTag": 840,
         "endPosition": 277,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "DiscretionInstructions",
@@ -357,7 +377,8 @@
         "startPosition": 278,
         "endTag": 846,
         "endPosition": 284,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "CommissionData",
@@ -366,7 +387,8 @@
         "startPosition": 324,
         "endTag": 497,
         "endPosition": 327,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "SpreadOrBenchmarkCurveData",
@@ -375,7 +397,8 @@
         "startPosition": 328,
         "endTag": 761,
         "endPosition": 335,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "YieldData",
@@ -384,7 +407,8 @@
         "startPosition": 336,
         "endTag": 698,
         "endPosition": 341,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoContAmts",
@@ -407,7 +431,8 @@
         "startPosition": 385,
         "endTag": 521,
         "endPosition": 394,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoLegSecurityAltID",
@@ -430,7 +455,8 @@
         "startPosition": 400,
         "endTag": 606,
         "endPosition": 406,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "InstrumentLeg",
@@ -439,7 +465,8 @@
         "startPosition": 396,
         "endTag": 956,
         "endPosition": 443,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoLegStipulations",
@@ -461,7 +488,8 @@
         "startPosition": 446,
         "endTag": 689,
         "endPosition": 450,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartySubIDs",
@@ -482,7 +510,8 @@
         "startPosition": 457,
         "endTag": 805,
         "endPosition": 459,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartyIDs",
@@ -503,7 +532,8 @@
         "startPosition": 453,
         "endTag": 805,
         "endPosition": 459,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoLegSecurityAltID",
@@ -526,7 +556,8 @@
         "startPosition": 469,
         "endTag": 606,
         "endPosition": 475,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "InstrumentLeg",
@@ -535,7 +566,8 @@
         "startPosition": 465,
         "endTag": 956,
         "endPosition": 512,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoLegStipulations",
@@ -558,7 +590,8 @@
         "startPosition": 515,
         "endTag": 689,
         "endPosition": 521,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartySubIDs",
@@ -579,7 +612,8 @@
         "startPosition": 528,
         "endTag": 805,
         "endPosition": 530,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartySubIDs",
@@ -602,7 +636,8 @@
         "startPosition": 534,
         "endTag": 805,
         "endPosition": 540,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartySubIDs",
@@ -624,7 +659,8 @@
         "startPosition": 544,
         "endTag": 805,
         "endPosition": 548,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartyIDs",
@@ -647,7 +683,8 @@
         "startPosition": 524,
         "endTag": 805,
         "endPosition": 548,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoLegSecurityAltID",
@@ -670,7 +707,8 @@
         "startPosition": 558,
         "endTag": 606,
         "endPosition": 564,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "InstrumentLeg",
@@ -679,7 +717,8 @@
         "startPosition": 554,
         "endTag": 956,
         "endPosition": 601,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoLegStipulations",
@@ -701,7 +740,8 @@
         "startPosition": 604,
         "endTag": 689,
         "endPosition": 608,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartySubIDs",
@@ -724,7 +764,8 @@
         "startPosition": 615,
         "endTag": 805,
         "endPosition": 621,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartySubIDs",
@@ -746,7 +787,8 @@
         "startPosition": 625,
         "endTag": 805,
         "endPosition": 629,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoNestedPartyIDs",
@@ -768,7 +810,8 @@
         "startPosition": 611,
         "endTag": 805,
         "endPosition": 629,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoLegs",
@@ -791,7 +834,8 @@
         "startPosition": 395,
         "endTag": 637,
         "endPosition": 634,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "NoMiscFees",
@@ -813,15 +857,27 @@
         "startPosition": 636,
         "endTag": 891,
         "endPosition": 644,
-        "delimiterTag": 0
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "ExecutionReport",
-        "depth": 0,
-        "startTag": 37,
-        "startPosition": 8,
+        "depth": 1,
+        "startTag": 8,
+        "startPosition": 0,
         "endTag": 891,
-        "endPosition": 644,
-        "delimiterTag": 0
+        "endPosition": 645,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "trailer",
+        "depth": 0,
+        "startTag": 10,
+        "startPosition": 645,
+        "endTag": 10,
+        "endPosition": 645,
+        "delimiterTag": 0,
+        "delimiterPositions": []
     }
 ]
