@@ -1,7 +1,7 @@
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
-import { initiator, acceptor } from '../../../transport/tcp'
+import { initiator, acceptor } from '../../../transport'
 
 class AppLauncher extends Launcher {
   public constructor () {

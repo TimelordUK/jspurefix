@@ -1,5 +1,5 @@
 import { MsgView, SegmentType } from '../../buffer'
-import { MsgType, MsgTag, SessionRejectReason } from '../../types/enum'
+import { MsgType, MsgTag, SessionRejectReason } from '../../types'
 import { IJsFixConfig } from '../../config'
 import { IMsgApplication } from '../session-description'
 import { SessionState, TickAction } from '../fix-session-state'

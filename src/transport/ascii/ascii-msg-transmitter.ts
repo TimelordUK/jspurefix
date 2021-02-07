@@ -1,4 +1,4 @@
-import { TimeFormatter, AsciiEncoder } from '../../buffer/ascii/'
+import { TimeFormatter, AsciiEncoder } from '../../buffer'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
 import { MessageDefinition, ContainedFieldSet } from '../../dictionary'

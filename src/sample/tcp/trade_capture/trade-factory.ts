@@ -11,7 +11,7 @@ import {
   ITradeCaptureReportRequest
 } from '../../../types/FIX4.4/repo'
 
-import { TradeReportTransType } from '../../../types/FIXML50SP2/enum'
+import { TradeReportTransType } from '../../../types/FIXML50SP2'
 
 export class TradeFactory {
   private nextTradeId: number = 100000

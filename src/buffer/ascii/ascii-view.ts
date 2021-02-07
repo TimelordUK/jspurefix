@@ -7,7 +7,7 @@ import { ElasticBuffer } from '../elastic-buffer'
 import { ITimeFormatter } from './itime-formatter'
 import { TimeFormatter } from './time-formatter'
 import { TagPos } from '../tag-pos'
-import { MsgTag } from '../../types/enum'
+import { MsgTag } from '../../types'
 
 export class AsciiView extends MsgView {
   private readonly timeFormatter: ITimeFormatter = new TimeFormatter(this.buffer)

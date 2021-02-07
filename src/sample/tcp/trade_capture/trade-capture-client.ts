@@ -1,6 +1,6 @@
 import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport'
-import { MsgType } from '../../../types/enum'
+import { MsgType } from '../../../types'
 import { ITradeCaptureReport, ITradeCaptureReportRequest, ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { Dictionary } from '../../../collections'

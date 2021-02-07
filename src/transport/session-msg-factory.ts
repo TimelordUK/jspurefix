@@ -1,7 +1,7 @@
 import { ISessionMsgFactory } from './fix-msg-factory'
 import { ISessionDescription } from './session-description'
 import { ILooseObject } from '../collections/collection'
-import { MsgType } from '../types/enum'
+import { MsgType } from '../types'
 
 import { ILogon, ITestRequest, IHeartbeat, ILogout,
   IResendRequest, ISequenceReset, IReject, IStandardHeader, IStandardTrailer, EncryptMethod } from '../types/FIX4.4/repo'

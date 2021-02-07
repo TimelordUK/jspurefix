@@ -1,7 +1,7 @@
 import { MsgView, ElasticBuffer, AsciiChars } from '../buffer'
 import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, MsgTransport, SessionMsgFactory, AsciiMsgTransmitter, StringDuplex, FixDuplex } from '../transport'
-import { MsgType, SessionRejectReason } from '../types/enum'
+import { MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'
 import { IJsFixConfig, JsFixConfig } from '../config'
 import { SkeletonSession } from '../sample/tcp/skeleton/skeleton-session'

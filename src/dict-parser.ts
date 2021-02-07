@@ -5,7 +5,7 @@ import { AsciiChars, MsgView, MsgParser, ElasticBuffer, AsciiParser, AsciiView, 
 import { ReadStream } from 'fs'
 import { ISessionDescription, AsciiMsgTransmitter, StringDuplex, MsgPayload } from './transport'
 import { EnumCompiler, MsgCompiler, ICompilerSettings, FixDefinitions } from './dictionary'
-import { MsgType } from './types/enum'
+import { MsgType } from './types'
 import { JsFixWinstonLogFactory, JsFixConfig, WinstonLogger } from './config'
 import * as requestPromise from 'request-promise'
 import { BusinessRejectReason, IBusinessMessageReject } from './types/FIXML50SP2'

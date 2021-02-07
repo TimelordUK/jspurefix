@@ -2,7 +2,7 @@ import { ContainedComponentField, ContainedFieldType, ContainedGroupField, Conta
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
-import { MsgTag } from '../../types/enum'
+import { MsgTag } from '../../types'
 
 export class AsciiSegmentParser {
 
