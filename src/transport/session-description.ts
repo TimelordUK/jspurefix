@@ -1,6 +1,11 @@
 export interface ITcpTransportDescription {
   readonly port: number
   readonly host: string,
+  readonly key: string,
+  readonly cert: string,
+  readonly ca: string[],
+  requestCert: boolean,
+  rejectUnauthorized: boolean
 }
 
 export interface IHttpAdapter {

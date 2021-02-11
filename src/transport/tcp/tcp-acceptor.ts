@@ -1,38 +1,65 @@
-import * as net from 'net'
 import { TcpDuplex } from '../duplex'
 import { MsgTransport } from '../msg-transport'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
+import { getTlsOptions } from './tls-options'
+import { createServer as netCreateServer, Socket, Server } from 'net'
+import { createServer as tlsCreateServer, TLSSocket, TlsOptions } from 'tls'
 
 export class TcpAcceptor extends FixAcceptor {
-  private server: net.Server
+  private server: Server
   private logger: IJsFixLogger
   constructor (public readonly config: IJsFixConfig) {
     super(config.description.application)
     this.logger = config.logFactory.logger(`${config.description.application.name}:TcpAcceptor`)
     let nextId: number = 0
+    const tcp = this.config.description.application.tcp
+    const tlsOptions: TlsOptions = getTlsOptions(tcp)
     this.logger.info('creating server')
-    this.server = net.createServer((socket: net.Socket) => {
-      socket.setNoDelay(true)
-      const id: number = nextId++
-      const transport: MsgTransport = new MsgTransport(id, config, new TcpDuplex(socket))
-      this.saveTransport(id, transport)
-      transport.receiver.on('end', () => {
-        this.harvestTransport(id)
+    if (tlsOptions) {
+      this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
+        // tlsSocket.enableTrace()
+        tlsSocket.setEncoding('utf8')
+        const id: number = nextId++
+        this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
+        if (tlsSocket.authorized) {
+          this.onSocket(id, tlsSocket, config)
+        }
       })
-      transport.receiver.on('error', (e: Error) => {
-        this.logger.error(e)
-        this.harvestTransport(id)
+    } else {
+      this.server = netCreateServer((socket: Socket) => {
+        const id: number = nextId++
+        this.logger.info(`net creates session ${id} }`)
+        socket.setNoDelay(true)
+        this.onSocket(id, socket, config)
       })
-    })
+    }
     this.server.on('error', ((err: Error) => {
       throw err
     }))
   }
 
+  private onSocket (id: number, socket: Socket, config: IJsFixConfig) {
+    const transport: MsgTransport = new MsgTransport(id, config, new TcpDuplex(socket))
+    this.saveTransport(id, transport)
+    transport.receiver.on('end', () => {
+      this.harvestTransport(id)
+    })
+    transport.receiver.on('error', (e: Error) => {
+      this.logger.error(e)
+      this.harvestTransport(id)
+    })
+  }
+
   public listen (): void {
     const port = this.config.description.application.tcp.port
     this.logger.info(`start to listen ${port}`)
+    this.server.on('connection', () => {
+      this.logger.info('insecure connection established')
+    })
+    this.server.on('secureConnection', (s) => {
+      this.logger.info(`secure connection; client authorized: ${s.authorized}`)
+    })
     this.server.listen(port)
   }
 

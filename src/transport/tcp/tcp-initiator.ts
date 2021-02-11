@@ -6,7 +6,9 @@ import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { TcpDuplex, FixDuplex } from '../duplex'
 
 import * as util from 'util'
-import * as net from 'net'
+import { connect as tlsConnect, ConnectionOptions, TLSSocket } from 'tls'
+import { getTlsConnectionOptions } from './tls-options'
+import { Socket, createConnection } from 'net'
 
 export enum InitiatorState {
   Idle = 1,
@@ -77,14 +79,37 @@ export class TcpInitiator extends FixInitiator {
     return new Promise<MsgTransport>((resolve, reject) => {
       const tcp = this.tcp
       this.logger.info(`tryConnect ${tcp.host}:${tcp.port}`)
-      const socket = net.createConnection(tcp, () => {
-        this.logger.info(`net.createConnection cb, resolving`)
-        this.duplex = new TcpDuplex(socket)
-        resolve(new MsgTransport(0, this.jsFixConfig, this.duplex))
-      })
-      socket.on('error', (e) => {
-        reject(e)
-      })
+      const connectionOptions: any = getTlsConnectionOptions(tcp)
+      let socket: Socket = null
+      let tlsSocket: TLSSocket = null
+      if (connectionOptions) {
+        tlsSocket = tlsConnect(connectionOptions, () => {
+          this.logger.info(`client connected ${tlsSocket.authorized ? 'authorized' : 'unauthorized'}`)
+          if (!tlsSocket.authorized) {
+            this.logger.warning(`rejecting from state ${this.state}`)
+            console.error(`authorizationError = ${tlsSocket.authorizationError}`)
+            tlsSocket.end()
+            reject(tlsSocket.authorizationError)
+          } else {
+            // tlsSocket.enableTrace()
+            tlsSocket.setEncoding('utf8')
+            this.duplex = new TcpDuplex(tlsSocket)
+            resolve(new MsgTransport(0, this.jsFixConfig, this.duplex))
+          }
+        })
+        tlsSocket.on('error', (e) => {
+          reject(e)
+        })
+      } else {
+        socket = createConnection(tcp, () => {
+          this.logger.info(`net.createConnection cb, resolving`)
+          this.duplex = new TcpDuplex(socket)
+          resolve(new MsgTransport(0, this.jsFixConfig, this.duplex))
+          socket.on('error', (e) => {
+            reject(e)
+          })
+        })
+      }
     })
   }
 

@@ -131,6 +131,12 @@ export class ElasticBuffer {
     return this.buffer.slice(0, this.ptr)
   }
 
+  public copy (): Buffer {
+    const m = Buffer.alloc(this.ptr)
+    this.buffer.copy(m, 0, 0, this.ptr)
+    return m
+  }
+
   public clone (): ElasticBuffer {
     const cloned = new ElasticBuffer(this.ptr)
     this.buffer.copy(cloned.buffer, 0, 0, this.ptr)

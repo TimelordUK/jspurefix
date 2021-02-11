@@ -1,0 +1,27 @@
+{
+  "application": {
+    "reconnectSeconds": 10,
+    "type": "initiator",
+    "name": "test_client",
+    "tcp": {
+      "host" : "localhost",
+      "port": 2344,
+      "key": "data/session/certs/client/client.key",
+      "cert": "data/session/certs/client/client.crt",
+      "ca": [
+        "data/session/certs/ca/ca.crt"
+      ]
+    },
+    "protocol": "ascii",
+    "dictionary": "repo44"
+  },
+  "Username": "js-tls-client",
+  "Password": "pwd-tls-client",
+  "EncryptMethod": 0,
+  "ResetSeqNumFlag": true,
+  "HeartBtInt": 30,
+  "SenderCompId": "init-tls-comp",
+  "TargetCompID": "accept-tls-comp",
+  "TargetSubID": "fix",
+  "BeginString": "FIX4.4"
+}

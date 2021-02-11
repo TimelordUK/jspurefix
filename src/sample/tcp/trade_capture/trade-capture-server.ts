@@ -66,7 +66,7 @@ export class TradeCaptureServer extends AsciiSession {
     // send back an ack.
     this.send(MsgType.TradeCaptureReportRequestAck, TradeFactory.tradeCaptureReportRequestAck(tcr, TradeRequestStatus.Accepted))
     // send some trades
-    const batch: ITradeCaptureReport[] = this.tradeFactory.batchOfTradeCaptureReport()
+    const batch: ITradeCaptureReport[] = this.tradeFactory.batchOfTradeCaptureReport(5)
     batch.forEach((tc: ITradeCaptureReport) => {
       this.send(MsgType.TradeCaptureReport, tc)
     })
