@@ -1,5 +1,5 @@
 import { ITcpTransportDescription } from '../session-description'
-import { ConnectionOptions, TlsOptions} from 'tls'
+import { ConnectionOptions, TlsOptions } from 'tls'
 const path = require('path')
 const fs = require('fs')
 
@@ -35,10 +35,16 @@ export function getTlsConnectionOptions (tcp: ITcpTransportDescription): Connect
       port: tcp.port,
       host: tcp.host,
       key: read(tcp.key),
-      cert: read(tcp.cert)
+      cert: read(tcp.cert),
     } as ConnectionOptions
     if (tcp.ca && tcp.ca.length > 0) {
       connectionOptions.ca = tcp.ca.map(i => read(i))
+    }
+    if (tcp.timeout) {
+      connectionOptions.timeout = tcp.timeout
+    }
+    if (tcp.sessionTimeout) {
+      connectionOptions.sessionTimeout = tcp.sessionTimeout
     }
   }
   return connectionOptions

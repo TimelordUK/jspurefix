@@ -18,12 +18,17 @@ export class TcpAcceptor extends FixAcceptor {
     this.logger.info('creating server')
     if (tlsOptions) {
       this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
-        // tlsSocket.enableTrace()
-        tlsSocket.setEncoding('utf8')
-        const id: number = nextId++
-        this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
+        if (tcp.enableTrace) {
+          this.logger.info(`enabling tls session trace`)
+          tlsSocket.enableTrace()
+        }
         if (tlsSocket.authorized) {
+          tlsSocket.setEncoding('utf8')
+          const id: number = nextId++
+          this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
           this.onSocket(id, tlsSocket, config)
+        } else {
+          this.logger.info(`no transport created on tls with no authorized connection`)
         }
       })
     } else {

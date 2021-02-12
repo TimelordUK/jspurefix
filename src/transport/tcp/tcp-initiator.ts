@@ -6,7 +6,7 @@ import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { TcpDuplex, FixDuplex } from '../duplex'
 
 import * as util from 'util'
-import { connect as tlsConnect, ConnectionOptions, TLSSocket } from 'tls'
+import { connect as tlsConnect, TLSSocket } from 'tls'
 import { getTlsConnectionOptions } from './tls-options'
 import { Socket, createConnection } from 'net'
 
@@ -91,12 +91,17 @@ export class TcpInitiator extends FixInitiator {
             tlsSocket.end()
             reject(tlsSocket.authorizationError)
           } else {
-            // tlsSocket.enableTrace()
             tlsSocket.setEncoding('utf8')
             this.duplex = new TcpDuplex(tlsSocket)
             resolve(new MsgTransport(0, this.jsFixConfig, this.duplex))
           }
         })
+
+        if (tcp.enableTrace) {
+          this.logger.info(`enabling tls session trace`)
+          tlsSocket.enableTrace()
+        }
+
         tlsSocket.on('error', (e) => {
           reject(e)
         })
