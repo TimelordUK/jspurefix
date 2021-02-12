@@ -86,8 +86,7 @@ export class TcpInitiator extends FixInitiator {
         tlsSocket = tlsConnect(connectionOptions, () => {
           this.logger.info(`client connected ${tlsSocket.authorized ? 'authorized' : 'unauthorized'}`)
           if (!tlsSocket.authorized) {
-            this.logger.warning(`rejecting from state ${this.state}`)
-            console.error(`authorizationError = ${tlsSocket.authorizationError}`)
+            this.logger.warning(`rejecting from state ${this.state} authorizationError ${tlsSocket.authorizationError}`)
             tlsSocket.end()
             reject(tlsSocket.authorizationError)
           } else {

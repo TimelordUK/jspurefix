@@ -35,7 +35,7 @@ export function getTlsConnectionOptions (tcp: ITcpTransportDescription): Connect
       port: tcp.port,
       host: tcp.host,
       key: read(tcp.key),
-      cert: read(tcp.cert),
+      cert: read(tcp.cert)
     } as ConnectionOptions
     if (tcp.ca && tcp.ca.length > 0) {
       connectionOptions.ca = tcp.ca.map(i => read(i))
