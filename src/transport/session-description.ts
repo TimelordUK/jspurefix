@@ -1,14 +1,18 @@
+export interface ITlsOptions {
+  readonly key: string,
+  readonly cert: string,
+  readonly ca?: string[],
+  readonly timeout?: number,
+  readonly sessionTimeout?: number,
+  readonly enableTrace?: boolean,
+  readonly requestCert?: boolean,
+  readonly rejectUnauthorized?: boolean
+}
+
 export interface ITcpTransportDescription {
   readonly port: number
   readonly host: string,
-  readonly timeout: number,
-  readonly sessionTimeout: number,
-  readonly key: string,
-  readonly cert: string,
-  readonly ca: string[],
-  enableTrace: boolean,
-  requestCert: boolean,
-  rejectUnauthorized: boolean
+  readonly tls: ITlsOptions
 }
 
 export interface IHttpAdapter {
@@ -60,4 +64,5 @@ export interface ISessionDescription {
   readonly SenderSubID: string
   readonly TargetSubID: string
   readonly BeginString: string
+  readonly BodyLengthChars?: number,
 }

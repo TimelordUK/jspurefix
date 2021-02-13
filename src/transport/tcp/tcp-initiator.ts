@@ -96,7 +96,7 @@ export class TcpInitiator extends FixInitiator {
           }
         })
 
-        if (tcp.enableTrace) {
+        if (tcp.tls.enableTrace) {
           this.logger.info(`enabling tls session trace`)
           tlsSocket.enableTrace()
         }

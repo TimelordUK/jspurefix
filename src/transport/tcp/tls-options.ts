@@ -1,4 +1,4 @@
-import { ITcpTransportDescription } from '../session-description'
+import { ITcpTransportDescription, ITlsOptions } from '../session-description'
 import { ConnectionOptions, TlsOptions } from 'tls'
 const path = require('path')
 const fs = require('fs')
@@ -12,17 +12,17 @@ function read (filePath: string) {
     })
 }
 
-export function getTlsOptions (tcp: ITcpTransportDescription): TlsOptions {
+export function getTlsOptions (tls: ITlsOptions): TlsOptions {
   let tlsOptions: TlsOptions = null
-  if (tcp.key) {
+  if (tls && tls.key) {
     tlsOptions = {
-      key: read(tcp.key),
-      cert: read(tcp.cert),
-      requestCert: tcp.requestCert,
-      rejectUnauthorized: tcp.rejectUnauthorized
+      key: read(tls.key),
+      cert: read(tls.cert),
+      requestCert: tls.requestCert,
+      rejectUnauthorized: tls.rejectUnauthorized
     } as TlsOptions
-    if (tcp.ca && tcp.ca.length > 0) {
-      tlsOptions.ca = tcp.ca.map(i => read(i))
+    if (tls.ca && tls.ca.length > 0) {
+      tlsOptions.ca = tls.ca.map(i => read(i))
     }
   }
   return tlsOptions
@@ -30,21 +30,22 @@ export function getTlsOptions (tcp: ITcpTransportDescription): TlsOptions {
 
 export function getTlsConnectionOptions (tcp: ITcpTransportDescription): ConnectionOptions {
   let connectionOptions: ConnectionOptions = null
-  if (tcp.key) {
+  const tls = tcp.tls
+  if (tls && tls.key) {
     connectionOptions = {
       port: tcp.port,
       host: tcp.host,
-      key: read(tcp.key),
-      cert: read(tcp.cert)
+      key: read(tcp.tls.key),
+      cert: read(tcp.tls.cert)
     } as ConnectionOptions
-    if (tcp.ca && tcp.ca.length > 0) {
-      connectionOptions.ca = tcp.ca.map(i => read(i))
+    if (tcp.tls.ca && tcp.tls.ca.length > 0) {
+      connectionOptions.ca = tcp.tls.ca.map(i => read(i))
     }
-    if (tcp.timeout) {
-      connectionOptions.timeout = tcp.timeout
+    if (tcp.tls.timeout) {
+      connectionOptions.timeout = tcp.tls.timeout
     }
-    if (tcp.sessionTimeout) {
-      connectionOptions.sessionTimeout = tcp.sessionTimeout
+    if (tcp.tls.sessionTimeout) {
+      connectionOptions.sessionTimeout = tcp.tls.sessionTimeout
     }
   }
   return connectionOptions

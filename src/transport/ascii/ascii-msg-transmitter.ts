@@ -34,9 +34,9 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     encoder.encode(hdr, this.header.name)
     encoder.encode(obj, msgDef.name)
     const lenPos = encoder.bodyLengthPos
-    const padding = 7
+    const bodyLength: number = Math.max(4, this.config.description.BodyLengthChars || 7)
     const len = buffer.getPos() - encoder.msgTypePos
-    buffer.patchPaddedNumberAtPos(lenPos, len, padding)
+    buffer.patchPaddedNumberAtPos(lenPos, len, bodyLength)
     const checksum: number = buffer.checksum()
     const trl: ILooseObject = factory.trailer(checksum)
     encoder.encode(trl, this.trailer.name)

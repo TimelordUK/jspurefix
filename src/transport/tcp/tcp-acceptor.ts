@@ -14,11 +14,11 @@ export class TcpAcceptor extends FixAcceptor {
     this.logger = config.logFactory.logger(`${config.description.application.name}:TcpAcceptor`)
     let nextId: number = 0
     const tcp = this.config.description.application.tcp
-    const tlsOptions: TlsOptions = getTlsOptions(tcp)
+    const tlsOptions: TlsOptions = getTlsOptions(tcp.tls)
     this.logger.info('creating server')
     if (tlsOptions) {
       this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
-        if (tcp.enableTrace) {
+        if (tcp.tls.enableTrace) {
           this.logger.info(`enabling tls session trace`)
           tlsSocket.enableTrace()
         }

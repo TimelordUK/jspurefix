@@ -150,9 +150,11 @@ export class SessionMsgFactory implements ISessionMsgFactory {
 
   private asciiHeader (msgType: string, seqNum: number, time: Date): ILooseObject {
     const description = this.description
+    const bodyLength: number = Math.max(4, description.BodyLengthChars || 7)
+    const placeHolder = Math.pow(10, bodyLength - 1) + 1
     const o: IStandardHeader = {
       BeginString: description.BeginString,
-      BodyLength: 9999999,
+      BodyLength: placeHolder,
       MsgType: msgType,
       SenderCompID: description.SenderCompId,
       MsgSeqNum: seqNum,
