@@ -5,6 +5,7 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 1. fast 100% native clean fix engine for Node JS
+1. supports tls encrypted sessions over tcp
 1. represent data dictionary as quickfix or repo notation
 1. compile interface types against definitions
 1. ascii / fixml supported
@@ -19,8 +20,6 @@
 ## Typescript FIX Engine for Node JS
 
 This fix engine provides a fast easy API to parse or send finacial protocol FIX messages. It is implemented entirely in typescript and runs in Node JS. Messages of any complexity can be handled providing they are backed by a suitable data dictionary. All structures within a message will be resolved for easy access - groups of components containing groups etc.
-
-### extensive documentation coming soon
 
 ## Installing
 
@@ -142,6 +141,60 @@ included is an example fixml over http application where an order is submitted a
 
 ```shell
 npm run http-oms
+```
+
+## tls SSL encryption
+
+see example data\session\test-initiator-tls.json
+
+to run the provided example tls trade capture a script such as script\getKey.ps1 can be run to generate self certified certificates. This is a powershell script that requires openssl in the tunnel e.g. /mingw64/bin/openssl. the ca field below is only required when using self certified and will not be needed for a third party vendor where certificates are provided. Set enableTrace flag whilst diagnosing the session.
+
+```json
+{
+  "application": {
+    "reconnectSeconds": 10,
+    "type": "initiator",
+    "name": "test_client",
+    "tcp": {
+      "host" : "localhost",
+      "port": 2344,
+      "tls": {
+        "timeout": 10000,
+        "sessionTimeout": 10000,
+        "enableTrace": true,
+        "key": "data/session/certs/client/client.key",
+        "cert": "data/session/certs/client/client.crt",
+        "ca": [
+          "data/session/certs/ca/ca.crt"
+        ]
+      }
+    },
+    "protocol": "ascii",
+    "dictionary": "repo44"
+  },
+  "Username": "js-tls-client",
+  "Password": "pwd-tls-client",
+  "EncryptMethod": 0,
+  "ResetSeqNumFlag": true,
+  "HeartBtInt": 30,
+  "SenderCompId": "init-tls-comp",
+  "TargetCompID": "accept-tls-comp",
+  "TargetSubID": "fix",
+  "BeginString": "FIX4.4",
+  "BodyLengthChars": 6
+}
+```
+
+## configure the body length field padding width
+
+see example initiator file data\session\test-initiator-tls.json.
+
+i.e. include field BodyLengthChars which defaults to 7 characters if omitted.
+
+```json
+{
+  "BodsyLengthChars": 6
+}
 ```
 
 ## Unit Tests
