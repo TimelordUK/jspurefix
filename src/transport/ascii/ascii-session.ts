@@ -40,7 +40,7 @@ export abstract class AsciiSession extends FixSession {
           this.stop()
         } else if (seqDelta > 1) {
           // reset required as have missed messages.
-          const resend = this.config.factory.resendRequest(lastSeq, seqNo)
+          const resend = this.config.factory.resendRequest(lastSeq || 1, seqNo)
           this.sessionLogger.warning(`sending resend last received ${lastSeq} seqNo ${seqNo}`)
           this.send(MsgType.ResendRequest, resend)
         } else {
@@ -162,7 +162,8 @@ export abstract class AsciiSession extends FixSession {
       case MsgType.SequenceReset: {
         const newSeqNo: number = view.getTyped(MsgTag.NewSeqNo)
         logger.info(`peer sends '${msgType}' sequence reset. newSeqNo = ${newSeqNo}`)
-        this.sessionState.lastPeerMsgSeqNum = newSeqNo
+        // expect  newSeqNo to be the next message's sequence number.
+        this.sessionState.lastPeerMsgSeqNum = newSeqNo - 1
         break
       }
 
