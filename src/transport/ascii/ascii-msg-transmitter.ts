@@ -5,7 +5,7 @@ import { MessageDefinition, ContainedFieldSet } from '../../dictionary'
 import { IJsFixConfig } from '../../config'
 
 export class AsciiMsgTransmitter extends MsgTransmitter {
-  public msgSeqNum: number = 1
+  public msgSeqNum: number
   public time: Date
 
   private readonly header: ContainedFieldSet
@@ -14,6 +14,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   constructor (public readonly config: IJsFixConfig) {
 
     super(config.definitions, config.description)
+    this.msgSeqNum = (config.description.LastSentSeqNum || 0) + 1 // adding 1 as this the next sequence # to use.
     const buffer = this.buffer
     const tf: TimeFormatter = new TimeFormatter(buffer)
     this.encoder = new AsciiEncoder(buffer, config.definitions, tf, config.delimiter)

@@ -30,13 +30,13 @@ export class FixSessionState {
   public compId: string = ''
   public peerCompId: string = ''
   public peerHeartBeatSecs: number = 0
-  public lastPeerMsgSeqNum: number = 0
 
   private secondsSinceLogoutSent: number = -1
   private secondsSinceSent: number = -1
   private secondsSinceReceive: number = -1
 
   public constructor (public readonly heartBeat: number,
+                      public lastPeerMsgSeqNum: number = 0,
                       public state: SessionState = SessionState.Connected,
                       public readonly waitLogoutConfirmSeconds: number = 5,
                       public readonly stopSeconds: number = 2) {
