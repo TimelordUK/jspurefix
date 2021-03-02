@@ -3,10 +3,26 @@ import { ISessionDescription } from './session-description'
 import { ILooseObject } from '../collections/collection'
 import { MsgType } from '../types'
 
-import { ILogon, ITestRequest, IHeartbeat, ILogout,
-  IResendRequest, ISequenceReset, IReject, IStandardHeader, IStandardTrailer, EncryptMethod } from '../types/FIX4.4/repo'
+import {
+  EncryptMethod,
+  IHeartbeat,
+  ILogon,
+  ILogout,
+  IReject,
+  IResendRequest,
+  ISequenceReset,
+  IStandardHeader,
+  IStandardTrailer,
+  ITestRequest
+} from '../types/FIX4.4/repo'
 
-import { IUserRequest, IUserResponse, UserRequestType, UserStatus, IStandardHeader as IStandardHeaderFixml } from '../types/FIXML50SP2'
+import {
+  IStandardHeader as IStandardHeaderFixml,
+  IUserRequest,
+  IUserResponse,
+  UserRequestType,
+  UserStatus
+} from '../types/FIXML50SP2'
 
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }
@@ -75,9 +91,9 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     return this.mutator ? this.mutator(this.description, MsgType.SequenceReset, o) : o
   }
 
-  public header (msgType: string, seqNum: number = 0, time: Date = new Date()): ILooseObject {
+  public header (msgType: string, seqNum: number = 0, time: Date = new Date(), overrideData?: Partial<IStandardHeader>): ILooseObject {
     if (this.isAscii) {
-      return this.asciiHeader(msgType, seqNum, time)
+      return this.asciiHeader(msgType, seqNum, time, overrideData)
     } else {
       return this.fixmlHeader()
     }
@@ -148,7 +164,7 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     }
   }
 
-  private asciiHeader (msgType: string, seqNum: number, time: Date): ILooseObject {
+  private asciiHeader (msgType: string, seqNum: number, time: Date, overrideData?: Partial<IStandardHeader>): ILooseObject {
     const description = this.description
     const bodyLength: number = Math.max(4, description.BodyLengthChars || 7)
     const placeHolder = Math.pow(10, bodyLength - 1) + 1
@@ -160,7 +176,8 @@ export class SessionMsgFactory implements ISessionMsgFactory {
       MsgSeqNum: seqNum,
       SendingTime: time,
       TargetCompID: description.TargetCompID,
-      TargetSubID: description.TargetSubID
+      TargetSubID: description.TargetSubID,
+      ...overrideData
     }
     return this.mutator ? this.mutator(description, 'StandardHeader', o) : o
   }

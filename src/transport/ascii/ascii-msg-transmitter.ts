@@ -1,8 +1,9 @@
-import { TimeFormatter, AsciiEncoder } from '../../buffer'
+import { AsciiEncoder, TimeFormatter } from '../../buffer'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
-import { MessageDefinition, ContainedFieldSet } from '../../dictionary'
+import { ContainedFieldSet, MessageDefinition } from '../../dictionary'
 import { IJsFixConfig } from '../../config'
+import { IStandardHeader } from '../../types/FIX4.4/repo'
 
 export class AsciiMsgTransmitter extends MsgTransmitter {
   public msgSeqNum: number
@@ -25,7 +26,19 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   public encodeMessage (msgType: string, obj: ILooseObject): void {
     const encoder: AsciiEncoder = this.encoder as AsciiEncoder
     const factory = this.config.factory
-    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum++,this.time || new Date())
+    // TODO write a typesafe copy of header props, then write tests for it.
+    const headerProps: Partial<IStandardHeader> = {
+      ...(obj.PossDupFlag ? { PossDupFlag: obj.PossDupFlag } : {}),
+      ...(obj.MsgSeqNum ? { MsgSeqNum: obj.MsgSeqNum } : {})
+    }
+    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum,this.time || new Date(), headerProps)
+
+    // FIXME there has to be a more elegant way to do this.
+    // Only increment sequence number if this is not a duplicate message.
+    if (!headerProps.PossDupFlag) {
+      this.msgSeqNum++
+    }
+
     const buffer = this.buffer
     buffer.reset()
     const msgDef: MessageDefinition = this.definitions.message.get(msgType)
