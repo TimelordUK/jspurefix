@@ -22,7 +22,6 @@ export abstract class AsciiSession extends FixSession {
   private checkSeqNo (msgType: string, view: MsgView): boolean {
 
     switch (msgType) {
-      case MsgType.TestRequest:
       case MsgType.SequenceReset:
       case MsgType.ResendRequest: {
         return true
