@@ -28,8 +28,8 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     const factory = this.config.factory
     // TODO write a typesafe copy of header props, then write tests for it.
     const headerProps: Partial<IStandardHeader> = {
-      ...(obj.PossDupFlag ? { PossDupFlag: obj.PossDupFlag } : {}),
-      ...(obj.MsgSeqNum ? { MsgSeqNum: obj.MsgSeqNum } : {})
+      ...(obj.StandardHeader?.PossDupFlag ? { PossDupFlag: obj.StandardHeader?.PossDupFlag } : {}),
+      ...(obj.StandardHeader?.MsgSeqNum ? { MsgSeqNum: obj.StandardHeader?.MsgSeqNum } : {})
     }
     const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum,this.time || new Date(), headerProps)
 

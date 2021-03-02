@@ -1,5 +1,5 @@
 import { MsgView, SegmentType } from '../../buffer'
-import { MsgType, MsgTag, SessionRejectReason } from '../../types'
+import { MsgTag, MsgType, SessionRejectReason } from '../../types'
 import { IJsFixConfig } from '../../config'
 import { IMsgApplication } from '../session-description'
 import { SessionState, TickAction } from '../fix-session-state'
@@ -22,8 +22,7 @@ export abstract class AsciiSession extends FixSession {
   private checkSeqNo (msgType: string, view: MsgView): boolean {
 
     switch (msgType) {
-      case MsgType.SequenceReset:
-      case MsgType.ResendRequest: {
+      case MsgType.SequenceReset: {
         return true
       }
 
@@ -39,9 +38,14 @@ export abstract class AsciiSession extends FixSession {
           this.stop()
         } else if (seqDelta > 1) {
           // reset required as have missed messages.
-          const resend = this.config.factory.resendRequest(lastSeq || 1, seqNo)
+          const resend = this.config.factory.resendRequest(lastSeq + 1, seqNo)
           this.sessionLogger.warning(`sending resend last received ${lastSeq} seqNo ${seqNo}`)
           this.send(MsgType.ResendRequest, resend)
+          // TODO test this too
+          // Sequence discrepancies should be resolved after logon. However, this does not make the Logon invalid.
+          if (MsgType.Logon) {
+            return true
+          }
         } else {
           ret = true
           state.lastPeerMsgSeqNum = seqNo
@@ -128,7 +132,11 @@ export abstract class AsciiSession extends FixSession {
    * @protected
    */
   // tslint:disable-next-line:no-empty
-  protected onSequenceReset (BeginSeqNo: number, EndSeqNo: number) {}
+  protected onSequenceReset (view: MsgView) {
+    const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
+    const resend = this.config.factory.sequenceReset(endSeqNo)
+    this.send(MsgType.SequenceReset, resend)
+  }
 
   private onSessionMsg (msgType: string, view: MsgView): void {
 
@@ -159,10 +167,7 @@ export abstract class AsciiSession extends FixSession {
 
       case MsgType.ResendRequest: {
         logger.info(`peer sends '${msgType}' resend reset.`)
-        const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
-        const resend = factory.sequenceReset(endSeqNo)
-        this.send(MsgType.SequenceReset, resend)
-        this.onSequenceReset(resend.BeginSeqNo, resend.EndSeqNo)
+        this.onSequenceReset(view)
         break
       }
 
