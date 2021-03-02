@@ -123,6 +123,13 @@ export abstract class AsciiSession extends FixSession {
     return true
   }
 
+  /**
+   * Override to resend stored messages following a sequence reset.
+   * @protected
+   */
+  // tslint:disable-next-line:no-empty
+  protected onSequenceReset (BeginSeqNo: number, EndSeqNo: number) {}
+
   private onSessionMsg (msgType: string, view: MsgView): void {
 
     const factory = this.config.factory
@@ -155,6 +162,7 @@ export abstract class AsciiSession extends FixSession {
         const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
         const resend = factory.sequenceReset(endSeqNo)
         this.send(MsgType.SequenceReset, resend)
+        this.onSequenceReset(resend.BeginSeqNo, resend.EndSeqNo)
         break
       }
 
