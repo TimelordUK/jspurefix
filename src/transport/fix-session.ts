@@ -1,4 +1,4 @@
-import { SegmentType, ElasticBuffer, MsgView } from '../buffer'
+import { ElasticBuffer, MsgView, SegmentType } from '../buffer'
 import { IJsFixConfig, IJsFixLogger } from '../config'
 import { FixSessionState, SessionState } from './fix-session-state'
 import { MsgTransport } from './msg-transport'
@@ -47,6 +47,7 @@ export abstract class FixSession {
       if (this.initiator) {
         logger.debug('sending logon')
         this.send(this.requestLogonType, this.config.factory.logon())
+        this.sessionState.state = SessionState.InitiationLogonSent
       }
       this.emitter.on('error', (e: Error) => {
         logger.error(e)
@@ -124,7 +125,8 @@ export abstract class FixSession {
         break
       }
 
-      case SessionState.PeerLoggedOn: {
+      case SessionState.InitiationLogonResponse:
+      case SessionState.InitiationLogonReceived: {
         this.sessionState.state = SessionState.ConfirmingLogout
         this.sessionLogger.info(`peer initiates logout Text = '${msg}'`)
         this.sessionLogout()
@@ -154,7 +156,8 @@ export abstract class FixSession {
     }
     const factory = this.config.factory
     switch (sessionState.state) {
-      case SessionState.PeerLoggedOn: {
+      case SessionState.InitiationLogonResponse:
+      case SessionState.InitiationLogonReceived: {
         // this instance initiates logout
         sessionState.state = SessionState.WaitingLogoutConfirm
         sessionState.logoutSentAt = new Date()
@@ -181,7 +184,8 @@ export abstract class FixSession {
 
   public done (): void {
     switch (this.sessionState.state) {
-      case SessionState.PeerLoggedOn: {
+      case SessionState.InitiationLogonResponse:
+      case SessionState.InitiationLogonReceived: {
         this.sessionLogout()
         break
       }
@@ -200,7 +204,7 @@ export abstract class FixSession {
 
   public reset (): void {
     this.transport = null
-    this.sessionState.state = SessionState.Connected
+    this.sessionState.state = SessionState.NetworkConnectionEstablished
     this.sessionState.lastPeerMsgSeqNum = 0
   }
 

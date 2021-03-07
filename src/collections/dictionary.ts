@@ -51,6 +51,12 @@ export class Dictionary<T> {
     return this.container[key]
   }
 
+  public clear () {
+    this.keys().forEach(k => {
+      this.remove(k)
+    })
+  }
+
   public forEach (cb: IDictIteratorCb<T>): void {
     Object.keys(this.container).forEach((k: string) => cb(k, this.container[k]))
   }

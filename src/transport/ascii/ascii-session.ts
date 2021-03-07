@@ -101,7 +101,8 @@ export abstract class AsciiSession extends FixSession {
     }
 
     switch (state.state) {
-      case SessionState.PeerLoggedOn: {
+      case SessionState.InitiationLogonReceived:
+      case SessionState.InitiationLogonResponse: {
         const targetCompId = view.getString(MsgTag.TargetCompID)
         if (targetCompId !== state.compId) {
           const msg: string = `msgType ${msgType} unexpected TargetCompID ${targetCompId}`
@@ -232,11 +233,13 @@ export abstract class AsciiSession extends FixSession {
     const userName = view.getString(MsgTag.Username)
     logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, userName = ${userName}`)
     const state = this.sessionState
-    state.state = SessionState.PeerLoggedOn
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt)
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
+      state.state = SessionState.InitiationLogonResponse
       this.send(MsgType.Logon, this.config.factory.logon())
+    } else { // as an initiator the acceptor has responded
+      state.state = SessionState.InitiationLogonReceived
     }
     if (this.heartbeat) {
       logger.debug(`start heartbeat timer.`)

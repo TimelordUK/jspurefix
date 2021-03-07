@@ -5,7 +5,7 @@ let now: Date
 
 beforeEach(async () => {
   state = new FixSessionState(30)
-  state.state = SessionState.PeerLoggedOn
+  state.state = SessionState.InitiationLogonResponse
   now = new Date(2018, 0, 1, 20, 0, 0, 0)
   state.LastSentAt = now
   state.lastReceivedAt = now
