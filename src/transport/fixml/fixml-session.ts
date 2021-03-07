@@ -69,7 +69,7 @@ export abstract class FixmlSession extends FixSession {
   private peerLogon (view: MsgView) {
     const logger = this.sessionLogger
     const state = this.sessionState
-    state.state = SessionState.PeerLoggedOn
+    state.state = SessionState.InitiationLogonReceived
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
       const reqId: string = view.getString('UserReqID')
