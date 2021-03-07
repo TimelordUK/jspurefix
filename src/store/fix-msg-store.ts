@@ -16,7 +16,7 @@ export interface IFixMsgStore {
   exits (seqNum: number): boolean
   getSeqNum (seqNum: number): IFixMsgStoreRecord
   // if to = 0, then to the end of sequence
-  getSeqNumRange (from: number, to: number): IFixMsgStoreRecord[]
+  getSeqNumRange (from: number, to?: number): IFixMsgStoreRecord[]
   getDateRange (from: Date, to: Date): IFixMsgStoreRecord[]
   getMsgType (msgType: string): IFixMsgStoreRecord[]
 }

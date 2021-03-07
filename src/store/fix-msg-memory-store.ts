@@ -57,9 +57,12 @@ export class FixMsgMemoryStore implements IFixMsgStore {
   public getSeqNumRange (from: number, to?: number): IFixMsgStoreRecord[] {
     if (from < 0 || to < 0) return []
     const arr = this.sortedBySeqNum
-    const fromIdx = Math.abs(FixMsgMemoryStore.search(arr, from))
-    let toIdx: number = to === 0 ? arr.length - 1 : Math.abs(FixMsgMemoryStore.search(arr, to))
-    return fromIdx >= 0 && fromIdx < arr.length && toIdx >= 0 && toIdx < arr.length ? arr.slice(fromIdx, toIdx) : []
+    let fromIdx = FixMsgMemoryStore.search(arr, from)
+    if (fromIdx < 0) {
+      fromIdx = -(fromIdx + 1)
+    }
+    let toIdx: number = to === 0 || isNaN(to) ? arr.length - 1 : Math.abs(FixMsgMemoryStore.search(arr, to))
+    return fromIdx >= 0 && fromIdx < arr.length && toIdx >= 0 && toIdx < arr.length ? arr.slice(fromIdx, toIdx + 1) : []
   }
 
   private addDate (record: IFixMsgStoreRecord) {
