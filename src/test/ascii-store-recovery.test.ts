@@ -1,10 +1,10 @@
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary'
 import { AsciiChars, AsciiView, MsgView } from '../buffer'
-import { ISessionDescription } from '../transport'
+import { ISessionDescription, SessionMsgFactory } from '../transport'
 import { ILooseObject } from '../collections/collection'
 import { getDefinitions, replayFixFile } from '../util'
-import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../store'
+import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore, FixMsgAsciiStoreRecovery } from '../store'
 import { MsgTag } from '../types'
 import { JsFixConfig } from '../config'
 
@@ -15,13 +15,15 @@ let views: MsgView[]
 let expected: ILooseObject
 let store: IFixMsgStore
 let records: FixMsgStoreRecord[]
+let recovery: FixMsgAsciiStoreRecovery
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
+  const clientFactory = new SessionMsgFactory(sessionDescription)
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), AsciiChars.Pipe)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
+  const config = new JsFixConfig(clientFactory, definitions, sessionDescription, AsciiChars.Pipe)
   store = new FixMsgMemoryStore('test', config)
   records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
     if (v.getString(MsgTag.SenderCompID) === 'accept-tls-comp') {
@@ -30,6 +32,7 @@ beforeAll(async () => {
     return agg
   }, [])
   records.forEach(r => store.put(r))
+  recovery = new FixMsgAsciiStoreRecovery(store, config)
 }, 45000)
 
 test('expect 15 messages in log', () => {
@@ -48,35 +51,7 @@ test('expect 15 messages in log', () => {
 8=FIX4.4|9=000206|35=AE|49=accept-tls-comp|56=init-tls-comp|34=10|57=fix|52=20210307-16:17:14.477|571=100006|487=0|856=0|828=0|17=600006|39=2|570=N|55=Silver|48=Silver.INC|32=105|31=61.2|75=20210307|60=20210307-16:17:14.477|10=191|
  */
 
-test('check messages loaded into store', () => {
-  expect(records.length).toEqual(11)
-  expect(store.length).toEqual(9)
-})
-
-test('fetch sequence number from store', () => {
-  expect(store.exits(1)).toBeFalsy()
-  for (let seq = 2; seq <= 10; ++seq) {
-    expect(store.exits(seq)).toBeTruthy()
-    expect(store.getSeqNum(seq)).toBeTruthy()
-  }
-})
-
-test('fetch from seqNum to inferred as end ', () => {
-  const range1 = store.getSeqNumRange(5) // to the end
-  expect(range1.length).toEqual(6)
-  expect(range1[0].seqNum).toEqual(5)
-  expect(range1[range1.length - 1].seqNum).toEqual(10)
-})
-
-test('fetch from seqNum to = start', () => {
-  const range1 = store.getSeqNumRange(5, 5)
-  expect(range1.length).toEqual(1)
-  expect(range1[0].seqNum).toEqual(5)
-})
-
-test('fetch start from seqNum not in store', () => {
-  const range1 = store.getSeqNumRange(1)
-  expect(range1.length).toEqual(9)
-  expect(range1[0].seqNum).toEqual(2)
-  expect(range1[range1.length - 1].seqNum).toEqual(10)
+test('fetch recovery from seq=1 to seq=10', () => {
+  const vec = recovery.getReplayRequest(1, 10)
+  let x = 0
 })

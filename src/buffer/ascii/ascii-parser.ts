@@ -33,7 +33,9 @@ export class AsciiParser extends MsgParser {
     this.state = new AsciiParserState(this.receivingBuffer)
     this.state.locations = new Tags(definitions, maxMessageLen / 10)
     this.state.beginMessage()
-    this.subscribe()
+    if (readStream !== null) {
+      this.subscribe()
+    }
   }
 
   private subscribe (): void {
@@ -75,6 +77,11 @@ export class AsciiParser extends MsgParser {
     }
     this.emit('msg', state.msgType, this.getView(ptr))
     state.beginMessage()
+  }
+
+  public parseText (text: string) {
+    const buff = Buffer.from(text)
+    this.parse(buff, buff.length)
   }
 
   private parse (readBuffer: Buffer, end: number): void {
