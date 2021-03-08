@@ -2,6 +2,7 @@ import { IFixMsgStore } from './fix-msg-store'
 import { IJsFixConfig, IJsFixLogger } from '../config'
 import { IFixMsgStoreRecord } from './fix-msg-store-record'
 import { Dictionary } from '../collections'
+import { MsgType } from '../types'
 
 export class FixMsgMemoryStore implements IFixMsgStore {
   protected readonly logger: IJsFixLogger
@@ -10,11 +11,15 @@ export class FixMsgMemoryStore implements IFixMsgStore {
   private sortedByDateTime: IFixMsgStoreRecord[] = []
   private excluded: Dictionary<boolean> = new Dictionary<boolean>()
   public length: number = 0
+  private sessionMessages: string[] = [
+    MsgType.Logon, MsgType.Logout,
+    MsgType.ResendRequest, MsgType.Heartbeat,
+    MsgType.TestRequest, MsgType.SequenceReset
+  ]
 
   public constructor (public readonly id: string, public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger(`${this.id}:FixMsgMemoryStore`)
-    const excludes: string[] = ['A', '5', '2', '0', '1', '4']
-    this.setExcMsgType(excludes)
+    this.setExcMsgType([])
   }
 
   public static search (ar: IFixMsgStoreRecord[], target?: number, isDate?: boolean): number {
@@ -86,6 +91,11 @@ export class FixMsgMemoryStore implements IFixMsgStore {
 
   public setExcMsgType (exclude: string[]): void {
     this.excluded.clear()
+    this.excludeRange(this.sessionMessages)
+    this.excludeRange(exclude)
+  }
+
+  private excludeRange (exclude: string[]): void {
     exclude.forEach(s => {
       this.excluded.add(s, true)
     })
