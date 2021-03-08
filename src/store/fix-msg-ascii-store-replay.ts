@@ -22,14 +22,9 @@ export class FixMsgAsciiStoreReplay {
     while (seqNum <= endSeq) {
       const record = this.store.getSeqNum(seqNum)
       if (record !== null) {
-        if (beginGap > 0) {
-          arr.push(new FixReplayRecord(this.gap(beginGap), MsgType.SequenceReset, beginGap))
-          if (seqNum > beginGap) {
-            arr.push(new FixReplayRecord(this.gap(seqNum),MsgType.SequenceReset, seqNum))
-          }
-        }
+        this.gap(beginGap, seqNum, arr)
         // we sent an application msg for this seqNum and hence need to recover it from its record
-        arr.push(new FixReplayRecord(this.createMsg(record), record.msgType, record.seqNum))
+        arr.push(this.createMsg(record))
         beginGap = 0
       } else {
         // this was a non saved message such as heartbeat - will be filled with a gap
@@ -39,16 +34,11 @@ export class FixMsgAsciiStoreReplay {
       }
       ++seqNum
     }
-    if (beginGap > 0) {
-      arr.push(new FixReplayRecord(this.gap(beginGap), MsgType.SequenceReset, beginGap))
-      if (seqNum > beginGap) {
-        arr.push(new FixReplayRecord(this.gap(seqNum), MsgType.SequenceReset, seqNum))
-      }
-    }
+    this.gap(beginGap, seqNum, arr)
     return arr
   }
 
-  public createMsg (record: IFixMsgStoreRecord): ILooseObject {
+  public createMsg (record: IFixMsgStoreRecord): IFixReplayRecord {
     let res: ILooseObject = null
     const parser: AsciiParser = new AsciiParser(this.config.definitions, null, this.config.delimiter)
     parser.on('error', (e: Error) => {
@@ -61,10 +51,19 @@ export class FixMsgAsciiStoreReplay {
       res = null
     })
     parser.parseText(record.text)
-    return res
+    return new FixReplayRecord(res, record.msgType, record.seqNum)
   }
 
-  public gap (newSeq: number): ILooseObject {
-    return this.config.factory.sequenceReset(newSeq)
+  public gap (beginGap: number, seqNum: number, arr: IFixReplayRecord[]) {
+    if (beginGap > 0) {
+      arr.push(this.sequenceReset(beginGap))
+      if (seqNum > beginGap) {
+        arr.push(this.sequenceReset(seqNum))
+      }
+    }
+  }
+
+  public sequenceReset (newSeq: number): IFixReplayRecord {
+    return new FixReplayRecord(this.config.factory.sequenceReset(newSeq), MsgType.SequenceReset, newSeq)
   }
 }
