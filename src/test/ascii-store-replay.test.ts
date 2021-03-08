@@ -4,7 +4,7 @@ import { AsciiChars, AsciiView, MsgView } from '../buffer'
 import { ISessionDescription, SessionMsgFactory } from '../transport'
 import { ILooseObject } from '../collections/collection'
 import { getDefinitions, replayFixFile } from '../util'
-import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore, FixMsgAsciiStoreRecovery } from '../store'
+import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore, FixMsgAsciiStoreReplay } from '../store'
 import { MsgTag } from '../types'
 import { JsFixConfig } from '../config'
 
@@ -15,7 +15,7 @@ let views: MsgView[]
 let expected: ILooseObject
 let store: IFixMsgStore
 let records: FixMsgStoreRecord[]
-let recovery: FixMsgAsciiStoreRecovery
+let recovery: FixMsgAsciiStoreReplay
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
@@ -32,7 +32,7 @@ beforeAll(async () => {
     return agg
   }, [])
   records.forEach(r => store.put(r))
-  recovery = new FixMsgAsciiStoreRecovery(store, config)
+  recovery = new FixMsgAsciiStoreReplay(store, config)
 }, 45000)
 
 test('expect 15 messages in log', () => {
