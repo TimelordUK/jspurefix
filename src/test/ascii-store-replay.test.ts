@@ -127,3 +127,16 @@ test('client replay request from seq=1 to seq=10', () => {
   expect(vec[4].msgType).toEqual(MsgType.SequenceReset)
   expect(vec[4].seqNum).toEqual(11)
 })
+
+test('client replay request from seq=4 to seq=10', () => {
+  const vec = client.recovery.getResendRequest(4, 10)
+  expect(vec).toBeTruthy()
+  expect(Array.isArray(vec))
+  expect(vec.length).toEqual(2)
+
+  expect(vec[0].msgType).toEqual(MsgType.SequenceReset)
+  expect(vec[0].seqNum).toEqual(4)
+
+  expect(vec[1].msgType).toEqual(MsgType.SequenceReset)
+  expect(vec[1].seqNum).toEqual(11)
+})
