@@ -26,14 +26,13 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   public encodeMessage (msgType: string, obj: ILooseObject): void {
     const encoder: AsciiEncoder = this.encoder as AsciiEncoder
     const factory = this.config.factory
-    // TODO write a typesafe copy of header props, then write tests for it.
+
     const headerProps: Partial<IStandardHeader> = {
       ...(obj.StandardHeader?.PossDupFlag ? { PossDupFlag: obj.StandardHeader?.PossDupFlag } : {}),
       ...(obj.StandardHeader?.MsgSeqNum ? { MsgSeqNum: obj.StandardHeader?.MsgSeqNum } : {})
     }
     const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum,this.time || new Date(), headerProps)
 
-    // FIXME there has to be a more elegant way to do this.
     // Only increment sequence number if this is not a duplicate message.
     if (!headerProps.PossDupFlag) {
       this.msgSeqNum++

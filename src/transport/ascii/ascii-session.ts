@@ -41,7 +41,6 @@ export abstract class AsciiSession extends FixSession {
           const resend = this.config.factory.resendRequest(lastSeq + 1, seqNo)
           this.sessionLogger.warning(`sending resend last received ${lastSeq} seqNo ${seqNo}`)
           this.send(MsgType.ResendRequest, resend)
-          // TODO test this too
           // Sequence discrepancies should be resolved after logon. However, this does not make the Logon invalid.
           if (MsgType.Logon) {
             return true
@@ -132,7 +131,7 @@ export abstract class AsciiSession extends FixSession {
    * @protected
    */
   // tslint:disable-next-line:no-empty
-  protected onSequenceReset (view: MsgView) {
+  protected onResendRequest (view: MsgView) {
     const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
     const resend = this.config.factory.sequenceReset(endSeqNo)
     this.send(MsgType.SequenceReset, resend)
@@ -167,7 +166,7 @@ export abstract class AsciiSession extends FixSession {
 
       case MsgType.ResendRequest: {
         logger.info(`peer sends '${msgType}' resend reset.`)
-        this.onSequenceReset(view)
+        this.onResendRequest(view)
         break
       }
 

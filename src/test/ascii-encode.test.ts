@@ -1,8 +1,8 @@
 import * as path from 'path'
-import { FixDefinitions, MessageDefinition, ComponentFieldDefinition, ContainedFieldSet } from '../dictionary'
-import { AsciiEncoder, TimeFormatter, AsciiChars, MsgView, AsciiParser, Tags } from '../buffer'
+import { ComponentFieldDefinition, ContainedFieldSet, FixDefinitions, MessageDefinition } from '../dictionary'
+import { AsciiChars, AsciiEncoder, AsciiParser, MsgView, Tags, TimeFormatter } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { ISessionDescription, AsciiMsgTransmitter, SessionMsgFactory, StringDuplex } from '../transport'
+import { AsciiMsgTransmitter, ISessionDescription, SessionMsgFactory, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
 
@@ -81,6 +81,26 @@ test('encode heartbeat', async () => {
   const len = res.view.getTyped(Tags.BodyLengthTag)
   const expected = fix.length - '8=FIX4.4|9=0000081|'.length - '10=159|'.length
   expect(len).toEqual(expected)
+})
+
+test('encode custom header PossDupFlag', () => {
+  const no: ILooseObject = {
+    StandardHeader: {
+      PossDupFlag: true
+    }
+  }
+  const fix: string = toFixMessage(no, definitions.message.get('Heartbeat'))
+  expect(fix).toMatch('43=Y|')
+})
+
+test('encode custom header PossDupFlag', () => {
+  const no: ILooseObject = {
+    StandardHeader: {
+      MsgSeqNum: 9999
+    }
+  }
+  const fix: string = toFixMessage(no, definitions.message.get('Heartbeat'))
+  expect(fix).toMatch('34=9999|')
 })
 
 test('encode string ClOrdID ', () => {
