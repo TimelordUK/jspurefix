@@ -24,6 +24,7 @@
   },
   "scripts": {
     "test": "jest",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "cmd": "cd dist && node jsfix-cmd",
     "repo44": "cd dist && node jsfix-cmd --dict=repo44",
     "repo44-unit": "cd dist && node jsfix-cmd --dict=repo44 --generate --density=0.8 --unit --delimiter=\"|\" --session=data/session/test-initiator.json",

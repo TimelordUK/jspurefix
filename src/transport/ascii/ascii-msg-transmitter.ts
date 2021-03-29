@@ -1,11 +1,12 @@
-import { TimeFormatter, AsciiEncoder } from '../../buffer'
+import { AsciiEncoder, TimeFormatter } from '../../buffer'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
-import { MessageDefinition, ContainedFieldSet } from '../../dictionary'
+import { ContainedFieldSet, MessageDefinition } from '../../dictionary'
 import { IJsFixConfig } from '../../config'
+import { IStandardHeader } from '../../types/FIX4.4/repo'
 
 export class AsciiMsgTransmitter extends MsgTransmitter {
-  public msgSeqNum: number = 1
+  public msgSeqNum: number
   public time: Date
 
   private readonly header: ContainedFieldSet
@@ -14,6 +15,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   constructor (public readonly config: IJsFixConfig) {
 
     super(config.definitions, config.description)
+    this.msgSeqNum = (config.description.LastSentSeqNum || 0) + 1 // adding 1 as this the next sequence # to use.
     const buffer = this.buffer
     const tf: TimeFormatter = new TimeFormatter(buffer)
     this.encoder = new AsciiEncoder(buffer, config.definitions, tf, config.delimiter)
@@ -24,7 +26,18 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   public encodeMessage (msgType: string, obj: ILooseObject): void {
     const encoder: AsciiEncoder = this.encoder as AsciiEncoder
     const factory = this.config.factory
-    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum++,this.time || new Date())
+
+    const headerProps: Partial<IStandardHeader> = {
+      ...(obj.StandardHeader?.PossDupFlag ? { PossDupFlag: obj.StandardHeader?.PossDupFlag } : {}),
+      ...(obj.StandardHeader?.MsgSeqNum ? { MsgSeqNum: obj.StandardHeader?.MsgSeqNum } : {})
+    }
+    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum,this.time || new Date(), headerProps)
+
+    // Only increment sequence number if this is not a duplicate message.
+    if (!headerProps.PossDupFlag) {
+      this.msgSeqNum++
+    }
+
     const buffer = this.buffer
     buffer.reset()
     const msgDef: MessageDefinition = this.definitions.message.get(msgType)
