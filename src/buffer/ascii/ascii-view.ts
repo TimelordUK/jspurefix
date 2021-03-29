@@ -36,7 +36,7 @@ export class AsciiView extends MsgView {
   }
 
   public toMsgStoreRecord () {
-    return new FixMsgStoreRecord(this.getString(MsgTag.MsgType), this.getTyped(MsgTag.SendingTime), this.getTyped(MsgTag.MsgSeqNum), this.buffer.toString(this.buffer.size))
+    return new FixMsgStoreRecord(this.getString(MsgTag.MsgType), this.getTyped(MsgTag.SendingTime), this.getTyped(MsgTag.MsgSeqNum), this.toObject())
   }
 
   public checksum (): number {
