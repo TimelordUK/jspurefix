@@ -99,9 +99,9 @@ export abstract class FixSession {
       this.terminate(e)
     })
 
-    tx.on('encoded', (msgType: string, data: Buffer) => {
+    tx.on('encoded', (msgType: string, data: string) => {
       logger.debug(`tx: [${msgType}] ${data.length} bytes`)
-      this.onEncoded(msgType, data.toString())
+      this.onEncoded(msgType, data)
     })
   }
 

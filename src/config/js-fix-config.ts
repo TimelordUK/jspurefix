@@ -9,6 +9,7 @@ export interface IJsFixConfig {
   definitions: FixDefinitions
   description: ISessionDescription
   delimiter?: number
+  logDelimiter?: number
   logFactory: JsFixLoggerFactory
 }
 

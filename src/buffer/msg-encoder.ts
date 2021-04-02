@@ -15,5 +15,7 @@ export abstract class MsgEncoder extends events.EventEmitter {
     this.encodeSet(o, set)
   }
 
+  public abstract reset (): void
+  public abstract trim (): Buffer
   public abstract encodeSet (o: ILooseObject, set: ContainedFieldSet): void
 }

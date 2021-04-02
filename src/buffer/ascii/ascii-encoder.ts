@@ -11,12 +11,30 @@ export class AsciiEncoder extends MsgEncoder {
 
   public bodyLengthPos: number
   public msgTypePos: number
+  public tags: Tags
 
   constructor (public readonly buffer: ElasticBuffer,
                public readonly definitions: FixDefinitions,
                public readonly timeFormatter: ITimeFormatter = new TimeFormatter(buffer),
-               public readonly delimiter: number = AsciiChars.Soh) {
+               public readonly delimiter: number = AsciiChars.Soh,
+               public readonly logDelimiter: number = AsciiChars.Pipe) {
     super(definitions)
+    this.tags = new Tags(definitions)
+  }
+
+  public trim (): Buffer {
+    const b = this.buffer.copy()
+    const delimiter = this.delimiter
+    const logDelimiter = this.logDelimiter
+    const tags = this.tags
+    if (delimiter !== logDelimiter) {
+      for (let p = 0; p < tags.nextTagPos; ++p) {
+        const tagp = tags.tagPos[p]
+        b.writeUInt8(delimiter, tagp.start + tagp.len)
+      }
+    }
+
+    return b
   }
 
   private static checkGroupInstanceHasDelimiter (gf: ContainedGroupField, instance: ILooseObject): boolean {
@@ -40,6 +58,13 @@ export class AsciiEncoder extends MsgEncoder {
           instance = null
       }
     }
+  }
+
+  // only reset tags after entire message is encoded - <hdr>body<trl>
+
+  public reset (): void {
+    this.buffer.reset()
+    this.tags.reset()
   }
 
   public encodeSet (objectToEncode: ILooseObject, set: ContainedFieldSet): void {
@@ -110,9 +135,10 @@ export class AsciiEncoder extends MsgEncoder {
     const definition = sf.definition
     const tag: number = definition.tag
     const buffer = this.buffer
-    const delimiter = this.delimiter
+    const delimiter = this.logDelimiter
     const tf = this.timeFormatter
     const pos = buffer.getPos()
+    let posValBegin = 0
 
     let tagType: TagType
     if (typeof val === 'string') {
@@ -141,6 +167,7 @@ export class AsciiEncoder extends MsgEncoder {
 
       default: {
         this.WriteTagEquals(tag)
+        posValBegin = buffer.getPos()
         break
       }
     }
@@ -197,6 +224,7 @@ export class AsciiEncoder extends MsgEncoder {
         }
         this.WriteTagEquals(tag)
         buffer.writeBuffer(b)
+        posValBegin = buffer.getPos()
         break
       }
 
@@ -206,6 +234,7 @@ export class AsciiEncoder extends MsgEncoder {
       }
     }
 
+    this.tags.store(posValBegin, buffer.getPos() - posValBegin, tag)
     buffer.writeChar(delimiter)
 
     switch (tag) {

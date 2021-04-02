@@ -212,4 +212,12 @@ export class FixmlEncoder extends MsgEncoder {
       this.toXml(instance, cf.name, def, depth + 1)
     }
   }
+
+  reset (): void {
+    this.buffer.reset()
+  }
+
+  trim (): Buffer {
+    return this.buffer.copy()
+  }
 }

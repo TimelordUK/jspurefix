@@ -17,6 +17,7 @@ export class MsgTransport {
     if (!delimiter) {
       throw new Error(`no delimiter char given.`)
     }
+    const logDelimiter = config.logDelimiter || AsciiChars.Pipe
     const description = config.description
     const definitions = config.definitions
     const protocol = description.application.protocol
@@ -25,7 +26,7 @@ export class MsgTransport {
         // let parser replace delimiter with Pipe so fix log does not require
         // expensive replace
         this.transmitter = new AsciiMsgTransmitter(config)
-        this.receiver = new AsciiParser(definitions, duplex.readable, delimiter, AsciiChars.Pipe)
+        this.receiver = new AsciiParser(definitions, duplex.readable, delimiter, logDelimiter)
         break
       }
 
