@@ -1,8 +1,11 @@
+import { Iheader } from './set/header'
 import { IMDReqGrp } from './set/md_req_grp'
 import { IInstrmtMDReqGrp } from './set/instrmt_md_req_grp'
 import { ITrdgSesGrp } from './set/trdg_ses_grp'
+import { Itrailer } from './set/trailer'
 
 export interface IMarketDataRequest {
+  header: Iheader
   MDReqID: string// 262
   SubscriptionRequestType: string// 263
   MarketDepth: number// 264
@@ -16,4 +19,5 @@ export interface IMarketDataRequest {
   TrdgSesGrp?: ITrdgSesGrp
   ApplQueueAction?: number// 815
   ApplQueueMax?: number// 812
+  trailer: Itrailer
 }

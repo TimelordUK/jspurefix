@@ -1,6 +1,9 @@
+import { Iheader } from './set/header'
 import { IOrdAllocGrp } from './set/ord_alloc_grp'
+import { Itrailer } from './set/trailer'
 
 export interface IConfirmationRequest {
+  header: Iheader
   ConfirmReqID: string// 859
   ConfirmType: number// 773
   OrdAllocGrp?: IOrdAllocGrp
@@ -14,4 +17,5 @@ export interface IConfirmationRequest {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  trailer: Itrailer
 }

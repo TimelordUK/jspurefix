@@ -1,4 +1,8 @@
+import { Iheader } from './set/header'
+import { Itrailer } from './set/trailer'
+
 export interface ITradingSessionStatus {
+  header: Iheader
   TradSesReqID?: string// 335
   TradingSessionID: string// 336
   TradingSessionSubID?: string// 625
@@ -16,4 +20,5 @@ export interface ITradingSessionStatus {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  trailer: Itrailer
 }

@@ -1,6 +1,9 @@
+import { Iheader } from './set/header'
 import { ISettlInstGrp } from './set/settl_inst_grp'
+import { Itrailer } from './set/trailer'
 
 export interface ISettlementInstructions {
+  header: Iheader
   SettlInstMsgID: string// 777
   SettlInstReqID?: string// 791
   SettlInstMode: string// 160
@@ -11,4 +14,5 @@ export interface ISettlementInstructions {
   ClOrdID?: string// 11
   TransactTime: Date// 60
   SettlInstGrp?: ISettlInstGrp
+  trailer: Itrailer
 }

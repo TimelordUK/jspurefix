@@ -1,10 +1,13 @@
+import { Iheader } from './set/header'
 import { IRoutingGrp } from './set/routing_grp'
 import { IInstrmtGrp } from './set/instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { ILinesOfTextGrp } from './set/lines_of_text_grp'
+import { Itrailer } from './set/trailer'
 
 export interface INews {
+  header: Iheader
   OrigTime?: Date// 42
   Urgency?: string// 61
   Headline: string// 148
@@ -18,4 +21,5 @@ export interface INews {
   URLLink?: string// 149
   RawDataLength?: number// 95
   RawData?: Buffer// 96
+  trailer: Itrailer
 }

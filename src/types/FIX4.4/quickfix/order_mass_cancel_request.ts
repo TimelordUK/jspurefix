@@ -1,7 +1,10 @@
+import { Iheader } from './set/header'
 import { IInstrument } from './set/instrument'
 import { IUnderlyingInstrument } from './set/underlying_instrument'
+import { Itrailer } from './set/trailer'
 
 export interface IOrderMassCancelRequest {
+  header: Iheader
   ClOrdID: string// 11
   SecondaryClOrdID?: string// 526
   MassCancelRequestType: string// 530
@@ -14,4 +17,5 @@ export interface IOrderMassCancelRequest {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  trailer: Itrailer
 }

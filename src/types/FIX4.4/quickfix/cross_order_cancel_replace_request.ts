@@ -1,3 +1,4 @@
+import { Iheader } from './set/header'
 import { ISideCrossOrdModGrp } from './set/side_cross_ord_mod_grp'
 import { IInstrument } from './set/instrument'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
@@ -8,8 +9,10 @@ import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_dat
 import { IYieldData } from './set/yield_data'
 import { IPegInstructions } from './set/peg_instructions'
 import { IDiscretionInstructions } from './set/discretion_instructions'
+import { Itrailer } from './set/trailer'
 
 export interface ICrossOrderCancelReplaceRequest {
+  header: Iheader
   OrderID?: string// 37
   CrossID: string// 548
   OrigCrossID: string// 551
@@ -57,4 +60,5 @@ export interface ICrossOrderCancelReplaceRequest {
   MoneyLaunderingStatus?: string// 481
   RegistID?: string// 513
   Designation?: string// 494
+  trailer: Itrailer
 }

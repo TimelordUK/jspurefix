@@ -1,7 +1,10 @@
+import { Iheader } from './set/header'
 import { IBidDescReqGrp } from './set/bid_desc_req_grp'
 import { IBidCompReqGrp } from './set/bid_comp_req_grp'
+import { Itrailer } from './set/trailer'
 
 export interface IBidRequest {
+  header: Iheader
   BidID?: string// 390
   ClientBidID: string// 391
   BidRequestTransType: string// 374
@@ -31,4 +34,5 @@ export interface IBidRequest {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  trailer: Itrailer
 }

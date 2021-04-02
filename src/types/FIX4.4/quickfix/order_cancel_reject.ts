@@ -1,4 +1,8 @@
+import { Iheader } from './set/header'
+import { Itrailer } from './set/trailer'
+
 export interface IOrderCancelReject {
+  header: Iheader
   OrderID: string// 37
   SecondaryOrderID?: string// 198
   SecondaryClOrdID?: string// 526
@@ -20,4 +24,5 @@ export interface IOrderCancelReject {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  trailer: Itrailer
 }

@@ -1,6 +1,9 @@
+import { Iheader } from './set/header'
 import { ISecTypesGrp } from './set/sec_types_grp'
+import { Itrailer } from './set/trailer'
 
 export interface ISecurityTypes {
+  header: Iheader
   SecurityReqID: string// 320
   SecurityResponseID: string// 322
   SecurityResponseType: number// 323
@@ -13,4 +16,5 @@ export interface ISecurityTypes {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   SubscriptionRequestType?: string// 263
+  trailer: Itrailer
 }

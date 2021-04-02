@@ -1,3 +1,4 @@
+import { Iheader } from './set/header'
 import { IParties } from './set/parties'
 import { IExecCollGrp } from './set/exec_coll_grp'
 import { ITrdCollGrp } from './set/trd_coll_grp'
@@ -10,8 +11,10 @@ import { IMiscFeesGrp } from './set/misc_fees_grp'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IStipulations } from './set/stipulations'
 import { ISettlInstructionsData } from './set/settl_instructions_data'
+import { Itrailer } from './set/trailer'
 
 export interface ICollateralAssignment {
+  header: Iheader
   CollAsgnID: string// 902
   CollReqID?: string// 894
   CollAsgnReason: number// 895
@@ -59,4 +62,5 @@ export interface ICollateralAssignment {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  trailer: Itrailer
 }

@@ -1,6 +1,9 @@
+import { Iheader } from './set/header'
 import { IListOrdGrp } from './set/list_ord_grp'
+import { Itrailer } from './set/trailer'
 
 export interface INewOrderList {
+  header: Iheader
   ListID: string// 66
   BidID?: string// 390
   ClientBidID?: string// 391
@@ -20,4 +23,5 @@ export interface INewOrderList {
   TotNoOrders: number// 68
   LastFragment?: boolean// 893
   ListOrdGrp?: IListOrdGrp
+  trailer: Itrailer
 }

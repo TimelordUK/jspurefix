@@ -1,9 +1,12 @@
+import { Iheader } from './set/header'
 import { IInstrument } from './set/instrument'
 import { IInstrumentExtension } from './set/instrument_extension'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
+import { Itrailer } from './set/trailer'
 
 export interface ISecurityDefinitionRequest {
+  header: Iheader
   SecurityReqID: string// 320
   SecurityRequestType: number// 321
   Instrument?: IInstrument
@@ -18,4 +21,5 @@ export interface ISecurityDefinitionRequest {
   InstrmtLegGrp?: IInstrmtLegGrp
   ExpirationCycle?: number// 827
   SubscriptionRequestType?: string// 263
+  trailer: Itrailer
 }

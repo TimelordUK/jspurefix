@@ -1,3 +1,4 @@
+import { Iheader } from './set/header'
 import { IParties } from './set/parties'
 import { IPreAllocGrp } from './set/pre_alloc_grp'
 import { ITrdgSesGrp } from './set/trdg_ses_grp'
@@ -11,8 +12,10 @@ import { IYieldData } from './set/yield_data'
 import { ICommissionData } from './set/commission_data'
 import { IPegInstructions } from './set/peg_instructions'
 import { IDiscretionInstructions } from './set/discretion_instructions'
+import { Itrailer } from './set/trailer'
 
 export interface INewOrderSingle {
+  header: Iheader
   ClOrdID: string// 11
   SecondaryClOrdID?: string// 526
   ClOrdLinkID?: string// 583
@@ -89,4 +92,5 @@ export interface INewOrderSingle {
   MoneyLaunderingStatus?: string// 481
   RegistID?: string// 513
   Designation?: string// 494
+  trailer: Itrailer
 }

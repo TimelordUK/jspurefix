@@ -1,6 +1,9 @@
+import { Iheader } from './set/header'
 import { IParties } from './set/parties'
+import { Itrailer } from './set/trailer'
 
 export interface ISettlementInstructionRequest {
+  header: Iheader
   SettlInstReqID: string// 791
   TransactTime: Date// 60
   Parties?: IParties
@@ -16,4 +19,5 @@ export interface ISettlementInstructionRequest {
   StandInstDbType?: number// 169
   StandInstDbName?: string// 170
   StandInstDbID?: string// 171
+  trailer: Itrailer
 }

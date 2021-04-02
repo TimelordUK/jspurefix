@@ -1,3 +1,4 @@
+import { Iheader } from './set/header'
 import { IParties } from './set/parties'
 import { IContraGrp } from './set/contra_grp'
 import { IInstrument } from './set/instrument'
@@ -13,8 +14,10 @@ import { IYieldData } from './set/yield_data'
 import { IContAmtGrp } from './set/cont_amt_grp'
 import { IInstrmtLegExecGrp } from './set/instrmt_leg_exec_grp'
 import { IMiscFeesGrp } from './set/misc_fees_grp'
+import { Itrailer } from './set/trailer'
 
 export interface IExecutionReport {
+  header: Iheader
   OrderID: string// 37
   SecondaryOrderID?: string// 198
   SecondaryClOrdID?: string// 526
@@ -153,4 +156,5 @@ export interface IExecutionReport {
   InstrmtLegExecGrp?: IInstrmtLegExecGrp
   CopyMsgIndicator?: boolean// 797
   MiscFeesGrp?: IMiscFeesGrp
+  trailer: Itrailer
 }

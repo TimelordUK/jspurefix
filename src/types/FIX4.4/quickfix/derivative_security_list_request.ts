@@ -1,6 +1,9 @@
+import { Iheader } from './set/header'
 import { IUnderlyingInstrument } from './set/underlying_instrument'
+import { Itrailer } from './set/trailer'
 
 export interface IDerivativeSecurityListRequest {
+  header: Iheader
   SecurityReqID: string// 320
   SecurityListRequestType: number// 559
   UnderlyingInstrument?: IUnderlyingInstrument
@@ -12,4 +15,5 @@ export interface IDerivativeSecurityListRequest {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   SubscriptionRequestType?: string// 263
+  trailer: Itrailer
 }

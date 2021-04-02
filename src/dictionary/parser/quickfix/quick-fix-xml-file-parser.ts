@@ -189,11 +189,14 @@ export class QuickFixXmlFileParser extends FixParser {
   private encloseMessages (): void {
     const messages = this.definitions.message
     const keys = messages.keys()
+    const trailerName = 'trailer'
     keys.forEach(k => {
       const message = messages.get(k)
-      const trailer = this.definitions.component.get('trailer')
-      const contained = new ContainedComponentField(trailer, message.fields.length, true)
-      message.add(contained)
+      const trailer = this.definitions.component.get(trailerName)
+      if (trailer && !message.components.containsKey(trailerName)) {
+        const contained = new ContainedComponentField(trailer, message.fields.length, true)
+        message.add(contained)
+      }
     })
   }
 

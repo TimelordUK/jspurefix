@@ -1,9 +1,12 @@
+import { Iheader } from './set/header'
 import { IInstrument } from './set/instrument'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IOrderQtyData } from './set/order_qty_data'
+import { Itrailer } from './set/trailer'
 
 export interface IDontKnowTrade {
+  header: Iheader
   OrderID: string// 37
   SecondaryOrderID?: string// 198
   ExecID: string// 17
@@ -18,4 +21,5 @@ export interface IDontKnowTrade {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  trailer: Itrailer
 }

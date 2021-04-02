@@ -1,3 +1,4 @@
+import { Iheader } from './set/header'
 import { IInstrument } from './set/instrument'
 import { IFinancingDetails } from './set/financing_details'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
@@ -8,8 +9,10 @@ import { IIOIQualGrp } from './set/ioi_qual_grp'
 import { IRoutingGrp } from './set/routing_grp'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IYieldData } from './set/yield_data'
+import { Itrailer } from './set/trailer'
 
 export interface IIOI {
+  header: Iheader
   IOIID: string// 23
   IOITransType: string// 28
   IOIRefID?: string// 26
@@ -37,4 +40,5 @@ export interface IIOI {
   RoutingGrp?: IRoutingGrp
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
   YieldData?: IYieldData
+  trailer: Itrailer
 }

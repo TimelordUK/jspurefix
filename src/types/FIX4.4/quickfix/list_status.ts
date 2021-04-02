@@ -1,6 +1,9 @@
+import { Iheader } from './set/header'
 import { IOrdListStatGrp } from './set/ord_list_stat_grp'
+import { Itrailer } from './set/trailer'
 
 export interface IListStatus {
+  header: Iheader
   ListID: string// 66
   ListStatusType: number// 429
   NoRpts: number// 82
@@ -13,4 +16,5 @@ export interface IListStatus {
   TotNoOrders: number// 68
   LastFragment?: boolean// 893
   OrdListStatGrp?: IOrdListStatGrp
+  trailer: Itrailer
 }

@@ -1,3 +1,4 @@
+import { Iheader } from './set/header'
 import { IInstrument } from './set/instrument'
 import { IFinancingDetails } from './set/financing_details'
 import { IOrderQtyData } from './set/order_qty_data'
@@ -8,8 +9,10 @@ import { IPositionAmountData } from './set/position_amount_data'
 import { ITrdInstrmtLegGrp } from './set/trd_instrmt_leg_grp'
 import { ITrdRegTimestamps } from './set/trd_reg_timestamps'
 import { ITrdCapRptSideGrp } from './set/trd_cap_rpt_side_grp'
+import { Itrailer } from './set/trailer'
 
 export interface ITradeCaptureReport {
+  header: Iheader
   TradeReportID: string// 571
   TradeReportTransType?: number// 487
   TradeReportType?: number// 856
@@ -67,4 +70,5 @@ export interface ITradeCaptureReport {
   CopyMsgIndicator?: boolean// 797
   PublishTrdIndicator?: boolean// 852
   ShortSaleReason?: number// 853
+  trailer: Itrailer
 }
