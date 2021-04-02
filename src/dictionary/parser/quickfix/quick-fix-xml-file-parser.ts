@@ -10,6 +10,7 @@ import { FixParser } from '../../fix-parser'
 import { FixDefinitionSource, VersionUtil } from '../../fix-versions'
 import { GetJsFixLogger } from '../../../config'
 import { promisify } from 'util'
+import { ContainedComponentField } from '../../contained'
 
 enum ParseState {
     Begin = 1,
@@ -185,6 +186,17 @@ export class QuickFixXmlFileParser extends FixParser {
     })
   }
 
+  private encloseMessages (): void {
+    const messages = this.definitions.message
+    const keys = messages.keys()
+    keys.forEach(k => {
+      const message = messages.get(k)
+      const trailer = this.definitions.component.get('trailer')
+      const contained = new ContainedComponentField(trailer, message.fields.length, true)
+      message.add(contained)
+    })
+  }
+
   public parse (): Promise<FixDefinitions> {
     return new Promise<FixDefinitions>(async (accept, reject) => {
       try {
@@ -193,6 +205,7 @@ export class QuickFixXmlFileParser extends FixParser {
         await this.onePass() // second pass of components top level with forward references replace
         await this.onePass() // third pass of components all fully resolved i.e. pick up versions from pass above
         await this.onePass() // lastly messages with all dependencies
+        this.encloseMessages()
         accept(this.definitions)
       } catch (e) {
         reject(e)

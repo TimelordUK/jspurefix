@@ -1,5 +1,7 @@
 import { ILooseObject } from '../../collections/collection'
-import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField, ContainedFieldType, ContainedComponentField, SimpleFieldDefinition, FixDefinitions, dispatchFields } from '../../dictionary'
+import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField,
+  ContainedFieldType, ContainedComponentField, SimpleFieldDefinition,
+  FixDefinitions, dispatchFields } from '../../dictionary'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import { TimeFormatter } from './time-formatter'
@@ -29,8 +31,8 @@ export class AsciiEncoder extends MsgEncoder {
     const tags = this.tags
     if (delimiter !== logDelimiter) {
       for (let p = 0; p < tags.nextTagPos; ++p) {
-        const tagp = tags.tagPos[p]
-        b.writeUInt8(delimiter, tagp.start + tagp.len)
+        const tagPos = tags.tagPos[p]
+        b.writeUInt8(delimiter, tagPos.start + tagPos.len)
       }
     }
 
@@ -129,6 +131,13 @@ export class AsciiEncoder extends MsgEncoder {
     const buffer = this.buffer
     buffer.writeWholeNumber(tag)
     buffer.writeChar(AsciiChars.Equal)
+  }
+
+  private writeDelimiter (posValBegin: number, tag: number): void {
+    const delimiter = this.logDelimiter
+    const buffer = this.buffer
+    this.tags.store(posValBegin, buffer.getPos() - posValBegin, tag)
+    buffer.writeChar(delimiter)
   }
 
   private encodeSimple (o: ILooseObject, set: ContainedFieldSet, sf: ContainedSimpleField, val: any): void {
@@ -234,8 +243,7 @@ export class AsciiEncoder extends MsgEncoder {
       }
     }
 
-    this.tags.store(posValBegin, buffer.getPos() - posValBegin, tag)
-    buffer.writeChar(delimiter)
+    this.writeDelimiter(posValBegin, tag)
 
     switch (tag) {
       case Tags.BodyLengthTag:
