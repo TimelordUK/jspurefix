@@ -27,7 +27,7 @@ export abstract class FixSession {
     const description = config.description
     this.emitter = new events.EventEmitter()
     this.me = description.application.name
-    this.sessionState = new FixSessionState(description.HeartBtInt)
+    this.sessionState = new FixSessionState(description.HeartBtInt, config.description.LastReceivedSeqNum)
     this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`)
     this.initiator = description.application.type === 'initiator'
     this.acceptor = !this.initiator

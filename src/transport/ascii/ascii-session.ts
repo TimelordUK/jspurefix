@@ -22,9 +22,7 @@ export abstract class AsciiSession extends FixSession {
   private checkSeqNo (msgType: string, view: MsgView): boolean {
 
     switch (msgType) {
-      case MsgType.TestRequest:
-      case MsgType.SequenceReset:
-      case MsgType.ResendRequest: {
+      case MsgType.SequenceReset: {
         return true
       }
 
@@ -40,9 +38,13 @@ export abstract class AsciiSession extends FixSession {
           this.stop()
         } else if (seqDelta > 1) {
           // reset required as have missed messages.
-          const resend = this.config.factory.resendRequest(lastSeq, seqNo)
+          const resend = this.config.factory.resendRequest(lastSeq + 1, seqNo)
           this.sessionLogger.warning(`sending resend last received ${lastSeq} seqNo ${seqNo}`)
           this.send(MsgType.ResendRequest, resend)
+          // Sequence discrepancies should be resolved after logon. However, this does not make the Logon invalid.
+          if (MsgType.Logon) {
+            return true
+          }
         } else {
           ret = true
           state.lastPeerMsgSeqNum = seqNo
@@ -125,6 +127,17 @@ export abstract class AsciiSession extends FixSession {
     return true
   }
 
+  /**
+   * Override to resend stored messages following a sequence reset.
+   * @protected
+   */
+  // tslint:disable-next-line:no-empty
+  protected onResendRequest (view: MsgView) {
+    const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
+    const resend = this.config.factory.sequenceReset(endSeqNo)
+    this.send(MsgType.SequenceReset, resend)
+  }
+
   private onSessionMsg (msgType: string, view: MsgView): void {
 
     const factory = this.config.factory
@@ -154,16 +167,15 @@ export abstract class AsciiSession extends FixSession {
 
       case MsgType.ResendRequest: {
         logger.info(`peer sends '${msgType}' resend reset.`)
-        const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
-        const resend = factory.sequenceReset(endSeqNo)
-        this.send(MsgType.SequenceReset, resend)
+        this.onResendRequest(view)
         break
       }
 
       case MsgType.SequenceReset: {
         const newSeqNo: number = view.getTyped(MsgTag.NewSeqNo)
         logger.info(`peer sends '${msgType}' sequence reset. newSeqNo = ${newSeqNo}`)
-        this.sessionState.lastPeerMsgSeqNum = newSeqNo
+        // expect  newSeqNo to be the next message's sequence number.
+        this.sessionState.lastPeerMsgSeqNum = newSeqNo - 1
         break
       }
 

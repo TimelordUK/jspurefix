@@ -141,7 +141,7 @@ export class FixSessionState {
 
   public timeToDie (): boolean {
     return this.secondsSinceLogoutSent > this.waitLogoutConfirmSeconds ||
-    this.secondsSinceLogoutSent > this.stopSeconds
+      this.secondsSinceLogoutSent > this.stopSeconds
   }
 
   public timeToHeartbeat (): boolean {

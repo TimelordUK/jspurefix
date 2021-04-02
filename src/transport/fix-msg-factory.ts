@@ -1,4 +1,5 @@
 import { ILooseObject } from '../collections/collection'
+import { IStandardHeader } from '../types/FIX4.4/repo'
 import { ISessionDescription } from './session-description'
 
 export interface ISessionMsgFactory {
@@ -10,6 +11,6 @@ export interface ISessionMsgFactory {
   resendRequest (from: number, to: number): ILooseObject
   sequenceReset (newSeq: number): ILooseObject
   heartbeat (testReqId: string): ILooseObject
-  header (msgType?: string, seqNum?: number, time?: Date): ILooseObject
+  header (msgType?: string, seqNum?: number, time?: Date, overrideData?: Partial<IStandardHeader>): ILooseObject
   trailer (checksum: number): ILooseObject
 }
