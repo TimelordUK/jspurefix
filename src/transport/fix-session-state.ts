@@ -20,7 +20,6 @@ export enum SessionState {
   InitiateLogout = 16,
   ActiveNormalSession = 17,
   WaitingForALogon = 18,
-  // PeerLoggedOn = 19,
   PeerLogonRejected = 20,
   WaitingLogoutConfirm = 21,
   ConfirmingLogout = 22,

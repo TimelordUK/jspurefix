@@ -128,11 +128,13 @@ export class AsciiSegmentParser {
     }
 
     function clean (): void {
+      // any remainder components can be closed.
       while (structureStack.length > 0) {
         const done: SegmentDescription = structureStack.pop()
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
         segments[segments.length] = done
       }
+      // logically reverse the trailer and message so trailer is last in list.
       const m1 = segments.length - 1
       const m2 = segments.length - 2
       const tmp = segments[m1]

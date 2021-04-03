@@ -35,6 +35,12 @@ export abstract class FixSession {
     this.sessionState.compId = description.SenderCompId
   }
 
+  public setState (state: SessionState) {
+    const logger = this.sessionLogger
+    logger.info(`current state ${this.sessionState.state} moves to ${state}`)
+    this.sessionState.state = state
+  }
+
   public run (transport: MsgTransport): Promise<any> {
     const logger = this.sessionLogger
     if (this.transport) {
