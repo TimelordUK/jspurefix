@@ -15,10 +15,6 @@ export abstract class AsciiSession extends FixSession {
     this.requestLogonType = MsgType.Logon
   }
 
-  public static asPiped (txt: string) {
-    return txt.replace(/\x01/g,'|')
-  }
-
   private checkSeqNo (msgType: string, view: MsgView): boolean {
 
     switch (msgType) {

@@ -114,8 +114,9 @@ export class AsciiEncoder extends MsgEncoder {
     if (instances) {
       // a repeated group has number of instances at the start of group
       this.WriteTagEquals(noOfField.tag)
+      const posValBegin = buffer.getPos()
       buffer.writeWholeNumber(instances.length)
-      buffer.writeChar(this.delimiter)
+      this.writeDelimiter(posValBegin, noOfField.tag)
       instances.forEach((i: ILooseObject) => {
         if (AsciiEncoder.checkGroupInstanceHasDelimiter(gf, i)) {
           this.encodeSet(i, gf.definition)
