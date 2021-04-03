@@ -9,7 +9,6 @@ import {
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
-import { MsgTag } from '../../types'
 
 export class AsciiSegmentParser {
 
@@ -105,7 +104,7 @@ export class AsciiSegmentParser {
         peek = structureStack[structureStack.length - 1]
         peek.setCurrentField(tag)
         if (!peek.set.containedTag[tag] || groupDelimiter(tag)) {
-          const unknown = peek.type === SegmentType.Msg && tag !== MsgTag.CheckSum
+          const unknown = peek.type === SegmentType.Msg
           if (unknown) {
             gap(tag)
           } else if (structureStack.length > 1) {
