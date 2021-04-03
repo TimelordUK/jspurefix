@@ -1,5 +1,4 @@
 import {
-  ComponentFieldDefinition,
   ContainedComponentField,
   ContainedFieldType,
   ContainedGroupField,
@@ -14,28 +13,18 @@ import { MsgTag } from '../../types'
 
 export class AsciiSegmentParser {
 
-  private readonly trailerDefinition: ComponentFieldDefinition
-
   constructor (public readonly definitions: FixDefinitions) {
-    this.trailerDefinition = definitions.component.get('trailer')
   }
 
   public parse (msgType: string, tags: Tags, last: number): Structure {
     const segments: SegmentDescription[] = []
-    const tr = this.trailerDefinition
     const msgDefinition: MessageDefinition = this.definitions.message.get(msgType)
     if (!msgDefinition) {
       return null
     }
     const structureStack: SegmentDescription[] = []
     let currentTagPosition: number = 0
-    // let currentContainedField: ContainedField;
     let peek: SegmentDescription
-
-    function init (): void {
-      structureStack[structureStack.length] = new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
-        currentTagPosition, structureStack.length, SegmentType.Msg)
-    }
 
     // having finished one segments keep unwinding until tag matches further up stack
     function unwind (tag: number): void {
@@ -48,7 +37,7 @@ export class AsciiSegmentParser {
           // unwound to point this tag lives in this set.
           break
         }
-        if (peek.type === SegmentType.Msg && !tr.localTag[tag]) {
+        if (peek.type === SegmentType.Msg) {
           // this is unknown tag and it is not part of trailer so raise unknown
           break
         }
@@ -142,7 +131,8 @@ export class AsciiSegmentParser {
       segments[m2] = tmp
     }
 
-    init()
+    structureStack[structureStack.length] = new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
+      currentTagPosition, structureStack.length, SegmentType.Msg)
     discover()
     clean()
 
