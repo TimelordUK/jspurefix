@@ -41,6 +41,10 @@ export abstract class FixSession {
     this.sessionState.state = state
   }
 
+  public getState (): SessionState {
+    return this.sessionState.state
+  }
+
   public run (transport: MsgTransport): Promise<any> {
     const logger = this.sessionLogger
     if (this.transport) {
