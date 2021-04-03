@@ -44,7 +44,8 @@ export class AsciiSegmentParser {
       }
     }
 
-    function examine (tag: number): void {
+    function examine (tag: number): SegmentDescription {
+      let structure: SegmentDescription = null
       switch (peek.currentField.type) {
 
         case ContainedFieldType.Simple: {
@@ -57,16 +58,15 @@ export class AsciiSegmentParser {
         // moving deeper into structure, start a new context
         case ContainedFieldType.Component: {
           const cf: ContainedComponentField = peek.currentField as ContainedComponentField
-          structureStack[structureStack.length] = new SegmentDescription(cf.name, tag, cf.definition,
+          structure = new SegmentDescription(cf.name, tag, cf.definition,
                         currentTagPosition, structureStack.length, SegmentType.Component)
           break
         }
 
         case ContainedFieldType.Group: {
           const gf: ContainedComponentField = peek.currentField as ContainedGroupField
-          const structure: SegmentDescription = new SegmentDescription(gf.name, tag, gf.definition,
+          structure = new SegmentDescription(gf.name, tag, gf.definition,
                         currentTagPosition, structureStack.length, SegmentType.Group)
-          structureStack[structureStack.length] = structure
           currentTagPosition = currentTagPosition + 1
           structure.startGroup(tags.tagPos[currentTagPosition].tag)
           break
@@ -75,6 +75,8 @@ export class AsciiSegmentParser {
         default:
           throw new Error(`unknown tag type ${tag}`)
       }
+
+      return structure
     }
 
     function groupDelimiter (tag: number): boolean {
@@ -112,7 +114,10 @@ export class AsciiSegmentParser {
           }
           continue
         }
-        examine(tag)
+        const structure = examine(tag)
+        if (structure) {
+          structureStack.push(structure)
+        }
       }
     }
 
@@ -131,8 +136,8 @@ export class AsciiSegmentParser {
       segments[m2] = tmp
     }
 
-    structureStack[structureStack.length] = new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
-      currentTagPosition, structureStack.length, SegmentType.Msg)
+    structureStack.push(new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
+      currentTagPosition, structureStack.length, SegmentType.Msg))
     discover()
     clean()
 
