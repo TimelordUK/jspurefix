@@ -1,4 +1,12 @@
-import { ContainedComponentField, ContainedFieldType, ContainedGroupField, ContainedSimpleField, ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../..'
+import {
+  ComponentFieldDefinition,
+  ContainedComponentField,
+  ContainedFieldType,
+  ContainedGroupField,
+  ContainedSimpleField,
+  FixDefinitions,
+  MessageDefinition
+} from '../..'
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
@@ -6,18 +14,15 @@ import { MsgTag } from '../../types'
 
 export class AsciiSegmentParser {
 
-  private readonly headerDefinition: ComponentFieldDefinition
   private readonly trailerDefinition: ComponentFieldDefinition
 
   constructor (public readonly definitions: FixDefinitions) {
-    this.headerDefinition = definitions.component.get('header')
     this.trailerDefinition = definitions.component.get('trailer')
   }
 
   public parse (msgType: string, tags: Tags, last: number): Structure {
     const segments: SegmentDescription[] = []
     const tr = this.trailerDefinition
-    const hd = this.headerDefinition
     const msgDefinition: MessageDefinition = this.definitions.message.get(msgType)
     if (!msgDefinition) {
       return null
@@ -28,13 +33,8 @@ export class AsciiSegmentParser {
     let peek: SegmentDescription
 
     function init (): void {
-      const firstTag: number = tags.tagPos[0].tag
-      structureStack[structureStack.length] = new SegmentDescription(tr.name, tags.tagPos[last].tag, tr,
-        currentTagPosition, structureStack.length, SegmentType.Component)
-      structureStack[structureStack.length] = new SegmentDescription(msgDefinition.name, firstTag, msgDefinition,
+      structureStack[structureStack.length] = new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
         currentTagPosition, structureStack.length, SegmentType.Msg)
-      structureStack[structureStack.length] = new SegmentDescription(hd.name, firstTag, hd,
-        currentTagPosition, structureStack.length, SegmentType.Component)
     }
 
     // having finished one segments keep unwinding until tag matches further up stack
@@ -69,14 +69,14 @@ export class AsciiSegmentParser {
         case ContainedFieldType.Component: {
           const cf: ContainedComponentField = peek.currentField as ContainedComponentField
           structureStack[structureStack.length] = new SegmentDescription(cf.name, tag, cf.definition,
-                        currentTagPosition, structureStack.length - 1, SegmentType.Component)
+                        currentTagPosition, structureStack.length, SegmentType.Component)
           break
         }
 
         case ContainedFieldType.Group: {
           const gf: ContainedComponentField = peek.currentField as ContainedGroupField
           const structure: SegmentDescription = new SegmentDescription(gf.name, tag, gf.definition,
-                        currentTagPosition, structureStack.length - 1, SegmentType.Group)
+                        currentTagPosition, structureStack.length, SegmentType.Group)
           structureStack[structureStack.length] = structure
           currentTagPosition = currentTagPosition + 1
           structure.startGroup(tags.tagPos[currentTagPosition].tag)
@@ -133,11 +133,11 @@ export class AsciiSegmentParser {
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
         segments[segments.length] = done
       }
-      const msg: SegmentDescription = segments[segments.length - 2]
-      const trl: SegmentDescription = segments[segments.length - 1]
-      msg.startTag = tags.tagPos[msg.startPosition].tag
-      trl.startPosition = msg.endPosition + 1
-      msg.endPosition = trl.endPosition
+      const m1 = segments.length - 1
+      const m2 = segments.length - 2
+      const tmp = segments[m1]
+      segments[m1] = segments[m2]
+      segments[m2] = tmp
     }
 
     init()
