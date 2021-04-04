@@ -102,8 +102,15 @@ export abstract class FixSession {
       this.terminate(e)
     })
 
-    rx.on('done', () => this.done())
-    rx.on('end', () => this.done())
+    rx.on('done', () => {
+      logger.info('rx done received')
+      this.done()
+    })
+
+    rx.on('end', () => {
+      logger.info('rx end received')
+      this.done()
+    })
 
     rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
       logger.debug(`rx: [${msgType}] ${ptr} bytes`)
@@ -224,16 +231,22 @@ export abstract class FixSession {
     this.sessionState.lastPeerMsgSeqNum = 0
   }
 
-  protected stop (): void {
+  protected stop (error: Error = null): void {
     if (this.sessionState.state === SessionState.Stopped) {
       return
     }
     clearInterval(this.timer)
     this.sessionLogger.info(`stop: kill transport`)
     this.transport.end()
-    this.emitter.emit('done')
+    if (error) {
+      this.sessionLogger.info(`stop: emit error ${error.message}`)
+      this.emitter.emit('error', error)
+    } else {
+      this.emitter.emit('done')
+    }
+
     this.setState(SessionState.Stopped)
-    this.onStopped()
+    this.onStopped(error)
     this.transport = null
   }
 
@@ -247,7 +260,7 @@ export abstract class FixSession {
   // inform application peer has logged in - provide login message
   protected abstract onReady (view: MsgView): void
   // inform application this session has now ended - either from logout or connection dropped
-  protected abstract onStopped (): void
+  protected abstract onStopped (error?: Error): void
   // does the application accept the inbound logon request
   protected abstract onLogon (view: MsgView, user: string, password: string): boolean
 }
