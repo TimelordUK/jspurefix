@@ -45,7 +45,7 @@ export abstract class FixSession {
     return this.sessionState.state
   }
 
-  public run (transport: MsgTransport): Promise<any> {
+  public run (transport: MsgTransport): Promise<number> {
     const logger = this.sessionLogger
     if (this.transport) {
       logger.info('reset from previous transport.')
@@ -64,7 +64,7 @@ export abstract class FixSession {
         reject(e)
       })
       this.emitter.on('done', () => {
-        accept(true)
+        accept(this.transport.id)
       })
     })
   }

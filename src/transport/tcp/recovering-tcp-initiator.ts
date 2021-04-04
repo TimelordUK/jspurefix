@@ -2,10 +2,10 @@ import { IMsgApplication, ITcpTransportDescription } from '../session-descriptio
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { MakeFixSession } from '../make-fixl-session'
 import { FixSession } from '../fix-session'
-import * as events from 'events'
 import { SessionState } from '../fix-session-state'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../msg-transport'
+import * as events from 'events'
 
 /*
    create one application session instance - and recover a lost transport.  Hence the application
@@ -24,7 +24,7 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
   constructor (public readonly jsFixConfig: IJsFixConfig, public readonly sessionFactory: MakeFixSession) {
     super()
     this.application = this.jsFixConfig.description.application
-    this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:TcpInitiator`)
+    this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:RecoveringTcpInitiator`)
     if (!this.application) {
       const e: Error = new Error(`no application in session description.`)
       this.logger.error(e)
@@ -52,24 +52,55 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     this.logger.info(`initiator connects id ${(transport.id)}`)
     const session = this.session
     session.setState(SessionState.NetworkConnectionEstablished)
-    transport.receiver.on('end', () => {
-      // this.harvestTransport(id)
-    })
-    transport.receiver.on('error', (e: Error) => {
+    session.run(transport).then((id: number) => {
+      if (transport && id === transport.id) {
+        this.emit('end', this)
+      } else {
+        this.logger.info(`old transport ${id} ends waiting on ${(transport.id)}`)
+      }
+    }).catch(e => {
+      this.logger.info(`transport id ${(transport.id)} failed - session state ${session.getState()}`)
       this.logger.error(e)
       this.emit('error', e)
-      // this.harvestTransport(id)
+      this.recover()
     })
     this.logger.info(`running session with transport ${transport.id} state = ${session.getState()}`)
   }
 
-  public run (initialTimeout: number = 30): Promise<MsgTransport> {
-    return new Promise<MsgTransport>((resolve, reject) => {
-      this.logger.info(`start initiator timeout ${initialTimeout}`)
-      this.session.setState(SessionState.InitiateConnection)
-      this.initiator.connect(initialTimeout).then((transport: MsgTransport) => {
-        this.newTransport(transport)
+  private recover (): void {
+    this.logger.info(`recover session transport`)
+    this.transport = null
+  }
+
+  // for first connection - reject if no initial connection established within timeout
+  // once connection established, will not resolve until session is ended - i.e. lost
+  // connections are re-established using the same session instance.
+
+  public run (initialTimeout: number = 60): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.connect(initialTimeout).then(() => {
+        this.on('end', () => {
+          resolve(null)
+        })
       }).catch(e => {
+        this.logger.info(`run: failed to connect to first transport ${initialTimeout} - rejecting`)
+        reject(e)
+      })
+    })
+  }
+
+  // return a promise for new transport - or reject if no connection within timeout
+
+  private connect (timeout: number): Promise<MsgTransport> {
+    return new Promise<MsgTransport>((resolve, reject) => {
+      this.logger.info(`connect: start initiator timeout ${timeout}`)
+      this.session.setState(SessionState.InitiateConnection)
+      this.initiator.connect(timeout).then((transport: MsgTransport) => {
+        this.logger.info(`connect: receive new transport ${transport.id}`)
+        this.newTransport(transport)
+        resolve(transport)
+      }).catch(e => {
+        this.logger.info(`connect: failed to connect within ${timeout} - rejecting`)
         this.session.setState(SessionState.DetectBrokenNetworkConnection)
         reject(e)
       })
