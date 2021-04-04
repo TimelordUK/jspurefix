@@ -19,9 +19,8 @@ export function acceptor (config: IJsFixConfig, sessionFactory: MakeFixSession):
           accept(true)
         })
       }).catch((e: Error) => {
-        logger.error(e)
-        logger.info(e.stack)
-        reject(e)
+        logger.info(e.message)
+        // reject(e)
       })
     })
     acceptor.listen()

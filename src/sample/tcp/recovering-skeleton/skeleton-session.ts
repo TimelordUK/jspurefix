@@ -52,7 +52,14 @@ export class SkeletonSession extends AsciiSession {
       }
 
       case 'acceptor': {
-        this.logger.info(`acceptor is ready for requests`)
+        const killTimeout = 5
+        this.logger.info(`acceptor is ready for requests - drop connection in ${killTimeout}`)
+        setTimeout(() => {
+          setImmediate(() => {
+            this.logger.info(`kill transport`)
+            this.stop(new Error(`loss of tcp. ${this.me}`))
+          })
+        }, killTimeout * 1000)
         break
       }
 
