@@ -38,6 +38,14 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     }
     this.logger.info('creating an application session')
     this.session = sessionFactory(jsFixConfig)
+    this.session.on('done', () => {
+      this.logger.info('session has permanently ended')
+      this.emit('end', this)
+    })
+    this.session.on('end', () => {
+      this.logger.info('session has permanently ended')
+      this.emit('end', this)
+    })
     this.initiator = new TcpInitiator(jsFixConfig)
     this.session.setState(SessionState.DisconnectedNoConnectionToday)
   }
@@ -53,23 +61,22 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     const session = this.session
     session.setState(SessionState.NetworkConnectionEstablished)
     session.run(transport).then((id: number) => {
-      if (transport && id === transport.id) {
+      if (!transport || id === transport.id) {
         this.emit('end', this)
       } else {
         this.logger.info(`old transport ${id} ends waiting on ${(transport.id)}`)
       }
     }).catch(e => {
       this.logger.info(`transport id ${(transport.id)} failed - session state ${session.getState()}`)
-      this.logger.error(e)
-      this.emit('error', e)
+      this.logger.error(e.message)
       this.recover()
     })
     this.logger.info(`running session with transport ${transport.id} state = ${session.getState()}`)
   }
 
   private recover (): void {
+    this.session.setState(SessionState.DetectBrokenNetworkConnection)
     this.logger.info(`recover session transport`)
-    this.transport = null
   }
 
   // for first connection - reject if no initial connection established within timeout

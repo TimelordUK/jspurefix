@@ -7,7 +7,7 @@ import { ILooseObject } from '../collections/collection'
 
 import * as events from 'events'
 
-export abstract class FixSession {
+export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false
   protected timer: NodeJS.Timer = null
   protected transport: MsgTransport = null
@@ -17,15 +17,15 @@ export abstract class FixSession {
   protected readonly initiator: boolean
   protected readonly acceptor: boolean
   protected readonly sessionState: FixSessionState
-  protected readonly emitter: events.EventEmitter
+  // protected readonly emitter: events.EventEmitter
   protected readonly sessionLogger: IJsFixLogger
   protected requestLogoutType: string
   protected respondLogoutType: string
   protected requestLogonType: string
 
   protected constructor (public readonly config: IJsFixConfig) {
+    super()
     const description = config.description
-    this.emitter = new events.EventEmitter()
     this.me = description.application.name
     this.sessionState = new FixSessionState(description.HeartBtInt, config.description.LastReceivedSeqNum)
     this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`)
@@ -65,11 +65,11 @@ export abstract class FixSession {
         this.setState(SessionState.WaitingForALogon)
       }
 
-      this.emitter.on('error', (e: Error) => {
+      this.on('error', (e: Error) => {
         logger.error(e)
         reject(e)
       })
-      this.emitter.on('done', () => {
+      this.on('done', () => {
         accept(this.transport.id)
       })
     })
@@ -108,8 +108,23 @@ export abstract class FixSession {
     })
 
     rx.on('end', () => {
-      logger.info('rx end received')
-      this.done()
+      logger.info(`rx end received sessionState = [${this.sessionState.toString()}]`)
+      switch (this.sessionState.state) {
+        case SessionState.ReceiveLogout:
+        case SessionState.Stopped:
+        case SessionState.ConfirmingLogout: {
+          logger.info(`rx graceful end state = ${SessionState[this.sessionState.state]}`)
+          this.done()
+        }
+          break
+
+        default: {
+          const e = new Error(`unexpected state - transport failed? = ${SessionState[this.sessionState.state]}`)
+          logger.info(`rx error ${e.message}`)
+          this.terminate(e)
+        }
+          break
+      }
     })
 
     rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
@@ -136,7 +151,7 @@ export abstract class FixSession {
   protected terminate (error: Error): void {
     this.sessionLogger.error(error)
     clearInterval(this.timer)
-    this.emitter.emit('error', error)
+    this.emit('error', error)
   }
 
   protected peerLogout (view: MsgView) {
@@ -240,9 +255,9 @@ export abstract class FixSession {
     this.transport.end()
     if (error) {
       this.sessionLogger.info(`stop: emit error ${error.message}`)
-      this.emitter.emit('error', error)
+      this.emit('error', error)
     } else {
-      this.emitter.emit('done')
+      this.emit('done')
     }
 
     this.setState(SessionState.Stopped)
