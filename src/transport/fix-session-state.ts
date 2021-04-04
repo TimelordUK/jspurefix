@@ -72,7 +72,7 @@ export class FixSessionState {
 
     buffer.writeString(`compId = ${this.compId}, `)
     buffer.writeString(`heartBeat = ${this.heartBeat}, `)
-    buffer.writeString(`state = ${this.state}, `)
+    buffer.writeString(`state = ${SessionState[this.state]} (${this.state}), `)
     buffer.writeString(`nextTickAction = ${this.nextTickAction}, `)
     buffer.writeString(`now = ${FixSessionState.dateAsString(this.now)}, `)
     buffer.writeString(`timeToDie = ${this.timeToDie()}, `)

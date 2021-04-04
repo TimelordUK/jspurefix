@@ -37,7 +37,8 @@ export abstract class FixSession {
 
   public setState (state: SessionState) {
     const logger = this.sessionLogger
-    logger.info(`current state ${this.sessionState.state} moves to ${state}`)
+    const prevState = this.sessionState.state
+    logger.info(`current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`)
     this.sessionState.state = state
   }
 
@@ -57,7 +58,7 @@ export abstract class FixSession {
       if (this.initiator) {
         logger.debug('sending logon')
         this.send(this.requestLogonType, this.config.factory.logon())
-        this.sessionState.state = SessionState.InitiationLogonSent
+        this.setState(SessionState.InitiationLogonSent)
       }
       this.emitter.on('error', (e: Error) => {
         logger.error(e)
@@ -137,7 +138,7 @@ export abstract class FixSession {
 
       case SessionState.InitiationLogonResponse:
       case SessionState.InitiationLogonReceived: {
-        this.sessionState.state = SessionState.ConfirmingLogout
+        this.setState(SessionState.ConfirmingLogout)
         this.sessionLogger.info(`peer initiates logout Text = '${msg}'`)
         this.sessionLogout()
       }
@@ -169,7 +170,7 @@ export abstract class FixSession {
       case SessionState.InitiationLogonResponse:
       case SessionState.InitiationLogonReceived: {
         // this instance initiates logout
-        sessionState.state = SessionState.WaitingLogoutConfirm
+        this.setState(SessionState.WaitingLogoutConfirm)
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} initiate logout`
         this.sessionLogger.info(msg)
@@ -214,7 +215,7 @@ export abstract class FixSession {
 
   public reset (): void {
     this.transport = null
-    this.sessionState.state = SessionState.NetworkConnectionEstablished
+    this.setState(SessionState.NetworkConnectionEstablished)
     this.sessionState.lastPeerMsgSeqNum = 0
   }
 
@@ -226,7 +227,7 @@ export abstract class FixSession {
     this.sessionLogger.info(`stop: kill transport`)
     this.transport.end()
     this.emitter.emit('done')
-    this.sessionState.state = SessionState.Stopped
+    this.setState(SessionState.Stopped)
     this.onStopped()
     this.transport = null
   }

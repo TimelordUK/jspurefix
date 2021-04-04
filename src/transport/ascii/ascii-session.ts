@@ -193,7 +193,7 @@ export abstract class AsciiSession extends FixSession {
       this.sessionLogger.info(`message '${msgType}' failed checkIntegrity.`)
       switch (msgType) {
         case MsgType.Logon: {
-          this.sessionState.state = SessionState.PeerLogonRejected
+          this.setState(SessionState.PeerLogonRejected)
           this.timer = setInterval(() => {
             this.tick()
           }, 200)
@@ -232,10 +232,10 @@ export abstract class AsciiSession extends FixSession {
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt)
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
-      state.state = SessionState.InitiationLogonResponse
+      this.setState(SessionState.InitiationLogonResponse)
       this.send(MsgType.Logon, this.config.factory.logon())
     } else { // as an initiator the acceptor has responded
-      state.state = SessionState.InitiationLogonReceived
+      this.setState(SessionState.InitiationLogonReceived)
     }
     if (this.heartbeat) {
       logger.debug(`start heartbeat timer.`)
