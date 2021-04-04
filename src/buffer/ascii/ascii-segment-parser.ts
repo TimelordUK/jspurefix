@@ -30,7 +30,7 @@ export class AsciiSegmentParser {
       while (structureStack.length > 1) {
         const done: SegmentDescription = structureStack.pop()
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
-        segments[segments.length] = done
+        segments.push(done)
         peek = structureStack[structureStack.length - 1]
         if (peek.set.containedTag[tag]) {
           // unwound to point this tag lives in this set.
@@ -94,7 +94,7 @@ export class AsciiSegmentParser {
       const gap = new SegmentDescription('.undefined', tag, peek.set,
         currentTagPosition, structureStack.length, SegmentType.Gap)
       gap.end(segments.length, currentTagPosition, tag)
-      segments[segments.length] = gap
+      segments.push(gap)
       currentTagPosition++
     }
 
@@ -104,6 +104,7 @@ export class AsciiSegmentParser {
         peek = structureStack[structureStack.length - 1]
         peek.setCurrentField(tag)
         if (!peek.set.containedTag[tag] || groupDelimiter(tag)) {
+          // unravelled all way back to root hence this is not recognised
           const unknown = peek.type === SegmentType.Msg
           if (unknown) {
             gap(tag)
@@ -135,11 +136,13 @@ export class AsciiSegmentParser {
       segments[m2] = tmp
     }
 
-    structureStack.push(new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
-      currentTagPosition, structureStack.length, SegmentType.Msg))
+    const msgStructure = new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
+      currentTagPosition, structureStack.length, SegmentType.Msg)
+    structureStack.push(msgStructure)
     discover()
     clean()
 
+    // now know where all components and groups are positioned within message
     return new Structure(tags, segments)
   }
 }
