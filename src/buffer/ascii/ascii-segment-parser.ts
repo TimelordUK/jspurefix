@@ -10,17 +10,24 @@ import { SegmentDescription, SegmentType } from '../segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
 
+// this takes linear time i.e. it constantly makes forward progress
+// one tag at a time
+
 export class AsciiSegmentParser {
 
   constructor (public readonly definitions: FixDefinitions) {
   }
 
   public parse (msgType: string, tags: Tags, last: number): Structure {
+    // completed segments in that they are fully parsed
     const segments: SegmentDescription[] = []
     const msgDefinition: MessageDefinition = this.definitions.message.get(msgType)
     if (!msgDefinition) {
       return null
     }
+    // in process of being discovered and may have any amount of depth
+    // i.e. a component containing a repeated group of components
+    // with sub-groups of components
     const structureStack: SegmentDescription[] = []
     let currentTagPosition: number = 0
     let peek: SegmentDescription
@@ -61,7 +68,7 @@ export class AsciiSegmentParser {
                         currentTagPosition, structureStack.length, SegmentType.Component)
           break
         }
-
+        // for a group also need to know where all delimiters are positioned
         case ContainedFieldType.Group: {
           const gf: ContainedComponentField = peek.currentField as ContainedGroupField
           structure = new SegmentDescription(gf.name, tag, gf.definition,
