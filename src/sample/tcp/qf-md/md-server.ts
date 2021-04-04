@@ -14,7 +14,6 @@ export class MDServer extends AsciiSession {
   constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
-    this.checkMsgIntegrity = false
     this.logger = config.logFactory.logger(`${this.me}:MDServer`)
     this.fixLog = config.logFactory.plain(`jsfix.${config!.description!.application!.name}.txt`)
   }
