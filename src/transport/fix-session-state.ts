@@ -23,7 +23,8 @@ export enum SessionState {
   PeerLogonRejected = 20,
   WaitingLogoutConfirm = 21,
   ConfirmingLogout = 22,
-  Stopped = 23
+  Stopped = 23,
+  Idle = 24
 }
 
 export enum TickAction {
@@ -53,7 +54,7 @@ export class FixSessionState {
   private secondsSinceReceive: number = -1
 
   public constructor (public readonly heartBeat: number,
-                      public state: SessionState = SessionState.NetworkConnectionEstablished,
+                      public state: SessionState = SessionState.Idle,
                       public readonly waitLogoutConfirmSeconds: number = 5,
                       public readonly stopSeconds: number = 2) {
 

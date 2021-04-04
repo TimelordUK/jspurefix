@@ -36,6 +36,7 @@ export abstract class FixSession {
   }
 
   public setState (state: SessionState) {
+    if (state === this.sessionState.state) return
     const logger = this.sessionLogger
     const prevState = this.sessionState.state
     logger.info(`current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`)
@@ -56,10 +57,14 @@ export abstract class FixSession {
     this.subscribe()
     return new Promise<any>((accept, reject) => {
       if (this.initiator) {
-        logger.debug('sending logon')
+        logger.debug('initiator sending logon')
         this.send(this.requestLogonType, this.config.factory.logon())
         this.setState(SessionState.InitiationLogonSent)
+      } else {
+        logger.debug('acceptor waits for logon')
+        this.setState(SessionState.WaitingForALogon)
       }
+
       this.emitter.on('error', (e: Error) => {
         logger.error(e)
         reject(e)

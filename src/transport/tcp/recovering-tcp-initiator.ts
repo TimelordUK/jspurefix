@@ -80,6 +80,7 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     return new Promise<any>((resolve, reject) => {
       this.connect(initialTimeout).then(() => {
         this.on('end', () => {
+          this.logger.info(`run: transport ${this.transport.id} gracefully ends ${initialTimeout} - resolving`)
           resolve(null)
         })
       }).catch(e => {
