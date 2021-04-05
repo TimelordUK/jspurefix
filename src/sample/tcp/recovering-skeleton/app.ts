@@ -1,10 +1,12 @@
-import { IJsFixConfig } from '../../../config'
+import { IJsFixConfig, IJsFixLogger } from '../../../config'
 import { Launcher } from '../../launcher'
-import { SkeletonSession } from './skeleton-session'
+import { SkeletonClient } from './skeleton-client'
+import { SkeletonServer } from './skeleton-server'
 import { acceptor } from '../../../transport'
 import { RecoveringTcpInitiator } from '../../../transport/tcp/recovering-tcp-initiator'
 
 class AppLauncher extends Launcher {
+
   public constructor () {
     super(
       'data/session/test-initiator.json',
@@ -19,13 +21,22 @@ class AppLauncher extends Launcher {
       let respawned = 0
       while (respawned <= respawns) {
         try {
-          await acceptor(config, (c) => new SkeletonSession(c))
-          resolve(respawned)
+          await acceptor(config, (c) => {
+            const dropConnectionTimeout = respawned === 0 ? 5 : -1
+            this.logger.info(`getRespawnAcceptor: create a new acceptor session ${respawned}, dropConnectionTimeout = ${dropConnectionTimeout}`)
+            return new SkeletonServer(c, dropConnectionTimeout)
+          })
+          break
         } catch (e) {
-          ++respawned
+          this.logger.info(`getRespawnAcceptor: error in acceptor respawned = ${respawned}`)
         }
+        ++respawned
       }
-      reject(respawned)
+      if (respawned > 0) {
+        reject(respawned)
+      } else {
+        resolve(respawned)
+      }
     })
   }
 
@@ -34,7 +45,7 @@ class AppLauncher extends Launcher {
   }
 
   protected getInitiator (config: IJsFixConfig): Promise<any> {
-    return new RecoveringTcpInitiator(config, c => new SkeletonSession(c)).run()
+    return new RecoveringTcpInitiator(config, c => new SkeletonClient(c)).run()
   }
 }
 

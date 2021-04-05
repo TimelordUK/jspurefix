@@ -6,7 +6,7 @@ const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
 
 export abstract class Launcher {
-  private readonly logger: IJsFixLogger
+  protected readonly logger: IJsFixLogger
   protected constructor (public readonly initiatorConfig: string, public readonly acceptorConfig: string) {
     this.logger = logFactory.logger('launcher')
   }

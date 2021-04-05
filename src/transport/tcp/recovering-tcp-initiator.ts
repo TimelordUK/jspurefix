@@ -21,7 +21,7 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
   private application: IMsgApplication
   private initiator: TcpInitiator
   private transport: MsgTransport
-  private th: Timeout
+  private th: Timeout = null
   public recoveryAttemptSecs: number = 5
   public backoffFailConnectSecs: number = 30
 
@@ -77,6 +77,13 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     this.logger.info(`running session with transport ${transport.id} state = ${session.getState()}`)
   }
 
+  private clearTimer () {
+    if (this.th) {
+      clearTimeout(this.th)
+      this.th = null
+    }
+  }
+
   // at least one connection was established so retry to establish - either
   // succeed in which case can restart session or fails in which case wait and
   // restart an attempt to connect
@@ -89,7 +96,7 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
         this.logger.info(`new transport ${t.id}`)
       }).catch((e) => {
         this.logger.info(`failed to re-connect ${e.message} - backoff for ${this.backoffFailConnectSecs}`)
-        setTimeout(() => {
+        this.th = setTimeout(() => {
           this.logger.info('returning to recover()')
           this.recover()
         }, this.backoffFailConnectSecs * 1000)
@@ -105,6 +112,8 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     return new Promise<any>((resolve, reject) => {
       this.connect(initialTimeout).then(() => {
         this.on('end', () => {
+          this.clearTimer()
+          this.initiator.end()
           this.logger.info(`run: transport ${this.transport.id} gracefully ends ${initialTimeout} - resolving`)
           resolve(null)
         })

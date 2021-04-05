@@ -2,9 +2,10 @@ import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 
-export class SkeletonSession extends AsciiSession {
+export class SkeletonClient extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
+
   constructor (public readonly config: IJsFixConfig,
                public readonly logoutSeconds: number = 45) {
     super(config)
@@ -42,32 +43,10 @@ export class SkeletonSession extends AsciiSession {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
     const t = this.config.description.application.type
-    switch (t) {
-      case 'initiator': {
-        this.logger.info(`will logout after ${logoutSeconds}`)
-        setTimeout(() => {
-          this.done()
-        }, logoutSeconds * 1000)
-        break
-      }
-
-      case 'acceptor': {
-        const killTimeout = 5
-        this.logger.info(`acceptor is ready for requests - drop connection in ${killTimeout}`)
-        setTimeout(() => {
-          setImmediate(() => {
-            this.logger.info(`kill transport`)
-            this.stop(new Error(`loss of tcp. ${this.me}`))
-          })
-        }, killTimeout * 1000)
-        break
-      }
-
-      default: {
-        this.logger.warning(`unknown type ${t}`)
-        break
-      }
-    }
+    this.logger.info(`will logout after ${logoutSeconds}`)
+    setTimeout(() => {
+      this.done()
+    }, logoutSeconds * 1000)
   }
 
   protected onStopped (): void {
