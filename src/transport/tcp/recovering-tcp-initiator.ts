@@ -40,6 +40,10 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
       this.logger.error(e)
       throw e
     }
+    this.createSession(jsFixConfig, sessionFactory)
+  }
+
+  private createSession (jsFixConfig: IJsFixConfig, sessionFactory: MakeFixSession) {
     this.logger.info('creating an application session')
     this.session = sessionFactory(jsFixConfig)
     this.session.on('done', () => {

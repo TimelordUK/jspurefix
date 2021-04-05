@@ -42,7 +42,6 @@ export class SkeletonClient extends AsciiSession {
   protected onReady (view: MsgView): void {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
-    const t = this.config.description.application.type
     this.logger.info(`will logout after ${logoutSeconds}`)
     setTimeout(() => {
       this.done()
