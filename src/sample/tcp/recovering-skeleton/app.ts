@@ -17,10 +17,9 @@ class AppLauncher extends Launcher {
   protected getRespawnAcceptor (config: IJsFixConfig, respawns: number = 1): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
       let respawned = 0
-      const session = new SkeletonSession(config)
       while (respawned <= respawns) {
         try {
-          await acceptor(config, () => session)
+          await acceptor(config, (c) => new SkeletonSession(c))
           resolve(respawned)
         } catch (e) {
           ++respawned

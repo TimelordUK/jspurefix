@@ -53,6 +53,20 @@ export class FixSessionState {
   private secondsSinceSent: number = -1
   private secondsSinceReceive: number = -1
 
+  public reset (resetSeqNo: boolean): void {
+    this.lastReceivedAt = null
+    this.LastSentAt = null
+    this.lastTestRequestAt = null
+    this.secondsSinceLogoutSent = -1
+    this.secondsSinceSent = -1
+    this.secondsSinceReceive = -1
+    this.peerHeartBeatSecs = 0
+    this.logoutSentAt = null
+    if (resetSeqNo) {
+      this.lastPeerMsgSeqNum = 0
+    }
+  }
+
   public constructor (public readonly heartBeat: number,
                       public state: SessionState = SessionState.Idle,
                       public readonly waitLogoutConfirmSeconds: number = 5,

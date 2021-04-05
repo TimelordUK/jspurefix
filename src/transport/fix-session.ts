@@ -242,8 +242,8 @@ export abstract class FixSession extends events.EventEmitter {
 
   public reset (): void {
     this.transport = null
+    this.sessionState.reset(true) // from header def ... eventually
     this.setState(SessionState.NetworkConnectionEstablished)
-    this.sessionState.lastPeerMsgSeqNum = 0
   }
 
   protected stop (error: Error = null): void {
