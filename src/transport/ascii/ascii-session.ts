@@ -130,7 +130,7 @@ export abstract class AsciiSession extends FixSession {
   // tslint:disable-next-line:no-empty
   protected onResendRequest (view: MsgView) {
     const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
-    const resend = this.config.factory.sequenceReset(endSeqNo)
+    const resend = this.config.factory.sequenceReset(endSeqNo, true)
     this.send(MsgType.SequenceReset, resend)
   }
 

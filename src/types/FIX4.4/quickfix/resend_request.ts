@@ -1,9 +1,9 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IResendRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   BeginSeqNo: number// 7
   EndSeqNo: number// 16
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

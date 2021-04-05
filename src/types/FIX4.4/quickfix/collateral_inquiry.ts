@@ -1,4 +1,4 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { ICollInqQualGrp } from './set/coll_inq_qual_grp'
 import { IParties } from './set/parties'
 import { IExecCollGrp } from './set/exec_coll_grp'
@@ -11,10 +11,10 @@ import { ITrdRegTimestamps } from './set/trd_reg_timestamps'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IStipulations } from './set/stipulations'
 import { ISettlInstructionsData } from './set/settl_instructions_data'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ICollateralInquiry {
-  header: Iheader
+  StandardHeader: IStandardHeader
   CollInquiryID?: string// 909
   CollInqQualGrp?: ICollInqQualGrp
   SubscriptionRequestType?: string// 263
@@ -59,5 +59,5 @@ export interface ICollateralInquiry {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

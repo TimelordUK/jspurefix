@@ -1,13 +1,13 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IInstrument } from './set/instrument'
 import { IInstrumentExtension } from './set/instrument_extension'
 import { IFinancingDetails } from './set/financing_details'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ISecurityListRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   SecurityReqID: string// 320
   SecurityListRequestType: number// 559
   Instrument?: IInstrument
@@ -22,5 +22,5 @@ export interface ISecurityListRequest {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   SubscriptionRequestType?: string// 263
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

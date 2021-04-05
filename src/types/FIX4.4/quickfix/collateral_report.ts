@@ -1,4 +1,4 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IExecCollGrp } from './set/exec_coll_grp'
 import { ITrdCollGrp } from './set/trd_coll_grp'
@@ -11,10 +11,10 @@ import { IMiscFeesGrp } from './set/misc_fees_grp'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IStipulations } from './set/stipulations'
 import { ISettlInstructionsData } from './set/settl_instructions_data'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ICollateralReport {
-  header: Iheader
+  StandardHeader: IStandardHeader
   CollRptID: string// 908
   CollInquiryID?: string// 909
   CollStatus: number// 910
@@ -60,5 +60,5 @@ export interface ICollateralReport {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

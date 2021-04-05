@@ -17,7 +17,7 @@ export class MessageParser extends NodeParser {
         const att: any = node.attributes
         const msg: MessageDefinition = new MessageDefinition(att.name, att.name, att.msgtype, att.msgcat, null)
         const context: ParseContext = new ParseContext(msg.name, true, msg)
-        const hdr = this.definitions.component.get('header')
+        const hdr = this.definitions.component.get('StandardHeader')
         const contained = new ContainedComponentField(hdr, msg.fields.length, true)
         msg.add(contained)
         this.parseContexts.push(context)

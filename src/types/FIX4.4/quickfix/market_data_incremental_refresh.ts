@@ -1,12 +1,12 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IMDIncGrp } from './set/md_inc_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IMarketDataIncrementalRefresh {
-  header: Iheader
+  StandardHeader: IStandardHeader
   MDReqID?: string// 262
   MDIncGrp?: IMDIncGrp
   ApplQueueDepth?: number// 813
   ApplQueueResolution?: number// 814
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

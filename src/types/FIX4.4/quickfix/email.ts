@@ -1,13 +1,13 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IRoutingGrp } from './set/routing_grp'
 import { IInstrmtGrp } from './set/instrmt_grp'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { ILinesOfTextGrp } from './set/lines_of_text_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IEmail {
-  header: Iheader
+  StandardHeader: IStandardHeader
   EmailThreadID: string// 164
   EmailType: string// 94
   OrigTime?: Date// 42
@@ -23,5 +23,5 @@ export interface IEmail {
   LinesOfTextGrp?: ILinesOfTextGrp
   RawDataLength?: number// 95
   RawData?: Buffer// 96
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

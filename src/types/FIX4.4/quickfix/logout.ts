@@ -1,10 +1,10 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ILogout {
-  header: Iheader
+  StandardHeader: IStandardHeader
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

@@ -1,11 +1,11 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IUserResponse {
-  header: Iheader
+  StandardHeader: IStandardHeader
   UserRequestID: string// 923
   Username: string// 553
   UserStatus?: number// 926
   UserStatusText?: string// 927
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

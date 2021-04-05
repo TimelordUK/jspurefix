@@ -1,8 +1,8 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IReject {
-  header: Iheader
+  StandardHeader: IStandardHeader
   RefSeqNum: number// 45
   RefTagID?: number// 371
   RefMsgType?: string// 372
@@ -10,5 +10,5 @@ export interface IReject {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

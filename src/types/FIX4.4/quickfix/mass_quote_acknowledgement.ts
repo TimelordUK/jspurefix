@@ -1,10 +1,10 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IQuotSetAckGrp } from './set/quot_set_ack_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IMassQuoteAcknowledgement {
-  header: Iheader
+  StandardHeader: IStandardHeader
   QuoteReqID?: string// 131
   QuoteID?: string// 117
   QuoteStatus: number// 297
@@ -19,5 +19,5 @@ export interface IMassQuoteAcknowledgement {
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
   QuotSetAckGrp?: IQuotSetAckGrp
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

@@ -1,4 +1,4 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IQuotQualGrp } from './set/quot_qual_grp'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
@@ -9,10 +9,10 @@ import { IStipulations } from './set/stipulations'
 import { ILegQuotGrp } from './set/leg_quot_grp'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IYieldData } from './set/yield_data'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuoteResponse {
-  header: Iheader
+  StandardHeader: IStandardHeader
   QuoteRespID: string// 693
   QuoteID?: string// 117
   QuoteRespType: number// 694
@@ -74,5 +74,5 @@ export interface IQuoteResponse {
   PriceType?: number// 423
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
   YieldData?: IYieldData
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

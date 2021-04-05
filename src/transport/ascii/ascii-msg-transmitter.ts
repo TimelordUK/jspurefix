@@ -21,8 +21,8 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     this.encoder = new AsciiEncoder(buffer, config.definitions, tf,
       config.delimiter || AsciiChars.Soh,
       config.logDelimiter || AsciiChars.Pipe)
-    this.header = config.definitions.component.get('header')
-    this.trailer = config.definitions.component.get('trailer')
+    this.header = config.definitions.component.get('StandardHeader')
+    this.trailer = config.definitions.component.get('StandardTrailer')
   }
 
   private checksum (): number {

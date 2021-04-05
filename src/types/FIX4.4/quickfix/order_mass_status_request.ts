@@ -1,11 +1,11 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
 import { IUnderlyingInstrument } from './set/underlying_instrument'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IOrderMassStatusRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   MassStatusReqID: string// 584
   MassStatusReqType: number// 585
   Parties?: IParties
@@ -16,5 +16,5 @@ export interface IOrderMassStatusRequest {
   Instrument?: IInstrument
   UnderlyingInstrument?: IUnderlyingInstrument
   Side?: string// 54
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

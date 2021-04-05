@@ -1,12 +1,12 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IRequestForPositionsAck {
-  header: Iheader
+  StandardHeader: IStandardHeader
   PosMaintRptID: string// 721
   PosReqID?: string// 710
   TotalNumPosReports?: number// 727
@@ -26,5 +26,5 @@ export interface IRequestForPositionsAck {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

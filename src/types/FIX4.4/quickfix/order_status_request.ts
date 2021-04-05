@@ -1,12 +1,12 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
 import { IFinancingDetails } from './set/financing_details'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IOrderStatusRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   OrderID?: string// 37
   ClOrdID: string// 11
   SecondaryClOrdID?: string// 526
@@ -19,5 +19,5 @@ export interface IOrderStatusRequest {
   FinancingDetails?: IFinancingDetails
   UndInstrmtGrp?: IUndInstrmtGrp
   Side: string// 54
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

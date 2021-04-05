@@ -1,11 +1,11 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IRFQReqGrp } from './set/rfq_req_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IRFQRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   RFQReqID: string// 644
   RFQReqGrp?: IRFQReqGrp
   SubscriptionRequestType?: string// 263
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

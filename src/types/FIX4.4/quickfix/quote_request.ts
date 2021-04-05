@@ -1,9 +1,9 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IQuotReqGrp } from './set/quot_req_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuoteRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   QuoteReqID: string// 131
   RFQReqID?: string// 644
   ClOrdID?: string// 11
@@ -12,5 +12,5 @@ export interface IQuoteRequest {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

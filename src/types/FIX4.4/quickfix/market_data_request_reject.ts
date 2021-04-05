@@ -1,14 +1,14 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IMDRjctGrp } from './set/md_rjct_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IMarketDataRequestReject {
-  header: Iheader
+  StandardHeader: IStandardHeader
   MDReqID: string// 262
   MDReqRejReason?: string// 281
   MDRjctGrp?: IMDRjctGrp
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

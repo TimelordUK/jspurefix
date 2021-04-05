@@ -1,12 +1,12 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { ISideCrossOrdCxlGrp } from './set/side_cross_ord_cxl_grp'
 import { IInstrument } from './set/instrument'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ICrossOrderCancelRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   OrderID?: string// 37
   CrossID: string// 548
   OrigCrossID: string// 551
@@ -17,5 +17,5 @@ export interface ICrossOrderCancelRequest {
   UndInstrmtGrp?: IUndInstrmtGrp
   InstrmtLegGrp?: IInstrmtLegGrp
   TransactTime: Date// 60
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

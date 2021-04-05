@@ -1,11 +1,11 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IBidCompRspGrp } from './set/bid_comp_rsp_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IBidResponse {
-  header: Iheader
+  StandardHeader: IStandardHeader
   BidID?: string// 390
   ClientBidID?: string// 391
   BidCompRspGrp?: IBidCompRspGrp
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

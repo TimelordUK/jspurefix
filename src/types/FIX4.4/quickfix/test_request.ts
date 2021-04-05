@@ -1,8 +1,8 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ITestRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   TestReqID: string// 112
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

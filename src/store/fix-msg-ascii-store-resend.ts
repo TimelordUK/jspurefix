@@ -48,6 +48,6 @@ export class FixMsgAsciiStoreResend {
     return new FixMsgStoreRecord(
       MsgType.SequenceReset,
       null,
-      newSeq, this.config.factory.sequenceReset(newSeq))
+      newSeq, this.config.factory.sequenceReset(newSeq, true))
   }
 }

@@ -1,4 +1,4 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IOrdAllocGrp } from './set/ord_alloc_grp'
 import { ITrdRegTimestamps } from './set/trd_reg_timestamps'
@@ -14,10 +14,10 @@ import { ISettlInstructionsData } from './set/settl_instructions_data'
 import { ICommissionData } from './set/commission_data'
 import { IStipulations } from './set/stipulations'
 import { IMiscFeesGrp } from './set/misc_fees_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IConfirmation {
-  header: Iheader
+  StandardHeader: IStandardHeader
   ConfirmID: string// 664
   ConfirmRefID?: string// 772
   ConfirmReqID?: string// 859
@@ -83,5 +83,5 @@ export interface IConfirmation {
   SharedCommission?: number// 858
   Stipulations?: IStipulations
   MiscFeesGrp?: IMiscFeesGrp
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

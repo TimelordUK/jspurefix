@@ -1,7 +1,7 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IXMLnonFIX {
-  header: Iheader
-  trailer: Itrailer
+  StandardHeader: IStandardHeader
+  StandardTrailer: IStandardTrailer
 }

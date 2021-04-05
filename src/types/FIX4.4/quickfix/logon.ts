@@ -1,9 +1,9 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { ILogonNoMsgTypes } from './set/logon_no_msg_types'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ILogon {
-  header: Iheader
+  StandardHeader: IStandardHeader
   EncryptMethod: number// 98
   HeartBtInt: number// 108
   RawDataLength?: number// 95
@@ -15,5 +15,5 @@ export interface ILogon {
   TestMessageIndicator?: boolean// 464
   Username?: string// 553
   Password?: string// 554
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

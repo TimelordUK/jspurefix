@@ -1,11 +1,11 @@
-import { Iheader } from './set/header'
+import { IStandardHeader } from './set/standard_header'
 import { ICompIDReqGrp } from './set/comp_id_req_grp'
-import { Itrailer } from './set/trailer'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface INetworkCounterpartySystemStatusRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   NetworkRequestType: number// 935
   NetworkRequestID: string// 933
   CompIDReqGrp?: ICompIDReqGrp
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

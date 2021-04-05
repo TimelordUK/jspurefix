@@ -1,8 +1,8 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IListCancelRequest {
-  header: Iheader
+  StandardHeader: IStandardHeader
   ListID: string// 66
   TransactTime: Date// 60
   TradeOriginationDate?: Date// 229
@@ -10,5 +10,5 @@ export interface IListCancelRequest {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

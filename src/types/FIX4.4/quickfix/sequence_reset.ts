@@ -1,9 +1,9 @@
-import { Iheader } from './set/header'
-import { Itrailer } from './set/trailer'
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ISequenceReset {
-  header: Iheader
+  StandardHeader: IStandardHeader
   GapFillFlag?: boolean// 123
   NewSeqNo: number// 36
-  trailer: Itrailer
+  StandardTrailer: IStandardTrailer
 }

@@ -1,6 +1,6 @@
 import { IHop } from './hop'
 
-export interface Iheader {
+export interface IStandardHeader {
   BeginString: string// 8
   BodyLength: number// 9
   MsgType: string// 35
