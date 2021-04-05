@@ -11,8 +11,27 @@ class AppLauncher extends Launcher {
       'data/session/test-acceptor.json')
   }
 
+  // if acceptor errors e.g. via a forced connection drop, then respawn
+  // a set number of times.
+
+  protected getRespawnAcceptor (config: IJsFixConfig, respawns: number = 1): Promise<any> {
+    return new Promise<any>(async (resolve, reject) => {
+      let respawned = 0
+      const session = new SkeletonSession(config)
+      while (respawned <= respawns) {
+        try {
+          await acceptor(config, () => session)
+          resolve(respawned)
+        } catch (e) {
+          ++respawned
+        }
+      }
+      reject(respawned)
+    })
+  }
+
   protected getAcceptor (config: IJsFixConfig): Promise<any> {
-    return acceptor(config, c => new SkeletonSession(c))
+    return this.getRespawnAcceptor(config)
   }
 
   protected getInitiator (config: IJsFixConfig): Promise<any> {

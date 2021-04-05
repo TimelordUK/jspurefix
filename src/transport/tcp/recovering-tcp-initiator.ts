@@ -6,6 +6,7 @@ import { SessionState } from '../fix-session-state'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../msg-transport'
 import * as events from 'events'
+import Timeout = NodeJS.Timeout
 
 /*
    create one application session instance - and recover a lost transport.  Hence the application
@@ -20,6 +21,9 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
   private application: IMsgApplication
   private initiator: TcpInitiator
   private transport: MsgTransport
+  private th: Timeout
+  public recoveryAttemptSecs: number = 5
+  public backoffFailConnectSecs: number = 30
 
   constructor (public readonly jsFixConfig: IJsFixConfig, public readonly sessionFactory: MakeFixSession) {
     super()
@@ -46,7 +50,6 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
       this.logger.info('session has permanently ended')
       this.emit('end', this)
     })
-    this.initiator = new TcpInitiator(jsFixConfig)
     this.session.setState(SessionState.DisconnectedNoConnectionToday)
   }
 
@@ -74,9 +77,24 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     this.logger.info(`running session with transport ${transport.id} state = ${session.getState()}`)
   }
 
+  // at least one connection was established so retry to establish - either
+  // succeed in which case can restart session or fails in which case wait and
+  // restart an attempt to connect
+
   private recover (): void {
     this.session.setState(SessionState.DetectBrokenNetworkConnection)
-    this.logger.info(`recover session transport`)
+    this.logger.info(`recover session transport - attempt in ${this.recoveryAttemptSecs} secs`)
+    this.th = setTimeout(() => {
+      this.connect(60).then(t => {
+        this.logger.info(`new transport ${t.id}`)
+      }).catch((e) => {
+        this.logger.info(`failed to re-connect ${e.message} - backoff for ${this.backoffFailConnectSecs}`)
+        setTimeout(() => {
+          this.logger.info('returning to recover()')
+          this.recover()
+        }, this.backoffFailConnectSecs * 1000)
+      })
+    },this.recoveryAttemptSecs * 1000)
   }
 
   // for first connection - reject if no initial connection established within timeout
@@ -103,6 +121,7 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     return new Promise<MsgTransport>((resolve, reject) => {
       this.logger.info(`connect: start initiator timeout ${timeout}`)
       this.session.setState(SessionState.InitiateConnection)
+      this.initiator = new TcpInitiator(this.jsFixConfig)
       this.initiator.connect(timeout).then((transport: MsgTransport) => {
         this.logger.info(`connect: receive new transport ${transport.id}`)
         this.newTransport(transport)
