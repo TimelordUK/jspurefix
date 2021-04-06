@@ -46,14 +46,15 @@ let server: TestRecovery
 let client: TestRecovery
 
 beforeAll(async () => {
+  const delimiter = AsciiChars.Pipe
   const serverDescription: ISessionDescription = require(path.join(root, 'session/test-acceptor-tls.json'))
   const clientDescription: ISessionDescription = require(path.join(root, 'session/test-initiator-tls.json'))
   const serverFactory = new SessionMsgFactory(serverDescription)
   const clientFactory = new SessionMsgFactory(clientDescription)
   definitions = await getDefinitions(serverDescription.application.dictionary)
-  const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, AsciiChars.Pipe)
-  const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, AsciiChars.Pipe)
-  const views = await replayFixFile(definitions, serverDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), AsciiChars.Pipe)
+  const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, delimiter)
+  const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, delimiter)
+  const views = await replayFixFile(definitions, serverDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), delimiter)
   server = new TestRecovery(views, serverConfig)
   client = new TestRecovery(views, clientConfig)
 }, 45000)
