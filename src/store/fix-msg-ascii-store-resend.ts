@@ -2,9 +2,12 @@ import { IFixMsgStore } from './fix-msg-store'
 import { FixMsgStoreRecord, IFixMsgStoreRecord } from './fix-msg-store-record'
 import { IJsFixConfig } from '../config'
 import { MsgType } from '../types'
+import { AsciiParser, MsgView } from '../buffer'
 
 export class FixMsgAsciiStoreResend {
+  parser: AsciiParser
   constructor (public readonly store: IFixMsgStore, public readonly config: IJsFixConfig) {
+    this.parser = new AsciiParser(this.config.definitions, null, this.config.delimiter)
   }
 
   public getResendRequest (startSeq: number, endSeq: number): IFixMsgStoreRecord[] {
@@ -21,6 +24,9 @@ export class FixMsgAsciiStoreResend {
       if (record !== null) {
         this.gap(beginGap, seqNum, toResend)
         // we sent an application msg for this seqNum and hence need to recover it from its record
+        if (record.encoded) {
+          this.inflate(record)
+        }
         toResend.push(record)
         beginGap = 0
       } else {
@@ -39,6 +45,23 @@ export class FixMsgAsciiStoreResend {
     if (beginGap > 0) {
       arr.push(this.sequenceResetGap(beginGap, seqNum))
     }
+  }
+
+  // if records were sent as encoded text then inflate back to object
+  // so can be resent or examined
+
+  public inflate (record: IFixMsgStoreRecord): void {
+    if (record.obj) return
+    if (!record.encoded) return
+    const parser = this.parser
+    parser.on('error', (e: Error) => {
+      record.obj = null
+    })
+    parser.on('msg', (view: MsgView) => {
+      record.obj = view.toObject()
+    })
+    // inline parse
+    parser.parseText(record.encoded)
   }
 
   public sequenceResetGap (startGap: number, newSeq: number): IFixMsgStoreRecord {

@@ -14,6 +14,7 @@ export interface IJsFixConfig {
 }
 
 export class JsFixConfig implements IJsFixConfig {
+  public logDelimiter: number = AsciiChars.Pipe
   constructor (
                public readonly factory: ISessionMsgFactory,
                public readonly definitions: FixDefinitions,

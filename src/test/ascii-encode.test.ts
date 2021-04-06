@@ -33,12 +33,13 @@ test('expect a definition ', () => {
   expect(nos).toBeTruthy()
 })
 
-function toFix (o: ILooseObject, set?: ContainedFieldSet): string {
+function toFix (o: ILooseObject, set?: ContainedFieldSet, enc?: AsciiEncoder): string {
+  const theEncode = enc ? enc : encoder
   session.buffer.reset()
   if (set) {
-    encoder.encode(o, set.name)
+    theEncode.encode(o, set.name)
   } else {
-    encoder.encode(o, nos.name)
+    theEncode.encode(o, nos.name)
   }
   return session.buffer.toString()
 }
@@ -314,6 +315,14 @@ test('encode repeated group of simple repository Parties', () => {
   const e: ILooseObject = getParties()
   const fix: string = toFix(e, er)
   expect(fix).toEqual('453=2|448=magna.|447=9|452=28|448=iaculis|447=F|452=2|')
+})
+
+test('use a carat as log delimiter', () => {
+  expect(er).toBeTruthy()
+  const carotEncoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Soh, AsciiChars.Carat)
+  const e: ILooseObject = getParties()
+  const fix: string = toFix(e, er, carotEncoder)
+  expect(fix).toEqual('453=2^448=magna.^447=9^452=28^448=iaculis^447=F^452=2^')
 })
 
 test('encode repeated group with no delimiter - should throw', () => {

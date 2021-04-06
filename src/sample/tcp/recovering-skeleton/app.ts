@@ -3,6 +3,7 @@ import { Launcher } from '../../launcher'
 import { SkeletonClient } from './skeleton-client'
 import { RecoveringTcpInitiator } from '../../../transport/tcp/recovering-tcp-initiator'
 import { RespawnAcceptor } from './respawn-acceptor'
+import { AsciiChars } from '../../../buffer'
 
 class AppLauncher extends Launcher {
 
@@ -13,6 +14,8 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (config: IJsFixConfig): Promise<any> {
+    // use a different log delimiter as an example
+    config.logDelimiter = AsciiChars.Carat
     const respawn = new RespawnAcceptor(config)
     return respawn.waitFor()
   }
