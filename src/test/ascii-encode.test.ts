@@ -331,6 +331,8 @@ test('use a carat as log delimiter with Soh in buffer to show encoding still wor
   const e: ILooseObject = getParties()
   const fix: string = toFix(e, er, caratEncoder)
   expect(fix).toEqual('453=2^448=magna.^447=9^452=28^448=iaculis^447=F^452=2^')
+  const trimmed = caratEncoder.trim().toString()
+  expect(trimmed).toEqual('453=2448=magna.447=9452=28448=iaculis447=F452=2')
 })
 
 test('encode repeated group with no delimiter - should throw', () => {
