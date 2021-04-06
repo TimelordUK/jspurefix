@@ -319,9 +319,17 @@ test('encode repeated group of simple repository Parties', () => {
 
 test('use a carat as log delimiter', () => {
   expect(er).toBeTruthy()
-  const carotEncoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Soh, AsciiChars.Carat)
+  const caratEncoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Soh, AsciiChars.Carat)
   const e: ILooseObject = getParties()
-  const fix: string = toFix(e, er, carotEncoder)
+  const fix: string = toFix(e, er, caratEncoder)
+  expect(fix).toEqual('453=2^448=magna.^447=9^452=28^448=iaculis^447=F^452=2^')
+})
+
+test('use a carat as log delimiter with Soh in buffer to show encoding still works', () => {
+  expect(er).toBeTruthy()
+  const caratEncoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Soh, AsciiChars.Carat)
+  const e: ILooseObject = getParties()
+  const fix: string = toFix(e, er, caratEncoder)
   expect(fix).toEqual('453=2^448=magna.^447=9^452=28^448=iaculis^447=F^452=2^')
 })
 
