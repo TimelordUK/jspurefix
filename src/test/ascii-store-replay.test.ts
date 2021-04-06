@@ -3,9 +3,16 @@ import { FixDefinitions } from '../dictionary'
 import { AsciiChars, AsciiView, MsgView } from '../buffer'
 import { ISessionDescription, SessionMsgFactory } from '../transport'
 import { getDefinitions, replayFixFile } from '../util'
-import { FixMsgAsciiStoreResend, FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../store'
+import {
+  FixMsgAsciiStoreResend,
+  FixMsgMemoryStore,
+  FixMsgStoreRecord,
+  IFixMsgStore,
+  IFixMsgStoreRecord
+} from '../store'
 import { MsgTag, MsgType } from '../types'
 import { JsFixConfig } from '../config'
+import { ISequenceReset } from '../types/FIX4.4/repo'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -49,7 +56,6 @@ beforeAll(async () => {
   const views = await replayFixFile(definitions, serverDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), AsciiChars.Pipe)
   server = new TestRecovery(views, serverConfig)
   client = new TestRecovery(views, clientConfig)
-  let x = 0
 }, 45000)
 
 test('expect 15 messages in log', () => {
@@ -81,28 +87,24 @@ test('server replay request from seq=1 to seq=10', () => {
   const vec = server.recovery.getResendRequest(1, 10)
   expect(vec).toBeTruthy()
   expect(Array.isArray(vec))
-  expect(vec.length).toEqual(11)
+  expect(vec.length).toEqual(10)
 
-  expect(vec[0].msgType).toEqual(MsgType.SequenceReset)
-  expect(vec[0].seqNum).toEqual(1)
+  checkSeqReset(vec[0], 1, 2)
 
-  expect(vec[1].msgType).toEqual(MsgType.SequenceReset)
+  expect(vec[1].msgType).toEqual(MsgType.TradeCaptureReportRequestAck)
   expect(vec[1].seqNum).toEqual(2)
 
-  expect(vec[2].msgType).toEqual(MsgType.TradeCaptureReportRequestAck)
-  expect(vec[2].seqNum).toEqual(2)
-
-  for (let i = 3; i <= 7; ++i) {
+  for (let i = 2; i <= 6; ++i) {
     expect(vec[i].msgType).toEqual(MsgType.TradeCaptureReport)
-    expect(vec[i].seqNum).toEqual(i)
+    expect(vec[i].seqNum).toEqual(i + 1)
   }
 
-  expect(vec[8].msgType).toEqual(MsgType.TradeCaptureReportRequestAck)
-  expect(vec[8].seqNum).toEqual(8)
+  expect(vec[7].msgType).toEqual(MsgType.TradeCaptureReportRequestAck)
+  expect(vec[7].seqNum).toEqual(8)
 
-  for (let i = 9; i <= 10; ++i) {
+  for (let i = 8; i < 10; ++i) {
     expect(vec[i].msgType).toEqual(MsgType.TradeCaptureReport)
-    expect(vec[i].seqNum).toEqual(i)
+    expect(vec[i].seqNum).toEqual(i + 1)
   }
 })
 
@@ -110,33 +112,33 @@ test('client replay request from seq=1 to seq=10', () => {
   const vec = client.recovery.getResendRequest(1, 10)
   expect(vec).toBeTruthy()
   expect(Array.isArray(vec))
-  expect(vec.length).toEqual(5)
+  expect(vec.length).toEqual(3)
 
-  expect(vec[0].msgType).toEqual(MsgType.SequenceReset)
-  expect(vec[0].seqNum).toEqual(1)
+  checkSeqReset(vec[0], 1, 2)
 
-  expect(vec[1].msgType).toEqual(MsgType.SequenceReset)
+  expect(vec[1].msgType).toEqual(MsgType.TradeCaptureReportRequest)
   expect(vec[1].seqNum).toEqual(2)
 
-  expect(vec[2].msgType).toEqual(MsgType.TradeCaptureReportRequest)
-  expect(vec[2].seqNum).toEqual(2)
-
-  expect(vec[3].msgType).toEqual(MsgType.SequenceReset)
-  expect(vec[3].seqNum).toEqual(3)
-
-  expect(vec[4].msgType).toEqual(MsgType.SequenceReset)
-  expect(vec[4].seqNum).toEqual(11)
+  checkSeqReset(vec[2], 3, 11)
 })
 
+function checkSeqReset (rec: IFixMsgStoreRecord, from: number, to: number) {
+  const reset: ISequenceReset = rec.obj as ISequenceReset
+  expect(rec.msgType).toEqual(MsgType.SequenceReset)
+  expect(rec.obj).toBeTruthy()
+  expect(rec.seqNum).toEqual(to)
+  expect(reset.GapFillFlag).toBeTruthy()
+  expect(reset.StandardHeader.MsgType).toEqual(MsgType.SequenceReset)
+  expect(reset.StandardHeader.PossDupFlag).toBeTruthy()
+  expect(reset.StandardHeader.MsgSeqNum).toEqual(from)
+}
+
+// expect to gap fill entire request - and move expected seqNo to 11
+// which will be the next message sent
 test('client replay request from seq=4 to seq=10', () => {
   const vec = client.recovery.getResendRequest(4, 10)
   expect(vec).toBeTruthy()
   expect(Array.isArray(vec))
-  expect(vec.length).toEqual(2)
-
-  expect(vec[0].msgType).toEqual(MsgType.SequenceReset)
-  expect(vec[0].seqNum).toEqual(4)
-
-  expect(vec[1].msgType).toEqual(MsgType.SequenceReset)
-  expect(vec[1].seqNum).toEqual(11)
+  expect(vec.length).toEqual(1)
+  checkSeqReset(vec[0], 4, 11)
 })
