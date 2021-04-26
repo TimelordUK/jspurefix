@@ -137,7 +137,7 @@ export abstract class AsciiSession extends FixSession {
     this.send(MsgType.SequenceReset, resend)
   }
 
-  private onSessionMsg (msgType: string, view: MsgView): void {
+  protected onSessionMsg (msgType: string, view: MsgView): void {
 
     const factory = this.config.factory
     const logger = this.sessionLogger
