@@ -1,4 +1,4 @@
-import { SegmentType, ElasticBuffer, MsgView } from '../buffer'
+import { ElasticBuffer, MsgView, SegmentType } from '../buffer'
 import { IJsFixConfig, IJsFixLogger } from '../config'
 import { FixSessionState, SessionState } from './fix-session-state'
 import { MsgTransport } from './msg-transport'
@@ -85,8 +85,14 @@ export abstract class FixSession {
       this.terminate(e)
     })
 
-    rx.on('done', () => this.done())
-    rx.on('end', () => this.done())
+    rx.on('done', () => {
+      logger.info('message receiver done')
+      this.done()
+    })
+    rx.on('end', () => {
+      logger.info('message receiver ended')
+      this.done()
+    })
 
     rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
       logger.debug(`rx: [${msgType}] ${ptr} bytes`)
@@ -112,6 +118,9 @@ export abstract class FixSession {
   protected terminate (error: Error): void {
     this.sessionLogger.error(error)
     clearInterval(this.timer)
+    this.transport.end()
+    this.transport = null
+    this.sessionState.state = SessionState.Stopped
     this.emitter.emit('error', error)
   }
 

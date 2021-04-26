@@ -19,6 +19,7 @@ export function initiator (config: IJsFixConfig, sessionFactory: MakeFixSession,
         accept(true)
       } catch (e) {
         if (!reconnectTimeout) {
+          connecting = false
           reject(e)
         } else {
           logger.info(`waiting ${reconnectTimeout} to reconnect following error`)
