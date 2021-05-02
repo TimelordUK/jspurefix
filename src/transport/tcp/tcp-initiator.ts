@@ -9,6 +9,7 @@ import * as util from 'util'
 import { connect as tlsConnect, TLSSocket } from 'tls'
 import { getTlsConnectionOptions } from './tls-options'
 import { Socket, createConnection } from 'net'
+import Timeout = NodeJS.Timeout
 
 export enum InitiatorState {
   Idle = 1,
@@ -22,6 +23,7 @@ export class TcpInitiator extends FixInitiator {
   public state: InitiatorState = InitiatorState.Idle
   private readonly logger: IJsFixLogger
   private duplex: FixDuplex
+  private th: Timeout = null
 
   constructor (public readonly jsFixConfig: IJsFixConfig) {
     super(jsFixConfig.description.application)
@@ -40,6 +42,7 @@ export class TcpInitiator extends FixInitiator {
   }
 
   public end (): void {
+    this.clearTimer()
     switch (this.state) {
       case InitiatorState.Connected: {
         this.logger.info('end')
@@ -50,6 +53,8 @@ export class TcpInitiator extends FixInitiator {
 
       default: {
         this.logger.info(`end :state ${this.state}`)
+        this.state = InitiatorState.Stopped
+        break
       }
     }
   }
@@ -117,24 +122,31 @@ export class TcpInitiator extends FixInitiator {
     })
   }
 
+  public clearTimer () {
+    if (this.th) {
+      clearInterval(this.th)
+      this.th = null
+    }
+  }
+
   private repeatConnect (timeoutSeconds: number): Promise<MsgTransport> {
     return new Promise<MsgTransport>(async (resolve, reject) => {
       const application = this.application
       const promisify = util.promisify
       const timeoutPromise = promisify(setTimeout)
       let retries = 0
-      let timer = setInterval(() => {
+      this.th = setInterval(() => {
         ++retries
         this.tryConnect().then((t: MsgTransport) => {
           this.state = InitiatorState.Connected
-          clearInterval(timer)
+          this.clearTimer()
           resolve(t)
         }).catch((e: Error) => {
           this.logger.info(`${application.name}: retries ${retries} ${e.message}`)
         })
       }, application.reconnectSeconds * 1000)
       timeoutPromise(timeoutSeconds * 1000).then(() => {
-        clearInterval(timer)
+        this.clearTimer()
         this.state = InitiatorState.Stopped
         const e = new Error(`${application.name}: timeout of ${timeoutSeconds} whilst connecting`)
         this.logger.warning(`repeatConnect reject with message ${e.message}`)

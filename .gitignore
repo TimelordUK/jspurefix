@@ -69,3 +69,8 @@ dist/
 .idea/
 
 data/fix_repo
+/jsfix.test_client.txt
+/jsfix.test_server.txt
+/tags
+/tags.lock
+/tags.temp

@@ -12,7 +12,7 @@ export interface ITlsOptions {
 export interface ITcpTransportDescription {
   readonly port: number
   readonly host: string,
-  readonly tls: ITlsOptions
+  readonly tls?: ITlsOptions
 }
 
 export interface IHttpAdapter {

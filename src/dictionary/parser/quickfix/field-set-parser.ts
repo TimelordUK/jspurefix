@@ -15,13 +15,20 @@ export class FieldSetParser extends NodeParser {
       case 'header':
       case 'trailer': {
         const componentName: string = node.attributes.name || node.name
+        let fullName = componentName
+        if (componentName === 'header') {
+          fullName = 'StandardHeader'
+        } else if (componentName === 'trailer') {
+          fullName = 'StandardTrailer'
+        }
+
         if (!node.isSelfClosing) {
-          const set: ComponentFieldDefinition = new ComponentFieldDefinition(componentName, componentName, null, null)
-          const context: ParseContext = new ParseContext(componentName, true, set)
+          const set: ComponentFieldDefinition = new ComponentFieldDefinition(fullName, componentName, null, null)
+          const context: ParseContext = new ParseContext(fullName, true, set)
           this.parseContexts.push(context)
         } else {
-          this.addComponentField(componentName, node)
-          const context: ParseContext = new ParseContext(componentName, false, null)
+          this.addComponentField(fullName, node)
+          const context: ParseContext = new ParseContext(fullName, false, null)
           this.parseContexts.push(context)
         }
         break

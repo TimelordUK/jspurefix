@@ -1,9 +1,12 @@
+import { IStandardHeader } from './set/standard_header'
 import { IInstrument } from './set/instrument'
 import { ITrdRegTimestamps } from './set/trd_reg_timestamps'
 import { ITrdInstrmtLegGrp } from './set/trd_instrmt_leg_grp'
 import { ITrdAllocGrp } from './set/trd_alloc_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ITradeCaptureReportAck {
+  StandardHeader: IStandardHeader
   TradeReportID: string// 571
   TradeReportTransType?: number// 487
   TradeReportType?: number// 856
@@ -41,4 +44,5 @@ export interface ITradeCaptureReportAck {
   PositionEffect?: string// 77
   PreallocMethod?: string// 591
   TrdAllocGrp?: ITrdAllocGrp
+  StandardTrailer: IStandardTrailer
 }

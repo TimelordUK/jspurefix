@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IPreAllocMlegGrp } from './set/pre_alloc_mleg_grp'
 import { ITrdgSesGrp } from './set/trdg_ses_grp'
@@ -8,8 +9,10 @@ import { IOrderQtyData } from './set/order_qty_data'
 import { ICommissionData } from './set/commission_data'
 import { IPegInstructions } from './set/peg_instructions'
 import { IDiscretionInstructions } from './set/discretion_instructions'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IMultilegOrderCancelReplace {
+  StandardHeader: IStandardHeader
   OrderID?: string// 37
   OrigClOrdID: string// 41
   ClOrdID: string// 11
@@ -84,4 +87,5 @@ export interface IMultilegOrderCancelReplace {
   RegistID?: string// 513
   Designation?: string// 494
   MultiLegRptTypeReq?: number// 563
+  StandardTrailer: IStandardTrailer
 }

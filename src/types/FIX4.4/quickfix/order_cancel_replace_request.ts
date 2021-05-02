@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IPreAllocGrp } from './set/pre_alloc_grp'
 import { ITrdgSesGrp } from './set/trdg_ses_grp'
@@ -10,8 +11,10 @@ import { IYieldData } from './set/yield_data'
 import { IPegInstructions } from './set/peg_instructions'
 import { IDiscretionInstructions } from './set/discretion_instructions'
 import { ICommissionData } from './set/commission_data'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IOrderCancelReplaceRequest {
+  StandardHeader: IStandardHeader
   OrderID?: string// 37
   Parties?: IParties
   TradeOriginationDate?: Date// 229
@@ -87,4 +90,5 @@ export interface IOrderCancelReplaceRequest {
   MoneyLaunderingStatus?: string// 481
   RegistID?: string// 513
   Designation?: string// 494
+  StandardTrailer: IStandardTrailer
 }

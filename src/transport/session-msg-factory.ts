@@ -83,9 +83,9 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     return this.mutator ? this.mutator(this.description, MsgType.ResendRequest, o) : o
   }
 
-  public sequenceReset (newSeqNo: number): ILooseObject {
+  public sequenceReset (newSeqNo: number, gapFill?: boolean): ILooseObject {
     const o: ISequenceReset = {
-      GapFillFlag: true,
+      GapFillFlag: gapFill === true,
       NewSeqNo: newSeqNo
     } as ISequenceReset
     return this.mutator ? this.mutator(this.description, MsgType.SequenceReset, o) : o

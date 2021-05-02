@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { ISideCrossOrdModGrp } from './set/side_cross_ord_mod_grp'
 import { IInstrument } from './set/instrument'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
@@ -8,8 +9,10 @@ import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_dat
 import { IYieldData } from './set/yield_data'
 import { IPegInstructions } from './set/peg_instructions'
 import { IDiscretionInstructions } from './set/discretion_instructions'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface INewOrderCross {
+  StandardHeader: IStandardHeader
   CrossID: string// 548
   CrossType: number// 549
   CrossPrioritization: number// 550
@@ -55,4 +58,5 @@ export interface INewOrderCross {
   MoneyLaunderingStatus?: string// 481
   RegistID?: string// 513
   Designation?: string// 494
+  StandardTrailer: IStandardTrailer
 }

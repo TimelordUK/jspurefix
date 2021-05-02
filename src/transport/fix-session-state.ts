@@ -2,12 +2,29 @@ import { ElasticBuffer } from '../buffer'
 import moment = require('moment')
 
 export enum SessionState {
-  Connected = 1,
-  PeerLoggedOn = 2,
-  PeerLogonRejected = 3,
-  WaitingLogoutConfirm = 4,
-  ConfirmingLogout = 5,
-  Stopped = 6
+  DisconnectedNoConnectionToday = 1,
+  DisconnectedConnectionToday = 2,
+  DetectBrokenNetworkConnection = 3,
+  AwaitingConnection = 4,
+  InitiateConnection = 5,
+  NetworkConnectionEstablished = 6,
+  InitiationLogonSent = 7,
+  InitiationLogonReceived = 8,
+  InitiationLogonResponse = 9,
+  HandleResendRequest = 10,
+  ReceiveMsgSeqNumTooHigh = 11,
+  AwaitingProcessingResponseToResendRequest = 12,
+  NoMessagesReceivedInInterval = 13,
+  AwaitingProcessingResponseToTestRequest = 14,
+  ReceiveLogout = 15,
+  InitiateLogout = 16,
+  ActiveNormalSession = 17,
+  WaitingForALogon = 18,
+  PeerLogonRejected = 20,
+  WaitingLogoutConfirm = 21,
+  ConfirmingLogout = 22,
+  Stopped = 23,
+  Idle = 24
 }
 
 export enum TickAction {
@@ -30,14 +47,28 @@ export class FixSessionState {
   public compId: string = ''
   public peerCompId: string = ''
   public peerHeartBeatSecs: number = 0
+  public lastPeerMsgSeqNum: number = 0
 
   private secondsSinceLogoutSent: number = -1
   private secondsSinceSent: number = -1
   private secondsSinceReceive: number = -1
 
+  public reset (resetSeqNo: boolean): void {
+    this.lastReceivedAt = null
+    this.LastSentAt = null
+    this.lastTestRequestAt = null
+    this.secondsSinceLogoutSent = -1
+    this.secondsSinceSent = -1
+    this.secondsSinceReceive = -1
+    this.peerHeartBeatSecs = 0
+    this.logoutSentAt = null
+    if (resetSeqNo) {
+      this.lastPeerMsgSeqNum = 0
+    }
+  }
+
   public constructor (public readonly heartBeat: number,
-                      public lastPeerMsgSeqNum: number = 0,
-                      public state: SessionState = SessionState.Connected,
+                      public state: SessionState = SessionState.Idle,
                       public readonly waitLogoutConfirmSeconds: number = 5,
                       public readonly stopSeconds: number = 2) {
 
@@ -56,7 +87,7 @@ export class FixSessionState {
 
     buffer.writeString(`compId = ${this.compId}, `)
     buffer.writeString(`heartBeat = ${this.heartBeat}, `)
-    buffer.writeString(`state = ${this.state}, `)
+    buffer.writeString(`state = ${SessionState[this.state]} (${this.state}), `)
     buffer.writeString(`nextTickAction = ${this.nextTickAction}, `)
     buffer.writeString(`now = ${FixSessionState.dateAsString(this.now)}, `)
     buffer.writeString(`timeToDie = ${this.timeToDie()}, `)
@@ -98,7 +129,8 @@ export class FixSessionState {
         break
       }
 
-      case SessionState.PeerLoggedOn: {
+      case SessionState.InitiationLogonReceived:
+      case SessionState.InitiationLogonResponse : {
         if (this.timeToHeartbeat()) {
           // have not sent anything for heartbeat period so let other side know still alive.
           this.nextTickAction = TickAction.Heartbeat
@@ -123,7 +155,7 @@ export class FixSessionState {
 
   public timeToDie (): boolean {
     return this.secondsSinceLogoutSent > this.waitLogoutConfirmSeconds ||
-    this.secondsSinceLogoutSent > this.stopSeconds
+      this.secondsSinceLogoutSent > this.stopSeconds
   }
 
   public timeToHeartbeat (): boolean {

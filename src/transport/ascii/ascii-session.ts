@@ -15,10 +15,6 @@ export abstract class AsciiSession extends FixSession {
     this.requestLogonType = MsgType.Logon
   }
 
-  public static asPiped (txt: string) {
-    return txt.replace(/\x01/g,'|')
-  }
-
   private checkSeqNo (msgType: string, view: MsgView): boolean {
 
     switch (msgType) {
@@ -101,7 +97,8 @@ export abstract class AsciiSession extends FixSession {
     }
 
     switch (state.state) {
-      case SessionState.PeerLoggedOn: {
+      case SessionState.InitiationLogonReceived:
+      case SessionState.InitiationLogonResponse: {
         const targetCompId = view.getString(MsgTag.TargetCompID)
         if (targetCompId !== state.compId) {
           const msg: string = `msgType ${msgType} unexpected TargetCompID ${targetCompId}`
@@ -133,7 +130,7 @@ export abstract class AsciiSession extends FixSession {
   // tslint:disable-next-line:no-empty
   protected onResendRequest (view: MsgView) {
     const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
-    const resend = this.config.factory.sequenceReset(endSeqNo)
+    const resend = this.config.factory.sequenceReset(endSeqNo, true)
     this.send(MsgType.SequenceReset, resend)
   }
 
@@ -196,7 +193,7 @@ export abstract class AsciiSession extends FixSession {
       this.sessionLogger.info(`message '${msgType}' failed checkIntegrity.`)
       switch (msgType) {
         case MsgType.Logon: {
-          this.sessionState.state = SessionState.PeerLogonRejected
+          this.setState(SessionState.PeerLogonRejected)
           this.timer = setInterval(() => {
             this.tick()
           }, 200)
@@ -232,11 +229,13 @@ export abstract class AsciiSession extends FixSession {
     const userName = view.getString(MsgTag.Username)
     logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, userName = ${userName}`)
     const state = this.sessionState
-    state.state = SessionState.PeerLoggedOn
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt)
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
+      this.setState(SessionState.InitiationLogonResponse)
       this.send(MsgType.Logon, this.config.factory.logon())
+    } else { // as an initiator the acceptor has responded
+      this.setState(SessionState.InitiationLogonReceived)
     }
     if (this.heartbeat) {
       logger.debug(`start heartbeat timer.`)

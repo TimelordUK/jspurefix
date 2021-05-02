@@ -24,7 +24,10 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
     let session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
     const parser: AsciiParser = new AsciiParser(definitions, session.encodeStream, AsciiChars.Pipe)
     parser.on('msg', (msgType: string, view: AsciiView) => {
-      resolve(view.toObject())
+      const o = view.toObject()
+      delete o.StandardHeader
+      delete o.StandardTrailer
+      resolve(o)
     })
     parser.on('error', (e: Error) => {
       reject(e)

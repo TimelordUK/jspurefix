@@ -1,6 +1,9 @@
+import { IStandardHeader } from './set/standard_header'
 import { IListOrdGrp } from './set/list_ord_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface INewOrderList {
+  StandardHeader: IStandardHeader
   ListID: string// 66
   BidID?: string// 390
   ClientBidID?: string// 391
@@ -20,4 +23,5 @@ export interface INewOrderList {
   TotNoOrders: number// 68
   LastFragment?: boolean// 893
   ListOrdGrp?: IListOrdGrp
+  StandardTrailer: IStandardTrailer
 }

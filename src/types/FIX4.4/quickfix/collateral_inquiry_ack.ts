@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { ICollInqQualGrp } from './set/coll_inq_qual_grp'
 import { IParties } from './set/parties'
 import { IExecCollGrp } from './set/exec_coll_grp'
@@ -6,8 +7,10 @@ import { IInstrument } from './set/instrument'
 import { IFinancingDetails } from './set/financing_details'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ICollateralInquiryAck {
+  StandardHeader: IStandardHeader
   CollInquiryID: string// 909
   CollInquiryStatus: number// 945
   CollInquiryResult?: number// 946
@@ -40,4 +43,5 @@ export interface ICollateralInquiryAck {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  StandardTrailer: IStandardTrailer
 }

@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IOrdAllocGrp } from './set/ord_alloc_grp'
 import { IExecAllocGrp } from './set/exec_alloc_grp'
 import { IInstrument } from './set/instrument'
@@ -10,8 +11,10 @@ import { IParties } from './set/parties'
 import { IStipulations } from './set/stipulations'
 import { IYieldData } from './set/yield_data'
 import { IAllocGrp } from './set/alloc_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IAllocationReport {
+  StandardHeader: IStandardHeader
   AllocReportID: string// 755
   AllocID?: string// 70
   AllocTransType: string// 71
@@ -79,4 +82,5 @@ export interface IAllocationReport {
   TotNoAllocs?: number// 892
   LastFragment?: boolean// 893
   AllocGrp?: IAllocGrp
+  StandardTrailer: IStandardTrailer
 }

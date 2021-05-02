@@ -15,29 +15,40 @@ export class TcpAcceptor extends FixAcceptor {
     let nextId: number = 0
     const tcp = this.config.description.application.tcp
     const tlsOptions: TlsOptions = getTlsOptions(tcp.tls)
-    this.logger.info('creating server')
     if (tlsOptions) {
-      this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
-        if (tcp.tls.enableTrace) {
-          this.logger.info(`enabling tls session trace`)
-          tlsSocket.enableTrace()
-        }
-        if (tlsSocket.authorized) {
-          tlsSocket.setEncoding('utf8')
-          const id: number = nextId++
-          this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
-          this.onSocket(id, tlsSocket, config)
-        } else {
-          this.logger.info(`no transport created on tls with no authorized connection`)
-        }
-      })
+      try {
+        this.logger.info(`create tls server`)
+        this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
+          if (tcp.tls.enableTrace) {
+            this.logger.info(`enabling tls session trace`)
+            tlsSocket.enableTrace()
+          }
+          if (tlsSocket.authorized) {
+            tlsSocket.setEncoding('utf8')
+            const id: number = nextId++
+            this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
+            this.onSocket(id, tlsSocket, config)
+          } else {
+            this.logger.info(`no transport created on tls with no authorized connection`)
+          }
+        })
+      } catch (e) {
+        this.logger.error(e)
+        throw e
+      }
     } else {
-      this.server = netCreateServer((socket: Socket) => {
-        const id: number = nextId++
-        this.logger.info(`net creates session ${id} }`)
-        socket.setNoDelay(true)
-        this.onSocket(id, socket, config)
-      })
+      try {
+        this.logger.info(`create unsecured server`)
+        this.server = netCreateServer((socket: Socket) => {
+          const id: number = nextId++
+          this.logger.info(`net creates session ${id} }`)
+          socket.setNoDelay(true)
+          this.onSocket(id, socket, config)
+        })
+      } catch (e) {
+        this.logger.error(e)
+        throw e
+      }
     }
     this.server.on('error', ((err: Error) => {
       throw err

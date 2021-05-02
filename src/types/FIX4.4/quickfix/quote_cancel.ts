@@ -1,7 +1,10 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IQuotCxlEntriesGrp } from './set/quot_cxl_entries_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuoteCancel {
+  StandardHeader: IStandardHeader
   QuoteReqID?: string// 131
   QuoteID: string// 117
   QuoteCancelType: number// 298
@@ -13,4 +16,5 @@ export interface IQuoteCancel {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   QuotCxlEntriesGrp?: IQuotCxlEntriesGrp
+  StandardTrailer: IStandardTrailer
 }

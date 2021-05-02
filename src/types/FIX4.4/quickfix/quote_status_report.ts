@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
 import { IFinancingDetails } from './set/financing_details'
@@ -8,8 +9,10 @@ import { ILegQuotStatGrp } from './set/leg_quot_stat_grp'
 import { IQuotQualGrp } from './set/quot_qual_grp'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IYieldData } from './set/yield_data'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuoteStatusReport {
+  StandardHeader: IStandardHeader
   QuoteStatusReqID?: string// 649
   QuoteReqID?: string// 131
   QuoteID: string// 117
@@ -71,4 +74,5 @@ export interface IQuoteStatusReport {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  StandardTrailer: IStandardTrailer
 }

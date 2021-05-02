@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IExecCollGrp } from './set/exec_coll_grp'
 import { ITrdCollGrp } from './set/trd_coll_grp'
@@ -9,8 +10,10 @@ import { ITrdRegTimestamps } from './set/trd_reg_timestamps'
 import { IMiscFeesGrp } from './set/misc_fees_grp'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IStipulations } from './set/stipulations'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ICollateralRequest {
+  StandardHeader: IStandardHeader
   CollReqID: string// 894
   CollAsgnReason: number// 895
   TransactTime: Date// 60
@@ -54,4 +57,5 @@ export interface ICollateralRequest {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  StandardTrailer: IStandardTrailer
 }

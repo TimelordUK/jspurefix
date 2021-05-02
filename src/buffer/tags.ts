@@ -1,6 +1,6 @@
 import { FixDefinitions, ContainedSimpleField } from '../dictionary'
 import { TagPos } from './tag-pos'
-import { MsgTag } from '../types/enum'
+import { MsgTag } from '../types'
 
 export enum TagType {
     String = 1,

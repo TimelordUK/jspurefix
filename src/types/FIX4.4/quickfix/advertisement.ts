@@ -1,8 +1,11 @@
+import { IStandardHeader } from './set/standard_header'
 import { IInstrument } from './set/instrument'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IAdvertisement {
+  StandardHeader: IStandardHeader
   AdvId: string// 2
   AdvTransType: string// 5
   AdvRefID?: string// 3
@@ -23,4 +26,5 @@ export interface IAdvertisement {
   LastMkt?: string// 30
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
+  StandardTrailer: IStandardTrailer
 }

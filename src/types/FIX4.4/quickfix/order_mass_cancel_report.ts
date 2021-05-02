@@ -1,8 +1,11 @@
+import { IStandardHeader } from './set/standard_header'
 import { IAffectedOrdGrp } from './set/affected_ord_grp'
 import { IInstrument } from './set/instrument'
 import { IUnderlyingInstrument } from './set/underlying_instrument'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IOrderMassCancelReport {
+  StandardHeader: IStandardHeader
   ClOrdID?: string// 11
   SecondaryClOrdID?: string// 526
   OrderID: string// 37
@@ -21,4 +24,5 @@ export interface IOrderMassCancelReport {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  StandardTrailer: IStandardTrailer
 }

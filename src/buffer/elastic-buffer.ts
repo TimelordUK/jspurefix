@@ -37,6 +37,14 @@ export class ElasticBuffer {
     return this.ptr
   }
 
+  public setPos (ptr: number): number {
+    const r = this.ptr
+    if (ptr >= 0 && ptr < this.size) {
+      this.ptr = ptr
+    }
+    return r
+  }
+
   public get (pos: number): number {
     return this.buffer[pos]
   }
@@ -140,6 +148,7 @@ export class ElasticBuffer {
   public clone (): ElasticBuffer {
     const cloned = new ElasticBuffer(this.ptr)
     this.buffer.copy(cloned.buffer, 0, 0, this.ptr)
+    cloned.setPos(this.ptr)
     return cloned
   }
 

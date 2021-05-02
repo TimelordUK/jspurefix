@@ -1,7 +1,10 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IQuotSetGrp } from './set/quot_set_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IMassQuote {
+  StandardHeader: IStandardHeader
   QuoteReqID?: string// 131
   QuoteID: string// 117
   QuoteType?: number// 537
@@ -13,4 +16,5 @@ export interface IMassQuote {
   DefBidSize?: number// 293
   DefOfferSize?: number// 294
   QuotSetGrp?: IQuotSetGrp
+  StandardTrailer: IStandardTrailer
 }

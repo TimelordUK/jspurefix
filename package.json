@@ -37,7 +37,9 @@
     "repo44-bench-sd": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/security-definition/fix.txt --benchmark --delimiter=\"|\" --repeats=150000",
     "qf-bench-lo": "cd dist && node jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/quickfix/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
     "fixml": "cd dist && node jsfix-cmd --dict=repofixml",
-    "tcp-tc": "cd dist/sample/tcp/trade_capture && node app",
+    "tcp-qf-md": "cd dist/sample/tcp/qf-md && node app",
+    "tcp-tls-tc": "cd dist/sample/tcp/tls-trade-capture && node app",
+    "tcp-tc": "cd dist/sample/tcp/trade-capture && node app",
     "tcp-sk": "cd dist/sample/tcp/skeleton && node app",
     "http-oms": "cd dist/sample/http/oms && node app",
     "repo40-compile": "cd dist && node jsfix-cmd \"--dict=repo40\" \"--compile\"",
@@ -59,7 +61,7 @@
   "dependencies": {
     "align-text": "^1.0.2",
     "express": "^4.17.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "log4js": "^6.3.0",
     "mathjs": "^7.5.1",
     "minimist": "^1.2.5",
@@ -75,22 +77,22 @@
     "yauzl": "^2.10.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.9",
-    "@types/jest": "^26.0.15",
+    "@types/express": "^4.17.11",
+    "@types/jest": "^26.0.22",
     "@types/lodash": "^4.14.168",
-    "@types/mathjs": "^6.0.7",
+    "@types/mathjs": "^6.0.11",
     "@types/minimist": "^1.2.1",
-    "@types/node": "^14.14.22",
-    "@types/request-promise": "^4.1.46",
+    "@types/node": "^14.14.31",
+    "@types/request-promise": "^4.1.47",
     "@types/sax": "^1.2.1",
     "@types/uuid": "^3.4.7",
     "@types/winston": "^2.4.4",
     "@types/xmlbuilder": "0.0.34",
     "jest": "^26.6.3",
     "standard": "^16.0.3",
-    "ts-jest": "^26.4.4",
+    "ts-jest": "^26.5.4",
     "tslint": "^6.1.3",
     "tslint-config-standard": "^9.0.0",
-    "typescript": "^4.1.3"
+    "typescript": "^4.2.3"
   }
 }

@@ -1,4 +1,4 @@
-import { TradeCaptureClient, TradeCaptureServer } from '../trade_capture'
+import { TradeCaptureClient, TradeCaptureServer } from '../trade-capture'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { initiator, acceptor } from '../../../transport'

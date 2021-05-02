@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
 import { IInstrumentExtension } from './set/instrument_extension'
@@ -5,8 +6,10 @@ import { IFinancingDetails } from './set/financing_details'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { ITrdCapDtGrp } from './set/trd_cap_dt_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ITradeCaptureReportRequest {
+  StandardHeader: IStandardHeader
   TradeRequestID: string// 568
   TradeRequestType: number// 569
   SubscriptionRequestType?: string// 263
@@ -43,4 +46,5 @@ export interface ITradeCaptureReportRequest {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  StandardTrailer: IStandardTrailer
 }

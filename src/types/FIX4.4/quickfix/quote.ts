@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IQuotQualGrp } from './set/quot_qual_grp'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
@@ -8,8 +9,10 @@ import { IStipulations } from './set/stipulations'
 import { ILegQuotGrp } from './set/leg_quot_grp'
 import { ISpreadOrBenchmarkCurveData } from './set/spread_or_benchmark_curve_data'
 import { IYieldData } from './set/yield_data'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuote {
+  StandardHeader: IStandardHeader
   QuoteReqID?: string// 131
   QuoteID: string// 117
   QuoteRespID?: string// 693
@@ -69,4 +72,5 @@ export interface IQuote {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  StandardTrailer: IStandardTrailer
 }

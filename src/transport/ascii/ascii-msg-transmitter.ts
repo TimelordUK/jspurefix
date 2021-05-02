@@ -1,4 +1,4 @@
-import { AsciiEncoder, TimeFormatter } from '../../buffer'
+import { AsciiChars, AsciiEncoder, TimeFormatter } from '../../buffer'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
 import { ContainedFieldSet, MessageDefinition } from '../../dictionary'
@@ -18,9 +18,24 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     this.msgSeqNum = (config.description.LastSentSeqNum || 0) + 1 // adding 1 as this the next sequence # to use.
     const buffer = this.buffer
     const tf: TimeFormatter = new TimeFormatter(buffer)
-    this.encoder = new AsciiEncoder(buffer, config.definitions, tf, config.delimiter)
-    this.header = config.definitions.component.get('header')
-    this.trailer = config.definitions.component.get('trailer')
+    this.encoder = new AsciiEncoder(buffer, config.definitions, tf,
+      config.delimiter || AsciiChars.Soh,
+      config.logDelimiter || AsciiChars.Pipe)
+    this.header = config.definitions.component.get('StandardHeader')
+    this.trailer = config.definitions.component.get('StandardTrailer')
+  }
+
+  private checksum (): number {
+    const buffer = this.buffer
+    const encoder: AsciiEncoder = this.encoder as AsciiEncoder
+    let checksum: number = buffer.sum()
+    if (encoder.delimiter !== encoder.logDelimiter) {
+      const changes = encoder.tags.nextTagPos
+      checksum -= changes * encoder.logDelimiter
+      checksum += changes * encoder.delimiter
+    }
+    checksum = checksum % 256
+    return checksum
   }
 
   public encodeMessage (msgType: string, obj: ILooseObject): void {
@@ -50,7 +65,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     const bodyLength: number = Math.max(4, this.config.description.BodyLengthChars || 7)
     const len = buffer.getPos() - encoder.msgTypePos
     buffer.patchPaddedNumberAtPos(lenPos, len, bodyLength)
-    const checksum: number = buffer.checksum()
+    let checksum: number = this.checksum()
     const trl: ILooseObject = factory.trailer(checksum)
     encoder.encode(trl, this.trailer.name)
   }

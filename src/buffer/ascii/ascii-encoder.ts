@@ -1,5 +1,7 @@
 import { ILooseObject } from '../../collections/collection'
-import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField, ContainedFieldType, ContainedComponentField, SimpleFieldDefinition, FixDefinitions, dispatchFields } from '../../dictionary'
+import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField,
+  ContainedFieldType, ContainedComponentField, SimpleFieldDefinition,
+  FixDefinitions, dispatchFields } from '../../dictionary'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import { TimeFormatter } from './time-formatter'
@@ -11,12 +13,30 @@ export class AsciiEncoder extends MsgEncoder {
 
   public bodyLengthPos: number
   public msgTypePos: number
+  public tags: Tags
 
   constructor (public readonly buffer: ElasticBuffer,
                public readonly definitions: FixDefinitions,
                public readonly timeFormatter: ITimeFormatter = new TimeFormatter(buffer),
-               public readonly delimiter: number = AsciiChars.Soh) {
+               public readonly delimiter: number = AsciiChars.Soh,
+               public readonly logDelimiter: number = AsciiChars.Pipe) {
     super(definitions)
+    this.tags = new Tags(definitions)
+  }
+
+  public trim (): Buffer {
+    const b = this.buffer.copy()
+    const delimiter = this.delimiter
+    const logDelimiter = this.logDelimiter
+    const tags = this.tags
+    if (delimiter !== logDelimiter) {
+      for (let p = 0; p < tags.nextTagPos; ++p) {
+        const tagPos = tags.tagPos[p]
+        b.writeUInt8(delimiter, tagPos.start + tagPos.len)
+      }
+    }
+
+    return b
   }
 
   private static checkGroupInstanceHasDelimiter (gf: ContainedGroupField, instance: ILooseObject): boolean {
@@ -40,6 +60,13 @@ export class AsciiEncoder extends MsgEncoder {
           instance = null
       }
     }
+  }
+
+  // only reset tags after entire message is encoded - <hdr>body<trl>
+
+  public reset (): void {
+    this.buffer.reset()
+    this.tags.reset()
   }
 
   public encodeSet (objectToEncode: ILooseObject, set: ContainedFieldSet): void {
@@ -87,8 +114,9 @@ export class AsciiEncoder extends MsgEncoder {
     if (instances) {
       // a repeated group has number of instances at the start of group
       this.WriteTagEquals(noOfField.tag)
+      const posValBegin = buffer.getPos()
       buffer.writeWholeNumber(instances.length)
-      buffer.writeChar(this.delimiter)
+      this.writeDelimiter(posValBegin, noOfField.tag)
       instances.forEach((i: ILooseObject) => {
         if (AsciiEncoder.checkGroupInstanceHasDelimiter(gf, i)) {
           this.encodeSet(i, gf.definition)
@@ -106,13 +134,21 @@ export class AsciiEncoder extends MsgEncoder {
     buffer.writeChar(AsciiChars.Equal)
   }
 
+  private writeDelimiter (posValBegin: number, tag: number): void {
+    const delimiter = this.logDelimiter
+    const buffer = this.buffer
+    this.tags.store(posValBegin, buffer.getPos() - posValBegin, tag)
+    buffer.writeChar(delimiter)
+  }
+
   private encodeSimple (o: ILooseObject, set: ContainedFieldSet, sf: ContainedSimpleField, val: any): void {
     const definition = sf.definition
     const tag: number = definition.tag
     const buffer = this.buffer
-    const delimiter = this.delimiter
+    const delimiter = this.logDelimiter
     const tf = this.timeFormatter
     const pos = buffer.getPos()
+    let posValBegin = 0
 
     let tagType: TagType
     if (typeof val === 'string') {
@@ -141,6 +177,7 @@ export class AsciiEncoder extends MsgEncoder {
 
       default: {
         this.WriteTagEquals(tag)
+        posValBegin = buffer.getPos()
         break
       }
     }
@@ -197,6 +234,7 @@ export class AsciiEncoder extends MsgEncoder {
         }
         this.WriteTagEquals(tag)
         buffer.writeBuffer(b)
+        posValBegin = buffer.getPos()
         break
       }
 
@@ -206,7 +244,7 @@ export class AsciiEncoder extends MsgEncoder {
       }
     }
 
-    buffer.writeChar(delimiter)
+    this.writeDelimiter(posValBegin, tag)
 
     switch (tag) {
       case Tags.BodyLengthTag:

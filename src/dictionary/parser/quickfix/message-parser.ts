@@ -3,6 +3,7 @@ import { MessageDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
 import { QuickFixXmlFileParser } from './quick-fix-xml-file-parser'
+import { ContainedComponentField } from '../../contained'
 
 export class MessageParser extends NodeParser {
 
@@ -16,6 +17,9 @@ export class MessageParser extends NodeParser {
         const att: any = node.attributes
         const msg: MessageDefinition = new MessageDefinition(att.name, att.name, att.msgtype, att.msgcat, null)
         const context: ParseContext = new ParseContext(msg.name, true, msg)
+        const hdr = this.definitions.component.get('StandardHeader')
+        const contained = new ContainedComponentField(hdr, msg.fields.length, true)
+        msg.add(contained)
         this.parseContexts.push(context)
         break
       }

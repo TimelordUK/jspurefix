@@ -1,61 +1,57 @@
-import { ContainedComponentField, ContainedFieldType, ContainedGroupField, ContainedSimpleField, ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../..'
+import {
+  ContainedComponentField,
+  ContainedFieldType,
+  ContainedGroupField,
+  ContainedSimpleField,
+  FixDefinitions,
+  MessageDefinition
+} from '../..'
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
-import { MsgTag } from '../../types'
+
+// this takes linear time i.e. it constantly makes forward progress
+// one tag at a time
 
 export class AsciiSegmentParser {
 
-  private readonly headerDefinition: ComponentFieldDefinition
-  private readonly trailerDefinition: ComponentFieldDefinition
-
   constructor (public readonly definitions: FixDefinitions) {
-    this.headerDefinition = definitions.component.get('header')
-    this.trailerDefinition = definitions.component.get('trailer')
   }
 
   public parse (msgType: string, tags: Tags, last: number): Structure {
+    // completed segments in that they are fully parsed
     const segments: SegmentDescription[] = []
-    const tr = this.trailerDefinition
-    const hd = this.headerDefinition
     const msgDefinition: MessageDefinition = this.definitions.message.get(msgType)
     if (!msgDefinition) {
       return null
     }
+    // in process of being discovered and may have any amount of depth
+    // i.e. a component containing a repeated group of components
+    // with sub-groups of components
     const structureStack: SegmentDescription[] = []
     let currentTagPosition: number = 0
-    // let currentContainedField: ContainedField;
     let peek: SegmentDescription
-
-    function init (): void {
-      const firstTag: number = tags.tagPos[0].tag
-      structureStack[structureStack.length] = new SegmentDescription(tr.name, tags.tagPos[last].tag, tr,
-        currentTagPosition, structureStack.length, SegmentType.Component)
-      structureStack[structureStack.length] = new SegmentDescription(msgDefinition.name, firstTag, msgDefinition,
-        currentTagPosition, structureStack.length, SegmentType.Msg)
-      structureStack[structureStack.length] = new SegmentDescription(hd.name, firstTag, hd,
-        currentTagPosition, structureStack.length, SegmentType.Component)
-    }
 
     // having finished one segments keep unwinding until tag matches further up stack
     function unwind (tag: number): void {
       while (structureStack.length > 1) {
         const done: SegmentDescription = structureStack.pop()
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
-        segments[segments.length] = done
+        segments.push(done)
         peek = structureStack[structureStack.length - 1]
         if (peek.set.containedTag[tag]) {
           // unwound to point this tag lives in this set.
           break
         }
-        if (peek.type === SegmentType.Msg && !tr.localTag[tag]) {
+        if (peek.type === SegmentType.Msg) {
           // this is unknown tag and it is not part of trailer so raise unknown
           break
         }
       }
     }
 
-    function examine (tag: number): void {
+    function examine (tag: number): SegmentDescription {
+      let structure: SegmentDescription = null
       switch (peek.currentField.type) {
 
         case ContainedFieldType.Simple: {
@@ -68,16 +64,15 @@ export class AsciiSegmentParser {
         // moving deeper into structure, start a new context
         case ContainedFieldType.Component: {
           const cf: ContainedComponentField = peek.currentField as ContainedComponentField
-          structureStack[structureStack.length] = new SegmentDescription(cf.name, tag, cf.definition,
-                        currentTagPosition, structureStack.length - 1, SegmentType.Component)
+          structure = new SegmentDescription(cf.name, tag, cf.definition,
+                        currentTagPosition, structureStack.length, SegmentType.Component)
           break
         }
-
+        // for a group also need to know where all delimiters are positioned
         case ContainedFieldType.Group: {
           const gf: ContainedComponentField = peek.currentField as ContainedGroupField
-          const structure: SegmentDescription = new SegmentDescription(gf.name, tag, gf.definition,
-                        currentTagPosition, structureStack.length - 1, SegmentType.Group)
-          structureStack[structureStack.length] = structure
+          structure = new SegmentDescription(gf.name, tag, gf.definition,
+                        currentTagPosition, structureStack.length, SegmentType.Group)
           currentTagPosition = currentTagPosition + 1
           structure.startGroup(tags.tagPos[currentTagPosition].tag)
           break
@@ -86,6 +81,8 @@ export class AsciiSegmentParser {
         default:
           throw new Error(`unknown tag type ${tag}`)
       }
+
+      return structure
     }
 
     function groupDelimiter (tag: number): boolean {
@@ -104,7 +101,7 @@ export class AsciiSegmentParser {
       const gap = new SegmentDescription('.undefined', tag, peek.set,
         currentTagPosition, structureStack.length, SegmentType.Gap)
       gap.end(segments.length, currentTagPosition, tag)
-      segments[segments.length] = gap
+      segments.push(gap)
       currentTagPosition++
     }
 
@@ -114,7 +111,8 @@ export class AsciiSegmentParser {
         peek = structureStack[structureStack.length - 1]
         peek.setCurrentField(tag)
         if (!peek.set.containedTag[tag] || groupDelimiter(tag)) {
-          const unknown = peek.type === SegmentType.Msg && tag !== MsgTag.CheckSum
+          // unravelled all way back to root hence this is not recognised
+          const unknown = peek.type === SegmentType.Msg
           if (unknown) {
             gap(tag)
           } else if (structureStack.length > 1) {
@@ -123,27 +121,35 @@ export class AsciiSegmentParser {
           }
           continue
         }
-        examine(tag)
+        const structure = examine(tag)
+        if (structure) {
+          structureStack.push(structure)
+        }
       }
     }
 
     function clean (): void {
+      // any remainder components can be closed.
       while (structureStack.length > 0) {
         const done: SegmentDescription = structureStack.pop()
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
         segments[segments.length] = done
       }
-      const msg: SegmentDescription = segments[segments.length - 2]
-      const trl: SegmentDescription = segments[segments.length - 1]
-      msg.startTag = tags.tagPos[msg.startPosition].tag
-      trl.startPosition = msg.endPosition + 1
-      msg.endPosition = trl.endPosition
+      // logically reverse the trailer and message so trailer is last in list.
+      const m1 = segments.length - 1
+      const m2 = segments.length - 2
+      const tmp = segments[m1]
+      segments[m1] = segments[m2]
+      segments[m2] = tmp
     }
 
-    init()
+    const msgStructure = new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
+      currentTagPosition, structureStack.length, SegmentType.Msg)
+    structureStack.push(msgStructure)
     discover()
     clean()
 
+    // now know where all components and groups are positioned within message
     return new Structure(tags, segments)
   }
 }

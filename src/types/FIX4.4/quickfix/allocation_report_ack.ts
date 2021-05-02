@@ -1,7 +1,10 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IAllocAckGrp } from './set/alloc_ack_grp'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IAllocationReportAck {
+  StandardHeader: IStandardHeader
   AllocReportID: string// 755
   AllocID: string// 70
   Parties?: IParties
@@ -19,4 +22,5 @@ export interface IAllocationReportAck {
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
   AllocAckGrp?: IAllocAckGrp
+  StandardTrailer: IStandardTrailer
 }

@@ -1,6 +1,9 @@
+import { IStandardHeader } from './set/standard_header'
 import { IUnderlyingInstrument } from './set/underlying_instrument'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IDerivativeSecurityListRequest {
+  StandardHeader: IStandardHeader
   SecurityReqID: string// 320
   SecurityListRequestType: number// 559
   UnderlyingInstrument?: IUnderlyingInstrument
@@ -12,4 +15,5 @@ export interface IDerivativeSecurityListRequest {
   TradingSessionID?: string// 336
   TradingSessionSubID?: string// 625
   SubscriptionRequestType?: string// 263
+  StandardTrailer: IStandardTrailer
 }

@@ -1,3 +1,4 @@
+import { IStandardHeader } from './set/standard_header'
 import { IParties } from './set/parties'
 import { IInstrument } from './set/instrument'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
@@ -5,8 +6,10 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { ITrdgSesGrp } from './set/trdg_ses_grp'
 import { IPositionQty } from './set/position_qty'
 import { IPositionAmountData } from './set/position_amount_data'
+import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IPositionMaintenanceReport {
+  StandardHeader: IStandardHeader
   PosMaintRptID: string// 721
   PosTransType: number// 709
   PosReqID?: string// 710
@@ -34,4 +37,5 @@ export interface IPositionMaintenanceReport {
   Text?: string// 58
   EncodedTextLen?: number// 354
   EncodedText?: Buffer// 355
+  StandardTrailer: IStandardTrailer
 }

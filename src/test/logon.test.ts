@@ -60,7 +60,7 @@ test('Logon structure', () => {
   expect(logon.startPosition).toEqual(0)
   expect(logon.startTag).toEqual(8)
   expect(logon.endPosition).toEqual(21)
-  expect(logon.endTag).toEqual(554)
+  expect(logon.endTag).toEqual(10)
 })
 
 test('Logon MsgTypes', () => {
