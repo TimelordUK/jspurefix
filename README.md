@@ -176,6 +176,8 @@ to run the provided example tls trade capture a script such as script\getKey.ps1
   "Password": "pwd-tls-client",
   "EncryptMethod": 0,
   "ResetSeqNumFlag": true,
+  "LastSentSeqNum": 10,
+  "LastReceivedSeqNum": 11,
   "HeartBtInt": 30,
   "SenderCompId": "init-tls-comp",
   "TargetCompID": "accept-tls-comp",
@@ -194,6 +196,18 @@ i.e. include field BodyLengthChars which defaults to 7 characters if omitted.
 ```json
 {
   "BodsyLengthChars": 6
+}
+```
+
+## launching without resetting message sequences
+
+If the message sequences are persisted over multiple sessions and are not reset on logon (ie. `"ResetSeqNumFlag": false,`),
+then the previously used sequence numbers can be set as follows:
+```json
+{
+  "ResetSeqNumFlag": false,
+  "LastSentSeqNum": 10,
+  "LastReceivedSeqNum": 11
 }
 ```
 
