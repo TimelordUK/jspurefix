@@ -33,14 +33,18 @@ export abstract class AsciiSession extends FixSession {
           this.sessionLogger.warning(`terminate as seqDelta (${seqDelta}) < 0 lastSeq = ${lastSeq} seqNo = ${seqNo}`)
           this.stop()
         } else if (seqDelta > 1) {
-          // reset required as have missed messages.
-          const resend = this.config.factory.resendRequest(lastSeq + 1, seqNo)
-          this.sessionLogger.warning(`sending resend last received ${lastSeq} seqNo ${seqNo}`)
-          this.send(MsgType.ResendRequest, resend)
-          // Sequence discrepancies should be resolved after logon. However, this does not make the Logon invalid.
-          if (MsgType.Logon) {
-            return true
+          // resend request required as have missed messages.
+
+          // We process a Logon beforehand to confirm the connection even we out of sync
+          if (msgType === MsgType.Logon) {
+            this.peerLogon(view)
           }
+          // If the out of sync message is a resend request itself, then we handle it first in order
+          // to avoid triggering an endless loop of both sides sending resend requests in response to resend requests.
+          if (msgType === MsgType.ResendRequest) {
+            this.onResendRequest(view)
+          }
+          this.sendResendRequest(lastSeq, seqNo)
         } else {
           ret = true
           state.lastPeerMsgSeqNum = seqNo
@@ -55,6 +59,12 @@ export abstract class AsciiSession extends FixSession {
     const reject = factory.reject(msgType, seqNo, msg, reason)
     this.sessionLogger.warning(`rejecting with ${JSON.stringify(reject)}`)
     this.send(MsgType.Reject, reject)
+  }
+
+  protected sendResendRequest (lastSeq: number, receivedSeq: number) {
+    const resend = this.config.factory.resendRequest(lastSeq + 1, 0)
+    this.sessionLogger.warning(`received seq ${receivedSeq}, but last known seq is ${lastSeq}. Sending resend request for all messages > ${lastSeq}`)
+    this.send(MsgType.ResendRequest, resend)
   }
 
   private checkIntegrity (msgType: string, view: MsgView): boolean {
@@ -127,7 +137,6 @@ export abstract class AsciiSession extends FixSession {
    * Override to resend stored messages following a sequence reset.
    * @protected
    */
-  // tslint:disable-next-line:no-empty
   protected onResendRequest (view: MsgView) {
     const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
     const resend = this.config.factory.sequenceReset(endSeqNo, true)
@@ -162,7 +171,7 @@ export abstract class AsciiSession extends FixSession {
       }
 
       case MsgType.ResendRequest: {
-        logger.info(`peer sends '${msgType}' resend reset.`)
+        logger.info(`peer sends '${msgType}' resend request.`)
         this.onResendRequest(view)
         break
       }
