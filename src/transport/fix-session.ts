@@ -27,7 +27,9 @@ export abstract class FixSession extends events.EventEmitter {
     super()
     const description = config.description
     this.me = description.application.name
-    this.sessionState = new FixSessionState(description.HeartBtInt, config.description.LastReceivedSeqNum)
+    this.sessionState = new FixSessionState(
+      { heartBeat: config.description.HeartBtInt,
+        lastPeerMsgSeqNum: config.description.LastReceivedSeqNum})
     this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`)
     this.initiator = description.application.type === 'initiator'
     this.acceptor = !this.initiator

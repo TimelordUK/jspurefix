@@ -36,6 +36,14 @@ export enum TickAction {
   Stop = 6
 }
 
+interface IFixSessionStateArgs {
+  heartBeat: number
+  state?: SessionState
+  waitLogoutConfirmSeconds?: number
+  stopSeconds?: number
+  lastPeerMsgSeqNum?: number
+}
+
 export class FixSessionState {
   public nextTickAction: TickAction = TickAction.Nothing
 
@@ -47,7 +55,11 @@ export class FixSessionState {
   public compId: string = ''
   public peerCompId: string = ''
   public peerHeartBeatSecs: number = 0
-  public lastPeerMsgSeqNum: number = 0
+  public lastPeerMsgSeqNum: number
+  public readonly heartBeat: number
+  public state: SessionState
+  public readonly waitLogoutConfirmSeconds: number
+  public readonly stopSeconds: number
 
   private secondsSinceLogoutSent: number = -1
   private secondsSinceSent: number = -1
@@ -67,11 +79,16 @@ export class FixSessionState {
     }
   }
 
-  public constructor (public readonly heartBeat: number,
-                      public state: SessionState = SessionState.Idle,
-                      public readonly waitLogoutConfirmSeconds: number = 5,
-                      public readonly stopSeconds: number = 2) {
-
+  public constructor ({ heartBeat,
+                        state = SessionState.Idle,
+                        waitLogoutConfirmSeconds = 5,
+                        stopSeconds = 2,
+                        lastPeerMsgSeqNum = 0 }: IFixSessionStateArgs) {
+    this.heartBeat = heartBeat
+    this.state = state
+    this.waitLogoutConfirmSeconds = waitLogoutConfirmSeconds
+    this.stopSeconds = stopSeconds
+    this.lastPeerMsgSeqNum = lastPeerMsgSeqNum
   }
 
   private static dateAsString (d: Date) {
