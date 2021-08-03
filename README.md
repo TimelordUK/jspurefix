@@ -225,7 +225,7 @@ RUNS  src/test/session.test.ts
 PASS  src/test/encode-proxy.test.tsst.ts
 PASS  src/test/execution-report.test.ts
 PASS  src/test/view-decode.test.ts
-PASS  src/test/ascii-encode.test.ts
+PASS  src/test/ascii-encoder.test.ts
 PASS  src/test/ascii-parser.test.ts
 PASS  src/test/includes.test.ts
 PASS  src/test/fixml-alloc-parse.test.ts (9.433s)

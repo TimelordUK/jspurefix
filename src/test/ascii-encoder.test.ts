@@ -111,14 +111,14 @@ test('encode string ClOrdID ', () => {
   expect(fix).toEqual('11=Order-a|')
 })
 
-test('encode empty string', () => {
+test('should not encode empty string', () => {
   const no: ILooseObject = {}
   no.ClOrdID = ''
   const fix: string = toFix(no)
-  expect(fix).toEqual('11=|')
+  expect(fix).toEqual('')
 })
 
-test('encode null string', () => {
+test('should not encode null string', () => {
   const no: ILooseObject = {}
   no.ClOrdID = null
   const fix: string = toFix(no)
