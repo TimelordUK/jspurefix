@@ -211,6 +211,35 @@ then the previously used sequence numbers can be set as follows:
 }
 ```
 
+## resending messages
+
+By default, the library will not resend past messages as this requires persisting messages which depending on the volume, 
+may also require a database. If you want to support resending you must override `AsciiSession.onResendRequest()` with a resending logic.
+Additionally, make sure to include the original message sequence and the duplicate message flag in the FIX object:
+```typescript
+{
+  ...messageBodyData, 
+  StandardHeader: { PossDupFlag: true, MsgSeqNum: sequenceNumber},
+}
+
+```
+
+### Example
+```json
+{
+  "ClOrdID": "acceptor-order-id",
+  "HandlInst": "2",
+  "OrdType": "2",
+  "Side": "2",
+  "TransactTime": "2021-08-03T08:23:57.041Z",
+  "Symbol": "some ticker",
+  "StandardHeader": {
+    "PossDupFlag": true,
+    "MsgSeqNum": 2
+  }
+}
+```
+
 ## Unit Tests
 
 there is a comprehensive suite of tests which can be run
