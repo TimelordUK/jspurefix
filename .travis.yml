@@ -12,7 +12,7 @@ before_script:
 script:
 - npm run tcp-tc
 - npm run http-oms
-- npm t src/test/ascii-encode.test.ts
+- npm t src/test/ascii-encoder.test.ts
 - npm t src/test/includes.test.ts
 - npm t src/test/fixml-mkt-data-settle-parse.test.ts
 - npm t src/test/repo-full-ascii-msg.test.ts

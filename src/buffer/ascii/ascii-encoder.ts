@@ -74,7 +74,8 @@ export class AsciiEncoder extends MsgEncoder {
     dispatchFields(fields, {
       simple: (sf: ContainedSimpleField) => {
         const val: any = objectToEncode[sf.name]
-        if (val != null) {
+        // Empty strings are omitted as they result in empty values for tags, which are considered malformed.
+        if (val != null && val !== '') {
           this.encodeSimple(objectToEncode, set, sf, val)
         }
       },

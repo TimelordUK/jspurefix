@@ -42,10 +42,13 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     const encoder: AsciiEncoder = this.encoder as AsciiEncoder
     const factory = this.config.factory
 
+    const { StandardHeader, ...bodyProps } = obj
+
     const headerProps: Partial<IStandardHeader> = {
-      ...(obj.StandardHeader?.PossDupFlag ? { PossDupFlag: obj.StandardHeader?.PossDupFlag } : {}),
-      ...(obj.StandardHeader?.MsgSeqNum ? { MsgSeqNum: obj.StandardHeader?.MsgSeqNum } : {})
+      ...(StandardHeader?.PossDupFlag ? { PossDupFlag: StandardHeader?.PossDupFlag } : {}),
+      ...(StandardHeader?.MsgSeqNum ? { MsgSeqNum: StandardHeader?.MsgSeqNum } : {})
     }
+
     const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum,this.time || new Date(), headerProps)
 
     // Only increment sequence number if this is not a duplicate message.
@@ -60,7 +63,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
       return
     }
     encoder.encode(hdr, this.header.name)
-    encoder.encode(obj, msgDef.name)
+    encoder.encode(bodyProps, msgDef.name)
     const lenPos = encoder.bodyLengthPos
     const bodyLength: number = Math.max(4, this.config.description.BodyLengthChars || 7)
     const len = buffer.getPos() - encoder.msgTypePos
