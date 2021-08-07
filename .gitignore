@@ -74,3 +74,11 @@ data/fix_repo
 /tags
 /tags.lock
 /tags.temp
+app.txt
+data/session/genkey.ps1
+data/session/certs/ca/ca.crt
+data/session/certs/ca/ca.key
+data/session/certs/client/client.crt
+data/session/certs/client/client.key
+data/session/certs/server/server.crt
+data/session/certs/server/server.key
