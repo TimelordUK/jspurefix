@@ -17,7 +17,6 @@ export abstract class FixSession extends events.EventEmitter {
   protected readonly initiator: boolean
   protected readonly acceptor: boolean
   protected readonly sessionState: FixSessionState
-  // protected readonly emitter: events.EventEmitter
   protected readonly sessionLogger: IJsFixLogger
   protected requestLogoutType: string
   protected respondLogoutType: string

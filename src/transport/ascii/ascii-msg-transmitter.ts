@@ -41,15 +41,14 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   public encodeMessage (msgType: string, obj: ILooseObject): void {
     const encoder: AsciiEncoder = this.encoder as AsciiEncoder
     const factory = this.config.factory
-
+    let headerProps: Partial<IStandardHeader> = {}
     const { StandardHeader, ...bodyProps } = obj
-
-    const headerProps: Partial<IStandardHeader> = {
-      ...(StandardHeader?.PossDupFlag ? { PossDupFlag: StandardHeader?.PossDupFlag } : {}),
-      ...(StandardHeader?.MsgSeqNum ? { MsgSeqNum: StandardHeader?.MsgSeqNum } : {})
+    if (StandardHeader) {
+      const { BeginString, BodyLength, MsgType, SenderCompID, SendingTime, TargetCompID, TargetSubID, ...hp } = StandardHeader
+      headerProps = hp // pick up any optional applied by application
     }
 
-    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum,this.time || new Date(), headerProps)
+    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum, this.time || new Date(), headerProps)
 
     // Only increment sequence number if this is not a duplicate message.
     if (!headerProps.PossDupFlag) {
@@ -60,6 +59,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     buffer.reset()
     const msgDef: MessageDefinition = this.definitions.message.get(msgType)
     if (!msgDef) {
+      this.emit('error', new Error(`ascii transmitter cannot find definition for ${msgType}`))
       return
     }
     encoder.encode(hdr, this.header.name)
