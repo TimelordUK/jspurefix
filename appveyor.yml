@@ -1,5 +1,8 @@
 version: 1.0.{build}
-image: Visual Studio 2017
+
+image: 
+  - Ubuntu
+  - Visual Studio 2017
 
 environment:
   matrix:
@@ -20,3 +23,43 @@ build_script:
 
 test_script:
   - cmd: script\test.cmd
+
+  for:
+  -
+      matrix:
+        only:
+          - image: Visual Studio 2017
+    
+      clone_folder: c:\projects\jspurefix
+
+      install:
+        - ps: Install-Product node $env:nodejs_version $env:platform
+        - npm install
+
+      build_script:
+        - node --version
+        - cmd: script\build.cmd
+
+      test_script:
+        - cmd: script\test.cmd
+  -        
+      matrix:
+        only:
+          - image: Ubuntu
+          - platform: x64
+
+      clone_folder: /home/appveyor/projects/jspurefix 
+      
+      install:
+        - nvm install $nodejs_version
+        - npm install
+
+      build_script:
+        - node --version
+        - sh: script/build.sh
+
+        test_script:
+        - sh: "npm run tcp-tc"
+        - sh: "npm run http-oms"
+        - sh: "npm run t"
+

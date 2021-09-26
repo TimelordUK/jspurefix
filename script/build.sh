@@ -1,3 +1,4 @@
+#!/bin/sh
 npm install
 npm run unzip-repo
 ./node_modules/.bin/tsc --version
