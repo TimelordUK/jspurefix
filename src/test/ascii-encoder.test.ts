@@ -2,9 +2,10 @@ import * as path from 'path'
 import { ComponentFieldDefinition, ContainedFieldSet, FixDefinitions, MessageDefinition } from '../dictionary'
 import { AsciiChars, AsciiEncoder, AsciiParser, MsgView, Tags, TimeFormatter } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { AsciiMsgTransmitter, ISessionDescription, SessionMsgFactory, StringDuplex } from '../transport'
+import { AsciiMsgTransmitter, ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
+import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -22,7 +23,7 @@ const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(new SessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
+  const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Pipe)
   nos = definitions.message.get('NewOrderSingle')

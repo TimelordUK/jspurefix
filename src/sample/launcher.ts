@@ -1,6 +1,8 @@
 import * as path from 'path'
 import { WinstonLogger, IJsFixConfig, JsFixWinstonLogFactory, IJsFixLogger } from '../config'
-import { SessionMsgFactory, makeConfig } from '../transport'
+import { makeConfig, ISessionDescription, ISessionMsgFactory } from '../transport'
+import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
+import { FixmlSessionMsgFactory } from '../transport/fixml-session-msg-factory'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -28,14 +30,22 @@ export abstract class Launcher {
     })
   }
 
+  private makeSessionFactory (description: ISessionDescription): ISessionMsgFactory {
+    const fixml = description.application.protocol !== 'ascii'
+    const factory = fixml ?
+      new FixmlSessionMsgFactory(description) :
+      new AsciiSessionMsgFactory(description)
+    return factory
+  }
+
   private async setup () {
-    const clientDescription = require(path.join(root, this.initiatorConfig))
-    const serverDescription = require(path.join(root, this.acceptorConfig))
-    this.logger.info('launching ..')
+    const clientDescription: ISessionDescription = require(path.join(root, this.initiatorConfig))
+    const serverDescription: ISessionDescription = require(path.join(root, this.acceptorConfig))
+    this.logger.info(`launching [protocol ${clientDescription.application.protocol}] ...`)
     const clientConfig = await
-    makeConfig(clientDescription, logFactory, new SessionMsgFactory(clientDescription))
+    makeConfig(clientDescription, logFactory, this.makeSessionFactory(clientDescription))
     const serverConfig = await
-    makeConfig(serverDescription, logFactory, new SessionMsgFactory(serverDescription))
+    makeConfig(serverDescription, logFactory, this.makeSessionFactory(serverDescription))
     this.logger.info('create acceptor')
     const server = this.getAcceptor(serverConfig)
     this.logger.info('create initiator')

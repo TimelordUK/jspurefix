@@ -1,6 +1,6 @@
 import { MsgView, ElasticBuffer, AsciiChars } from '../buffer'
 import { FixDefinitions } from '../dictionary'
-import { ISessionDescription, MsgTransport, SessionMsgFactory, AsciiMsgTransmitter, StringDuplex, FixDuplex } from '../transport'
+import { ISessionDescription, MsgTransport, AsciiMsgTransmitter, StringDuplex, FixDuplex, AsciiSessionMsgFactory } from '../transport'
 import { MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'
 import { IJsFixConfig, JsFixConfig } from '../config'
@@ -26,8 +26,8 @@ let definitions: FixDefinitions
 let clientDescription: ISessionDescription
 let serverDescription: ISessionDescription
 let client: FixEntity
-let clientFactory: SessionMsgFactory
-let serverFactory: SessionMsgFactory
+let clientFactory: AsciiSessionMsgFactory
+let serverFactory: AsciiSessionMsgFactory
 let server: FixEntity
 
 function loopBack (lhs: FixDuplex, rhs: FixDuplex) {
@@ -44,8 +44,8 @@ beforeAll(async () => {
 
 beforeEach(async () => {
 
-  clientFactory = new SessionMsgFactory(clientDescription)
-  serverFactory = new SessionMsgFactory(serverDescription)
+  clientFactory = new AsciiSessionMsgFactory(clientDescription)
+  serverFactory = new AsciiSessionMsgFactory(serverDescription)
 
   const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, AsciiChars.Pipe)
   const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, AsciiChars.Pipe)

@@ -3,8 +3,9 @@ import { AsciiParser, AsciiView, AsciiChars } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary'
 import { JsonHelper, getDefinitions } from '../util'
-import { ISessionDescription, SessionMsgFactory, AsciiMsgTransmitter } from '../transport'
+import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { JsFixConfig } from '../config'
+import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -15,7 +16,7 @@ beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
-  config = new JsFixConfig(new SessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
+  config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
 }, 45000)
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {

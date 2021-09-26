@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary'
 import { AsciiChars, AsciiView, MsgView } from '../buffer'
-import { ISessionDescription, SessionMsgFactory } from '../transport'
+import { ISessionDescription } from '../transport'
 import { getDefinitions, replayFixFile } from '../util'
 import {
   FixMsgAsciiStoreResend,
@@ -13,6 +13,7 @@ import {
 import { MsgTag, MsgType } from '../types'
 import { JsFixConfig } from '../config'
 import { ISequenceReset } from '../types/FIX4.4/repo'
+import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -49,8 +50,8 @@ beforeAll(async () => {
   const delimiter = AsciiChars.Pipe
   const serverDescription: ISessionDescription = require(path.join(root, 'session/test-acceptor-tls.json'))
   const clientDescription: ISessionDescription = require(path.join(root, 'session/test-initiator-tls.json'))
-  const serverFactory = new SessionMsgFactory(serverDescription)
-  const clientFactory = new SessionMsgFactory(clientDescription)
+  const serverFactory = new AsciiSessionMsgFactory(serverDescription)
+  const clientFactory = new AsciiSessionMsgFactory(clientDescription)
   definitions = await getDefinitions(serverDescription.application.dictionary)
   const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, delimiter)
   const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, delimiter)

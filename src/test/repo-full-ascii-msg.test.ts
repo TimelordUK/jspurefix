@@ -3,8 +3,9 @@ import { AsciiParser, AsciiView, AsciiChars } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary'
 import { JsonHelper, getDefinitions } from '../util'
-import { ISessionDescription, SessionMsgFactory, AsciiMsgTransmitter } from '../transport'
+import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { JsFixConfig } from '../config'
+import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -15,7 +16,7 @@ beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
-  const config = new JsFixConfig(new SessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
+  const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
 }, 45000)
 
@@ -40,19 +41,19 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
 test('check 1 digit checksum format', async () => {
   const factory = session.config.factory
   const cs = factory.trailer(1)
-  await expect(cs.CheckSum).toEqual('001')
+  expect(cs.CheckSum).toEqual('001')
 })
 
 test('check 2 digit checksum format', async () => {
   const factory = session.config.factory
   const cs = factory.trailer(10)
-  await expect(cs.CheckSum).toEqual('010')
+  expect(cs.CheckSum).toEqual('010')
 })
 
 test('check 3 digit checksum format', async () => {
   const factory = session.config.factory
   const cs = factory.trailer(100)
-  await expect(cs.CheckSum).toEqual('100')
+  expect(cs.CheckSum).toEqual('100')
 })
 
 test('AE object to ascii fix to object', async () => {
@@ -61,7 +62,7 @@ test('AE object to ascii fix to object', async () => {
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   const o: ILooseObject = await testEncodeDecode(msgType, msg)
 
-  await expect(o).toEqual(msg)
+  expect(o).toEqual(msg)
 }, 1000)
 
 test('d object to ascii fix to object', async () => {
@@ -70,7 +71,7 @@ test('d object to ascii fix to object', async () => {
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   const o: ILooseObject = await testEncodeDecode(msgType, msg)
 
-  await expect(o).toEqual(msg)
+  expect(o).toEqual(msg)
 }, 1000)
 
 test('D object to ascii fix to object', async () => {
@@ -79,5 +80,5 @@ test('D object to ascii fix to object', async () => {
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   const o: ILooseObject = await testEncodeDecode(msgType, msg)
 
-  await expect(o).toEqual(msg)
+  expect(o).toEqual(msg)
 }, 1000)
