@@ -50,7 +50,7 @@ environment:
         - node --version
         - sh: script/build.sh
 
-        test_script:
+      test_script:
         - sh: "npm run tcp-tc"
         - sh: "npm run http-oms"
         - sh: "npm run t"
