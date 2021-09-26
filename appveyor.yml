@@ -4,25 +4,17 @@ image:
   - Ubuntu
   - Visual Studio 2017
 
+platform:
+  - x64
+
 environment:
   matrix:
     - nodejs_version: "16"
     - nodejs_version: "14"
     - nodejs_version: "12"
 
-platform:
-  - x64
-
-install:
-  - ps: Install-Product node $env:nodejs_version $env:platform
-  - npm install
-
-build_script:
-  - node --version
-  - cmd: script\build.cmd
-
-test_script:
-  - cmd: script\test.cmd
+  test_script:
+    - ps: Write-Host "jspurefix test script"    
 
   for:
   -
