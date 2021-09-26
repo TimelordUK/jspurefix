@@ -82,7 +82,7 @@
     "@types/lodash": "^4.14.172",
     "@types/mathjs": "^9.4.1",
     "@types/minimist": "^1.2.2",
-    "@types/node": "^15.0.1",
+    "@types/node": "^16.10.1",
     "@types/request-promise": "^4.1.48",
     "@types/sax": "^1.2.3",
     "@types/uuid": "^3.4.7",
@@ -93,6 +93,6 @@
     "ts-jest": "^26.5.5",
     "tslint": "^6.1.3",
     "tslint-config-standard": "^9.0.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.3"
   }
 }

@@ -27,6 +27,8 @@ import {
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }
 
+
+
 export class SessionMsgFactory implements ISessionMsgFactory {
 
   public isAscii: boolean
@@ -164,7 +166,7 @@ export class SessionMsgFactory implements ISessionMsgFactory {
     }
   }
 
-  private asciiHeader (msgType: string, seqNum: number, time: Date, overrideData?: Partial<IStandardHeader>): ILooseObject {
+  protected asciiHeader (msgType: string, seqNum: number, time: Date, overrideData?: Partial<IStandardHeader>): ILooseObject {
     const description = this.description
     const bodyLength: number = Math.max(4, description.BodyLengthChars || 7)
     const placeHolder = Math.pow(10, bodyLength - 1) + 1
@@ -191,5 +193,5 @@ export class SessionMsgFactory implements ISessionMsgFactory {
       TargetSubID: description.TargetSubID
     } as IStandardHeaderFixml
     return this.mutator ? this.mutator(this.description, MsgType.Logon, o) : o
-  }
+  }  
 }
