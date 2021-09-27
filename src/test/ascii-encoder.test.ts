@@ -451,26 +451,6 @@ test('encode group not an array of', () => {
   expect(run).toThrow(/expected array instance for group NoSecurityAltID/)
 })
 
-function createOrder (id: number, symbol: string, securityType: SecurityType, side: Side, qty: number, price: number): INewOrderSingle {
-  return {
-    ClOrdID: `Cli${id}`,
-    Account: 'MyAcc',
-    Side: side,
-    Price: price,
-    OrdType: OrdType.Limit,
-    OrderQtyData: {
-      OrderQty: qty
-    } as IOrderQtyData,
-    Instrument: {
-      SecurityType: securityType,
-      Symbol: symbol,
-      SecurityID: '459200101',
-      SecurityIDSource: SecurityIDSource.IsinNumber
-    } as IInstrument,
-    TimeInForce: TimeInForce.Day
-  } as INewOrderSingle
-}
-
 function getCompID(securityType: SecurityType): string {
   switch (securityType) {
     case SecurityType.CommonStock: {
@@ -490,13 +470,32 @@ function getCompID(securityType: SecurityType): string {
   }
 }
 
+function createOrder (id: number, symbol: string, securityType: SecurityType, side: Side, qty: number, price: number): INewOrderSingle {
+  return {
+    StandardHeader: {
+        DeliverToCompID: getCompID(securityType),
+      } as IStandardHeader,
+    ClOrdID: `Cli${id}`,
+    Account: 'MyAcc',
+    Side: side,
+    Price: price,
+    OrdType: OrdType.Limit,
+    OrderQtyData: {
+      OrderQty: qty
+    } as IOrderQtyData,
+    Instrument: {
+      SecurityType: securityType,
+      Symbol: symbol,
+      SecurityID: '459200101',
+      SecurityIDSource: SecurityIDSource.IsinNumber
+    } as IInstrument,
+    TimeInForce: TimeInForce.Day
+  } as INewOrderSingle
+}
+
 test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
   const type = SecurityType.CommonStock
   const o1 = createOrder(1, 'MS', type, Side.Buy, 100, 1000.0)
-  const h: ILooseObject = {
-    DeliverToCompID: getCompID(type)
-  }
-  o1.StandardHeader = h as IStandardHeader
   const nosd = definitions.message.get('NewOrderSingle')
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
@@ -512,10 +511,6 @@ test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
 test('encode custom header 2 - expect DeliverToCompID DepC', async () => {
   const type = SecurityType.ConvertibleBond
   const o1 = createOrder(1, 'MSCb', type, Side.Buy, 100, 1000.0)
-  const h: ILooseObject = {
-    DeliverToCompID: getCompID(type)
-  }
-  o1.StandardHeader = h as IStandardHeader
   const nosd = definitions.message.get('NewOrderSingle')
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
@@ -532,18 +527,20 @@ test('encode custom header - include MsgSeqNum (for resends we do not want to ov
   const type = SecurityType.ConvertibleBond
   const seqNum: number = 10
   const o1 = createOrder(1, 'MSCb', type, Side.Buy, 100, 1000.0)
-  const h: ILooseObject = {
-    DeliverToCompID: getCompID(type),
-    MsgSeqNum: seqNum
-  }
-  o1.StandardHeader = h as IStandardHeader
+  o1.StandardHeader.MsgSeqNum = seqNum
+  o1.StandardHeader.PossDupFlag = true
   const nosd = definitions.message.get('NewOrderSingle')
+  expect(nosd).toBeTruthy()
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
   const res: ParsingResult = await toParse(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)
   const parsed: INewOrderSingle = res.view.toObject()
-  expect(parsed.StandardHeader.DeliverToCompID).toEqual('DepC')
-  expect(parsed.StandardHeader.MsgSeqNum).toEqual(seqNum)
+  const h: IStandardHeader = parsed.StandardHeader
+  expect(h.DeliverToCompID).toEqual('DepC')
+  expect(h.MsgSeqNum).toEqual(seqNum)
+  expect(h.BeginString).toEqual('FIX4.4')
+  expect(h.PossDupFlag).toEqual(true)
+  expect(h.MsgType).toEqual(MsgType.NewOrderSingle)
 })
