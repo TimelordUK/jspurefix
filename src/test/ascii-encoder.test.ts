@@ -5,9 +5,9 @@ import { ILooseObject } from '../collections/collection'
 import { AsciiMsgTransmitter, ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
-import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
 import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
+import { AsciiSessionMsgFactory } from '../transport/ascii'
 
 
 const root: string = path.join(__dirname, '../../data')

@@ -13,7 +13,7 @@ import {
 import { MsgTag, MsgType } from '../types'
 import { JsFixConfig } from '../config'
 import { ISequenceReset } from '../types/FIX4.4/repo'
-import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
+import { AsciiSessionMsgFactory } from '../transport/ascii'
 
 const root: string = path.join(__dirname, '../../data')
 

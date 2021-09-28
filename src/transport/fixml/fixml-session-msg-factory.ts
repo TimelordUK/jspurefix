@@ -1,7 +1,7 @@
-import { ISessionDescription } from './session-description'
-import { ILooseObject } from '../collections/collection'
-import { MsgType } from '../types'
-import { ASessionMsgFactory, ObjectMutator } from '.'
+import { ISessionDescription } from './../session-description'
+import { ILooseObject } from '../../collections/collection'
+import { MsgType } from '../../types'
+import { ASessionMsgFactory, ObjectMutator } from '../a-session-msg-factory'
 
 import {
   IStandardHeader,
@@ -9,7 +9,7 @@ import {
   IUserResponse,
   UserRequestType,
   UserStatus
-} from '../types/FIXML50SP2'
+} from '../../types/FIXML50SP2'
 
 export class FixmlSessionMsgFactory extends ASessionMsgFactory {
 

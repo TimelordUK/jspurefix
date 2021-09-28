@@ -6,7 +6,7 @@ import { ISessionDescription, AsciiMsgTransmitter, StringDuplex } from '../trans
 import { JsFixConfig } from '../config'
 import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
 import { getDefinitions, replayFixFile } from '../util'
-import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
+import { AsciiSessionMsgFactory } from '../transport/ascii'
 
 const root: string = path.join(__dirname, '../../data')
 

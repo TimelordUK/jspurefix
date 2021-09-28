@@ -1,6 +1,6 @@
 import { MsgView, ElasticBuffer, AsciiChars } from '../buffer'
 import { FixDefinitions } from '../dictionary'
-import { ISessionDescription, MsgTransport, AsciiMsgTransmitter, StringDuplex, FixDuplex, AsciiSessionMsgFactory } from '../transport'
+import { ISessionDescription, MsgTransport, AsciiMsgTransmitter, StringDuplex, FixDuplex } from '../transport'
 import { MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'
 import { IJsFixConfig, JsFixConfig } from '../config'
@@ -9,6 +9,7 @@ import { IStandardHeader, IReject, ILogon } from '../types/FIX4.4/repo'
 
 import * as path from 'path'
 import { getDefinitions } from '../util'
+import { AsciiSessionMsgFactory } from '../transport/ascii/'
 
 const root: string = path.join(__dirname, '../../data')
 const logonMsg: string = '8=FIX4.4|9=0000136|35=A|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:28.980|98=0|108=30|141=Y|553=js-client|554=pwd-client|10=177|'

@@ -5,7 +5,7 @@ import { FixDefinitions } from '../dictionary'
 import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { JsFixConfig } from '../config'
-import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
+import { AsciiSessionMsgFactory } from '../transport/ascii/'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper

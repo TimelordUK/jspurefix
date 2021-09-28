@@ -1,8 +1,8 @@
 import * as path from 'path'
 import { WinstonLogger, IJsFixConfig, JsFixWinstonLogFactory, IJsFixLogger } from '../config'
 import { makeConfig, ISessionDescription, ISessionMsgFactory } from '../transport'
-import { AsciiSessionMsgFactory } from '../transport/ascii-session-msg-factory'
-import { FixmlSessionMsgFactory } from '../transport/fixml-session-msg-factory'
+import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { FixmlSessionMsgFactory } from '../transport/fixml'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))

@@ -1,14 +1,14 @@
-import { ISessionDescription } from './session-description'
-import { ILooseObject } from '../collections/collection'
-import { MsgType } from '../types'
-import { ASessionMsgFactory, ObjectMutator } from '.'
+import { ISessionDescription } from '../session-description'
+import { ILooseObject } from '../../collections/collection'
+import { MsgType } from '../../types'
+import { ASessionMsgFactory, ObjectMutator } from '../a-session-msg-factory'
 
 import {
   EncryptMethod,
   ILogon,
   ILogout,
   IStandardHeader
-} from '../types/FIX4.4/repo'
+} from '../../types/FIX4.4/repo'
 
 export class AsciiSessionMsgFactory extends ASessionMsgFactory {
 
