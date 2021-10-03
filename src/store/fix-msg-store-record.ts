@@ -6,6 +6,7 @@ export interface IFixMsgStoreRecord {
   readonly seqNum: number
   obj?: ILooseObject
   readonly encoded?: string
+  clone (): IFixMsgStoreRecord
 }
 
 export class FixMsgStoreRecord implements IFixMsgStoreRecord {
@@ -14,5 +15,8 @@ export class FixMsgStoreRecord implements IFixMsgStoreRecord {
                public readonly seqNum: number,
                public obj?: ILooseObject,
                public readonly encoded?: string) {
+  }
+  clone (): IFixMsgStoreRecord {
+    return new FixMsgStoreRecord(this.msgType, this.timestamp, this.seqNum, this.obj, this.encoded)
   }
 }

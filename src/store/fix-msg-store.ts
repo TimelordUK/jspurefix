@@ -4,19 +4,20 @@
 
 import { IFixMsgStoreRecord } from './fix-msg-store-record'
 
-export interface IFixMsgStore {
+export interface IFixMsgStoreState {
+  readonly length: number,
+  readonly firstSeq: number,
+  readonly lastSeq: number
   readonly id: string
-  readonly length: number
-  /*
-  default to Logon , Logout , ResendRequest, HeartbeatInt, TestRequest, SequenceReset
-  = ["A", "5", "2", "0", "1", "4"]
-   */
-  setExcMsgType (exclude: string[]): void
-  put (record: IFixMsgStoreRecord): boolean
-  exits (seqNum: number): boolean
-  getSeqNum (seqNum: number): IFixMsgStoreRecord
+}
+
+export interface IFixMsgStore {
+  clear (): Promise<IFixMsgStoreState>
+  getState (): Promise<IFixMsgStoreState>
+  put (record: IFixMsgStoreRecord): Promise<IFixMsgStoreState>
+  get (seq: number): Promise<IFixMsgStoreRecord>
+  exists (seq: number): Promise<boolean>
   // if to = 0, then to the end of sequence
-  getSeqNumRange (from: number, to?: number): IFixMsgStoreRecord[]
-  getDateRange (from: Date, to: Date): IFixMsgStoreRecord[]
-  getMsgType (msgType: string): IFixMsgStoreRecord[]
+  getSeqNumRange (from: number, to?: number): Promise<IFixMsgStoreRecord[]>
+  getMsgType (msgType: string): Promise<IFixMsgStoreRecord[]>
 }

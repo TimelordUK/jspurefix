@@ -29,7 +29,8 @@ beforeAll(async () => {
     }
     return agg
   }, [])
-  records.forEach(r => store.put(r))
+  const toWrite = records.map(r => store.put(r))
+  await Promise.all(toWrite)
 }, 45000)
 
 test('expect 15 messages in log', () => {
@@ -48,34 +49,38 @@ test('expect 15 messages in log', () => {
 8=FIX4.4|9=000206|35=AE|49=accept-tls-comp|56=init-tls-comp|34=10|57=fix|52=20210307-16:17:14.477|571=100006|487=0|856=0|828=0|17=600006|39=2|570=N|55=Silver|48=Silver.INC|32=105|31=61.2|75=20210307|60=20210307-16:17:14.477|10=191|
  */
 
-test('check messages loaded into store', () => {
-  expect(records.length).toEqual(11)
-  expect(store.length).toEqual(9)
+test('check messages loaded into store', async () => {
+  const state = await store.getState()
+  expect(state.lastSeq).toEqual(10)
+  expect(state.length).toEqual(9)
 })
 
-test('fetch sequence number from store', () => {
-  expect(store.exits(1)).toBeFalsy()
+test('fetch sequence number from store', async () => {
+  const res1 = await store.exists(1)
+  expect(res1).toBeFalsy()
   for (let seq = 2; seq <= 10; ++seq) {
-    expect(store.exits(seq)).toBeTruthy()
-    expect(store.getSeqNum(seq)).toBeTruthy()
+    const res = await store.exists(seq)
+    expect(res).toBeTruthy()
+    const get = await store.get(seq)
+    expect(get).toBeTruthy()
   }
 })
 
-test('fetch from seqNum to inferred as end ', () => {
-  const range1 = store.getSeqNumRange(5) // to the end
+test('fetch from seqNum to inferred as end ', async () => {
+  const range1 = await store.getSeqNumRange(5) // to the end
   expect(range1.length).toEqual(6)
   expect(range1[0].seqNum).toEqual(5)
   expect(range1[range1.length - 1].seqNum).toEqual(10)
 })
 
-test('fetch from seqNum to = start', () => {
-  const range1 = store.getSeqNumRange(5, 5)
+test('fetch from seqNum to = start', async () => {
+  const range1 = await store.getSeqNumRange(5, 5)
   expect(range1.length).toEqual(1)
   expect(range1[0].seqNum).toEqual(5)
 })
 
-test('fetch start from seqNum not in store', () => {
-  const range1 = store.getSeqNumRange(1)
+test('fetch start from seqNum not in store', async () => {
+  const range1 = await store.getSeqNumRange(1)
   expect(range1.length).toEqual(9)
   expect(range1[0].seqNum).toEqual(2)
   expect(range1[range1.length - 1].seqNum).toEqual(10)

@@ -29,8 +29,13 @@ class TestRecovery {
 
     this.store = new FixMsgMemoryStore(`test-${id}`, config)
     this.records = this.getRecords(id)
-    this.records.forEach(r => this.store.put(r))
     this.recovery = new FixMsgAsciiStoreResend(this.store, config)
+  }
+
+  async populate () {
+    const records = this.records
+    const toWrite = records.map(r => this.store.put(r))
+    await Promise.all(toWrite)
   }
 
   getRecords (comp: string) {
@@ -58,10 +63,13 @@ beforeAll(async () => {
   const views = await replayFixFile(definitions, serverDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), delimiter)
   server = new TestRecovery(views, serverConfig)
   client = new TestRecovery(views, clientConfig)
+  await server.populate()
+  await client.populate()
 }, 45000)
 
 test('expect 15 messages in log', () => {
   expect(server.views.length).toEqual(15)
+  expect(client.views.length).toEqual(15)
 })
 
 /*
@@ -85,8 +93,18 @@ server: (application only)
 8=FIX4.4|9=000206|35=AE|49=accept-tls-comp|56=init-tls-comp|34=10|57=fix|52=20210307-16:17:14.477|571=100006|487=0|856=0|828=0|17=600006|39=2|570=N|55=Silver|48=Silver.INC|32=105|31=61.2|75=20210307|60=20210307-16:17:14.477|10=191|
  */
 
-test('server replay request from seq=1 to seq=10', () => {
-  const vec = server.recovery.getResendRequest(1, 10)
+test('server store states',async () => {
+  const s1 = await server.recovery.store.getState()
+  expect(s1.length).toEqual(9)
+})
+
+test('client store states',async () => {
+  const s1 = await client.recovery.store.getState()
+  expect(s1.length).toEqual(1)
+})
+
+test('server replay request from seq=1 to seq=10', async () => {
+  const vec = await server.recovery.getResendRequest(1, 10)
   expect(vec).toBeTruthy()
   expect(Array.isArray(vec))
   expect(vec.length).toEqual(10)
@@ -110,8 +128,8 @@ test('server replay request from seq=1 to seq=10', () => {
   }
 })
 
-test('client replay request from seq=1 to seq=10', () => {
-  const vec = client.recovery.getResendRequest(1, 10)
+test('client replay request from seq=1 to seq=10', async () => {
+  const vec = await client.recovery.getResendRequest(1, 10)
   expect(vec).toBeTruthy()
   expect(Array.isArray(vec))
   expect(vec.length).toEqual(3)
@@ -137,8 +155,8 @@ function checkSeqReset (rec: IFixMsgStoreRecord, from: number, to: number) {
 
 // expect to gap fill entire request - and move expected seqNo to 11
 // which will be the next message sent
-test('client replay request from seq=4 to seq=10', () => {
-  const vec = client.recovery.getResendRequest(4, 10)
+test('client replay request from seq=4 to seq=10', async () => {
+  const vec = await client.recovery.getResendRequest(4, 10)
   expect(vec).toBeTruthy()
   expect(Array.isArray(vec))
   expect(vec.length).toEqual(1)

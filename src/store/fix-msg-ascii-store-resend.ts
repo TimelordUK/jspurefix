@@ -3,6 +3,7 @@ import { FixMsgStoreRecord, IFixMsgStoreRecord } from './fix-msg-store-record'
 import { IJsFixConfig } from '../config'
 import { MsgType } from '../types'
 import { AsciiParser, MsgView } from '../buffer'
+import { ISequenceReset, IStandardHeader } from '../types/FIX4.4/repo'
 
 export class FixMsgAsciiStoreResend {
   parser: AsciiParser
@@ -10,34 +11,40 @@ export class FixMsgAsciiStoreResend {
     this.parser = new AsciiParser(this.config.definitions, null, this.config.delimiter)
   }
 
-  public getResendRequest (startSeq: number, endSeq: number): IFixMsgStoreRecord[] {
+  public getResendRequest (startSeq: number, endSeq: number): Promise<IFixMsgStoreRecord[]> {
 
     // need to cover request from start to end where any missing numbers are
     // included as gaps to allow vector of messages to be sent by the session
     // on a request
 
+    return new Promise((resolve, reject) => {
+      this.store.getSeqNumRange(startSeq, endSeq).then(res => {
+        resolve(this.inflateRange(startSeq, endSeq, res))
+      }).catch(e => {
+        reject(e)
+      })
+    })
+  }
+
+  private inflateRange (startSeq: number, endSeq: number, input: IFixMsgStoreRecord[]): IFixMsgStoreRecord[] {
     const toResend: IFixMsgStoreRecord[] = []
-    let seqNum = startSeq
-    let beginGap = 0
-    while (seqNum <= endSeq) {
-      const record = this.store.getSeqNum(seqNum)
-      if (record !== null) {
-        this.gap(beginGap, seqNum, toResend)
-        // we sent an application msg for this seqNum and hence need to recover it from its record
-        if (record.encoded) {
-          this.inflate(record)
-        }
-        toResend.push(record)
-        beginGap = 0
-      } else {
-        // this was a non saved message such as heartbeat - will be filled with a gap
-        if (beginGap === 0) {
-          beginGap = seqNum
-        }
+    let expected = startSeq
+    for (let i = 0; i < input.length; ++i) {
+      const record = input[i].clone()
+      const seqNum = record.seqNum
+      const toGap = seqNum - expected
+      if (toGap > 0) {
+        this.gap(expected, seqNum, toResend)
       }
-      ++seqNum
+      expected = seqNum + 1
+      if (record.encoded) {
+        this.inflate(record)
+      }
+      toResend.push(record)
     }
-    this.gap(beginGap, seqNum, toResend)
+    if (endSeq - expected > 0) {
+      this.gap(expected, endSeq + 1, toResend)
+    }
     return toResend
   }
 
@@ -65,12 +72,15 @@ export class FixMsgAsciiStoreResend {
   }
 
   public sequenceResetGap (startGap: number, newSeq: number): IFixMsgStoreRecord {
-    const gapFill = this.config.factory.sequenceReset(newSeq, true)
-    gapFill.StandardHeader = this.config.factory.header(MsgType.SequenceReset, startGap)
+    const gapFill: ISequenceReset = this.config.factory.sequenceReset(newSeq, true) as ISequenceReset
+    gapFill.StandardHeader = this.config.factory.header(MsgType.SequenceReset, startGap) as IStandardHeader
     gapFill.StandardHeader.PossDupFlag = true
+    gapFill.NewSeqNo = newSeq
     return new FixMsgStoreRecord(
       MsgType.SequenceReset,
-      null,
-      newSeq, gapFill)
+      new Date(),
+      newSeq,
+      gapFill,
+      null)
   }
 }
