@@ -6,9 +6,9 @@ import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { TcpDuplex, FixDuplex } from '../duplex'
 
 import * as util from 'util'
-import { connect as tlsConnect, TLSSocket } from 'tls'
+import { connect as tlsConnect, ConnectionOptions, TLSSocket } from 'tls'
 import { getTlsConnectionOptions } from './tls-options'
-import { Socket, createConnection } from 'net'
+import { createConnection } from 'net'
 import Timeout = NodeJS.Timeout
 
 export enum InitiatorState {
@@ -80,56 +80,81 @@ export class TcpInitiator extends FixInitiator {
     })
   }
 
-  private tryConnect (): Promise<MsgTransport> {
-    return new Promise<MsgTransport>((resolve, reject) => {
-      const tcp = this.tcp
-      this.logger.info(`tryConnect ${tcp.host}:${tcp.port}`)
-      const connectionOptions: any = getTlsConnectionOptions(tcp)
-      let socket: Socket = null
-      let tlsSocket: TLSSocket = null
-      if (connectionOptions) {
-        tlsSocket = tlsConnect(connectionOptions, () => {
-          this.logger.info(`client connected ${tlsSocket.authorized ? 'authorized' : 'unauthorized'}`)
-          if (!tlsSocket.authorized) {
-            this.logger.warning(`rejecting from state ${this.state} authorizationError ${tlsSocket.authorizationError}`)
-            tlsSocket.end()
-            reject(tlsSocket.authorizationError)
-          } else {
-            tlsSocket.setEncoding('utf8')
-            this.duplex = new TcpDuplex(tlsSocket)
-            resolve(new MsgTransport(0, this.jsFixConfig, this.duplex))
+  private unsecureDuplex (): Promise<TcpDuplex> {
+    const tcp = this.tcp
+    return new Promise<TcpDuplex>((resolve, reject) => {
+      try {
+        this.logger.info(`unsecureDuplex try to connect to endPoint`)
+        const socket = createConnection(tcp, () => {
+          try {
+            this.logger.info(`net.createConnection cb, resolving`)
+            const tcpDuplex = new TcpDuplex(socket)
+            resolve(tcpDuplex)
+          } catch (e) {
+            reject(e)
           }
         })
-
-        if (tcp.tls.enableTrace) {
-          this.logger.info(`enabling tls session trace`)
-          tlsSocket.enableTrace()
-        }
-
-        tlsSocket.on('error', (e) => {
-          reject(e)
-        })
-      } else {
-        socket = createConnection(tcp, () => {
-          this.logger.info(`net.createConnection cb, resolving`)
-          this.duplex = new TcpDuplex(socket)
-          resolve(new MsgTransport(0, this.jsFixConfig, this.duplex))
-          socket.on('error', (e) => {
-            reject(e)
-          })
-        })
+      } catch (e) {
+        reject(e)
       }
     })
   }
 
+  private tlsDuplex (): Promise < TcpDuplex > {
+    return new Promise<TcpDuplex>((resolve, reject) => {
+      let tlsSocket: TLSSocket = null
+      const tcp = this.tcp
+      const connectionOptions: ConnectionOptions = getTlsConnectionOptions(tcp)
+      if (connectionOptions) {
+        try {
+          tlsSocket = tlsConnect(connectionOptions, () => {
+            this.logger.info(`client connected ${tlsSocket.authorized ? 'authorized' : 'unauthorized'}`)
+            if (!tlsSocket.authorized) {
+              const error = tlsSocket.authorizationError
+              this.logger.warning(`rejecting from state ${this.state} authorizationError ${error}`)
+              tlsSocket.end()
+              reject(error)
+            } else {
+              tlsSocket.setEncoding('utf8')
+              const tlsDuplex = new TcpDuplex(tlsSocket)
+              if (tcp.tls.enableTrace) {
+                this.logger.info(`enabling tls session trace`)
+                tlsSocket.enableTrace()
+              }
+              this.logger.info(`tlsDuplex resolving`)
+              resolve(tlsDuplex)
+            }
+          })
+        } catch (e) {
+          reject(e)
+        }
+      }
+    })
+  }
+
+  private tryConnect (): Promise < MsgTransport > {
+    return new Promise<MsgTransport>((resolve, reject) => {
+      const tcp = this.tcp
+      const connectionOptions: ConnectionOptions = getTlsConnectionOptions(tcp)
+      const connector = connectionOptions ? this.tlsDuplex() : this.unsecureDuplex()
+      this.logger.info(`tryConnect ${tcp.host}:${tcp.port}`)
+      connector.then(duplex => {
+        this.duplex = duplex
+        resolve(new MsgTransport(0, this.jsFixConfig, duplex))
+      }).catch(e => {
+        reject(e)
+      })
+    })
+  }
+
   public clearTimer () {
-    if (this.th) {
+    if (this .th) {
       clearInterval(this.th)
       this.th = null
     }
   }
 
-  private repeatConnect (timeoutSeconds: number): Promise<MsgTransport> {
+  private repeatConnect (timeoutSeconds: number): Promise < MsgTransport > {
     return new Promise<MsgTransport>(async (resolve, reject) => {
       const application = this.application
       const promisify = util.promisify

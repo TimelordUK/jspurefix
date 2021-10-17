@@ -9,50 +9,74 @@ import { createServer as tlsCreateServer, TLSSocket, TlsOptions } from 'tls'
 export class TcpAcceptor extends FixAcceptor {
   private server: Server
   private logger: IJsFixLogger
+  private nextId: number = 0
+
   constructor (public readonly config: IJsFixConfig) {
     super(config.description.application)
     this.logger = config.logFactory.logger(`${config.description.application.name}:TcpAcceptor`)
-    let nextId: number = 0
-    const tcp = this.config.description.application.tcp
-    const tlsOptions: TlsOptions = getTlsOptions(tcp.tls)
+    const tlsOptions: TlsOptions = this.tlsOptions()
     if (tlsOptions) {
-      try {
-        this.logger.info(`create tls server`)
-        this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
-          if (tcp.tls.enableTrace) {
-            this.logger.info(`enabling tls session trace`)
-            tlsSocket.enableTrace()
-          }
-          if (tlsSocket.authorized) {
-            tlsSocket.setEncoding('utf8')
-            const id: number = nextId++
-            this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
-            this.onSocket(id, tlsSocket, config)
-          } else {
-            this.logger.info(`no transport created on tls with no authorized connection`)
-          }
-        })
-      } catch (e) {
-        this.logger.error(e)
-        throw e
-      }
+      this.tlsServer()
     } else {
-      try {
-        this.logger.info(`create unsecured server`)
-        this.server = netCreateServer((socket: Socket) => {
-          const id: number = nextId++
-          this.logger.info(`net creates session ${id} }`)
-          socket.setNoDelay(true)
-          this.onSocket(id, socket, config)
-        })
-      } catch (e) {
-        this.logger.error(e)
-        throw e
-      }
+      this.unsecureServer()
     }
     this.server.on('error', ((err: Error) => {
       throw err
     }))
+  }
+
+  getId (): number {
+    this.nextId++
+    const id: number = this.nextId
+    return id
+  }
+
+  tlsServer (): void {
+    try {
+      const config: IJsFixConfig = this.config
+      const tcp = this.config.description.application.tcp
+      const tlsOptions: TlsOptions = getTlsOptions(tcp.tls)
+      this.logger.info(`create tls server`)
+      this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
+        if (tcp.tls.enableTrace) {
+          this.logger.info(`enabling tls session trace`)
+          tlsSocket.enableTrace()
+        }
+        if (tlsSocket.authorized) {
+          tlsSocket.setEncoding('utf8')
+          const id: number = this.getId()
+          this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
+          this.onSocket(id, tlsSocket, config)
+        } else {
+          this.logger.info(`no transport created on tls with no authorized connection`)
+        }
+      })
+    } catch (e) {
+      this.logger.error(e)
+      throw e
+    }
+  }
+
+  unsecureServer () {
+    try {
+      const config = this.config
+      this.logger.info(`create unsecured server`)
+      this.server = netCreateServer((socket: Socket) => {
+        const id: number = this.getId()
+        this.logger.info(`net creates session ${id} }`)
+        socket.setNoDelay(true)
+        this.onSocket(id, socket, config)
+      })
+    } catch (e) {
+      this.logger.error(e)
+      throw e
+    }
+  }
+
+  tlsOptions (): TlsOptions {
+    const tcp = this.config.description.application.tcp
+    const tlsOptions: TlsOptions = getTlsOptions(tcp.tls)
+    return tlsOptions
   }
 
   private onSocket (id: number, socket: Socket, config: IJsFixConfig) {

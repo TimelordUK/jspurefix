@@ -9,7 +9,6 @@ import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource,
 import { MsgType } from '..'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
 
-
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions
@@ -451,7 +450,7 @@ test('encode group not an array of', () => {
   expect(run).toThrow(/expected array instance for group NoSecurityAltID/)
 })
 
-function getCompID(securityType: SecurityType): string {
+function getCompID (securityType: SecurityType): string {
   switch (securityType) {
     case SecurityType.CommonStock: {
       return 'DepA'
@@ -473,8 +472,8 @@ function getCompID(securityType: SecurityType): string {
 function createOrder (id: number, symbol: string, securityType: SecurityType, side: Side, qty: number, price: number): INewOrderSingle {
   return {
     StandardHeader: {
-        DeliverToCompID: getCompID(securityType),
-      } as IStandardHeader,
+      DeliverToCompID: getCompID(securityType)
+    } as IStandardHeader,
     ClOrdID: `Cli${id}`,
     Account: 'MyAcc',
     Side: side,
