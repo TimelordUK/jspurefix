@@ -4,15 +4,20 @@ import { IJsFixConfig } from '../../config'
 import { IMsgApplication } from '../session-description'
 import { SessionState, TickAction } from '../fix-session-state'
 import { FixSession } from '../fix-session'
+import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore } from '../../store'
 
 export abstract class AsciiSession extends FixSession {
 
   public heartbeat: boolean = true
+  protected store: IFixMsgStore = null
+  protected resender: FixMsgAsciiStoreResend
 
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.requestLogoutType = this.respondLogoutType = MsgType.Logout
     this.requestLogonType = MsgType.Logon
+    this.store = new FixMsgMemoryStore(this.config.description.SenderCompId, this.config)
+    this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
   }
 
   private checkSeqNo (msgType: string, view: MsgView): boolean {
@@ -164,7 +169,6 @@ export abstract class AsciiSession extends FixSession {
 
   protected onSessionMsg (msgType: string, view: MsgView): void {
 
-    const factory = this.config.factory
     const logger = this.sessionLogger
 
     switch (msgType) {
@@ -186,7 +190,7 @@ export abstract class AsciiSession extends FixSession {
 
       case MsgType.TestRequest: {
         const req: string = view.getString(MsgTag.TestReqID)
-        this.send(MsgType.Heartbeat, factory.heartbeat(req))
+        this.sendHeartbeat(req)
         break
       }
 
@@ -258,9 +262,7 @@ export abstract class AsciiSession extends FixSession {
 
   private peerLogon (view: MsgView) {
     const logger = this.sessionLogger
-    const heartBtInt = view.getTyped(MsgTag.HeartBtInt)
-    const peerCompId = view.getTyped(MsgTag.SenderCompID)
-    const userName = view.getString(MsgTag.Username)
+    const [heartBtInt, peerCompId, userName] = view.getTypedTags([MsgTag.HeartBtInt, MsgTag.SenderCompID, MsgTag.Username])
     logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, userName = ${userName}`)
     const state = this.sessionState
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt)
@@ -282,11 +284,20 @@ export abstract class AsciiSession extends FixSession {
     this.onReady(view)
   }
 
+  private sendTestRequest () {
+    const factory = this.config.factory
+    this.send(MsgType.TestRequest, factory.testRequest())
+  }
+
+  private sendHeartbeat (testReqId: string) {
+    const factory = this.config.factory
+    this.send(MsgType.Heartbeat, factory.heartbeat(testReqId))
+  }
+
   private tick (): void {
     const sessionState = this.sessionState
     const action: TickAction = sessionState.calcAction(new Date())
     const application: IMsgApplication = this.transport.config.description.application
-    const factory = this.config.factory
     const logger = this.sessionLogger
 
     switch (action) {
@@ -297,13 +308,13 @@ export abstract class AsciiSession extends FixSession {
 
       case TickAction.TestRequest: {
         logger.debug(`send test req. state = ${sessionState.toString()}`)
-        this.send(MsgType.TestRequest, factory.testRequest())
+        this.sendTestRequest()
         break
       }
 
       case TickAction.Heartbeat: {
         logger.debug(`send heartbeat. state = ${sessionState.toString()}`)
-        this.send(MsgType.Heartbeat, factory.heartbeat(sessionState.now.toUTCString()))
+        this.sendHeartbeat(sessionState.now.toUTCString())
         break
       }
 
