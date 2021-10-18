@@ -24,9 +24,22 @@ class FixEntity {
   }
 }
 
-let definitions: FixDefinitions
-let clientDescription: ISessionDescription
-let serverDescription: ISessionDescription
+class Setup {
+  public definitions: FixDefinitions
+  public readonly clientDescription: ISessionDescription
+  public readonly serverDescription: ISessionDescription
+  constructor () {
+    this.clientDescription = require(path.join(root, 'session/test-initiator.json'))
+    this.serverDescription = require(path.join(root, 'session/test-acceptor.json'))
+  }
+
+  async init () {
+    this.definitions = await getDefinitions(this.clientDescription.application.dictionary)
+  }
+}
+
+let setup: Setup = null
+let experiment: Experiment = null
 
 class Experiment {
   public readonly client: FixEntity
@@ -34,37 +47,34 @@ class Experiment {
   public readonly serverFactory: AsciiSessionMsgFactory
   public readonly server: FixEntity
 
-  constructor () {
-    this.clientFactory = new AsciiSessionMsgFactory(clientDescription)
-    this.serverFactory = new AsciiSessionMsgFactory(serverDescription)
+  loopBack (lhs: FixDuplex, rhs: FixDuplex) {
+    lhs.writable.on('data', (data: Buffer) => {
+      rhs.readable.push(data)
+    })
+  }
 
-    const clientConfig = new JsFixConfig(this.clientFactory, definitions, clientDescription, AsciiChars.Pipe)
-    const serverConfig = new JsFixConfig(this.serverFactory, definitions, serverDescription, AsciiChars.Pipe)
+  constructor () {
+    this.clientFactory = new AsciiSessionMsgFactory(setup.clientDescription)
+    this.serverFactory = new AsciiSessionMsgFactory(setup.serverDescription)
+
+    const clientConfig = new JsFixConfig(this.clientFactory, setup.definitions, setup.clientDescription, AsciiChars.Pipe)
+    const serverConfig = new JsFixConfig(this.serverFactory, setup.definitions, setup.serverDescription, AsciiChars.Pipe)
 
     this.client = new FixEntity(clientConfig)
     this.server = new FixEntity(serverConfig)
 
-    loopBack(this.client.duplex, this.server.duplex)
-    loopBack(this.server.duplex, this.client.duplex)
+    this.loopBack(this.client.duplex, this.server.duplex)
+    this.loopBack(this.server.duplex, this.client.duplex)
   }
 }
 
-let experiment: Experiment = null
-
-function loopBack (lhs: FixDuplex, rhs: FixDuplex) {
-  lhs.writable.on('data', (data: Buffer) => {
-    rhs.readable.push(data)
-  })
-}
-
 beforeAll(async () => {
-  clientDescription = require(path.join(root, 'session/test-initiator.json'))
-  serverDescription = require(path.join(root, 'session/test-acceptor.json'))
-  definitions = await getDefinitions(clientDescription.application.dictionary)
+  setup = new Setup()
+  await setup.init()
 }, 45000)
 
 beforeEach(() => {
-   experiment = new Experiment()
+  experiment = new Experiment()
 })
 
 class ParsingResult {
@@ -118,7 +128,6 @@ class SkeletonRunner {
     })
 
     this.serverSkeleton.on('error', e => {
-      console.log(e)
       experiment.server.errors.push(e)
     })
   }
@@ -241,11 +250,13 @@ function checkSeqNos (views: MsgView[]) {
 
 test('seq No OK', async () => {
   await runSkeletons()
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
   // both sides should now have logged on and logged off
-  expect(experiment.client.views.length >= 2).toEqual(true)
-  expect(experiment.server.views.length >= 2).toEqual(true)
-  checkSeqNos(experiment.client.views)
-  checkSeqNos(experiment.server.views)
+  expect(cviews.length >= 2).toEqual(true)
+  expect(sviews.length >= 2).toEqual(true)
+  checkSeqNos(cviews)
+  checkSeqNos(sviews)
 })
 
 function mutateSeqNo (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject {
@@ -264,12 +275,14 @@ function mutateSeqNo (description: ISessionDescription, type: string, o: ILooseO
 test('out of seq logout', async () => {
   experiment.clientFactory.mutator = mutateSeqNo
   await runSkeletons()
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
   // both sides should now have logged on but out of seq logout will terminate sessions so no logout returned
-  expect(experiment.client.views.length).toEqual(1)
-  expect(experiment.client.views[0].segment.name).toEqual('Logon')
-  expect(experiment.server.views.length).toEqual(2)
-  expect(experiment.server.views[0].segment.name).toEqual('Logon')
-  expect(experiment.server.views[1].segment.name).toEqual('Logout')
+  expect(cviews.length).toEqual(1)
+  expect(cviews[0].segment.name).toEqual('Logon')
+  expect(sviews.length).toEqual(2)
+  expect(sviews[0].segment.name).toEqual('Logon')
+  expect(sviews[1].segment.name).toEqual('Logout')
 })
 
 function countOfType (type: string, views: MsgView[]): number {
@@ -293,11 +306,13 @@ test('client logon reject missing 108', async () => {
   experiment.clientFactory.mutator = mutateRemoveRequiredHeartBtInt
   await runSkeletons(2)
   // client sends logon, server rejects
-  expect(experiment.client.views.length === 1).toEqual(true)
-  expect(experiment.server.views.length === 1).toEqual(true)
-  expect(experiment.client.views[0].segment.name).toEqual('Reject')
-  expect(experiment.server.views[0].segment.name).toEqual('Logon')
-  const reject: IReject = experiment.client.views[0].toObject()
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
+  expect(cviews.length === 1).toEqual(true)
+  expect(sviews.length === 1).toEqual(true)
+  expect(cviews[0].segment.name).toEqual('Reject')
+  expect(sviews[0].segment.name).toEqual('Logon')
+  const reject: IReject = cviews[0].toObject()
   expect(reject.SessionRejectReason === SessionRejectReason.RequiredTagMissing)
   expect(reject.Text).toEqual('msgType A missing required tag 108')
 }, 10000)
@@ -308,14 +323,16 @@ test('client unknown msg type', async () => {
   const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
   const changed = logonMsg.replace('35=A', '35=ZZ').replace('34=1', `34=${at.msgSeqNum + 1}`)
   await runSkeletons(2, changed)
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
   // client sends logon, server rejects
-  expect(experiment.client.views.length === 3).toEqual(true)
-  expect(experiment.server.views.length === 3).toEqual(true)
-  expect(experiment.client.views[0].segment.name).toEqual('Logon')
-  expect(experiment.client.views[1].segment.name).toEqual('Reject')
-  expect(experiment.server.views[0].segment.name).toEqual('Logon')
-  expect(experiment.server.views[1].segment.name).toEqual('unknown')
-  const reject: IReject = experiment.client.views[1].toObject()
+  expect(cviews.length === 3).toEqual(true)
+  expect(sviews.length === 3).toEqual(true)
+  expect(cviews[0].segment.name).toEqual('Logon')
+  expect(cviews[1].segment.name).toEqual('Reject')
+  expect(sviews[0].segment.name).toEqual('Logon')
+  expect(sviews[1].segment.name).toEqual('unknown')
+  const reject: IReject = cviews[1].toObject()
   expect(reject.SessionRejectReason === SessionRejectReason.InvalidMsgType)
   expect(reject.Text).toEqual('msgType ZZ unknown')
 }, 10000)
@@ -324,32 +341,36 @@ test('heartbeat invalid tag', async () => {
   const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
   const changed = heartbeat.replace('112=', '999=').replace('34=1', `34=${at.msgSeqNum + 1}`)
   await runSkeletons(2, changed)
-  expect(experiment.client.views.length === 3).toEqual(true)
-  expect(experiment.server.views.length === 3).toEqual(true)
-  expect(experiment.client.views[0].segment.name).toEqual('Logon')
-  expect(experiment.client.views[1].segment.name).toEqual('Reject')
-  expect(experiment.server.views[0].segment.name).toEqual('Logon')
-  expect(experiment.server.views[1].segment.name).toEqual('Heartbeat')
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
+  expect(cviews.length === 3).toEqual(true)
+  expect(sviews.length === 3).toEqual(true)
+  expect(cviews[0].segment.name).toEqual('Logon')
+  expect(cviews[1].segment.name).toEqual('Reject')
+  expect(sviews[0].segment.name).toEqual('Logon')
+  expect(sviews[1].segment.name).toEqual('Heartbeat')
   const reject: IReject = experiment.client.views[1].toObject()
   expect(reject.SessionRejectReason === SessionRejectReason.InvalidTagNumber)
-  checkSeqNos(experiment.client.views)
-  checkSeqNos(experiment.server.views)
+  checkSeqNos(cviews)
+  checkSeqNos(sviews)
 }, 10000)
 
 test('heartbeat invalid sender comp', async () => {
   const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
   const changed = heartbeat.replace('49=init-comp', '49=init-not!').replace('34=1', `34=${at.msgSeqNum + 1}`)
   await runSkeletons(2, changed)
-  expect(experiment.client.views.length === 3).toEqual(true)
-  expect(experiment.server.views.length === 3).toEqual(true)
-  expect(experiment.client.views[0].segment.name).toEqual('Logon')
-  expect(experiment.client.views[1].segment.name).toEqual('Reject')
-  expect(experiment.server.views[0].segment.name).toEqual('Logon')
-  expect(experiment.server.views[1].segment.name).toEqual('Heartbeat')
-  const reject: IReject = experiment.client.views[1].toObject()
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
+  expect(cviews.length === 3).toEqual(true)
+  expect(sviews.length === 3).toEqual(true)
+  expect(cviews[0].segment.name).toEqual('Logon')
+  expect(cviews[1].segment.name).toEqual('Reject')
+  expect(sviews[0].segment.name).toEqual('Logon')
+  expect(sviews[1].segment.name).toEqual('Heartbeat')
+  const reject: IReject = cviews[1].toObject()
   expect(reject.SessionRejectReason === SessionRejectReason.CompIDProblem)
-  checkSeqNos(experiment.client.views)
-  checkSeqNos(experiment.server.views)
+  checkSeqNos(cviews)
+  checkSeqNos(sviews)
 }, 10000)
 
 // client will send heartbeats to server, server with 30 second heartbeat will not heartbeat
@@ -357,13 +378,15 @@ test('client heartbeats to server', async () => {
   const preset = experiment.client.config.description.HeartBtInt
   experiment.client.config.description.HeartBtInt = 2
   await runSkeletons(6)
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
   // both sides should now have logged on and logged off
-  expect(experiment.client.views.length === 2).toEqual(true)
-  expect(experiment.server.views.length > 2).toEqual(true)
-  const serverReceivesHeartbeats = countOfType('Heartbeat', experiment.server.views)
+  expect(cviews.length === 2).toEqual(true)
+  expect(sviews.length > 2).toEqual(true)
+  const serverReceivesHeartbeats = countOfType('Heartbeat', sviews)
   expect(serverReceivesHeartbeats >= 2 && serverReceivesHeartbeats <= 4).toEqual(true)
-  checkSeqNos(experiment.client.views)
-  checkSeqNos(experiment.server.views)
+  checkSeqNos(cviews)
+  checkSeqNos(sviews)
   experiment.client.config.description.HeartBtInt = preset
 }, 10000)
 
@@ -372,12 +395,14 @@ test('server heartbeats to client', async () => {
   experiment.server.config.description.HeartBtInt = 2
   await runSkeletons(6)
   // both sides should now have logged on and logged off
-  expect(experiment.server.views.length === 2).toEqual(true)
-  expect(experiment.client.views.length > 2).toEqual(true)
-  const clientReceivesHeartbeats = countOfType('Heartbeat', experiment.client.views)
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
+  expect(sviews.length === 2).toEqual(true)
+  expect(cviews.length > 2).toEqual(true)
+  const clientReceivesHeartbeats = countOfType('Heartbeat', cviews)
   expect(clientReceivesHeartbeats >= 2 && clientReceivesHeartbeats <= 4).toEqual(true)
-  checkSeqNos(experiment.client.views)
-  checkSeqNos(experiment.server.views)
+  checkSeqNos(cviews)
+  checkSeqNos(sviews)
   experiment.server.config.description.HeartBtInt = preset
 }, 10000)
 
@@ -386,15 +411,17 @@ test('client server heartbeat', async () => {
   experiment.server.config.description.HeartBtInt = 2
   experiment.client.config.description.HeartBtInt = 2
   await runSkeletons(6)
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
   // both sides should now have logged on and logged off
-  expect(experiment.server.views.length > 2).toEqual(true)
-  expect(experiment.client.views.length > 2).toEqual(true)
-  const clientReceivesHeartbeats = countOfType('Heartbeat', experiment.client.views)
-  const serverReceivesHeartbeats = countOfType('Heartbeat', experiment.server.views)
+  expect(sviews.length > 2).toEqual(true)
+  expect(cviews.length > 2).toEqual(true)
+  const clientReceivesHeartbeats = countOfType('Heartbeat', cviews)
+  const serverReceivesHeartbeats = countOfType('Heartbeat', sviews)
   expect(clientReceivesHeartbeats >= 2 && clientReceivesHeartbeats <= 4).toEqual(true)
   expect(serverReceivesHeartbeats >= 2 && serverReceivesHeartbeats <= 4).toEqual(true)
-  checkSeqNos(experiment.client.views)
-  checkSeqNos(experiment.server.views)
+  checkSeqNos(cviews)
+  checkSeqNos(sviews)
   experiment.server.config.description.HeartBtInt = preset
   experiment.client.config.description.HeartBtInt = preset
 }, 10000)
