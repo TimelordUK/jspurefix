@@ -40,12 +40,17 @@ export abstract class FixSession extends events.EventEmitter {
     if (state === this.sessionState.state) return
     const logger = this.sessionLogger
     const prevState = this.sessionState.state
-    logger.info(`current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`)
+    const msg = `current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`
+    logger.info(msg)
     this.sessionState.state = state
   }
 
   public getState (): SessionState {
     return this.sessionState.state
+  }
+
+  public sendLogon () {
+    this.send(this.requestLogonType, this.config.factory.logon())
   }
 
   public run (transport: MsgTransport): Promise<number> {
@@ -59,7 +64,7 @@ export abstract class FixSession extends events.EventEmitter {
     return new Promise<any>((accept, reject) => {
       if (this.initiator) {
         logger.debug('initiator sending logon')
-        this.send(this.requestLogonType, this.config.factory.logon())
+        this.sendLogon()
         this.setState(SessionState.InitiationLogonSent)
       } else {
         logger.debug('acceptor waits for logon')
@@ -169,9 +174,12 @@ export abstract class FixSession extends events.EventEmitter {
   }
 
   protected terminate (error: Error): void {
+    if (this.sessionState.state === SessionState.Stopped) return
     this.sessionLogger.error(error)
     clearInterval(this.timer)
-    this.transport.end()
+    if (this.transport) {
+      this.transport.end()
+    }
     this.transport = null
     this.sessionState.state = SessionState.Stopped
     this.emit('error', error)
@@ -179,7 +187,8 @@ export abstract class FixSession extends events.EventEmitter {
 
   protected peerLogout (view: MsgView) {
     const msg = view.getString(MsgTag.Text)
-    switch (this.sessionState.state) {
+    const state = this.sessionState.state
+    switch (state) {
       case SessionState.WaitingLogoutConfirm: {
         this.sessionLogger.info(`peer confirms logout Text = '${msg}'`)
         this.stop()

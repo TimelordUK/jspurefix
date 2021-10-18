@@ -174,7 +174,7 @@ export abstract class AsciiSession extends FixSession {
         if (this.okForLogon()) {
           this.peerLogon(view)
         } else {
-          this.terminate(new Error(`state ${this.stateString()} is illegal forLogon`))
+          this.terminate(new Error(`state ${this.stateString()} is illegal for Logon`))
         }
         break
       }
@@ -267,7 +267,8 @@ export abstract class AsciiSession extends FixSession {
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
       this.setState(SessionState.InitiationLogonResponse)
-      this.send(MsgType.Logon, this.config.factory.logon())
+      logger.info('acceptor responds to logon request')
+      this.sendLogon()
     } else { // as an initiator the acceptor has responded
       this.setState(SessionState.InitiationLogonReceived)
     }

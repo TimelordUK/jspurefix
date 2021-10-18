@@ -1,6 +1,7 @@
 import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
+import { ILooseObject } from '../../../collections/collection'
 
 export class SkeletonSession extends AsciiSession {
   private readonly logger: IJsFixLogger
@@ -21,6 +22,10 @@ export class SkeletonSession extends AsciiSession {
         break
       }
     }
+  }
+
+  public sendMessage (msgType: string, obj: ILooseObject): void {
+    this.send(msgType, obj)
   }
 
   // use msgType for example to persist only trade capture messages to database
