@@ -134,13 +134,13 @@ export class HttpAcceptor extends FixAcceptor {
     const authorise = `${root}authorise`
     const query = `${root}query`
     this.logger.info(`uri: authorise ${authorise}, query ${query}`)
-    router.post(authorise, (req: express.Request, res: express.Response) => {
+    router.post(authorise, async (req: express.Request, res: express.Response) => {
       if (!req.headers.authorization) {
         this.logger.info('logon')
-        this.logon(req, res)
+        await this.logon(req, res)
       } else {
         this.logger.info('logout')
-        this.logout(req, res)
+        await this.logout(req, res)
       }
     })
 
@@ -157,6 +157,8 @@ export class HttpAcceptor extends FixAcceptor {
         const d = t.duplex
         this.respond(d, res).then(() => {
           this.logger.info(`responded to ${req.url}`)
+        }).catch(e => {
+          res.send(e)
         })
         d.readable.push(body.fixml)
       }

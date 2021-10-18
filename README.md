@@ -203,6 +203,7 @@ i.e. include field BodyLengthChars which defaults to 7 characters if omitted.
 
 If the message sequences are persisted over multiple sessions and are not reset on logon (ie. `"ResetSeqNumFlag": false,`),
 then the previously used sequence numbers can be set as follows:
+
 ```json
 {
   "ResetSeqNumFlag": false,
@@ -213,9 +214,10 @@ then the previously used sequence numbers can be set as follows:
 
 ## resending messages
 
-By default, the library will not resend past messages as this requires persisting messages which depending on the volume, 
+By default, the library will not resend past messages as this requires persisting messages which depending on the volume,
 may also require a database. If you want to support resending you must override `AsciiSession.onResendRequest()` with a resending logic.
 Additionally, make sure to include the original message sequence and the duplicate message flag in the FIX object:
+
 ```typescript
 {
   ...messageBodyData, 
@@ -225,6 +227,7 @@ Additionally, make sure to include the original message sequence and the duplica
 ```
 
 ### Example
+
 ```json
 {
   "ClOrdID": "acceptor-order-id",
