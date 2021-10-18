@@ -54,6 +54,17 @@ export abstract class AsciiSession extends FixSession {
     }
   }
 
+  protected checkForwardMsg (msgType: string, view: MsgView): void {
+    const okToForward = this.validStateApplicationMsg()
+    if (okToForward) {
+      this.sessionLogger.info(`ascii forwarding msgType = '${msgType}' to application`)
+      this.setState(SessionState.ActiveNormalSession)
+      this.onApplicationMsg(msgType, view)
+    } else {
+      this.terminate(new Error(`msgType ${msgType} received in state ${this.stateString()}`))
+    }
+  }
+
   private sendReject (msgType: string, seqNo: number, msg: string, reason: number): void {
     const factory = this.config.factory
     const reject = factory.reject(msgType, seqNo, msg, reason)
@@ -143,6 +154,14 @@ export abstract class AsciiSession extends FixSession {
     this.send(MsgType.SequenceReset, resend)
   }
 
+  okForLogon (): boolean {
+    const state = this.sessionState.state
+    if (this.acceptor) {
+      return state === SessionState.WaitingForALogon
+    }
+    return state === SessionState.InitiationLogonSent
+  }
+
   protected onSessionMsg (msgType: string, view: MsgView): void {
 
     const factory = this.config.factory
@@ -150,7 +169,13 @@ export abstract class AsciiSession extends FixSession {
 
     switch (msgType) {
       case MsgType.Logon: {
-        this.peerLogon(view)
+        // only valid to receive a logon when in LogonSent or WaitingALogon
+        // else will drop connection immediately.
+        if (this.okForLogon()) {
+          this.peerLogon(view)
+        } else {
+          this.terminate(new Error(`state ${this.stateString()} is illegal forLogon`))
+        }
         break
       }
 

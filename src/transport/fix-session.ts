@@ -109,18 +109,20 @@ export abstract class FixSession extends events.EventEmitter {
     })
 
     rx.on('end', () => {
+      const state = this.sessionState.state
       logger.info(`rx end received sessionState = [${this.sessionState.toString()}]`)
-      switch (this.sessionState.state) {
+      switch (state) {
+        case SessionState.ActiveNormalSession:
         case SessionState.ReceiveLogout:
         case SessionState.Stopped:
         case SessionState.ConfirmingLogout: {
-          logger.info(`rx graceful end state = ${SessionState[this.sessionState.state]}`)
+          logger.info(`rx graceful end state = ${SessionState[state]}`)
           this.done()
         }
           break
 
         default: {
-          const e = new Error(`unexpected state - transport failed? = ${SessionState[this.sessionState.state]}`)
+          const e = new Error(`unexpected state - transport failed? = ${SessionState[state]}`)
           logger.info(`rx error ${e.message}`)
           this.terminate(e)
         }
@@ -144,8 +146,25 @@ export abstract class FixSession extends events.EventEmitter {
     })
   }
 
+  protected validStateApplicationMsg (): boolean {
+    switch (this.sessionState.state) {
+      case SessionState.Idle:
+      case SessionState.InitiateConnection:
+      case SessionState.InitiationLogonSent:
+      case SessionState.WaitingForALogon:
+        return false
+      default:
+        return true
+    }
+  }
+
+  protected stateString (): string {
+    return SessionState[this.sessionState.state]
+  }
+
   protected checkForwardMsg (msgType: string, view: MsgView): void {
     this.sessionLogger.info(`forwarding msgType = '${msgType}' to application`)
+    this.setState(SessionState.ActiveNormalSession)
     this.onApplicationMsg(msgType, view)
   }
 
@@ -168,6 +187,7 @@ export abstract class FixSession extends events.EventEmitter {
       }
 
       case SessionState.InitiationLogonResponse:
+      case SessionState.ActiveNormalSession:
       case SessionState.InitiationLogonReceived: {
         this.setState(SessionState.ConfirmingLogout)
         this.sessionLogger.info(`peer initiates logout Text = '${msg}'`)
@@ -198,6 +218,7 @@ export abstract class FixSession extends events.EventEmitter {
     }
     const factory = this.config.factory
     switch (sessionState.state) {
+      case SessionState.ActiveNormalSession:
       case SessionState.InitiationLogonResponse:
       case SessionState.InitiationLogonReceived: {
         // this instance initiates logout
@@ -227,6 +248,7 @@ export abstract class FixSession extends events.EventEmitter {
   public done (): void {
     switch (this.sessionState.state) {
       case SessionState.InitiationLogonResponse:
+      case SessionState.ActiveNormalSession:
       case SessionState.InitiationLogonReceived: {
         this.sessionLogout()
         break
