@@ -207,6 +207,7 @@ export abstract class AsciiSession extends FixSession {
 
       case MsgType.Heartbeat: {
         this.sessionState.lastTestRequestAt = null
+        this.setState(SessionState.ActiveNormalSession)
         break
       }
 
@@ -303,6 +304,7 @@ export abstract class AsciiSession extends FixSession {
 
   private sendTestRequest () {
     const factory = this.config.factory
+    this.setState(SessionState.AwaitingProcessingResponseToTestRequest)
     this.send(MsgType.TestRequest, factory.testRequest())
   }
 
