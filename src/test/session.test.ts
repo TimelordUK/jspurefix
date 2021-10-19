@@ -408,18 +408,22 @@ test('server heartbeats to client', async () => {
 
 test('client server heartbeat', async () => {
   const preset = experiment.server.config.description.HeartBtInt
-  experiment.server.config.description.HeartBtInt = 2
+  experiment.server.config.description.HeartBtInt = 5
   experiment.client.config.description.HeartBtInt = 2
-  await runSkeletons(6)
+  await runSkeletons(8)
   const cviews = experiment.client.views
   const sviews = experiment.server.views
   // both sides should now have logged on and logged off
   expect(sviews.length > 2).toEqual(true)
   expect(cviews.length > 2).toEqual(true)
   const clientReceivesHeartbeats = countOfType('Heartbeat', cviews)
+  const clientReceivesTestRequest = countOfType('TestRequest', cviews)
+  const clientTotal = clientReceivesHeartbeats + clientReceivesTestRequest
   const serverReceivesHeartbeats = countOfType('Heartbeat', sviews)
-  expect(clientReceivesHeartbeats >= 2 && clientReceivesHeartbeats <= 4).toEqual(true)
-  expect(serverReceivesHeartbeats >= 2 && serverReceivesHeartbeats <= 4).toEqual(true)
+  const serverReceivesTestRequest = countOfType('TestRequest', sviews)
+  const serverTotal = serverReceivesHeartbeats + serverReceivesTestRequest
+  expect(clientTotal >= 1 && clientReceivesHeartbeats <= 4).toEqual(true)
+  expect(serverTotal >= 3 && serverReceivesHeartbeats <= 4).toEqual(true)
   checkSeqNos(cviews)
   checkSeqNos(sviews)
   experiment.server.config.description.HeartBtInt = preset

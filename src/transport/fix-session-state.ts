@@ -146,6 +146,8 @@ export class FixSessionState {
         break
       }
 
+      case SessionState.ActiveNormalSession:
+      case SessionState.AwaitingProcessingResponseToTestRequest:
       case SessionState.InitiationLogonReceived:
       case SessionState.InitiationLogonResponse : {
         if (this.timeToHeartbeat()) {
