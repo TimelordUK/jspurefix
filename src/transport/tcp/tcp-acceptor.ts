@@ -63,7 +63,7 @@ export class TcpAcceptor extends FixAcceptor {
       this.logger.info(`create unsecured server`)
       this.server = netCreateServer((socket: Socket) => {
         const id: number = this.getId()
-        this.logger.info(`net creates session ${id} }`)
+        this.logger.info(`net creates session ${id}`)
         socket.setNoDelay(true)
         this.onSocket(id, socket, config)
       })

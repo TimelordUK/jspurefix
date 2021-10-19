@@ -272,6 +272,7 @@ export abstract class AsciiSession extends FixSession {
       logger.info('acceptor responds to logon request')
       this.sendLogon()
     } else { // as an initiator the acceptor has responded
+      logger.info('initiator receives logon response')
       this.setState(SessionState.InitiationLogonReceived)
     }
     if (this.heartbeat) {

@@ -53,21 +53,15 @@ export abstract class FixSession extends events.EventEmitter {
     this.send(this.requestLogonType, this.config.factory.logon())
   }
 
-  public run (transport: MsgTransport): Promise<number> {
+  private waitPromise (): Promise<any> {
     const logger = this.sessionLogger
-    if (this.transport) {
-      logger.info('reset from previous transport.')
-      this.reset()
-    }
-    this.transport = transport
-    this.subscribe()
     return new Promise<any>((accept, reject) => {
       if (this.initiator) {
-        logger.debug('initiator sending logon')
+        logger.debug(`initiator sending logon state = ${this.stateString()}`)
         this.sendLogon()
         this.setState(SessionState.InitiationLogonSent)
       } else {
-        logger.debug('acceptor waits for logon')
+        logger.debug(`acceptor waits for logon state = ${this.stateString()}`)
         this.setState(SessionState.WaitingForALogon)
       }
 
@@ -75,10 +69,22 @@ export abstract class FixSession extends events.EventEmitter {
         logger.error(e)
         reject(e)
       })
+
       this.on('done', () => {
         accept(this.transport.id)
       })
     })
+  }
+
+  public run (transport: MsgTransport): Promise<number> {
+    const logger = this.sessionLogger
+    if (this.transport) {
+      logger.info(`reset from previous transport. state ${this.stateString()}`)
+      this.reset()
+    }
+    this.transport = transport
+    this.subscribe()
+    return this.waitPromise()
   }
 
   protected subscribe () {
@@ -121,13 +127,13 @@ export abstract class FixSession extends events.EventEmitter {
         case SessionState.ReceiveLogout:
         case SessionState.Stopped:
         case SessionState.ConfirmingLogout: {
-          logger.info(`rx graceful end state = ${SessionState[state]}`)
+          logger.info(`rx graceful end state = ${this.stateString()}`)
           this.done()
         }
           break
 
         default: {
-          const e = new Error(`unexpected state - transport failed? = ${SessionState[state]}`)
+          const e = new Error(`unexpected state - transport failed? = ${this.stateString()}`)
           logger.info(`rx error ${e.message}`)
           this.terminate(e)
         }
@@ -176,12 +182,14 @@ export abstract class FixSession extends events.EventEmitter {
   protected terminate (error: Error): void {
     if (this.sessionState.state === SessionState.Stopped) return
     this.sessionLogger.error(error)
-    clearInterval(this.timer)
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
     if (this.transport) {
       this.transport.end()
     }
     this.transport = null
-    this.sessionState.state = SessionState.Stopped
+    this.setState(SessionState.Stopped)
     this.emit('error', error)
   }
 
@@ -206,9 +214,10 @@ export abstract class FixSession extends events.EventEmitter {
   }
 
   protected send (msgType: string, obj: ILooseObject) {
-    switch (this.sessionState.state) {
+    const state = this.sessionState.state
+    switch (state) {
       case SessionState.Stopped: {
-        this.sessionLogger.warning(`can't send in stopped state`)
+        this.sessionLogger.warning(`can't send in state ${this.stateString()}`)
         break
       }
 
@@ -220,12 +229,18 @@ export abstract class FixSession extends events.EventEmitter {
     }
   }
 
+  protected sendLogout (msg: string) {
+    const factory = this.config.factory
+    this.sessionLogger.info(`sending logout with ${msg}`)
+    this.send(this.requestLogoutType, factory.logout(this.requestLogoutType, msg))
+  }
+
   protected sessionLogout (): void {
     const sessionState = this.sessionState
     if (sessionState.logoutSentAt) {
       return
     }
-    const factory = this.config.factory
+
     switch (sessionState.state) {
       case SessionState.ActiveNormalSession:
       case SessionState.InitiationLogonResponse:
@@ -235,7 +250,7 @@ export abstract class FixSession extends events.EventEmitter {
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} initiate logout`
         this.sessionLogger.info(msg)
-        this.send(this.requestLogoutType, factory.logout(this.requestLogoutType,msg))
+        this.sendLogout(msg)
         break
       }
 
@@ -244,7 +259,7 @@ export abstract class FixSession extends events.EventEmitter {
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} confirming logout`
         this.sessionLogger.info(msg)
-        this.send(this.respondLogoutType, factory.logout(this.respondLogoutType,msg))
+        this.sendLogout(msg)
         break
       }
 
@@ -272,10 +287,13 @@ export abstract class FixSession extends events.EventEmitter {
         break
       }
     }
-    this.sessionLogger.info(`done. check logout sequence`)
+    this.sessionLogger.info(`done. check logout sequence state ${this.stateString()}`)
   }
 
   public reset (): void {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
     this.transport = null
     this.sessionState.reset(true) // from header def ... eventually
     this.setState(SessionState.NetworkConnectionEstablished)
@@ -285,7 +303,9 @@ export abstract class FixSession extends events.EventEmitter {
     if (this.sessionState.state === SessionState.Stopped) {
       return
     }
-    clearInterval(this.timer)
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
     this.sessionLogger.info(`stop: kill transport`)
     this.transport.end()
     if (error) {
