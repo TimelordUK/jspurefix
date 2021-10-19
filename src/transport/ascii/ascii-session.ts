@@ -4,7 +4,7 @@ import { IJsFixConfig } from '../../config'
 import { IMsgApplication } from '../session-description'
 import { SessionState, TickAction } from '../fix-session-state'
 import { FixSession } from '../fix-session'
-import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore } from '../../store'
+import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
 
 export abstract class AsciiSession extends FixSession {
 
@@ -154,9 +154,20 @@ export abstract class AsciiSession extends FixSession {
    * @protected
    */
   protected onResendRequest (view: MsgView) {
-    const endSeqNo: number = view.getTyped(MsgTag.EndSeqNo)
-    const resend = this.config.factory.sequenceReset(endSeqNo, true)
-    this.send(MsgType.SequenceReset, resend)
+    // if no records are in store then send a gap fill for entire sequence
+    this.setState(SessionState.HandleResendRequest)
+    const [beginSeqNo, endSeqNo] = view.getTypedTags([MsgTag.BeginSeqNo, MsgTag.EndSeqNo])
+    this.sessionLogger.info(`onResendRequest getResendRequest beginSeqNo = ${beginSeqNo}, endSeqNo = ${endSeqNo}`)
+    this.resender.getResendRequest(beginSeqNo, endSeqNo).then((records: IFixMsgStoreRecord[]) => {
+      const validRecords = records.filter(rec => rec.obj !== null)
+      this.sessionLogger.info(`sending ${validRecords.length}`)
+      validRecords.forEach(rec => {
+        this.send(rec.msgType, rec.obj)
+      })
+      this.setState(SessionState.ActiveNormalSession)
+    }).catch(e => {
+      this.sessionLogger.error(e)
+    })
   }
 
   okForLogon (): boolean {
@@ -232,9 +243,7 @@ export abstract class AsciiSession extends FixSession {
       switch (msgType) {
         case MsgType.Logon: {
           this.setState(SessionState.PeerLogonRejected)
-          this.timer = setInterval(() => {
-            this.tick()
-          }, 200)
+          this.startTimer()
           break
         }
       }
@@ -260,26 +269,33 @@ export abstract class AsciiSession extends FixSession {
     }
   }
 
+  private startTimer (interval: number = 200) {
+    this.timer = setInterval(() => {
+      this.tick()
+    }, interval)
+  }
+
   private peerLogon (view: MsgView) {
     const logger = this.sessionLogger
-    const [heartBtInt, peerCompId, userName] = view.getTypedTags([MsgTag.HeartBtInt, MsgTag.SenderCompID, MsgTag.Username])
+    const [heartBtInt, peerCompId, userName, password] = view.getTypedTags([MsgTag.HeartBtInt, MsgTag.SenderCompID, MsgTag.Username, MsgTag.Password])
     logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, userName = ${userName}`)
     const state = this.sessionState
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt)
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
+    const res = this.onLogon(view, userName, password)
+    // currently not using this.
+    logger.info(`peerLogon onLogon returns ${res}`)
     if (this.acceptor) {
       this.setState(SessionState.InitiationLogonResponse)
       logger.info('acceptor responds to logon request')
-      this.sendLogon()
+      this.sendLogon() // if res send response else reject, terminate
     } else { // as an initiator the acceptor has responded
       logger.info('initiator receives logon response')
       this.setState(SessionState.InitiationLogonReceived)
     }
     if (this.heartbeat) {
       logger.debug(`start heartbeat timer.`)
-      this.timer = setInterval(() => {
-        this.tick()
-      }, 200)
+      this.startTimer()
     }
     logger.info(`system ready, inform app`)
     this.onReady(view)

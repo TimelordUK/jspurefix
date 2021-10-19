@@ -52,6 +52,12 @@ export class TradeCaptureClient extends AsciiSession {
     this.fixLog.info(txt)
   }
 
+  private logoutTimer (logoutSeconds: number = 32) {
+    setTimeout(() => {
+      this.done()
+    }, logoutSeconds * 1000)
+  }
+
   protected onReady (view: MsgView): void {
     this.logger.info('ready')
     const tcr: ITradeCaptureReportRequest = TradeFactory.tradeCaptureReportRequest('all-trades', new Date())
@@ -59,12 +65,11 @@ export class TradeCaptureClient extends AsciiSession {
     this.send(MsgType.TradeCaptureReportRequest, tcr)
     const logoutSeconds = 32
     this.logger.info(`will logout after ${logoutSeconds}`)
-    setTimeout(() => {
-      this.done()
-    }, logoutSeconds * 1000)
+    this.logoutTimer()
   }
 
   protected onLogon (view: MsgView, user: string, password: string): boolean {
+    this.logger.info(`onLogon user ${user}`)
     return true
   }
 }

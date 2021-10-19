@@ -87,6 +87,22 @@ export abstract class FixSession extends events.EventEmitter {
     return this.waitPromise()
   }
 
+  protected expectedState (): boolean {
+    switch (this.sessionState.state) {
+      case SessionState.ActiveNormalSession:
+      case SessionState.ReceiveLogout:
+      case SessionState.Stopped:
+      case SessionState.ConfirmingLogout:
+      case SessionState.HandleResendRequest:
+      case SessionState.AwaitingProcessingResponseToTestRequest:
+      case SessionState.AwaitingProcessingResponseToResendRequest:
+        return true
+
+      default:
+        return false
+    }
+  }
+
   protected subscribe () {
 
     const transport = this.transport
@@ -120,24 +136,15 @@ export abstract class FixSession extends events.EventEmitter {
     })
 
     rx.on('end', () => {
-      const state = this.sessionState.state
       logger.info(`rx end received sessionState = [${this.sessionState.toString()}]`)
-      switch (state) {
-        case SessionState.ActiveNormalSession:
-        case SessionState.ReceiveLogout:
-        case SessionState.Stopped:
-        case SessionState.ConfirmingLogout: {
-          logger.info(`rx graceful end state = ${this.stateString()}`)
-          this.done()
-        }
-          break
-
-        default: {
-          const e = new Error(`unexpected state - transport failed? = ${this.stateString()}`)
-          logger.info(`rx error ${e.message}`)
-          this.terminate(e)
-        }
-          break
+      const expectedState = this.expectedState()
+      if (expectedState) {
+        logger.info(`rx graceful end state = ${this.stateString()}`)
+        this.done()
+      } else {
+        const e = new Error(`unexpected state - transport failed? = ${this.stateString()}`)
+        logger.info(`rx error ${e.message}`)
+        this.terminate(e)
       }
     })
 
@@ -163,6 +170,9 @@ export abstract class FixSession extends events.EventEmitter {
       case SessionState.InitiateConnection:
       case SessionState.InitiationLogonSent:
       case SessionState.WaitingForALogon:
+      case SessionState.HandleResendRequest:
+      case SessionState.AwaitingProcessingResponseToTestRequest:
+      case SessionState.AwaitingProcessingResponseToResendRequest:
         return false
       default:
         return true
