@@ -1,7 +1,7 @@
 import { MsgView, ElasticBuffer, AsciiChars } from '../buffer'
 import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, MsgTransport, AsciiMsgTransmitter, StringDuplex, FixDuplex } from '../transport'
-import { MsgType, SessionRejectReason } from '../types'
+import { MsgTag, MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'
 import { IJsFixConfig, JsFixConfig } from '../config'
 import { SkeletonSession } from '../sample/tcp/skeleton/skeleton-session'
@@ -10,6 +10,7 @@ import { IStandardHeader, IReject, ILogon } from '../types/FIX4.4/repo'
 import * as path from 'path'
 import { getDefinitions } from '../util'
 import { AsciiSessionMsgFactory } from '../transport/ascii/'
+import { lastIndexOf } from 'lodash'
 
 const root: string = path.join(__dirname, '../../data')
 const logonMsg: string = '8=FIX4.4|9=0000136|35=A|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:28.980|98=0|108=30|141=Y|553=js-client|554=pwd-client|10=177|'
@@ -63,6 +64,8 @@ class Experiment {
     this.client = new FixEntity(clientConfig)
     this.server = new FixEntity(serverConfig)
 
+    // using a string duplex so pipe a write to client to read to server
+    // to simulate a tcp connection.
     this.loopBack(this.client.duplex, this.server.duplex)
     this.loopBack(this.server.duplex, this.client.duplex)
   }
@@ -143,8 +146,12 @@ class SkeletonRunner {
   }
 
   sendMsg (msgType: string, o: ILooseObject): void {
+    let count = 0
     experiment.client.transport.receiver.on('msg', m => {
-      this.clientSkeleton.sendMessage(msgType, o)
+      if (count === 0) {
+        count++
+        this.clientSkeleton.sendMessage(msgType, o)
+      }
     })
   }
 
@@ -209,8 +216,28 @@ test('end to end logon', async () => {
   expect(received).toEqual(lo)
 })
 
+test('session send resendRequest when logged on', async () => {
+  const runner: SkeletonRunner = new SkeletonRunner(2)
+  const factory = experiment.client.config.factory
+  const resend = factory.resendRequest(1, 2)
+  runner.sendMsg(MsgType.ResendRequest, resend)
+  try {
+    const cViews = experiment.client.views
+    const sViews = experiment.server.views
+    await runner.wait()
+    const last = experiment.client.views[experiment.client.views.length - 1]
+    expect(last).toBeTruthy()
+    const clientResets = countOfType('SequenceReset', cViews)
+    const serverResets = countOfType('SequenceReset', sViews)
+    expect(clientResets).toEqual(1)
+    expect(serverResets).toEqual(0)
+  } catch (e) {
+    expect(true).toEqual(false)
+  }
+})
+
 test('session send logon when logged on', async () => {
-  const runner: SkeletonRunner = new SkeletonRunner(5)
+  const runner: SkeletonRunner = new SkeletonRunner(2)
   const logon = experiment.client.config.factory.logon()
   runner.sendMsg(MsgType.Logon, logon)
   try {
