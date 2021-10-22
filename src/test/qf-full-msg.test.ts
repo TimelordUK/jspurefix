@@ -6,14 +6,15 @@ import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { JsFixConfig } from '../config'
 import { AsciiSessionMsgFactory } from '../transport/ascii/'
+import { MsgType } from '..'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
 let config: JsFixConfig
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../data/examples/FIX.4.4/quickfix')
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
+  const sessionDescription: ISessionDescription = require(path.join(root, '../../../session/qf-fix44.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
   config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
@@ -38,36 +39,36 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
 }
 
 test('test logon JSON => object => fix => object', async () => {
-  const msgType: string = 'A'
-  const file: string = path.join(root, 'examples/FIX.4.4/quickfix/logon/object.json')
+  const msgType: string = MsgType.Logon
+  const file: string = path.join(root, 'logon/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)
 }, 1000)
 
 test('test execution report JSON => object => fix => object', async () => {
-  const msgType: string = '8'
-  const file: string = path.join(root, 'examples/FIX.4.4/quickfix/execution-report/object.json')
+  const msgType: string = MsgType.ExecutionReport
+  const file: string = path.join(root, 'execution-report/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)
 }, 2000)
 
 test('test order cxl reject JSON => object => fix => object', async () => {
-  const msgType: string = '9'
-  const file: string = path.join(root, 'examples/FIX.4.4/quickfix/order-cancel-reject/object.json')
+  const msgType: string = MsgType.OrderCancelReject
+  const file: string = path.join(root, 'order-cancel-reject/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)
 }, 1000)
 
 test('test quote request JSON => object => fix => object', async () => {
-  const msgType: string = 'R'
-  const file: string = path.join(root, 'examples/FIX.4.4/quickfix/quote-request/object.json')
+  const msgType: string = MsgType.QuoteRequest
+  const file: string = path.join(root, 'quote-request/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)
 }, 1000)
 
 test('test md request JSON => object => fix => object', async () => {
-  const msgType: string = 'W'
-  const file: string = path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/object.json')
+  const msgType: string = MsgType.MarketDataSnapshotFullRefresh
+  const file: string = path.join(root, 'md-data-snapshot/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)
 }, 1000)
