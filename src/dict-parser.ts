@@ -7,8 +7,8 @@ import { ISessionDescription, AsciiMsgTransmitter, StringDuplex, MsgPayload } fr
 import { EnumCompiler, MsgCompiler, ICompilerSettings, FixDefinitions } from './dictionary'
 import { MsgType } from './types'
 import { JsFixWinstonLogFactory, JsFixConfig, WinstonLogger } from './config'
-import * as requestPromise from 'request-promise'
 import { BusinessRejectReason, IBusinessMessageReject } from './types/FIXML50SP2'
+import * as rp from 'request-promise-native'
 
 async function testEncodeDecode (): Promise<any> {
   const msgType: string = 'W'
@@ -210,7 +210,7 @@ async function http (): Promise<any> {
     '    </UserReq>\n' +
     '</FIXML>'
   // acceptor.listen()
-  requestPromise({
+  rp({
     method: 'POST',
     uri: 'http://localhost:2343/session',
     body: {

@@ -455,4 +455,4 @@ test('client server heartbeat', async () => {
   checkSeqNos(sviews)
   experiment.server.config.description.HeartBtInt = preset
   experiment.client.config.description.HeartBtInt = preset
-}, 10000)
+}, 15000)
