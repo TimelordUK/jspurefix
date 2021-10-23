@@ -1,7 +1,7 @@
 import { MsgView, ElasticBuffer, AsciiChars } from '../buffer'
 import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, MsgTransport, AsciiMsgTransmitter, StringDuplex, FixDuplex } from '../transport'
-import { MsgTag, MsgType, SessionRejectReason } from '../types'
+import { MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'
 import { IJsFixConfig, JsFixConfig } from '../config'
 import { SkeletonSession } from '../sample/tcp/skeleton/skeleton-session'
@@ -10,7 +10,6 @@ import { IStandardHeader, IReject, ILogon } from '../types/FIX4.4/repo'
 import * as path from 'path'
 import { getDefinitions } from '../util'
 import { AsciiSessionMsgFactory } from '../transport/ascii/'
-import { lastIndexOf } from 'lodash'
 
 const root: string = path.join(__dirname, '../../data')
 const logonMsg: string = '8=FIX4.4|9=0000136|35=A|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:28.980|98=0|108=30|141=Y|553=js-client|554=pwd-client|10=177|'
@@ -136,8 +135,14 @@ class SkeletonRunner {
   }
 
   watchdog () {
-    const clientStop = experiment.client.views.length > 20 || experiment.client.errors.length > 0
-    const serverStop = experiment.server.views.length > 20 || experiment.server.errors.length > 0
+    const cviews = experiment.client.views
+    const sviews = experiment.server.views
+
+    const cerrors = experiment.client.errors
+    const serrors = experiment.server.errors
+
+    const clientStop = cviews.length > 20 || cerrors.length > 0
+    const serverStop = sviews.length > 20 || serrors.length > 0
     const stop = clientStop || serverStop
     if (stop) {
       this.clientSkeleton.done()
