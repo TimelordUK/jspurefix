@@ -8,6 +8,7 @@ import { Dictionary } from '../../collections'
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
+import { v4 as uuidv4 } from 'uuid'
 
 export class HttpAcceptor extends FixAcceptor {
   private app: express.Express = express()
@@ -49,11 +50,9 @@ export class HttpAcceptor extends FixAcceptor {
   }
 
   private saveTransport (tid: number, transport: MsgTransport): string {
-    const uuidv3 = require('uuid/v3')
     this.transports[tid] = transport
-    const app = this.config.description.application
     const keys: string[] = Object.keys(this.transports)
-    const a = uuidv3(app.http.uri, uuidv3.URL)
+    const a = uuidv4()
     this.keys.addUpdate(a, transport)
     this.logger.info(`new transport id = ${tid} token = ${a} created total transports = ${keys.length}`)
     this.emit('transport', transport)
