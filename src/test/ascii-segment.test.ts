@@ -4,6 +4,7 @@ import { ISessionDescription, StringDuplex } from '../transport'
 import { ILogon } from '../types/FIX4.4/repo'
 import { getDefinitions, JsonHelper } from '../util'
 import * as path from 'path'
+import { MsgType } from '..'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -43,7 +44,7 @@ function toParse (text: string, chunks: boolean = false): Promise<ParsingResult>
 test('0 gaps', async () => {
   const res: ParsingResult = await toParse(logon)
   expect(res.event).toEqual('msg')
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
   const unknowns: SegmentDescription[] = res.view.structure.layout['.undefined']
   expect(unknowns).toBeFalsy()
   const o: ILogon = res.view.toObject()
@@ -56,7 +57,7 @@ test('1 gap', async () => {
   const gap = logon.replace('108=62441|', '108=62441|9999=im not here')
   const res: ParsingResult = await toParse(gap)
   expect(res.event).toEqual('msg')
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
   const unknown: SegmentDescription = res.view.structure.layout['.undefined']
   expect(unknown).toBeTruthy()
   expect(unknown.startTag).toEqual(9999)
@@ -71,7 +72,7 @@ test('1 gap next to 1 gap', async () => {
   const gap = logon.replace('108=62441|', '108=62441|1=gap|2=gap|')
   const res: ParsingResult = await toParse(gap)
   expect(res.event).toEqual('msg')
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
   const unknowns: SegmentDescription[] = res.view.structure.layout['.undefined']
   expect(unknowns).toBeTruthy()
   expect(Array.isArray(unknowns)).toEqual(true)
@@ -89,7 +90,7 @@ test('1 gap undefined msg', async () => {
   const gap = logon.replace('108=62441|', '108=62441|9999=im not here')
   const res: ParsingResult = await toParse(gap)
   expect(res.event).toEqual('msg')
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.view.getUndefined()).toBeTruthy()
   expect(res.view.undefinedForMsg()).toEqual('undefined tag = 9999')
 })
@@ -98,7 +99,7 @@ test('2 gap undefined msg', async () => {
   const gap = logon.replace('108=62441|', '108=62441|1=gap|2=gap|')
   const res: ParsingResult = await toParse(gap)
   expect(res.event).toEqual('msg')
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.view.getUndefined()).toBeTruthy()
   expect(res.view.undefinedForMsg()).toEqual('undefined tags = 1, 2')
 })

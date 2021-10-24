@@ -3,6 +3,7 @@ import { FixDefinitions } from '../dictionary'
 import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription, StringDuplex } from '../transport'
 import * as path from 'path'
+import { MsgType } from '..'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -48,14 +49,15 @@ class ParsingResult {
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
     const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, AsciiChars.Pipe)
+    const buffer = parser.state.elasticBuffer
     parser.on('error', (e: Error) => {
       reject(e)
     })
     parser.on('msg', (msgType: string, view: MsgView) => {
-      resolve(new ParsingResult('msg', msgType, view.clone(), parser.state.elasticBuffer.toString(), parser))
+      resolve(new ParsingResult('msg', msgType, view.clone(), buffer.toString(), parser))
     })
     parser.on('done', () => {
-      resolve(new ParsingResult('done', null,null, parser.state.elasticBuffer.toString(), parser))
+      resolve(new ParsingResult('done', null,null, buffer.toString(), parser))
     })
   })
 }
@@ -104,24 +106,24 @@ test('first 3 fields correctly placed', async () => {
 test('complete msg parsed', async () => {
   const res: ParsingResult = await toParse(logon)
   expect(res.event).toEqual('msg')
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
 })
 
 test('complete msg in chunks parsed', async () => {
   const res: ParsingResult = await toParse(logon, true)
   expect(res.event).toEqual('msg')
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
 })
 
 test('msg sent in chunks matches parser buffer', async () => {
   const res: ParsingResult = await toParse(logon, true)
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.contents).toEqual(logon)
 })
 
 test('logon parsers to correct tag set', async () => {
   const res: ParsingResult = await toParse(logon, true)
-  expect(res.msgType).toEqual('A')
+  expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.view.structure.tags.tagPos).toEqual(expectedTagPos)
 })
 

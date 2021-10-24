@@ -6,14 +6,15 @@ import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
 import { JsFixConfig } from '../config'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { MsgType } from '..'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
 let session: AsciiMsgTransmitter
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../data/examples/FIX.4.4/repo/')
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
+  const sessionDescription: ISessionDescription = require(path.join(root, '../../../session/test-initiator.json'))
   definitions = await getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
   const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
@@ -57,8 +58,8 @@ test('check 3 digit checksum format', async () => {
 })
 
 test('AE object to ascii fix to object', async () => {
-  const msgType: string = 'AE'
-  const file: string = path.join(root, 'examples/FIX.4.4/repo/trade-capture/object.json')
+  const msgType: string = MsgType.TradeCaptureReport
+  const file: string = path.join(root, 'trade-capture/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   const o: ILooseObject = await testEncodeDecode(msgType, msg)
 
@@ -66,8 +67,8 @@ test('AE object to ascii fix to object', async () => {
 }, 1000)
 
 test('d object to ascii fix to object', async () => {
-  const msgType: string = 'd'
-  const file: string = path.join(root, 'examples/FIX.4.4/repo/security-definition/object.json')
+  const msgType: string = MsgType.SecurityDefinition
+  const file: string = path.join(root, 'security-definition/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   const o: ILooseObject = await testEncodeDecode(msgType, msg)
 
@@ -75,8 +76,8 @@ test('d object to ascii fix to object', async () => {
 }, 1000)
 
 test('D object to ascii fix to object', async () => {
-  const msgType: string = 'D'
-  const file: string = path.join(root, 'examples/FIX.4.4/repo/new-order-single/object.json')
+  const msgType: string = MsgType.NewOrderSingle
+  const file: string = path.join(root, 'new-order-single/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   const o: ILooseObject = await testEncodeDecode(msgType, msg)
 

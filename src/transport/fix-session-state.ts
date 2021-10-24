@@ -74,6 +74,7 @@ export class FixSessionState {
     this.secondsSinceReceive = -1
     this.peerHeartBeatSecs = 0
     this.logoutSentAt = null
+    this.nextTickAction = TickAction.Nothing
     if (resetSeqNo) {
       this.lastPeerMsgSeqNum = 0
     }
@@ -105,7 +106,7 @@ export class FixSessionState {
     buffer.writeString(`compId = ${this.compId}, `)
     buffer.writeString(`heartBeat = ${this.heartBeat}, `)
     buffer.writeString(`state = ${SessionState[this.state]} (${this.state}), `)
-    buffer.writeString(`nextTickAction = ${this.nextTickAction}, `)
+    buffer.writeString(`nextTickAction = ${TickAction[this.nextTickAction]} (${this.nextTickAction}), `)
     buffer.writeString(`now = ${FixSessionState.dateAsString(this.now)}, `)
     buffer.writeString(`timeToDie = ${this.timeToDie()}, `)
     buffer.writeString(`timeToHeartbeat = ${this.timeToHeartbeat()}, `)
