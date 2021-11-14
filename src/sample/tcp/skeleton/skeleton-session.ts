@@ -6,8 +6,10 @@ import { ILooseObject } from '../../../collections/collection'
 export class SkeletonSession extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
+
   constructor (public readonly config: IJsFixConfig,
-               public readonly logoutSeconds: number = 45) {
+               public readonly logoutSeconds: number = 45,
+               public useInMemoryStore: boolean = false) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
@@ -16,9 +18,24 @@ export class SkeletonSession extends AsciiSession {
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {
     // dispatch messages
+    if (this.useInMemoryStore) {
+      const rec = view.toMsgStoreRecord()
+      this.store.put(rec).then(r => {
+        this.logger.info(`store state ${JSON.stringify(r, null, 4)}`)
+        this.dispatch(msgType, view)
+      }).catch(e => {
+        this.logger.error(e)
+      })
+    } else {
+      this.dispatch(msgType, view)
+    }
+  }
+
+  private dispatch (msgType: string, view: MsgView) {
+    const o = view.toObject()
     switch (msgType) {
       default: {
-        this.logger.info(`received message type ${msgType}`)
+        this.logger.info(`received message type ${msgType} ${JSON.stringify(o, null, 4)}`)
         break
       }
     }
@@ -27,6 +44,7 @@ export class SkeletonSession extends AsciiSession {
   public sendMessage (msgType: string, obj: ILooseObject): void {
     this.send(msgType, obj)
   }
+
 
   // use msgType for example to persist only trade capture messages to database
   protected onDecoded (msgType: string, txt: string): void {

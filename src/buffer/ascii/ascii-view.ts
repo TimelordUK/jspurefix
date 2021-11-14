@@ -8,7 +8,7 @@ import { ITimeFormatter } from './itime-formatter'
 import { TimeFormatter } from './time-formatter'
 import { TagPos } from '../tag-pos'
 import { MsgTag } from '../../types'
-import { FixMsgStoreRecord } from '../../store'
+import { FixMsgStoreRecord, IFixMsgStoreRecord } from '../../store'
 
 export class AsciiView extends MsgView {
   private readonly timeFormatter: ITimeFormatter = new TimeFormatter(this.buffer)
@@ -35,7 +35,7 @@ export class AsciiView extends MsgView {
     return new AsciiView(segment, buffer, null, this.ptr, delimiter, writeDelimiter)
   }
 
-  public toMsgStoreRecord () {
+  public toMsgStoreRecord (): IFixMsgStoreRecord {
     return new FixMsgStoreRecord(this.getString(MsgTag.MsgType), this.getTyped(MsgTag.SendingTime), this.getTyped(MsgTag.MsgSeqNum), this.toObject())
   }
 

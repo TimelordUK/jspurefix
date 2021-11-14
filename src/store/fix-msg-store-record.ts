@@ -16,6 +16,7 @@ export class FixMsgStoreRecord implements IFixMsgStoreRecord {
                public obj?: ILooseObject,
                public readonly encoded?: string) {
   }
+
   clone (): IFixMsgStoreRecord {
     return new FixMsgStoreRecord(this.msgType, this.timestamp, this.seqNum, this.obj, this.encoded)
   }

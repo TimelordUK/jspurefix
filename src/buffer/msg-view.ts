@@ -6,6 +6,7 @@ import { Tags } from './tags'
 import { ContainedGroupField, ContainedComponentField, ContainedField, ContainedFieldSet, ContainedSimpleField, SimpleFieldDefinition, GroupFieldDefinition, ITypeDispatcher, reduceSet, ContainedSetType } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
+import { IFixMsgStoreRecord } from '../store'
 
 export abstract class MsgView {
   protected sortedTagPosForwards: TagPos[]
@@ -414,4 +415,6 @@ export abstract class MsgView {
 
     return buffer.toString()
   }
+
+  abstract toMsgStoreRecord (): IFixMsgStoreRecord
 }

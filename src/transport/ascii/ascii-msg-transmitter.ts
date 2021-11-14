@@ -47,9 +47,11 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     if (StandardHeader) {
       const { BeginString, BodyLength, MsgType, SenderCompID, SendingTime, TargetCompID, TargetSubID, ...hp } = StandardHeader
       headerProps = hp // pick up any optional applied by application
+      headerProps.OrigSendingTime = SendingTime // when first sent
     }
 
-    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum, this.time || new Date(), headerProps)
+    const sendingTime = this.time || new Date()
+    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum, sendingTime, headerProps)
 
     // Only increment sequence number if this is not a duplicate message.
     if (!headerProps.PossDupFlag) {

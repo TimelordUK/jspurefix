@@ -5,6 +5,7 @@ import { SegmentDescription } from '../segment-description'
 import { TagType } from '../tags'
 import { AsciiChars } from '../ascii-chars'
 import * as moment from 'moment'
+import { IFixMsgStoreRecord } from '../../store'
 
 export class FixmlView extends MsgView {
 
@@ -107,5 +108,9 @@ export class FixmlView extends MsgView {
       }
     }
     return this.stringAtPosition(position)
+  }
+
+  public toMsgStoreRecord (): IFixMsgStoreRecord {
+    return null
   }
 }
