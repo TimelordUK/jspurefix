@@ -7,7 +7,7 @@ export class EncodeProxy {
   }
 
   private static SimpleFieldCheck (field: ContainedSimpleField, val: any): void {
-    const sf: ContainedSimpleField = field as ContainedSimpleField
+    const sf: ContainedSimpleField = field
     const definition: SimpleFieldDefinition = sf.definition
     if (definition.isEnum()) {
       const resolved: boolean = definition.containsEnum(val)
@@ -73,7 +73,7 @@ export class EncodeProxy {
     if (!isComplex) {
       throw new Error(`type ${field.name} is a component but is given type "${typeof val}"`)
     }
-    const cf: ContainedComponentField = field as ContainedComponentField
+    const cf: ContainedComponentField = field
     return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(cf.definition)), val)
   }
 

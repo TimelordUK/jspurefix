@@ -23,13 +23,13 @@ export class TimeFormatter implements ITimeFormatter {
   public writeUtcTimestamp (v: Date): void {
     this.writeUtcDate(v)
     this.buffer.writeChar(AsciiChars.Hyphen)
-    this.writeUtcTime(v as Date)
+    this.writeUtcTime(v)
   }
 
   public writeLocalTimestamp (v: Date): void {
     this.writeLocalDate(v)
     this.buffer.writeChar(AsciiChars.Hyphen)
-    this.writeLocalTime(v as Date)
+    this.writeLocalTime(v)
   }
 
   public writeUtcTime (v: Date): void {
