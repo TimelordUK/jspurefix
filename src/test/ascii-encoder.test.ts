@@ -451,7 +451,7 @@ test('encode group missing delimiter', () => {
   function run () {
     toFix(e, er)
   }
-  expect(run).toThrow(/group instance \[1\] inconsisent delimeter 456 expected tag 455/)
+  expect(run).toThrow(/group instance \[1\] inconsisent delimeter 455 expected tag 456/)
 })
 
 test('encode group not an array of', () => {

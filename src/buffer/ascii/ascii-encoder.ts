@@ -276,7 +276,7 @@ class GroupValidator {
       const firstTag = first.firstSimple.definition.tag
       const tag = test.firstSimple.definition.tag
       if (firstTag !== tag) {
-        throw new Error(`group instance [${field}] inconsisent delimeter ${firstTag} expected tag ${tag}`)
+        throw new Error(`group instance [${field}] inconsisent delimeter ${tag} expected tag ${firstTag}`)
       }
     }
   }
