@@ -5,7 +5,7 @@ import { ILooseObject } from '../collections/collection'
 import { AsciiMsgTransmitter, ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
-import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader } from '../types/FIX4.4/quickfix'
+import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest, TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
 
@@ -221,6 +221,34 @@ test('encode UTCTIMEONLY MDEntryTime', () => {
   expect(fix).toEqual('268=1|269=0|273=16:35:00.246|')
 })
 
+function getTCR1 (): ITradeCaptureReportRequest {
+  const d0 = new Date(Date.UTC(2018, 11, 1, 0, 0, 0))
+  const d1 = new Date(Date.UTC(2018, 11, 2, 0, 0, 0))
+  const tcr = {
+    TradeRequestID: 'all-trades',
+    TradeRequestType: TradeRequestType.AllTrades,
+    SubscriptionRequestType: SubscriptionRequestType.SnapshotPlusUpdates,
+    TrdCapDtGrp : {
+      NoDates: [
+        {
+          TransactTime: d0
+        },
+        {
+          TransactTime: d1
+        }
+      ] as ITrdCapDtGrpNoDates[]
+    }
+  } as ITradeCaptureReportRequest
+  return tcr
+}
+
+test('encode TradeCaptureReportRequest with TransactTime', () => {
+  const tcr = getTCR1()
+  const d = definitions.message.get('TradeCaptureReportRequest')
+  const fix: string = toFix(tcr, d)
+  expect(fix).toEqual('568=all-trades|569=0|263=1|580=2|60=20181201-00:00:00.000|60=20181202-00:00:00.000|')
+})
+
 test('encode BOOLEAN (true) ReportToExch', () => {
   expect(er).toBeTruthy()
   const e: ILooseObject = {}
@@ -299,7 +327,7 @@ function getParties (): ILooseObject {
   }
 }
 
-function getPartiesNoDelimiter (): ILooseObject {
+function getPartiesNoPartyID (): ILooseObject {
   return {
     'Parties': {
       'NoPartyIDs': [
@@ -338,13 +366,11 @@ test('use a carat as log delimiter with Soh in buffer to show encoding still wor
   expect(trimmed).toEqual('453=2448=magna.447=9452=28448=iaculis447=F452=2')
 })
 
-test('encode repeated group with no delimiter - should throw', () => {
+test('encode repeated group with no PartyID - should encode', () => {
   expect(er).toBeTruthy()
-  const e: ILooseObject = getPartiesNoDelimiter()
-  function run (): void {
-    toFix(e, er)
-  }
-  expect(run).toThrow(/no delimiter/)
+  const e: ILooseObject = getPartiesNoPartyID()
+  const fix: string = toFix(e, er)
+  expect(fix).toEqual('453=1|447=9|452=28|')
 })
 
 test('encode repeated group with no array - should throw', () => {
@@ -425,7 +451,7 @@ test('encode group missing delimiter', () => {
   function run () {
     toFix(e, er)
   }
-  expect(run).toThrow(/group instance with no delimiter field SecurityAltID/)
+  expect(run).toThrow(/group instance \[1\] inconsisent delimeter 456 expected tag 455/)
 })
 
 test('encode group not an array of', () => {

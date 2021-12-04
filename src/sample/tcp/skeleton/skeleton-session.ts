@@ -45,7 +45,6 @@ export class SkeletonSession extends AsciiSession {
     this.send(msgType, obj)
   }
 
-
   // use msgType for example to persist only trade capture messages to database
   protected onDecoded (msgType: string, txt: string): void {
     this.fixLog.info(txt)

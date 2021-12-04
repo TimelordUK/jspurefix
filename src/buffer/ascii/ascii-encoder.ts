@@ -1,6 +1,7 @@
 import { ILooseObject } from '../../collections/collection'
-import { ContainedGroupField, ContainedSimpleField, ContainedFieldSet, ContainedField,
-  ContainedFieldType, ContainedComponentField, SimpleFieldDefinition,
+import { ContainedGroupField, ContainedSimpleField,
+  ContainedFieldSet, ContainedField,
+  ContainedComponentField, SimpleFieldDefinition,
   FixDefinitions, dispatchFields } from '../../dictionary'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
@@ -14,6 +15,7 @@ export class AsciiEncoder extends MsgEncoder {
   public bodyLengthPos: number
   public msgTypePos: number
   public tags: Tags
+  public checkGroups: boolean = true
 
   constructor (public readonly buffer: ElasticBuffer,
                public readonly definitions: FixDefinitions,
@@ -39,29 +41,6 @@ export class AsciiEncoder extends MsgEncoder {
     return b
   }
 
-  private static checkGroupInstanceHasDelimiter (gf: ContainedGroupField, instance: ILooseObject): boolean {
-    const delimiterField: ContainedSimpleField = gf.definition.firstSimple
-    if (!delimiterField) {
-      throw new Error(`group definition has delimiter field ${delimiterField.definition.name}`)
-    }
-    // may have a group represented by a component where first simple field is further down.
-    while (instance != null) {
-      if (instance[delimiterField.definition.name] != null) {
-        return true
-      }
-      const first = gf.definition.fields[0]
-      switch (first.type) {
-        case ContainedFieldType.Component: {
-          const cf: ContainedComponentField = first as ContainedComponentField
-          instance = instance[cf.definition.name]
-          break
-        }
-        default:
-          instance = null
-      }
-    }
-  }
-
   // only reset tags after entire message is encoded - <hdr>body<trl>
 
   public reset (): void {
@@ -70,19 +49,29 @@ export class AsciiEncoder extends MsgEncoder {
   }
 
   public encodeSet (objectToEncode: ILooseObject, set: ContainedFieldSet): void {
+    const summary: AsciiEncodeSetSummary = new AsciiEncodeSetSummary()
+    this.encodeObject(objectToEncode, set, summary)
+  }
+
+  private encodeObject (objectToEncode: ILooseObject, set: ContainedFieldSet, state: AsciiEncodeSetSummary): void {
     const fields: ContainedField[] = this.getFields(set, objectToEncode)
     dispatchFields(fields, {
       simple: (sf: ContainedSimpleField) => {
         const val: any = objectToEncode[sf.name]
         // Empty strings are omitted as they result in empty values for tags, which are considered malformed.
         if (val != null && val !== '') {
+          if (state.count === 0) {
+            state.firstSimple = sf
+          }
+          state.lastSimple = sf
+          state.count++
           this.encodeSimple(objectToEncode, set, sf, val)
         }
       },
       component: (cf: ContainedComponentField) => {
         const instance: ILooseObject = objectToEncode[cf.definition.name]
         if (instance) {
-          this.encodeSet(instance, cf.definition)
+          this.encodeObject(instance, cf.definition, state)
         }
       },
       group: (gf: ContainedGroupField) => {
@@ -108,24 +97,29 @@ export class AsciiEncoder extends MsgEncoder {
   private encodeInstances (o: ILooseObject, gf: ContainedGroupField): void {
     const noOfField: SimpleFieldDefinition = gf.definition.noOfField
     const instances: ILooseObject[] = o[gf.name] || o[noOfField.name]
+
     const buffer = this.buffer
     if (!Array.isArray(instances)) {
       throw new Error(`expected array instance for group ${noOfField.name}`)
     }
     if (instances) {
+      const validator = new GroupValidator(gf)
+      const test: AsciiEncodeSetSummary = validator.test
+
       // a repeated group has number of instances at the start of group
       this.WriteTagEquals(noOfField.tag)
       const posValBegin = buffer.getPos()
       buffer.writeWholeNumber(instances.length)
       this.writeDelimiter(posValBegin, noOfField.tag)
-      instances.forEach((i: ILooseObject) => {
-        if (AsciiEncoder.checkGroupInstanceHasDelimiter(gf, i)) {
-          this.encodeSet(i, gf.definition)
-        } else {
-          const delimiter: ContainedSimpleField = gf.definition.firstSimple
-          throw new Error(`group instance with no delimiter field ${delimiter.definition.name}`)
+      for (let field = 0; field < instances.length; ++field) {
+        const instance: ILooseObject = instances[field]
+        test.reset()
+        const summary = validator.getSummary(field)
+        this.encodeObject(instance, gf.definition, summary)
+        if (this.checkGroups) {
+          validator.assertInstanceValid(field)
         }
-      })
+      }
     }
   }
 
@@ -256,5 +250,49 @@ export class AsciiEncoder extends MsgEncoder {
         this.msgTypePos = pos
         break
     }
+  }
+}
+
+class GroupValidator {
+  constructor (public readonly gf: ContainedGroupField,
+    public readonly first: AsciiEncodeSetSummary = new AsciiEncodeSetSummary(),
+    public readonly test: AsciiEncodeSetSummary = new AsciiEncodeSetSummary()) {
+  }
+
+  getSummary (field: number) {
+    return field === 0 ? this.first : this.test
+  }
+
+  assertInstanceValid (field: number): void {
+    const first = this.first
+    const test = this.test
+    if (field === 0 && first.empty()) {
+      throw new Error(`first group instance has no delimeter present ${this.gf.name}`)
+    }
+    if (field > 0 && test.empty()) {
+      throw new Error(`group instance [${field}] has no delimeter present ${this.gf.name}`)
+    }
+    if (field > 0) {
+      const firstTag = first.firstSimple.definition.tag
+      const tag = test.firstSimple.definition.tag
+      if (firstTag !== tag) {
+        throw new Error(`group instance [${field}] inconsisent delimeter ${firstTag} expected tag ${tag}`)
+      }
+    }
+  }
+}
+
+class AsciiEncodeSetSummary {
+  constructor (public firstSimple: ContainedSimpleField = null,
+    public lastSimple: ContainedSimpleField = null,
+    public count: number = 0) {
+  }
+  public reset (): void {
+    this.firstSimple = null
+    this.lastSimple = null
+    this.count = 0
+  }
+  public empty (): boolean {
+    return this.firstSimple === null || this.count === 0
   }
 }
