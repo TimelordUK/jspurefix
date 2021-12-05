@@ -27,7 +27,7 @@ compiled typescript is now included. Install the package from npm:
 
 ```shell
   npm install jspurefix
-  npm run unzip-repo
+  cd node_modules/jspurefix && npm run unzip-repo
 ```
 
 see our [demo application](https://github.com/TimelordUK/jspf-demo/)
