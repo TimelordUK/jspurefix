@@ -2,10 +2,10 @@ import { MsgView, SegmentType } from '../../buffer'
 import { MsgTag, MsgType, SessionRejectReason } from '../../types'
 import { IJsFixConfig } from '../../config'
 import { IMsgApplication } from '../session-description'
-import { TickAction } from '../fix-session-state'
 import { FixSession } from '../fix-session'
 import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
 import { SessionState } from '../tcp'
+import { TickAction } from '../tick-action'
 
 export abstract class AsciiSession extends FixSession {
 

@@ -1,23 +1,8 @@
 import { ElasticBuffer } from '../buffer'
 import moment = require('moment')
 import { SessionState } from './tcp'
-
-export enum TickAction {
-  Nothing = 1,
-  Heartbeat = 2,
-  TestRequest = 3,
-  TerminateOnError = 4,
-  WaitLogoutConfirmExpired = 5,
-  Stop = 6
-}
-
-interface IFixSessionStateArgs {
-  heartBeat: number
-  state?: SessionState
-  waitLogoutConfirmSeconds?: number
-  stopSeconds?: number
-  lastPeerMsgSeqNum?: number
-}
+import { TickAction } from './tick-action'
+import { IFixSessionStateArgs } from './fix-session-state-args'
 
 export class FixSessionState {
   public nextTickAction: TickAction = TickAction.Nothing
