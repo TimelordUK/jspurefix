@@ -3,8 +3,8 @@ import { MsgTransport } from '../msg-transport'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { getTlsOptions } from './tls-options'
-import { createServer as netCreateServer, Socket, Server } from 'net'
-import { createServer as tlsCreateServer, TLSSocket, TlsOptions } from 'tls'
+import { createServer as netCreateServer, Server, Socket } from 'net'
+import { createServer as tlsCreateServer, TlsOptions, TLSSocket } from 'tls'
 
 export class TcpAcceptor extends FixAcceptor {
   private server: Server
@@ -27,8 +27,7 @@ export class TcpAcceptor extends FixAcceptor {
 
   getId (): number {
     this.nextId++
-    const id: number = this.nextId
-    return id
+    return this.nextId
   }
 
   tlsServer (): void {
@@ -75,8 +74,7 @@ export class TcpAcceptor extends FixAcceptor {
 
   tlsOptions (): TlsOptions {
     const tcp = this.config.description.application.tcp
-    const tlsOptions: TlsOptions = getTlsOptions(tcp.tls)
-    return tlsOptions
+    return getTlsOptions(tcp.tls)
   }
 
   private onSocket (id: number, socket: Socket, config: IJsFixConfig) {

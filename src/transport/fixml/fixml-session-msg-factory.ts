@@ -1,4 +1,4 @@
-import { ISessionDescription } from './../session-description'
+import { ISessionDescription } from '../session-description'
 import { ILooseObject } from '../../collections/collection'
 import { MsgType } from '../../types'
 import { ASessionMsgFactory, ObjectMutator } from '../a-session-msg-factory'
