@@ -1,4 +1,14 @@
-import { FixDefinitions, MessageDefinition, SimpleFieldDefinition, ContainedField, ContainedFieldType, ContainedSimpleField, ContainedComponentField, ContainedGroupField, ContainedFieldSet } from '..'
+import {
+  ContainedComponentField,
+  ContainedField,
+  ContainedFieldSet,
+  ContainedFieldType,
+  ContainedGroupField,
+  ContainedSimpleField,
+  FixDefinitions,
+  MessageDefinition,
+  SimpleFieldDefinition
+} from '..'
 import { ILooseObject } from '../collections/collection'
 import { TagType } from './tags'
 
@@ -7,8 +17,7 @@ export class EncodeProxy {
   }
 
   private static SimpleFieldCheck (field: ContainedSimpleField, val: any): void {
-    const sf: ContainedSimpleField = field
-    const definition: SimpleFieldDefinition = sf.definition
+    const definition: SimpleFieldDefinition = field.definition
     if (definition.isEnum()) {
       const resolved: boolean = definition.containsEnum(val)
       if (!resolved) {

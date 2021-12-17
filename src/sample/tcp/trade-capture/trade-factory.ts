@@ -36,13 +36,19 @@ export class TradeFactory {
   }
 
   public static tradeCaptureReportRequest (requestId: string, tradeDate: Date): ITradeCaptureReportRequest {
+    const d0 = tradeDate
+    const d1 = new Date(tradeDate.getTime())
+    d1.setDate(d1.getDate() + 1)
     return {
       TradeRequestID: 'all-trades',
       TradeRequestType: TradeRequestType.AllTrades,
       SubscriptionRequestType: SubscriptionRequestType.SnapshotAndUpdates,
       TrdCapDtGrp: [
         {
-          TradeDate: tradeDate
+          TransactTime: d0
+        },
+        {
+          TransactTime: d1
         }
       ]
     } as ITradeCaptureReportRequest

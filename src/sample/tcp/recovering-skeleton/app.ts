@@ -1,7 +1,7 @@
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { SkeletonClient } from './skeleton-client'
-import { RecoveringTcpInitiator } from '../../../transport/tcp/recovering-tcp-initiator'
+import { RecoveringTcpInitiator } from '../../../transport'
 import { RespawnAcceptor } from './respawn-acceptor'
 import { AsciiChars } from '../../../buffer'
 

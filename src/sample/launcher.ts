@@ -1,7 +1,6 @@
 import * as path from 'path'
 import { WinstonLogger, IJsFixConfig, JsFixWinstonLogFactory, IJsFixLogger } from '../config'
-import { makeConfig, ISessionDescription, ISessionMsgFactory } from '../transport'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { makeConfig, ISessionDescription, ISessionMsgFactory, AsciiSessionMsgFactory } from '../transport'
 import { FixmlSessionMsgFactory } from '../transport/fixml'
 
 const root = '../../'
