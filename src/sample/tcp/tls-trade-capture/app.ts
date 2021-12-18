@@ -1,7 +1,7 @@
 import { TradeCaptureClient, TradeCaptureServer } from '../trade-capture'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
-import { initiator, acceptor } from '../../../transport'
+import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -11,15 +11,15 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (config: IJsFixConfig): Promise<any> {
-    return acceptor(config, c => {
+    return new TcpAcceptorListener(config, c => {
       return new TradeCaptureServer(c)
-    })
+    }).start()
   }
 
   protected getInitiator (config: IJsFixConfig): Promise<any> {
-    return initiator(config, c => {
+    return new TcpInitiatorConnector(config, c => {
       return new TradeCaptureClient(c)
-    })
+    }).start()
   }
 }
 

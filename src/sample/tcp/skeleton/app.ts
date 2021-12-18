@@ -1,7 +1,7 @@
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
-import { initiator, acceptor } from '../../../transport'
+import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -11,11 +11,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (config: IJsFixConfig): Promise<any> {
-    return acceptor(config, c => new SkeletonSession(c))
+    return new TcpAcceptorListener(config, c => new SkeletonSession(c)).start()
   }
 
   protected getInitiator (config: IJsFixConfig): Promise<any> {
-    return initiator(config, c => new SkeletonSession(c))
+    return new TcpInitiatorConnector(config, c => new SkeletonSession(c)).start()
   }
 }
 

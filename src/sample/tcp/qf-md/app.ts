@@ -1,7 +1,7 @@
 import { MDClient } from './md-client'
 import { MDServer } from './md-server'
 import { IJsFixConfig } from '../../../config'
-import { initiator, acceptor } from '../../../transport'
+import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport'
 import { Launcher } from '../../launcher'
 
 class AppLauncher extends Launcher {
@@ -12,11 +12,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (config: IJsFixConfig): Promise<any> {
-    return acceptor(config, c => new MDServer(c))
+    return new TcpAcceptorListener(config, c => new MDServer(c)).start()
   }
 
   protected getInitiator (config: IJsFixConfig): Promise<any> {
-    return initiator(config, c => new MDClient(c))
+    return new TcpInitiatorConnector(config, c => new MDClient(c)).start()
   }
 }
 
