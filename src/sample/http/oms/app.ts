@@ -2,7 +2,7 @@ import { HttpServer } from './http-server'
 import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
-import { httpInitiator, HttpJsonSampleAdapter } from '../../../transport'
+import { httpInitiator, HttpJsonSampleAdapter } from '../../../transport/http'
 import { acceptor } from '../../../transport/fixml'
 
 class AppLauncher extends Launcher {
