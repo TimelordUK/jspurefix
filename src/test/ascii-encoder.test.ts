@@ -2,12 +2,12 @@ import * as path from 'path'
 import { ComponentFieldDefinition, ContainedFieldSet, FixDefinitions, MessageDefinition } from '../dictionary'
 import { AsciiChars, AsciiEncoder, AsciiParser, MsgView, Tags, TimeFormatter } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { AsciiMsgTransmitter, ISessionDescription, StringDuplex } from '../transport'
+import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
 import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest, TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { AsciiMsgTransmitter, AsciiSessionMsgFactory } from '../transport/ascii'
 
 const root: string = path.join(__dirname, '../../data')
 

@@ -1,7 +1,7 @@
 import { TradeCaptureClient, TradeCaptureServer } from '../trade-capture'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
-import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport'
+import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 
 class AppLauncher extends Launcher {
   public constructor () {

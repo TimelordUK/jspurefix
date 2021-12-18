@@ -1,12 +1,11 @@
-import { ComponentFieldDefinition } from '../../definition'
+import { ComponentFieldDefinition, FixDefinitions } from '../../definition'
 import { ISaxNode } from '../../dict-primitive'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
-import { QuickFixXmlFileParser } from './quick-fix-xml-file-parser'
 
 export class FieldSetParser extends NodeParser {
-  constructor (public readonly parser: QuickFixXmlFileParser) {
-    super(parser)
+  constructor (definitions: FixDefinitions, public passes: number) {
+    super(definitions, passes)
   }
 
   public open (line: number, node: ISaxNode): void {

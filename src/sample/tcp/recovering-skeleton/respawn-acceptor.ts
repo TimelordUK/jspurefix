@@ -1,5 +1,5 @@
 import { IJsFixConfig, IJsFixLogger } from '../../../config'
-import { TcpAcceptorListener } from '../../../transport'
+import { TcpAcceptorListener } from '../../../transport/tcp'
 import { SkeletonServer } from './skeleton-server'
 
 export class RespawnAcceptor {

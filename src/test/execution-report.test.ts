@@ -2,10 +2,11 @@ import * as path from 'path'
 import { SegmentDescription, SegmentType, MsgView, Structure, AsciiChars } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary'
-import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
+import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { IUndInstrmtGrp, IUnderlyingInstrument } from '../types/FIX4.4/quickfix'
 import { replayFixFile, getDefinitions } from '../util'
+import { AsciiMsgTransmitter } from '../transport/ascii'
 
 const root: string = path.join(__dirname, '../../data')
 

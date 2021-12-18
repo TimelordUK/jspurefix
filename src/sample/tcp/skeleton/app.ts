@@ -1,7 +1,7 @@
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
-import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport'
+import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 
 class AppLauncher extends Launcher {
   public constructor () {

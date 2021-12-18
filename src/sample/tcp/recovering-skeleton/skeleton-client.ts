@@ -1,5 +1,5 @@
 import { MsgView } from '../../../buffer'
-import { AsciiSession } from '../../../transport'
+import { AsciiSession } from '../../../transport/ascii'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 
 export class SkeletonClient extends AsciiSession {

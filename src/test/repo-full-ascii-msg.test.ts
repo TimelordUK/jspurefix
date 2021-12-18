@@ -3,9 +3,9 @@ import { AsciiParser, AsciiView, AsciiChars } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary'
 import { JsonHelper, getDefinitions } from '../util'
-import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
+import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { AsciiMsgTransmitter, AsciiSessionMsgFactory } from '../transport/ascii'
 import { MsgType } from '..'
 
 let definitions: FixDefinitions

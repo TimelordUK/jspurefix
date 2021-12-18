@@ -2,14 +2,11 @@ import { ContainedGroupField, ContainedSimpleField, ContainedComponentField } fr
 import { ISaxNode } from '../../dict-primitive'
 import { FixDefinitions, GroupFieldDefinition, SimpleFieldDefinition, ComponentFieldDefinition } from '../../definition'
 import { ParseContext } from './parse-context'
-import { QuickFixXmlFileParser } from './quick-fix-xml-file-parser'
 
 export abstract class NodeParser {
   protected readonly parseContexts: ParseContext[] = []
-  protected readonly definitions: FixDefinitions
 
-  protected constructor (public readonly parser: QuickFixXmlFileParser) {
-    this.definitions = parser.definitions
+  protected constructor (public readonly definitions: FixDefinitions, public passes: number) {
   }
 
   public abstract open (line: number, node: ISaxNode): void
@@ -44,7 +41,7 @@ export abstract class NodeParser {
                 new ContainedComponentField(fieldDef, parent.set.fields.length, parent.required)
       parent.set.add(containedField)
     } else {
-      if (this.parser.numberPasses >= 4) {
+      if (this.passes >= 4) {
         throw new Error(`field ${node.name} includes unknown component ${componentName}.`)
       }
     }

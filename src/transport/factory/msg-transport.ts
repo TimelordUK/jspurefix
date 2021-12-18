@@ -1,9 +1,9 @@
-import { AsciiParser, FiXmlParser, MsgParser, AsciiChars } from '../buffer'
-import { AsciiMsgTransmitter } from './ascii'
-import { MsgTransmitter } from './msg-transmitter'
-import { FixmlMsgTransmitter } from './fixml'
-import { FixDuplex } from './duplex'
-import { IJsFixConfig } from '../config'
+import { AsciiParser, FiXmlParser, MsgParser, AsciiChars } from '../../buffer'
+import { AsciiMsgTransmitter } from '../ascii/ascii-msg-transmitter'
+import { MsgTransmitter } from '../msg-transmitter'
+import { FixmlMsgTransmitter } from '../fixml/fixml-msg-transmitter'
+import { FixDuplex } from '../duplex'
+import { IJsFixConfig } from '../../config'
 
 export class MsgTransport {
   public readonly transmitter: MsgTransmitter

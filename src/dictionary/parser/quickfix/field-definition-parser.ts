@@ -1,13 +1,12 @@
 import { ISaxNode } from '../../dict-primitive'
-import { SimpleFieldDefinition } from '../../definition'
+import { FixDefinitions, SimpleFieldDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
-import { QuickFixXmlFileParser } from './quick-fix-xml-file-parser'
 
 export class FieldDefinitionParser extends NodeParser {
   private currentField: SimpleFieldDefinition
 
-  constructor (public readonly parser: QuickFixXmlFileParser) {
-    super(parser)
+  constructor (definitions: FixDefinitions, public passes: number) {
+    super(definitions, passes)
   }
 
   public open (line: number, node: ISaxNode): void {

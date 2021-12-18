@@ -1,8 +1,8 @@
 import { ElasticBuffer } from '../buffer'
 import moment = require('moment')
-import { SessionState } from './tcp'
 import { TickAction } from './tick-action'
 import { IFixSessionStateArgs } from './fix-session-state-args'
+import { SessionState } from './session-state'
 
 export class FixSessionState {
   public nextTickAction: TickAction = TickAction.Nothing

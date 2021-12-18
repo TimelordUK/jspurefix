@@ -1,12 +1,12 @@
 import { IMsgApplication, ITcpTransportDescription } from '../session-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
-import { MakeFixSession } from '../make-fixl-session'
+import { MakeFixSession } from '../make-fix-session'
 import { FixSession } from '../fix-session'
 import { TcpInitiator } from './tcp-initiator'
-import { MsgTransport } from '../msg-transport'
+import { MsgTransport } from '../factory/msg-transport'
 import * as events from 'events'
 import Timeout = NodeJS.Timeout
-import { SessionState } from './session-state'
+import { SessionState } from '../session-state'
 
 /*
    create one application session instance - and recover a lost transport.  Hence the application

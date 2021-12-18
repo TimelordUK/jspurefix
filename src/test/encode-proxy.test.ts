@@ -2,9 +2,10 @@ import * as path from 'path'
 import { EncodeProxy, AsciiChars } from '../buffer'
 import { FixDefinitions } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
-import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
+import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
+import { AsciiMsgTransmitter } from '../transport/ascii'
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions

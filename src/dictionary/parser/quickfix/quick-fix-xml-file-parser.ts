@@ -102,7 +102,7 @@ export class QuickFixXmlFileParser extends FixParser {
         case 'fields': {
           switch (instance.parseState) {
             case ParseState.FieldDefinitions: {
-              parser = new FieldDefinitionParser(instance)
+              parser = new FieldDefinitionParser(instance.definitions, instance.numberPasses)
               break
             }
             default: {
@@ -115,7 +115,7 @@ export class QuickFixXmlFileParser extends FixParser {
         case 'messages': {
           switch (instance.parseState) {
             case ParseState.Messages: {
-              parser = new MessageParser(instance)
+              parser = new MessageParser(instance.definitions, instance.numberPasses)
               break
             }
 
@@ -133,7 +133,7 @@ export class QuickFixXmlFileParser extends FixParser {
             case ParseState.ComponentsFirstPass:
             case ParseState.ComponentsSecondPass:
             case ParseState.ComponentsThirdPass:
-              parser = new FieldSetParser(instance)
+              parser = new FieldSetParser(instance.definitions, instance.numberPasses)
               break
           }
           break
@@ -168,7 +168,7 @@ export class QuickFixXmlFileParser extends FixParser {
         case 'trailer': {
           switch (instance.parseState) {
             case ParseState.Messages: {
-              parser = new FieldSetParser(instance)
+              parser = new FieldSetParser(instance.definitions, instance.numberPasses)
               parser.open(saxParser.line, node)
               break
             }

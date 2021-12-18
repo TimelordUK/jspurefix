@@ -1,5 +1,5 @@
 import { MsgView } from '../../../buffer'
-import { AsciiSession } from '../../../transport'
+import { AsciiSession } from '../../../transport/ascii'
 import { MsgType } from '../../../types'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { IMarketDataRequest } from '../../../types/FIX4.4/quickfix'

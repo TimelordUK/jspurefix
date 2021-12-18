@@ -1,5 +1,5 @@
 import { TcpDuplex } from '../duplex'
-import { MsgTransport } from '../msg-transport'
+import { MsgTransport } from '../factory/msg-transport'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { getTlsOptions } from './tls-options'

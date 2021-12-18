@@ -2,8 +2,7 @@ import { HttpServer } from './http-server'
 import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
-import { httpInitiator, HttpJsonSampleAdapter } from '../../../transport/http'
-import { acceptor } from '../../../transport/fixml'
+import { HttpAcceptorListener, HttpJsonSampleAdapter, HttpInitiator } from '../../../transport/http'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -13,12 +12,12 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (config: IJsFixConfig): Promise<any> {
-    return acceptor(config, (c) => new HttpServer(c))
+    return new HttpAcceptorListener(config, (c) => new HttpServer(c)).start()
   }
 
   protected getInitiator (config: IJsFixConfig): Promise<any> {
     config.description.application.http.adapter = new HttpJsonSampleAdapter(config)
-    return httpInitiator(config, (c) => new HttpClient(c))
+    return new HttpInitiator(config, (c) => new HttpClient(c)).start()
   }
 }
 

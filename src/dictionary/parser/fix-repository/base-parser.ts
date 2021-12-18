@@ -1,12 +1,11 @@
 import { ILooseObject } from '../../../collections/collection'
 import { ISaxNode } from '../../dict-primitive'
-import { RepositoryXmlParser } from './repository-xml-parser'
 
 export abstract class BaseParser {
   public data: ILooseObject[] = []
   public current: ILooseObject
 
-  protected constructor (public readonly parser: RepositoryXmlParser, public readonly name: string) {
+  protected constructor (public readonly name: string) {
   }
 
   public value (line: number, n: string, v: string): void {

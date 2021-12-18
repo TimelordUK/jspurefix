@@ -2,7 +2,7 @@ import { ElasticBuffer, MsgView, MsgParser, AsciiParser, AsciiView, AsciiChars }
 import { ILooseObject } from './collections/collection'
 import { SimpleFieldDefinition, FixDefinitions, MsgCompiler, EnumCompiler, ICompilerSettings } from './dictionary'
 import { MessageGenerator, JsonHelper, getDefinitions, getDictPath, getWords } from './util'
-import { AsciiMsgTransmitter, ISessionDescription, SessionMsgFactory, MsgTransport, FileDuplex, StringDuplex } from './transport'
+import { ISessionDescription, FileDuplex, StringDuplex } from './transport'
 
 import { MsgTag } from './types'
 import { JsFixConfig } from './config'
@@ -11,6 +11,8 @@ import * as util from 'util'
 const fs = require('node-fs-extra')
 import * as minimist from 'minimist'
 import * as path from 'path'
+import { AsciiMsgTransmitter, SessionMsgFactory } from './transport/ascii'
+import { MsgTransport } from './transport/factory'
 
 const argv: any = minimist(process.argv.slice(2))
 

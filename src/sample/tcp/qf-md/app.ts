@@ -1,7 +1,7 @@
 import { MDClient } from './md-client'
 import { MDServer } from './md-server'
 import { IJsFixConfig } from '../../../config'
-import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport'
+import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 import { Launcher } from '../../launcher'
 
 class AppLauncher extends Launcher {

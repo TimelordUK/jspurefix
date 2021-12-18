@@ -1,9 +1,10 @@
 import * as path from 'path'
 import { AsciiChars, MsgView, TagPos, Structure } from '../buffer'
 import { FixDefinitions } from '../dictionary'
-import { ISessionDescription, AsciiMsgTransmitter } from '../transport'
+import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions, replayFixFile } from '../util'
+import { AsciiMsgTransmitter } from '../transport/ascii'
 
 const root: string = path.join(__dirname, '../../data')
 

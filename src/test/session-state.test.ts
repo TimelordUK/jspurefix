@@ -1,4 +1,6 @@
-import { FixSessionState, SessionState, TickAction } from '../transport'
+import { SessionState } from '../transport'
+import { FixSessionState } from '../transport/fix-session-state'
+import { TickAction } from '../transport/tick-action'
 
 let state: FixSessionState
 let now: Date

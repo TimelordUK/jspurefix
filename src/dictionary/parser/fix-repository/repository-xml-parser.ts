@@ -86,37 +86,37 @@ export class RepositoryXmlParser extends FixParser {
       const saxNode: ISaxNode = node as ISaxNode
       switch (saxNode.name) {
         case 'Datatypes': {
-          parser = new DataTypesParser(instance)
+          parser = new DataTypesParser()
           break
         }
 
         case 'Fields': {
-          parser = new FieldsParser(instance)
+          parser = new FieldsParser()
           break
         }
 
         case 'Enums': {
-          parser = new EnumsParser(instance)
+          parser = new EnumsParser()
           break
         }
 
         case 'Components': {
-          parser = new ComponentsParser(instance)
+          parser = new ComponentsParser()
           break
         }
 
         case 'Messages': {
-          parser = new MessagesParser(instance)
+          parser = new MessagesParser()
           break
         }
 
         case 'MsgContents': {
-          parser = new MsgContentsParser(instance)
+          parser = new MsgContentsParser()
           break
         }
 
         case 'Abbreviations': {
-          parser = new AbbreviationsParser(instance)
+          parser = new AbbreviationsParser()
           break
         }
 

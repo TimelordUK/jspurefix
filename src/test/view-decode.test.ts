@@ -2,11 +2,11 @@ import * as path from 'path'
 import { Structure, AsciiChars, MsgView, AsciiParser } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions, MessageDefinition } from '../dictionary'
-import { ISessionDescription, AsciiMsgTransmitter, StringDuplex } from '../transport'
+import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
 import { getDefinitions, replayFixFile } from '../util'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { AsciiMsgTransmitter, AsciiSessionMsgFactory } from '../transport/ascii'
 
 const root: string = path.join(__dirname, '../../data')
 
