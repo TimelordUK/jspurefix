@@ -3,13 +3,7 @@
  */
 
 import { IFixMsgStoreRecord } from './fix-msg-store-record'
-
-export interface IFixMsgStoreState {
-  readonly length: number,
-  readonly firstSeq: number,
-  readonly lastSeq: number
-  readonly id: string
-}
+import { IFixMsgStoreState } from './fix-msg-store-state'
 
 export interface IFixMsgStore {
   clear (): Promise<IFixMsgStoreState>

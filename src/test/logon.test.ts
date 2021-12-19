@@ -6,7 +6,7 @@ import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
 import { replayFixFile, getDefinitions } from '../util'
 import { JsFixConfig } from '../config'
-import { AsciiMsgTransmitter } from '../transport/ascii'
+import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
 const root: string = path.join(__dirname, '../../data')
 

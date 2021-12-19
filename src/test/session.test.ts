@@ -10,8 +10,9 @@ import { IStandardHeader, IReject, ILogon } from '../types/FIX4.4/repo'
 
 import * as path from 'path'
 import { getDefinitions } from '../util'
-import { AsciiMsgTransmitter, AsciiSessionMsgFactory } from '../transport/ascii/'
+import { AsciiSessionMsgFactory } from '../transport/ascii/'
 import { MsgTransport } from '../transport/factory'
+import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
 const root: string = path.join(__dirname, '../../data')
 const logonMsg: string = '8=FIX4.4|9=0000136|35=A|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:28.980|98=0|108=30|141=Y|553=js-client|554=pwd-client|10=177|'

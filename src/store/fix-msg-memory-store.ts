@@ -3,7 +3,7 @@ import { IJsFixConfig, IJsFixLogger } from '../config'
 import { IFixMsgStoreRecord } from './fix-msg-store-record'
 import { Dictionary } from '../collections'
 import { MsgType } from '../types'
-import { IFixMsgStoreState } from '.'
+import { IFixMsgStoreState } from './fix-msg-store-state'
 
 export class FixMsgMemoryStore implements IFixMsgStore {
   protected readonly logger: IJsFixLogger

@@ -8,8 +8,9 @@ import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
 import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest, TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
-import { AsciiMsgTransmitter, AsciiSessionMsgFactory } from '../transport/ascii'
+import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { ContainedFieldSet } from '../dictionary/contained'
+import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
 const root: string = path.join(__dirname, '../../data')
 

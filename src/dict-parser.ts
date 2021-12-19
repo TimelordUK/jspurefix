@@ -11,8 +11,8 @@ import { MsgType } from './types'
 import { JsFixWinstonLogFactory, JsFixConfig, WinstonLogger } from './config'
 import { BusinessRejectReason, IBusinessMessageReject } from './types/FIXML50SP2'
 import * as rp from 'request-promise-native'
-import { AsciiMsgTransmitter } from './transport/ascii'
 import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'
+import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 
 async function testEncodeDecode (): Promise<any> {
   const msgType: string = 'W'

@@ -7,7 +7,7 @@ import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { IUndInstrmtGrp, IUnderlyingInstrument } from '../types/FIX4.4/quickfix'
 import { replayFixFile, getDefinitions } from '../util'
-import { AsciiMsgTransmitter } from '../transport/ascii'
+import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
 const root: string = path.join(__dirname, '../../data')
 

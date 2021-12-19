@@ -6,7 +6,7 @@ import { ILooseObject } from '../collections/collection'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions } from '../util'
-import { AsciiMsgTransmitter } from '../transport/ascii'
+import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions

@@ -12,9 +12,10 @@ import * as util from 'util'
 const fs = require('node-fs-extra')
 import * as minimist from 'minimist'
 import * as path from 'path'
-import { AsciiMsgTransmitter, SessionMsgFactory } from './transport/ascii'
+import { SessionMsgFactory } from './transport/ascii'
 import { MsgTransport } from './transport/factory'
 import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'
+import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 
 const argv: any = minimist(process.argv.slice(2))
 
