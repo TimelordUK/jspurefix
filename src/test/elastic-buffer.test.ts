@@ -1,4 +1,5 @@
-import { ElasticBuffer, AsciiChars } from '../buffer'
+import { ElasticBuffer } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
 
 test('1 char in buffer length 1', () => {
   const buffer = new ElasticBuffer(1)

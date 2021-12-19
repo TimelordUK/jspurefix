@@ -1,6 +1,7 @@
-import { ElasticBuffer, MsgView, MsgParser, AsciiParser, AsciiView, AsciiChars } from './buffer'
+import { ElasticBuffer, MsgView, MsgParser } from './buffer'
+import { AsciiParser, AsciiView, AsciiChars } from './buffer/ascii'
 import { ILooseObject } from './collections/collection'
-import { SimpleFieldDefinition, FixDefinitions, MsgCompiler, EnumCompiler, ICompilerSettings } from './dictionary'
+import { SimpleFieldDefinition, FixDefinitions } from './dictionary'
 import { MessageGenerator, JsonHelper, getDefinitions, getDictPath, getWords } from './util'
 import { ISessionDescription, FileDuplex, StringDuplex } from './transport'
 
@@ -13,6 +14,7 @@ import * as minimist from 'minimist'
 import * as path from 'path'
 import { AsciiMsgTransmitter, SessionMsgFactory } from './transport/ascii'
 import { MsgTransport } from './transport/factory'
+import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'
 
 const argv: any = minimist(process.argv.slice(2))
 

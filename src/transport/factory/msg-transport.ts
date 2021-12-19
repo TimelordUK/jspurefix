@@ -1,9 +1,11 @@
-import { AsciiParser, FiXmlParser, MsgParser, AsciiChars } from '../../buffer'
+import { MsgParser } from '../../buffer'
+import { AsciiParser, AsciiChars } from '../../buffer/ascii'
 import { AsciiMsgTransmitter } from '../ascii/ascii-msg-transmitter'
 import { MsgTransmitter } from '../msg-transmitter'
 import { FixmlMsgTransmitter } from '../fixml/fixml-msg-transmitter'
 import { FixDuplex } from '../duplex'
 import { IJsFixConfig } from '../../config'
+import { FiXmlParser } from '../../buffer/fixml'
 
 export class MsgTransport {
   public readonly transmitter: MsgTransmitter

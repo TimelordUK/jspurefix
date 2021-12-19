@@ -3,7 +3,9 @@ import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
-import { MsgView, ElasticBuffer, MsgParser, AsciiChars, FixmlEncoder, FiXmlParser } from '../buffer'
+import { MsgView, ElasticBuffer, MsgParser } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
+import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
 import { getDefinitions, JsonHelper } from '../util'
 
 let definitions: FixDefinitions

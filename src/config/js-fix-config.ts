@@ -2,7 +2,7 @@ import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { JsFixLoggerFactory } from './js-fix-logger-factory'
 import { EmptyLogFactory } from './empty-log-factory'
-import { AsciiChars } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
 
 export interface IJsFixConfig {
   factory: ISessionMsgFactory

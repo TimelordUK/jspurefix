@@ -1,4 +1,5 @@
-import { MsgView, ElasticBuffer, AsciiChars } from '../buffer'
+import { MsgView, ElasticBuffer } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary'
 import { ISessionDescription, StringDuplex, FixDuplex } from '../transport'
 import { MsgType, SessionRejectReason } from '../types'

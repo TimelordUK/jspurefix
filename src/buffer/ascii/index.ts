@@ -1,3 +1,4 @@
+export * from './ascii-chars'
 export * from './ascii-encoder'
 export * from './ascii-parser'
 export * from './ascii-parser-state'

@@ -1,14 +1,13 @@
-import {
-  ContainedComponentField,
-  ContainedFieldType,
-  ContainedGroupField,
-  ContainedSimpleField,
-  FixDefinitions,
-  MessageDefinition
-} from '../..'
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
+import {
+  ContainedComponentField,
+  ContainedFieldType, ContainedGroupField,
+  ContainedSimpleField,
+  FixDefinitions,
+  MessageDefinition
+} from '../../dictionary'
 
 // this takes linear time i.e. it constantly makes forward progress
 // one tag at a time

@@ -1,6 +1,7 @@
 import * as path from 'path'
 import { ComponentFieldDefinition, ContainedFieldSet, FixDefinitions, MessageDefinition } from '../dictionary'
-import { AsciiChars, AsciiEncoder, AsciiParser, MsgView, Tags, TimeFormatter } from '../buffer'
+import { MsgView, Tags } from '../buffer'
+import { AsciiChars, AsciiEncoder, AsciiParser, TimeFormatter } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'

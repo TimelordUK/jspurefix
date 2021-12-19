@@ -1,5 +1,5 @@
 export * from './definition'
-export * from './compiler'
+// export * from './compiler'
 export * from './contained'
 export * from './parser'
 export * from './dict-primitive'

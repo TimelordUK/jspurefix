@@ -1,4 +1,4 @@
-import { FixmlEncoder } from '../../buffer'
+import { FixmlEncoder } from '../../buffer/fixml'
 import { IJsFixConfig } from '../../config'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'

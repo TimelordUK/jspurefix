@@ -2,7 +2,8 @@ import { IFixMsgStore } from './fix-msg-store'
 import { FixMsgStoreRecord, IFixMsgStoreRecord } from './fix-msg-store-record'
 import { IJsFixConfig } from '../config'
 import { MsgType } from '../types'
-import { AsciiParser, MsgView } from '../buffer'
+import { MsgView } from '../buffer'
+import { AsciiParser } from '../buffer/ascii'
 import { ISequenceReset, IStandardHeader } from '../types/FIX4.4/repo'
 
 export class FixMsgAsciiStoreResend {

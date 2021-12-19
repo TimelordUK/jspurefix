@@ -1,5 +1,6 @@
 import * as path from 'path'
-import { SegmentDescription, SegmentType, MsgView, Structure, AsciiChars } from '../buffer'
+import { SegmentDescription, SegmentType, MsgView, Structure } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary'
 import { ISessionDescription } from '../transport'

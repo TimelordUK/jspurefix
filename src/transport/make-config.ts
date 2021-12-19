@@ -1,4 +1,4 @@
-import { AsciiChars } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
 import { ISessionDescription } from './session-description'
 import { ISessionMsgFactory } from './fix-msg-factory'
 import { IJsFixConfig, JsFixConfig, JsFixLoggerFactory } from '../config'

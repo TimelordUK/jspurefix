@@ -3,7 +3,7 @@ import { Launcher } from '../../launcher'
 import { SkeletonClient } from './skeleton-client'
 import { RecoveringTcpInitiator } from '../../../transport/tcp'
 import { RespawnAcceptor } from './respawn-acceptor'
-import { AsciiChars } from '../../../buffer'
+import { AsciiChars } from '../../../buffer/ascii'
 
 class AppLauncher extends Launcher {
 

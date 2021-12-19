@@ -1,4 +1,5 @@
-import { TagPos, SegmentType, MsgView, AsciiChars, AsciiParser } from '../buffer'
+import { TagPos, SegmentType, MsgView } from '../buffer'
+import { AsciiChars, AsciiParser } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary'
 import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription, StringDuplex } from '../transport'

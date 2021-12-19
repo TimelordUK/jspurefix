@@ -1,6 +1,7 @@
 import * as path from 'path'
 import { FixDefinitions, MessageDefinition } from '../dictionary'
-import { MsgView, AsciiChars } from '../buffer'
+import { MsgView } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
 import { ISessionDescription } from '../transport'
 import { ILooseObject } from '../collections/collection'
 import { replayFixFile, getDefinitions } from '../util'

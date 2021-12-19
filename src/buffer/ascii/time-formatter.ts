@@ -1,4 +1,4 @@
-import { AsciiChars } from '../ascii-chars'
+import { AsciiChars } from './ascii-chars'
 import { ElasticBuffer } from '../elastic-buffer'
 import { ITimeFormatter } from './itime-formatter'
 

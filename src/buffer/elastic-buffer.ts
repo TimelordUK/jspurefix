@@ -1,4 +1,4 @@
-import { AsciiChars } from './ascii-chars'
+import { AsciiChars } from './ascii/ascii-chars'
 import { format } from 'mathjs'
 
 export class ElasticBuffer {

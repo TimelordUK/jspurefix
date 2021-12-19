@@ -1,5 +1,6 @@
 import * as path from 'path'
-import { EncodeProxy, AsciiChars } from '../buffer'
+import { EncodeProxy } from '../buffer'
+import { AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription } from '../transport'
