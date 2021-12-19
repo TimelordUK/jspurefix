@@ -7,9 +7,9 @@ import { TcpDuplex, FixDuplex } from '../duplex'
 
 import * as util from 'util'
 import { connect as tlsConnect, ConnectionOptions, TLSSocket } from 'tls'
-import { getTlsConnectionOptions } from './tls-options'
 import { createConnection } from 'net'
 import Timeout = NodeJS.Timeout
+import { TlsOptionsFactory } from './tls-options-factory'
 
 export enum InitiatorState {
   Idle = 1,
@@ -104,7 +104,7 @@ export class TcpInitiator extends FixInitiator {
     return new Promise<TcpDuplex>((resolve, reject) => {
       let tlsSocket: TLSSocket = null
       const tcp = this.tcp
-      const connectionOptions: ConnectionOptions = getTlsConnectionOptions(tcp)
+      const connectionOptions: ConnectionOptions = TlsOptionsFactory.getTlsConnectionOptions(tcp)
       if (connectionOptions) {
         try {
           tlsSocket = tlsConnect(connectionOptions, () => {
@@ -135,7 +135,7 @@ export class TcpInitiator extends FixInitiator {
   private tryConnect (): Promise < MsgTransport > {
     return new Promise<MsgTransport>((resolve, reject) => {
       const tcp = this.tcp
-      const connectionOptions: ConnectionOptions = getTlsConnectionOptions(tcp)
+      const connectionOptions: ConnectionOptions = TlsOptionsFactory.getTlsConnectionOptions(tcp)
       const connector = connectionOptions ? this.tlsDuplex() : this.unsecureDuplex()
       this.logger.info(`tryConnect ${tcp.host}:${tcp.port}`)
       connector.then(duplex => {

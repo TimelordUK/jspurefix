@@ -7,7 +7,6 @@ import { ContainedGroupField, ContainedComponentField, ContainedField, Contained
 import { ITypeDispatcher, reduceSet, ContainedSetType } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
-import { IFixMsgStoreRecord } from '../store'
 import { GroupFieldDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 
 export abstract class MsgView {

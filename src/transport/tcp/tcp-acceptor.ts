@@ -2,9 +2,9 @@ import { TcpDuplex } from '../duplex'
 import { MsgTransport } from '../factory/msg-transport'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
-import { getTlsOptions } from './tls-options'
 import { createServer as netCreateServer, Server, Socket } from 'net'
 import { createServer as tlsCreateServer, TlsOptions, TLSSocket } from 'tls'
+import { TlsOptionsFactory } from './tls-options-factory'
 
 export class TcpAcceptor extends FixAcceptor {
   private server: Server
@@ -34,7 +34,7 @@ export class TcpAcceptor extends FixAcceptor {
     try {
       const config: IJsFixConfig = this.config
       const tcp = this.config.description.application.tcp
-      const tlsOptions: TlsOptions = getTlsOptions(tcp.tls)
+      const tlsOptions: TlsOptions = TlsOptionsFactory.getTlsOptions(tcp.tls)
       this.logger.info(`create tls server`)
       this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
         if (tcp.tls.enableTrace) {
@@ -74,7 +74,7 @@ export class TcpAcceptor extends FixAcceptor {
 
   tlsOptions (): TlsOptions {
     const tcp = this.config.description.application.tcp
-    return getTlsOptions(tcp.tls)
+    return TlsOptionsFactory.getTlsOptions(tcp.tls)
   }
 
   private onSocket (id: number, socket: Socket, config: IJsFixConfig) {
