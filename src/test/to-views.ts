@@ -5,7 +5,7 @@ import { JsFixConfig } from '../config'
 import { MsgParser, MsgView } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
 import { FiXmlParser } from '../buffer/fixml'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { getDefinitions } from '../util'
 
 export class ToViews {

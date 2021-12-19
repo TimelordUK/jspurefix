@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { EncodeProxy } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'

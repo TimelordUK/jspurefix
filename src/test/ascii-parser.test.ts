@@ -1,6 +1,6 @@
 import { TagPos, SegmentType, MsgView } from '../buffer'
 import { AsciiChars, AsciiParser } from '../buffer/ascii'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription, StringDuplex } from '../transport'
 import * as path from 'path'

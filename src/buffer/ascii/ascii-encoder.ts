@@ -1,8 +1,9 @@
 import { ILooseObject } from '../../collections/collection'
+import { dispatchFields } from '../../dictionary'
 import { ContainedGroupField, ContainedSimpleField,
   ContainedFieldSet, ContainedField,
-  ContainedComponentField, SimpleFieldDefinition,
-  FixDefinitions, dispatchFields } from '../../dictionary'
+  ContainedComponentField } from '../../dictionary/contained'
+import { SimpleFieldDefinition, FixDefinitions } from '../../dictionary/definition'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import { TimeFormatter } from './time-formatter'

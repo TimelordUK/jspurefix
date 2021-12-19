@@ -1,5 +1,6 @@
 import { ILooseObject } from '../collections/collection'
-import { ContainedFieldSet, FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
+import { ContainedFieldSet } from '../dictionary/contained'
 import * as events from 'events'
 
 export abstract class MsgEncoder extends events.EventEmitter {

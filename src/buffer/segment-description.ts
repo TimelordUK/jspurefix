@@ -1,6 +1,6 @@
 import { INumericKeyed } from '../collections/collection'
-import { ContainedField, ContainedFieldSet, GroupFieldDefinition } from '../dictionary'
-
+import { ContainedField, ContainedFieldSet } from '../dictionary/contained'
+import { GroupFieldDefinition } from '../dictionary/definition'
 export enum SegmentType {
     Component = 0,
     Group = 1,

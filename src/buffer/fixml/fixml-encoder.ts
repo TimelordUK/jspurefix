@@ -1,10 +1,13 @@
 import { ILooseObject } from '../../collections/collection'
-import { ContainedFieldSet, ContainedField, ContainedGroupField, ContainedComponentField, ContainedSimpleField, FixDefinitions, dispatchFields, IFieldDispatcher } from '../../dictionary'
+import { dispatchFields, IFieldDispatcher } from '../../dictionary'
+import { ContainedFieldSet, ContainedField, ContainedGroupField,
+  ContainedComponentField, ContainedSimpleField } from '../../dictionary/contained'
 import { AsciiChars } from '../ascii/ascii-chars'
 import { TagType } from '../tags'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import moment = require('moment')
+import { FixDefinitions } from '../../dictionary/definition'
 
 interface IPopulatedAttributes {
   fields: ContainedSimpleField[],

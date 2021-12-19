@@ -1,4 +1,4 @@
-import { SimpleFieldDefinition } from '../../dictionary'
+import { SimpleFieldDefinition } from '../../dictionary/definition'
 import { SegmentDescription } from '../segment-description'
 import { Structure } from '../structure'
 import { TagType } from '../tags'

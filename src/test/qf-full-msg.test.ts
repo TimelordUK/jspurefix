@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { AsciiParser, AsciiView, AsciiChars } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { JsonHelper, getDefinitions } from '../util'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'

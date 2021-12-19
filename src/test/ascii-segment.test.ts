@@ -1,6 +1,6 @@
 import { MsgView, SegmentDescription } from '../buffer'
 import { AsciiParser, AsciiChars } from '../buffer/ascii'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { ILogon } from '../types/FIX4.4/repo'
 import { getDefinitions, JsonHelper } from '../util'

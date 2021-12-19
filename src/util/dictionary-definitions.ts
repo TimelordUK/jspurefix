@@ -1,4 +1,5 @@
-import { FixXsdParser, FixDefinitions, FixParser, QuickFixXmlFileParser, RepositoryXmlParser } from '../dictionary'
+import { FixXsdParser, FixParser, QuickFixXmlFileParser, RepositoryXmlParser } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { GetJsFixLogger, makeEmptyLogger } from '../config'
 import * as path from 'path'
 import * as fs from 'fs'

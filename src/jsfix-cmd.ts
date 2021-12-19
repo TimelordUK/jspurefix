@@ -1,7 +1,7 @@
 import { ElasticBuffer, MsgView, MsgParser } from './buffer'
 import { AsciiParser, AsciiView, AsciiChars } from './buffer/ascii'
 import { ILooseObject } from './collections/collection'
-import { SimpleFieldDefinition, FixDefinitions } from './dictionary'
+import { SimpleFieldDefinition, FixDefinitions } from './dictionary/definition'
 import { MessageGenerator, JsonHelper, getDefinitions, getDictPath, getWords } from './util'
 import { ISessionDescription, FileDuplex, StringDuplex } from './transport'
 

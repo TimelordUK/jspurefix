@@ -1,5 +1,5 @@
 import { MsgView } from '../msg-view'
-import { SimpleFieldDefinition } from '../../dictionary'
+import { SimpleFieldDefinition } from '../../dictionary/definition'
 import { Structure } from '../structure'
 import { SegmentDescription } from '../segment-description'
 import { TagType } from '../tags'

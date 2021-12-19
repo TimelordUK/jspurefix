@@ -1,7 +1,8 @@
 import { AsciiChars, AsciiEncoder, TimeFormatter } from '../../buffer/ascii'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
-import { ContainedFieldSet, MessageDefinition } from '../../dictionary'
+import { ContainedFieldSet } from '../../dictionary/contained'
+import { MessageDefinition } from '../../dictionary/definition'
 import { IJsFixConfig } from '../../config'
 import { IStandardHeader } from '../../types/FIX4.4/repo'
 

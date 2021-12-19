@@ -1,5 +1,6 @@
 import * as path from 'path'
-import { ContainedFieldType, FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
+import { ContainedFieldType } from '../dictionary/contained'
 import { ISessionDescription } from '../transport'
 import { getDefinitions } from '../util'
 

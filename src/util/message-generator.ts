@@ -1,6 +1,8 @@
 import { TagType } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { ContainedComponentField, ContainedGroupField, ContainedFieldSet, ContainedSimpleField, FixDefinitions, MessageDefinition, SimpleFieldDefinition, reduceSet } from '../dictionary'
+import { ContainedComponentField, ContainedGroupField, ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
+import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
+import { reduceSet } from '../dictionary'
 
 export class MessageGenerator {
   private word: number = 0

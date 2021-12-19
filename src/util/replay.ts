@@ -1,5 +1,5 @@
 import { MsgView } from '../buffer'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription, FileDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { MsgTransport } from '../transport/factory'

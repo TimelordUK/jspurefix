@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { MsgView, ElasticBuffer, MsgParser } from '../buffer'

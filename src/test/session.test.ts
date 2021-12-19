@@ -1,6 +1,6 @@
 import { MsgView, ElasticBuffer } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription, StringDuplex, FixDuplex } from '../transport'
 import { MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'

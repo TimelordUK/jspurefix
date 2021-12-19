@@ -1,5 +1,5 @@
 import * as path from 'path'
-import { ComponentFieldDefinition, ContainedFieldSet, FixDefinitions, MessageDefinition } from '../dictionary'
+import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { MsgView, Tags } from '../buffer'
 import { AsciiChars, AsciiEncoder, AsciiParser, TimeFormatter } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
@@ -9,6 +9,7 @@ import { getDefinitions } from '../util'
 import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest, TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
 import { AsciiMsgTransmitter, AsciiSessionMsgFactory } from '../transport/ascii'
+import { ContainedFieldSet } from '../dictionary/contained'
 
 const root: string = path.join(__dirname, '../../data')
 

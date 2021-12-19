@@ -1,16 +1,12 @@
-import {
-  ContainedComponentField,
-  ContainedField,
-  ContainedFieldSet,
-  ContainedFieldType,
-  ContainedGroupField,
-  ContainedSimpleField,
-  FixDefinitions,
-  MessageDefinition,
-  SimpleFieldDefinition
-} from '..'
 import { ILooseObject } from '../collections/collection'
 import { TagType } from './tags'
+import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
+import {
+  ContainedComponentField, ContainedField,
+  ContainedFieldSet, ContainedFieldType,
+  ContainedGroupField,
+  ContainedSimpleField
+} from '../dictionary/contained'
 
 export class EncodeProxy {
   constructor (public readonly definitions: FixDefinitions) {

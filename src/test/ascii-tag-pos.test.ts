@@ -1,7 +1,7 @@
 import * as path from 'path'
 import { MsgView, TagPos, Structure } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { getDefinitions, replayFixFile } from '../util'

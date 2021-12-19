@@ -1,4 +1,5 @@
-import { FixDefinitions, ContainedSimpleField } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
+import { ContainedSimpleField } from '../dictionary/contained'
 import { TagPos } from './tag-pos'
 import { MsgTag } from '../types'
 

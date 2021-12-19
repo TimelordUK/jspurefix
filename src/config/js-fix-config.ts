@@ -1,4 +1,4 @@
-import { FixDefinitions } from '../dictionary'
+import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { JsFixLoggerFactory } from './js-fix-logger-factory'
 import { EmptyLogFactory } from './empty-log-factory'

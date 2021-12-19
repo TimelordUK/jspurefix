@@ -1,4 +1,4 @@
-import { FixDefinitions } from '../../dictionary'
+import { FixDefinitions } from '../../dictionary/definition'
 import { AsciiChars } from './ascii-chars'
 import { AsciiView } from './ascii-view'
 import { AsciiSegmentParser } from './ascii-segment-parser'
