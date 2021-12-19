@@ -6,7 +6,7 @@ import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
-import { getDefinitions, replayFixFile } from '../util'
+import { DefinitionFactory, replayFixFile } from '../util'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
@@ -20,7 +20,7 @@ let view: MsgView
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'), AsciiChars.Pipe)

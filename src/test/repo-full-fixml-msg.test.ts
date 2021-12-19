@@ -6,7 +6,7 @@ import { JsFixConfig } from '../config'
 import { MsgView, ElasticBuffer, MsgParser } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
 import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
-import { getDefinitions, JsonHelper } from '../util'
+import { DefinitionFactory, JsonHelper } from '../util'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -15,7 +15,7 @@ const root: string = path.join(__dirname, '../../data/examples/FIXML')
 
 beforeAll(async () => {
   sessionDescription = require(path.join(root, '../../session/test-initiator.json'))
-  definitions = await getDefinitions('repofixml')
+  definitions = await DefinitionFactory.getDefinitions('repofixml')
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 

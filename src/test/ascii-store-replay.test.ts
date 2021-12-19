@@ -3,7 +3,7 @@ import { FixDefinitions } from '../dictionary/definition'
 import { MsgView } from '../buffer'
 import { AsciiChars, AsciiView } from '../buffer/ascii'
 import { ISessionDescription } from '../transport'
-import { getDefinitions, replayFixFile } from '../util'
+import { DefinitionFactory, replayFixFile } from '../util'
 import {
   FixMsgAsciiStoreResend,
   FixMsgMemoryStore,
@@ -58,7 +58,7 @@ beforeAll(async () => {
   const clientDescription: ISessionDescription = require(path.join(root, 'session/test-initiator-tls.json'))
   const serverFactory = new AsciiSessionMsgFactory(serverDescription)
   const clientFactory = new AsciiSessionMsgFactory(clientDescription)
-  definitions = await getDefinitions(serverDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(serverDescription.application.dictionary)
   const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, delimiter)
   const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, delimiter)
   const views = await replayFixFile(definitions, serverDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), delimiter)

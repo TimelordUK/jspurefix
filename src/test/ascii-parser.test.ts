@@ -1,7 +1,7 @@
 import { TagPos, SegmentType, MsgView } from '../buffer'
 import { AsciiChars, AsciiParser } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
-import { JsonHelper, getDefinitions } from '../util'
+import { DefinitionFactory, JsonHelper } from '../util'
 import { ISessionDescription, StringDuplex } from '../transport'
 import * as path from 'path'
 import { MsgType } from '..'
@@ -37,7 +37,7 @@ const expectedTagPos = [
 beforeAll(async () => {
   expect.assertions(1)
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 

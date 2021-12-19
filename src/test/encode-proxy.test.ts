@@ -5,8 +5,8 @@ import { FixDefinitions } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
-import { getDefinitions } from '../util'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
+import { DefinitionFactory } from '../util'
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions
@@ -15,7 +15,7 @@ let proxyFactory: EncodeProxy
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   proxyFactory = new EncodeProxy(definitions)

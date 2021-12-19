@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { ILooseObject } from './collections/collection'
-import { MessageGenerator, JsonHelper, getDefinitions, getWords } from './util'
+import { MessageGenerator, JsonHelper, getWords, DefinitionFactory } from './util'
 import { MsgView, MsgParser, ElasticBuffer } from './buffer'
 import { AsciiChars, AsciiParser, AsciiView } from './buffer/ascii'
 import { FiXmlParser, FixmlEncoder } from './buffer/fixml'
@@ -18,7 +18,7 @@ async function testEncodeDecode (): Promise<any> {
   const msgType: string = 'W'
   const root: string = path.join(__dirname, '../')
   const sessionDescription: ISessionDescription = require('../data/session/test-initiator.json')
-  const definitions = await getDefinitions(path.join(root, sessionDescription.application.dictionary))
+  const definitions = await DefinitionFactory.getDefinitions(path.join(root, sessionDescription.application.dictionary))
   const jh: JsonHelper = new JsonHelper(definitions)
   const msg: ILooseObject = jh.fromJson(path.join(root, 'data/examples/FIXML/cme/tc/Initial Single Side Submission/fix.xml'), msgType)
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
@@ -43,7 +43,7 @@ async function testEncodeDecode (): Promise<any> {
 async function testGenerator (): Promise<any> {
   const root: string = path.join(__dirname, '../')
   const sessionDescription: ISessionDescription = require('../data/session/test-initiator.json')
-  const definitions = await getDefinitions('C:/Users/Stephen/dev/ts/jsfix/data/fix_repo/FIX.4.4/Base')
+  const definitions = await DefinitionFactory.getDefinitions('C:/Users/Stephen/dev/ts/jsfix/data/fix_repo/FIX.4.4/Base')
   const lipsum: string[] = await getWords(path.join(root, 'data/examples/lipsum.txt'))
   const generator: MessageGenerator = new MessageGenerator(lipsum, definitions)
   const msgType: string = MsgType.NewOrderSingle
@@ -77,7 +77,7 @@ Executing Firm Marks a Trade for Give-up.xml
  */
 async function repository (): Promise<any> {
   const root: string = path.join(__dirname, '../')
-  const definitions: FixDefinitions = await getDefinitions('repofixml')
+  const definitions: FixDefinitions = await DefinitionFactory.getDefinitions('repofixml')
   // cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
@@ -160,7 +160,7 @@ function streamExample () {
 }
 
 async function compileDefinitions (definitionPath: string, outputPath: string) {
-  const definitions = await getDefinitions(definitionPath)
+  const definitions = await DefinitionFactory.getDefinitions(definitionPath)
   const compilerSettings: ICompilerSettings = require('../data/compiler.json')
   compilerSettings.output = outputPath
   const msgCompiler: MsgCompiler = new MsgCompiler(definitions, compilerSettings)
@@ -185,7 +185,7 @@ async function generateMessage () {
 }
 
 async function decode (): Promise<any> {
-  const definitions: FixDefinitions = await getDefinitions('data/fix_repo/FIX.4.4/Base')
+  const definitions: FixDefinitions = await DefinitionFactory.getDefinitions('data/fix_repo/FIX.4.4/Base')
   const txt = '8=FIX4.4|9=0001022|35=AE|49=init-comp|56=accept-comp|34=1|57=fix|52=20180909-14:22:09.841|571=Lorem|487=23513|856=1|568=ipsum|828=6|855=23619|830=dolor|150=F|748=17140|912=N|325=N|263=1|881=sit|818=amet,|820=consectetur|880=adipiscing|17=elit.|39=3|527=Nunc|570=N|423=8|55=odio|65=orci,|48=blandit|22=3|460=4|461=vel|167=MPT|762=semper|200=sed,|541=20180909|201=0|224=20180909|225=20180909|227=-8796.1|228=-23.537|255=bibendum|543=cursus|470=lectus.|471=Aenean|472=vel|240=20180909|202=891.7|947=-2928.1|231=5.7237|223=-1894.1|106=diam|348=9|349=6YYz0zu5s|350=8|351=TuH3tTNd|691=magna.|667=Aenean|875=99|876=et|873=20180909|874=20180909|913=viverra|914=leo,|915=20180909|916=20180909|919=0|898=0.5594|38=96682|152=19226|516=9.1251|854=0|235=PREVCLOSE|236=-2833.5|701=20180909|696=20180909|697=-6.095|698=26303|823=non|32=9253|31=2065.4|194=-73.233|30=iaculis|75=20180909|715=20180909|6=5.9279|218=0.0001953|221=neque.|222=Nullam|663=16216|699=arcu|761=lectus,|824=dignissim|63=3|64=20180909|573=0|574=M3|797=Y|852=Y|853=3|10=16|'
   const startsAt: Date = new Date()
   let i = 0
@@ -203,7 +203,7 @@ async function decode (): Promise<any> {
 
 async function http (): Promise<any> {
   const sessionDescription: ISessionDescription = require('../data/session/test-http-acceptor.json')
-  const definitions = await getDefinitions(sessionDescription.application.dictionary)
+  const definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe, logFactory)
   // const acceptor = acceptor(config)

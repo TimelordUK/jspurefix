@@ -6,7 +6,7 @@ import { MsgParser, MsgView } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
 import { FiXmlParser } from '../buffer/fixml'
 import { FixDefinitions } from '../dictionary/definition'
-import { getDefinitions } from '../util'
+import { DefinitionFactory } from '../util'
 
 export class ToViews {
   public definitions: FixDefinitions
@@ -21,7 +21,7 @@ export class ToViews {
     const root = this.root
     const testFolder = this.testFolder
     const views = this.views
-    this.definitions = await getDefinitions(file)
+    this.definitions = await DefinitionFactory.getDefinitions(file)
     const definitions = this.definitions
     const fs: any = require('fs')
     const fullName = path.join(root, `${testFolder}/fix.xml`)

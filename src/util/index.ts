@@ -1,4 +1,4 @@
-export * from './dictionary-definitions'
+export * from './definition-factory'
 export * from './json-helper'
 export * from './message-generator'
 export * from './replay'

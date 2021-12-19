@@ -2,7 +2,7 @@ import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition'
 import { ContainedFieldType } from '../dictionary/contained'
 import { ISessionDescription } from '../transport'
-import { getDefinitions } from '../util'
+import { DefinitionFactory } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -10,7 +10,7 @@ let definitions: FixDefinitions
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
 }, 45000)
 
 /*

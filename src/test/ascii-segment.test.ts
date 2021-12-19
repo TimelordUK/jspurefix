@@ -3,7 +3,7 @@ import { AsciiParser, AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { ILogon } from '../types/FIX4.4/repo'
-import { getDefinitions, JsonHelper } from '../util'
+import { DefinitionFactory, JsonHelper } from '../util'
 import * as path from 'path'
 import { MsgType } from '..'
 
@@ -14,7 +14,7 @@ const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 

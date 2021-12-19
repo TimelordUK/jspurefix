@@ -2,7 +2,7 @@ import { ElasticBuffer, MsgView, MsgParser } from './buffer'
 import { AsciiParser, AsciiView, AsciiChars } from './buffer/ascii'
 import { ILooseObject } from './collections/collection'
 import { SimpleFieldDefinition, FixDefinitions } from './dictionary/definition'
-import { MessageGenerator, JsonHelper, getDefinitions, getDictPath, getWords } from './util'
+import { MessageGenerator, JsonHelper, getWords, DefinitionFactory } from './util'
 import { ISessionDescription, FileDuplex, StringDuplex } from './transport'
 
 import { MsgTag } from './types'
@@ -299,7 +299,7 @@ export class JsfixCmd {
 
   private async compile () {
     let output = argv.output
-    const dp = getDictPath(argv.dict)
+    const dp = DefinitionFactory.getDictPath(argv.dict)
     if (dp) {
       output = dp.output
     }
@@ -317,7 +317,7 @@ export class JsfixCmd {
     } else {
       dict = this.sessionDescription.application.dictionary
     }
-    this.definitions = await getDefinitions(dict)
+    this.definitions = await DefinitionFactory.getDefinitions(dict)
     const definitions = this.definitions
     if (argv.delimiter) {
       this.delimiter = AsciiChars.firstChar(argv.delimiter)

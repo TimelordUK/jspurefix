@@ -5,12 +5,12 @@ import { AsciiChars, AsciiEncoder, AsciiParser, TimeFormatter } from '../buffer/
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
-import { getDefinitions } from '../util'
 import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest, TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { ContainedFieldSet } from '../dictionary/contained'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
+import { DefinitionFactory } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -27,7 +27,7 @@ const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Pipe)

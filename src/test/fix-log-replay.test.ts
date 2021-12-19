@@ -4,7 +4,7 @@ import { MsgView } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
 import { ISessionDescription } from '../transport'
 import { ILooseObject } from '../collections/collection'
-import { replayFixFile, getDefinitions } from '../util'
+import { DefinitionFactory, replayFixFile } from '../util'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -15,7 +15,7 @@ let expected: ILooseObject
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/fix.txt'), AsciiChars.Pipe)
 }, 45000)
 

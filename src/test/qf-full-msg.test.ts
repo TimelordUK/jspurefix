@@ -2,7 +2,7 @@ import * as path from 'path'
 import { AsciiParser, AsciiView, AsciiChars } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { JsonHelper, getDefinitions } from '../util'
+import { DefinitionFactory, JsonHelper } from '../util'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
 import { AsciiSessionMsgFactory } from '../transport/ascii/'
@@ -16,7 +16,7 @@ const root: string = path.join(__dirname, '../../data/examples/FIX.4.4/quickfix'
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, '../../../session/qf-fix44.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
   config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
 }, 45000)

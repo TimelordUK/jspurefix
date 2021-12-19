@@ -4,7 +4,7 @@ import { AsciiChars } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
-import { replayFixFile, getDefinitions } from '../util'
+import { DefinitionFactory, replayFixFile } from '../util'
 import { JsFixConfig } from '../config'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
@@ -42,7 +42,7 @@ const asStrings: string[] = [
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await getDefinitions(sessionDescription.application.dictionary)
+  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'), AsciiChars.Pipe)
