@@ -23,6 +23,7 @@
     "url": "git+https://github.com/TimelordUK/jspurefix.git"
   },
   "scripts": {
+    "circular": "madge --circular --extensions js dist && madge --circular --extensions ts src",
     "test": "jest",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "cmd": "cd dist && node jsfix-cmd",
@@ -95,6 +96,7 @@
     "ts-jest": "^27.1.1",
     "tslint": "^6.1.3",
     "tslint-config-standard": "^9.0.0",
+    "madge": "^5.0.1",
     "typescript": "^4.5.4"
   }
 }

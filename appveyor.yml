@@ -49,5 +49,6 @@ for:
     test_script:
       - sh: "npm run tcp-tc"
       - sh: "npm run http-oms"
+      - sh: "npm run tcp-qf-md"
       - sh: "npm test"
 
