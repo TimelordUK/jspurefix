@@ -2,6 +2,7 @@ import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport/ascii'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { ILooseObject } from '../../../collections/collection'
+import { FixMsgStoreRecord } from '../../../store'
 
 export class SkeletonSession extends AsciiSession {
   private readonly logger: IJsFixLogger
@@ -19,7 +20,7 @@ export class SkeletonSession extends AsciiSession {
   protected onApplicationMsg (msgType: string, view: MsgView): void {
     // dispatch messages
     if (this.useInMemoryStore) {
-      const rec = view.toMsgStoreRecord()
+      const rec = FixMsgStoreRecord.toMsgStoreRecord(view)
       this.store.put(rec).then(r => {
         this.logger.info(`store state ${JSON.stringify(r, null, 4)}`)
         this.dispatch(msgType, view)

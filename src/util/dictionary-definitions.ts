@@ -1,8 +1,9 @@
-import { FixXsdParser, FixParser, QuickFixXmlFileParser, RepositoryXmlParser } from '../dictionary'
+import { FixParser } from '../dictionary'
 import { FixDefinitions } from '../dictionary/definition'
 import { GetJsFixLogger, makeEmptyLogger } from '../config'
 import * as path from 'path'
 import * as fs from 'fs'
+import { FixXsdParser, QuickFixXmlFileParser, RepositoryXmlParser } from '../dictionary/parser'
 
 export interface IDictionaryPath {
   output: string,

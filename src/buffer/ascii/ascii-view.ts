@@ -8,7 +8,6 @@ import { ITimeFormatter } from './itime-formatter'
 import { TimeFormatter } from './time-formatter'
 import { TagPos } from '../tag-pos'
 import { MsgTag } from '../../types'
-import { FixMsgStoreRecord, IFixMsgStoreRecord } from '../../store'
 
 export class AsciiView extends MsgView {
   private readonly timeFormatter: ITimeFormatter = new TimeFormatter(this.buffer)
@@ -33,10 +32,6 @@ export class AsciiView extends MsgView {
       return new AsciiView(segment, buffer, new Structure(structure.tags.clone(), structure.segments), this.ptr, delimiter, writeDelimiter)
     }
     return new AsciiView(segment, buffer, null, this.ptr, delimiter, writeDelimiter)
-  }
-
-  public toMsgStoreRecord (): IFixMsgStoreRecord {
-    return new FixMsgStoreRecord(this.getString(MsgTag.MsgType), this.getTyped(MsgTag.SendingTime), this.getTyped(MsgTag.MsgSeqNum), this.toObject())
   }
 
   public checksum (): number {

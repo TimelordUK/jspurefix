@@ -11,7 +11,7 @@ import { Dictionary } from '../../collections'
 import * as fs from 'fs'
 import * as Util from 'util'
 import * as Path from 'path'
-import { dispatchFields } from '../fields-dispatch'
+import { dispatchFields } from '../contained/fields-dispatch'
 import { reduceSet } from '../set-reduce'
 
 export class MsgCompiler {

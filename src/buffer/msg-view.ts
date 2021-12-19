@@ -417,6 +417,4 @@ export abstract class MsgView {
 
     return buffer.toString()
   }
-
-  abstract toMsgStoreRecord (): IFixMsgStoreRecord
 }

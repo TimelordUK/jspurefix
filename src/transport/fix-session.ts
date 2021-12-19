@@ -6,7 +6,7 @@ import { MsgTag } from '../types'
 import { ILooseObject } from '../collections/collection'
 
 import * as events from 'events'
-import { SessionState } from '.'
+import { SessionState } from './session-state'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false

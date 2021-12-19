@@ -1,4 +1,6 @@
 import { ILooseObject } from '../collections/collection'
+import { MsgView } from '../buffer'
+import { MsgTag } from '../types'
 
 export interface IFixMsgStoreRecord {
   readonly msgType: string
@@ -15,6 +17,10 @@ export class FixMsgStoreRecord implements IFixMsgStoreRecord {
                public readonly seqNum: number,
                public obj?: ILooseObject,
                public readonly encoded?: string) {
+  }
+
+  static toMsgStoreRecord (v: MsgView): IFixMsgStoreRecord {
+    return new FixMsgStoreRecord(v.getString(MsgTag.MsgType), v.getTyped(MsgTag.SendingTime), v.getTyped(MsgTag.MsgSeqNum), v.toObject())
   }
 
   clone (): IFixMsgStoreRecord {

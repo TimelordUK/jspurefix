@@ -42,7 +42,7 @@ class TestRecovery {
   getRecords (comp: string) {
     return this.views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
       if (v.getString(MsgTag.SenderCompID) === comp) {
-        agg.push(v.toMsgStoreRecord())
+        agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
       }
       return agg
     }, [])

@@ -26,7 +26,7 @@ beforeAll(async () => {
   store = new FixMsgMemoryStore('test', config)
   records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
     if (v.getString(MsgTag.SenderCompID) === 'accept-tls-comp') {
-      agg.push(v.toMsgStoreRecord())
+      agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
     }
     return agg
   }, [])

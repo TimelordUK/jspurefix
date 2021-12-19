@@ -1,6 +1,3 @@
-// export * from './ascii'
-// export * from './fixml'
-// export * from './ascii/ascii-chars'
 export * from './elastic-buffer'
 export * from './encode-proxy'
 export * from './encoder-state'

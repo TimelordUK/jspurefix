@@ -1,4 +1,7 @@
-import { ContainedField, ContainedFieldType, ContainedGroupField, ContainedSimpleField, ContainedComponentField } from './contained'
+import { ContainedGroupField } from './contained-group-field'
+import { ContainedSimpleField } from './contained-simple-field'
+import { ContainedField, ContainedFieldType } from './contained-field'
+import { ContainedComponentField } from './contained-component-field'
 
 export interface IFieldDispatcher {
   group?: { (field: ContainedGroupField): void }
