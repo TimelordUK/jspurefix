@@ -1,5 +1,5 @@
 import { IMsgApplication } from './session-description'
-import { MsgTransport } from './factory/msg-transport'
+import { MsgTransport } from './factory'
 
 export abstract class FixInitiator {
   protected constructor (public readonly application: IMsgApplication) {

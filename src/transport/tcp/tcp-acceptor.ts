@@ -1,5 +1,5 @@
 import { TcpDuplex } from '../duplex'
-import { MsgTransport } from '../factory/msg-transport'
+import { MsgTransport } from '../factory'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { createServer as netCreateServer, Server, Socket } from 'net'

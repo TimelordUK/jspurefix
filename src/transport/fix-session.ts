@@ -1,7 +1,7 @@
 import { ElasticBuffer, MsgView, SegmentType } from '../buffer'
 import { IJsFixConfig, IJsFixLogger } from '../config'
 import { FixSessionState } from './fix-session-state'
-import { MsgTransport } from './factory/msg-transport'
+import { MsgTransport } from './factory'
 import { MsgTag } from '../types'
 import { ILooseObject } from '../collections/collection'
 

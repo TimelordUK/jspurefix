@@ -1,7 +1,7 @@
 import { IJsFixConfig } from '../../config'
 import { FixInitiator } from '../fix-initiator'
 import { TcpInitiator } from './tcp-initiator'
-import { MsgTransport } from '../factory/msg-transport'
+import { MsgTransport } from '../factory'
 import { MakeFixSession } from '../make-fix-session'
 import { FixSession } from '../fix-session'
 

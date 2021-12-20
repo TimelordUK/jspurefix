@@ -1,7 +1,7 @@
 import { IJsFixConfig } from '../../config'
 import { FixAcceptor } from '../fix-acceptor'
 import { TcpAcceptor } from './tcp-acceptor'
-import { MsgTransport } from '../factory/msg-transport'
+import { MsgTransport } from '../factory'
 import { MakeFixSession } from '../make-fix-session'
 
 export class TcpAcceptorListener {

@@ -1,5 +1,5 @@
 import * as events from 'events'
-import { MsgTransport } from './factory/msg-transport'
+import { MsgTransport } from './factory'
 import { IMsgApplication } from './session-description'
 import { INumericKeyed } from '../collections/collection'
 
