@@ -3,7 +3,7 @@ import { FixDefinitions } from '../dictionary/definition'
 import { MsgView } from '../buffer'
 import { AsciiChars, AsciiView } from '../buffer/ascii'
 import { ISessionDescription } from '../transport'
-import { DefinitionFactory, replayFixFile } from '../util'
+import { DefinitionFactory, FileReplayer } from '../util'
 import {
   FixMsgAsciiStoreResend,
   FixMsgMemoryStore,
@@ -61,7 +61,7 @@ beforeAll(async () => {
   definitions = await new DefinitionFactory().getDefinitions(serverDescription.application.dictionary)
   const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, delimiter)
   const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, delimiter)
-  const views = await replayFixFile(definitions, serverDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), delimiter)
+  const views = await new FileReplayer(definitions, serverDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), delimiter)
   server = new TestRecovery(views, serverConfig)
   client = new TestRecovery(views, clientConfig)
   await server.populate()

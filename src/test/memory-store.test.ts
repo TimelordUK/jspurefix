@@ -4,7 +4,7 @@ import { MsgView } from '../buffer'
 import { AsciiChars, AsciiView } from '../buffer/ascii'
 import { ISessionDescription } from '../transport'
 import { ILooseObject } from '../collections/collection'
-import { DefinitionFactory, replayFixFile } from '../util'
+import { DefinitionFactory, FileReplayer } from '../util'
 import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../store'
 import { MsgTag } from '../types'
 import { JsFixConfig } from '../config'
@@ -21,7 +21,7 @@ beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
   definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), AsciiChars.Pipe)
+  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), AsciiChars.Pipe)
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   store = new FixMsgMemoryStore('test', config)
   records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {

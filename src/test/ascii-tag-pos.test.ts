@@ -4,7 +4,7 @@ import { AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
 import { JsFixConfig } from '../config'
-import { DefinitionFactory, replayFixFile } from '../util'
+import { DefinitionFactory, FileReplayer } from '../util'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
 const root: string = path.join(__dirname, '../../data')
@@ -60,7 +60,7 @@ beforeAll(async () => {
   definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
-  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'), AsciiChars.Pipe)
+  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'), AsciiChars.Pipe)
   if (views && views.length > 0) {
     structure = views[0].structure
     tp = views[0].structure.tags.tagPos.slice(0, views[0].segment.endPosition)

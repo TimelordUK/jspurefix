@@ -2,7 +2,7 @@ import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
 import { DefinitionFactory } from '../util'
-import { ContainedFieldType } from '../dictionary/contained/contained-field-type'
+import { ContainedFieldType } from '../dictionary/contained/'
 
 const root: string = path.join(__dirname, '../../data')
 

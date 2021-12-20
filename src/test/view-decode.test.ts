@@ -6,7 +6,7 @@ import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { ISessionDescription, StringDuplex } from '../transport'
 import { JsFixConfig } from '../config'
 import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
-import { DefinitionFactory, replayFixFile } from '../util'
+import { DefinitionFactory, FileReplayer } from '../util'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 
@@ -23,7 +23,7 @@ beforeAll(async () => {
   definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
-  views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'), AsciiChars.Pipe)
+  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'), AsciiChars.Pipe)
   if (views && views.length > 0) {
     view = views[0]
     structure = view.structure
