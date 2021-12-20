@@ -11,7 +11,7 @@ import { Dictionary } from '../../collections'
 import * as fs from 'fs'
 import * as Util from 'util'
 import * as Path from 'path'
-import { reduceSet } from '../set-reduce'
+import { SetReduce } from '../set-reduce'
 
 export class MsgCompiler {
   readonly queue: CompilerType[] = []
@@ -180,9 +180,10 @@ export class MsgCompiler {
   }
 
   private imports (compilerType: CompilerType): number {
+    const reducer = new SetReduce<string[]>()
     const isMsg = compilerType.set.type === ContainedSetType.Msg
     const snippets = this.snippets
-    const imports: string[] = reduceSet<string[]>(compilerType.set, {
+    const imports: string[] = reducer.reduce(compilerType.set, {
       component: (a: string[], c: ContainedComponentField) => {
         a.push(`${snippets.import(compilerType.getExtended(c), isMsg, 0)}`)
         return a

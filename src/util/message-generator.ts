@@ -2,7 +2,7 @@ import { TagType } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { ContainedComponentField, ContainedGroupField, ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
 import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
-import { reduceSet } from '../dictionary'
+import { SetReduce } from '../dictionary'
 
 export class MessageGenerator {
   private word: number = 0
@@ -64,7 +64,8 @@ export class MessageGenerator {
   }
 
   private toObject (set: ContainedFieldSet, density: number, repeatGroups: boolean): ILooseObject {
-    return reduceSet<ILooseObject>(set, {
+    const reducer = new SetReduce<ILooseObject>()
+    return reducer.reduce(set, {
       simple: (a: ILooseObject, sf: ContainedSimpleField) => {
         const tag: number = sf.definition.tag
         let include = tag === set.firstSimple.definition.tag || this.length > 0 || Math.random() <= density

@@ -4,10 +4,11 @@ import { Structure } from './structure'
 import { Dictionary } from '../collections'
 import { Tags } from './tags'
 import { ContainedGroupField, ContainedComponentField, ContainedField, ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
-import { ITypeDispatcher, reduceSet, ContainedSetType } from '../dictionary'
+import { ContainedSetType, SetReduce } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
 import { GroupFieldDefinition, SimpleFieldDefinition } from '../dictionary/definition'
+import { ITypeDispatcher } from '../dictionary/type-dispatcher'
 
 export abstract class MsgView {
   protected sortedTagPosForwards: TagPos[]
@@ -309,7 +310,8 @@ export abstract class MsgView {
   }
 
   private asLoose (def: ContainedFieldSet): ILooseObject {
-    return reduceSet<ILooseObject>(def, {
+    const reducer = new SetReduce<ILooseObject>()
+    return reducer.reduce(def, {
       group: (a: ILooseObject, field: ContainedGroupField) => this.asLooseGroup(a, field),
       simple: (a: ILooseObject, field: ContainedSimpleField) => this.asLooseSimple(a, field),
       component: (a: ILooseObject, field: ContainedComponentField) => this.asLooseComponent(a, field)
@@ -324,7 +326,8 @@ export abstract class MsgView {
   }
 
   private missingRequired (def: ContainedFieldSet, tags: number []): number[] {
-    return reduceSet<number[]>(def, {
+    const reducer = new SetReduce<number[]>()
+    return reducer.reduce(def, {
       group: (a: number[], field: ContainedGroupField) => this.missingGroup(def, field, a),
       simple: (a: number[], field: ContainedSimpleField) => this.missingSimple(field, a),
       component: (a: number[], field: ContainedComponentField) => this.missingComponent(field, a)
