@@ -15,7 +15,7 @@ const root: string = path.join(__dirname, '../../data/examples/FIXML')
 
 beforeAll(async () => {
   sessionDescription = require(path.join(root, '../../session/test-initiator.json'))
-  definitions = await DefinitionFactory.getDefinitions('repofixml')
+  definitions = await new DefinitionFactory().getDefinitions('repofixml')
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 

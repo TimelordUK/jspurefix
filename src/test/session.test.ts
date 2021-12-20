@@ -37,7 +37,7 @@ class Setup {
   }
 
   async init () {
-    this.definitions = await DefinitionFactory.getDefinitions(this.clientDescription.application.dictionary)
+    this.definitions = await new DefinitionFactory().getDefinitions(this.clientDescription.application.dictionary)
   }
 }
 

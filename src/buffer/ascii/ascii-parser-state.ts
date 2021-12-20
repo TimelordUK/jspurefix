@@ -1,15 +1,7 @@
 import { Tags } from '../tags'
 import { MessageDefinition } from '../../dictionary/definition'
 import { ElasticBuffer } from '../elastic-buffer'
-
-export enum ParseState {
-  BeginField = 1,
-  ParsingTag = 2,
-  ParsingValue = 3,
-  ParsingRawDataLength = 4,
-  ParsingRawData = 5,
-  MsgComplete = 6
-}
+import { ParseState } from './parse-state'
 
 export class AsciiParserState {
   public message: MessageDefinition

@@ -299,7 +299,7 @@ export class JsfixCmd {
 
   private async compile () {
     let output = argv.output
-    const dp = DefinitionFactory.getDictPath(argv.dict)
+    const dp = new DefinitionFactory().getDictPath(argv.dict)
     if (dp) {
       output = dp.output
     }
@@ -317,7 +317,7 @@ export class JsfixCmd {
     } else {
       dict = this.sessionDescription.application.dictionary
     }
-    this.definitions = await DefinitionFactory.getDefinitions(dict)
+    this.definitions = await new DefinitionFactory().getDefinitions(dict)
     const definitions = this.definitions
     if (argv.delimiter) {
       this.delimiter = AsciiChars.firstChar(argv.delimiter)

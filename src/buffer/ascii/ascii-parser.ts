@@ -2,7 +2,7 @@ import { FixDefinitions } from '../../dictionary/definition'
 import { AsciiChars } from './ascii-chars'
 import { AsciiView } from './ascii-view'
 import { AsciiSegmentParser } from './ascii-segment-parser'
-import { AsciiParserState, ParseState } from './ascii-parser-state'
+import { AsciiParserState } from './ascii-parser-state'
 import { Structure } from '../structure'
 import { Tags } from '../tags'
 import { MsgParser } from '../msg-parser'
@@ -10,6 +10,7 @@ import { MsgView } from '../msg-view'
 import { Readable } from 'stream'
 import { ElasticBuffer } from '../elastic-buffer'
 import { SegmentDescription, SegmentType } from '../segment-description'
+import { ParseState } from './parse-state'
 
 export class AsciiParser extends MsgParser {
   private static nextId: number = 0

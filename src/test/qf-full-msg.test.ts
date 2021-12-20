@@ -16,7 +16,7 @@ const root: string = path.join(__dirname, '../../data/examples/FIX.4.4/quickfix'
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, '../../../session/qf-fix44.json'))
-  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
+  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
   config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
 }, 45000)

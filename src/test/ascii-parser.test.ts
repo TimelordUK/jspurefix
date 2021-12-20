@@ -37,7 +37,7 @@ const expectedTagPos = [
 beforeAll(async () => {
   expect.assertions(1)
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
+  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 

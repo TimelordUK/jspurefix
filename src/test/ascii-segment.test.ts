@@ -14,7 +14,7 @@ const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
+  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 

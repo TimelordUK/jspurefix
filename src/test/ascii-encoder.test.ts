@@ -27,7 +27,7 @@ const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
+  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
   session = new AsciiMsgTransmitter(config)
   encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Pipe)

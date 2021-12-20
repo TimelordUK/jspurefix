@@ -21,7 +21,7 @@ export class ToViews {
     const root = this.root
     const testFolder = this.testFolder
     const views = this.views
-    this.definitions = await DefinitionFactory.getDefinitions(file)
+    this.definitions = await new DefinitionFactory().getDefinitions(file)
     const definitions = this.definitions
     const fs: any = require('fs')
     const fullName = path.join(root, `${testFolder}/fix.xml`)

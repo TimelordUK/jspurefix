@@ -10,7 +10,7 @@ let definitions: FixDefinitions
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
+  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
 }, 45000)
 
 /*

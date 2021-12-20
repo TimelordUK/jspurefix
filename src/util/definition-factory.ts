@@ -10,18 +10,18 @@ const root: string = path.join(__dirname, '../../')
 
 export class DefinitionFactory {
 
-  static getDictPath (p: string): IDictionaryPath {
+  getDictPath (p: string): IDictionaryPath {
     const dictionary = require(path.join(root, 'data/dictionary.json'))
     return dictionary[p]
   }
 
-  static async getDefinitions (path: string, getLogger: GetJsFixLogger = makeEmptyLogger): Promise<FixDefinitions> {
+  async getDefinitions (path: string, getLogger: GetJsFixLogger = makeEmptyLogger): Promise<FixDefinitions> {
     let parser: FixParser
-    const dp: IDictionaryPath = DefinitionFactory.getDictPath(path)
+    const dp: IDictionaryPath = this.getDictPath(path)
     if (dp) {
       path = dp.dict
     }
-    path = DefinitionFactory.norm(path)
+    path = this.norm(path)
     if (fs.lstatSync(path).isDirectory() && path.indexOf('fixml') >= 0) {
       parser = new FixXsdParser(path, getLogger)
     } else if (fs.lstatSync(path).isDirectory()) {
@@ -32,7 +32,7 @@ export class DefinitionFactory {
     return parser.parse()
   }
 
-  static norm (p: string): string {
+  norm (p: string): string {
     let f: string = p
     if (!path.isAbsolute(p)) {
       f = path.join(root, f)

@@ -20,7 +20,7 @@ let records: FixMsgStoreRecord[]
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
-  definitions = await DefinitionFactory.getDefinitions(sessionDescription.application.dictionary)
+  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   views = await replayFixFile(definitions, sessionDescription, path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), AsciiChars.Pipe)
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   store = new FixMsgMemoryStore('test', config)
