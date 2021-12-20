@@ -1,9 +1,4 @@
-
-export enum ContainedFieldType {
-    Component = 0,
-    Group = 1,
-    Simple = 2
-}
+import { ContainedFieldType } from './contained-field-type'
 
 export class ContainedField {
   constructor (public readonly name: string, public readonly position: number,

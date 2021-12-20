@@ -1,5 +1,6 @@
-import { ContainedField, ContainedFieldType } from './contained-field'
+import { ContainedField } from './contained-field'
 import { GroupFieldDefinition } from '../definition'
+import { ContainedFieldType } from './contained-field-type'
 
 export class ContainedGroupField extends ContainedField {
   constructor (public readonly definition: GroupFieldDefinition,

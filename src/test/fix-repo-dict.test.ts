@@ -1,8 +1,8 @@
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition'
-import { ContainedFieldType } from '../dictionary/contained'
 import { ISessionDescription } from '../transport'
 import { DefinitionFactory } from '../util'
+import { ContainedFieldType } from '../dictionary/contained/contained-field-type'
 
 const root: string = path.join(__dirname, '../../data')
 

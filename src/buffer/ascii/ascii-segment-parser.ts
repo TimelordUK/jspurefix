@@ -7,9 +7,9 @@ import {
 } from '../../dictionary/definition'
 import {
   ContainedComponentField,
-  ContainedFieldType,
   ContainedGroupField,
-  ContainedSimpleField
+  ContainedSimpleField,
+  ContainedFieldType
 } from '../../dictionary/contained'
 
 // this takes linear time i.e. it constantly makes forward progress

@@ -1,13 +1,9 @@
 import { ContainedGroupField } from './contained-group-field'
 import { ContainedSimpleField } from './contained-simple-field'
 import { ContainedComponentField } from './contained-component-field'
-import { ContainedField, ContainedFieldType } from './contained-field'
-
-export interface IContainedFieldDispatcher {
-  group?: { (field: ContainedGroupField): void }
-  simple?: { (field: ContainedSimpleField): void }
-  component?: { (field: ContainedComponentField): void }
-}
+import { ContainedField } from './contained-field'
+import { IContainedFieldDispatcher } from './contained-field-dispatcher'
+import { ContainedFieldType } from './contained-field-type'
 
 export function dispatchContainedField (field: ContainedField, dispatcher: IContainedFieldDispatcher): void {
   switch (field.type) {

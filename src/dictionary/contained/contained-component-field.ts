@@ -1,5 +1,6 @@
 import { ComponentFieldDefinition } from '../definition'
-import { ContainedField, ContainedFieldType } from './contained-field'
+import { ContainedField } from './contained-field'
+import { ContainedFieldType } from './contained-field-type'
 
 export class ContainedComponentField extends ContainedField {
   constructor (public readonly definition: ComponentFieldDefinition,

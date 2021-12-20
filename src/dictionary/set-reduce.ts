@@ -1,5 +1,5 @@
-import { ContainedField, ContainedFieldType, ContainedFieldSet,
-  ContainedGroupField, ContainedSimpleField, ContainedComponentField } from './contained'
+import { ContainedField, ContainedFieldSet,
+  ContainedGroupField, ContainedSimpleField, ContainedComponentField, ContainedFieldType } from './contained'
 import { ITypeDispatcher } from './type-dispatcher'
 
 export class SetReduce<T> {

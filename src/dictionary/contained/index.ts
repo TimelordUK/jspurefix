@@ -1,4 +1,5 @@
 export * from './contained-component-field'
+export * from './contained-field-type'
 export * from './contained-field'
 export * from './contained-field-dispatch'
 export * from './contained-field-set'

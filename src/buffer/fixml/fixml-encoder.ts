@@ -3,7 +3,7 @@ import {
   ContainedFieldSet, ContainedField, ContainedGroupField,
   ContainedComponentField, ContainedSimpleField, FieldsDispatch
 } from '../../dictionary/contained'
-import { AsciiChars } from '../ascii/ascii-chars'
+import { AsciiChars } from '../ascii'
 import { TagType } from '../tags'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'

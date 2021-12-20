@@ -1,8 +1,9 @@
 import { ContainedGroupField } from './contained-group-field'
 import { ContainedSimpleField } from './contained-simple-field'
-import { ContainedField, ContainedFieldType } from './contained-field'
+import { ContainedField } from './contained-field'
 import { ContainedComponentField } from './contained-component-field'
 import { IFieldDispatcher } from './field-dispatcher'
+import { ContainedFieldType } from './contained-field-type'
 
 export class FieldsDispatch {
   dispatchField (field: ContainedField, dispatcher: IFieldDispatcher): void {

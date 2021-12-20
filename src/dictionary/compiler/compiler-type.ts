@@ -1,4 +1,4 @@
-import { ContainedField, ContainedFieldType, ContainedFieldSet, ContainedGroupField, ContainedComponentField } from '../contained'
+import { ContainedField, ContainedFieldSet, ContainedGroupField, ContainedComponentField, ContainedFieldType } from '../contained'
 import { FixDefinitions } from '../definition'
 import { FixDefinitionSource } from '../fix-versions'
 import { ContainedSetType } from '../dict-primitive'

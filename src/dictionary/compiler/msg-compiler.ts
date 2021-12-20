@@ -1,5 +1,5 @@
 import { ElasticBuffer, Tags } from '../../buffer'
-import { AsciiChars } from '../../buffer/ascii/ascii-chars'
+import { AsciiChars } from '../../buffer/ascii/'
 import { ICompilerSettings } from './compiler-settings'
 import { FixDefinitions } from '../definition'
 import { ContainedGroupField, ContainedSimpleField, ContainedComponentField, FieldsDispatch } from '../contained'
