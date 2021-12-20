@@ -1,13 +1,15 @@
 import { ILooseObject } from '../../collections/collection'
-import { dispatchFields, IFieldDispatcher } from '../../dictionary'
-import { ContainedFieldSet, ContainedField, ContainedGroupField,
-  ContainedComponentField, ContainedSimpleField } from '../../dictionary/contained'
+import {
+  ContainedFieldSet, ContainedField, ContainedGroupField,
+  ContainedComponentField, ContainedSimpleField, FieldsDispatch
+} from '../../dictionary/contained'
 import { AsciiChars } from '../ascii/ascii-chars'
 import { TagType } from '../tags'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import moment = require('moment')
 import { FixDefinitions } from '../../dictionary/definition'
+import { IFieldDispatcher } from '../../dictionary/contained/field-dispatcher'
 
 interface IPopulatedAttributes {
   fields: ContainedSimpleField[],
@@ -117,7 +119,7 @@ export class FixmlEncoder extends MsgEncoder {
     buffer.writeString(`${name} `)
     this.attributes(o, set, depth, this.attributePerLine)
     buffer.writeString(`${eol}`)
-    dispatchFields(fields, {
+    new FieldsDispatch().dispatchFields(fields, {
       group: (g: ContainedGroupField) => this.complexGroup(o, g, depth),
       component: (c: ContainedComponentField) => this.complexComponent(o, c, depth)
     } as IFieldDispatcher)

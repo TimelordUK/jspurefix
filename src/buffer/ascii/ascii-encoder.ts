@@ -1,8 +1,9 @@
 import { ILooseObject } from '../../collections/collection'
-import { dispatchFields } from '../../dictionary'
-import { ContainedGroupField, ContainedSimpleField,
+import {
+  ContainedGroupField, ContainedSimpleField,
   ContainedFieldSet, ContainedField,
-  ContainedComponentField } from '../../dictionary/contained'
+  ContainedComponentField, FieldsDispatch
+} from '../../dictionary/contained'
 import { SimpleFieldDefinition, FixDefinitions } from '../../dictionary/definition'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
@@ -56,7 +57,7 @@ export class AsciiEncoder extends MsgEncoder {
 
   private encodeObject (objectToEncode: ILooseObject, set: ContainedFieldSet, state: AsciiEncodeSetSummary): void {
     const fields: ContainedField[] = this.getFields(set, objectToEncode)
-    dispatchFields(fields, {
+    new FieldsDispatch().dispatchFields(fields, {
       simple: (sf: ContainedSimpleField) => {
         const val: any = objectToEncode[sf.name]
         // Empty strings are omitted as they result in empty values for tags, which are considered malformed.

@@ -2,7 +2,7 @@ import { ElasticBuffer, Tags } from '../../buffer'
 import { AsciiChars } from '../../buffer/ascii/ascii-chars'
 import { ICompilerSettings } from './compiler-settings'
 import { FixDefinitions } from '../definition'
-import { ContainedGroupField, ContainedSimpleField, ContainedComponentField } from '../contained'
+import { ContainedGroupField, ContainedSimpleField, ContainedComponentField, FieldsDispatch } from '../contained'
 import { StandardSnippet } from './standard-snippet'
 import { ContainedSetType } from '../dict-primitive'
 import { CompilerType } from './compiler-type'
@@ -11,7 +11,6 @@ import { Dictionary } from '../../collections'
 import * as fs from 'fs'
 import * as Util from 'util'
 import * as Path from 'path'
-import { dispatchFields } from '../contained/fields-dispatch'
 import { reduceSet } from '../set-reduce'
 
 export class MsgCompiler {
@@ -159,7 +158,7 @@ export class MsgCompiler {
 
   private fields (compilerType: CompilerType): void {
     this.attributes(compilerType)
-    dispatchFields(compilerType.set.fields, {
+    new FieldsDispatch().dispatchFields(compilerType.set.fields, {
       group: (g: ContainedGroupField) => this.fieldGroup(g, compilerType),
       simple: (simple: ContainedSimpleField) => this.fieldSimple(simple),
       component: (c: ContainedComponentField) => this.fieldComponent(c, compilerType)

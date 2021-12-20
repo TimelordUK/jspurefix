@@ -2,47 +2,44 @@ import { ContainedGroupField } from './contained-group-field'
 import { ContainedSimpleField } from './contained-simple-field'
 import { ContainedField, ContainedFieldType } from './contained-field'
 import { ContainedComponentField } from './contained-component-field'
+import { IFieldDispatcher } from './field-dispatcher'
 
-export interface IFieldDispatcher {
-  group?: { (field: ContainedGroupField): void }
-  simple?: { (field: ContainedSimpleField): void }
-  component?: { (field: ContainedComponentField): void }
-}
-
-function dispatchField (field: ContainedField, dispatcher: IFieldDispatcher): void {
-  switch (field.type) {
-    case ContainedFieldType.Group: {
-      if (dispatcher.group) {
-        dispatcher.group(field as ContainedGroupField)
-      }
-      break
-    }
-
-    case ContainedFieldType.Simple: {
-      if (dispatcher.simple) {
-        try {
-          dispatcher.simple(field as ContainedSimpleField)
-        } catch (ex) {
-          let x = 0
+export class FieldsDispatch {
+  dispatchField (field: ContainedField, dispatcher: IFieldDispatcher): void {
+    switch (field.type) {
+      case ContainedFieldType.Group: {
+        if (dispatcher.group) {
+          dispatcher.group(field as ContainedGroupField)
         }
+        break
       }
-      break
-    }
 
-    case ContainedFieldType.Component: {
-      if (dispatcher.component) {
-        dispatcher.component(field as ContainedComponentField)
+      case ContainedFieldType.Simple: {
+        if (dispatcher.simple) {
+          try {
+            dispatcher.simple(field as ContainedSimpleField)
+          } catch (ex) {
+            let x = 0
+          }
+        }
+        break
       }
-      break
-    }
 
-    default:
-      throw new Error(`unknown type ${field.type}`)
+      case ContainedFieldType.Component: {
+        if (dispatcher.component) {
+          dispatcher.component(field as ContainedComponentField)
+        }
+        break
+      }
+
+      default:
+        throw new Error(`unknown type ${field.type}`)
+    }
   }
-}
 
-export function dispatchFields (fields: ContainedField[], dispatcher: IFieldDispatcher): void {
-  fields.forEach((field: ContainedField) => {
-    dispatchField(field, dispatcher)
-  })
+  dispatchFields (fields: ContainedField[], dispatcher: IFieldDispatcher): void {
+    fields.forEach((field: ContainedField) => {
+      this.dispatchField(field, dispatcher)
+    })
+  }
 }

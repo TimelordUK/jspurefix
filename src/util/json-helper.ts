@@ -1,12 +1,19 @@
 import { TagType } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { ContainedSimpleField, ContainedFieldSet, ContainedGroupField, ContainedComponentField } from '../dictionary/contained'
+import {
+  ContainedSimpleField,
+  ContainedFieldSet,
+  ContainedGroupField,
+  ContainedComponentField,
+  FieldsDispatch
+} from '../dictionary/contained'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 
 import moment = require('moment')
-import { dispatchFields, IFieldDispatcher } from '../dictionary'
+import { IFieldDispatcher } from '../dictionary/contained/field-dispatcher'
 
 export class JsonHelper {
+  dispatcher: FieldsDispatch = new FieldsDispatch()
   constructor (public readonly definitions: FixDefinitions) {
   }
 
@@ -92,8 +99,8 @@ export class JsonHelper {
       component: (cf: ContainedComponentField) => this.patchComponent(object, cf)
     }
 
-    dispatchFields(set.localAttribute, dispatcher)
-    dispatchFields(set.fields, dispatcher)
+    this.dispatcher.dispatchFields(set.localAttribute, dispatcher)
+    this.dispatcher.dispatchFields(set.fields, dispatcher)
   }
 
   private patchComponent (object: ILooseObject, cf: ContainedComponentField) {
