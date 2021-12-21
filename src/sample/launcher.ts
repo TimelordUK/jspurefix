@@ -1,9 +1,10 @@
+import 'reflect-metadata'
 import * as path from 'path'
 import { IJsFixConfig, IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { FixmlSessionMsgFactory } from '../transport/fixml'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
-import { makeConfig } from '../runtime'
+import { RuntimeFactory } from '../runtime'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -41,11 +42,10 @@ export abstract class Launcher {
   private async setup () {
     const clientDescription: ISessionDescription = require(path.join(root, this.initiatorConfig))
     const serverDescription: ISessionDescription = require(path.join(root, this.acceptorConfig))
+    const factory = new RuntimeFactory(logFactory, this.makeSessionFactory(clientDescription))
     this.logger.info(`launching [protocol ${clientDescription.application.protocol}] ...`)
-    const clientConfig = await
-    makeConfig(clientDescription, logFactory, this.makeSessionFactory(clientDescription))
-    const serverConfig = await
-    makeConfig(serverDescription, logFactory, this.makeSessionFactory(serverDescription))
+    const clientConfig = await factory.makeConfig(clientDescription)
+    const serverConfig = await factory.makeConfig(serverDescription)
     this.logger.info('create acceptor')
     const server = this.getAcceptor(serverConfig)
     this.logger.info('create initiator')

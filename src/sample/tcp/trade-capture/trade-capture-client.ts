@@ -1,7 +1,8 @@
 import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport/ascii'
 import { MsgType } from '../../../types'
-import { ITradeCaptureReport, ITradeCaptureReportRequest, ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo'
+import { ITradeCaptureReport, ITradeCaptureReportRequest,
+  ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
