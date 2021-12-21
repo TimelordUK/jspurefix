@@ -5,8 +5,7 @@ export interface IJsFixLogger {
   error (e: Error): void
 }
 
-export interface GetJsFixLogger { (type: string): IJsFixLogger
-}
+
 
 export class EmptyLogger implements IJsFixLogger {
   constructor (public readonly type: string = '') {

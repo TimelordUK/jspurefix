@@ -1,7 +1,7 @@
 import { INumericKeyed } from '../collections/collection'
-import { ContainedField } from '../dictionary/contained/contained-field'
-import { ContainedFieldSet } from '../dictionary/contained/contained-field-set'
+import { ContainedField, ContainedFieldSet } from '../dictionary/contained/'
 import { GroupFieldDefinition } from '../dictionary/definition/group-field-definition'
+
 export enum SegmentType {
     Component = 0,
     Group = 1,
