@@ -1,10 +1,13 @@
 import 'reflect-metadata'
 import * as path from 'path'
-import { IJsFixConfig, IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
+import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory,
+  JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { FixmlSessionMsgFactory } from '../transport/fixml'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { RuntimeFactory } from '../runtime'
+import { container } from 'tsyringe'
+import { DefinitionFactory } from '../util'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -39,10 +42,22 @@ export abstract class Launcher {
       new AsciiSessionMsgFactory(description)
   }
 
+  private register (description: ISessionDescription) {
+    container.registerInstance(DefinitionFactory, new DefinitionFactory())
+    const lf = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
+    container.registerInstance('JsFixLoggerFactory', lf)
+    const sf = this.makeSessionFactory(description)
+    container.registerInstance('ISessionMsgFactory', sf)
+    container.register<RuntimeFactory>(RuntimeFactory, {
+      useClass: RuntimeFactory
+    })
+  }
+
   private async setup () {
     const clientDescription: ISessionDescription = require(path.join(root, this.initiatorConfig))
     const serverDescription: ISessionDescription = require(path.join(root, this.acceptorConfig))
-    const factory = new RuntimeFactory(logFactory, this.makeSessionFactory(clientDescription))
+    this.register(clientDescription)
+    const factory = container.resolve<RuntimeFactory>(RuntimeFactory)
     this.logger.info(`launching [protocol ${clientDescription.application.protocol}] ...`)
     const clientConfig = await factory.makeConfig(clientDescription)
     const serverConfig = await factory.makeConfig(serverDescription)

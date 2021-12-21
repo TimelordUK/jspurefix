@@ -1,0 +1,1 @@
+import { container } from 'tsyringe'
