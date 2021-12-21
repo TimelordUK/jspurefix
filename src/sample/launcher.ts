@@ -1,8 +1,9 @@
 import * as path from 'path'
-import { WinstonLogger, IJsFixConfig, JsFixWinstonLogFactory, IJsFixLogger } from '../config'
-import { makeConfig, ISessionDescription, ISessionMsgFactory } from '../transport'
+import { IJsFixConfig, IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
+import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { FixmlSessionMsgFactory } from '../transport/fixml'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { makeConfig } from '../runtime'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -32,10 +33,9 @@ export abstract class Launcher {
 
   private makeSessionFactory (description: ISessionDescription): ISessionMsgFactory {
     const fixml = description.application.protocol !== 'ascii'
-    const factory = fixml ?
+    return fixml ?
       new FixmlSessionMsgFactory(description) :
       new AsciiSessionMsgFactory(description)
-    return factory
   }
 
   private async setup () {

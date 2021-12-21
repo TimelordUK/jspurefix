@@ -1,6 +1,5 @@
 export * from './duplex'
 export * from './a-session-msg-factory'
-export * from './make-config'
 export * from './fix-acceptor'
 export * from './fix-initiator'
 export * from './fix-msg-factory'

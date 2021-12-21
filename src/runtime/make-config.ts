@@ -1,6 +1,6 @@
 import { AsciiChars } from '../buffer/ascii'
-import { ISessionDescription } from './session-description'
-import { ISessionMsgFactory } from './fix-msg-factory'
+import { ISessionDescription } from '../transport/session-description'
+import { ISessionMsgFactory } from '../transport/fix-msg-factory'
 import { IJsFixConfig, JsFixConfig, JsFixLoggerFactory } from '../config'
 import { FixDefinitions } from '../dictionary/definition'
 import { DefinitionFactory } from '../util/definition-factory'
