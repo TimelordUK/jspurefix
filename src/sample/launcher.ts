@@ -71,14 +71,14 @@ export abstract class Launcher {
     const description: ISessionDescription = require(path.join(root, this.initiatorConfig))
     const sessionContainer = await this.makeSystem(description)
     this.logger.info('create initiator')
-    return this.getAcceptor(sessionContainer)
+    return this.getInitiator(sessionContainer)
   }
 
   private async makeServer (): Promise<any> {
     const description: ISessionDescription = require(path.join(root, this.acceptorConfig))
     const sessionContainer = await this.makeSystem(description)
     this.logger.info('create acceptor')
-    return this.getInitiator(sessionContainer)
+    return this.getAcceptor(sessionContainer)
   }
 
   private async setup () {
