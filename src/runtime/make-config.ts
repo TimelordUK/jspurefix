@@ -10,10 +10,11 @@ export class RuntimeFactory {
   constructor (
     @inject(DefinitionFactory) public readonly definitionFactory: DefinitionFactory,
     @inject('JsFixLoggerFactory') public readonly logFactory: JsFixLoggerFactory,
-    @inject('ISessionMsgFactory') public readonly msgFactory: ISessionMsgFactory) {
-  }
+    @inject('ISessionMsgFactory') public readonly msgFactory: ISessionMsgFactory,
+    @inject('ISessionDescription') public readonly description: ISessionDescription) {}
 
-  makeConfig (description: ISessionDescription): Promise<IJsFixConfig> {
+  makeConfig (): Promise<IJsFixConfig> {
+    const description = this.description
     return new Promise<IJsFixConfig>((accept, reject) => {
       this.definitionFactory.getDefinitions(description.application.dictionary,
           (t: string) => {

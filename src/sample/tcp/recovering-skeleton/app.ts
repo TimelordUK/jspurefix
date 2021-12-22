@@ -1,9 +1,11 @@
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { SkeletonClient } from './skeleton-client'
-import { RecoveringTcpInitiator } from '../../../transport/tcp'
+import { RecoveringTcpInitiator, TcpAcceptorListener, TcpInitiatorConnector } from '../../../transport/tcp'
 import { RespawnAcceptor } from './respawn-acceptor'
 import { AsciiChars } from '../../../buffer/ascii'
+import { DependencyContainer } from 'tsyringe'
+import { TradeCaptureClient, TradeCaptureServer } from '../trade-capture'
 
 class AppLauncher extends Launcher {
 
@@ -13,14 +15,16 @@ class AppLauncher extends Launcher {
       'data/session/test-acceptor.json')
   }
 
-  protected getAcceptor (config: IJsFixConfig): Promise<any> {
+  protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
     // use a different log delimiter as an example
     config.logDelimiter = AsciiChars.Carat
     const respawn = new RespawnAcceptor(config)
     return respawn.waitFor()
   }
 
-  protected getInitiator (config: IJsFixConfig): Promise<any> {
+  protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
     return new RecoveringTcpInitiator(config, c => new SkeletonClient(c)).run()
   }
 }
