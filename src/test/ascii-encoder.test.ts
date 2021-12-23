@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { MsgView, Tags } from '../buffer'

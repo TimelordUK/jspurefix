@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { MDClient } from './md-client'
 import { MDServer } from './md-server'
 import { IJsFixConfig } from '../../../config'
@@ -13,8 +15,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new TcpAcceptorListener(config, c => new MDServer(c)).start()
+    sessionContainer.register('FixSession', {
+      useClass: MDServer
+    })
+    const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
+    return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {

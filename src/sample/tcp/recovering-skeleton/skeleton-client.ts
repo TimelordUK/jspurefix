@@ -1,13 +1,15 @@
 import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport/ascii'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class SkeletonClient extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
 
-  constructor (public readonly config: IJsFixConfig,
-               public readonly logoutSeconds: number = 45) {
+  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig,
+               @inject('logoutSeconds') public readonly logoutSeconds: number) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)

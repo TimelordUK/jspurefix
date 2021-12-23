@@ -1,11 +1,12 @@
 import { IJsFixConfig, IJsFixLogger } from '../../../config'
 import { TcpAcceptorListener } from '../../../transport/tcp'
-import { SkeletonServer } from './skeleton-server'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class RespawnAcceptor {
   private readonly logger: IJsFixLogger
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger('RespawnAcceptor')
   }
 
@@ -17,11 +18,10 @@ export class RespawnAcceptor {
       let respawned = 0
       while (respawned <= respawns) {
         try {
-          const listener = new TcpAcceptorListener(this.config, c => {
-            const dropConnectionTimeout = respawned === 0 ? 5 : -1
-            this.logger.info(`waitFor: create a new acceptor session respawned = ${respawned}, dropConnectionTimeout = ${dropConnectionTimeout}`)
-            return new SkeletonServer(c, dropConnectionTimeout)
-          })
+          const sessionContainer = this.config.sessionContainer
+          const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
+          const dropConnectionTimeout = respawned === 0 ? 5 : -1
+          sessionContainer.register('dropConnectionTimeout', { useValue: dropConnectionTimeout })
           this.logger.info(`waitFor: waiting for acceptor respawned = ${respawned}`)
           await listener.start()
           break

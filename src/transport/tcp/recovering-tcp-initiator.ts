@@ -66,6 +66,10 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
     this.emit('transport', transport)
     this.logger.info(`initiator connects id ${(transport.id)}`)
     const session = this.session
+    if (this.jsFixConfig.description.ResetSeqNumFlag) {
+      this.logger.info('reset sequence numbers')
+      session.reset()
+    }
     session.setState(SessionState.NetworkConnectionEstablished)
     session.run(transport).then((id: number) => {
       if (!transport || id === transport.id) {

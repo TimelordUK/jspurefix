@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
@@ -11,14 +13,27 @@ class AppLauncher extends Launcher {
       'data/session/test-acceptor.json')
   }
 
+  protected registerSession (sessionContainer: DependencyContainer) {
+    sessionContainer.register('FixSession', {
+      useClass: SkeletonSession
+    })
+    sessionContainer.register('logoutSeconds', {
+      useValue: 45
+    })
+    sessionContainer.register('useInMemoryStore', {
+      useValue: false
+    })
+  }
+
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new TcpAcceptorListener(config, c => new SkeletonSession(c)).start()
+    this.registerSession(sessionContainer)
+    const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
+    return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new TcpInitiatorConnector(config, c => new SkeletonSession(c)).start()
+    return new TcpInitiatorConnector(config, c => new SkeletonSession(c, 45, false)).start()
   }
 }
 

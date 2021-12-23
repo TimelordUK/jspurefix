@@ -6,13 +6,15 @@ import { ITradeCaptureReport, ITradeCaptureReportRequest,
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class TradeCaptureClient extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   private reports: Dictionary<ITradeCaptureReport>
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.reports = new Dictionary<ITradeCaptureReport>()

@@ -6,14 +6,16 @@ import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { ITradeCaptureReportRequest, ITradeCaptureReport, MsgTag, SessionRejectReason,
   SubscriptionRequestType, TradeRequestStatus } from '../../../types/FIX4.4/repo'
 import { TradeFactory } from './trade-factory'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class TradeCaptureServer extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   private readonly tradeFactory: TradeFactory = new TradeFactory()
   private timerHandle: NodeJS.Timer = null
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.logger = config.logFactory.logger(`${this.me}:TradeCaptureServer`)

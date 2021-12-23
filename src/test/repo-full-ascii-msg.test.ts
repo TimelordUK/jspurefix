@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import * as path from 'path'
 import { AsciiParser, AsciiView, AsciiChars } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'

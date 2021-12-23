@@ -306,7 +306,8 @@ export abstract class FixSession extends events.EventEmitter {
       clearInterval(this.timer)
     }
     this.transport = null
-    this.sessionState.reset(true) // from header def ... eventually
+    const resetSeqNum = this.config.description.ResetSeqNumFlag || true
+    this.sessionState.reset(resetSeqNum) // from header def ... eventually
     this.setState(SessionState.NetworkConnectionEstablished)
   }
 

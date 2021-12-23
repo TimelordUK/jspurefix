@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { MsgView, ElasticBuffer } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
@@ -113,8 +115,8 @@ class SkeletonRunner {
   serverSkeleton: SkeletonSession
 
   constructor (public readonly logoutSeconds: number = 1) {
-    this.clientSkeleton = new SkeletonSession(experiment.client.config, logoutSeconds)
-    this.serverSkeleton = new SkeletonSession(experiment.server.config, logoutSeconds)
+    this.clientSkeleton = new SkeletonSession(experiment.client.config, logoutSeconds, false)
+    this.serverSkeleton = new SkeletonSession(experiment.server.config, logoutSeconds, false)
     this.clientSkeleton.checkMsgIntegrity = true
     this.serverSkeleton.checkMsgIntegrity = true
 

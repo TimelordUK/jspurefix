@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { HttpServer } from './http-server'
 import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config'

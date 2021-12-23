@@ -41,6 +41,7 @@
     "tcp-qf-md": "cd dist/sample/tcp/qf-md && node app",
     "tcp-tls-tc": "cd dist/sample/tcp/tls-trade-capture && node app",
     "tcp-tc": "cd dist/sample/tcp/trade-capture && node app",
+    "tcp-rec-sk": "cd dist/sample/tcp/recovering-skeleton && node app",
     "tcp-sk": "cd dist/sample/tcp/skeleton && node app",
     "http-oms": "cd dist/sample/http/oms && node app",
     "repo40-compile": "cd dist && node jsfix-cmd \"--dict=repo40\" \"--compile\"",

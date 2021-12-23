@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { TradeCaptureClient, TradeCaptureServer } from '../trade-capture'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
@@ -12,8 +14,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new TcpAcceptorListener(config, c => new TradeCaptureServer(c)).start()
+    sessionContainer.register('FixSession', {
+      useClass: TradeCaptureServer
+    })
+    const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
+    return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {

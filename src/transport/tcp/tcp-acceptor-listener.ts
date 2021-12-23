@@ -2,20 +2,23 @@ import { IJsFixConfig } from '../../config'
 import { FixAcceptor } from '../fix-acceptor'
 import { TcpAcceptor } from './tcp-acceptor'
 import { MsgTransport } from '../factory'
-import { MakeFixSession } from '../make-fix-session'
+import { inject, injectable } from 'tsyringe'
+import { FixSession } from '../fix-session'
 
+@injectable()
 export class TcpAcceptorListener {
-  constructor (public readonly config: IJsFixConfig, public readonly sessionFactory: MakeFixSession) {
+  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
   }
 
   start (): Promise<any> {
     return new Promise<any>(async (accept, reject) => {
       const logger = this.config.logFactory.logger('acceptor')
+      const sessionContainer = this.config.sessionContainer
       logger.info('starting.')
       const acceptor: FixAcceptor = new TcpAcceptor(this.config)
       acceptor.on('transport', (t: MsgTransport) => {
         logger.info('creates new transport.')
-        const acceptorSession = this.sessionFactory(this.config)
+        const acceptorSession = sessionContainer.resolve<FixSession>('FixSession')
         acceptorSession.run(t).then(() => {
           logger.info('ends')
           acceptor.close(() => {

@@ -3,6 +3,7 @@ import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { JsFixLoggerFactory } from './js-fix-logger-factory'
 import { EmptyLogFactory } from './empty-log-factory'
 import { AsciiChars } from '../buffer/ascii'
+import { DependencyContainer } from 'tsyringe'
 
 export interface IJsFixConfig {
   factory: ISessionMsgFactory
@@ -11,10 +12,12 @@ export interface IJsFixConfig {
   delimiter?: number
   logDelimiter?: number
   logFactory: JsFixLoggerFactory
+  sessionContainer: DependencyContainer
 }
 
 export class JsFixConfig implements IJsFixConfig {
   public logDelimiter: number = AsciiChars.Pipe
+  public sessionContainer: DependencyContainer
   constructor (
                public readonly factory: ISessionMsgFactory,
                public readonly definitions: FixDefinitions,

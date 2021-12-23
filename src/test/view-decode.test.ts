@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { Structure, MsgView } from '../buffer'
 import { AsciiChars, AsciiParser } from '../buffer/ascii'

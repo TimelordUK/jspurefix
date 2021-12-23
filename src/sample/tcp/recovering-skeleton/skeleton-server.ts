@@ -1,13 +1,15 @@
 import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport/ascii'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class SkeletonServer extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
 
-  constructor (public readonly config: IJsFixConfig,
-               public readonly dropConnectionTimeout: number) {
+  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig,
+               @inject('dropConnectionTimeout') public readonly dropConnectionTimeout: number) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)

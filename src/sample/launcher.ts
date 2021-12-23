@@ -1,4 +1,3 @@
-import 'reflect-metadata'
 import * as path from 'path'
 import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { ISessionDescription, ISessionMsgFactory } from '../transport'
@@ -7,6 +6,7 @@ import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { RuntimeFactory } from '../runtime'
 import { container, DependencyContainer } from 'tsyringe'
 import { DefinitionFactory } from '../util'
+import { TcpAcceptorListener } from '../transport/tcp'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -48,6 +48,9 @@ export abstract class Launcher {
     container.register<RuntimeFactory>(RuntimeFactory, {
       useClass: RuntimeFactory
     })
+    container.register<TcpAcceptorListener>(TcpAcceptorListener, {
+      useClass: TcpAcceptorListener
+    })
   }
 
   private makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
@@ -59,6 +62,7 @@ export abstract class Launcher {
       sessionContainer.registerInstance('ISessionMsgFactory', sf)
       const factory = sessionContainer.resolve<RuntimeFactory>(RuntimeFactory)
       factory.makeConfig().then((c: IJsFixConfig) => {
+        c.sessionContainer = sessionContainer
         sessionContainer.registerInstance('IJsFixConfig', c)
         resolve(sessionContainer)
       }).catch(e => {

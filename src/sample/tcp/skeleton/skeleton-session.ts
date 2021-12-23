@@ -3,14 +3,16 @@ import { AsciiSession } from '../../../transport/ascii'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { ILooseObject } from '../../../collections/collection'
 import { FixMsgStoreRecord } from '../../../store'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class SkeletonSession extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
 
-  constructor (public readonly config: IJsFixConfig,
-               public readonly logoutSeconds: number = 45,
-               public useInMemoryStore: boolean = false) {
+  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig,
+               @inject('logoutSeconds') public readonly logoutSeconds: number,
+               @inject('useInMemoryStore') public useInMemoryStore: boolean) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
