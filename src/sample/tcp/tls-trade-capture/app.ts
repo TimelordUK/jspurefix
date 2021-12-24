@@ -5,7 +5,7 @@ import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime'
+import { DITokens } from '../../../runtime/DITokens'
 
 class AppLauncher extends Launcher {
   public constructor () {

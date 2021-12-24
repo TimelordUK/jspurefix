@@ -7,7 +7,7 @@ import * as events from 'events'
 import Timeout = NodeJS.Timeout
 import { SessionState } from '../session-state'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime'
+import { DITokens } from '../../runtime/DITokens'
 
 /*
    create one application session instance - and recover a lost transport.  Hence the application

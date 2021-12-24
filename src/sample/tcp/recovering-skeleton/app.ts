@@ -8,7 +8,7 @@ import { RespawnAcceptor } from './respawn-acceptor'
 import { AsciiChars } from '../../../buffer/ascii'
 import { DependencyContainer } from 'tsyringe'
 import { SkeletonServer } from './skeleton-server'
-import { DITokens } from '../../../runtime'
+import { DITokens } from '../../../runtime/DITokens'
 
 class AppLauncher extends Launcher {
 

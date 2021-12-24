@@ -1,5 +1,6 @@
 import { FixDefinitions } from '../dictionary/definition'
-import { DITokens, SessionContainer } from '../runtime'
+import { DITokens } from '../runtime/DITokens'
+import { SessionContainer } from '../runtime/'
 import { ISessionDescription } from '../transport'
 import { DependencyContainer } from 'tsyringe'
 import { IJsFixConfig } from '../config'

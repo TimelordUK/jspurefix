@@ -7,7 +7,8 @@ import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
 import { IUndInstrmtGrp, IUnderlyingInstrument } from '../types/FIX4.4/quickfix'
 import { FileReplayer } from '../util'
-import { DITokens, SessionContainer } from '../runtime'
+import { DITokens } from '../runtime/DITokens'
+import { SessionContainer } from '../runtime/'
 import { IJsFixConfig } from '../config'
 
 const root: string = path.join(__dirname, '../../data')

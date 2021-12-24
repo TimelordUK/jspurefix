@@ -4,7 +4,7 @@ import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
 import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime'
+import { DITokens } from '../../../runtime/DITokens'
 
 class AppLauncher extends Launcher {
   public constructor () {

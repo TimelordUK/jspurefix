@@ -6,7 +6,7 @@ import { MessageDefinition } from '../../dictionary/definition'
 import { IJsFixConfig } from '../../config'
 import { IStandardHeader } from '../../types/FIX4.4/repo'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime'
+import { DITokens } from '../../runtime/DITokens'
 
 @injectable()
 export class AsciiMsgTransmitter extends MsgTransmitter {

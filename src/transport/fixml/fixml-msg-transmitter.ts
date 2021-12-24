@@ -3,7 +3,7 @@ import { IJsFixConfig } from '../../config'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime'
+import { DITokens } from '../../runtime/DITokens'
 
 @injectable()
 export class FixmlMsgTransmitter extends MsgTransmitter {

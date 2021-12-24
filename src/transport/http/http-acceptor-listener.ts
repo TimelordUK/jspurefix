@@ -3,7 +3,7 @@ import { FixAcceptor } from '../fix-acceptor'
 import { HttpAcceptor } from './http-acceptor'
 import { MsgTransport } from '../factory/msg-transport'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime'
+import { DITokens } from '../../runtime/DITokens'
 import { FixSession } from '../fix-session'
 
 @injectable()

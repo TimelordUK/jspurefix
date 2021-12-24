@@ -5,7 +5,7 @@ import { IJsFixLogger, IJsFixConfig } from '../../../config'
 
 import { MDFactory } from './md-factory'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime'
+import { DITokens } from '../../../runtime/DITokens'
 
 @injectable()
 export class MDClient extends AsciiSession {

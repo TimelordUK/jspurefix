@@ -4,7 +4,7 @@ import { TcpAcceptor } from './tcp-acceptor'
 import { MsgTransport } from '../factory'
 import { inject, injectable } from 'tsyringe'
 import { FixSession } from '../fix-session'
-import { DITokens } from '../../runtime'
+import { DITokens } from '../../runtime/DITokens'
 
 @injectable()
 export class TcpAcceptorListener {

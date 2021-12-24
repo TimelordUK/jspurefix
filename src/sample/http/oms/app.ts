@@ -6,7 +6,7 @@ import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { HttpAcceptorListener, HttpJsonSampleAdapter, HttpInitiator } from '../../../transport/http'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime'
+import { DITokens } from '../../../runtime/DITokens'
 
 class AppLauncher extends Launcher {
   public constructor () {

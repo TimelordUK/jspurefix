@@ -11,7 +11,7 @@ import { createConnection } from 'net'
 import Timeout = NodeJS.Timeout
 import { TlsOptionsFactory } from './tls-options-factory'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime'
+import { DITokens } from '../../runtime/DITokens'
 
 export enum InitiatorState {
   Idle = 1,

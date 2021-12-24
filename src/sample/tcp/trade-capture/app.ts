@@ -5,7 +5,7 @@ import { Launcher } from '../../launcher'
 import { TcpAcceptorListener, TcpInitiatorConnector } from '../../../transport/tcp'
 import { TradeCaptureClient } from './trade-capture-client'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime'
+import { DITokens } from '../../../runtime/DITokens'
 import { IJsFixConfig } from '../../../config'
 
 class AppLauncher extends Launcher {

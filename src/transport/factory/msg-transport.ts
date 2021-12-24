@@ -4,7 +4,7 @@ import { MsgTransmitter } from '../msg-transmitter'
 import { FixDuplex } from '../duplex'
 import { IJsFixConfig } from '../../config'
 import { FiXmlParser } from '../../buffer/fixml'
-import { DITokens } from '../../runtime'
+import { DITokens } from '../../runtime/DITokens'
 
 export class MsgTransport {
   public readonly transmitter: MsgTransmitter
