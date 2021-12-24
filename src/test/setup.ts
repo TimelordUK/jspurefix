@@ -17,7 +17,7 @@ export class Setup {
   public serverConfig: IJsFixConfig
 
   constructor (public readonly clientPath: string = 'session/test-initiator.json',
-               public readonly serverPath: string = 'session/test-initiator.json') {
+               public readonly serverPath: string = 'session/test-acceptor.json') {
     this.clientDescription = require(path.join(root, this.clientPath))
     this.serverDescription = require(path.join(root, this.serverPath))
   }

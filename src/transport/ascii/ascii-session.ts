@@ -128,14 +128,14 @@ export abstract class AsciiSession extends FixSession {
       case SessionState.InitiationLogonResponse: {
         const targetCompId = view.getString(MsgTag.TargetCompID)
         if (targetCompId !== state.compId) {
-          const msg: string = `msgType ${msgType} unexpected TargetCompID ${targetCompId}`
+          const msg: string = `msgType ${msgType} unexpected TargetCompID ${targetCompId} expecting ${state.compId})`
           this.sendReject(msgType, seqNum, msg, SessionRejectReason.CompIDProblem)
           return false
         }
 
         const peerCompId = view.getString(MsgTag.SenderCompID)
         if (peerCompId !== state.peerCompId) {
-          const msg: string = `msgType ${msgType} unexpected SenderCompID ${peerCompId}`
+          const msg: string = `msgType ${msgType} unexpected SenderCompID ${peerCompId}  expecting ${state.compId}`
           this.sendReject(msgType, seqNum, msg, SessionRejectReason.CompIDProblem)
           return false
         }
