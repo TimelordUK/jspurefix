@@ -3,13 +3,16 @@ import { MsgView } from '../../../buffer'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { OmsFactory } from './oms-factory'
 import { IExecutionReport, Side } from '../../../types/FIXML50SP2'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
+@injectable()
 export class HttpClient extends FixmlSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   private readonly factory: OmsFactory = new OmsFactory('TradersRUs')
-  constructor (public readonly config: IJsFixConfig,
-               public readonly logoutSeconds: number = 45) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
+               @inject('logoutSeconds') public readonly logoutSeconds: number = 45) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)

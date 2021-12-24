@@ -7,6 +7,7 @@ import { DITokens, RuntimeFactory } from '../runtime'
 import { container, DependencyContainer } from 'tsyringe'
 import { DefinitionFactory } from '../util'
 import { RecoveringTcpInitiator, TcpAcceptorListener, TcpInitiator, TcpInitiatorConnector } from '../transport/tcp'
+import { HttpAcceptorListener, HttpInitiator } from '../transport/http'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -59,6 +60,12 @@ export abstract class Launcher {
     })
     container.register<TcpInitiator>(TcpInitiator, {
       useClass: TcpInitiator
+    })
+    container.register<HttpAcceptorListener>(HttpAcceptorListener, {
+      useClass: HttpAcceptorListener
+    })
+    container.register<HttpInitiator>(HttpInitiator, {
+      useClass: HttpInitiator
     })
   }
 

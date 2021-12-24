@@ -1,35 +1,42 @@
-import { IJsFixConfig } from '../../config'
+import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { MsgTransport } from '../factory/msg-transport'
 import { HttpDuplex } from '../duplex'
 import { FixSession } from '../fix-session'
-import { MakeFixSession } from '../make-fix-session'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
+@injectable()
 export class HttpInitiator {
-
-  constructor (public readonly config: IJsFixConfig, public readonly sessionFactory: MakeFixSession) {
+  logger: IJsFixLogger
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
+    this.logger = config.logFactory.logger('initiator')
   }
 
   start (): Promise<any> {
-    const initiatorSession = this.sessionFactory(this.config)
-    return this.once(this.config, initiatorSession)
+    return this.once(this.config)
   }
 
 // the adapter will be provided on config
-  once (config: IJsFixConfig, initiatorSession: FixSession): Promise<any> {
+  once (config: IJsFixConfig): Promise<any> {
     return new Promise<any>(async (accept, reject) => {
-      const logger = config.logFactory.logger('initiator')
       const adapter = config.description.application.http.adapter
       if (!adapter) {
         reject('http initiator needs config.description.application.http.adapter')
       }
-      logger.info('connecting ...')
+      const sessionContainer = this.config.sessionContainer
+      if (!sessionContainer.isRegistered(DITokens.FixSession)) {
+        reject(new Error(`application must register a DI token '${DITokens.FixSession}' - see src/sample`))
+      }
+      this.logger.info(`create session with DI Token ${DITokens.FixSession}`)
+      const initiatorSession = sessionContainer.resolve<FixSession>(DITokens.FixSession)
+      this.logger.info('connecting ...')
       const initiatorTransport: MsgTransport = new MsgTransport(0, config, new HttpDuplex(adapter))
-      logger.info('... connected, run session')
+      this.logger.info('... connected, run session')
       initiatorSession.run(initiatorTransport).then(() => {
-        logger.info('ends')
+        this.logger.info('ends')
         accept(true)
       }).catch((e: Error) => {
-        logger.error(e)
+        this.logger.error(e)
         reject(e)
       })
     })

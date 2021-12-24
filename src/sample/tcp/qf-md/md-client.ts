@@ -4,12 +4,15 @@ import { MsgType } from '../../../types'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 
 import { MDFactory } from './md-factory'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
+@injectable()
 export class MDClient extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config!.description!.application!.name}.txt`)

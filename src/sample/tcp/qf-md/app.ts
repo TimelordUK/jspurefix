@@ -6,6 +6,7 @@ import { IJsFixConfig } from '../../../config'
 import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 import { Launcher } from '../../launcher'
 import { DependencyContainer } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -14,17 +15,30 @@ class AppLauncher extends Launcher {
       'data/session/test-qf44-acceptor.json')
   }
 
+  protected registerSession (sessionContainer: DependencyContainer) {
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
+    const isInitiator = config.description.application.type === 'initiator'
+    if (isInitiator) {
+      sessionContainer.register(DITokens.FixSession, {
+        useClass: MDClient
+      })
+    } else {
+      sessionContainer.register(DITokens.FixSession, {
+        useClass: MDServer
+      })
+    }
+  }
+
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    sessionContainer.register('FixSession', {
-      useClass: MDServer
-    })
+    this.registerSession(sessionContainer)
     const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
     return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new TcpInitiatorConnector(config, c => new MDClient(c)).start()
+    this.registerSession(sessionContainer)
+    const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
+    return initiator.start()
   }
 }
 

@@ -6,6 +6,7 @@ import { TcpAcceptorListener, TcpInitiatorConnector } from '../../../transport/t
 import { TradeCaptureClient } from './trade-capture-client'
 import { DependencyContainer } from 'tsyringe'
 import { DITokens } from '../../../runtime'
+import { IJsFixConfig } from '../../../config'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -14,18 +15,28 @@ class AppLauncher extends Launcher {
       'data/session/test-acceptor.json')
   }
 
+  protected registerSession (sessionContainer: DependencyContainer) {
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
+    const isInitiator = config.description.application.type === 'initiator'
+    if (isInitiator) {
+      sessionContainer.register(DITokens.FixSession, {
+        useClass: TradeCaptureClient
+      })
+    } else {
+      sessionContainer.register(DITokens.FixSession, {
+        useClass: TradeCaptureServer
+      })
+    }
+  }
+
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    sessionContainer.register(DITokens.FixSession, {
-      useClass: TradeCaptureServer
-    })
+    this.registerSession(sessionContainer)
     const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
     return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    sessionContainer.register(DITokens.FixSession, {
-      useClass: TradeCaptureClient
-    })
+    this.registerSession(sessionContainer)
     const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
     return initiator.start()
   }

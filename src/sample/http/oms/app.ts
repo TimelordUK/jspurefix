@@ -6,6 +6,7 @@ import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { HttpAcceptorListener, HttpJsonSampleAdapter, HttpInitiator } from '../../../transport/http'
 import { DependencyContainer } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -14,15 +15,35 @@ class AppLauncher extends Launcher {
       'data/session/test-http-acceptor.json')
   }
 
+  protected registerSession (sessionContainer: DependencyContainer) {
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
+    const isInitiator = config.description.application.type === 'initiator'
+    if (isInitiator) {
+      sessionContainer.register(DITokens.FixSession, {
+        useClass: HttpClient
+      })
+    } else {
+      sessionContainer.register(DITokens.FixSession, {
+        useClass: HttpServer
+      })
+    }
+    sessionContainer.register('logoutSeconds', {
+      useValue: 45
+    })
+  }
+
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new HttpAcceptorListener(config, (c) => new HttpServer(c)).start()
+    this.registerSession(sessionContainer)
+    const listener = sessionContainer.resolve<HttpAcceptorListener>(HttpAcceptorListener)
+    return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
+    this.registerSession(sessionContainer)
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     config.description.application.http.adapter = new HttpJsonSampleAdapter(config)
-    return new HttpInitiator(config, (c) => new HttpClient(c)).start()
+    const initiator = sessionContainer.resolve<HttpInitiator>(HttpInitiator)
+    return initiator.start()
   }
 }
 

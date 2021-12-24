@@ -8,6 +8,7 @@ import { RespawnAcceptor } from './respawn-acceptor'
 import { AsciiChars } from '../../../buffer/ascii'
 import { DependencyContainer } from 'tsyringe'
 import { SkeletonServer } from './skeleton-server'
+import { DITokens } from '../../../runtime'
 
 class AppLauncher extends Launcher {
 
@@ -18,7 +19,7 @@ class AppLauncher extends Launcher {
   }
 
   protected registerSession (sessionContainer: DependencyContainer) {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     // use a different log delimiter as an example
     config.logDelimiter = AsciiChars.Carat
     sessionContainer.register<RespawnAcceptor>(RespawnAcceptor, {
@@ -26,11 +27,11 @@ class AppLauncher extends Launcher {
     })
     const isInitiator = config.description.application.type === 'initiator'
     if (isInitiator) {
-      sessionContainer.register('FixSession', {
+      sessionContainer.register(DITokens.FixSession, {
         useClass: SkeletonClient
       })
     } else {
-      sessionContainer.register('FixSession', {
+      sessionContainer.register(DITokens.FixSession, {
         useClass: SkeletonServer
       })
     }

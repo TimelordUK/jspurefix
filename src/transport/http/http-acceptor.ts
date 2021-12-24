@@ -9,7 +9,10 @@ import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
 import { v4 as uuidv4 } from 'uuid'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
+@injectable()
 export class HttpAcceptor extends FixAcceptor {
   private app: express.Express = express()
   private server: http.Server
@@ -18,7 +21,7 @@ export class HttpAcceptor extends FixAcceptor {
   private nextId: number = 0
   private keys: Dictionary<MsgTransport> = new Dictionary()
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config.description.application)
     this.logger = config.logFactory.logger(`${config.description.application.name}:HttpAcceptor`)
     this.logger.info('creating http server')

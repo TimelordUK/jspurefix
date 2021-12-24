@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 
-import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
 import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
@@ -33,8 +32,9 @@ class AppLauncher extends Launcher {
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.FixSession)
-    return new TcpInitiatorConnector(config, c => new SkeletonSession(c, 45, false)).start()
+    this.registerSession(sessionContainer)
+    const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
+    return initiator.start()
   }
 }
 
