@@ -5,13 +5,16 @@ import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { createServer as netCreateServer, Server, Socket } from 'net'
 import { createServer as tlsCreateServer, TlsOptions, TLSSocket } from 'tls'
 import { TlsOptionsFactory } from './tls-options-factory'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
+@injectable()
 export class TcpAcceptor extends FixAcceptor {
   private server: Server
   private logger: IJsFixLogger
   private nextId: number = 0
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config.description.application)
     this.logger = config.logFactory.logger(`${config.description.application.name}:TcpAcceptor`)
     const tlsOptions: TlsOptions = this.tlsOptions()

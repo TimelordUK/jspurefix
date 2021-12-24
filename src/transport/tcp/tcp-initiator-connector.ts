@@ -2,17 +2,23 @@ import { IJsFixConfig } from '../../config'
 import { FixInitiator } from '../fix-initiator'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../factory'
-import { MakeFixSession } from '../make-fix-session'
 import { FixSession } from '../fix-session'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
+@injectable()
 export class TcpInitiatorConnector {
-  constructor (public readonly config: IJsFixConfig, public readonly sessionFactory: MakeFixSession) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
   }
   start (reconnectTimeout: number = 0): Promise<any> {
     return new Promise<any>(async (accept, reject) => {
       const logger = this.config.logFactory.logger('initiator')
-      logger.info('create session')
-      const initiatorSession = this.sessionFactory(this.config)
+      const sessionContainer = this.config.sessionContainer
+      if (!sessionContainer.isRegistered(DITokens.FixSession)) {
+        reject(new Error(`application must register a DI token '${DITokens.FixSession}' - see src/sample`))
+      }
+      logger.info(`create session with DI Token ${DITokens.FixSession}`)
+      const initiatorSession = sessionContainer.resolve<FixSession>(DITokens.FixSession)
       let connecting: boolean = true
       while (connecting) {
         try {
@@ -47,7 +53,7 @@ export class TcpInitiatorConnector {
   once (initiatorSession: FixSession): Promise<any> {
     return new Promise<any>(async (accept, reject) => {
       const logger = this.config.logFactory.logger('initiator')
-      const initiator: FixInitiator = new TcpInitiator(this.config)
+      const initiator: FixInitiator = this.config.sessionContainer.resolve<FixInitiator>(TcpInitiator)
       logger.info('connecting ...')
       const initiatorTransport: MsgTransport = await initiator.connect(22)
       logger.info('... connected, run session')

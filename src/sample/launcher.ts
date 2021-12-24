@@ -3,10 +3,10 @@ import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory, JsFixWinstonLogFactory,
 import { ISessionDescription, ISessionMsgFactory } from '../transport'
 import { FixmlSessionMsgFactory } from '../transport/fixml'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
-import { RuntimeFactory } from '../runtime'
+import { DITokens, RuntimeFactory } from '../runtime'
 import { container, DependencyContainer } from 'tsyringe'
 import { DefinitionFactory } from '../util'
-import { TcpAcceptorListener } from '../transport/tcp'
+import { RecoveringTcpInitiator, TcpAcceptorListener, TcpInitiator, TcpInitiatorConnector } from '../transport/tcp'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -51,6 +51,15 @@ export abstract class Launcher {
     container.register<TcpAcceptorListener>(TcpAcceptorListener, {
       useClass: TcpAcceptorListener
     })
+    container.register<RecoveringTcpInitiator>(RecoveringTcpInitiator, {
+      useClass: RecoveringTcpInitiator
+    })
+    container.register<TcpInitiatorConnector>(TcpInitiatorConnector, {
+      useClass: TcpInitiatorConnector
+    })
+    container.register<TcpInitiator>(TcpInitiator, {
+      useClass: TcpInitiator
+    })
   }
 
   private makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
@@ -63,7 +72,7 @@ export abstract class Launcher {
       const factory = sessionContainer.resolve<RuntimeFactory>(RuntimeFactory)
       factory.makeConfig().then((c: IJsFixConfig) => {
         c.sessionContainer = sessionContainer
-        sessionContainer.registerInstance('IJsFixConfig', c)
+        sessionContainer.registerInstance(DITokens.IJsFixConfig, c)
         resolve(sessionContainer)
       }).catch(e => {
         reject(e)

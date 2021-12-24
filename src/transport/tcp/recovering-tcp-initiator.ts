@@ -1,12 +1,13 @@
 import { IMsgApplication, ITcpTransportDescription } from '../session-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
-import { MakeFixSession } from '../make-fix-session'
 import { FixSession } from '../fix-session'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../factory'
 import * as events from 'events'
 import Timeout = NodeJS.Timeout
 import { SessionState } from '../session-state'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
 /*
    create one application session instance - and recover a lost transport.  Hence the application
@@ -14,6 +15,7 @@ import { SessionState } from '../session-state'
    last known sequence number or sequence reset.
  */
 
+@injectable()
 export class RecoveringTcpInitiator extends events.EventEmitter {
   public tcp: ITcpTransportDescription
   public session: FixSession
@@ -25,7 +27,7 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
   public recoveryAttemptSecs: number = 5
   public backoffFailConnectSecs: number = 30
 
-  constructor (public readonly jsFixConfig: IJsFixConfig, public readonly sessionFactory: MakeFixSession) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
     super()
     this.application = this.jsFixConfig.description.application
     this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:RecoveringTcpInitiator`)
@@ -40,12 +42,12 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
       this.logger.error(e)
       throw e
     }
-    this.createSession(jsFixConfig, sessionFactory)
+    this.createSession(jsFixConfig)
   }
 
-  private createSession (jsFixConfig: IJsFixConfig, sessionFactory: MakeFixSession) {
-    this.logger.info('creating an application session')
-    this.session = sessionFactory(jsFixConfig)
+  private createSession (jsFixConfig: IJsFixConfig) {
+    this.logger.info(`creating an application session with DI token ${DITokens.FixSession}.`)
+    this.session = jsFixConfig.sessionContainer.resolve<FixSession>(DITokens.FixSession)
     this.session.on('done', () => {
       this.logger.info('session has permanently ended')
       this.emit('end', this)

@@ -49,8 +49,9 @@ class AppLauncher extends Launcher {
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new RecoveringTcpInitiator(config, c => new SkeletonClient(c, 45)).run()
+    this.registerSession(sessionContainer)
+    const initiator = sessionContainer.resolve<RecoveringTcpInitiator>(RecoveringTcpInitiator)
+    return initiator.run()
   }
 }
 

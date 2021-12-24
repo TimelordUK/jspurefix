@@ -5,6 +5,7 @@ import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 import { DependencyContainer } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -14,7 +15,7 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    sessionContainer.register('FixSession', {
+    sessionContainer.register(DITokens.FixSession, {
       useClass: TradeCaptureServer
     })
     const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
@@ -22,7 +23,7 @@ class AppLauncher extends Launcher {
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     return new TcpInitiatorConnector(config, c => new TradeCaptureClient(c)).start()
   }
 }

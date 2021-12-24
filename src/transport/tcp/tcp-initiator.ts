@@ -10,6 +10,8 @@ import { connect as tlsConnect, ConnectionOptions, TLSSocket } from 'tls'
 import { createConnection } from 'net'
 import Timeout = NodeJS.Timeout
 import { TlsOptionsFactory } from './tls-options-factory'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
 export enum InitiatorState {
   Idle = 1,
@@ -18,6 +20,7 @@ export enum InitiatorState {
   Stopped = 4
 }
 
+@injectable()
 export class TcpInitiator extends FixInitiator {
   public tcp: ITcpTransportDescription
   public state: InitiatorState = InitiatorState.Idle
@@ -25,7 +28,7 @@ export class TcpInitiator extends FixInitiator {
   private duplex: FixDuplex
   private th: Timeout = null
 
-  constructor (public readonly jsFixConfig: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
     super(jsFixConfig.description.application)
     this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:TcpInitiator`)
     if (!this.application) {

@@ -7,6 +7,7 @@ import { ITradeCaptureReportRequest, ITradeCaptureReport, MsgTag, SessionRejectR
   SubscriptionRequestType, TradeRequestStatus } from '../../../types/FIX4.4/repo'
 import { TradeFactory } from './trade-factory'
 import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
 @injectable()
 export class TradeCaptureServer extends AsciiSession {
@@ -15,7 +16,7 @@ export class TradeCaptureServer extends AsciiSession {
   private readonly tradeFactory: TradeFactory = new TradeFactory()
   private timerHandle: NodeJS.Timer = null
 
-  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.logger = config.logFactory.logger(`${this.me}:TradeCaptureServer`)

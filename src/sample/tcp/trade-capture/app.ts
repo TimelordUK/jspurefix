@@ -1,11 +1,11 @@
 import 'reflect-metadata'
 
 import { TradeCaptureServer } from './trade-capture-server'
-import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { TcpAcceptorListener, TcpInitiatorConnector } from '../../../transport/tcp'
 import { TradeCaptureClient } from './trade-capture-client'
 import { DependencyContainer } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -15,7 +15,7 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    sessionContainer.register('FixSession', {
+    sessionContainer.register(DITokens.FixSession, {
       useClass: TradeCaptureServer
     })
     const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
@@ -23,13 +23,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    sessionContainer.register('FixSession', {
+    sessionContainer.register(DITokens.FixSession, {
       useClass: TradeCaptureClient
     })
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
-    return new TcpInitiatorConnector(config, () => {
-      return sessionContainer.resolve<TradeCaptureClient>('FixSession')
-    }).start()
+    const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
+    return initiator.start()
   }
 }
 

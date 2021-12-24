@@ -5,6 +5,7 @@ import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
 import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 import { DependencyContainer } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -14,7 +15,7 @@ class AppLauncher extends Launcher {
   }
 
   protected registerSession (sessionContainer: DependencyContainer) {
-    sessionContainer.register('FixSession', {
+    sessionContainer.register(DITokens.FixSession, {
       useClass: SkeletonSession
     })
     sessionContainer.register('logoutSeconds', {
@@ -32,7 +33,7 @@ class AppLauncher extends Launcher {
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>('IJsFixConfig')
+    const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.FixSession)
     return new TcpInitiatorConnector(config, c => new SkeletonSession(c, 45, false)).start()
   }
 }

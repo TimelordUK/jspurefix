@@ -4,13 +4,14 @@ import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { ILooseObject } from '../../../collections/collection'
 import { FixMsgStoreRecord } from '../../../store'
 import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../../runtime'
 
 @injectable()
 export class SkeletonSession extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
 
-  constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig,
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
                @inject('logoutSeconds') public readonly logoutSeconds: number,
                @inject('useInMemoryStore') public useInMemoryStore: boolean) {
     super(config)
