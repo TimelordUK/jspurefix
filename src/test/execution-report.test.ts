@@ -1,27 +1,32 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { SegmentDescription, SegmentType, MsgView, Structure } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
-import { JsFixConfig } from '../config'
 import { IUndInstrmtGrp, IUnderlyingInstrument } from '../types/FIX4.4/quickfix'
-import { DefinitionFactory, FileReplayer } from '../util'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
+import { FileReplayer } from '../util'
+import { DITokens, SessionContainer } from '../runtime'
+import { IJsFixConfig } from '../config'
 
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions
-let session: AsciiMsgTransmitter
 let views: MsgView[]
 let structure: Structure
+const fixContainer: SessionContainer = new SessionContainer()
 
 beforeAll(async () => {
+  fixContainer.reset()
+  fixContainer.registerGlobal()
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
-  session = new AsciiMsgTransmitter(config)
-  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/execution-report/fix.txt'), AsciiChars.Pipe)
+  const sessionContainer = await fixContainer.makeSystem(sessionDescription)
+  const config = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
+  config.delimiter = config.logDelimiter
+  definitions = config.definitions
+
+  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/execution-report/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure
   }

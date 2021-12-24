@@ -4,14 +4,15 @@ import { IJsFixConfig, JsFixConfig, JsFixLoggerFactory } from '../config'
 import { FixDefinitions } from '../dictionary/definition'
 import { DefinitionFactory } from '../util/'
 import { injectable, inject } from 'tsyringe'
+import { DITokens } from './DITokens'
 
 @injectable()
 export class RuntimeFactory {
   constructor (
     @inject(DefinitionFactory) public readonly definitionFactory: DefinitionFactory,
-    @inject('JsFixLoggerFactory') public readonly logFactory: JsFixLoggerFactory,
-    @inject('ISessionMsgFactory') public readonly msgFactory: ISessionMsgFactory,
-    @inject('ISessionDescription') public readonly description: ISessionDescription) {}
+    @inject(DITokens.JsFixLoggerFactory) public readonly logFactory: JsFixLoggerFactory,
+    @inject(DITokens.ISessionMsgFactory) public readonly msgFactory: ISessionMsgFactory,
+    @inject(DITokens.ISessionDescription) public readonly description: ISessionDescription) {}
 
   makeConfig (): Promise<IJsFixConfig> {
     const description = this.description

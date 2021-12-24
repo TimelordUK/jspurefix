@@ -1,22 +1,25 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { MsgView } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
-import { ISessionDescription } from '../transport'
 import { ILooseObject } from '../collections/collection'
-import { DefinitionFactory, FileReplayer } from '../util'
+import { FileReplayer } from '../util'
+import { Setup } from './setup'
 
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions
 let views: MsgView[]
 let expected: ILooseObject
+let setup: Setup = null
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
+  setup = new Setup('session/test-initiator.json','session/test-acceptor.json')
+  await setup.init()
+  definitions = setup.serverConfig.definitions
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/fix.txt'), AsciiChars.Pipe)
+  views = await new FileReplayer(setup.clientConfig).replayFixFile(path.join(root, 'examples/FIX.4.4/fix.txt'))
 }, 45000)
 
 test('expect 50 messages in log', () => {

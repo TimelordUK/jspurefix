@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { MsgView } from '../buffer'
 // use the compiled interfaces for intelisense
 

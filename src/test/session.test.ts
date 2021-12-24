@@ -1,22 +1,19 @@
 import 'reflect-metadata'
 
 import { MsgView, ElasticBuffer } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
-import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription, StringDuplex, FixDuplex } from '../transport'
 import { MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'
-import { IJsFixConfig, JsFixConfig } from '../config'
+import { IJsFixConfig } from '../config'
 import { SkeletonSession } from '../sample/tcp/skeleton/skeleton-session'
 import { IStandardHeader, IReject, ILogon } from '../types/FIX4.4/repo'
 
-import * as path from 'path'
 import { AsciiSessionMsgFactory } from '../transport/ascii/'
 import { MsgTransport } from '../transport/factory'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { DefinitionFactory } from '../util'
+import { Setup } from './setup'
+import { DITokens } from '../runtime'
 
-const root: string = path.join(__dirname, '../../data')
 const logonMsg: string = '8=FIX4.4|9=0000136|35=A|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:28.980|98=0|108=30|141=Y|553=js-client|554=pwd-client|10=177|'
 const heartbeat: string = '8=FIX4.4|9=0000123|35=0|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:59.161|112=Sun, 02 Sep 2018 12:25:59 GMT|10=95|'
 class FixEntity {
@@ -26,20 +23,6 @@ class FixEntity {
   constructor (public readonly config: IJsFixConfig,
               public readonly duplex: FixDuplex = new StringDuplex(),
               public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
-  }
-}
-
-class Setup {
-  public definitions: FixDefinitions
-  public readonly clientDescription: ISessionDescription
-  public readonly serverDescription: ISessionDescription
-  constructor () {
-    this.clientDescription = require(path.join(root, 'session/test-initiator.json'))
-    this.serverDescription = require(path.join(root, 'session/test-acceptor.json'))
-  }
-
-  async init () {
-    this.definitions = await new DefinitionFactory().getDefinitions(this.clientDescription.application.dictionary)
   }
 }
 
@@ -58,12 +41,12 @@ class Experiment {
     })
   }
 
-  constructor () {
-    this.clientFactory = new AsciiSessionMsgFactory(setup.clientDescription)
-    this.serverFactory = new AsciiSessionMsgFactory(setup.serverDescription)
+  constructor (setup: Setup) {
+    this.clientFactory = setup.clientSessionContainer.resolve<AsciiSessionMsgFactory>(DITokens.ISessionMsgFactory)
+    this.serverFactory = setup.serverSessionContainer.resolve<AsciiSessionMsgFactory>(DITokens.ISessionMsgFactory)
 
-    const clientConfig = new JsFixConfig(this.clientFactory, setup.definitions, setup.clientDescription, AsciiChars.Pipe)
-    const serverConfig = new JsFixConfig(this.serverFactory, setup.definitions, setup.serverDescription, AsciiChars.Pipe)
+    const clientConfig = setup.clientConfig
+    const serverConfig = setup.serverConfig
 
     this.client = new FixEntity(clientConfig)
     this.server = new FixEntity(serverConfig)
@@ -75,13 +58,10 @@ class Experiment {
   }
 }
 
-beforeAll(async () => {
+beforeEach(async () => {
   setup = new Setup()
   await setup.init()
-}, 45000)
-
-beforeEach(() => {
-  experiment = new Experiment()
+  experiment = new Experiment(setup)
 })
 
 class ParsingResult {
@@ -363,8 +343,8 @@ test('client unknown msg type', async () => {
   const cviews = experiment.client.views
   const sviews = experiment.server.views
   // client sends logon, server rejects
-  expect(cviews.length === 3).toEqual(true)
-  expect(sviews.length === 3).toEqual(true)
+  expect(cviews.length).toEqual(3)
+  expect(sviews.length).toEqual(3)
   expect(cviews[0].segment.name).toEqual('Logon')
   expect(cviews[1].segment.name).toEqual('Reject')
   expect(sviews[0].segment.name).toEqual('Logon')

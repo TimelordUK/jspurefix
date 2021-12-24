@@ -1,11 +1,10 @@
 import { MsgParser } from '../../buffer'
 import { AsciiParser, AsciiChars } from '../../buffer/ascii'
-import { AsciiMsgTransmitter } from '../ascii/ascii-msg-transmitter'
 import { MsgTransmitter } from '../msg-transmitter'
-import { FixmlMsgTransmitter } from '../fixml/fixml-msg-transmitter'
 import { FixDuplex } from '../duplex'
 import { IJsFixConfig } from '../../config'
 import { FiXmlParser } from '../../buffer/fixml'
+import { DITokens } from '../../runtime'
 
 export class MsgTransport {
   public readonly transmitter: MsgTransmitter
@@ -23,17 +22,16 @@ export class MsgTransport {
     const description = config.description
     const definitions = config.definitions
     const protocol = description.application.protocol
+    this.transmitter = this.config.sessionContainer.resolve<MsgTransmitter>(DITokens.MsgTransmitter)
     switch (protocol) {
       case 'ascii': {
         // let parser replace delimiter with Pipe so fix log does not require
         // expensive replace
-        this.transmitter = new AsciiMsgTransmitter(config)
         this.receiver = new AsciiParser(definitions, duplex.readable, delimiter, logDelimiter)
         break
       }
 
       case 'fixml': {
-        this.transmitter = new FixmlMsgTransmitter(config)
         this.receiver = new FiXmlParser(config, duplex.readable)
         break
       }

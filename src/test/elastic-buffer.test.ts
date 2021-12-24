@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { ElasticBuffer } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'
 

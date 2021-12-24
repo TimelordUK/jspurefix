@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { TagPos, SegmentType, MsgView } from '../buffer'
 import { AsciiChars, AsciiParser } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'

@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'

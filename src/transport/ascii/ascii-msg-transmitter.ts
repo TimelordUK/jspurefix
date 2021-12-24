@@ -5,7 +5,10 @@ import { ContainedFieldSet } from '../../dictionary/contained'
 import { MessageDefinition } from '../../dictionary/definition'
 import { IJsFixConfig } from '../../config'
 import { IStandardHeader } from '../../types/FIX4.4/repo'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
+@injectable()
 export class AsciiMsgTransmitter extends MsgTransmitter {
   public msgSeqNum: number
   public time: Date
@@ -13,7 +16,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   private readonly header: ContainedFieldSet
   private readonly trailer: ContainedFieldSet
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
 
     super(config.definitions, config.description)
     this.msgSeqNum = (config.description.LastSentSeqNum || 0) + 1 // adding 1 as this the next sequence # to use.

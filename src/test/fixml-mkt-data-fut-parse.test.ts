@@ -1,4 +1,5 @@
 // use the compiled interfaces for intelisense
+import 'reflect-metadata'
 
 import { ToViews } from './to-views'
 import { IInstrument, IMDFullGrp, IMarketDataSnapshotFullRefresh } from '../types/FIXML50SP2'

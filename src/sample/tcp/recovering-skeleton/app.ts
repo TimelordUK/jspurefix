@@ -18,14 +18,14 @@ class AppLauncher extends Launcher {
       'data/session/test-acceptor.json')
   }
 
-  protected registerSession (sessionContainer: DependencyContainer) {
+  protected override registerApplication (sessionContainer: DependencyContainer) {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     // use a different log delimiter as an example
     config.logDelimiter = AsciiChars.Carat
     sessionContainer.register<RespawnAcceptor>(RespawnAcceptor, {
       useClass: RespawnAcceptor
     })
-    const isInitiator = config.description.application.type === 'initiator'
+    const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
       sessionContainer.register(DITokens.FixSession, {
         useClass: SkeletonClient
@@ -44,13 +44,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const listener = sessionContainer.resolve<RespawnAcceptor>(RespawnAcceptor)
     return listener.waitFor()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const initiator = sessionContainer.resolve<RecoveringTcpInitiator>(RecoveringTcpInitiator)
     return initiator.run()
   }

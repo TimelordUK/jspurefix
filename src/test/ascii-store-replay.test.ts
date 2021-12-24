@@ -3,9 +3,8 @@ import 'reflect-metadata'
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition'
 import { MsgView } from '../buffer'
-import { AsciiChars, AsciiView } from '../buffer/ascii'
-import { ISessionDescription } from '../transport'
-import { DefinitionFactory, FileReplayer } from '../util'
+import { AsciiView } from '../buffer/ascii'
+import { FileReplayer } from '../util'
 import {
   FixMsgAsciiStoreResend,
   FixMsgMemoryStore,
@@ -14,9 +13,10 @@ import {
   IFixMsgStoreRecord
 } from '../store'
 import { MsgTag, MsgType } from '../types'
-import { JsFixConfig } from '../config'
+import { IJsFixConfig } from '../config'
 import { ISequenceReset } from '../types/FIX4.4/repo'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+
+import { Setup } from './setup'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -27,7 +27,7 @@ class TestRecovery {
   public readonly records: FixMsgStoreRecord[]
   public readonly recovery: FixMsgAsciiStoreResend
 
-  constructor (public readonly views: MsgView[], public readonly config: JsFixConfig) {
+  constructor (public readonly views: MsgView[], public readonly config: IJsFixConfig) {
     const id = config.description.SenderCompId
 
     this.store = new FixMsgMemoryStore(`test-${id}`, config)
@@ -53,17 +53,14 @@ class TestRecovery {
 
 let server: TestRecovery
 let client: TestRecovery
-
+let setup: Setup = null
 beforeAll(async () => {
-  const delimiter = AsciiChars.Pipe
-  const serverDescription: ISessionDescription = require(path.join(root, 'session/test-acceptor-tls.json'))
-  const clientDescription: ISessionDescription = require(path.join(root, 'session/test-initiator-tls.json'))
-  const serverFactory = new AsciiSessionMsgFactory(serverDescription)
-  const clientFactory = new AsciiSessionMsgFactory(clientDescription)
-  definitions = await new DefinitionFactory().getDefinitions(serverDescription.application.dictionary)
-  const serverConfig = new JsFixConfig(serverFactory, definitions, serverDescription, delimiter)
-  const clientConfig = new JsFixConfig(clientFactory, definitions, clientDescription, delimiter)
-  const views = await new FileReplayer(definitions, serverDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), delimiter)
+  setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
+  await setup.init()
+  definitions = setup.definitions
+  const serverConfig = setup.serverConfig
+  const clientConfig = setup.clientConfig
+  const views = await new FileReplayer(serverConfig).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
   server = new TestRecovery(views, serverConfig)
   client = new TestRecovery(views, clientConfig)
   await server.populate()

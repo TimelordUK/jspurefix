@@ -1,19 +1,18 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { SegmentDescription, SegmentType, Structure, MsgView } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription } from '../transport'
-import { DefinitionFactory, FileReplayer } from '../util'
-import { JsFixConfig } from '../config'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
+import { FileReplayer } from '../util'
+import { Setup } from './setup'
 
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions
-let session: AsciiMsgTransmitter
 let views: MsgView[]
 let structure: Structure
+let setup: Setup = null
 
 const asStrings: string[] = [
   'FIX4.4',
@@ -41,11 +40,11 @@ const asStrings: string[] = [
 ]
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
-  session = new AsciiMsgTransmitter(config)
-  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'), AsciiChars.Pipe)
+  setup = new Setup('session/qf-fix44.json','session/qf-fix44.json')
+  await setup.init()
+  definitions = setup.serverConfig.definitions
+  const config = setup.serverConfig
+  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure
   }

@@ -1,4 +1,5 @@
 // use the compiled interfaces for intelisense
+import 'reflect-metadata'
 
 import { ToViews } from './to-views'
 import { IBatch } from '../types/FIXML50SP2/set/batch'

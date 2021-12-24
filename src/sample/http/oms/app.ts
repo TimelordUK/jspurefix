@@ -15,9 +15,9 @@ class AppLauncher extends Launcher {
       'data/session/test-http-acceptor.json')
   }
 
-  protected registerSession (sessionContainer: DependencyContainer) {
+  protected override registerApplication (sessionContainer: DependencyContainer) {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
-    const isInitiator = config.description.application.type === 'initiator'
+    const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
       sessionContainer.register(DITokens.FixSession, {
         useClass: HttpClient
@@ -33,13 +33,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const listener = sessionContainer.resolve<HttpAcceptorListener>(HttpAcceptorListener)
     return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     config.description.application.http.adapter = new HttpJsonSampleAdapter(config)
     const initiator = sessionContainer.resolve<HttpInitiator>(HttpInitiator)

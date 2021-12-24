@@ -1,13 +1,14 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition'
 import { MsgView } from '../buffer'
-import { AsciiChars, AsciiView } from '../buffer/ascii'
-import { ISessionDescription } from '../transport'
+import { AsciiView } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { DefinitionFactory, FileReplayer } from '../util'
 import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../store'
 import { MsgTag } from '../types'
-import { JsFixConfig } from '../config'
+import { Setup } from './setup'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -16,14 +17,17 @@ let views: MsgView[]
 let expected: ILooseObject
 let store: IFixMsgStore
 let records: FixMsgStoreRecord[]
+let setup: Setup = null
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
+  setup = new Setup('session/test-initiator.json','session/test-acceptor.json')
+  await setup.init()
+  definitions = setup.serverConfig.definitions
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
+  const sessionDescription = setup.clientDescription
   definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'), AsciiChars.Pipe)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
-  store = new FixMsgMemoryStore('test', config)
+  views = await new FileReplayer(setup.clientConfig).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
+  store = new FixMsgMemoryStore('test', setup.clientConfig)
   records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
     if (v.getString(MsgTag.SenderCompID) === 'accept-tls-comp') {
       agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))

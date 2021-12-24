@@ -5,12 +5,12 @@ import { Structure, MsgView } from '../buffer'
 import { AsciiChars, AsciiParser } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { ISessionDescription, StringDuplex } from '../transport'
-import { JsFixConfig } from '../config'
+import { StringDuplex } from '../transport'
 import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
-import { DefinitionFactory, FileReplayer } from '../util'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { FileReplayer } from '../util'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
+import { Setup } from './setup'
+import { DITokens } from '../runtime'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -19,13 +19,15 @@ let session: AsciiMsgTransmitter
 let views: MsgView[]
 let structure: Structure
 let view: MsgView
+let setup: Setup = null
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
-  session = new AsciiMsgTransmitter(config)
-  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'), AsciiChars.Pipe)
+  setup = new Setup('session/qf-fix44.json','session/qf-fix44.json')
+  await setup.init()
+  definitions = setup.serverConfig.definitions
+  const config = setup.clientConfig
+  session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
+  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'))
   if (views && views.length > 0) {
     view = views[0]
     structure = view.structure

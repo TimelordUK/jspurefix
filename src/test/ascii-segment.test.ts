@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { MsgView, SegmentDescription } from '../buffer'
 import { AsciiParser, AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'

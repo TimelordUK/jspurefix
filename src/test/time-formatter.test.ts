@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { ElasticBuffer } from '../buffer'
 import { ITimeFormatter, TimeFormatter } from '../buffer/ascii'
 

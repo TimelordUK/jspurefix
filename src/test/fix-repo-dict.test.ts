@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'

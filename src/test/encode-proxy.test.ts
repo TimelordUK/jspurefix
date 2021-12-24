@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { EncodeProxy } from '../buffer'
 import { AsciiChars } from '../buffer/ascii'

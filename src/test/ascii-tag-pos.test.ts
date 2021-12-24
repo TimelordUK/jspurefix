@@ -1,11 +1,12 @@
+import 'reflect-metadata'
+
 import * as path from 'path'
 import { MsgView, TagPos, Structure } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription } from '../transport'
-import { JsFixConfig } from '../config'
-import { DefinitionFactory, FileReplayer } from '../util'
+import { FileReplayer } from '../util'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
+import { Setup } from './setup'
+import { DITokens } from '../runtime'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -55,12 +56,15 @@ const unsortedLogon = [
   new TagPos(20, 554, 196, 11)
 ]
 
+let setup: Setup = null
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
-  session = new AsciiMsgTransmitter(config)
-  views = await new FileReplayer(definitions, sessionDescription).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'), AsciiChars.Pipe)
+  setup = new Setup('session/test-initiator.json','session/test-initiator.json')
+  await setup.init()
+  definitions = setup.serverConfig.definitions
+  definitions = setup.clientConfig.definitions
+  const config = setup.clientConfig
+  session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
+  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure
     tp = views[0].structure.tags.tagPos.slice(0, views[0].segment.endPosition)

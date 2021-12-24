@@ -1,4 +1,6 @@
 // use the compiled interfaces for intelisense
+import 'reflect-metadata'
+
 import { ILooseObject } from '../collections/collection'
 import { ITradeCaptureReport, IInstrument, IStandardHeader } from '../types/FIXML50SP2'
 import { IBatch } from '../types/FIXML50SP2/set/batch'

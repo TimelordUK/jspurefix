@@ -1,13 +1,8 @@
 import * as path from 'path'
-import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger } from '../config'
-import { ISessionDescription, ISessionMsgFactory } from '../transport'
-import { FixmlSessionMsgFactory } from '../transport/fixml'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
-import { DITokens, RuntimeFactory } from '../runtime'
-import { container, DependencyContainer } from 'tsyringe'
-import { DefinitionFactory } from '../util'
-import { RecoveringTcpInitiator, TcpAcceptorListener, TcpInitiator, TcpInitiatorConnector } from '../transport/tcp'
-import { HttpAcceptorListener, HttpInitiator } from '../transport/http'
+import { IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
+import { ISessionDescription } from '../transport'
+import { DependencyContainer } from 'tsyringe'
+import { SessionContainer } from '../runtime/session-container'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
@@ -17,7 +12,7 @@ export abstract class Launcher {
   protected constructor (public readonly initiatorConfig: string, public readonly acceptorConfig: string) {
     this.logger = logFactory.logger('launcher')
   }
-
+  protected sessionContainer: SessionContainer = new SessionContainer()
   protected abstract getInitiator (sessionContainer: DependencyContainer): Promise<any>
   protected abstract getAcceptor (sessionContainer: DependencyContainer): Promise<any>
 
@@ -35,61 +30,25 @@ export abstract class Launcher {
     })
   }
 
-  protected makeSessionFactory (description: ISessionDescription): ISessionMsgFactory {
-    const fixml = description.application.protocol !== 'ascii'
-    return fixml ?
-      new FixmlSessionMsgFactory(description) :
-      new AsciiSessionMsgFactory(description)
+  public isAscii (description: ISessionDescription): boolean {
+    return description.application.protocol === 'ascii'
   }
 
-  protected registerGlobal (): void {
-    container.registerInstance(DefinitionFactory, new DefinitionFactory())
-    const lf = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
-    container.registerInstance('JsFixLoggerFactory', lf)
-    container.register<RuntimeFactory>(RuntimeFactory, {
-      useClass: RuntimeFactory
-    })
-    container.register<TcpAcceptorListener>(TcpAcceptorListener, {
-      useClass: TcpAcceptorListener
-    })
-    container.register<RecoveringTcpInitiator>(RecoveringTcpInitiator, {
-      useClass: RecoveringTcpInitiator
-    })
-    container.register<TcpInitiatorConnector>(TcpInitiatorConnector, {
-      useClass: TcpInitiatorConnector
-    })
-    container.register<TcpInitiator>(TcpInitiator, {
-      useClass: TcpInitiator
-    })
-    container.register<HttpAcceptorListener>(HttpAcceptorListener, {
-      useClass: HttpAcceptorListener
-    })
-    container.register<HttpInitiator>(HttpInitiator, {
-      useClass: HttpInitiator
-    })
+  public isInitiator (description: ISessionDescription): boolean {
+    return description.application.type === 'initiator'
   }
+
+  protected abstract registerApplication (sessionContainer: DependencyContainer): void
 
   private makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
-    return new Promise<DependencyContainer>((resolve, reject) => {
-      this.logger.info(`creating app ${description.application.name} [protocol ${description.application.protocol}] ...`)
-      const sessionContainer = container.createChildContainer()
-      const sf = this.makeSessionFactory(description)
-      sessionContainer.registerInstance('ISessionDescription', description)
-      sessionContainer.registerInstance('ISessionMsgFactory', sf)
-      const factory = sessionContainer.resolve<RuntimeFactory>(RuntimeFactory)
-      factory.makeConfig().then((c: IJsFixConfig) => {
-        c.sessionContainer = sessionContainer
-        sessionContainer.registerInstance(DITokens.IJsFixConfig, c)
-        resolve(sessionContainer)
-      }).catch(e => {
-        reject(e)
-      })
-    })
+    this.logger.info(`creating app ${description.application.name} [protocol ${description.application.protocol}]`)
+    return this.sessionContainer.makeSystem(description)
   }
 
   private async makeClient (): Promise<any> {
     const description: ISessionDescription = require(path.join(root, this.initiatorConfig))
     const sessionContainer = await this.makeSystem(description)
+    this.registerApplication(sessionContainer)
     this.logger.info('create initiator')
     return this.getInitiator(sessionContainer)
   }
@@ -97,12 +56,13 @@ export abstract class Launcher {
   private async makeServer (): Promise<any> {
     const description: ISessionDescription = require(path.join(root, this.acceptorConfig))
     const sessionContainer = await this.makeSystem(description)
+    this.registerApplication(sessionContainer)
     this.logger.info('create acceptor')
     return this.getAcceptor(sessionContainer)
   }
 
   private async setup () {
-    this.registerGlobal()
+    this.sessionContainer.registerGlobal()
     const server = this.makeServer()
     const client = this.makeClient()
     this.logger.info('launching ....')

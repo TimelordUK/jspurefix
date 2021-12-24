@@ -2,11 +2,14 @@ import { FixmlEncoder } from '../../buffer/fixml'
 import { IJsFixConfig } from '../../config'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime'
 
+@injectable()
 export class FixmlMsgTransmitter extends MsgTransmitter {
   public time: Date
 
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config.definitions, config.description)
     this.encoder = new FixmlEncoder(this.buffer, config.definitions)
   }

@@ -14,9 +14,9 @@ class AppLauncher extends Launcher {
       'data/session/test-acceptor-tls.json')
   }
 
-  protected registerSession (sessionContainer: DependencyContainer) {
+  protected override registerApplication (sessionContainer: DependencyContainer) {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
-    const isInitiator = config.description.application.type === 'initiator'
+    const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
       sessionContainer.register(DITokens.FixSession, {
         useClass: TradeCaptureClient
@@ -29,13 +29,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
     return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
     return initiator.start()
   }

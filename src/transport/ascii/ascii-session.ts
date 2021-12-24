@@ -315,6 +315,7 @@ export abstract class AsciiSession extends FixSession {
   }
 
   private tick (): void {
+    if (!this.transport) return
     const sessionState = this.sessionState
     const action: TickAction = sessionState.calcAction(new Date())
     const application: IMsgApplication = this.transport.config.description.application

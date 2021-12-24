@@ -1,28 +1,30 @@
 import { MsgView } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription, FileDuplex } from '../transport'
-import { JsFixConfig } from '../config'
+import { FileDuplex } from '../transport'
+import { IJsFixConfig } from '../config'
 import { MsgTransport } from '../transport/factory'
 
 export class FileReplayer {
-  constructor (public readonly definitions: FixDefinitions, public readonly sessionDescription: ISessionDescription) {
+  constructor (public readonly config: IJsFixConfig) {
   }
 
-  replayFixFile (replayFile: string, delimiter: number): Promise<MsgView[]> {
+  replayFixFile (replayFile: string): Promise<MsgView[]> {
     return new Promise<MsgView[]>((accept, reject) => {
-      const arr: MsgView[] = []
-      const config = new JsFixConfig(null, this.definitions, this.sessionDescription, delimiter)
-      const transport: MsgTransport = new MsgTransport(1, config, new FileDuplex(replayFile))
-      transport.receiver.on('msg', (msgType: string, m: MsgView) => {
-        // note must clone if a view is to be saved after this call
-        arr.push(m.clone())
-      })
-      transport.receiver.on('end', () => {
-        accept(arr)
-      })
-      transport.receiver.on('error', (e) => {
+      try {
+        const arr: MsgView[] = []
+        const transport: MsgTransport = new MsgTransport(1, this.config, new FileDuplex(replayFile))
+        transport.receiver.on('msg', (msgType: string, m: MsgView) => {
+          // note must clone if a view is to be saved after this call
+          arr.push(m.clone())
+        })
+        transport.receiver.on('end', () => {
+          accept(arr)
+        })
+        transport.receiver.on('error', (e) => {
+          reject(e)
+        })
+      } catch (e) {
         reject(e)
-      })
+      }
     })
   }
 }

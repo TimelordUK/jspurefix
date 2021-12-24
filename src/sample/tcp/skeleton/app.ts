@@ -13,7 +13,7 @@ class AppLauncher extends Launcher {
       'data/session/test-acceptor.json')
   }
 
-  protected registerSession (sessionContainer: DependencyContainer) {
+  protected override registerApplication (sessionContainer: DependencyContainer) {
     sessionContainer.register(DITokens.FixSession, {
       useClass: SkeletonSession
     })
@@ -26,13 +26,11 @@ class AppLauncher extends Launcher {
   }
 
   protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
     return listener.start()
   }
 
   protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    this.registerSession(sessionContainer)
     const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
     return initiator.start()
   }

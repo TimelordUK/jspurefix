@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { IncludeGraph } from '../dictionary/parser/fixml/include-graph'
 import * as path from 'path'
 

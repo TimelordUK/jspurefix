@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { SessionState,TickAction, FixSessionState } from '../transport'
 
 let state: FixSessionState
