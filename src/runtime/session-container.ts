@@ -3,20 +3,18 @@ import { DefinitionFactory } from '../util'
 import { IJsFixConfig, JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { DITokens } from './DITokens'
 import { RuntimeFactory } from './make-config'
-import { RecoveringTcpInitiator } from '../transport/tcp/recovering-tcp-initiator'
-import { TcpAcceptorListener } from '../transport/tcp/tcp-acceptor-listener'
-import { TcpInitiator } from '../transport/tcp/tcp-initiator'
-import { TcpInitiatorConnector } from '../transport/tcp/tcp-initiator-connector'
 
-import { HttpAcceptorListener } from '../transport/http/http-acceptor-listener'
-import { HttpInitiator } from '../transport/http/http-initiator'
-import { ISessionDescription } from '../transport/session-description'
-import { MsgTransmitter } from '../transport/msg-transmitter'
-import { ISessionMsgFactory } from '../transport/fix-msg-factory'
+import { TcpAcceptorListener, RecoveringTcpInitiator,
+  TcpInitiatorConnector, TcpInitiator } from '../transport/tcp'
+import { HttpInitiator, HttpAcceptorListener } from '../transport/http'
+import { ISessionMsgFactory, MsgTransmitter, ISessionDescription } from '../transport'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { FixmlMsgTransmitter } from '../transport/fixml/fixml-msg-transmitter'
-import { FixmlSessionMsgFactory } from '../transport/fixml/fixml-session-msg-factory'
-import { AsciiSessionMsgFactory } from '../transport/ascii/ascii-session-msg-factory'
+import { FixmlSessionMsgFactory } from '../transport/fixml'
+import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { MsgParser } from '../buffer'
+import { AsciiParser } from '../buffer/ascii'
+import { FiXmlParser } from '../buffer/fixml'
 
 export class SessionContainer {
 
@@ -92,9 +90,21 @@ export class SessionContainer {
       sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
         useClass: AsciiMsgTransmitter
       })
+      sessionContainer.register<MsgParser>(DITokens.MsgParser, {
+        useClass: AsciiParser
+      })
+      sessionContainer.register(DITokens.maxMessageLen, {
+        useValue: 160 * 1024
+      })
     } else {
       sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
         useClass: FixmlMsgTransmitter
+      })
+      sessionContainer.register<MsgParser>(DITokens.MsgParser, {
+        useClass: FiXmlParser
+      })
+      sessionContainer.register(DITokens.maxMessageLocations, {
+        useValue: 10 * 1024
       })
     }
     c.sessionContainer = sessionContainer

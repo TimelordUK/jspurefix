@@ -9,7 +9,7 @@ import { ISequenceReset, IStandardHeader } from '../types/FIX4.4/repo'
 export class FixMsgAsciiStoreResend {
   parser: AsciiParser
   constructor (public readonly store: IFixMsgStore, public readonly config: IJsFixConfig) {
-    this.parser = new AsciiParser(this.config.definitions, null, this.config.delimiter)
+    this.parser = new AsciiParser(this.config, null, 160 * 1024)
   }
 
   public getResendRequest (startSeq: number, endSeq: number): Promise<IFixMsgStoreRecord[]> {

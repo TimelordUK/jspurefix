@@ -2,14 +2,19 @@ import { MsgParser } from '../msg-parser'
 import { Tags } from '../tags'
 import { ISaxNode, SAXStream } from '../../dictionary'
 import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
-import { ContainedField, ContainedComponentField, ContainedFieldType, ContainedGroupField, ContainedSimpleField, ContainedFieldSet } from '../../dictionary/contained'
+import { ContainedField, ContainedComponentField,
+  ContainedFieldType, ContainedGroupField,
+  ContainedSimpleField, ContainedFieldSet } from '../../dictionary/contained'
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { MsgView } from '../msg-view'
 import { Structure } from '../structure'
 import { FixmlView } from './fixml-view'
 import { Readable } from 'stream'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime/DITokens'
 
+@injectable()
 export class FiXmlParser extends MsgParser {
   private readonly locations: Tags
   private values: string[] = []
@@ -20,9 +25,10 @@ export class FiXmlParser extends MsgParser {
   private readonly logger: IJsFixLogger
   private last: SegmentDescription
   private raw: string
-  constructor (public readonly config: IJsFixConfig,
-               public readonly readStream: Readable,
-               public readonly maxMessageLocations: number = 10 * 1024) {
+
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
+               @inject(DITokens.readStream) public readonly readStream: Readable,
+               @inject(DITokens.maxMessageLocations) public readonly maxMessageLocations: number = 10 * 1024) {
     super()
     this.definitions = this.config.definitions
     const description = config.description

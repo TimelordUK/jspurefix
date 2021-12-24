@@ -65,7 +65,7 @@ class ParsingResult {
 
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
-    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, AsciiChars.Pipe)
+    const parser = new AsciiParser(session.config, new StringDuplex(text, chunks).readable, 160 * 1024)
     parser.on('error', (e: Error) => {
       reject(e)
     })

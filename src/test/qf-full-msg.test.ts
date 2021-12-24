@@ -27,7 +27,7 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
     // encode to FIX format from provided object.
   return new Promise(async (resolve, reject) => {
     let session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
-    const parser: AsciiParser = new AsciiParser(definitions, session.encodeStream, AsciiChars.Pipe)
+    const parser: AsciiParser = new AsciiParser(config, session.encodeStream, 160 * 1024)
     parser.on('msg', (msgType: string, view: AsciiView) => {
       const o = view.toObject()
       delete o.StandardHeader

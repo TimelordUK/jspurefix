@@ -28,8 +28,10 @@ export class Setup {
     this.fixContainer.registerGlobal()
     this.clientSessionContainer = await this.fixContainer.makeSystem(this.clientDescription)
     this.serverSessionContainer = await this.fixContainer.makeSystem(this.serverDescription)
+
     this.serverConfig = this.serverSessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     this.clientConfig = this.clientSessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
+
     this.serverConfig.delimiter = this.serverConfig.logDelimiter
     this.clientConfig.delimiter = this.clientConfig.logDelimiter
     this.definitions = this.clientConfig.definitions

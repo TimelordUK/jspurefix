@@ -1,10 +1,9 @@
 import { MsgParser } from '../../buffer'
-import { AsciiParser, AsciiChars } from '../../buffer/ascii'
 import { MsgTransmitter } from '../msg-transmitter'
 import { FixDuplex } from '../duplex'
 import { IJsFixConfig } from '../../config'
-import { FiXmlParser } from '../../buffer/fixml'
 import { DITokens } from '../../runtime/DITokens'
+import { Readable } from 'stream'
 
 export class MsgTransport {
   public readonly transmitter: MsgTransmitter
@@ -18,28 +17,15 @@ export class MsgTransport {
     if (!delimiter) {
       throw new Error(`no delimiter char given.`)
     }
-    const logDelimiter = config.logDelimiter || AsciiChars.Pipe
-    const description = config.description
-    const definitions = config.definitions
-    const protocol = description.application.protocol
-    this.transmitter = this.config.sessionContainer.resolve<MsgTransmitter>(DITokens.MsgTransmitter)
-    switch (protocol) {
-      case 'ascii': {
-        // let parser replace delimiter with Pipe so fix log does not require
-        // expensive replace
-        this.receiver = new AsciiParser(definitions, duplex.readable, delimiter, logDelimiter)
-        break
-      }
 
-      case 'fixml': {
-        this.receiver = new FiXmlParser(config, duplex.readable)
-        break
-      }
+    const sessionContainer = this.config.sessionContainer
+    sessionContainer.registerInstance<Readable>(DITokens.readStream, this.duplex.readable)
 
-      default: {
-        throw new Error(`session Protocol must ascii or fixml. got ${protocol}`)
-      }
-    }
+    // let parser replace delimiter with Pipe so fix log does not require
+    // expensive replace
+
+    this.transmitter = sessionContainer.resolve<MsgTransmitter>(DITokens.MsgTransmitter)
+    this.receiver = sessionContainer.resolve<MsgParser>(DITokens.MsgParser)
 
     // pipe the encoder to say a socket.
     if (duplex.writable) {

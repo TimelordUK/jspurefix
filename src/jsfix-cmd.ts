@@ -455,7 +455,8 @@ export class JsfixCmd {
         const toParse = new StringDuplex(contents.repeat(repeats), false)
         const startsAt: Date = new Date()
         let i = 0
-        const asciiParser: MsgParser = new AsciiParser(definitions, toParse.readable, delimiter)
+        const config = new JsFixConfig(null, definitions, this.sessionDescription, delimiter)
+        const asciiParser: MsgParser = new AsciiParser(config, toParse.readable, 160 * 1024)
         asciiParser.on('msg', (msgType: string, v: MsgView) => {
           ++i
           if (i === repeats) {

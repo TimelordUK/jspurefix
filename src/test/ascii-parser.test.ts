@@ -1,16 +1,17 @@
 import 'reflect-metadata'
 
 import { TagPos, SegmentType, MsgView } from '../buffer'
-import { AsciiChars, AsciiParser } from '../buffer/ascii'
+import { AsciiParser } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
-import { DefinitionFactory, JsonHelper } from '../util'
-import { ISessionDescription, StringDuplex } from '../transport'
-import * as path from 'path'
-import { MsgType } from '..'
+import { JsonHelper } from '../util'
+import { StringDuplex } from '../transport'
+import { IJsFixConfig, MsgType } from '..'
+import { Setup } from './setup'
 
+let config: IJsFixConfig
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
-const root: string = path.join(__dirname, '../../data')
+
 const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57=sub-a|52=20180610-10:39:01.621|98=2|108=62441|95=20|96=VgfoSqo56NqSVI1fLdlI|141=Y|789=4886|383=20|384=1|372=ipsum|385=R|464=N|553=sit|554=consectetur|10=49|'
 const expectedTagPos = [
   new TagPos(0, 8, 2, 6),
@@ -36,10 +37,14 @@ const expectedTagPos = [
   new TagPos(20, 554, 196, 11),
   new TagPos(21, 10, 211, 2)]
 
+let setup: Setup = null
 beforeAll(async () => {
   expect.assertions(1)
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
+  setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
+  await setup.init()
+  definitions = setup.definitions
+  config = setup.clientConfig
+  definitions = setup.definitions
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 
@@ -51,7 +56,7 @@ class ParsingResult {
 
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
-    const parser = new AsciiParser(definitions, new StringDuplex(text, chunks).readable, AsciiChars.Pipe)
+    const parser = new AsciiParser(config, new StringDuplex(text, chunks).readable, 160 * 1024)
     const buffer = parser.state.elasticBuffer
     parser.on('error', (e: Error) => {
       reject(e)

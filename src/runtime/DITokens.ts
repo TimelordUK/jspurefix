@@ -5,5 +5,8 @@ export enum DITokens {
   ISessionDescription = 'ISessionDescription',
   ISessionMsgFactory = 'ISessionMsgFactory',
   MsgTransmitter = 'MsgTransmitter',
-  MsgParser = 'MsgParser'
+  MsgParser = 'MsgParser',
+  maxMessageLen = 'maxMessageLen',
+  readStream = 'readStream',
+  maxMessageLocations = 'maxMessageLocations'
 }

@@ -54,6 +54,7 @@ class TestRecovery {
 let server: TestRecovery
 let client: TestRecovery
 let setup: Setup = null
+
 beforeAll(async () => {
   setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
   await setup.init()

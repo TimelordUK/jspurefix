@@ -1,4 +1,3 @@
-import { FixDefinitions } from '../../dictionary/definition'
 import { AsciiChars } from './ascii-chars'
 import { AsciiView } from './ascii-view'
 import { AsciiSegmentParser } from './ascii-segment-parser'
@@ -11,23 +10,31 @@ import { Readable } from 'stream'
 import { ElasticBuffer } from '../elastic-buffer'
 import { SegmentDescription, SegmentType } from '../segment-description'
 import { ParseState } from './parse-state'
+import { IJsFixConfig } from '../../config'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime/DITokens'
 
+@injectable()
 export class AsciiParser extends MsgParser {
   private static nextId: number = 0
   public readonly id: number
   public readonly state: AsciiParserState
   private readonly receivingBuffer: ElasticBuffer
   private readonly segmentParser: AsciiSegmentParser
+  public readonly delimiter: number
+  public readonly writeDelimiter: number
 
   // allocate enough in receive buffer so buffer does not constant resize back after large messages
   // want to keep one slice of memory and constantly reuse it
 
-  constructor (public readonly definitions: FixDefinitions,
-               public readonly readStream: Readable,
-               public readonly delimiter: number,
-               public readonly writeDelimiter: number = delimiter,
-               public readonly maxMessageLen: number = 160 * 1024) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
+               @inject(DITokens.readStream) public readonly readStream: Readable,
+               @inject(DITokens.maxMessageLen) public readonly maxMessageLen: number) {
     super()
+
+    this.delimiter = config.delimiter
+    this.writeDelimiter = config.logDelimiter || AsciiChars.Pipe
+    const definitions = config.definitions
     this.id = AsciiParser.nextId++
     this.segmentParser = new AsciiSegmentParser(definitions)
     this.receivingBuffer = new ElasticBuffer(maxMessageLen)
