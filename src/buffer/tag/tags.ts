@@ -1,7 +1,7 @@
-import { FixDefinitions } from '../dictionary/definition'
-import { ContainedSimpleField } from '../dictionary/contained'
+import { FixDefinitions } from '../../dictionary/definition'
+import { ContainedSimpleField } from '../../dictionary/contained'
 import { TagPos } from './tag-pos'
-import { MsgTag } from '../types'
+import { MsgTag } from '../../types'
 import { TagType } from './tag-type'
 
 export class Tags {

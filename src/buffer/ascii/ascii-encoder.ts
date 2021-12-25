@@ -10,8 +10,8 @@ import { ElasticBuffer } from '../elastic-buffer'
 import { TimeFormatter } from './time-formatter'
 import { ITimeFormatter } from './itime-formatter'
 import { AsciiChars } from './ascii-chars'
-import { Tags } from '../tags'
-import { TagType } from '../tag-type'
+import { Tags } from '../tag/tags'
+import { TagType } from '../tag/tag-type'
 
 export class AsciiEncoder extends MsgEncoder {
 

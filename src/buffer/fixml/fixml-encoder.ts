@@ -9,7 +9,7 @@ import { ElasticBuffer } from '../elastic-buffer'
 import moment = require('moment')
 import { FixDefinitions } from '../../dictionary/definition'
 import { IFieldDispatcher } from '../../dictionary/contained/field-dispatcher'
-import { TagType } from '../tag-type'
+import { TagType } from '../tag/tag-type'
 import { IPopulatedAttributes } from './populated-attributes'
 
 export class FixmlEncoder extends MsgEncoder {

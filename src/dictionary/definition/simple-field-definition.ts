@@ -1,9 +1,9 @@
 import { Dictionary } from '../../collections'
 import { FieldEnum } from '../field-enum'
-import { Tags } from '../../buffer/tags'
+import { Tags } from '../../buffer/tag/tags'
 import { AsciiChars } from '../../buffer/ascii/ascii-chars'
 import * as _ from 'lodash'
-import { TagType } from '../../buffer/tag-type'
+import { TagType } from '../../buffer/tag/tag-type'
 
 export class SimpleFieldDefinition {
   public readonly tag: number

@@ -6,7 +6,7 @@ import { ContainedGroupField } from './contained-group-field'
 import { ContainedSimpleField } from './contained-simple-field'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
 import { ContainedFieldType } from './contained-field-type'
-import { TagType } from '../../buffer/tag-type'
+import { TagType } from '../../buffer/tag/tag-type'
 import { ContainedSetType } from '../contained-set-type'
 
 export abstract class ContainedFieldSet {

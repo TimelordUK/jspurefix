@@ -10,7 +10,7 @@ import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 
 import moment = require('moment')
 import { IFieldDispatcher } from '../dictionary/contained/field-dispatcher'
-import { TagType } from '../buffer/tag-type'
+import { TagType } from '../buffer/tag/tag-type'
 
 export class JsonHelper {
   dispatcher: FieldsDispatch = new FieldsDispatch()

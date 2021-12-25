@@ -8,7 +8,7 @@ import * as fs from 'fs'
 import * as util from 'util'
 import * as Path from 'path'
 import * as _ from 'lodash'
-import { TagType } from '../../buffer/tag-type'
+import { TagType } from '../../buffer/tag/tag-type'
 
 export class EnumCompiler {
   private readonly buffer: ElasticBuffer = new ElasticBuffer()

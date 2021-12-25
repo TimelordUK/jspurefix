@@ -1,6 +1,6 @@
-import { SegmentDescription } from '../segment-description'
+import { SegmentDescription } from '../segment/segment-description'
 import { Structure } from '../structure'
-import { Tags } from '../tags'
+import { Tags } from '../tag/tags'
 import {
   FixDefinitions,
   MessageDefinition
@@ -13,7 +13,7 @@ import {
 } from '../../dictionary/contained'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
-import { SegmentType } from '../segment-type'
+import { SegmentType } from '../segment/segment-type'
 
 // this takes linear time i.e. it constantly makes forward progress
 // one tag at a time

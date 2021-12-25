@@ -6,7 +6,7 @@ import {
   ContainedGroupField,
   ContainedSimpleField
 } from '../dictionary/contained'
-import { TagType } from './tag-type'
+import { TagType } from './tag/tag-type'
 
 export class EncodeProxy {
   constructor (public readonly definitions: FixDefinitions) {

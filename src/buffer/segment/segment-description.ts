@@ -1,6 +1,6 @@
-import { INumericKeyed } from '../collections/collection'
-import { ContainedField, ContainedFieldSet } from '../dictionary/contained/'
-import { GroupFieldDefinition } from '../dictionary/definition'
+import { INumericKeyed } from '../../collections/collection'
+import { ContainedField, ContainedFieldSet } from '../../dictionary/contained'
+import { GroupFieldDefinition } from '../../dictionary/definition'
 import { SegmentType } from './segment-type'
 
 export class SegmentDescription {

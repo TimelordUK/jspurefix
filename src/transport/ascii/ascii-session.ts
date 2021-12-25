@@ -6,7 +6,7 @@ import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore, IFixMsgStoreRe
 import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'
 import { IMsgApplication } from '../msg-application'
-import { SegmentType } from '../../buffer/segment-type'
+import { SegmentType } from '../../buffer/segment/segment-type'
 
 export abstract class AsciiSession extends FixSession {
 

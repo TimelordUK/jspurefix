@@ -1,10 +1,10 @@
 import { MsgView } from '../msg-view'
 import { SimpleFieldDefinition } from '../../dictionary/definition'
 import { Structure } from '../structure'
-import { SegmentDescription } from '../segment-description'
+import { SegmentDescription } from '../segment/segment-description'
 import { AsciiChars } from '../ascii/'
 import * as moment from 'moment'
-import { TagType } from '../tag-type'
+import { TagType } from '../tag/tag-type'
 
 export class FixmlView extends MsgView {
 

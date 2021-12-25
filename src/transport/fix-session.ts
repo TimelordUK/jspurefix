@@ -7,7 +7,7 @@ import { ILooseObject } from '../collections/collection'
 
 import * as events from 'events'
 import { SessionState } from './session-state'
-import { SegmentType } from '../buffer/segment-type'
+import { SegmentType } from '../buffer/segment/segment-type'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false

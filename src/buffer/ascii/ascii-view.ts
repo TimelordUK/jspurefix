@@ -1,13 +1,13 @@
 import { SimpleFieldDefinition } from '../../dictionary/definition'
-import { SegmentDescription } from '../segment-description'
+import { SegmentDescription } from '../segment/segment-description'
 import { Structure } from '../structure'
 import { MsgView } from '../msg-view'
 import { ElasticBuffer } from '../elastic-buffer'
 import { ITimeFormatter } from './itime-formatter'
 import { TimeFormatter } from './time-formatter'
-import { TagPos } from '../tag-pos'
+import { TagPos } from '../tag/tag-pos'
 import { MsgTag } from '../../types'
-import { TagType } from '../tag-type'
+import { TagType } from '../tag/tag-type'
 
 export class AsciiView extends MsgView {
   private readonly timeFormatter: ITimeFormatter = new TimeFormatter(this.buffer)

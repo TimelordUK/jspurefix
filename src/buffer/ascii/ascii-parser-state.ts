@@ -1,4 +1,4 @@
-import { Tags } from '../tags'
+import { Tags } from '../tag/tags'
 import { MessageDefinition } from '../../dictionary/definition'
 import { ElasticBuffer } from '../elastic-buffer'
 import { ParseState } from './parse-state'

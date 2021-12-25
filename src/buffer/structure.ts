@@ -1,7 +1,7 @@
 import { ILooseObject } from '../collections/collection'
-import { SegmentDescription } from './segment-description'
-import { SegmentSummary } from './segment-summary'
-import { Tags } from './tags'
+import { SegmentDescription } from './segment/segment-description'
+import { SegmentSummary } from './segment/segment-summary'
+import { Tags } from './tag/tags'
 
 export class Structure {
   public readonly layout: ILooseObject = null

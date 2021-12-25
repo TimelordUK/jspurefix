@@ -7,7 +7,7 @@ import { JsonHelper } from '../util'
 import { StringDuplex } from '../transport'
 import { IJsFixConfig, MsgType } from '..'
 import { Setup } from './setup'
-import { SegmentType } from '../buffer/segment-type'
+import { SegmentType } from '../buffer/segment/segment-type'
 
 let config: IJsFixConfig
 let definitions: FixDefinitions

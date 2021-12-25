@@ -1,8 +1,8 @@
-import { TagPos } from './tag-pos'
-import { SegmentDescription } from './segment-description'
+import { TagPos } from './tag/tag-pos'
+import { SegmentDescription } from './segment/segment-description'
 import { Structure } from './structure'
 import { Dictionary } from '../collections'
-import { Tags } from './tags'
+import { Tags } from './tag/tags'
 import { ContainedGroupField, ContainedComponentField, ContainedField,
   ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
 import { SetReduce } from '../dictionary'

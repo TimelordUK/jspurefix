@@ -10,7 +10,7 @@ import { FileReplayer } from '../util'
 import { DITokens } from '../runtime/DITokens'
 import { SessionContainer } from '../runtime/'
 import { IJsFixConfig } from '../config'
-import { SegmentType } from '../buffer/segment-type'
+import { SegmentType } from '../buffer/segment/segment-type'
 
 const root: string = path.join(__dirname, '../../data')
 
