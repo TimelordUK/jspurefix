@@ -17,7 +17,8 @@ export class RuntimeFactory {
   makeConfig (): Promise<IJsFixConfig> {
     const description = this.description
     return new Promise<IJsFixConfig>((accept, reject) => {
-      this.definitionFactory.getDefinitions(description.application.dictionary,
+      try {
+        this.definitionFactory.getDefinitions(description.application.dictionary,
           (t: string) => {
             return this.logFactory.logger(`${description.application.type}.${t}`)
           }).then((definitions: FixDefinitions) => {
@@ -26,6 +27,9 @@ export class RuntimeFactory {
           }).catch(e => {
             reject(e)
           })
+      } catch (e) {
+        reject(e)
+      }
     })
   }
 }

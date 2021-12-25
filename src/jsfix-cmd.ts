@@ -8,13 +8,12 @@ import { MessageGenerator, JsonHelper, getWords, DefinitionFactory } from './uti
 import { ISessionDescription, FileDuplex, StringDuplex } from './transport'
 
 import { MsgTag } from './types'
-import { IJsFixConfig, JsFixConfig } from './config'
+import { IJsFixConfig } from './config'
 
 import * as util from 'util'
 const fs = require('node-fs-extra')
 import * as minimist from 'minimist'
 import * as path from 'path'
-import { SessionMsgFactory } from './transport/ascii'
 import { MsgTransport } from './transport/factory'
 import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'
 import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
@@ -311,26 +310,33 @@ export class JsfixCmd {
     await this.compileDefinitions(output)
   }
 
+  sys: SessionContainer
+  config: IJsFixConfig
+
   private async init (): Promise<any> {
     let session: string = argv.session || 'data/session/test-initiator.json'
+    this.sys = new SessionContainer()
+    this.sys.registerGlobal()
     session = this.norm(session)
     this.sessionDescription = require(session)
+    const container = await this.sys.makeSystem(this.sessionDescription)
+    this.config = container.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
+    this.definitions = this.config.definitions
     let dict: string
     if (argv.dict) {
       dict = argv.dict
-    } else {
-      dict = this.sessionDescription.application.dictionary
+      const df = await new DefinitionFactory().getDefinitions(dict)
+      this.config.definitions = df
+      this.definitions = df
     }
-    this.definitions = await new DefinitionFactory().getDefinitions(dict)
     const definitions = this.definitions
     if (argv.delimiter) {
       this.delimiter = AsciiChars.firstChar(argv.delimiter)
+      this.config.delimiter = this.delimiter
     }
     this.jsonHelper = new JsonHelper(definitions)
     if (argv.session) {
-      const description = this.sessionDescription
-      const config = new JsFixConfig(new SessionMsgFactory(description), definitions, description, this.delimiter)
-      this.session = new AsciiMsgTransmitter(config)
+      this.session = container.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
     }
   }
 
@@ -437,7 +443,7 @@ export class JsfixCmd {
       return
     }
     const fix: string = this.norm(argv.fix)
-    const config = new JsFixConfig(null, this.definitions, this.sessionDescription, this.delimiter)
+    const config = this.config
     const ft: MsgTransport = new MsgTransport(1, config, new FileDuplex(fix))
     await this.dispatch(ft)
   }
@@ -450,7 +456,6 @@ export class JsfixCmd {
     return new Promise<any>((accept, reject) => {
       const fix: string = this.norm(argv.fix)
       const fs = require('fs')
-      const delimiter = this.delimiter
       fs.readFile(fix, 'utf8', async (err: Error, contents: string) => {
         if (err) {
           reject(err)
@@ -458,11 +463,7 @@ export class JsfixCmd {
         const toParse = new StringDuplex(contents.repeat(repeats), false)
         const startsAt: Date = new Date()
         let i = 0
-        const sys = new SessionContainer()
-        sys.registerGlobal()
-        const container = await sys.makeSystem(this.sessionDescription)
-        const config = container.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
-        config.delimiter = delimiter
+        const config = this.config
         const asciiParser: MsgParser = new AsciiParser(config, toParse.readable, 160 * 1024)
         asciiParser.on('msg', (msgType: string, v: MsgView) => {
           ++i

@@ -16,12 +16,17 @@ export class DefinitionFactory {
   }
 
   async getDefinitions (path: string, getLogger: GetJsFixLogger = makeEmptyLogger): Promise<FixDefinitions> {
-    let parser: FixParser
     const dp: IDictionaryPath = this.getDictPath(path)
     if (dp) {
       path = dp.dict
     }
     path = this.norm(path)
+    const parser = this.getParser(path, getLogger)
+    return parser.parse()
+  }
+
+  getParser (path: string, getLogger: GetJsFixLogger): FixParser {
+    let parser: FixParser
     if (fs.lstatSync(path).isDirectory() && path.indexOf('fixml') >= 0) {
       parser = new FixXsdParser(path, getLogger)
     } else if (fs.lstatSync(path).isDirectory()) {
@@ -29,7 +34,7 @@ export class DefinitionFactory {
     } else {
       parser = new QuickFixXmlFileParser(path, getLogger)
     }
-    return parser.parse()
+    return parser
   }
 
   norm (p: string): string {

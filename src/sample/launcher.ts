@@ -58,6 +58,14 @@ export abstract class Launcher {
     })
   }
 
+  public exec () {
+    this.run().then(() => {
+      console.log('finished.')
+    }).catch(e => {
+      console.error(e)
+    })
+  }
+
   public isAscii (description: ISessionDescription): boolean {
     return this.sessionContainer.isAscii(description)
   }
