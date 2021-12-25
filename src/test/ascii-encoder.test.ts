@@ -10,7 +10,7 @@ import { MsgType } from '..'
 import { ContainedFieldSet } from '../dictionary/contained'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { Setup } from './setup'
-import { DITokens } from '../runtime/DITokens'
+import { DITokens } from '../runtime/di-tokens'
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter

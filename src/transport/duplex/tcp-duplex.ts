@@ -1,7 +1,7 @@
 import { FixDuplex } from './fix-duplex'
 import * as net from 'net'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class TcpDuplex extends FixDuplex {

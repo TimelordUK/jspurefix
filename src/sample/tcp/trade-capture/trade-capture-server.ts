@@ -7,7 +7,7 @@ import { ITradeCaptureReportRequest, ITradeCaptureReport, MsgTag, SessionRejectR
   SubscriptionRequestType, TradeRequestStatus } from '../../../types/FIX4.4/repo'
 import { TradeFactory } from './trade-factory'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 
 @injectable()
 export class TradeCaptureServer extends AsciiSession {

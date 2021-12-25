@@ -6,7 +6,7 @@ import { FixDefinitions } from '../dictionary/definition'
 import { FileReplayer } from '../util'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { Setup } from './setup'
-import { DITokens } from '../runtime/DITokens'
+import { DITokens } from '../runtime/di-tokens'
 
 const root: string = path.join(__dirname, '../../data')
 

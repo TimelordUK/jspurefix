@@ -5,7 +5,7 @@ import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 import { FixEntity } from '../../../transport/fix-entity'
 import { IHttpAdapter } from '../../../transport/http/http-adapter'
 

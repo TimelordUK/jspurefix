@@ -1,5 +1,5 @@
 import { FixDefinitions } from '../dictionary/definition'
-import { DITokens } from '../runtime/DITokens'
+import { DITokens } from '../runtime/di-tokens'
 import { SessionContainer } from '../runtime/'
 import { ISessionDescription } from '../transport'
 import { DependencyContainer } from 'tsyringe'

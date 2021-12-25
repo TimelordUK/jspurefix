@@ -3,7 +3,7 @@ import { MsgTransport } from '../factory'
 import { HttpDuplex } from '../duplex'
 import { FixSession } from '../session/fix-session'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 import { FixEntity } from '../fix-entity'
 
 @injectable()

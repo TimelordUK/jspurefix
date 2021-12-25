@@ -6,7 +6,7 @@ import { createServer as netCreateServer, Server, Socket } from 'net'
 import { createServer as tlsCreateServer, TlsOptions, TLSSocket } from 'tls'
 import { TlsOptionsFactory } from './tls-options-factory'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class TcpAcceptor extends FixAcceptor {

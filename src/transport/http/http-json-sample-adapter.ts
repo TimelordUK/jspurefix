@@ -5,7 +5,7 @@ import { IHttpAdapter } from './http-adapter'
 import { IHtmlRoute } from './html-route'
 import { IHtmlOptions } from './html-options'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class HttpJsonSampleAdapter implements IHttpAdapter {

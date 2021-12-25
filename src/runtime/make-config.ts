@@ -4,7 +4,7 @@ import { IJsFixConfig, JsFixConfig, JsFixLoggerFactory } from '../config'
 import { FixDefinitions } from '../dictionary/definition'
 import { DefinitionFactory } from '../util/'
 import { injectable, inject } from 'tsyringe'
-import { DITokens } from './DITokens'
+import { DITokens } from './di-tokens'
 
 @injectable()
 export class RuntimeFactory {

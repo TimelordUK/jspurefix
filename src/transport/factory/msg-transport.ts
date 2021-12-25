@@ -2,7 +2,7 @@ import { MsgParser } from '../../buffer'
 import { MsgTransmitter } from '../msg-transmitter'
 import { FixDuplex } from '../duplex'
 import { IJsFixConfig } from '../../config'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 import { Readable } from 'stream'
 import { inject, injectable } from 'tsyringe'
 

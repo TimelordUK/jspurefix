@@ -1,7 +1,7 @@
 import { container, DependencyContainer } from 'tsyringe'
 import { DefinitionFactory } from '../util'
 import { IJsFixConfig, JsFixWinstonLogFactory, WinstonLogger } from '../config'
-import { DITokens } from './DITokens'
+import { DITokens } from './di-tokens'
 import { RuntimeFactory } from './make-config'
 
 import { TcpAcceptorListener, RecoveringTcpInitiator,

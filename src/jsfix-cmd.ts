@@ -18,7 +18,7 @@ import { MsgTransport } from './transport/factory'
 import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'
 import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 import { SessionContainer } from './runtime'
-import { DITokens } from './runtime/DITokens'
+import { DITokens } from './runtime/di-tokens'
 
 const argv: any = minimist(process.argv.slice(2))
 

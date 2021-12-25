@@ -10,7 +10,7 @@ import * as bodyParser from 'body-parser'
 import * as http from 'http'
 import { v4 as uuidv4 } from 'uuid'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class HttpAcceptor extends FixAcceptor {

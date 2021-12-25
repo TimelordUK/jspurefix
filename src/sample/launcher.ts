@@ -4,7 +4,7 @@ import { ISessionDescription } from '../transport'
 import { DependencyContainer } from 'tsyringe'
 import { SessionContainer } from '../runtime'
 import { FixEntity } from '../transport/fix-entity'
-import { DITokens } from '../runtime/DITokens'
+import { DITokens } from '../runtime/di-tokens'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))

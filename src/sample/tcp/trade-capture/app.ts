@@ -4,7 +4,7 @@ import { TradeCaptureServer } from './trade-capture-server'
 import { Launcher } from '../../launcher'
 import { TradeCaptureClient } from './trade-capture-client'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 import { IJsFixConfig } from '../../../config'
 
 class AppLauncher extends Launcher {

@@ -12,7 +12,7 @@ import { SegmentDescription } from '../segment/segment-description'
 import { ParseState } from './parse-state'
 import { IJsFixConfig } from '../../config'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
 
 @injectable()

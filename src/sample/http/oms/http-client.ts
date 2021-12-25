@@ -4,7 +4,7 @@ import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { OmsFactory } from './oms-factory'
 import { IExecutionReport, Side } from '../../../types/FIXML50SP2'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 
 @injectable()
 export class HttpClient extends FixmlSession {

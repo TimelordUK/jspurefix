@@ -3,7 +3,7 @@ import 'reflect-metadata'
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 
 class AppLauncher extends Launcher {
   public constructor () {

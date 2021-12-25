@@ -5,7 +5,7 @@ import { MDServer } from './md-server'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 
 class AppLauncher extends Launcher {
   public constructor () {

@@ -12,7 +12,7 @@ import { Structure } from '../structure'
 import { FixmlView } from './fixml-view'
 import { Readable } from 'stream'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 import { ISaxNode } from '../../dictionary/sax-node'
 import { SegmentType } from '../segment/segment-type'
 

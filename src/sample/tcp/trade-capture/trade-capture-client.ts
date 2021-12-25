@@ -7,7 +7,7 @@ import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 
 @injectable()
 export class TradeCaptureClient extends AsciiSession {

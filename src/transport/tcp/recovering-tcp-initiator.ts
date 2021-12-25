@@ -5,7 +5,7 @@ import { MsgTransport } from '../factory'
 import Timeout = NodeJS.Timeout
 import { SessionState } from '../session/session-state'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 import { ITcpTransportDescription } from './tcp-transport-description'
 import { IMsgApplication } from '../msg-application'
 import { FixEntity } from '../fix-entity'

@@ -12,7 +12,7 @@ import {
   ContainedFieldType
 } from '../../dictionary/contained'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../runtime/DITokens'
+import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
 
 // this takes linear time i.e. it constantly makes forward progress

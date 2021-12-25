@@ -4,7 +4,7 @@ import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { ILooseObject } from '../../../collections/collection'
 import { FixMsgStoreRecord } from '../../../store'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime/DITokens'
+import { DITokens } from '../../../runtime/di-tokens'
 
 @injectable()
 export class SkeletonSession extends AsciiSession {
