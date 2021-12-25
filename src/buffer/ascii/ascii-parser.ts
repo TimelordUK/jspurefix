@@ -36,7 +36,7 @@ export class AsciiParser extends MsgParser {
     this.writeDelimiter = config.logDelimiter || AsciiChars.Pipe
     const definitions = config.definitions
     this.id = AsciiParser.nextId++
-    this.segmentParser = new AsciiSegmentParser(definitions)
+    this.segmentParser = config.sessionContainer.resolve<AsciiSegmentParser>(AsciiSegmentParser)
     this.receivingBuffer = new ElasticBuffer(maxMessageLen)
     this.state = new AsciiParserState(this.receivingBuffer)
     this.state.locations = new Tags(definitions, maxMessageLen / 10)

@@ -3,9 +3,10 @@ import { Dictionary } from '../../collections'
 import { ComponentFieldDefinition } from './component-field-definition'
 import { MessageDefinition } from './message-definition'
 import { SimpleFieldDefinition } from './simple-field-definition'
-import { FixDefinitionSource, FixVersion } from '../fix-versions'
+import { FixVersion } from '../fix-versions'
 import { CategorySimpleSet } from './category-simple-set'
 import { ContainedFieldSet } from '../contained'
+import { FixDefinitionSource } from '../fix-definition-source'
 
 export class FixDefinitions {
   public readonly simple: Dictionary<SimpleFieldDefinition> = new Dictionary<SimpleFieldDefinition>()

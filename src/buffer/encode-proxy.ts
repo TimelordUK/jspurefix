@@ -1,5 +1,4 @@
 import { ILooseObject } from '../collections/collection'
-import { TagType } from './tags'
 import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import {
   ContainedComponentField, ContainedField,
@@ -7,6 +6,7 @@ import {
   ContainedGroupField,
   ContainedSimpleField
 } from '../dictionary/contained'
+import { TagType } from './tag-type'
 
 export class EncodeProxy {
   constructor (public readonly definitions: FixDefinitions) {

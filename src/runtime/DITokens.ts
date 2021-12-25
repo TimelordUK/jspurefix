@@ -11,6 +11,7 @@ export enum DITokens {
   FixEntity = 'FixEntity',
   Listener = 'Listener',
   Connector = 'Connector',
+  Definitions = 'Definitions',
   sessionId = 'sessionId',
   maxMessageLen = 'maxMessageLen',
   readStream = 'readStream',

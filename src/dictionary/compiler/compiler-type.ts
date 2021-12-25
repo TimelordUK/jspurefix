@@ -1,9 +1,9 @@
 import { ContainedField, ContainedFieldSet, ContainedGroupField, ContainedComponentField, ContainedFieldType } from '../contained'
 import { FixDefinitions } from '../definition'
-import { FixDefinitionSource } from '../fix-versions'
-import { ContainedSetType } from '../dict-primitive'
 
 import _ = require('lodash')
+import { ContainedSetType } from '../contained-set-type'
+import { FixDefinitionSource } from '../fix-definition-source'
 
 export class CompilerType {
   public readonly snaked: string

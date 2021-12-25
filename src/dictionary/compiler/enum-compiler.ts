@@ -1,13 +1,14 @@
 import { FixDefinitions, SimpleFieldDefinition } from '../definition'
 import { ICompilerSettings } from './compiler-settings'
 import { StandardSnippet } from './standard-snippet'
-import { TagType, ElasticBuffer } from '../../buffer'
+import { ElasticBuffer } from '../../buffer'
 import { ILooseObject } from '../../collections/collection'
 
 import * as fs from 'fs'
 import * as util from 'util'
 import * as Path from 'path'
 import * as _ from 'lodash'
+import { TagType } from '../../buffer/tag-type'
 
 export class EnumCompiler {
   private readonly buffer: ElasticBuffer = new ElasticBuffer()

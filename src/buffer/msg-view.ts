@@ -5,11 +5,12 @@ import { Dictionary } from '../collections'
 import { Tags } from './tags'
 import { ContainedGroupField, ContainedComponentField, ContainedField,
   ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
-import { ContainedSetType, SetReduce } from '../dictionary'
+import { SetReduce } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
 import { GroupFieldDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import { ITypeDispatcher } from '../dictionary/type-dispatcher'
+import { ContainedSetType } from '../dictionary/contained-set-type'
 
 export abstract class MsgView {
   protected sortedTagPosForwards: TagPos[]

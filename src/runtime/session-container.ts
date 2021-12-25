@@ -13,7 +13,7 @@ import { FixmlMsgTransmitter } from '../transport/fixml/fixml-msg-transmitter'
 import { FixmlSessionMsgFactory } from '../transport/fixml'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { MsgParser } from '../buffer'
-import { AsciiParser } from '../buffer/ascii'
+import { AsciiParser, AsciiSegmentParser } from '../buffer/ascii'
 import { FiXmlParser } from '../buffer/fixml'
 import { FixEntity } from '../transport/FixEntity'
 import { IHttpAdapter } from '../transport/http/http-adapter'
@@ -78,6 +78,9 @@ export class SessionContainer {
     })
     sessionContainer.register(DITokens.maxMessageLen, {
       useValue: 160 * 1024
+    })
+    sessionContainer.register<AsciiSegmentParser>(AsciiSegmentParser, {
+      useClass: AsciiSegmentParser
     })
 
     if (this.isInitiator(description)) {
@@ -144,5 +147,6 @@ export class SessionContainer {
     }
     c.sessionContainer = sessionContainer
     sessionContainer.registerInstance(DITokens.IJsFixConfig, c)
+    sessionContainer.registerInstance(DITokens.Definitions, c.definitions)
   }
 }

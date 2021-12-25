@@ -1,10 +1,11 @@
-import { ISaxNode } from '../../dict-primitive'
+
 import { Dictionary } from '../../../collections'
 import { XsdParser } from './xsd-parser'
 import { ComponentFieldDefinition, SimpleFieldDefinition,
   GroupFieldDefinition, FixDefinitions, MessageDefinition } from '../../definition'
 import { ContainedSimpleField, ContainedComponentField,
   ContainedFieldSet, ContainedGroupField } from '../../contained'
+import { ISaxNode } from '../../sax-node'
 
 interface IElement {
   ref: string

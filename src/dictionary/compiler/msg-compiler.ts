@@ -4,7 +4,6 @@ import { ICompilerSettings } from './compiler-settings'
 import { FixDefinitions } from '../definition'
 import { ContainedGroupField, ContainedSimpleField, ContainedComponentField, FieldsDispatch } from '../contained'
 import { StandardSnippet } from './standard-snippet'
-import { ContainedSetType } from '../dict-primitive'
 import { CompilerType } from './compiler-type'
 import { Dictionary } from '../../collections'
 
@@ -12,6 +11,7 @@ import * as fs from 'fs'
 import * as Util from 'util'
 import * as Path from 'path'
 import { SetReduce } from '../set-reduce'
+import { ContainedSetType } from '../contained-set-type'
 
 export class MsgCompiler {
   readonly queue: CompilerType[] = []

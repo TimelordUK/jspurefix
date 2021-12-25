@@ -1,5 +1,5 @@
 import { ContainedFieldSet } from '../contained'
-import { ContainedSetType } from '../dict-primitive'
+import { ContainedSetType } from '../contained-set-type'
 
 export class MessageDefinition extends ContainedFieldSet {
   constructor (public readonly name: string,

@@ -1,8 +1,8 @@
-import { ISaxNode } from '../../dict-primitive'
 import { FixDefinitions, MessageDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
 import { ContainedComponentField } from '../../contained'
+import { ISaxNode } from '../../sax-node'
 
 export class MessageParser extends NodeParser {
 

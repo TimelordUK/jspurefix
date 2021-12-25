@@ -1,26 +1,26 @@
 import 'reflect-metadata'
 
 import { MsgView, SegmentDescription } from '../buffer'
-import { AsciiParser, AsciiChars } from '../buffer/ascii'
+import { AsciiParser } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription, StringDuplex } from '../transport'
+import { StringDuplex } from '../transport'
 import { ILogon } from '../types/FIX4.4/repo'
-import { DefinitionFactory, JsonHelper } from '../util'
-import * as path from 'path'
-import { IJsFixConfig, JsFixConfig, MsgType } from '..'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { JsonHelper } from '../util'
+import { IJsFixConfig, MsgType } from '..'
+import { Setup } from './setup'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
-const root: string = path.join(__dirname, '../../data')
 const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57=sub-a|52=20180610-10:39:01.621|98=2|108=62441|95=20|96=VgfoSqo56NqSVI1fLdlI|141=Y|789=4886|383=20|384=1|372=ipsum|385=R|464=N|553=sit|554=consectetur|10=49|'
 let config: IJsFixConfig
 
+let setup: Setup = null
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
+  setup = new Setup()
+  await setup.init()
+  definitions = setup.definitions
   jsonHelper = new JsonHelper(definitions)
+  config = setup.clientConfig
 }, 45000)
 
 class ParsingResult {

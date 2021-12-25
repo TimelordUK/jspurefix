@@ -1,20 +1,16 @@
 import 'reflect-metadata'
 
-import * as path from 'path'
 import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { MsgView, Tags } from '../buffer'
 import { AsciiChars, AsciiEncoder, AsciiParser, TimeFormatter } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
-import { ISessionDescription, StringDuplex } from '../transport'
-import { JsFixConfig } from '../config'
+import { StringDuplex } from '../transport'
 import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest, TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { ContainedFieldSet } from '../dictionary/contained'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { DefinitionFactory } from '../util'
-
-const root: string = path.join(__dirname, '../../data')
+import { Setup } from './setup'
+import { DITokens } from '../runtime/DITokens'
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter
@@ -26,12 +22,15 @@ const localDate: Date = new Date(2018, 6, 25)
 const utcTimeStamp: Date = new Date(Date.UTC(2018, 5, 10, 16, 35, 0, 246))
 const utcDate: Date = new Date(Date.UTC(2018, 5, 10, 0, 0, 0, 0))
 const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
+let setup: Setup
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
-  session = new AsciiMsgTransmitter(config)
+  setup = new Setup('session/qf-fix44.json', 'session/qf-fix44.json')
+  await setup.init()
+  definitions = setup.definitions
+  const config = setup.clientConfig
+  definitions = config.definitions
+  session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
   encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Pipe)
   nos = definitions.message.get('NewOrderSingle')
   er = definitions.message.get('ExecutionReport')

@@ -1,7 +1,7 @@
 import { ContainedGroupField, ContainedSimpleField, ContainedComponentField } from '../../contained'
-import { ISaxNode } from '../../dict-primitive'
 import { FixDefinitions, GroupFieldDefinition, SimpleFieldDefinition, ComponentFieldDefinition } from '../../definition'
 import { ParseContext } from './parse-context'
+import { ISaxNode } from '../../sax-node'
 
 export abstract class NodeParser {
   protected readonly parseContexts: ParseContext[] = []

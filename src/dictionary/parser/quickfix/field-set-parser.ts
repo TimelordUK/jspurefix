@@ -1,7 +1,7 @@
 import { ComponentFieldDefinition, FixDefinitions } from '../../definition'
-import { ISaxNode } from '../../dict-primitive'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
+import { ISaxNode } from '../../sax-node'
 
 export class FieldSetParser extends NodeParser {
   constructor (definitions: FixDefinitions, public passes: number) {

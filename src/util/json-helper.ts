@@ -1,4 +1,3 @@
-import { TagType } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import {
   ContainedSimpleField,
@@ -11,6 +10,7 @@ import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 
 import moment = require('moment')
 import { IFieldDispatcher } from '../dictionary/contained/field-dispatcher'
+import { TagType } from '../buffer/tag-type'
 
 export class JsonHelper {
   dispatcher: FieldsDispatch = new FieldsDispatch()

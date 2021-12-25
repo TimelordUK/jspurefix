@@ -12,7 +12,7 @@ const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info
 export abstract class Launcher {
   protected readonly logger: IJsFixLogger
   protected constructor (public readonly initiatorConfig: string,
-                         public readonly acceptorConfig: string) {
+                         public readonly acceptorConfig: string = null) {
     this.logger = logFactory.logger('launcher')
   }
   protected sessionContainer: SessionContainer = new SessionContainer()
@@ -20,6 +20,7 @@ export abstract class Launcher {
   private empty (): Promise<any> {
     return new Promise((resolve, _) => {
       setImmediate(() => {
+        this.logger.info('resolving an empty promise')
         resolve(null)
       })
     })
@@ -90,8 +91,8 @@ export abstract class Launcher {
 
   private async setup () {
     this.sessionContainer.registerGlobal()
-    const server = this.makeServer()
-    const client = this.makeClient()
+    const server = this.initiatorConfig ? this.makeServer() : this.empty()
+    const client = this.acceptorConfig ? this.makeClient() : this.empty()
     this.logger.info('launching ....')
     return Promise.all([server, client])
   }

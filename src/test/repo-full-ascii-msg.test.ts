@@ -1,27 +1,29 @@
 import 'reflect-metadata'
 import * as path from 'path'
-import { AsciiParser, AsciiView, AsciiChars } from '../buffer/ascii'
+import { AsciiParser, AsciiView } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { DefinitionFactory, JsonHelper } from '../util'
-import { ISessionDescription } from '../transport'
-import { IJsFixConfig, JsFixConfig } from '../config'
-import { AsciiSessionMsgFactory } from '../transport/ascii'
+import { JsonHelper } from '../util'
+import { IJsFixConfig } from '../config'
 import { MsgType } from '..'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
+import { Setup } from './setup'
+import { DITokens } from '../runtime/DITokens'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
 let session: AsciiMsgTransmitter
 const root: string = path.join(__dirname, '../../data/examples/FIX.4.4/repo/')
 let config: IJsFixConfig
+let setup: Setup = null
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, '../../../session/test-initiator.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
+  setup = new Setup()
+  await setup.init()
+  definitions = setup.definitions
   jsonHelper = new JsonHelper(definitions)
-  config = new JsFixConfig(new AsciiSessionMsgFactory(sessionDescription), definitions, sessionDescription, AsciiChars.Pipe)
-  session = new AsciiMsgTransmitter(config)
-}, 45000)
+  config = setup.clientConfig
+  session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
+})
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
   // encode to FIX format from provided object.

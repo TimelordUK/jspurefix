@@ -1,6 +1,6 @@
-import { ISaxNode } from '../../dict-primitive'
 import { FixDefinitions, SimpleFieldDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
+import { ISaxNode } from '../../sax-node'
 
 export class FieldDefinitionParser extends NodeParser {
   private currentField: SimpleFieldDefinition

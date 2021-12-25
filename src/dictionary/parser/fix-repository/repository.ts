@@ -3,11 +3,12 @@ import { SimpleFieldDefinition, GroupFieldDefinition, ComponentFieldDefinition,
   MessageDefinition, FixDefinitions } from '../../definition'
 import { Dictionary } from '../../../collections'
 import { ContainedFieldSet, ContainedComponentField, ContainedGroupField, ContainedSimpleField } from '../../contained'
-import { ContainedSetType } from '../../dict-primitive'
-import { FixDefinitionSource, FixVersion } from '../../fix-versions'
+import { FixVersion } from '../../fix-versions'
 import { GetJsFixLogger, IJsFixLogger } from '../../../config'
 import { IRepositoryEnum, IRepositoryField, IRepositoryDataType, IRepositoryComponent,
   IRepositoryMessage, IRepositoryMsgContent, IRepositoryAbbreviation } from './repository-type'
+import { FixDefinitionSource } from '../../fix-definition-source'
+import { ContainedSetType } from '../../contained-set-type'
 
 export class Repository {
   public Enums: IRepositoryEnum[]

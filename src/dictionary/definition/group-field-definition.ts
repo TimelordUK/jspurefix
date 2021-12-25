@@ -1,6 +1,6 @@
 import { ContainedFieldSet } from '../contained'
-import { ContainedSetType } from '../dict-primitive'
 import { SimpleFieldDefinition } from './simple-field-definition'
+import { ContainedSetType } from '../contained-set-type'
 
 export class GroupFieldDefinition extends ContainedFieldSet {
   constructor (public readonly name: string,

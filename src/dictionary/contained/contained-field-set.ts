@@ -4,10 +4,10 @@ import { ContainedComponentField } from './contained-component-field'
 import { ContainedField } from './contained-field'
 import { ContainedGroupField } from './contained-group-field'
 import { ContainedSimpleField } from './contained-simple-field'
-import { ContainedSetType } from '../dict-primitive'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
-import { TagType } from '../../buffer/tags'
 import { ContainedFieldType } from './contained-field-type'
+import { TagType } from '../../buffer/tag-type'
+import { ContainedSetType } from '../contained-set-type'
 
 export abstract class ContainedFieldSet {
   public readonly groups: Dictionary<ContainedGroupField> = new Dictionary<ContainedGroupField>()

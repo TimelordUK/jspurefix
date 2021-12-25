@@ -11,13 +11,16 @@ import {
   ContainedSimpleField,
   ContainedFieldType
 } from '../../dictionary/contained'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime/DITokens'
 
 // this takes linear time i.e. it constantly makes forward progress
 // one tag at a time
 
+@injectable()
 export class AsciiSegmentParser {
 
-  constructor (public readonly definitions: FixDefinitions) {
+  constructor (@inject(DITokens.Definitions) public readonly definitions: FixDefinitions) {
   }
 
   public parse (msgType: string, tags: Tags, last: number): Structure {

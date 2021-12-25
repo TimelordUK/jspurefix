@@ -1,6 +1,6 @@
 import { MsgParser } from '../msg-parser'
 import { Tags } from '../tags'
-import { ISaxNode, SAXStream } from '../../dictionary'
+import { SAXStream } from '../../dictionary'
 import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
 import { ContainedField, ContainedComponentField,
   ContainedFieldType, ContainedGroupField,
@@ -13,6 +13,7 @@ import { FixmlView } from './fixml-view'
 import { Readable } from 'stream'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
+import { ISaxNode } from '../../dictionary/sax-node'
 
 @injectable()
 export class FiXmlParser extends MsgParser {

@@ -1,5 +1,5 @@
 import { ILooseObject } from '../../../collections/collection'
-import { ISaxNode } from '../../dict-primitive'
+import { ISaxNode } from '../../sax-node'
 
 export abstract class BaseParser {
   public data: ILooseObject[] = []

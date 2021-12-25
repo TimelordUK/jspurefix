@@ -4,12 +4,12 @@ import {
   ContainedComponentField, ContainedSimpleField, FieldsDispatch
 } from '../../dictionary/contained'
 import { AsciiChars } from '../ascii'
-import { TagType } from '../tags'
 import { MsgEncoder } from '../msg-encoder'
 import { ElasticBuffer } from '../elastic-buffer'
 import moment = require('moment')
 import { FixDefinitions } from '../../dictionary/definition'
 import { IFieldDispatcher } from '../../dictionary/contained/field-dispatcher'
+import { TagType } from '../tag-type'
 
 interface IPopulatedAttributes {
   fields: ContainedSimpleField[],

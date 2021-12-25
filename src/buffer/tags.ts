@@ -2,20 +2,7 @@ import { FixDefinitions } from '../dictionary/definition'
 import { ContainedSimpleField } from '../dictionary/contained'
 import { TagPos } from './tag-pos'
 import { MsgTag } from '../types'
-
-export enum TagType {
-    String = 1,
-    Int = 2,
-    Float = 3,
-    Boolean = 4,
-    UtcTimestamp = 5,
-    UtcDateOnly = 6,
-    UtcTimeOnly = 7,
-    LocalDate = 8,
-    RawData = 9,
-    Length = 10,
-    Unknown = 11
-}
+import { TagType } from './tag-type'
 
 export class Tags {
   public static readonly BeginString: number = MsgTag.BeginString

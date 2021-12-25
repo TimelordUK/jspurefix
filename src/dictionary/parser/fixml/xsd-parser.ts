@@ -1,8 +1,9 @@
 import { FixDefinitions } from '../../definition'
 import { ILooseObject } from '../../../collections/collection'
-import { ISaxNode, SAXStream } from '../../dict-primitive'
+import { SAXStream } from '../../dict-primitive'
 import * as fs from 'fs'
 import { SAXParser } from 'sax'
+import { ISaxNode } from '../../sax-node'
 
 export abstract class XsdParser {
   public readonly data: ILooseObject[] = []
