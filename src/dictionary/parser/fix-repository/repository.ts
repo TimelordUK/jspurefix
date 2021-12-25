@@ -5,10 +5,15 @@ import { Dictionary } from '../../../collections'
 import { ContainedFieldSet, ContainedComponentField, ContainedGroupField, ContainedSimpleField } from '../../contained'
 import { FixVersion } from '../../fix-versions'
 import { GetJsFixLogger, IJsFixLogger } from '../../../config'
-import { IRepositoryEnum, IRepositoryField, IRepositoryDataType, IRepositoryComponent,
-  IRepositoryMessage, IRepositoryMsgContent, IRepositoryAbbreviation } from './repository-type'
 import { FixDefinitionSource } from '../../fix-definition-source'
 import { ContainedSetType } from '../../contained-set-type'
+import { IRepositoryMessage } from './repository-message'
+import { IRepositoryEnum } from './repository-enum'
+import { IRepositoryDataType } from './repository-data-type'
+import { IRepositoryComponent } from './repository-component'
+import { IRepositoryField } from './repository-field'
+import { IRepositoryAbbreviation } from './repository-abbreviation'
+import { IRepositoryMsgContent } from './repository-msg-content'
 
 export class Repository {
   public Enums: IRepositoryEnum[]
@@ -29,20 +34,26 @@ export class Repository {
 
   constructor (public readonly version: FixVersion, public readonly getLogger: GetJsFixLogger) {
     this.logger = getLogger('Repository')
+    this.includesAbbreviations = Repository.doesIncludeAbbreviations(version)
+    this.definitions = new FixDefinitions(FixDefinitionSource.FixRepo, version)
+  }
+
+  private static doesIncludeAbbreviations (version: FixVersion): boolean {
+    let includesAbbreviations: boolean
     switch (version) {
       case FixVersion.FIX44:
       case FixVersion.FIX50:
       case FixVersion.FIX50SP1:
       case FixVersion.FIX50SP2:
-        this.includesAbbreviations = true
+        includesAbbreviations = true
         break
 
       default: {
-        this.includesAbbreviations = false
+        includesAbbreviations = false
         break
       }
     }
-    this.definitions = new FixDefinitions(FixDefinitionSource.FixRepo, version)
+    return includesAbbreviations
   }
 
   public assign (name: string, data: ILooseObject[]): void {
@@ -90,9 +101,10 @@ export class Repository {
 
   private summarise (): void {
     const logger = this.logger
-    logger.info(`definitions: ${this.definitions.simple.count()} fields`)
-    logger.info(`definitions: ${this.definitions.component.count()} components`)
-    logger.info(`definitions: ${this.definitions.message.count()} messages`)
+    const definitions = this.definitions
+    logger.info(`definitions: ${definitions.simple.count()} fields`)
+    logger.info(`definitions: ${definitions.component.count()} components`)
+    logger.info(`definitions: ${definitions.message.count()} messages`)
   }
 
   private toDefinitions (): void {
@@ -124,37 +136,40 @@ export class Repository {
     this.definitions.component.add('trailer', t)
   }
 
-  private fields (): void {
-    this.dataTypeLookup = this.types()
-    const definitions = this.definitions
-    const types = this.dataTypeLookup
-    types.remove('boolean')
-    types.remove('data')
-    this.Fields.forEach((f: IRepositoryField) => {
-      const nativeType =
-        f.Type === 'Boolean' ||
-        f.Type === 'data' ||
-        f.Type === 'LocalMktDate' ||
-        f.Type === 'UTCDateOnly' ||
-        f.Type === 'UTCTimestamp'
-      let type = f.Type
-      const mapped = !nativeType && types.get(type)
-      if (mapped) {
-        type = mapped.BaseType ?? type
-      }
-      definitions.addSimpleFieldDef(new SimpleFieldDefinition(
-                f.Tag,
-                f.Name,
-                f.AbbrName ? f.AbbrName : f.Name,
-                f.BaseCategory,
-                f.BaseCategoryAbbrName,
-                type.toUpperCase(),
-                f.Description))
-    })
+  private static isNative (f: IRepositoryField): boolean {
+    return f.Type === 'Boolean' ||
+      f.Type === 'data' ||
+      f.Type === 'LocalMktDate' ||
+      f.Type === 'UTCDateOnly' ||
+      f.Type === 'UTCTimestamp'
+  }
 
+  private static makeSimple (f: IRepositoryField, type: string) {
+    return new SimpleFieldDefinition(
+      f.Tag,
+      f.Name,
+      f.AbbrName ? f.AbbrName : f.Name,
+      f.BaseCategory,
+      f.BaseCategoryAbbrName,
+      type.toUpperCase(),
+      f.Description)
+  }
+
+  private getType (f: IRepositoryField): string {
+    const types = this.dataTypeLookup
+    const nativeType = Repository.isNative(f)
+    let type = f.Type
+    const mapped = !nativeType && types.get(type)
+    if (mapped) {
+      type = mapped.BaseType ?? type
+    }
+    return type
+  }
+
+  private fieldEnums () {
+    const definitions = this.definitions
     for (const e of this.Enums) {
-      const field: SimpleFieldDefinition =
-                definitions.tagToSimple[parseInt(e.Tag, 10)]
+      const field: SimpleFieldDefinition = definitions.tagToSimple[parseInt(e.Tag, 10)]
       if (field == null) {
         continue
       }
@@ -162,6 +177,19 @@ export class Repository {
         field.addEnum(e.Value, e.SymbolicName, e.Description)
       }
     }
+  }
+
+  private fields (): void {
+    this.dataTypeLookup = this.types()
+    const definitions = this.definitions
+    const types = this.dataTypeLookup
+    types.remove('boolean')
+    types.remove('data')
+    this.Fields.forEach((f: IRepositoryField) => {
+      const type = this.getType(f)
+      definitions.addSimpleFieldDef(Repository.makeSimple(f, type))
+    })
+    this.fieldEnums()
   }
 
   private contents (): Dictionary<IRepositoryMsgContent[]> {
