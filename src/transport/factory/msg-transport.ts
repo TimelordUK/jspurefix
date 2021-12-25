@@ -4,14 +4,16 @@ import { FixDuplex } from '../duplex'
 import { IJsFixConfig } from '../../config'
 import { DITokens } from '../../runtime/DITokens'
 import { Readable } from 'stream'
+import { inject, injectable } from 'tsyringe'
 
+@injectable()
 export class MsgTransport {
   public readonly transmitter: MsgTransmitter
   public readonly receiver: MsgParser
 
-  constructor (public readonly id: number,
-               public readonly config: IJsFixConfig,
-               public readonly duplex: FixDuplex) {
+  constructor (@inject(DITokens.sessionId) public readonly id: number,
+               @inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
+               @inject(DITokens.FixDuplex) public readonly duplex: FixDuplex) {
 
     const delimiter = config.delimiter
     if (!delimiter) {

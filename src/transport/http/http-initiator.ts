@@ -1,23 +1,25 @@
 import { IJsFixConfig, IJsFixLogger } from '../../config'
-import { MsgTransport } from '../factory/msg-transport'
+import { MsgTransport } from '../factory'
 import { HttpDuplex } from '../duplex'
 import { FixSession } from '../fix-session'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
+import { FixEntity } from '../FixEntity'
 
 @injectable()
-export class HttpInitiator {
+export class HttpInitiator extends FixEntity {
   logger: IJsFixLogger
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
+    super(config)
     this.logger = config.logFactory.logger('initiator')
   }
 
   start (): Promise<any> {
-    return this.once(this.config)
+    return this.connect(this.config)
   }
 
 // the adapter will be provided on config
-  once (config: IJsFixConfig): Promise<any> {
+  connect (config: IJsFixConfig): Promise<any> {
     return new Promise<any>(async (accept, reject) => {
       const adapter = config.description.application.http.adapter
       if (!adapter) {

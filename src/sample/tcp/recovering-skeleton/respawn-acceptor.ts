@@ -1,17 +1,23 @@
 import { IJsFixConfig, IJsFixLogger } from '../../../config'
 import { TcpAcceptorListener } from '../../../transport/tcp'
 import { inject, injectable } from 'tsyringe'
+import { FixEntity } from '../../../transport/FixEntity'
 
 @injectable()
-export class RespawnAcceptor {
+export class RespawnAcceptor extends FixEntity {
   private readonly logger: IJsFixLogger
 
   constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
+    super(config)
     this.logger = config.logFactory.logger('RespawnAcceptor')
   }
 
   // if acceptor errors e.g. via a forced connection drop, then respawn
   // a set number of times.
+
+  public start (): Promise<any> {
+    return this.waitFor()
+  }
 
   public async waitFor (respawns: number = 1): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {

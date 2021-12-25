@@ -2,19 +2,46 @@ import * as path from 'path'
 import { IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { ISessionDescription } from '../transport'
 import { DependencyContainer } from 'tsyringe'
-import { SessionContainer } from '../runtime/session-container'
+import { SessionContainer } from '../runtime'
+import { FixEntity } from '../transport/FixEntity'
+import { DITokens } from '../runtime/DITokens'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
 
 export abstract class Launcher {
   protected readonly logger: IJsFixLogger
-  protected constructor (public readonly initiatorConfig: string, public readonly acceptorConfig: string) {
+  protected constructor (public readonly initiatorConfig: string,
+                         public readonly acceptorConfig: string) {
     this.logger = logFactory.logger('launcher')
   }
   protected sessionContainer: SessionContainer = new SessionContainer()
-  protected abstract getInitiator (sessionContainer: DependencyContainer): Promise<any>
-  protected abstract getAcceptor (sessionContainer: DependencyContainer): Promise<any>
+
+  private empty (): Promise<any> {
+    return new Promise((resolve, _) => {
+      setImmediate(() => {
+        resolve(null)
+      })
+    })
+  }
+
+  protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
+    if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
+      const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
+      return entity.start()
+    } else {
+      return this.empty()
+    }
+  }
+
+  protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
+    if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
+      const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
+      return entity.start()
+    } else {
+      return this.empty()
+    }
+  }
 
   public run () {
     return new Promise<any>((accept, reject) => {
@@ -31,11 +58,11 @@ export abstract class Launcher {
   }
 
   public isAscii (description: ISessionDescription): boolean {
-    return description.application.protocol === 'ascii'
+    return this.sessionContainer.isAscii(description)
   }
 
   public isInitiator (description: ISessionDescription): boolean {
-    return description.application.type === 'initiator'
+    return this.sessionContainer.isInitiator(description)
   }
 
   protected abstract registerApplication (sessionContainer: DependencyContainer): void

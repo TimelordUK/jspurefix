@@ -5,10 +5,12 @@ import { MsgTransport } from '../factory'
 import { inject, injectable } from 'tsyringe'
 import { FixSession } from '../fix-session'
 import { DITokens } from '../../runtime/DITokens'
+import { FixEntity } from '../FixEntity'
 
 @injectable()
-export class TcpAcceptorListener {
+export class TcpAcceptorListener extends FixEntity {
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
+    super(config)
   }
 
   start (): Promise<any> {

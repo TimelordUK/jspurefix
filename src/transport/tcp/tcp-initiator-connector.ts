@@ -5,10 +5,12 @@ import { MsgTransport } from '../factory'
 import { FixSession } from '../fix-session'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
+import { FixEntity } from '../FixEntity'
 
 @injectable()
-export class TcpInitiatorConnector {
+export class TcpInitiatorConnector extends FixEntity {
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
+    super(config)
   }
   start (reconnectTimeout: number = 0): Promise<any> {
     return new Promise<any>(async (accept, reject) => {
@@ -22,7 +24,7 @@ export class TcpInitiatorConnector {
       let connecting: boolean = true
       while (connecting) {
         try {
-          await this.once(initiatorSession)
+          await this.connect(initiatorSession)
           logger.info('session has ended')
           connecting = false
           accept(true)
@@ -50,7 +52,7 @@ export class TcpInitiatorConnector {
     })
   }
 
-  once (initiatorSession: FixSession): Promise<any> {
+  connect (initiatorSession: FixSession): Promise<any> {
     return new Promise<any>(async (accept, reject) => {
       const logger = this.config.logFactory.logger('initiator')
       const initiator: FixInitiator = this.config.sessionContainer.resolve<FixInitiator>(TcpInitiator)

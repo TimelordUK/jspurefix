@@ -2,7 +2,6 @@ import 'reflect-metadata'
 
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
-import { TcpInitiatorConnector, TcpAcceptorListener } from '../../../transport/tcp'
 import { DependencyContainer } from 'tsyringe'
 import { DITokens } from '../../../runtime/DITokens'
 
@@ -23,16 +22,6 @@ class AppLauncher extends Launcher {
     sessionContainer.register('useInMemoryStore', {
       useValue: false
     })
-  }
-
-  protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
-    return listener.start()
-  }
-
-  protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
-    return initiator.start()
   }
 }
 

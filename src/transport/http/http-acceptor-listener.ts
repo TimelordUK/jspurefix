@@ -1,14 +1,16 @@
 import { IJsFixConfig } from '../../config'
 import { FixAcceptor } from '../fix-acceptor'
 import { HttpAcceptor } from './http-acceptor'
-import { MsgTransport } from '../factory/msg-transport'
+import { MsgTransport } from '../factory'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
 import { FixSession } from '../fix-session'
+import { FixEntity } from '../FixEntity'
 
 @injectable()
-export class HttpAcceptorListener {
+export class HttpAcceptorListener extends FixEntity {
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
+    super(config)
   }
   start (): Promise<any> {
     return new Promise<any>(async (accept, reject) => {

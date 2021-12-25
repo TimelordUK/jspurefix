@@ -2,7 +2,6 @@ import 'reflect-metadata'
 
 import { TradeCaptureServer } from './trade-capture-server'
 import { Launcher } from '../../launcher'
-import { TcpAcceptorListener, TcpInitiatorConnector } from '../../../transport/tcp'
 import { TradeCaptureClient } from './trade-capture-client'
 import { DependencyContainer } from 'tsyringe'
 import { DITokens } from '../../../runtime/DITokens'
@@ -27,16 +26,6 @@ class AppLauncher extends Launcher {
         useClass: TradeCaptureServer
       })
     }
-  }
-
-  protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const listener = sessionContainer.resolve<TcpAcceptorListener>(TcpAcceptorListener)
-    return listener.start()
-  }
-
-  protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const initiator = sessionContainer.resolve<TcpInitiatorConnector>(TcpInitiatorConnector)
-    return initiator.start()
   }
 }
 

@@ -1,4 +1,4 @@
-import { ITcpTransportDescription } from '../session-description'
+
 import { FixInitiator } from '../fix-initiator'
 import { MsgTransport } from '../factory'
 
@@ -12,6 +12,7 @@ import Timeout = NodeJS.Timeout
 import { TlsOptionsFactory } from './tls-options-factory'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
+import { ITcpTransportDescription } from './tcp-transport-description'
 
 export enum InitiatorState {
   Idle = 1,

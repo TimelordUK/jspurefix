@@ -1,13 +1,14 @@
-import { IMsgApplication, ITcpTransportDescription } from '../session-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { FixSession } from '../fix-session'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../factory'
-import * as events from 'events'
 import Timeout = NodeJS.Timeout
 import { SessionState } from '../session-state'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
+import { ITcpTransportDescription } from './tcp-transport-description'
+import { IMsgApplication } from '../msg-application'
+import { FixEntity } from '../FixEntity'
 
 /*
    create one application session instance - and recover a lost transport.  Hence the application
@@ -16,7 +17,7 @@ import { DITokens } from '../../runtime/DITokens'
  */
 
 @injectable()
-export class RecoveringTcpInitiator extends events.EventEmitter {
+export class RecoveringTcpInitiator extends FixEntity {
   public tcp: ITcpTransportDescription
   public session: FixSession
   private readonly logger: IJsFixLogger
@@ -28,7 +29,7 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
   public backoffFailConnectSecs: number = 30
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
-    super()
+    super(jsFixConfig)
     this.application = this.jsFixConfig.description.application
     this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:RecoveringTcpInitiator`)
     if (!this.application) {
@@ -112,6 +113,10 @@ export class RecoveringTcpInitiator extends events.EventEmitter {
         }, this.backoffFailConnectSecs * 1000)
       })
     },this.recoveryAttemptSecs * 1000)
+  }
+
+  public start (): Promise<any> {
+    return this.run()
   }
 
   // for first connection - reject if no initial connection established within timeout

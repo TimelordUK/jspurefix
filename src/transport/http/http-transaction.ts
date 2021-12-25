@@ -1,4 +1,4 @@
-import { IHtmlOptions } from '../session-description'
+import { IHtmlOptions } from './html-options'
 
 export class HttpTransaction {
   constructor (public readonly msgType: string,

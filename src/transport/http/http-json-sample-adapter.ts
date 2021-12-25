@@ -1,14 +1,19 @@
 import { IJsFixConfig, IJsFixLogger } from '../../config'
-import { IHtmlOptions, IHtmlRoute, IHttpAdapter } from '../session-description'
 import { HttpTransaction } from './http-transaction'
 import { Dictionary } from '../../collections'
+import { IHttpAdapter } from './http-adapter'
+import { IHtmlRoute } from './html-route'
+import { IHtmlOptions } from './html-options'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime/DITokens'
 
+@injectable()
 export class HttpJsonSampleAdapter implements IHttpAdapter {
   private logger: IJsFixLogger
   private queue: HttpTransaction[] = []
   private token: string = null
   private routes: Dictionary<IHtmlRoute> = new Dictionary()
-  constructor (public readonly config: IJsFixConfig) {
+  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger('http.adapter')
     const routes = this.routes
     const options = config.description.application.http.options

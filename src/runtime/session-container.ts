@@ -6,7 +6,7 @@ import { RuntimeFactory } from './make-config'
 
 import { TcpAcceptorListener, RecoveringTcpInitiator,
   TcpInitiatorConnector, TcpInitiator } from '../transport/tcp'
-import { HttpInitiator, HttpAcceptorListener } from '../transport/http'
+import { HttpInitiator, HttpAcceptorListener, HttpJsonSampleAdapter } from '../transport/http'
 import { ISessionMsgFactory, MsgTransmitter, ISessionDescription } from '../transport'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { FixmlMsgTransmitter } from '../transport/fixml/fixml-msg-transmitter'
@@ -15,6 +15,8 @@ import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { MsgParser } from '../buffer'
 import { AsciiParser } from '../buffer/ascii'
 import { FiXmlParser } from '../buffer/fixml'
+import { FixEntity } from '../transport/FixEntity'
+import { IHttpAdapter } from '../transport/http/http-adapter'
 
 export class SessionContainer {
 
@@ -28,24 +30,6 @@ export class SessionContainer {
     container.registerInstance(DITokens.JsFixLoggerFactory, lf)
     container.register<RuntimeFactory>(RuntimeFactory, {
       useClass: RuntimeFactory
-    })
-    container.register<TcpAcceptorListener>(TcpAcceptorListener, {
-      useClass: TcpAcceptorListener
-    })
-    container.register<RecoveringTcpInitiator>(RecoveringTcpInitiator, {
-      useClass: RecoveringTcpInitiator
-    })
-    container.register<TcpInitiatorConnector>(TcpInitiatorConnector, {
-      useClass: TcpInitiatorConnector
-    })
-    container.register<TcpInitiator>(TcpInitiator, {
-      useClass: TcpInitiator
-    })
-    container.register<HttpAcceptorListener>(HttpAcceptorListener, {
-      useClass: HttpAcceptorListener
-    })
-    container.register<HttpInitiator>(HttpInitiator, {
-      useClass: HttpInitiator
     })
   }
 
@@ -85,27 +69,78 @@ export class SessionContainer {
     return description.application.type === 'initiator'
   }
 
-  public registerSession (c: IJsFixConfig, sessionContainer: DependencyContainer) {
-    if (this.isAscii(c.description)) {
-      sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
-        useClass: AsciiMsgTransmitter
+  public asAscii (description: ISessionDescription, sessionContainer: DependencyContainer) {
+    sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
+      useClass: AsciiMsgTransmitter
+    })
+    sessionContainer.register<MsgParser>(DITokens.MsgParser, {
+      useClass: AsciiParser
+    })
+    sessionContainer.register(DITokens.maxMessageLen, {
+      useValue: 160 * 1024
+    })
+
+    if (this.isInitiator(description)) {
+      sessionContainer.register<TcpInitiator>(TcpInitiator, {
+        useClass: TcpInitiator
       })
-      sessionContainer.register<MsgParser>(DITokens.MsgParser, {
-        useClass: AsciiParser
+      sessionContainer.register<RecoveringTcpInitiator>(RecoveringTcpInitiator, {
+        useClass: RecoveringTcpInitiator
       })
-      sessionContainer.register(DITokens.maxMessageLen, {
-        useValue: 160 * 1024
+      sessionContainer.register<TcpInitiatorConnector>(TcpInitiatorConnector, {
+        useClass: TcpInitiatorConnector
+      })
+      if (description.application.resilient) {
+        sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+          useClass: RecoveringTcpInitiator
+        })
+      } else {
+        sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+          useClass: TcpInitiatorConnector
+        })
+      }
+    } else {
+      sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+        useClass: TcpAcceptorListener
+      })
+    }
+  }
+
+  public asFixml (description: ISessionDescription, sessionContainer: DependencyContainer) {
+    sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
+      useClass: FixmlMsgTransmitter
+    })
+    sessionContainer.register<MsgParser>(DITokens.MsgParser, {
+      useClass: FiXmlParser
+    })
+    sessionContainer.register(DITokens.maxMessageLocations, {
+      useValue: 10 * 1024
+    })
+    sessionContainer.register<HttpAcceptorListener>(HttpAcceptorListener, {
+      useClass: HttpAcceptorListener
+    })
+    sessionContainer.register<HttpInitiator>(HttpInitiator, {
+      useClass: HttpInitiator
+    })
+    if (this.isInitiator(description)) {
+      sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+        useClass: HttpInitiator
+      })
+      sessionContainer.register<IHttpAdapter>(DITokens.IHttpAdapter, {
+        useClass: HttpJsonSampleAdapter
       })
     } else {
-      sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
-        useClass: FixmlMsgTransmitter
+      sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+        useClass: HttpAcceptorListener
       })
-      sessionContainer.register<MsgParser>(DITokens.MsgParser, {
-        useClass: FiXmlParser
-      })
-      sessionContainer.register(DITokens.maxMessageLocations, {
-        useValue: 10 * 1024
-      })
+    }
+  }
+
+  public registerSession (c: IJsFixConfig, sessionContainer: DependencyContainer) {
+    if (this.isAscii(c.description)) {
+      this.asAscii(c.description, sessionContainer)
+    } else {
+      this.asFixml(c.description, sessionContainer)
     }
     c.sessionContainer = sessionContainer
     sessionContainer.registerInstance(DITokens.IJsFixConfig, c)

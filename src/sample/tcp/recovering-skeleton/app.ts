@@ -9,6 +9,8 @@ import { AsciiChars } from '../../../buffer/ascii'
 import { DependencyContainer } from 'tsyringe'
 import { SkeletonServer } from './skeleton-server'
 import { DITokens } from '../../../runtime/DITokens'
+import { FixEntity } from '../../../transport/FixEntity'
+import { FixSession } from '../../../transport'
 
 class AppLauncher extends Launcher {
 
@@ -22,17 +24,24 @@ class AppLauncher extends Launcher {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     // use a different log delimiter as an example
     config.logDelimiter = AsciiChars.Carat
-    sessionContainer.register<RespawnAcceptor>(RespawnAcceptor, {
-      useClass: RespawnAcceptor
-    })
+
     const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
-      sessionContainer.register(DITokens.FixSession, {
+      sessionContainer.register<FixSession>(DITokens.FixSession, {
         useClass: SkeletonClient
       })
+      sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+        useClass: RecoveringTcpInitiator
+      })
     } else {
-      sessionContainer.register(DITokens.FixSession, {
+      sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+        useClass: RespawnAcceptor
+      })
+      sessionContainer.register<FixSession>(DITokens.FixSession, {
         useClass: SkeletonServer
+      })
+      sessionContainer.register('logoutSeconds', {
+        useValue: 45
       })
     }
     sessionContainer.register('logoutSeconds', {
@@ -41,16 +50,6 @@ class AppLauncher extends Launcher {
     sessionContainer.register('useInMemoryStore', {
       useValue: false
     })
-  }
-
-  protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const listener = sessionContainer.resolve<RespawnAcceptor>(RespawnAcceptor)
-    return listener.waitFor()
-  }
-
-  protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
-    const initiator = sessionContainer.resolve<RecoveringTcpInitiator>(RecoveringTcpInitiator)
-    return initiator.run()
   }
 }
 

@@ -1,7 +1,7 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
-import { IHttpAdapter } from '../session-description'
 import * as rp from 'request-promise-native'
+import { IHttpAdapter } from '../http/http-adapter'
 
 export class HttpDuplex extends FixDuplex {
   public constructor (public readonly adapter: IHttpAdapter) {

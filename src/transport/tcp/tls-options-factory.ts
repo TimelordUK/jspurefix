@@ -1,5 +1,6 @@
-import { ITcpTransportDescription, ITlsOptions } from '../session-description'
 import { ConnectionOptions, TlsOptions } from 'tls'
+import { ITlsOptions } from './tls-options'
+import { ITcpTransportDescription } from './tcp-transport-description'
 const path = require('path')
 const fs = require('fs')
 

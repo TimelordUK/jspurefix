@@ -1,4 +1,4 @@
-import { MsgTransport } from '../factory/msg-transport'
+import { MsgTransport } from '../factory'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { IFixmlRequest } from '../fixml'

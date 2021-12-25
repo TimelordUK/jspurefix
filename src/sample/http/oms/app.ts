@@ -4,9 +4,10 @@ import { HttpServer } from './http-server'
 import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
-import { HttpAcceptorListener, HttpJsonSampleAdapter, HttpInitiator } from '../../../transport/http'
 import { DependencyContainer } from 'tsyringe'
 import { DITokens } from '../../../runtime/DITokens'
+import { FixEntity } from '../../../transport/FixEntity'
+import { IHttpAdapter } from '../../../transport/http/http-adapter'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -32,15 +33,10 @@ class AppLauncher extends Launcher {
     })
   }
 
-  protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
-    const listener = sessionContainer.resolve<HttpAcceptorListener>(HttpAcceptorListener)
-    return listener.start()
-  }
-
-  protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
+  protected override getInitiator (sessionContainer: DependencyContainer): Promise<any> {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
-    config.description.application.http.adapter = new HttpJsonSampleAdapter(config)
-    const initiator = sessionContainer.resolve<HttpInitiator>(HttpInitiator)
+    config.description.application.http.adapter = sessionContainer.resolve<IHttpAdapter>(DITokens.IHttpAdapter)
+    const initiator = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
     return initiator.start()
   }
 }

@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+
 import { ElasticBuffer, MsgView, MsgParser } from './buffer'
 import { AsciiParser, AsciiView, AsciiChars } from './buffer/ascii'
 import { ILooseObject } from './collections/collection'
