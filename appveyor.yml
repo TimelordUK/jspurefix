@@ -47,6 +47,7 @@ for:
       - sh: script/build.sh
 
     test_script:
+      - sh: "npm run repo44-bench-er"
       - sh: "npm run tcp-tc"
       - sh: "npm run http-oms"
       - sh: "npm run tcp-qf-md"
