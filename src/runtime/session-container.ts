@@ -15,7 +15,7 @@ import { AsciiSessionMsgFactory } from '../transport/ascii'
 import { MsgParser } from '../buffer'
 import { AsciiParser, AsciiSegmentParser } from '../buffer/ascii'
 import { FiXmlParser } from '../buffer/fixml'
-import { FixEntity } from '../transport/FixEntity'
+import { FixEntity } from '../transport/fix-entity'
 import { IHttpAdapter } from '../transport/http/http-adapter'
 
 export class SessionContainer {

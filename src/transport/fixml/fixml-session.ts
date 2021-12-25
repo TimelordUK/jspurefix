@@ -2,8 +2,8 @@ import { MsgView } from '../../buffer'
 import { IJsFixConfig } from '../../config'
 import { UserRequestType, UserStatus } from '../../types/FIXML50SP2'
 import { MsgTag } from '../../types'
-import { FixSession } from '../fix-session'
-import { SessionState } from '../session-state'
+import { FixSession } from '../session/fix-session'
+import { SessionState } from '../session/session-state'
 
 export abstract class FixmlSession extends FixSession {
 

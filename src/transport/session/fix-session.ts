@@ -1,13 +1,13 @@
-import { ElasticBuffer, MsgView } from '../buffer'
-import { IJsFixConfig, IJsFixLogger } from '../config'
+import { ElasticBuffer, MsgView } from '../../buffer'
+import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { FixSessionState } from './fix-session-state'
-import { MsgTransport } from './factory'
-import { MsgTag } from '../types'
-import { ILooseObject } from '../collections/collection'
+import { MsgTransport } from '../factory'
+import { MsgTag } from '../../types'
+import { ILooseObject } from '../../collections/collection'
 
 import * as events from 'events'
 import { SessionState } from './session-state'
-import { SegmentType } from '../buffer/segment/segment-type'
+import { SegmentType } from '../../buffer/segment/segment-type'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false

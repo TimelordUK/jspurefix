@@ -1,7 +1,7 @@
 import { MsgView } from '../../buffer'
 import { MsgTag, MsgType, SessionRejectReason } from '../../types'
 import { IJsFixConfig } from '../../config'
-import { FixSession } from '../fix-session'
+import { FixSession } from '../session/fix-session'
 import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
 import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'

@@ -3,7 +3,7 @@ import { FixDefinitions } from '../dictionary/definition'
 import { Transform } from 'stream'
 import { MsgPayload } from './msg-payload'
 import { ILooseObject } from '../collections/collection'
-import { ISessionDescription } from './session-description'
+import { ISessionDescription } from './session/session-description'
 import * as events from 'events'
 
 export abstract class MsgTransmitter extends events.EventEmitter {

@@ -1,14 +1,14 @@
 import { IJsFixConfig, IJsFixLogger } from '../../config'
-import { FixSession } from '../fix-session'
+import { FixSession } from '../session/fix-session'
 import { TcpInitiator } from './tcp-initiator'
 import { MsgTransport } from '../factory'
 import Timeout = NodeJS.Timeout
-import { SessionState } from '../session-state'
+import { SessionState } from '../session/session-state'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
 import { ITcpTransportDescription } from './tcp-transport-description'
 import { IMsgApplication } from '../msg-application'
-import { FixEntity } from '../FixEntity'
+import { FixEntity } from '../fix-entity'
 
 /*
    create one application session instance - and recover a lost transport.  Hence the application

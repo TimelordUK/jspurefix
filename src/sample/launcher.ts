@@ -3,7 +3,7 @@ import { IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { ISessionDescription } from '../transport'
 import { DependencyContainer } from 'tsyringe'
 import { SessionContainer } from '../runtime'
-import { FixEntity } from '../transport/FixEntity'
+import { FixEntity } from '../transport/fix-entity'
 import { DITokens } from '../runtime/DITokens'
 
 const root = '../../'

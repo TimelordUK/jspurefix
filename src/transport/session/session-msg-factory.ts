@@ -1,5 +1,5 @@
-import { ILooseObject } from '../collections/collection'
-import { IStandardHeader } from '../types/FIX4.4/repo'
+import { ILooseObject } from '../../collections/collection'
+import { IStandardHeader } from '../../types/FIX4.4/repo'
 import { ISessionDescription } from './session-description'
 
 export interface ISessionMsgFactory {

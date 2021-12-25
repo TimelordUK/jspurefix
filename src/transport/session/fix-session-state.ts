@@ -1,6 +1,6 @@
-import { ElasticBuffer } from '../buffer'
+import { ElasticBuffer } from '../../buffer'
 import moment = require('moment')
-import { TickAction } from './tick-action'
+import { TickAction } from '../tick-action'
 import { IFixSessionStateArgs } from './fix-session-state-args'
 import { SessionState } from './session-state'
 

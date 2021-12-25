@@ -4,8 +4,8 @@ import { HttpAcceptor } from './http-acceptor'
 import { MsgTransport } from '../factory'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
-import { FixSession } from '../fix-session'
-import { FixEntity } from '../FixEntity'
+import { FixSession } from '../session/fix-session'
+import { FixEntity } from '../fix-entity'
 
 @injectable()
 export class HttpAcceptorListener extends FixEntity {

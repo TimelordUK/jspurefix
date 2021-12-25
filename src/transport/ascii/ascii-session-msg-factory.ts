@@ -1,7 +1,7 @@
-import { ISessionDescription } from '../session-description'
+import { ISessionDescription } from '../session/session-description'
 import { ILooseObject } from '../../collections/collection'
 import { MsgType } from '../../types'
-import { ASessionMsgFactory, ObjectMutator } from '../a-session-msg-factory'
+import { ASessionMsgFactory, ObjectMutator } from '../session/a-session-msg-factory'
 
 import {
   EncryptMethod,

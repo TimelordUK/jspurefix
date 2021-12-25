@@ -6,7 +6,7 @@ import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { DependencyContainer } from 'tsyringe'
 import { DITokens } from '../../../runtime/DITokens'
-import { FixEntity } from '../../../transport/FixEntity'
+import { FixEntity } from '../../../transport/fix-entity'
 import { IHttpAdapter } from '../../../transport/http/http-adapter'
 
 class AppLauncher extends Launcher {

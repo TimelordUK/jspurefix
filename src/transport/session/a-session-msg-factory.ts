@@ -1,7 +1,7 @@
-import { ISessionMsgFactory } from './fix-msg-factory'
+import { ISessionMsgFactory } from './session-msg-factory'
 import { ISessionDescription } from './session-description'
-import { ILooseObject } from '../collections/collection'
-import { MsgType } from '../types'
+import { ILooseObject } from '../../collections/collection'
+import { MsgType } from '../../types'
 
 import {
   IHeartbeat,
@@ -11,7 +11,7 @@ import {
   IStandardHeader,
   IStandardTrailer,
   ITestRequest
-} from '../types/FIX4.4/repo'
+} from '../../types/FIX4.4/repo'
 
 export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
 }

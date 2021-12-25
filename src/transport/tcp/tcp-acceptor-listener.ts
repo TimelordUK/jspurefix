@@ -3,9 +3,9 @@ import { FixAcceptor } from '../fix-acceptor'
 import { TcpAcceptor } from './tcp-acceptor'
 import { MsgTransport } from '../factory'
 import { inject, injectable } from 'tsyringe'
-import { FixSession } from '../fix-session'
+import { FixSession } from '../session/fix-session'
 import { DITokens } from '../../runtime/DITokens'
-import { FixEntity } from '../FixEntity'
+import { FixEntity } from '../fix-entity'
 
 @injectable()
 export class TcpAcceptorListener extends FixEntity {

@@ -1,4 +1,4 @@
-import { IMsgApplication } from './msg-application'
+import { IMsgApplication } from '../msg-application'
 
 export interface ISessionDescription {
   readonly application?: IMsgApplication

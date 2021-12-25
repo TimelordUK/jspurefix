@@ -1,10 +1,10 @@
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { MsgTransport } from '../factory'
 import { HttpDuplex } from '../duplex'
-import { FixSession } from '../fix-session'
+import { FixSession } from '../session/fix-session'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
-import { FixEntity } from '../FixEntity'
+import { FixEntity } from '../fix-entity'
 
 @injectable()
 export class HttpInitiator extends FixEntity {
