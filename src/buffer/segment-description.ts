@@ -1,15 +1,7 @@
 import { INumericKeyed } from '../collections/collection'
 import { ContainedField, ContainedFieldSet } from '../dictionary/contained/'
 import { GroupFieldDefinition } from '../dictionary/definition'
-
-export enum SegmentType {
-    Component = 0,
-    Group = 1,
-    Msg = 2,
-    Gap = 3,
-    Batch = 4,
-    Unknown = 5
-}
+import { SegmentType } from './segment-type'
 
 export class SegmentDescription {
   public index: number

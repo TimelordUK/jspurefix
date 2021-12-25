@@ -5,7 +5,7 @@ import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
 import { ContainedField, ContainedComponentField,
   ContainedFieldType, ContainedGroupField,
   ContainedSimpleField, ContainedFieldSet } from '../../dictionary/contained'
-import { SegmentDescription, SegmentType } from '../segment-description'
+import { SegmentDescription } from '../segment-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { MsgView } from '../msg-view'
 import { Structure } from '../structure'
@@ -14,6 +14,7 @@ import { Readable } from 'stream'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
 import { ISaxNode } from '../../dictionary/sax-node'
+import { SegmentType } from '../segment-type'
 
 @injectable()
 export class FiXmlParser extends MsgParser {

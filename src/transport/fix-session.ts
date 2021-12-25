@@ -1,4 +1,4 @@
-import { ElasticBuffer, MsgView, SegmentType } from '../buffer'
+import { ElasticBuffer, MsgView } from '../buffer'
 import { IJsFixConfig, IJsFixLogger } from '../config'
 import { FixSessionState } from './fix-session-state'
 import { MsgTransport } from './factory'
@@ -7,6 +7,7 @@ import { ILooseObject } from '../collections/collection'
 
 import * as events from 'events'
 import { SessionState } from './session-state'
+import { SegmentType } from '../buffer/segment-type'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false

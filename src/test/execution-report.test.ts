@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { SegmentDescription, SegmentType, MsgView, Structure } from '../buffer'
+import { SegmentDescription, MsgView, Structure } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
 import { ISessionDescription } from '../transport'
@@ -10,6 +10,7 @@ import { FileReplayer } from '../util'
 import { DITokens } from '../runtime/DITokens'
 import { SessionContainer } from '../runtime/'
 import { IJsFixConfig } from '../config'
+import { SegmentType } from '../buffer/segment-type'
 
 const root: string = path.join(__dirname, '../../data')
 

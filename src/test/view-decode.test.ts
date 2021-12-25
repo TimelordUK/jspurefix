@@ -2,7 +2,7 @@ import 'reflect-metadata'
 
 import * as path from 'path'
 import { Structure, MsgView } from '../buffer'
-import { AsciiChars, AsciiParser } from '../buffer/ascii'
+import { AsciiParser } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { StringDuplex } from '../transport'

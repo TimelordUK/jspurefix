@@ -8,11 +8,12 @@ import { MsgParser } from '../msg-parser'
 import { MsgView } from '../msg-view'
 import { Readable } from 'stream'
 import { ElasticBuffer } from '../elastic-buffer'
-import { SegmentDescription, SegmentType } from '../segment-description'
+import { SegmentDescription } from '../segment-description'
 import { ParseState } from './parse-state'
 import { IJsFixConfig } from '../../config'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/DITokens'
+import { SegmentType } from '../segment-type'
 
 @injectable()
 export class AsciiParser extends MsgParser {

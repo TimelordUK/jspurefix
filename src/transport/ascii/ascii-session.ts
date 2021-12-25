@@ -1,4 +1,4 @@
-import { MsgView, SegmentType } from '../../buffer'
+import { MsgView } from '../../buffer'
 import { MsgTag, MsgType, SessionRejectReason } from '../../types'
 import { IJsFixConfig } from '../../config'
 import { FixSession } from '../fix-session'
@@ -6,6 +6,7 @@ import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore, IFixMsgStoreRe
 import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'
 import { IMsgApplication } from '../msg-application'
+import { SegmentType } from '../../buffer/segment-type'
 
 export abstract class AsciiSession extends FixSession {
 

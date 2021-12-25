@@ -10,11 +10,7 @@ import moment = require('moment')
 import { FixDefinitions } from '../../dictionary/definition'
 import { IFieldDispatcher } from '../../dictionary/contained/field-dispatcher'
 import { TagType } from '../tag-type'
-
-interface IPopulatedAttributes {
-  fields: ContainedSimpleField[],
-  values: any[]
-}
+import { IPopulatedAttributes } from './populated-attributes'
 
 export class FixmlEncoder extends MsgEncoder {
   public attributePerLine: boolean = false

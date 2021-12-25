@@ -1,12 +1,13 @@
 import 'reflect-metadata'
 
-import { TagPos, SegmentType, MsgView } from '../buffer'
+import { TagPos, MsgView } from '../buffer'
 import { AsciiParser } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
 import { JsonHelper } from '../util'
 import { StringDuplex } from '../transport'
 import { IJsFixConfig, MsgType } from '..'
 import { Setup } from './setup'
+import { SegmentType } from '../buffer/segment-type'
 
 let config: IJsFixConfig
 let definitions: FixDefinitions

@@ -1,11 +1,12 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { SegmentDescription, SegmentType, Structure, MsgView } from '../buffer'
+import { SegmentDescription, Structure, MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
 import { FileReplayer } from '../util'
 import { Setup } from './setup'
+import { SegmentType } from '../buffer/segment-type'
 
 const root: string = path.join(__dirname, '../../data')
 
