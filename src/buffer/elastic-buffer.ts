@@ -1,12 +1,17 @@
 import { AsciiChars } from './ascii/ascii-chars'
 import { format } from 'mathjs'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../runtime/di-tokens'
 
+@injectable()
 export class ElasticBuffer {
   private buffer: Buffer
   private ptr: number = 0
   private stretched: number
 
-  constructor (public readonly size: number = 6 * 1024, public readonly returnTo: number = 6 * 1024) {
+  constructor (@inject(DITokens.elasticBufferSize) public readonly size: number = 6 * 1024,
+               @inject(DITokens.elasticBufferReturnSize) public readonly returnTo: number = 6 * 1024) {
+
     this.size = Math.max(1, this.size)
     this.buffer = Buffer.allocUnsafe(this.size)
     this.returnTo = Math.max(this.size, this.returnTo)

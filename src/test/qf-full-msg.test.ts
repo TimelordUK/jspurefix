@@ -5,9 +5,10 @@ import { AsciiParser, AsciiView } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
 import { JsonHelper } from '../util'
-import { IJsFixConfig, MsgType } from '..'
+import { ElasticBuffer, IJsFixConfig, MsgType } from '..'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { Setup } from './setup'
+import { DITokens } from '../runtime/di-tokens'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -27,7 +28,8 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
     // encode to FIX format from provided object.
   return new Promise(async (resolve, reject) => {
     let session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
-    const parser: AsciiParser = new AsciiParser(config, session.encodeStream, 160 * 1024)
+    const parseBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
+    const parser: AsciiParser = new AsciiParser(config, session.encodeStream, parseBuffer)
     parser.on('msg', (msgType: string, view: AsciiView) => {
       const o = view.toObject()
       delete o.StandardHeader

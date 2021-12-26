@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { Structure, MsgView } from '../buffer'
+import { Structure, MsgView, ElasticBuffer } from '../buffer'
 import { AsciiParser } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
@@ -22,9 +22,9 @@ let view: MsgView
 let setup: Setup = null
 
 beforeAll(async () => {
-  setup = new Setup('session/qf-fix44.json','session/qf-fix44.json')
+  setup = new Setup('session/qf-fix44.json',null)
   await setup.init()
-  definitions = setup.serverConfig.definitions
+  definitions = setup.definitions
   const config = setup.clientConfig
   session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
   views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'))
@@ -178,7 +178,8 @@ class ParsingResult {
 
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
-    const parser = new AsciiParser(setup.clientConfig, new StringDuplex(text, chunks).readable, 160 * 1024)
+    const parseBuffer = setup.clientConfig.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
+    const parser = new AsciiParser(setup.clientConfig, new StringDuplex(text, chunks).readable, parseBuffer)
     parser.on('error', (e: Error) => {
       reject(e)
     })

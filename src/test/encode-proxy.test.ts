@@ -1,24 +1,21 @@
 import 'reflect-metadata'
 
-import * as path from 'path'
 import { EncodeProxy } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
-import { ISessionDescription } from '../transport'
-import { JsFixConfig } from '../config'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { DefinitionFactory } from '../util'
-const root: string = path.join(__dirname, '../../data')
+import { Setup } from './setup'
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter
 let proxyFactory: EncodeProxy
+let setup: Setup = null
 
 beforeAll(async () => {
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
+  setup = new Setup('session/qf-fix44.json', 'session/qf-fix44.json')
+  await setup.init()
+  definitions = setup.definitions
+  const config = setup.clientConfig
   session = new AsciiMsgTransmitter(config)
   proxyFactory = new EncodeProxy(definitions)
 }, 45000)

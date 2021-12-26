@@ -12,9 +12,9 @@ import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { FixmlMsgTransmitter } from '../transport/fixml/fixml-msg-transmitter'
 import { FixmlSessionMsgFactory } from '../transport/fixml'
 import { AsciiSessionMsgFactory } from '../transport/ascii'
-import { MsgParser } from '../buffer'
-import { AsciiParser, AsciiSegmentParser } from '../buffer/ascii'
-import { FiXmlParser } from '../buffer/fixml'
+import { ElasticBuffer, MsgEncoder, MsgParser } from '../buffer'
+import { AsciiParser, AsciiParserState, AsciiSegmentParser } from '../buffer/ascii'
+import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
 import { FixEntity } from '../transport/fix-entity'
 import { IHttpAdapter } from '../transport/http/http-adapter'
 
@@ -30,6 +30,9 @@ export class SessionContainer {
     container.registerInstance(DITokens.JsFixLoggerFactory, lf)
     container.register<RuntimeFactory>(RuntimeFactory, {
       useClass: RuntimeFactory
+    })
+    container.register<ElasticBuffer>(DITokens.ElasticBuffer, {
+      useClass: ElasticBuffer
     })
   }
 
@@ -76,12 +79,21 @@ export class SessionContainer {
     sessionContainer.register<MsgParser>(DITokens.MsgParser, {
       useClass: AsciiParser
     })
+    const parseSize = 160 * 1024
+    const sendSize = 10 * 1024
+
     sessionContainer.register(DITokens.maxMessageLen, {
-      useValue: 160 * 1024
+      useValue: parseSize
     })
     sessionContainer.register<AsciiSegmentParser>(AsciiSegmentParser, {
       useClass: AsciiSegmentParser
     })
+    sessionContainer.register<AsciiParserState>(AsciiParserState, {
+      useClass: AsciiParserState
+    })
+
+    sessionContainer.registerInstance<ElasticBuffer>(DITokens.TransmitBuffer, new ElasticBuffer(sendSize))
+    sessionContainer.registerInstance<ElasticBuffer>(DITokens.ParseBuffer, new ElasticBuffer(parseSize))
 
     if (this.isInitiator(description)) {
       sessionContainer.register<TcpInitiator>(TcpInitiator, {
@@ -113,12 +125,18 @@ export class SessionContainer {
     sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
       useClass: FixmlMsgTransmitter
     })
+    const sendSize = 10 * 1024
+
     sessionContainer.register<MsgParser>(DITokens.MsgParser, {
       useClass: FiXmlParser
     })
     sessionContainer.register(DITokens.maxMessageLocations, {
-      useValue: 10 * 1024
+      useValue: sendSize
     })
+    sessionContainer.register<MsgEncoder>(DITokens.MsgEncoder, {
+      useClass: FixmlEncoder
+    })
+    sessionContainer.registerInstance<ElasticBuffer>(DITokens.TransmitBuffer, new ElasticBuffer(sendSize))
     sessionContainer.register<HttpAcceptorListener>(HttpAcceptorListener, {
       useClass: HttpAcceptorListener
     })
@@ -139,9 +157,19 @@ export class SessionContainer {
     }
   }
 
+  protected asciiConstants (c: IJsFixConfig, sessionContainer: DependencyContainer) {
+    sessionContainer.register(DITokens.delimiter, {
+      useValue: c.delimiter
+    })
+    sessionContainer.register(DITokens.logDelimiter, {
+      useValue: c.logDelimiter
+    })
+  }
+
   public registerSession (c: IJsFixConfig, sessionContainer: DependencyContainer) {
     if (this.isAscii(c.description)) {
       this.asAscii(c.description, sessionContainer)
+      this.asciiConstants(c, sessionContainer)
     } else {
       this.asFixml(c.description, sessionContainer)
     }

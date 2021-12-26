@@ -8,10 +8,10 @@ import * as events from 'events'
 
 export abstract class MsgTransmitter extends events.EventEmitter {
   public readonly encodeStream: Transform
-  public readonly buffer: ElasticBuffer = new ElasticBuffer(10 * 1024)
-  protected encoder: MsgEncoder
+  public encoder: MsgEncoder
 
-  protected constructor (public readonly definitions: FixDefinitions,
+  protected constructor (public readonly buffer: ElasticBuffer,
+                         public readonly definitions: FixDefinitions,
                          public readonly session: ISessionDescription) {
     super()
     this.encodeStream = this.encoderStream()

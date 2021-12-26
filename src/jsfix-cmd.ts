@@ -464,7 +464,7 @@ export class JsfixCmd {
         const startsAt: Date = new Date()
         let i = 0
         const config = this.config
-        const asciiParser: MsgParser = new AsciiParser(config, toParse.readable, 160 * 1024)
+        const asciiParser: MsgParser = new AsciiParser(config, toParse.readable, new ElasticBuffer(160 * 1024))
         asciiParser.on('msg', (msgType: string, v: MsgView) => {
           ++i
           if (i === repeats) {

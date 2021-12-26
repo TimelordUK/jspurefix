@@ -11,7 +11,10 @@ import { FixDefinitions } from '../../dictionary/definition'
 import { IFieldDispatcher } from '../../dictionary/contained/field-dispatcher'
 import { TagType } from '../tag/tag-type'
 import { IPopulatedAttributes } from './populated-attributes'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime/di-tokens'
 
+@injectable()
 export class FixmlEncoder extends MsgEncoder {
   public attributePerLine: boolean = false
   public readonly eol: string = require('os').EOL
@@ -20,7 +23,7 @@ export class FixmlEncoder extends MsgEncoder {
   private readonly beginBatch: string = `<Batch>${this.eol}`
   private readonly endBatch: string = '</Batch>'
 
-  public constructor (public readonly buffer: ElasticBuffer, public readonly definitions: FixDefinitions) {
+  public constructor (@inject(DITokens.TransmitBuffer) public readonly buffer: ElasticBuffer, @inject(DITokens.Definitions) public readonly definitions: FixDefinitions) {
     super(definitions)
   }
 

@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { MsgView, SegmentDescription } from '../buffer'
+import { ElasticBuffer, MsgView, SegmentDescription } from '../buffer'
 import { AsciiParser } from '../buffer/ascii'
 import { FixDefinitions } from '../dictionary/definition'
 import { StringDuplex } from '../transport'
@@ -8,6 +8,7 @@ import { ILogon } from '../types/FIX4.4/repo'
 import { JsonHelper } from '../util'
 import { IJsFixConfig, MsgType } from '..'
 import { Setup } from './setup'
+import { DITokens } from '../runtime/di-tokens'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -34,7 +35,8 @@ class ParsingResult {
 
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
-    const parser = new AsciiParser(config, new StringDuplex(text, chunks).readable, 160 * 1024)
+    const rxBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
+    const parser = new AsciiParser(config, new StringDuplex(text, chunks).readable, rxBuffer)
     parser.on('error', (e: Error) => {
       reject(e)
     })

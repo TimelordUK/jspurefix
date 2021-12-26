@@ -27,7 +27,7 @@ async function testEncodeDecode (): Promise<any> {
   const encoderStream = session.encodeStream
   encoderStream.write(payload)
   session.encodeMessage(msgType, msg)
-  const parser: MsgParser = new AsciiParser(config, encoderStream, 160 * 1024)
+  const parser: MsgParser = new AsciiParser(config, encoderStream, new ElasticBuffer(160 * 1024))
   const fix: string = session.buffer.toString()
   console.log(fix)
   return new Promise(async (resolve, reject) => {
@@ -56,7 +56,7 @@ async function testGenerator (): Promise<any> {
   const encoderStream = session.encodeStream
   const payload: MsgPayload = new MsgPayload(msgType, example)
   encoderStream.write(payload)
-  const parser: MsgParser = new AsciiParser(config, encoderStream, 160 * 1024)
+  const parser: MsgParser = new AsciiParser(config, encoderStream, new ElasticBuffer(160 * 1024))
   parser.on('msg', (mt: string, view: MsgView) => {
     console.log(view.toString())
   })
@@ -192,7 +192,7 @@ async function decode (): Promise<any> {
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   let i = 0
   const repeats = 1
-  const asciiParser: MsgParser = new AsciiParser(config, new StringDuplex(txt.repeat(repeats)).readable, 160 * 1024)
+  const asciiParser: MsgParser = new AsciiParser(config, new StringDuplex(txt.repeat(repeats)).readable, new ElasticBuffer(160 * 1024))
   asciiParser.on('msg', (msgType: string, v: MsgView) => {
     ++i
     console.log(v.toJson())

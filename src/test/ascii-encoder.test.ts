@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 
 import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { MsgView, Tags } from '../buffer'
+import { ElasticBuffer, MsgView, Tags } from '../buffer'
 import { AsciiChars, AsciiEncoder, AsciiParser, TimeFormatter } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
 import { StringDuplex } from '../transport'
@@ -23,6 +23,7 @@ const utcTimeStamp: Date = new Date(Date.UTC(2018, 5, 10, 16, 35, 0, 246))
 const utcDate: Date = new Date(Date.UTC(2018, 5, 10, 0, 0, 0, 0))
 const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
 let setup: Setup
+let buffer: ElasticBuffer
 
 beforeAll(async () => {
   setup = new Setup('session/qf-fix44.json', 'session/qf-fix44.json')
@@ -31,7 +32,8 @@ beforeAll(async () => {
   const config = setup.clientConfig
   definitions = config.definitions
   session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
-  encoder = new AsciiEncoder(session.buffer, definitions, new TimeFormatter(session.buffer), AsciiChars.Pipe)
+  buffer = setup.clientSessionContainer.resolve<ElasticBuffer>(DITokens.TransmitBuffer)
+  encoder = session.encoder as AsciiEncoder
   nos = definitions.message.get('NewOrderSingle')
   er = definitions.message.get('ExecutionReport')
 }, 45000)
@@ -64,7 +66,8 @@ class ParsingResult {
 
 function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
   return new Promise<any>((resolve, reject) => {
-    const parser = new AsciiParser(session.config, new StringDuplex(text, chunks).readable, 160 * 1024)
+    buffer = setup.clientSessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
+    const parser = new AsciiParser(session.config, new StringDuplex(text, chunks).readable, buffer)
     parser.on('error', (e: Error) => {
       reject(e)
     })

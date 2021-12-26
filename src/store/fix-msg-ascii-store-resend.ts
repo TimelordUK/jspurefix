@@ -2,14 +2,14 @@ import { IFixMsgStore } from './fix-msg-store'
 import { FixMsgStoreRecord, IFixMsgStoreRecord } from './fix-msg-store-record'
 import { IJsFixConfig } from '../config'
 import { MsgType } from '../types'
-import { MsgView } from '../buffer'
+import { ElasticBuffer, MsgView } from '../buffer'
 import { AsciiParser } from '../buffer/ascii'
 import { ISequenceReset, IStandardHeader } from '../types/FIX4.4/repo'
 
 export class FixMsgAsciiStoreResend {
   parser: AsciiParser
   constructor (public readonly store: IFixMsgStore, public readonly config: IJsFixConfig) {
-    this.parser = new AsciiParser(this.config, null, 160 * 1024)
+    this.parser = new AsciiParser(this.config, null, new ElasticBuffer(160 * 1024))
   }
 
   public getResendRequest (startSeq: number, endSeq: number): Promise<IFixMsgStoreRecord[]> {

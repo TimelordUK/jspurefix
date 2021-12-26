@@ -2,7 +2,10 @@ import { Tags } from '../tag/tags'
 import { MessageDefinition } from '../../dictionary/definition'
 import { ElasticBuffer } from '../elastic-buffer'
 import { ParseState } from './parse-state'
+import { inject, injectable } from 'tsyringe'
+import { DITokens } from '../../runtime/di-tokens'
 
+@injectable()
 export class AsciiParserState {
   public message: MessageDefinition
   public locations: Tags
@@ -18,7 +21,7 @@ export class AsciiParserState {
   public rawDataRead: number
   public msgType: string
 
-  constructor (public readonly elasticBuffer: ElasticBuffer) {
+  constructor (@inject(DITokens.ParseBuffer) public readonly elasticBuffer: ElasticBuffer) {
   }
 
   public beginTag (pos: number) {
