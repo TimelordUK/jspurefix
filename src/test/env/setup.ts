@@ -26,8 +26,7 @@ export class TestEntity {
   constructor (public readonly sessionPath: string) {
     this.description = require(path.join(root, this.sessionPath))
   }
-// 'examples/FIX.4.4/fix.txt'
-  // examples/FIX.4.4/quickfix/logon/fix.txt'
+
   async getViews (fix: string = 'examples/FIX.4.4/fix.txt'): Promise<MsgView[]> {
     return this.replayer.replayFixFile(path.join(root, fix))
   }
@@ -53,7 +52,7 @@ export class TestEntity {
 
   async make () {
     this.fixContainer.reset()
-    this.fixContainer.registerGlobal()
+    this.fixContainer.registerGlobal('error')
     this.sessionContainer = await this.fixContainer.makeSystem(this.description)
     const container = this.sessionContainer
     this.config = container.resolve<IJsFixConfig>(DITokens.IJsFixConfig)

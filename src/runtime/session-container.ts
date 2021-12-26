@@ -24,9 +24,9 @@ export class SessionContainer {
     container.reset()
   }
 
-  public registerGlobal (): void {
+  public registerGlobal (level: string = 'info'): void {
     container.registerInstance(DefinitionFactory, new DefinitionFactory())
-    const lf = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
+    const lf = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions(level))
     container.registerInstance(DITokens.JsFixLoggerFactory, lf)
     container.register<RuntimeFactory>(RuntimeFactory, {
       useClass: RuntimeFactory
