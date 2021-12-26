@@ -1,61 +1,21 @@
 import 'reflect-metadata'
 
-import { MsgView, ElasticBuffer } from '../buffer'
-import { ISessionDescription, StringDuplex, FixDuplex } from '../transport'
+import { MsgView } from '../buffer'
+import { ISessionDescription } from '../transport'
 import { MsgType, SessionRejectReason } from '../types'
 import { ILooseObject } from '../collections/collection'
-import { IJsFixConfig } from '../config'
-import { SkeletonSession } from '../sample/tcp/skeleton/skeleton-session'
 import { IStandardHeader, IReject, ILogon } from '../types/FIX4.4/repo'
 
-import { AsciiSessionMsgFactory } from '../transport/ascii/'
-import { MsgTransport } from '../transport/factory'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './setup'
+import { Setup } from './env/setup'
+import { Experiment } from './env/experiment'
+import { SkeletonRunner } from './env/skeleton-runner'
 
 const logonMsg: string = '8=FIX4.4|9=0000136|35=A|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:28.980|98=0|108=30|141=Y|553=js-client|554=pwd-client|10=177|'
 const heartbeat: string = '8=FIX4.4|9=0000123|35=0|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:59.161|112=Sun, 02 Sep 2018 12:25:59 GMT|10=95|'
-class FixEntity {
-  public readonly views: MsgView[] = []
-  public readonly errors: Error[] = []
-
-  constructor (public readonly config: IJsFixConfig,
-              public readonly duplex: FixDuplex = new StringDuplex(),
-              public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
-  }
-}
 
 let setup: Setup = null
 let experiment: Experiment = null
-
-class Experiment {
-  public readonly client: FixEntity
-  public readonly clientFactory: AsciiSessionMsgFactory
-  public readonly serverFactory: AsciiSessionMsgFactory
-  public readonly server: FixEntity
-
-  loopBack (lhs: FixDuplex, rhs: FixDuplex) {
-    lhs.writable.on('data', (data: Buffer) => {
-      rhs.readable.push(data)
-    })
-  }
-
-  constructor (setup: Setup) {
-    this.clientFactory = setup.client.sessionMsgFactory as AsciiSessionMsgFactory
-    this.serverFactory = setup.server.sessionMsgFactory as AsciiSessionMsgFactory
-
-    const clientConfig = setup.clientConfig
-    const serverConfig = setup.serverConfig
-
-    this.client = new FixEntity(clientConfig)
-    this.server = new FixEntity(serverConfig)
-
-    // using a string duplex so pipe a write to client to read to server
-    // to simulate a tcp connection.
-    this.loopBack(this.client.duplex, this.server.duplex)
-    this.loopBack(this.server.duplex, this.client.duplex)
-  }
-}
 
 beforeEach(async () => {
   setup = new Setup()
@@ -89,106 +49,8 @@ function clientToServerWaitFirstMessage (type: string, obj: ILooseObject): Promi
   })
 }
 
-class SkeletonRunner {
-  clientSkeleton: SkeletonSession
-  serverSkeleton: SkeletonSession
-
-  constructor (public readonly logoutSeconds: number = 1) {
-    this.clientSkeleton = new SkeletonSession(experiment.client.config, logoutSeconds, false)
-    this.serverSkeleton = new SkeletonSession(experiment.server.config, logoutSeconds, false)
-    this.clientSkeleton.checkMsgIntegrity = true
-    this.serverSkeleton.checkMsgIntegrity = true
-
-    experiment.client.transport.receiver.on('msg', (type: string, view: MsgView) => {
-      experiment.client.views.push(view.clone())
-      this.watchdog()
-    })
-
-    experiment.server.transport.receiver.on('msg', (type: string, view: MsgView) => {
-      experiment.server.views.push(view.clone())
-      this.watchdog()
-    })
-
-    this.clientSkeleton.on('error', e => {
-      experiment.client.errors.push(e)
-    })
-
-    this.serverSkeleton.on('error', e => {
-      experiment.server.errors.push(e)
-    })
-  }
-
-  watchdog () {
-    const cviews = experiment.client.views
-    const sviews = experiment.server.views
-
-    const cerrors = experiment.client.errors
-    const serrors = experiment.server.errors
-
-    const clientStop = cviews.length > 20 || cerrors.length > 0
-    const serverStop = sviews.length > 20 || serrors.length > 0
-    const stop = clientStop || serverStop
-    if (stop) {
-      this.clientSkeleton.done()
-      this.serverSkeleton.done()
-    }
-  }
-
-  sendMsg (msgType: string, o: ILooseObject): void {
-    let count = 0
-    experiment.client.transport.receiver.on('msg', m => {
-      if (count === 0) {
-        count++
-        this.clientSkeleton.sendMessage(msgType, o)
-      }
-    })
-  }
-
-  sendText (followOn: string): void {
-    if (followOn) {
-      let sent: boolean = false
-      experiment.client.transport.transmitter.on('encoded', () => {
-        const b1 = new ElasticBuffer()
-        b1.writeString(followOn)
-        if (!sent) {
-          experiment.client.transport.duplex.writable.write(b1.slice())
-          const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
-          at.msgSeqNum++
-          sent = true
-        }
-      })
-    }
-  }
-
-  done () {
-    this.clientSkeleton.done()
-    this.serverSkeleton.done()
-  }
-
-  async wait () {
-    await Promise.all([
-      this.clientSkeleton.run(experiment.client.transport),
-      this.serverSkeleton.run(experiment.server.transport),
-      new Promise((accept, reject) => {
-        let handle = null
-        try {
-          handle = setTimeout(() => {
-            this.done()
-            accept(true)
-          }, (this.logoutSeconds + 2) * 1000)
-        } catch (e) {
-          if (handle) {
-            clearTimeout(handle)
-          }
-          this.done()
-          reject(e)
-        }
-      })])
-  }
-}
-
 async function runSkeletons (logoutSeconds: number = 1, followOn: string = null) {
-  const runner: SkeletonRunner = new SkeletonRunner(logoutSeconds)
+  const runner: SkeletonRunner = new SkeletonRunner(experiment, logoutSeconds)
   runner.sendText(followOn)
   await runner.wait()
 }
@@ -206,7 +68,7 @@ test('end to end logon', async () => {
 })
 
 test('session send resendRequest when logged on', async () => {
-  const runner: SkeletonRunner = new SkeletonRunner(2)
+  const runner: SkeletonRunner = new SkeletonRunner(experiment, 2)
   const factory = experiment.client.config.factory
   const resend = factory.resendRequest(1, 2)
   runner.sendMsg(MsgType.ResendRequest, resend)
@@ -226,7 +88,7 @@ test('session send resendRequest when logged on', async () => {
 })
 
 test('session send logon when logged on', async () => {
-  const runner: SkeletonRunner = new SkeletonRunner(2)
+  const runner: SkeletonRunner = new SkeletonRunner(experiment, 2)
   const logon = experiment.client.config.factory.logon()
   runner.sendMsg(MsgType.Logon, logon)
   try {

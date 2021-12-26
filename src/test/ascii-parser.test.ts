@@ -1,14 +1,12 @@
 import 'reflect-metadata'
 
-import { TagPos, MsgView, ElasticBuffer } from '../buffer'
-import { AsciiParser } from '../buffer/ascii'
+import { TagPos } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
 import { JsonHelper } from '../util'
-import { StringDuplex } from '../transport'
 import { IJsFixConfig, MsgType } from '..'
-import { Setup } from './setup'
+import { Setup } from './env/setup'
 import { SegmentType } from '../buffer/segment/segment-type'
-import { DITokens } from '../runtime/di-tokens'
+import { ParsingResult } from './env/parsing-result'
 
 let config: IJsFixConfig
 let definitions: FixDefinitions
@@ -50,90 +48,67 @@ beforeAll(async () => {
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 
-class ParsingResult {
-  constructor (public readonly event: string, public readonly msgType: string, public readonly view: MsgView,
-               public readonly contents: string, public readonly parser: AsciiParser) {
-  }
-}
-
-function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
-  return new Promise<any>((resolve, reject) => {
-    const rxBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
-    const parser = new AsciiParser(config, new StringDuplex(text, chunks).readable, rxBuffer)
-    const buffer = parser.state.elasticBuffer
-    parser.on('error', (e: Error) => {
-      reject(e)
-    })
-    parser.on('msg', (msgType: string, view: MsgView) => {
-      resolve(new ParsingResult('msg', msgType, view.clone(), buffer.toString(), parser))
-    })
-    parser.on('done', () => {
-      resolve(new ParsingResult('done', null,null, buffer.toString(), parser))
-    })
-  })
-}
-
 test('begin string incorrectly placed', () => {
-  return expect(toParse('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
+  return expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
     new Error('BeginString: not expected at position [2]')
   )
 })
 
 test('body length incorrectly placed', () => {
-  return expect(toParse('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
+  return expect(setup.client.parseText('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
     new Error('BodyLengthTag: not expected at position [3]')
   )
 })
 
 test('msg type incorrectly placed', () => {
-  return expect(toParse('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
+  return expect(setup.client.parseText('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
     new Error('MsgTag: not expected at position [4]')
   )
 })
 
 test('do not start with 8=', () => {
-  return expect(toParse('59=FIX4.4|')).rejects.toEqual(
+  return expect(setup.client.parseText('59=FIX4.4|')).rejects.toEqual(
     new Error('position 1 [59] must be BeginString: 8=')
   )
 })
 
 test('body length incorrectly placed', () => {
-  return expect(toParse('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
+  return expect(setup.client.parseText('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
     new Error('position 2 [59] must be BodyLengthTag: 9=')
   )
 })
 
 test('msgTag incorrectly placed', () => {
-  return expect(toParse('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
+  return expect(setup.client.parseText('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
     new Error('position 3 [59] must be MsgTag: 35=')
   )
 })
 
 test('first 3 fields correctly placed', async () => {
-  const res: ParsingResult = await toParse('8=FIX4.4|9=101|35=A|')
+  const res: ParsingResult = await setup.client.parseText('8=FIX4.4|9=101|35=A|')
   expect(res.event).toEqual('done')
 })
 
 test('complete msg parsed', async () => {
-  const res: ParsingResult = await toParse(logon)
+  const res: ParsingResult = await setup.client.parseText(logon)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.Logon)
 })
 
 test('complete msg in chunks parsed', async () => {
-  const res: ParsingResult = await toParse(logon, true)
+  const res: ParsingResult = await setup.client.parseText(logon, true)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.Logon)
 })
 
 test('msg sent in chunks matches parser buffer', async () => {
-  const res: ParsingResult = await toParse(logon, true)
+  const res: ParsingResult = await setup.client.parseText(logon, true)
   expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.contents).toEqual(logon)
 })
 
 test('logon parsers to correct tag set', async () => {
-  const res: ParsingResult = await toParse(logon, true)
+  const res: ParsingResult = await setup.client.parseText(logon, true)
   expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.view.structure.tags.tagPos).toEqual(expectedTagPos)
 })
@@ -141,21 +116,21 @@ test('logon parsers to correct tag set', async () => {
 test('tags other than 10 past body length', async () => {
   const begin = '8=FIX4.4|9=0000208|'
   const changed = logon.replace('10=49|','555=you know nothin|10=49')
-  return expect(toParse(changed)).rejects.toEqual(
+  return expect(setup.client.parseText(changed)).rejects.toEqual(
     new Error(`Tag: [555] cant be after ${208 + begin.length - 1}`)
   )
 })
 
 test('unknown message type', async () => {
   const changed = logon.replace('35=A', '35=ZZ')
-  const res = await toParse(changed)
+  const res = await setup.client.parseText(changed)
   expect(res.view).toBeTruthy()
   expect(res.view.segment.type).toEqual(SegmentType.Unknown)
 })
 
 test('missing 1 required tag', async () => {
   const changed = logon.replace('108=62441|','000=62441|')
-  const res = await toParse(changed)
+  const res = await setup.client.parseText(changed)
   expect(res.view).toBeTruthy()
   const missing = res.view.missing()
   expect(missing).toEqual([108])
@@ -164,7 +139,7 @@ test('missing 1 required tag', async () => {
 test('missing 2 required tags', async () => {
   // const changed = logon.replace('108=62441|','000=62441|')
   const changed = logon.replace('98=2|108=62441|','01=2|000=62441|')
-  const res = await toParse(changed)
+  const res = await setup.client.parseText(changed)
   expect(res.view).toBeTruthy()
   const missing = res.view.missing()
   expect(missing).toEqual([98, 108])

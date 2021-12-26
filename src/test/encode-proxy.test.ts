@@ -4,7 +4,7 @@ import { EncodeProxy } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './setup'
+import { Setup } from './env/setup'
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter

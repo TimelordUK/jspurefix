@@ -4,8 +4,7 @@ import * as path from 'path'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
 import { MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
-import { FileReplayer } from '../util'
-import { Setup } from './setup'
+import { Setup } from './env/setup'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -15,11 +14,11 @@ let expected: ILooseObject
 let setup: Setup = null
 
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator.json','session/test-acceptor.json')
+  setup = new Setup('session/test-initiator.json',null)
   await setup.init()
-  definitions = setup.serverConfig.definitions
+  definitions = setup.client.config.definitions
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
-  views = await new FileReplayer(setup.clientConfig).replayFixFile(path.join(root, 'examples/FIX.4.4/fix.txt'))
+  views = await setup.client.getViews()
 }, 45000)
 
 test('expect 50 messages in log', () => {

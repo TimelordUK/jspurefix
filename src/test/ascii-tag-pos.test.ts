@@ -3,10 +3,8 @@ import 'reflect-metadata'
 import * as path from 'path'
 import { MsgView, TagPos, Structure } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
-import { FileReplayer } from '../util'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './setup'
-import { DITokens } from '../runtime/di-tokens'
+import { Setup } from './env/setup'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -58,13 +56,11 @@ const unsortedLogon = [
 
 let setup: Setup = null
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator.json','session/test-initiator.json')
+  setup = new Setup('session/test-initiator.json')
   await setup.init()
-  definitions = setup.serverConfig.definitions
   definitions = setup.clientConfig.definitions
-  const config = setup.clientConfig
-  session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
-  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
+  session = setup.client.transmitter as AsciiMsgTransmitter
+  views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure
     tp = views[0].structure.tags.tagPos.slice(0, views[0].segment.endPosition)

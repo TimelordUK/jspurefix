@@ -7,7 +7,7 @@ import { JsonHelper } from '../util'
 import { IJsFixConfig } from '../config'
 import { ElasticBuffer, MsgType } from '..'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './setup'
+import { Setup } from './env/setup'
 import { DITokens } from '../runtime/di-tokens'
 
 let definitions: FixDefinitions

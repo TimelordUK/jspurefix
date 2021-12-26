@@ -1,16 +1,13 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { Structure, MsgView, ElasticBuffer } from '../buffer'
-import { AsciiParser } from '../buffer/ascii'
+import { Structure, MsgView } from '../buffer'
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { StringDuplex } from '../transport'
 import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
-import { FileReplayer } from '../util'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './setup'
-import { DITokens } from '../runtime/di-tokens'
+import { Setup } from './env/setup'
+import { ParsingResult } from './env/parsing-result'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -25,9 +22,8 @@ beforeAll(async () => {
   setup = new Setup('session/qf-fix44.json',null)
   await setup.init()
   definitions = setup.definitions
-  const config = setup.clientConfig
-  session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
-  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'))
+  session = setup.client.transmitter as AsciiMsgTransmitter
+  views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/md-data-snapshot/fix.txt'))
   if (views && views.length > 0) {
     view = views[0]
     structure = view.structure
@@ -170,28 +166,6 @@ function toFixMessage (o: ILooseObject, msg: MessageDefinition): string {
   return session.buffer.toString()
 }
 
-class ParsingResult {
-  constructor (public readonly event: string, public readonly msgType: string, public readonly view: MsgView,
-               public readonly contents: string, public readonly parser: AsciiParser) {
-  }
-}
-
-function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
-  return new Promise<any>((resolve, reject) => {
-    const parseBuffer = setup.clientConfig.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
-    const parser = new AsciiParser(setup.clientConfig, new StringDuplex(text, chunks).readable, parseBuffer)
-    parser.on('error', (e: Error) => {
-      reject(e)
-    })
-    parser.on('msg', (msgType: string, view: MsgView) => {
-      resolve(new ParsingResult('msg', msgType, view.clone(), parser.state.elasticBuffer.toString(), parser))
-    })
-    parser.on('done', () => {
-      resolve(new ParsingResult('done', null,null, parser.state.elasticBuffer.toString(), parser))
-    })
-  })
-}
-
 function BidOfferRequest (symbol: string): IMarketDataRequest {
   return {
     MDReqID: '1',
@@ -224,7 +198,7 @@ test('market data request', async () => {
   const def = definitions.message.get('MarketDataRequest')
   const fix = toFixMessage(mdr, def)
   expect(fix).toBeTruthy()
-  const res: ParsingResult = await toParse(fix)
+  const res: ParsingResult = await setup.client.parseText(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(def.msgType)
   const gv = res.view.getView('MDReqGrp')

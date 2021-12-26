@@ -1,16 +1,17 @@
 import 'reflect-metadata'
 
 import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { ElasticBuffer, MsgView, Tags } from '../buffer'
-import { AsciiChars, AsciiEncoder, AsciiParser, TimeFormatter } from '../buffer/ascii'
+import { ElasticBuffer, Tags } from '../buffer'
+import { AsciiChars, AsciiEncoder, TimeFormatter } from '../buffer/ascii'
 import { ILooseObject } from '../collections/collection'
-import { StringDuplex } from '../transport'
-import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource, SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest, TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
+import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource,
+  SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest,
+  TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
 import { MsgType } from '..'
 import { ContainedFieldSet } from '../dictionary/contained'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './setup'
-import { DITokens } from '../runtime/di-tokens'
+import { Setup } from './env/setup'
+import { ParsingResult } from './env/parsing-result'
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter
@@ -26,13 +27,13 @@ let setup: Setup
 let buffer: ElasticBuffer
 
 beforeAll(async () => {
-  setup = new Setup('session/qf-fix44.json', 'session/qf-fix44.json')
+  setup = new Setup('session/qf-fix44.json', null)
   await setup.init()
   definitions = setup.definitions
   const config = setup.clientConfig
   definitions = config.definitions
-  session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
-  buffer = setup.clientSessionContainer.resolve<ElasticBuffer>(DITokens.TransmitBuffer)
+  session = setup.client.transmitter as AsciiMsgTransmitter
+  buffer = setup.client.txBuffer
   encoder = session.encoder as AsciiEncoder
   nos = definitions.message.get('NewOrderSingle')
   er = definitions.message.get('ExecutionReport')
@@ -58,35 +59,13 @@ function toFixMessage (o: ILooseObject, msg: MessageDefinition): string {
   return session.buffer.toString()
 }
 
-class ParsingResult {
-  constructor (public readonly event: string, public readonly msgType: string, public readonly view: MsgView,
-               public readonly contents: string, public readonly parser: AsciiParser) {
-  }
-}
-
-function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
-  return new Promise<any>((resolve, reject) => {
-    buffer = setup.clientSessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
-    const parser = new AsciiParser(session.config, new StringDuplex(text, chunks).readable, buffer)
-    parser.on('error', (e: Error) => {
-      reject(e)
-    })
-    parser.on('msg', (msgType: string, view: MsgView) => {
-      resolve(new ParsingResult('msg', msgType, view.clone(), parser.state.elasticBuffer.toString(), parser))
-    })
-    parser.on('done', () => {
-      resolve(new ParsingResult('done', null,null, parser.state.elasticBuffer.toString(), parser))
-    })
-  })
-}
-
 test('encode heartbeat', async () => {
   const factory = session.config.factory
   const hb = factory.heartbeat('test01')
   const hbd = definitions.message.get('Heartbeat')
   const fix = toFixMessage(hb, hbd)
   expect(fix).toBeTruthy()
-  const res: ParsingResult = await toParse(fix)
+  const res: ParsingResult = await setup.client.parseText(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual('0')
   const len = res.view.getTyped(Tags.BodyLengthTag)
@@ -531,7 +510,7 @@ test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
   const nosd = definitions.message.get('NewOrderSingle')
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
-  const res: ParsingResult = await toParse(fix)
+  const res: ParsingResult = await setup.client.parseText(fix)
   const tag = res.view.getTyped('DeliverToCompID')
   expect(tag).toEqual('DepA')
   expect(res.event).toEqual('msg')
@@ -546,7 +525,7 @@ test('encode custom header 2 - expect DeliverToCompID DepC', async () => {
   const nosd = definitions.message.get('NewOrderSingle')
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
-  const res: ParsingResult = await toParse(fix)
+  const res: ParsingResult = await setup.client.parseText(fix)
   const tag = res.view.getTyped('DeliverToCompID')
   expect(tag).toEqual('DepC')
   expect(res.event).toEqual('msg')
@@ -565,7 +544,7 @@ test('encode custom header - include MsgSeqNum (for resends we do not want to ov
   expect(nosd).toBeTruthy()
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
-  const res: ParsingResult = await toParse(fix)
+  const res: ParsingResult = await setup.client.parseText(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)
   const parsed: INewOrderSingle = res.view.toObject()

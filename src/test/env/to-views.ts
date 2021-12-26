@@ -1,18 +1,18 @@
 import * as path from 'path'
 import { ReadStream } from 'fs'
-import { ISessionDescription } from '../transport'
-import { JsFixConfig } from '../config'
-import { MsgParser, MsgView } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
-import { FiXmlParser } from '../buffer/fixml'
-import { FixDefinitions } from '../dictionary/definition'
-import { DefinitionFactory } from '../util'
+import { ISessionDescription } from '../../transport'
+import { JsFixConfig } from '../../config'
+import { MsgParser, MsgView } from '../../buffer'
+import { AsciiChars } from '../../buffer/ascii'
+import { FiXmlParser } from '../../buffer/fixml'
+import { FixDefinitions } from '../../dictionary/definition'
+import { DefinitionFactory } from '../../util'
 
 export class ToViews {
   public definitions: FixDefinitions
   public readonly views: MsgView[] = []
   public batch: MsgView = null
-  private readonly root: string = path.join(__dirname, '../../data')
+  private readonly root: string = path.join(__dirname, '../../../data')
 
   constructor (public readonly testFolder: string) {
   }

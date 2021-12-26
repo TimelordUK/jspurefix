@@ -1,14 +1,12 @@
 import 'reflect-metadata'
 
-import { ElasticBuffer, MsgView, SegmentDescription } from '../buffer'
-import { AsciiParser } from '../buffer/ascii'
+import { SegmentDescription } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
-import { StringDuplex } from '../transport'
 import { ILogon } from '../types/FIX4.4/repo'
 import { JsonHelper } from '../util'
 import { IJsFixConfig, MsgType } from '..'
-import { Setup } from './setup'
-import { DITokens } from '../runtime/di-tokens'
+import { Setup } from './env/setup'
+import { ParsingResult } from './env/parsing-result'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -24,33 +22,8 @@ beforeAll(async () => {
   config = setup.clientConfig
 }, 45000)
 
-class ParsingResult {
-  constructor (public readonly event: string,
-               public readonly msgType: string,
-               public readonly view: MsgView,
-               public readonly contents: string,
-               public readonly parser: AsciiParser) {
-  }
-}
-
-function toParse (text: string, chunks: boolean = false): Promise<ParsingResult> {
-  return new Promise<any>((resolve, reject) => {
-    const rxBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
-    const parser = new AsciiParser(config, new StringDuplex(text, chunks).readable, rxBuffer)
-    parser.on('error', (e: Error) => {
-      reject(e)
-    })
-    parser.on('msg', (msgType: string, view: MsgView) => {
-      resolve(new ParsingResult('msg', msgType, view.clone(), parser.state.elasticBuffer.toString(), parser))
-    })
-    parser.on('done', () => {
-      resolve(new ParsingResult('done', null,null, parser.state.elasticBuffer.toString(), parser))
-    })
-  })
-}
-
 test('0 gaps', async () => {
-  const res: ParsingResult = await toParse(logon)
+  const res: ParsingResult = await setup.client.parseText(logon)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.Logon)
   const unknowns: SegmentDescription[] = res.view.structure.layout['.undefined']
@@ -63,7 +36,7 @@ test('0 gaps', async () => {
 
 test('1 gap', async () => {
   const gap = logon.replace('108=62441|', '108=62441|9999=im not here')
-  const res: ParsingResult = await toParse(gap)
+  const res: ParsingResult = await setup.client.parseText(gap)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.Logon)
   const unknown: SegmentDescription = res.view.structure.layout['.undefined']
@@ -78,7 +51,7 @@ test('1 gap', async () => {
 
 test('1 gap next to 1 gap', async () => {
   const gap = logon.replace('108=62441|', '108=62441|1=gap|2=gap|')
-  const res: ParsingResult = await toParse(gap)
+  const res: ParsingResult = await setup.client.parseText(gap)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.Logon)
   const unknowns: SegmentDescription[] = res.view.structure.layout['.undefined']
@@ -96,7 +69,7 @@ test('1 gap next to 1 gap', async () => {
 
 test('1 gap undefined msg', async () => {
   const gap = logon.replace('108=62441|', '108=62441|9999=im not here')
-  const res: ParsingResult = await toParse(gap)
+  const res: ParsingResult = await setup.client.parseText(gap)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.view.getUndefined()).toBeTruthy()
@@ -105,7 +78,7 @@ test('1 gap undefined msg', async () => {
 
 test('2 gap undefined msg', async () => {
   const gap = logon.replace('108=62441|', '108=62441|1=gap|2=gap|')
-  const res: ParsingResult = await toParse(gap)
+  const res: ParsingResult = await setup.client.parseText(gap)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.Logon)
   expect(res.view.getUndefined()).toBeTruthy()

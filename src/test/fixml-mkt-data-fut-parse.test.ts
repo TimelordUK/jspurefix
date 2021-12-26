@@ -1,7 +1,7 @@
 // use the compiled interfaces for intelisense
 import 'reflect-metadata'
 
-import { ToViews } from './to-views'
+import { ToViews } from './env/to-views'
 import { IInstrument, IMDFullGrp, IMarketDataSnapshotFullRefresh } from '../types/FIXML50SP2'
 
 const testFolder: string = 'examples/FIXML/cme/md/futures/'

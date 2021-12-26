@@ -8,7 +8,7 @@ import { ILooseObject } from '../collections/collection'
 import { DefinitionFactory, FileReplayer } from '../util'
 import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../store'
 import { MsgTag } from '../types'
-import { Setup } from './setup'
+import { Setup } from './env/setup'
 
 const root: string = path.join(__dirname, '../../data')
 
@@ -26,7 +26,7 @@ beforeAll(async () => {
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
   const sessionDescription = setup.clientDescription
   definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
-  views = await new FileReplayer(setup.clientConfig).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
+  views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
   store = new FixMsgMemoryStore('test', setup.clientConfig)
   records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
     if (v.getString(MsgTag.SenderCompID) === 'accept-tls-comp') {

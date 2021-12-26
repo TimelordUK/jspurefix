@@ -2,54 +2,19 @@ import 'reflect-metadata'
 
 import * as path from 'path'
 import { FixDefinitions } from '../dictionary/definition'
-import { MsgView } from '../buffer'
-import { AsciiView } from '../buffer/ascii'
-import { FileReplayer } from '../util'
+
 import {
-  FixMsgAsciiStoreResend,
-  FixMsgMemoryStore,
-  FixMsgStoreRecord,
-  IFixMsgStore,
   IFixMsgStoreRecord
 } from '../store'
-import { MsgTag, MsgType } from '../types'
-import { IJsFixConfig } from '../config'
+import { MsgType } from '../types'
 import { ISequenceReset } from '../types/FIX4.4/repo'
 
-import { Setup } from './setup'
+import { Setup } from './env/setup'
+import { TestRecovery } from './env/test-recovery'
 
 const root: string = path.join(__dirname, '../../data')
 
 let definitions: FixDefinitions
-
-class TestRecovery {
-  public readonly store: IFixMsgStore
-  public readonly records: FixMsgStoreRecord[]
-  public readonly recovery: FixMsgAsciiStoreResend
-
-  constructor (public readonly views: MsgView[], public readonly config: IJsFixConfig) {
-    const id = config.description.SenderCompId
-
-    this.store = new FixMsgMemoryStore(`test-${id}`, config)
-    this.records = this.getRecords(id)
-    this.recovery = new FixMsgAsciiStoreResend(this.store, config)
-  }
-
-  async populate () {
-    const records = this.records
-    const toWrite = records.map(r => this.store.put(r))
-    await Promise.all(toWrite)
-  }
-
-  getRecords (comp: string) {
-    return this.views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
-      if (v.getString(MsgTag.SenderCompID) === comp) {
-        agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
-      }
-      return agg
-    }, [])
-  }
-}
 
 let server: TestRecovery
 let client: TestRecovery
@@ -61,7 +26,7 @@ beforeAll(async () => {
   definitions = setup.definitions
   const serverConfig = setup.serverConfig
   const clientConfig = setup.clientConfig
-  const views = await new FileReplayer(serverConfig).replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
+  const views = await setup.server.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
   server = new TestRecovery(views, serverConfig)
   client = new TestRecovery(views, clientConfig)
   await server.populate()

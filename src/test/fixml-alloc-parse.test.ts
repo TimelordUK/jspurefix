@@ -7,7 +7,7 @@ import {
   IStandardHeader, IInstrument, IPtysSubGrp, IParties, INstdPtysSubGrp,
   IAllocationInstruction, IAllocationReport, IOrdAllocGrp } from '../types/FIXML50SP2'
 
-import { ToViews } from './to-views'
+import { ToViews } from './env/to-views'
 import * as moment from 'moment'
 
 const testFolder: string = 'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange'
