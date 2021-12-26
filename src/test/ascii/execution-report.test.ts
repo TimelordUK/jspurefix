@@ -4,31 +4,24 @@ import * as path from 'path'
 import { SegmentDescription, MsgView, Structure } from '../../buffer'
 import { ILooseObject } from '../../collections/collection'
 import { FixDefinitions } from '../../dictionary/definition'
-import { ISessionDescription } from '../../transport'
 import { IUndInstrmtGrp, IUnderlyingInstrument } from '../../types/FIX4.4/quickfix'
-import { FileReplayer } from '../../util'
-import { DITokens } from '../../runtime/di-tokens'
-import { SessionContainer } from '../../runtime'
-import { IJsFixConfig } from '../../config'
 import { SegmentType } from '../../buffer/segment/segment-type'
+import { Setup } from '../env/setup'
 
 const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let views: MsgView[]
 let structure: Structure
-const fixContainer: SessionContainer = new SessionContainer()
 
+let setup: Setup = null
 beforeAll(async () => {
-  fixContainer.reset()
-  fixContainer.registerGlobal()
-  const sessionDescription: ISessionDescription = require(path.join(root, 'session/qf-fix44.json'))
-  const sessionContainer = await fixContainer.makeSystem(sessionDescription)
-  const config = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
-  config.delimiter = config.logDelimiter
+  setup = new Setup('session/qf-fix44.json', null)
+  await setup.init()
+  const config = setup.client.config
   definitions = config.definitions
 
-  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/execution-report/fix.txt'))
+  views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/execution-report/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure
   }

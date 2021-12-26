@@ -4,9 +4,21 @@ import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../
 import { ElasticBuffer, Tags } from '../../buffer'
 import { AsciiChars, AsciiEncoder, TimeFormatter } from '../../buffer/ascii'
 import { ILooseObject } from '../../collections/collection'
-import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource,
-  SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest,
-  TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../../types/FIX4.4/quickfix'
+import {
+  IInstrument,
+  INewOrderSingle,
+  IOrderQtyData,
+  IStandardHeader,
+  ITradeCaptureReportRequest,
+  ITrdCapDtGrpNoDates,
+  OrdType,
+  SecurityIDSource,
+  SecurityType,
+  Side,
+  SubscriptionRequestType,
+  TimeInForce,
+  TradeRequestType
+} from '../../types/FIX4.4/quickfix'
 import { MsgType } from '../../index'
 import { ContainedFieldSet } from '../../dictionary/contained'
 import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
@@ -210,11 +222,11 @@ test('encode UTCTIMEONLY MDEntryTime', () => {
 function getTCR1 (): ITradeCaptureReportRequest {
   const d0 = new Date(Date.UTC(2018, 11, 1, 0, 0, 0))
   const d1 = new Date(Date.UTC(2018, 11, 2, 0, 0, 0))
-  const tcr = {
+  return {
     TradeRequestID: 'all-trades',
     TradeRequestType: TradeRequestType.AllTrades,
     SubscriptionRequestType: SubscriptionRequestType.SnapshotPlusUpdates,
-    TrdCapDtGrp : {
+    TrdCapDtGrp: {
       NoDates: [
         {
           TransactTime: d0
@@ -225,7 +237,6 @@ function getTCR1 (): ITradeCaptureReportRequest {
       ] as ITrdCapDtGrpNoDates[]
     }
   } as ITradeCaptureReportRequest
-  return tcr
 }
 
 test('encode TradeCaptureReportRequest with TransactTime', () => {
@@ -437,7 +448,7 @@ test('encode group missing delimiter', () => {
   function run () {
     toFix(e, er)
   }
-  expect(run).toThrow(/group instance \[1\] inconsisent delimeter 455 expected tag 456/)
+  expect(run).toThrow(/group instance \[1] inconsisent delimeter 455 expected tag 456/)
 })
 
 test('encode group not an array of', () => {

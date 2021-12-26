@@ -56,7 +56,7 @@ const unsortedLogon = [
 
 let setup: Setup = null
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator.json')
+  setup = new Setup('session/test-initiator.json', null)
   await setup.init()
   definitions = setup.clientConfig.definitions
   session = setup.client.transmitter as AsciiMsgTransmitter

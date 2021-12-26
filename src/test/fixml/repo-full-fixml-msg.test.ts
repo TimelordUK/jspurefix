@@ -9,14 +9,18 @@ import { MsgView, ElasticBuffer, MsgParser } from '../../buffer'
 import { AsciiChars } from '../../buffer/ascii'
 import { FixmlEncoder, FiXmlParser } from '../../buffer/fixml'
 import { DefinitionFactory, JsonHelper } from '../../util'
+import { Setup } from '../env/setup'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
 let sessionDescription: ISessionDescription
 const root: string = path.join(__dirname, '../../../data/examples/FIXML')
+let setup: Setup = null
 
 beforeAll(async () => {
-  sessionDescription = require(path.join(root, '../../session/test-initiator.json'))
+  setup = new Setup('session/test-initiator.json', null)
+  await setup.init()
+  sessionDescription = setup.client.description
   definitions = await new DefinitionFactory().getDefinitions('repofixml')
   jsonHelper = new JsonHelper(definitions)
 }, 45000)

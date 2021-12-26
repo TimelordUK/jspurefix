@@ -21,7 +21,9 @@ let client: TestRecovery
 let setup: Setup = null
 
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
+  setup = new Setup(
+    'session/test-initiator-tls.json',
+    'session/test-acceptor-tls.json')
   await setup.init()
   definitions = setup.definitions
   const serverConfig = setup.serverConfig

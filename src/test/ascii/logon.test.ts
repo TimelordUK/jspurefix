@@ -41,11 +41,10 @@ const asStrings: string[] = [
 ]
 
 beforeAll(async () => {
-  setup = new Setup('session/qf-fix44.json','session/qf-fix44.json')
+  setup = new Setup('session/qf-fix44.json',null)
   await setup.init()
-  definitions = setup.serverConfig.definitions
-  const config = setup.serverConfig
-  views = await new FileReplayer(config).replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
+  definitions = setup.client.config.definitions
+  views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure
   }

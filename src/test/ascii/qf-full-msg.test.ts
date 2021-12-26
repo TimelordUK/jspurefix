@@ -17,7 +17,7 @@ const root: string = path.join(__dirname, '../../../data/examples/FIX.4.4/quickf
 let setup: Setup
 
 beforeAll(async () => {
-  setup = new Setup('session/qf-fix44.json', 'session/qf-fix44.json')
+  setup = new Setup('session/qf-fix44.json', null)
   await setup.init()
   definitions = setup.definitions
   jsonHelper = new JsonHelper(definitions)

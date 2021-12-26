@@ -5,7 +5,6 @@ import { FixDefinitions } from '../../dictionary/definition'
 import { MsgView } from '../../buffer'
 import { AsciiView } from '../../buffer/ascii'
 import { ILooseObject } from '../../collections/collection'
-import { DefinitionFactory } from '../../util'
 import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../../store'
 import { MsgTag } from '../../types'
 import { Setup } from '../env/setup'
@@ -20,12 +19,10 @@ let records: FixMsgStoreRecord[]
 let setup: Setup = null
 
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator.json','session/test-acceptor.json')
+  setup = new Setup('session/test-initiator.json',null)
   await setup.init()
-  definitions = setup.serverConfig.definitions
+  definitions = setup.clientConfig.definitions
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
-  const sessionDescription = setup.clientDescription
-  definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
   store = new FixMsgMemoryStore('test', setup.clientConfig)
   records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
