@@ -1,13 +1,13 @@
 import 'reflect-metadata'
 
-import { MsgView } from '../buffer'
+import { MsgView } from '../../buffer'
 // use the compiled interfaces for intelisense
 
 import {
   IStandardHeader, IInstrument, IPtysSubGrp, IParties, INstdPtysSubGrp,
-  IAllocationInstruction, IAllocationReport, IOrdAllocGrp } from '../types/FIXML50SP2'
+  IAllocationInstruction, IAllocationReport, IOrdAllocGrp } from '../../types/FIXML50SP2'
 
-import { ToViews } from './env/to-views'
+import { ToViews } from '../env/to-views'
 import * as moment from 'moment'
 
 const testFolder: string = 'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange'

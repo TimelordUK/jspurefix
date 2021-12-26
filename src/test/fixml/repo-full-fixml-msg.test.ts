@@ -1,19 +1,19 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription, StringDuplex } from '../transport'
-import { JsFixConfig } from '../config'
-import { MsgView, ElasticBuffer, MsgParser } from '../buffer'
-import { AsciiChars } from '../buffer/ascii'
-import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
-import { DefinitionFactory, JsonHelper } from '../util'
+import { ILooseObject } from '../../collections/collection'
+import { FixDefinitions } from '../../dictionary/definition'
+import { ISessionDescription, StringDuplex } from '../../transport'
+import { JsFixConfig } from '../../config'
+import { MsgView, ElasticBuffer, MsgParser } from '../../buffer'
+import { AsciiChars } from '../../buffer/ascii'
+import { FixmlEncoder, FiXmlParser } from '../../buffer/fixml'
+import { DefinitionFactory, JsonHelper } from '../../util'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
 let sessionDescription: ISessionDescription
-const root: string = path.join(__dirname, '../../data/examples/FIXML')
+const root: string = path.join(__dirname, '../../../data/examples/FIXML')
 
 beforeAll(async () => {
   sessionDescription = require(path.join(root, '../../session/test-initiator.json'))

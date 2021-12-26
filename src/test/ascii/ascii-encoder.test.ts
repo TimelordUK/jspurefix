@@ -1,17 +1,17 @@
 import 'reflect-metadata'
 
-import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { ElasticBuffer, Tags } from '../buffer'
-import { AsciiChars, AsciiEncoder, TimeFormatter } from '../buffer/ascii'
-import { ILooseObject } from '../collections/collection'
+import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../../dictionary/definition'
+import { ElasticBuffer, Tags } from '../../buffer'
+import { AsciiChars, AsciiEncoder, TimeFormatter } from '../../buffer/ascii'
+import { ILooseObject } from '../../collections/collection'
 import { IInstrument, INewOrderSingle, IOrderQtyData, OrdType, SecurityIDSource,
   SecurityType, Side, TimeInForce, IStandardHeader, ITradeCaptureReportRequest,
-  TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../types/FIX4.4/quickfix'
-import { MsgType } from '..'
-import { ContainedFieldSet } from '../dictionary/contained'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './env/setup'
-import { ParsingResult } from './env/parsing-result'
+  TradeRequestType, SubscriptionRequestType, ITrdCapDtGrpNoDates } from '../../types/FIX4.4/quickfix'
+import { MsgType } from '../../index'
+import { ContainedFieldSet } from '../../dictionary/contained'
+import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
+import { Setup } from '../env/setup'
+import { ParsingResult } from '../env/parsing-result'
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter

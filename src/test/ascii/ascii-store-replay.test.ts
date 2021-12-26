@@ -1,18 +1,18 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { FixDefinitions } from '../dictionary/definition'
+import { FixDefinitions } from '../../dictionary/definition'
 
 import {
   IFixMsgStoreRecord
-} from '../store'
-import { MsgType } from '../types'
-import { ISequenceReset } from '../types/FIX4.4/repo'
+} from '../../store'
+import { MsgType } from '../../types'
+import { ISequenceReset } from '../../types/FIX4.4/repo'
 
-import { Setup } from './env/setup'
-import { TestRecovery } from './env/test-recovery'
+import { Setup } from '../env/setup'
+import { TestRecovery } from '../env/test-recovery'
 
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 

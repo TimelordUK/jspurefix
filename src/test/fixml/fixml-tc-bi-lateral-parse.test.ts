@@ -1,10 +1,10 @@
 // use the compiled interfaces for intelisense
 import 'reflect-metadata'
 
-import { ILooseObject } from '../collections/collection'
-import { ITradeCaptureReport, IInstrument, IStandardHeader } from '../types/FIXML50SP2'
-import { IBatch } from '../types/FIXML50SP2/set/batch'
-import { ToViews } from './env/to-views'
+import { ILooseObject } from '../../collections/collection'
+import { ITradeCaptureReport, IInstrument, IStandardHeader } from '../../types/FIXML50SP2'
+import { IBatch } from '../../types/FIXML50SP2/set/batch'
+import { ToViews } from '../env/to-views'
 
 const testFolder: string = 'examples/FIXML/cme/tc/Delivery Fixed Commodity Swap'
 const toViews: ToViews = new ToViews(testFolder)

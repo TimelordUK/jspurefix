@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { MsgView, TagPos, Structure } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './env/setup'
+import { MsgView, TagPos, Structure } from '../../buffer'
+import { FixDefinitions } from '../../dictionary/definition'
+import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
+import { Setup } from '../env/setup'
 
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter

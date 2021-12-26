@@ -1,15 +1,15 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { Structure, MsgView } from '../buffer'
-import { ILooseObject } from '../collections/collection'
-import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../types/FIX4.4/quickfix'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
-import { Setup } from './env/setup'
-import { ParsingResult } from './env/parsing-result'
+import { Structure, MsgView } from '../../buffer'
+import { ILooseObject } from '../../collections/collection'
+import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
+import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestType } from '../../types/FIX4.4/quickfix'
+import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
+import { Setup } from '../env/setup'
+import { ParsingResult } from '../env/parsing-result'
 
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter

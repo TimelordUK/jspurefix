@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 
-import { SegmentDescription } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
-import { ILogon } from '../types/FIX4.4/repo'
-import { JsonHelper } from '../util'
-import { IJsFixConfig, MsgType } from '..'
-import { Setup } from './env/setup'
-import { ParsingResult } from './env/parsing-result'
+import { SegmentDescription } from '../../buffer'
+import { FixDefinitions } from '../../dictionary/definition'
+import { ILogon } from '../../types/FIX4.4/repo'
+import { JsonHelper } from '../../util'
+import { IJsFixConfig, MsgType } from '../../index'
+import { Setup } from '../env/setup'
+import { ParsingResult } from '../env/parsing-result'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper

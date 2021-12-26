@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 
-import { TagPos } from '../buffer'
-import { FixDefinitions } from '../dictionary/definition'
-import { JsonHelper } from '../util'
-import { IJsFixConfig, MsgType } from '..'
-import { Setup } from './env/setup'
-import { SegmentType } from '../buffer/segment/segment-type'
-import { ParsingResult } from './env/parsing-result'
+import { TagPos } from '../../buffer'
+import { FixDefinitions } from '../../dictionary/definition'
+import { JsonHelper } from '../../util'
+import { IJsFixConfig, MsgType } from '../../index'
+import { Setup } from '../env/setup'
+import { SegmentType } from '../../buffer/segment/segment-type'
+import { ParsingResult } from '../env/parsing-result'
 
 let config: IJsFixConfig
 let definitions: FixDefinitions

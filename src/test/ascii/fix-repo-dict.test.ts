@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription } from '../transport'
-import { DefinitionFactory } from '../util'
-import { ContainedFieldType } from '../dictionary/contained/'
+import { FixDefinitions } from '../../dictionary/definition'
+import { ISessionDescription } from '../../transport'
+import { DefinitionFactory } from '../../util'
+import { ContainedFieldType } from '../../dictionary/contained'
 
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 

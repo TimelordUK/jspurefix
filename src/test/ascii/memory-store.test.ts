@@ -1,16 +1,16 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { FixDefinitions } from '../dictionary/definition'
-import { MsgView } from '../buffer'
-import { AsciiView } from '../buffer/ascii'
-import { ILooseObject } from '../collections/collection'
-import { DefinitionFactory, FileReplayer } from '../util'
-import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../store'
-import { MsgTag } from '../types'
-import { Setup } from './env/setup'
+import { FixDefinitions } from '../../dictionary/definition'
+import { MsgView } from '../../buffer'
+import { AsciiView } from '../../buffer/ascii'
+import { ILooseObject } from '../../collections/collection'
+import { DefinitionFactory } from '../../util'
+import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../../store'
+import { MsgTag } from '../../types'
+import { Setup } from '../env/setup'
 
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let views: MsgView[]

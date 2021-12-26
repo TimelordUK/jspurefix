@@ -1,18 +1,18 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { SegmentDescription, MsgView, Structure } from '../buffer'
-import { ILooseObject } from '../collections/collection'
-import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription } from '../transport'
-import { IUndInstrmtGrp, IUnderlyingInstrument } from '../types/FIX4.4/quickfix'
-import { FileReplayer } from '../util'
-import { DITokens } from '../runtime/di-tokens'
-import { SessionContainer } from '../runtime/'
-import { IJsFixConfig } from '../config'
-import { SegmentType } from '../buffer/segment/segment-type'
+import { SegmentDescription, MsgView, Structure } from '../../buffer'
+import { ILooseObject } from '../../collections/collection'
+import { FixDefinitions } from '../../dictionary/definition'
+import { ISessionDescription } from '../../transport'
+import { IUndInstrmtGrp, IUnderlyingInstrument } from '../../types/FIX4.4/quickfix'
+import { FileReplayer } from '../../util'
+import { DITokens } from '../../runtime/di-tokens'
+import { SessionContainer } from '../../runtime'
+import { IJsFixConfig } from '../../config'
+import { SegmentType } from '../../buffer/segment/segment-type'
 
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let views: MsgView[]

@@ -1,8 +1,8 @@
 // use the compiled interfaces for intelisense
 import 'reflect-metadata'
 
-import { ToViews } from './env/to-views'
-import { IBatch } from '../types/FIXML50SP2/set/batch'
+import { ToViews } from '../env/to-views'
+import { IBatch } from '../../types/FIXML50SP2/set/batch'
 
 const testFolder: string = 'examples/FIXML/cme/md/settle/'
 const toViews: ToViews = new ToViews(testFolder)

@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 
-import { ElasticBuffer } from '../buffer'
-import { ITimeFormatter, TimeFormatter } from '../buffer/ascii'
+import { ElasticBuffer } from '../../buffer'
+import { ITimeFormatter, TimeFormatter } from '../../buffer/ascii'
 
 const buffer = new ElasticBuffer()
 let timeFormatter: ITimeFormatter

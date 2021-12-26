@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { FixDefinitions, MessageDefinition } from '../dictionary/definition'
-import { MsgView } from '../buffer'
-import { ILooseObject } from '../collections/collection'
-import { Setup } from './env/setup'
+import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
+import { MsgView } from '../../buffer'
+import { ILooseObject } from '../../collections/collection'
+import { Setup } from '../env/setup'
 
-const root: string = path.join(__dirname, '../../data')
+const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let views: MsgView[]
