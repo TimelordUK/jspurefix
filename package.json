@@ -88,7 +88,7 @@
     "@types/lodash": "^4.14.178",
     "@types/mathjs": "^9.4.1",
     "@types/minimist": "^1.2.2",
-    "@types/node": "^17.0.4",
+    "@types/node": "^17.0.5",
     "@types/request-promise-native": "^1.0.18",
     "@types/sax": "^1.2.4",
     "@types/uuid": "^8.3.3",

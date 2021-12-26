@@ -21,7 +21,7 @@ beforeEach(async () => {
   setup = new Setup()
   await setup.init()
   experiment = new Experiment(setup)
-})
+}, 30000)
 
 class ParsingResult {
   constructor (

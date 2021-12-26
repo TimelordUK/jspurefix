@@ -8,7 +8,7 @@ import { IJsFixConfig } from '../../config'
 import { ElasticBuffer, MsgType } from '../../index'
 import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
 import { Setup } from '../env/setup'
-import { DITokens } from '../../runtime/di-tokens'
+import { DITokens } from '../../runtime'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -23,7 +23,7 @@ beforeAll(async () => {
   jsonHelper = new JsonHelper(definitions)
   config = setup.clientConfig
   session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
-})
+}, 30000)
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
   // encode to FIX format from provided object.

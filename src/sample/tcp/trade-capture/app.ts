@@ -4,7 +4,7 @@ import { TradeCaptureServer } from './trade-capture-server'
 import { Launcher } from '../../launcher'
 import { TradeCaptureClient } from './trade-capture-client'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/di-tokens'
+import { DITokens } from '../../../runtime'
 import { IJsFixConfig } from '../../../config'
 
 class AppLauncher extends Launcher {
@@ -19,11 +19,11 @@ class AppLauncher extends Launcher {
     const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
       sessionContainer.register(DITokens.FixSession, {
-        useClass: TradeCaptureClient
+        useFactory: () => new TradeCaptureClient(config)
       })
     } else {
       sessionContainer.register(DITokens.FixSession, {
-        useClass: TradeCaptureServer
+        useFactory: () => new TradeCaptureServer(config)
       })
     }
   }

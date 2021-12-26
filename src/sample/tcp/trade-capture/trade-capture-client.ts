@@ -1,21 +1,18 @@
 import { MsgView } from '../../../buffer'
-import { AsciiSession } from '../../../transport/ascii'
+import { AsciiSession } from '../../../transport'
 import { MsgType } from '../../../types'
 import { ITradeCaptureReport, ITradeCaptureReportRequest,
   ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
-import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime/di-tokens'
 
-@injectable()
 export class TradeCaptureClient extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   private reports: Dictionary<ITradeCaptureReport>
 
-  constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
+  constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.reports = new Dictionary<ITradeCaptureReport>()
