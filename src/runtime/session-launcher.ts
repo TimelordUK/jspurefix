@@ -6,10 +6,10 @@ import { EngineFactory } from './engine-factory'
 import { SessionContainer } from './session-container'
 import { DITokens } from './di-tokens'
 
-const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
 
 export abstract class SessionLauncher {
+  public root: string = '../../'
   protected readonly logger: IJsFixLogger
   protected constructor (public readonly initiatorConfig: string,
                          public readonly acceptorConfig: string = null) {
@@ -102,7 +102,7 @@ export abstract class SessionLauncher {
   }
 
   private async makeClient (): Promise<any> {
-    const description: ISessionDescription = require(path.join(root, this.initiatorConfig))
+    const description: ISessionDescription = require(path.join(this.root, this.initiatorConfig))
     const sessionContainer = await this.makeSystem(description)
     this.register(sessionContainer)
     this.logger.info('create initiator')
@@ -110,7 +110,7 @@ export abstract class SessionLauncher {
   }
 
   private async makeServer (): Promise<any> {
-    const description: ISessionDescription = require(path.join(root, this.acceptorConfig))
+    const description: ISessionDescription = require(path.join(this.root, this.acceptorConfig))
     const sessionContainer = await this.makeSystem(description)
     this.register(sessionContainer)
     this.logger.info('create acceptor')
