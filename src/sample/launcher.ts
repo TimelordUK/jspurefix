@@ -1,10 +1,8 @@
 import * as path from 'path'
 import { IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
-import { ISessionDescription } from '../transport'
+import { ISessionDescription, FixEntity } from '../transport'
 import { DependencyContainer } from 'tsyringe'
-import { SessionContainer } from '../runtime'
-import { FixEntity } from '../transport/fix-entity'
-import { DITokens } from '../runtime/di-tokens'
+import { SessionContainer, DITokens } from '../runtime'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))

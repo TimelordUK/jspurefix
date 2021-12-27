@@ -3,7 +3,8 @@ import 'reflect-metadata'
 import { Launcher } from '../../launcher'
 import { SkeletonSession } from './skeleton-session'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/di-tokens'
+import { DITokens } from '../../../runtime'
+import { IJsFixConfig } from '../../../config'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -14,13 +15,7 @@ class AppLauncher extends Launcher {
 
   protected override registerApplication (sessionContainer: DependencyContainer) {
     sessionContainer.register(DITokens.FixSession, {
-      useClass: SkeletonSession
-    })
-    sessionContainer.register('logoutSeconds', {
-      useValue: 45
-    })
-    sessionContainer.register('useInMemoryStore', {
-      useValue: false
+      useFactory: (c) => new SkeletonSession(c.resolve<IJsFixConfig>(DITokens.IJsFixConfig), 45,false)
     })
   }
 }

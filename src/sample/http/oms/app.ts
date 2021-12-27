@@ -5,8 +5,8 @@ import { HttpClient } from './http-client'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/di-tokens'
-import { FixEntity } from '../../../transport/fix-entity'
+import { DITokens } from '../../../runtime'
+import { FixEntity } from '../../../transport'
 import { IHttpAdapter } from '../../../transport/http/http-adapter'
 
 class AppLauncher extends Launcher {
@@ -21,16 +21,13 @@ class AppLauncher extends Launcher {
     const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
       sessionContainer.register(DITokens.FixSession, {
-        useClass: HttpClient
+        useFactory: () => new HttpClient(config)
       })
     } else {
       sessionContainer.register(DITokens.FixSession, {
-        useClass: HttpServer
+        useFactory: () => new HttpServer(config)
       })
     }
-    sessionContainer.register('logoutSeconds', {
-      useValue: 45
-    })
   }
 
   protected override getInitiator (sessionContainer: DependencyContainer): Promise<any> {

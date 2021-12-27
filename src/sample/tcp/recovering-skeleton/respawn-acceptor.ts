@@ -1,7 +1,7 @@
 import { IJsFixConfig, IJsFixLogger } from '../../../config'
 import { TcpAcceptorListener } from '../../../transport/tcp'
 import { inject, injectable } from 'tsyringe'
-import { FixEntity } from '../../../transport/fix-entity'
+import { FixEntity } from '../../../transport'
 
 @injectable()
 export class RespawnAcceptor extends FixEntity {

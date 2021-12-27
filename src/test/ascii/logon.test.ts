@@ -4,7 +4,7 @@ import * as path from 'path'
 import { SegmentDescription, Structure, MsgView } from '../../buffer'
 import { ILooseObject } from '../../collections/collection'
 import { FixDefinitions } from '../../dictionary/definition'
-import { FileReplayer } from '../../util'
+
 import { Setup } from '../env/setup'
 import { SegmentType } from '../../buffer/segment/segment-type'
 

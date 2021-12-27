@@ -5,7 +5,7 @@ import { MDServer } from './md-server'
 import { IJsFixConfig } from '../../../config'
 import { Launcher } from '../../launcher'
 import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime/di-tokens'
+import { DITokens } from '../../../runtime'
 
 class AppLauncher extends Launcher {
   public constructor () {
@@ -19,11 +19,11 @@ class AppLauncher extends Launcher {
     const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
       sessionContainer.register(DITokens.FixSession, {
-        useClass: MDClient
+        useFactory: () => new MDClient(config)
       })
     } else {
       sessionContainer.register(DITokens.FixSession, {
-        useClass: MDServer
+        useFactory: () => new MDServer(config)
       })
     }
   }

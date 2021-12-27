@@ -1,11 +1,11 @@
 import { MsgView } from '../../../buffer'
-import { AsciiSession } from '../../../transport/ascii'
+import { AsciiSession } from '../../../transport'
 import { MsgType } from '../../../types'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 
 import { MDFactory } from './md-factory'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime/di-tokens'
+import { DITokens } from '../../../runtime'
 
 @injectable()
 export class MDClient extends AsciiSession {

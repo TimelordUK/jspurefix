@@ -1,10 +1,10 @@
 import { MsgView } from '../../../buffer'
-import { AsciiSession } from '../../../transport/ascii'
+import { AsciiSession } from '../../../transport'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { ILooseObject } from '../../../collections/collection'
 import { FixMsgStoreRecord } from '../../../store'
 import { inject, injectable } from 'tsyringe'
-import { DITokens } from '../../../runtime/di-tokens'
+import { DITokens } from '../../../runtime'
 
 @injectable()
 export class SkeletonSession extends AsciiSession {
