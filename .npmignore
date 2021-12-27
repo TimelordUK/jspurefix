@@ -1,5 +1,6 @@
 data/session/certs
 data/examples/FIXML
+data/fix_repo
 data/examples/FIX.4.4/quickfix
 data/examples/FIX.4.4/repo
 datax/examples/FIX.4.4/fix.txt
