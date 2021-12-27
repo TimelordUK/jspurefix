@@ -316,7 +316,7 @@ export class JsfixCmd {
   private async init (): Promise<any> {
     let session: string = argv.session || 'data/session/test-initiator.json'
     this.sys = new SessionContainer()
-    this.sys.registerGlobal()
+    this.sys.registerGlobal('error')
     session = this.norm(session)
     this.sessionDescription = require(session)
     const container = await this.sys.makeSystem(this.sessionDescription)

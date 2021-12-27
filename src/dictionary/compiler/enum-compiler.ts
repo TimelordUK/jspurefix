@@ -19,6 +19,15 @@ export class EnumCompiler {
     this.snippets = new StandardSnippet(settings)
   }
 
+  private static getIndex (): string {
+    const lines = [
+      `export * from './all-enum'`,
+      `export * from './msg_tag'`,
+      ''
+    ]
+    return lines.join(require('os').EOL)
+  }
+
   /*
   enum MessageTypes {
   Logon = 'A',
@@ -35,6 +44,7 @@ export class EnumCompiler {
       })
       if (asOneFile) {
         await this.writeAsOne(asOneFile)
+        await this.writeFile('index', EnumCompiler.getIndex())
       }
     }).catch((e: Error) => {
       throw e
