@@ -1,17 +1,16 @@
 import 'reflect-metadata'
 
 import { IJsFixConfig } from '../../../config'
-import { Launcher } from '../../launcher'
+import { SessionLauncher, DITokens } from '../../../runtime'
 import { SkeletonClient } from './skeleton-client'
 import { RecoveringTcpInitiator } from '../../../transport/tcp'
 import { RespawnAcceptor } from './respawn-acceptor'
 import { AsciiChars } from '../../../buffer/ascii'
 import { DependencyContainer } from 'tsyringe'
 import { SkeletonServer } from './skeleton-server'
-import { DITokens } from '../../../runtime'
 import { FixSession, FixEntity } from '../../../transport'
 
-class AppLauncher extends Launcher {
+class AppLauncher extends SessionLauncher {
 
   public constructor () {
     super(

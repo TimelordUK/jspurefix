@@ -1,22 +1,20 @@
 import 'reflect-metadata'
 
-import { Launcher } from '../../launcher'
+import { SessionLauncher, EngineFactory } from '../../../runtime'
 import { SkeletonSession } from './skeleton-session'
-import { DependencyContainer } from 'tsyringe'
-import { DITokens } from '../../../runtime'
 import { IJsFixConfig } from '../../../config'
 
-class AppLauncher extends Launcher {
+class AppLauncher extends SessionLauncher {
   public constructor () {
     super(
       'data/session/test-initiator.json',
       'data/session/test-acceptor.json')
   }
 
-  protected override registerApplication (sessionContainer: DependencyContainer) {
-    sessionContainer.register(DITokens.FixSession, {
-      useFactory: (c) => new SkeletonSession(c.resolve<IJsFixConfig>(DITokens.IJsFixConfig), 45,false)
-    })
+  protected override makeFactory (config: IJsFixConfig): EngineFactory {
+    return {
+      makeSession: () => new SkeletonSession(config, 45,false)
+    } as EngineFactory
   }
 }
 

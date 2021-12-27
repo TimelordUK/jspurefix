@@ -1,13 +1,15 @@
 import * as path from 'path'
-import { IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
-import { ISessionDescription, FixEntity } from '../transport'
+import { IJsFixConfig, IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
+import { ISessionDescription, FixEntity, FixSession } from '../transport'
 import { DependencyContainer } from 'tsyringe'
-import { SessionContainer, DITokens } from '../runtime'
+import { EngineFactory } from './engine-factory'
+import { SessionContainer } from './session-container'
+import { DITokens } from './di-tokens'
 
 const root = '../../'
 const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
 
-export abstract class Launcher {
+export abstract class SessionLauncher {
   protected readonly logger: IJsFixLogger
   protected constructor (public readonly initiatorConfig: string,
                          public readonly acceptorConfig: string = null) {
@@ -42,6 +44,10 @@ export abstract class Launcher {
     }
   }
 
+  protected makeFactory (config: IJsFixConfig): EngineFactory {
+    return null
+  }
+
   public run () {
     return new Promise<any>((accept, reject) => {
       const logger = this.logger
@@ -72,17 +78,33 @@ export abstract class Launcher {
     return this.sessionContainer.isInitiator(description)
   }
 
-  protected abstract registerApplication (sessionContainer: DependencyContainer): void
+  protected registerApplication (sessionContainer: DependencyContainer): void {
+    this.logger.info('bypass register via DI')
+  }
 
   private makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
     this.logger.info(`creating app ${description.application.name} [protocol ${description.application.protocol}]`)
     return this.sessionContainer.makeSystem(description)
   }
 
+  private register (container: DependencyContainer): void {
+    const config = container.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
+    const factory = this.makeFactory(config)
+    if (!factory) {
+      this.registerApplication(container)
+    } else {
+      if (factory.makeSession) {
+        container.register<FixSession>(DITokens.FixSession, {
+          useFactory: () => factory.makeSession(config)
+        })
+      }
+    }
+  }
+
   private async makeClient (): Promise<any> {
     const description: ISessionDescription = require(path.join(root, this.initiatorConfig))
     const sessionContainer = await this.makeSystem(description)
-    this.registerApplication(sessionContainer)
+    this.register(sessionContainer)
     this.logger.info('create initiator')
     return this.getInitiator(sessionContainer)
   }
@@ -90,7 +112,7 @@ export abstract class Launcher {
   private async makeServer (): Promise<any> {
     const description: ISessionDescription = require(path.join(root, this.acceptorConfig))
     const sessionContainer = await this.makeSystem(description)
-    this.registerApplication(sessionContainer)
+    this.register(sessionContainer)
     this.logger.info('create acceptor')
     return this.getAcceptor(sessionContainer)
   }
