@@ -119,8 +119,8 @@ export abstract class SessionLauncher {
 
   private async setup () {
     this.sessionContainer.registerGlobal()
-    const server = this.initiatorConfig ? this.makeServer() : this.empty()
-    const client = this.acceptorConfig ? this.makeClient() : this.empty()
+    const server = this.acceptorConfig ? this.makeServer() : this.empty()
+    const client = this.initiatorConfig ? this.makeClient() : this.empty()
     this.logger.info('launching ....')
     return Promise.all([server, client])
   }
