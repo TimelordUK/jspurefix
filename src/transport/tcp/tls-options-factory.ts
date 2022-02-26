@@ -16,13 +16,17 @@ export class TlsOptionsFactory {
 
   static getTlsOptions (tls: ITlsOptions): TlsOptions {
     let tlsOptions: TlsOptions = null
-    if (tls && tls.key) {
+    if (tls) {
       tlsOptions = {
-        key: TlsOptionsFactory.read(tls.key),
-        cert: TlsOptionsFactory.read(tls.cert),
         requestCert: tls.requestCert,
         rejectUnauthorized: tls.rejectUnauthorized
       } as TlsOptions
+
+      if (tls.key) {
+        tlsOptions.key = TlsOptionsFactory.read(tls.key)
+        tlsOptions.cert = TlsOptionsFactory.read(tls.cert)
+      }
+      
       if (tls.ca && tls.ca.length > 0) {
         tlsOptions.ca = tls.ca.map(i => TlsOptionsFactory.read(i))
       }
