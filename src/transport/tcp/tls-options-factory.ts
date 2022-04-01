@@ -37,13 +37,15 @@ export class TlsOptionsFactory {
   static getTlsConnectionOptions (tcp: ITcpTransportDescription): ConnectionOptions {
     let connectionOptions: ConnectionOptions = null
     const tls = tcp.tls
-    if (tls && tls.key) {
+    if (tls) {
       connectionOptions = {
         port: tcp.port,
-        host: tcp.host,
-        key: TlsOptionsFactory.read(tcp.tls.key),
-        cert: TlsOptionsFactory.read(tcp.tls.cert)
+        host: tcp.host
       } as ConnectionOptions
+      if (tls.key) {
+        connectionOptions.key = TlsOptionsFactory.read(tcp.tls.key)
+        connectionOptions.cert = TlsOptionsFactory.read(tcp.tls.cert)
+      }
       if (tcp.tls.ca && tcp.tls.ca.length > 0) {
         connectionOptions.ca = tcp.tls.ca.map(i => TlsOptionsFactory.read(i))
       }
