@@ -1,0 +1,7 @@
+[0] 8 (BeginString) = FIX4.4, [1] 9 (BodyLength) = 0000117
+[2] 35 (MsgType) = A[Logon], [3] 49 (SenderCompID) = init-comp
+[4] 56 (TargetCompID) = accept-comp, [5] 34 (MsgSeqNum) = 1
+[6] 57 (TargetSubID) = fix, [7] 52 (SendingTime) = 20211221-14:56:42.674
+[8] 98 (EncryptMethod) = 0[None], [9] 108 (HeartBtInt) = 30
+[10] 141 (ResetSeqNumFlag) = Y[Yes], [11] 553 (Username) = js-client
+[12] 554 (Password) = pwd-client, [13] 10 (CheckSum) = 244

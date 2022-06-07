@@ -1,0 +1,20 @@
+{
+    "StandardHeader": {
+        "BeginString": "FIX4.4",
+        "BodyLength": 117,
+        "MsgType": "A",
+        "SenderCompID": "init-comp",
+        "TargetCompID": "accept-comp",
+        "MsgSeqNum": 1,
+        "TargetSubID": "fix",
+        "SendingTime": "2021-12-21T14:56:42.674Z"
+    },
+    "EncryptMethod": 0,
+    "HeartBtInt": 30,
+    "ResetSeqNumFlag": true,
+    "Username": "js-client",
+    "Password": "pwd-client",
+    "StandardTrailer": {
+        "CheckSum": "244"
+    }
+}

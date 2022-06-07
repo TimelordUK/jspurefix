@@ -1,0 +1,32 @@
+[
+    {
+        "name": "StandardHeader",
+        "depth": 1,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 52,
+        "endPosition": 7,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "Logon",
+        "depth": 0,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 10,
+        "endPosition": 13,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 1,
+        "startTag": 10,
+        "startPosition": 13,
+        "endTag": 10,
+        "endPosition": 13,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    }
+]
