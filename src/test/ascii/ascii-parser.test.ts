@@ -144,3 +144,4 @@ test('missing 2 required tags', async () => {
   const missing = res.view.missing()
   expect(missing).toEqual([98, 108])
 })
+

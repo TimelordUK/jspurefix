@@ -1,5 +1,4 @@
 import 'reflect-metadata'
-
 import * as path from 'path'
 import { AsciiParser, AsciiView } from '../../buffer/ascii'
 import { ILooseObject } from '../../collections/collection'
@@ -9,6 +8,7 @@ import { ElasticBuffer, IJsFixConfig, MsgType } from '../../index'
 import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
 import { Setup } from '../env/setup'
 import { DITokens } from '../../runtime'
+import { ParsingResult } from '../env/parsing-result'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -77,3 +77,14 @@ test('test md request JSON => object => fix => object', async () => {
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)
 }, 1000)
+
+test('parse MD snapshot msg', async () => {
+  const msg = '8=FIX.4.4|9=224|35=W|34=8|49=TEST|56=TEST|52=20220621-17:16:16.414|262=#GBPUSD#0#|55=GBPUSD|268=3|269=0|270=1.22759|271=1|63=0|272=20220623|768=0|269=1|270=1.22759|271=1|63=0|272=20220623|768=0|269=H|270=1.22759|63=0|272=20220623|768=0|10=066|'
+  const res: ParsingResult = await setup.client.parseText(msg)
+  expect(res.event).toEqual('msg')
+  expect(res.msgType).toEqual(MsgType.MarketDataSnapshotFullRefresh)
+  const v2 = res.view.getView('MDFullGrp')
+  const o = v2.toObject()
+  expect(o).toBeTruthy()
+  // console.log(JSON.stringify(o, null, 4))
+})

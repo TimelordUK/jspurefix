@@ -1,15 +1,15 @@
 version: 1.0.{build}
 
 image: 
-  - Ubuntu
-  - Visual Studio 2017
+  - Ubuntu2004
+  - Visual Studio 2022
 
 platform:
   - x64
 
 environment:
   matrix:
-    - nodejs_version: "17"
+    - nodejs_version: "18"
     - nodejs_version: "16"
     - nodejs_version: "14"
     - nodejs_version: "12"
