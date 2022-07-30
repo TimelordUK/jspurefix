@@ -129,6 +129,9 @@ export class TcpInitiator extends FixInitiator {
               resolve(tlsDuplex)
             }
           })
+          tlsSocket.on('error', (err) => {
+            reject(err)
+          })
         } catch (e) {
           reject(e)
         }
