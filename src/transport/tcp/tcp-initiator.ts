@@ -178,9 +178,9 @@ export class TcpInitiator extends FixInitiator {
         ++retries
         this.tryConnect()
           .then((t: MsgTransport) => {
-          this.state = InitiatorState.Connected
-          this.clearTimer()
-          resolve(t)
+            this.state = InitiatorState.Connected
+            this.clearTimer()
+            resolve(t)
         }).catch((e: Error) => {
           this.logger.info(`${application.name}: retries ${retries} ${e.message}`)
         })
