@@ -52,20 +52,19 @@ export class TcpInitiatorConnector extends FixEntity {
     })
   }
 
-  connect (initiatorSession: FixSession): Promise<any> {
-    return new Promise<any>(async (accept, reject) => {
-      const logger = this.config.logFactory.logger('initiator')
-      const initiator: FixInitiator = this.config.sessionContainer.resolve<FixInitiator>(TcpInitiator)
-      logger.info('connecting ...')
+  async connect (initiatorSession: FixSession): Promise<any> {
+    const logger = this.config.logFactory.logger('initiator')
+    const initiator: FixInitiator = this.config.sessionContainer.resolve<FixInitiator>(TcpInitiator)
+    logger.info('connecting ...')
+    try {
       const initiatorTransport: MsgTransport = await initiator.connect(22)
       logger.info('... connected, run session')
-      initiatorSession.run(initiatorTransport).then(() => {
-        logger.info('ends')
-        accept(true)
-      }).catch((e: Error) => {
-        logger.error(e)
-        reject(e)
-      })
-    })
+      await initiatorSession.run(initiatorTransport)
+      logger.info('ends')
+      return true
+    } catch (e) {
+      logger.error(e)
+      throw e
+    }
   }
 }
