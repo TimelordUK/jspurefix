@@ -69,10 +69,14 @@ export class TcpInitiator extends FixInitiator {
         case InitiatorState.Idle: {
           this.state = InitiatorState.Connecting
           this.logger.info(`connecting with timeout ${timeoutSeconds}`)
-          this.tryConnect().then((t: MsgTransport) => resolve(t)).catch((e: Error) => {
-            this.logger.error(e)
-            this.repeatConnect(timeoutSeconds).then((t: MsgTransport) => resolve(t)).catch((e: Error) => reject(e))
-          })
+          this.tryConnect()
+            .then((t: MsgTransport) => resolve(t))
+            .catch((e: Error) => {
+              this.logger.error(e)
+              this.repeatConnect(timeoutSeconds)
+                .then((t: MsgTransport) => resolve(t))
+                .catch((e: Error) => reject(e))
+            })
           break
         }
 
@@ -97,6 +101,9 @@ export class TcpInitiator extends FixInitiator {
           } catch (e) {
             reject(e)
           }
+        })
+        socket.on('error', (err) => {
+          reject(err)
         })
       } catch (e) {
         reject(e)
@@ -169,10 +176,11 @@ export class TcpInitiator extends FixInitiator {
       let retries = 0
       this.th = setInterval(() => {
         ++retries
-        this.tryConnect().then((t: MsgTransport) => {
-          this.state = InitiatorState.Connected
-          this.clearTimer()
-          resolve(t)
+        this.tryConnect()
+          .then((t: MsgTransport) => {
+            this.state = InitiatorState.Connected
+            this.clearTimer()
+            resolve(t)
         }).catch((e: Error) => {
           this.logger.info(`${application.name}: retries ${retries} ${e.message}`)
         })
