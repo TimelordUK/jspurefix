@@ -1,6 +1,6 @@
 {
   "name": "jspurefix",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "description": "pure node js fix engine",
   "keywords": [
     "typescript",
@@ -37,7 +37,7 @@
     "repo44-bench-er": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=125000",
     "repo44-bench-tc": "cd dist && node jsfix-cmd ---dict=repo44 --fix=data/examples/FIX.4.4/repo/trade-capture/fix.txt --benchmark --delimiter=\"|\" --repeats=30000",
     "repo44-bench-sd": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/security-definition/fix.txt --benchmark --delimiter=\"|\" --repeats=150000",
-    "repo44-bench-lo":"cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
+    "repo44-bench-lo": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
     "qf-bench-lo": "cd dist && node jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/quickfix/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
     "fixml": "cd dist && node jsfix-cmd --dict=repofixml",
     "tcp-qf-md": "cd dist/sample/tcp/qf-md && node app",
