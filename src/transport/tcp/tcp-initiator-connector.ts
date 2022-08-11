@@ -56,15 +56,10 @@ export class TcpInitiatorConnector extends FixEntity {
     const logger = this.config.logFactory.logger('initiator')
     const initiator: FixInitiator = this.config.sessionContainer.resolve<FixInitiator>(TcpInitiator)
     logger.info('connecting ...')
-    try {
-      const initiatorTransport: MsgTransport = await initiator.connect(22)
-      logger.info('... connected, run session')
-      await initiatorSession.run(initiatorTransport)
-      logger.info('ends')
-      return true
-    } catch (e) {
-      logger.error(e)
-      throw e
-    }
+    const initiatorTransport: MsgTransport = await initiator.connect(22)
+    logger.info('... connected, run session')
+    await initiatorSession.run(initiatorTransport)
+    logger.info('ends')
+    return true
   }
 }

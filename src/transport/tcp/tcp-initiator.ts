@@ -33,15 +33,11 @@ export class TcpInitiator extends FixInitiator {
     super(jsFixConfig.description.application)
     this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:TcpInitiator`)
     if (!this.application) {
-      const e: Error = new Error(`no application in session description.`)
-      this.logger.error(e)
-      throw e
+      throw new Error(`no application in session description.`)
     }
     this.tcp = this.application.tcp
     if (!this.tcp) {
-      const e = new Error(`no tcp in session description need tcp { host: hostname, port: port }`)
-      this.logger.error(e)
-      throw e
+      throw new Error(`no tcp in session description need tcp { host: hostname, port: port }`)
     }
   }
 
@@ -72,7 +68,6 @@ export class TcpInitiator extends FixInitiator {
           this.tryConnect()
             .then((t: MsgTransport) => resolve(t))
             .catch((e: Error) => {
-              this.logger.error(e)
               this.repeatConnect(timeoutSeconds)
                 .then((t: MsgTransport) => resolve(t))
                 .catch((e: Error) => reject(e))
@@ -174,6 +169,7 @@ export class TcpInitiator extends FixInitiator {
       const promisify = util.promisify
       const timeoutPromise = promisify(setTimeout)
       let retries = 0
+      let lastError: Error
       this.th = setInterval(() => {
         ++retries
         this.tryConnect()
@@ -182,17 +178,16 @@ export class TcpInitiator extends FixInitiator {
             this.clearTimer()
             resolve(t)
         }).catch((e: Error) => {
+          lastError = e
           this.logger.info(`${application.name}: retries ${retries} ${e.message}`)
         })
       }, application.reconnectSeconds * 1000)
       timeoutPromise(timeoutSeconds * 1000).then(() => {
         this.clearTimer()
         this.state = InitiatorState.Stopped
-        const e = new Error(`${application.name}: timeout of ${timeoutSeconds} whilst connecting`)
-        this.logger.warning(`repeatConnect reject with message ${e.message}`)
+        const e = lastError ?? new Error(`${application.name}: timeout of ${timeoutSeconds} whilst connecting`)
         reject(e)
       }).catch(e => {
-        this.logger.error(e)
         reject(e)
       })
     })

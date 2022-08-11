@@ -33,15 +33,11 @@ export class RecoveringTcpInitiator extends FixEntity {
     this.application = this.jsFixConfig.description.application
     this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:RecoveringTcpInitiator`)
     if (!this.application) {
-      const e: Error = new Error(`no application in session description.`)
-      this.logger.error(e)
-      throw e
+      throw new Error(`no application in session description.`)
     }
     this.tcp = this.application.tcp
     if (!this.tcp) {
-      const e = new Error(`no tcp in session description need tcp { host: hostname, port: port }`)
-      this.logger.error(e)
-      throw e
+      throw new Error(`no tcp in session description need tcp { host: hostname, port: port }`)
     }
     this.createSession(jsFixConfig)
   }
@@ -82,7 +78,7 @@ export class RecoveringTcpInitiator extends FixEntity {
       }
     }).catch(e => {
       this.logger.info(`transport id ${(transport.id)} failed - session state ${session.getState()}`)
-      this.logger.error(e.message)
+      this.logger.warning(e.message)
       this.recover()
     })
     this.logger.info(`running session with transport ${transport.id} state = ${session.getState()}`)
