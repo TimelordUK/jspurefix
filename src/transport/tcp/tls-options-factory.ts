@@ -26,7 +26,7 @@ export class TlsOptionsFactory {
         tlsOptions.key = TlsOptionsFactory.read(tls.key)
         tlsOptions.cert = TlsOptionsFactory.read(tls.cert)
       }
-      
+
       if (tls.ca && tls.ca.length > 0) {
         tlsOptions.ca = tls.ca.map(i => TlsOptionsFactory.read(i))
       }
