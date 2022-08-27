@@ -7,19 +7,19 @@ import { IParties } from './set/parties'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuoteStatusRequest {
-  StandardHeader: IStandardHeader
-  QuoteStatusReqID?: string// 649
-  QuoteID?: string// 117
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp
-  InstrmtLegGrp?: IInstrmtLegGrp
-  Parties?: IParties
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  SubscriptionRequestType?: string// 263
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  QuoteStatusReqID?: string// [2] 649 (String)
+  QuoteID?: string// [3] 117 (String)
+  Instrument?: IInstrument// [4] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [5] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [6] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  InstrmtLegGrp?: IInstrmtLegGrp// [7] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  Parties?: IParties// [8] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Account?: string// [9] 1 (String)
+  AcctIDSource?: number// [10] 660 (Int)
+  AccountType?: number// [11] 581 (Int)
+  TradingSessionID?: string// [12] 336 (String)
+  TradingSessionSubID?: string// [13] 625 (String)
+  SubscriptionRequestType?: string// [14] 263 (String)
+  StandardTrailer: IStandardTrailer// [15] SignatureLength.93, Signature.89, CheckSum.10
 }

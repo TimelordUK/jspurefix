@@ -2,7 +2,13 @@ import { ElasticBuffer, Tags } from '../../buffer'
 import { AsciiChars } from '../../buffer/ascii/'
 import { ICompilerSettings } from './compiler-settings'
 import { FixDefinitions } from '../definition'
-import { ContainedGroupField, ContainedSimpleField, ContainedComponentField, FieldsDispatch } from '../contained'
+import {
+  ContainedComponentField,
+  ContainedFieldSet,
+  ContainedGroupField,
+  ContainedSimpleField,
+  FieldsDispatch
+} from '../contained'
 import { StandardSnippet } from './standard-snippet'
 import { CompilerType } from './compiler-type'
 import { Dictionary } from '../../collections'
@@ -12,6 +18,10 @@ import * as Util from 'util'
 import * as Path from 'path'
 import { SetReduce } from '../set-reduce'
 import { ContainedSetType } from '../contained-set-type'
+import { TagType } from '../../buffer/tag/tag-type'
+
+const newLine = require('os').EOL
+const justifiedWidth: number = 50
 
 export class MsgCompiler {
   readonly queue: CompilerType[] = []
@@ -71,7 +81,6 @@ export class MsgCompiler {
       prev.push(`export * from '${current.snaked}'`)
       return prev
     }, [`export * from './enum'`] as string[])
-    const newLine = require('os').EOL
     exports.sort()
     exports.push('')
     const api: string = exports.join(newLine)
@@ -86,7 +95,6 @@ export class MsgCompiler {
     const buffer: ElasticBuffer = this.buffer
     buffer.reset()
     const snippets = this.snippets
-    const newLine = require('os').EOL
     // a single class with dependencies included
     let ptr: number = this.imports(compilerType)
     if (ptr > 0) {
@@ -127,32 +135,58 @@ export class MsgCompiler {
     const snippets = this.snippets
     const settings = this.settings
     const buffer = this.buffer
-    const newLine = require('os').EOL
     const len = buffer.writeString(snippets.simple(simple.name, Tags.toJSType(simple), simple.required, 1))
     if (settings.tags) {
-      buffer.writeString(snippets.commentLine(`${simple.definition.tag}`, 50 - len))
+      buffer.writeString(snippets.commentLine(`[${simple.position + 1}] ${simple.definition.tag} (${TagType[simple.definition.tagType]})`, justifiedWidth - len))
     }
     buffer.writeString(newLine)
   }
 
   private fieldGroup (groupField: ContainedGroupField, compilerType: CompilerType): void {
-    const newLine = require('os').EOL
     const buffer = this.buffer
     const snippets = this.snippets
     // for a group its field name is as defined in type, its type is qualified to avoid collisions
     const extended: string = compilerType.getExtended(groupField)
-    buffer.writeString(snippets.group(compilerType.getFieldGroupName(groupField), extended, groupField.required, 1))
+    const len = buffer.writeString(snippets.group(compilerType.getFieldGroupName(groupField), extended, groupField.required, 1))
+    this.setComment(groupField.definition, groupField.position, len)
     this.enqueue(new CompilerType(this.definitions, groupField.definition, extended))
     buffer.writeString(newLine)
   }
 
+  private tagSummary (definition: ContainedFieldSet, max: number = 3): string {
+    function tagTxt (tag: number) {
+      const name = definition.getFieldName(tag)
+      return `${name}.${tag}`
+    }
+
+    function setTxt (flattened: number[]) {
+      return flattened.map(f => tagTxt(f)).join(', ')
+    }
+
+    const flattened = definition.flattenedTag
+    if (max >= flattened.length) {
+      return setTxt(flattened)
+    }
+
+    const front = setTxt(flattened.slice(0, max - 1))
+    return `${front} .. ${tagTxt(flattened[flattened.length - 1])}`
+  }
+
+  private setComment (set: ContainedFieldSet, position: number, len: number): void {
+    if (this.settings.tags) {
+      const tagTxt = this.tagSummary(set)
+      const buffer = this.buffer
+      buffer.writeString(this.snippets.commentLine(`[${position + 1}] ${tagTxt}`, justifiedWidth - len))
+    }
+  }
+
   private fieldComponent (componentField: ContainedComponentField, compilerType: CompilerType): void {
-    const newLine = require('os').EOL
     const buffer = this.buffer
     const snippets = this.snippets
     const extended: string = compilerType.getExtended(componentField)
-    buffer.writeString(snippets.component(extended, componentField.required, 1))
+    const len = buffer.writeString(snippets.component(extended, componentField.required, 1))
     this.enqueue(new CompilerType(this.definitions, componentField.definition, extended))
+    this.setComment(componentField.definition, componentField.position, len)
     buffer.writeString(newLine)
   }
 
@@ -167,13 +201,12 @@ export class MsgCompiler {
 
   private attributes (compilerType: CompilerType): void {
     const settings = this.settings
-    const newLine = require('os').EOL
     const snippets = this.snippets
     const buffer = this.buffer
     compilerType.set.localAttribute.forEach((simple: ContainedSimpleField) => {
       const len = buffer.writeString(snippets.simple(simple.definition.name, Tags.toJSType(simple), simple.required, 1))
       if (settings.tags) {
-        buffer.writeString(snippets.commentLine(`${simple.definition.tag}`, 50 - len))
+        buffer.writeString(snippets.commentLine(`${simple.definition.tag}`, justifiedWidth - len))
       }
       buffer.writeString(newLine)
     })
@@ -194,6 +227,6 @@ export class MsgCompiler {
       }
     }, [])
 
-    return this.buffer.writeString(imports.join(require('os').EOL))
+    return this.buffer.writeString(imports.join(newLine))
   }
 }

@@ -2,51 +2,51 @@ import { IUndSecAltIDGrp } from './und_sec_alt_id_grp'
 import { IUnderlyingStipulations } from './underlying_stipulations'
 
 export interface IUnderlyingInstrument {
-  UnderlyingSymbol?: string// 311
-  UnderlyingSymbolSfx?: string// 312
-  UnderlyingSecurityID?: string// 309
-  UnderlyingSecurityIDSource?: string// 305
-  UndSecAltIDGrp?: IUndSecAltIDGrp
-  UnderlyingProduct?: number// 462
-  UnderlyingCFICode?: string// 463
-  UnderlyingSecurityType?: string// 310
-  UnderlyingSecuritySubType?: string// 763
-  UnderlyingMaturityMonthYear?: string// 313
-  UnderlyingMaturityDate?: Date// 542
-  UnderlyingPutOrCall?: number// 315
-  UnderlyingCouponPaymentDate?: Date// 241
-  UnderlyingIssueDate?: Date// 242
-  UnderlyingRepoCollateralSecurityType?: string// 243
-  UnderlyingRepurchaseTerm?: number// 244
-  UnderlyingRepurchaseRate?: number// 245
-  UnderlyingFactor?: number// 246
-  UnderlyingCreditRating?: string// 256
-  UnderlyingInstrRegistry?: string// 595
-  UnderlyingCountryOfIssue?: string// 592
-  UnderlyingStateOrProvinceOfIssue?: string// 593
-  UnderlyingLocaleOfIssue?: string// 594
-  UnderlyingRedemptionDate?: Date// 247
-  UnderlyingStrikePrice?: number// 316
-  UnderlyingStrikeCurrency?: string// 941
-  UnderlyingOptAttribute?: string// 317
-  UnderlyingContractMultiplier?: number// 436
-  UnderlyingCouponRate?: number// 435
-  UnderlyingSecurityExchange?: string// 308
-  UnderlyingIssuer?: string// 306
-  EncodedUnderlyingIssuerLen?: number// 362
-  EncodedUnderlyingIssuer?: Buffer// 363
-  UnderlyingSecurityDesc?: string// 307
-  EncodedUnderlyingSecurityDescLen?: number// 364
-  EncodedUnderlyingSecurityDesc?: Buffer// 365
-  UnderlyingCPProgram?: string// 877
-  UnderlyingCPRegType?: string// 878
-  UnderlyingCurrency?: string// 318
-  UnderlyingQty?: number// 879
-  UnderlyingPx?: number// 810
-  UnderlyingDirtyPrice?: number// 882
-  UnderlyingEndPrice?: number// 883
-  UnderlyingStartValue?: number// 884
-  UnderlyingCurrentValue?: number// 885
-  UnderlyingEndValue?: number// 886
-  UnderlyingStipulations?: IUnderlyingStipulations
+  UnderlyingSymbol?: string// [1] 311 (String)
+  UnderlyingSymbolSfx?: string// [2] 312 (String)
+  UnderlyingSecurityID?: string// [3] 309 (String)
+  UnderlyingSecurityIDSource?: string// [4] 305 (String)
+  UndSecAltIDGrp?: IUndSecAltIDGrp// [5] NoUnderlyingSecurityAltID.457, UnderlyingSecurityAltID.458, UnderlyingSecurityAltIDSource.459
+  UnderlyingProduct?: number// [6] 462 (Int)
+  UnderlyingCFICode?: string// [7] 463 (String)
+  UnderlyingSecurityType?: string// [8] 310 (String)
+  UnderlyingSecuritySubType?: string// [9] 763 (String)
+  UnderlyingMaturityMonthYear?: string// [10] 313 (String)
+  UnderlyingMaturityDate?: Date// [11] 542 (LocalDate)
+  UnderlyingPutOrCall?: number// [12] 315 (Int)
+  UnderlyingCouponPaymentDate?: Date// [13] 241 (LocalDate)
+  UnderlyingIssueDate?: Date// [14] 242 (LocalDate)
+  UnderlyingRepoCollateralSecurityType?: string// [15] 243 (String)
+  UnderlyingRepurchaseTerm?: number// [16] 244 (Int)
+  UnderlyingRepurchaseRate?: number// [17] 245 (Float)
+  UnderlyingFactor?: number// [18] 246 (Float)
+  UnderlyingCreditRating?: string// [19] 256 (String)
+  UnderlyingInstrRegistry?: string// [20] 595 (String)
+  UnderlyingCountryOfIssue?: string// [21] 592 (String)
+  UnderlyingStateOrProvinceOfIssue?: string// [22] 593 (String)
+  UnderlyingLocaleOfIssue?: string// [23] 594 (String)
+  UnderlyingRedemptionDate?: Date// [24] 247 (LocalDate)
+  UnderlyingStrikePrice?: number// [25] 316 (Float)
+  UnderlyingStrikeCurrency?: string// [26] 941 (String)
+  UnderlyingOptAttribute?: string// [27] 317 (String)
+  UnderlyingContractMultiplier?: number// [28] 436 (Float)
+  UnderlyingCouponRate?: number// [29] 435 (Float)
+  UnderlyingSecurityExchange?: string// [30] 308 (String)
+  UnderlyingIssuer?: string// [31] 306 (String)
+  EncodedUnderlyingIssuerLen?: number// [32] 362 (Length)
+  EncodedUnderlyingIssuer?: Buffer// [33] 363 (RawData)
+  UnderlyingSecurityDesc?: string// [34] 307 (String)
+  EncodedUnderlyingSecurityDescLen?: number// [35] 364 (Length)
+  EncodedUnderlyingSecurityDesc?: Buffer// [36] 365 (RawData)
+  UnderlyingCPProgram?: string// [37] 877 (String)
+  UnderlyingCPRegType?: string// [38] 878 (String)
+  UnderlyingCurrency?: string// [39] 318 (String)
+  UnderlyingQty?: number// [40] 879 (Float)
+  UnderlyingPx?: number// [41] 810 (Float)
+  UnderlyingDirtyPrice?: number// [42] 882 (Float)
+  UnderlyingEndPrice?: number// [43] 883 (Float)
+  UnderlyingStartValue?: number// [44] 884 (Float)
+  UnderlyingCurrentValue?: number// [45] 885 (Float)
+  UnderlyingEndValue?: number// [46] 886 (Float)
+  UnderlyingStipulations?: IUnderlyingStipulations// [47] NoUnderlyingStips.887, UnderlyingStipType.888, UnderlyingStipValue.889
 }

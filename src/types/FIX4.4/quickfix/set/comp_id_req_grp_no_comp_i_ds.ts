@@ -1,6 +1,6 @@
 export interface ICompIDReqGrpNoCompIDs {
-  RefCompID?: string// 930
-  RefSubID?: string// 931
-  LocationID?: string// 283
-  DeskID?: string// 284
+  RefCompID?: string// [1] 930 (String)
+  RefSubID?: string// [2] 931 (String)
+  LocationID?: string// [3] 283 (String)
+  DeskID?: string// [4] 284 (String)
 }

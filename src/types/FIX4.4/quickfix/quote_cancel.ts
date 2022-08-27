@@ -4,17 +4,17 @@ import { IQuotCxlEntriesGrp } from './set/quot_cxl_entries_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuoteCancel {
-  StandardHeader: IStandardHeader
-  QuoteReqID?: string// 131
-  QuoteID: string// 117
-  QuoteCancelType: number// 298
-  QuoteResponseLevel?: number// 301
-  Parties?: IParties
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  QuotCxlEntriesGrp?: IQuotCxlEntriesGrp
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  QuoteReqID?: string// [2] 131 (String)
+  QuoteID: string// [3] 117 (String)
+  QuoteCancelType: number// [4] 298 (Int)
+  QuoteResponseLevel?: number// [5] 301 (Int)
+  Parties?: IParties// [6] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Account?: string// [7] 1 (String)
+  AcctIDSource?: number// [8] 660 (Int)
+  AccountType?: number// [9] 581 (Int)
+  TradingSessionID?: string// [10] 336 (String)
+  TradingSessionSubID?: string// [11] 625 (String)
+  QuotCxlEntriesGrp?: IQuotCxlEntriesGrp// [12] NoQuoteEntries.295, Symbol.55 .. LegInterestAccrualDate.956
+  StandardTrailer: IStandardTrailer// [13] SignatureLength.93, Signature.89, CheckSum.10
 }

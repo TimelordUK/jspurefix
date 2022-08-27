@@ -1,8 +1,8 @@
 export interface IYieldData {
-  YieldType?: string// 235
-  Yield?: number// 236
-  YieldCalcDate?: Date// 701
-  YieldRedemptionDate?: Date// 696
-  YieldRedemptionPrice?: number// 697
-  YieldRedemptionPriceType?: number// 698
+  YieldType?: string// [1] 235 (String)
+  Yield?: number// [2] 236 (Float)
+  YieldCalcDate?: Date// [3] 701 (LocalDate)
+  YieldRedemptionDate?: Date// [4] 696 (LocalDate)
+  YieldRedemptionPrice?: number// [5] 697 (Float)
+  YieldRedemptionPriceType?: number// [6] 698 (Int)
 }

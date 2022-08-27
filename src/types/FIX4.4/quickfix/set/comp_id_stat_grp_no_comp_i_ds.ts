@@ -1,8 +1,8 @@
 export interface ICompIDStatGrpNoCompIDs {
-  RefCompID?: string// 930
-  RefSubID?: string// 931
-  LocationID?: string// 283
-  DeskID?: string// 284
-  StatusValue?: number// 928
-  StatusText?: string// 929
+  RefCompID?: string// [1] 930 (String)
+  RefSubID?: string// [2] 931 (String)
+  LocationID?: string// [3] 283 (String)
+  DeskID?: string// [4] 284 (String)
+  StatusValue?: number// [5] 928 (Int)
+  StatusText?: string// [6] 929 (String)
 }

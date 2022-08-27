@@ -1,11 +1,11 @@
 export interface IBidCompReqGrpNoBidComponents {
-  ListID?: string// 66
-  Side?: string// 54
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  NetGrossInd?: number// 430
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  Account?: string// 1
-  AcctIDSource?: number// 660
+  ListID?: string// [1] 66 (String)
+  Side?: string// [2] 54 (String)
+  TradingSessionID?: string// [3] 336 (String)
+  TradingSessionSubID?: string// [4] 625 (String)
+  NetGrossInd?: number// [5] 430 (Int)
+  SettlType?: string// [6] 63 (String)
+  SettlDate?: Date// [7] 64 (LocalDate)
+  Account?: string// [8] 1 (String)
+  AcctIDSource?: number// [9] 660 (Int)
 }

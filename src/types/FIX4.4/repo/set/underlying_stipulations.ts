@@ -6,6 +6,6 @@
 ***********************************************************
 */
 export interface IUnderlyingStipulations {
-  UnderlyingStipType?: string// 888
-  UnderlyingStipValue?: string// 889
+  UnderlyingStipType?: string// [1] 888 (String)
+  UnderlyingStipValue?: string// [2] 889 (String)
 }

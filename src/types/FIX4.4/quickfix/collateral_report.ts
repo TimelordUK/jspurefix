@@ -14,51 +14,51 @@ import { ISettlInstructionsData } from './set/settl_instructions_data'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ICollateralReport {
-  StandardHeader: IStandardHeader
-  CollRptID: string// 908
-  CollInquiryID?: string// 909
-  CollStatus: number// 910
-  TotNumReports?: number// 911
-  LastRptRequested?: boolean// 912
-  Parties?: IParties
-  Account?: string// 1
-  AccountType?: number// 581
-  ClOrdID?: string// 11
-  OrderID?: string// 37
-  SecondaryOrderID?: string// 198
-  SecondaryClOrdID?: string// 526
-  ExecCollGrp?: IExecCollGrp
-  TrdCollGrp?: ITrdCollGrp
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  SettlDate?: Date// 64
-  Quantity?: number// 53
-  QtyType?: number// 854
-  Currency?: string// 15
-  InstrmtLegGrp?: IInstrmtLegGrp
-  UndInstrmtGrp?: IUndInstrmtGrp
-  MarginExcess?: number// 899
-  TotalNetValue?: number// 900
-  CashOutstanding?: number// 901
-  TrdRegTimestamps?: ITrdRegTimestamps
-  Side?: string// 54
-  MiscFeesGrp?: IMiscFeesGrp
-  Price?: number// 44
-  PriceType?: number// 423
-  AccruedInterestAmt?: number// 159
-  EndAccruedInterestAmt?: number// 920
-  StartCash?: number// 921
-  EndCash?: number// 922
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  Stipulations?: IStipulations
-  SettlInstructionsData?: ISettlInstructionsData
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  SettlSessID?: string// 716
-  SettlSessSubID?: string// 717
-  ClearingBusinessDate?: Date// 715
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  CollRptID: string// [2] 908 (String)
+  CollInquiryID?: string// [3] 909 (String)
+  CollStatus: number// [4] 910 (Int)
+  TotNumReports?: number// [5] 911 (Int)
+  LastRptRequested?: boolean// [6] 912 (Boolean)
+  Parties?: IParties// [7] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Account?: string// [8] 1 (String)
+  AccountType?: number// [9] 581 (Int)
+  ClOrdID?: string// [10] 11 (String)
+  OrderID?: string// [11] 37 (String)
+  SecondaryOrderID?: string// [12] 198 (String)
+  SecondaryClOrdID?: string// [13] 526 (String)
+  ExecCollGrp?: IExecCollGrp// [14] NoExecs.124, ExecID.17
+  TrdCollGrp?: ITrdCollGrp// [15] NoTrades.897, TradeReportID.571, SecondaryTradeReportID.818
+  Instrument?: IInstrument// [16] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [17] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  SettlDate?: Date// [18] 64 (LocalDate)
+  Quantity?: number// [19] 53 (Float)
+  QtyType?: number// [20] 854 (Int)
+  Currency?: string// [21] 15 (String)
+  InstrmtLegGrp?: IInstrmtLegGrp// [22] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  UndInstrmtGrp?: IUndInstrmtGrp// [23] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  MarginExcess?: number// [24] 899 (Float)
+  TotalNetValue?: number// [25] 900 (Float)
+  CashOutstanding?: number// [26] 901 (Float)
+  TrdRegTimestamps?: ITrdRegTimestamps// [27] NoTrdRegTimestamps.768, TrdRegTimestamp.769 .. TrdRegTimestampOrigin.771
+  Side?: string// [28] 54 (String)
+  MiscFeesGrp?: IMiscFeesGrp// [29] NoMiscFees.136, MiscFeeAmt.137 .. MiscFeeBasis.891
+  Price?: number// [30] 44 (Float)
+  PriceType?: number// [31] 423 (Int)
+  AccruedInterestAmt?: number// [32] 159 (Float)
+  EndAccruedInterestAmt?: number// [33] 920 (Float)
+  StartCash?: number// [34] 921 (Float)
+  EndCash?: number// [35] 922 (Float)
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [36] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  Stipulations?: IStipulations// [37] NoStipulations.232, StipulationType.233, StipulationValue.234
+  SettlInstructionsData?: ISettlInstructionsData// [38] SettlDeliveryType.172, StandInstDbType.169 .. SettlPartySubIDType.786
+  TradingSessionID?: string// [39] 336 (String)
+  TradingSessionSubID?: string// [40] 625 (String)
+  SettlSessID?: string// [41] 716 (String)
+  SettlSessSubID?: string// [42] 717 (String)
+  ClearingBusinessDate?: Date// [43] 715 (LocalDate)
+  Text?: string// [44] 58 (String)
+  EncodedTextLen?: number// [45] 354 (Length)
+  EncodedText?: Buffer// [46] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [47] SignatureLength.93, Signature.89, CheckSum.10
 }

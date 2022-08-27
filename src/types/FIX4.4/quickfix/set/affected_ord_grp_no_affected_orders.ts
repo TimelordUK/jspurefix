@@ -1,5 +1,5 @@
 export interface IAffectedOrdGrpNoAffectedOrders {
-  OrigClOrdID?: string// 41
-  AffectedOrderID?: string// 535
-  AffectedSecondaryOrderID?: string// 536
+  OrigClOrdID?: string// [1] 41 (String)
+  AffectedOrderID?: string// [2] 535 (String)
+  AffectedSecondaryOrderID?: string// [3] 536 (String)
 }

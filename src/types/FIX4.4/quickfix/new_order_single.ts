@@ -15,82 +15,82 @@ import { IDiscretionInstructions } from './set/discretion_instructions'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface INewOrderSingle {
-  StandardHeader: IStandardHeader
-  ClOrdID: string// 11
-  SecondaryClOrdID?: string// 526
-  ClOrdLinkID?: string// 583
-  Parties?: IParties
-  TradeOriginationDate?: Date// 229
-  TradeDate?: Date// 75
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  DayBookingInst?: string// 589
-  BookingUnit?: string// 590
-  PreallocMethod?: string// 591
-  AllocID?: string// 70
-  PreAllocGrp?: IPreAllocGrp
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  CashMargin?: string// 544
-  ClearingFeeIndicator?: string// 635
-  HandlInst?: string// 21
-  ExecInst?: string// 18
-  MinQty?: number// 110
-  MaxFloor?: number// 111
-  ExDestination?: string// 100
-  TrdgSesGrp?: ITrdgSesGrp
-  ProcessCode?: string// 81
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp
-  PrevClosePx?: number// 140
-  Side: string// 54
-  LocateReqd?: boolean// 114
-  TransactTime: Date// 60
-  Stipulations?: IStipulations
-  QtyType?: number// 854
-  OrderQtyData?: IOrderQtyData
-  OrdType: string// 40
-  PriceType?: number// 423
-  Price?: number// 44
-  StopPx?: number// 99
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  YieldData?: IYieldData
-  Currency?: string// 15
-  ComplianceID?: string// 376
-  SolicitedFlag?: boolean// 377
-  IOIID?: string// 23
-  QuoteID?: string// 117
-  TimeInForce?: string// 59
-  EffectiveTime?: Date// 168
-  ExpireDate?: Date// 432
-  ExpireTime?: Date// 126
-  GTBookingInst?: number// 427
-  CommissionData?: ICommissionData
-  OrderCapacity?: string// 528
-  OrderRestrictions?: string// 529
-  CustOrderCapacity?: number// 582
-  ForexReq?: boolean// 121
-  SettlCurrency?: string// 120
-  BookingType?: number// 775
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  SettlDate2?: Date// 193
-  OrderQty2?: number// 192
-  Price2?: number// 640
-  PositionEffect?: string// 77
-  CoveredOrUncovered?: number// 203
-  MaxShow?: number// 210
-  PegInstructions?: IPegInstructions
-  DiscretionInstructions?: IDiscretionInstructions
-  TargetStrategy?: number// 847
-  TargetStrategyParameters?: string// 848
-  ParticipationRate?: number// 849
-  CancellationRights?: string// 480
-  MoneyLaunderingStatus?: string// 481
-  RegistID?: string// 513
-  Designation?: string// 494
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  ClOrdID: string// [2] 11 (String)
+  SecondaryClOrdID?: string// [3] 526 (String)
+  ClOrdLinkID?: string// [4] 583 (String)
+  Parties?: IParties// [5] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  TradeOriginationDate?: Date// [6] 229 (LocalDate)
+  TradeDate?: Date// [7] 75 (LocalDate)
+  Account?: string// [8] 1 (String)
+  AcctIDSource?: number// [9] 660 (Int)
+  AccountType?: number// [10] 581 (Int)
+  DayBookingInst?: string// [11] 589 (String)
+  BookingUnit?: string// [12] 590 (String)
+  PreallocMethod?: string// [13] 591 (String)
+  AllocID?: string// [14] 70 (String)
+  PreAllocGrp?: IPreAllocGrp// [15] NoAllocs.78, AllocAccount.79 .. AllocQty.80
+  SettlType?: string// [16] 63 (String)
+  SettlDate?: Date// [17] 64 (LocalDate)
+  CashMargin?: string// [18] 544 (String)
+  ClearingFeeIndicator?: string// [19] 635 (String)
+  HandlInst?: string// [20] 21 (String)
+  ExecInst?: string// [21] 18 (String)
+  MinQty?: number// [22] 110 (Float)
+  MaxFloor?: number// [23] 111 (Float)
+  ExDestination?: string// [24] 100 (String)
+  TrdgSesGrp?: ITrdgSesGrp// [25] NoTradingSessions.386, TradingSessionID.336, TradingSessionSubID.625
+  ProcessCode?: string// [26] 81 (String)
+  Instrument?: IInstrument// [27] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [28] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [29] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  PrevClosePx?: number// [30] 140 (Float)
+  Side: string// [31] 54 (String)
+  LocateReqd?: boolean// [32] 114 (Boolean)
+  TransactTime: Date// [33] 60 (UtcTimestamp)
+  Stipulations?: IStipulations// [34] NoStipulations.232, StipulationType.233, StipulationValue.234
+  QtyType?: number// [35] 854 (Int)
+  OrderQtyData?: IOrderQtyData// [36] OrderQty.38, CashOrderQty.152 .. RoundingModulus.469
+  OrdType: string// [37] 40 (String)
+  PriceType?: number// [38] 423 (Int)
+  Price?: number// [39] 44 (Float)
+  StopPx?: number// [40] 99 (Float)
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [41] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  YieldData?: IYieldData// [42] YieldType.235, Yield.236 .. YieldRedemptionPriceType.698
+  Currency?: string// [43] 15 (String)
+  ComplianceID?: string// [44] 376 (String)
+  SolicitedFlag?: boolean// [45] 377 (Boolean)
+  IOIID?: string// [46] 23 (String)
+  QuoteID?: string// [47] 117 (String)
+  TimeInForce?: string// [48] 59 (String)
+  EffectiveTime?: Date// [49] 168 (UtcTimestamp)
+  ExpireDate?: Date// [50] 432 (LocalDate)
+  ExpireTime?: Date// [51] 126 (UtcTimestamp)
+  GTBookingInst?: number// [52] 427 (Int)
+  CommissionData?: ICommissionData// [53] Commission.12, CommType.13 .. FundRenewWaiv.497
+  OrderCapacity?: string// [54] 528 (String)
+  OrderRestrictions?: string// [55] 529 (String)
+  CustOrderCapacity?: number// [56] 582 (Int)
+  ForexReq?: boolean// [57] 121 (Boolean)
+  SettlCurrency?: string// [58] 120 (String)
+  BookingType?: number// [59] 775 (Int)
+  Text?: string// [60] 58 (String)
+  EncodedTextLen?: number// [61] 354 (Length)
+  EncodedText?: Buffer// [62] 355 (RawData)
+  SettlDate2?: Date// [63] 193 (LocalDate)
+  OrderQty2?: number// [64] 192 (Float)
+  Price2?: number// [65] 640 (Float)
+  PositionEffect?: string// [66] 77 (String)
+  CoveredOrUncovered?: number// [67] 203 (Int)
+  MaxShow?: number// [68] 210 (Float)
+  PegInstructions?: IPegInstructions// [69] PegOffsetValue.211, PegMoveType.835 .. PegScope.840
+  DiscretionInstructions?: IDiscretionInstructions// [70] DiscretionInst.388, DiscretionOffsetValue.389 .. DiscretionScope.846
+  TargetStrategy?: number// [71] 847 (Int)
+  TargetStrategyParameters?: string// [72] 848 (String)
+  ParticipationRate?: number// [73] 849 (Float)
+  CancellationRights?: string// [74] 480 (String)
+  MoneyLaunderingStatus?: string// [75] 481 (String)
+  RegistID?: string// [76] 513 (String)
+  Designation?: string// [77] 494 (String)
+  StandardTrailer: IStandardTrailer// [78] SignatureLength.93, Signature.89, CheckSum.10
 }

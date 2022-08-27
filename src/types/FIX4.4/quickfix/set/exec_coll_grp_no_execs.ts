@@ -1,3 +1,3 @@
 export interface IExecCollGrpNoExecs {
-  ExecID?: string// 17
+  ExecID?: string// [1] 17 (String)
 }

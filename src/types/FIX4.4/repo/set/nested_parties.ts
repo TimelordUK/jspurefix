@@ -12,8 +12,8 @@ import { INstdPtysSubGrp } from './nstd_ptys_sub_grp'
 **************************************************************
 */
 export interface INestedParties {
-  NestedPartyID?: string// 524
-  NestedPartyIDSource?: string// 525
-  NestedPartyRole?: number// 538
-  NstdPtysSubGrp?: INstdPtysSubGrp[]
+  NestedPartyID?: string// [1] 524 (String)
+  NestedPartyIDSource?: string// [2] 525 (String)
+  NestedPartyRole?: number// [3] 538 (Int)
+  NstdPtysSubGrp?: INstdPtysSubGrp[]// [4] NestedPartySubID.545, NestedPartySubIDType.805
 }

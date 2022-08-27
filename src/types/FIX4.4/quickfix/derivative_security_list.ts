@@ -4,13 +4,13 @@ import { IRelSymDerivSecGrp } from './set/rel_sym_deriv_sec_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IDerivativeSecurityList {
-  StandardHeader: IStandardHeader
-  SecurityReqID: string// 320
-  SecurityResponseID: string// 322
-  SecurityRequestResult: number// 560
-  UnderlyingInstrument?: IUnderlyingInstrument
-  TotNoRelatedSym?: number// 393
-  LastFragment?: boolean// 893
-  RelSymDerivSecGrp?: IRelSymDerivSecGrp
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  SecurityReqID: string// [2] 320 (String)
+  SecurityResponseID: string// [3] 322 (String)
+  SecurityRequestResult: number// [4] 560 (Int)
+  UnderlyingInstrument?: IUnderlyingInstrument// [5] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingStipValue.889
+  TotNoRelatedSym?: number// [6] 393 (Int)
+  LastFragment?: boolean// [7] 893 (Boolean)
+  RelSymDerivSecGrp?: IRelSymDerivSecGrp// [8] NoRelatedSym.146, Symbol.55 .. EncodedText.355
+  StandardTrailer: IStandardTrailer// [9] SignatureLength.93, Signature.89, CheckSum.10
 }

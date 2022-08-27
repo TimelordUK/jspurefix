@@ -1,4 +1,4 @@
 export interface ILegSecAltIDGrpNoLegSecurityAltID {
-  LegSecurityAltID?: string// 605
-  LegSecurityAltIDSource?: string// 606
+  LegSecurityAltID?: string// [1] 605 (String)
+  LegSecurityAltIDSource?: string// [2] 606 (String)
 }

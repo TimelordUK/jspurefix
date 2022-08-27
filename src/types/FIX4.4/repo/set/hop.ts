@@ -1,6 +1,6 @@
 export interface IHop {
-  NoHops?: number        // 627
-  HopCompID?: string// 628
-  HopSendingTime?: Date// 629
-  HopRefID?: number// 630
+  NoHops?: number        // [1] 627 (Int)
+  HopCompID?: string// [2] 628 (String)
+  HopSendingTime?: Date// [3] 629 (UtcTimestamp)
+  HopRefID?: number// [4] 630 (Int)
 }

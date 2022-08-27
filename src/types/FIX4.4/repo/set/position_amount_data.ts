@@ -9,6 +9,6 @@
 ****************************************************************
 */
 export interface IPositionAmountData {
-  PosAmtType?: string// 707
-  PosAmt?: number// 708
+  PosAmtType?: string// [1] 707 (String)
+  PosAmt?: number// [2] 708 (Float)
 }

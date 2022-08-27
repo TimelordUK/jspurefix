@@ -1,3 +1,3 @@
 export interface ICollInqQualGrpNoCollInquiryQualifier {
-  CollInquiryQualifier?: number// 896
+  CollInquiryQualifier?: number// [1] 896 (Int)
 }

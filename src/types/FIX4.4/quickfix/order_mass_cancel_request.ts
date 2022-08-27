@@ -4,18 +4,18 @@ import { IUnderlyingInstrument } from './set/underlying_instrument'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IOrderMassCancelRequest {
-  StandardHeader: IStandardHeader
-  ClOrdID: string// 11
-  SecondaryClOrdID?: string// 526
-  MassCancelRequestType: string// 530
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  Instrument?: IInstrument
-  UnderlyingInstrument?: IUnderlyingInstrument
-  Side?: string// 54
-  TransactTime: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  ClOrdID: string// [2] 11 (String)
+  SecondaryClOrdID?: string// [3] 526 (String)
+  MassCancelRequestType: string// [4] 530 (String)
+  TradingSessionID?: string// [5] 336 (String)
+  TradingSessionSubID?: string// [6] 625 (String)
+  Instrument?: IInstrument// [7] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  UnderlyingInstrument?: IUnderlyingInstrument// [8] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingStipValue.889
+  Side?: string// [9] 54 (String)
+  TransactTime: Date// [10] 60 (UtcTimestamp)
+  Text?: string// [11] 58 (String)
+  EncodedTextLen?: number// [12] 354 (Length)
+  EncodedText?: Buffer// [13] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [14] SignatureLength.93, Signature.89, CheckSum.10
 }

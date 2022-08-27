@@ -1,4 +1,4 @@
 export interface ITrdCapDtGrpNoDates {
-  TradeDate?: Date// 75
-  TransactTime?: Date// 60
+  TradeDate?: Date// [1] 75 (LocalDate)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
 }

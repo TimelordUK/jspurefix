@@ -2,10 +2,10 @@ import { IUnderlyingInstrument } from './underlying_instrument'
 import { IQuotEntryGrp } from './quot_entry_grp'
 
 export interface IQuotSetGrpNoQuoteSets {
-  QuoteSetID: string// 302
-  UnderlyingInstrument: IUnderlyingInstrument
-  QuoteSetValidUntilTime?: Date// 367
-  TotNoQuoteEntries: number// 304
-  LastFragment?: boolean// 893
-  QuotEntryGrp: IQuotEntryGrp
+  QuoteSetID: string// [1] 302 (String)
+  UnderlyingInstrument: IUnderlyingInstrument// [2] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingStipValue.889
+  QuoteSetValidUntilTime?: Date// [3] 367 (UtcTimestamp)
+  TotNoQuoteEntries: number// [4] 304 (Int)
+  LastFragment?: boolean// [5] 893 (Boolean)
+  QuotEntryGrp: IQuotEntryGrp// [6] NoQuoteEntries.295, QuoteEntryID.299 .. Currency.15
 }

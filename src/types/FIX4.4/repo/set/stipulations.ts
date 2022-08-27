@@ -7,6 +7,6 @@
 ***************************************************************
 */
 export interface IStipulations {
-  StipulationType?: string// 233
-  StipulationValue?: string// 234
+  StipulationType?: string// [1] 233 (String)
+  StipulationValue?: string// [2] 234 (String)
 }

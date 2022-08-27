@@ -7,27 +7,27 @@ import { IOrderQtyData } from './set/order_qty_data'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IOrderCancelRequest {
-  StandardHeader: IStandardHeader
-  OrigClOrdID: string// 41
-  OrderID?: string// 37
-  ClOrdID: string// 11
-  SecondaryClOrdID?: string// 526
-  ClOrdLinkID?: string// 583
-  ListID?: string// 66
-  OrigOrdModTime?: Date// 586
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  Parties?: IParties
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp
-  Side: string// 54
-  TransactTime: Date// 60
-  OrderQtyData?: IOrderQtyData
-  ComplianceID?: string// 376
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  OrigClOrdID: string// [2] 41 (String)
+  OrderID?: string// [3] 37 (String)
+  ClOrdID: string// [4] 11 (String)
+  SecondaryClOrdID?: string// [5] 526 (String)
+  ClOrdLinkID?: string// [6] 583 (String)
+  ListID?: string// [7] 66 (String)
+  OrigOrdModTime?: Date// [8] 586 (UtcTimestamp)
+  Account?: string// [9] 1 (String)
+  AcctIDSource?: number// [10] 660 (Int)
+  AccountType?: number// [11] 581 (Int)
+  Parties?: IParties// [12] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Instrument?: IInstrument// [13] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [14] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [15] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  Side: string// [16] 54 (String)
+  TransactTime: Date// [17] 60 (UtcTimestamp)
+  OrderQtyData?: IOrderQtyData// [18] OrderQty.38, CashOrderQty.152 .. RoundingModulus.469
+  ComplianceID?: string// [19] 376 (String)
+  Text?: string// [20] 58 (String)
+  EncodedTextLen?: number// [21] 354 (Length)
+  EncodedText?: Buffer// [22] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [23] SignatureLength.93, Signature.89, CheckSum.10
 }

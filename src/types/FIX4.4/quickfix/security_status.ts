@@ -6,31 +6,31 @@ import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ISecurityStatus {
-  StandardHeader: IStandardHeader
-  SecurityStatusReqID?: string// 324
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  UndInstrmtGrp?: IUndInstrmtGrp
-  InstrmtLegGrp?: IInstrmtLegGrp
-  Currency?: string// 15
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  UnsolicitedIndicator?: boolean// 325
-  SecurityTradingStatus?: number// 326
-  FinancialStatus?: string// 291
-  CorporateAction?: string// 292
-  HaltReasonChar?: string// 327
-  InViewOfCommon?: boolean// 328
-  DueToRelated?: boolean// 329
-  BuyVolume?: number// 330
-  SellVolume?: number// 331
-  HighPx?: number// 332
-  LowPx?: number// 333
-  LastPx?: number// 31
-  TransactTime?: Date// 60
-  Adjustment?: number// 334
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  SecurityStatusReqID?: string// [2] 324 (String)
+  Instrument?: IInstrument// [3] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  InstrumentExtension?: IInstrumentExtension// [4] DeliveryForm.668, PctAtRisk.869 .. InstrAttribValue.872
+  UndInstrmtGrp?: IUndInstrmtGrp// [5] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  InstrmtLegGrp?: IInstrmtLegGrp// [6] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  Currency?: string// [7] 15 (String)
+  TradingSessionID?: string// [8] 336 (String)
+  TradingSessionSubID?: string// [9] 625 (String)
+  UnsolicitedIndicator?: boolean// [10] 325 (Boolean)
+  SecurityTradingStatus?: number// [11] 326 (Int)
+  FinancialStatus?: string// [12] 291 (String)
+  CorporateAction?: string// [13] 292 (String)
+  HaltReasonChar?: string// [14] 327 (String)
+  InViewOfCommon?: boolean// [15] 328 (Boolean)
+  DueToRelated?: boolean// [16] 329 (Boolean)
+  BuyVolume?: number// [17] 330 (Float)
+  SellVolume?: number// [18] 331 (Float)
+  HighPx?: number// [19] 332 (Float)
+  LowPx?: number// [20] 333 (Float)
+  LastPx?: number// [21] 31 (Float)
+  TransactTime?: Date// [22] 60 (UtcTimestamp)
+  Adjustment?: number// [23] 334 (Int)
+  Text?: string// [24] 58 (String)
+  EncodedTextLen?: number// [25] 354 (Length)
+  EncodedText?: Buffer// [26] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [27] SignatureLength.93, Signature.89, CheckSum.10
 }

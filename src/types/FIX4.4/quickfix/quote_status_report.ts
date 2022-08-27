@@ -12,67 +12,67 @@ import { IYieldData } from './set/yield_data'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IQuoteStatusReport {
-  StandardHeader: IStandardHeader
-  QuoteStatusReqID?: string// 649
-  QuoteReqID?: string// 131
-  QuoteID: string// 117
-  QuoteRespID?: string// 693
-  QuoteType?: number// 537
-  Parties?: IParties
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp
-  Side?: string// 54
-  OrderQtyData?: IOrderQtyData
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  SettlDate2?: Date// 193
-  OrderQty2?: number// 192
-  Currency?: string// 15
-  Stipulations?: IStipulations
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  LegQuotStatGrp?: ILegQuotStatGrp
-  QuotQualGrp?: IQuotQualGrp
-  ExpireTime?: Date// 126
-  Price?: number// 44
-  PriceType?: number// 423
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  YieldData?: IYieldData
-  BidPx?: number// 132
-  OfferPx?: number// 133
-  MktBidPx?: number// 645
-  MktOfferPx?: number// 646
-  MinBidSize?: number// 647
-  BidSize?: number// 134
-  MinOfferSize?: number// 648
-  OfferSize?: number// 135
-  ValidUntilTime?: Date// 62
-  BidSpotRate?: number// 188
-  OfferSpotRate?: number// 190
-  BidForwardPoints?: number// 189
-  OfferForwardPoints?: number// 191
-  MidPx?: number// 631
-  BidYield?: number// 632
-  MidYield?: number// 633
-  OfferYield?: number// 634
-  TransactTime?: Date// 60
-  OrdType?: string// 40
-  BidForwardPoints2?: number// 642
-  OfferForwardPoints2?: number// 643
-  SettlCurrBidFxRate?: number// 656
-  SettlCurrOfferFxRate?: number// 657
-  SettlCurrFxRateCalc?: string// 156
-  CommType?: string// 13
-  Commission?: number// 12
-  CustOrderCapacity?: number// 582
-  ExDestination?: string// 100
-  QuoteStatus?: number// 297
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  QuoteStatusReqID?: string// [2] 649 (String)
+  QuoteReqID?: string// [3] 131 (String)
+  QuoteID: string// [4] 117 (String)
+  QuoteRespID?: string// [5] 693 (String)
+  QuoteType?: number// [6] 537 (Int)
+  Parties?: IParties// [7] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  TradingSessionID?: string// [8] 336 (String)
+  TradingSessionSubID?: string// [9] 625 (String)
+  Instrument?: IInstrument// [10] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [11] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [12] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  Side?: string// [13] 54 (String)
+  OrderQtyData?: IOrderQtyData// [14] OrderQty.38, CashOrderQty.152 .. RoundingModulus.469
+  SettlType?: string// [15] 63 (String)
+  SettlDate?: Date// [16] 64 (LocalDate)
+  SettlDate2?: Date// [17] 193 (LocalDate)
+  OrderQty2?: number// [18] 192 (Float)
+  Currency?: string// [19] 15 (String)
+  Stipulations?: IStipulations// [20] NoStipulations.232, StipulationType.233, StipulationValue.234
+  Account?: string// [21] 1 (String)
+  AcctIDSource?: number// [22] 660 (Int)
+  AccountType?: number// [23] 581 (Int)
+  LegQuotStatGrp?: ILegQuotStatGrp// [24] NoLegs.555, LegSymbol.600 .. NestedPartySubIDType.805
+  QuotQualGrp?: IQuotQualGrp// [25] NoQuoteQualifiers.735, QuoteQualifier.695
+  ExpireTime?: Date// [26] 126 (UtcTimestamp)
+  Price?: number// [27] 44 (Float)
+  PriceType?: number// [28] 423 (Int)
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [29] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  YieldData?: IYieldData// [30] YieldType.235, Yield.236 .. YieldRedemptionPriceType.698
+  BidPx?: number// [31] 132 (Float)
+  OfferPx?: number// [32] 133 (Float)
+  MktBidPx?: number// [33] 645 (Float)
+  MktOfferPx?: number// [34] 646 (Float)
+  MinBidSize?: number// [35] 647 (Float)
+  BidSize?: number// [36] 134 (Float)
+  MinOfferSize?: number// [37] 648 (Float)
+  OfferSize?: number// [38] 135 (Float)
+  ValidUntilTime?: Date// [39] 62 (UtcTimestamp)
+  BidSpotRate?: number// [40] 188 (Float)
+  OfferSpotRate?: number// [41] 190 (Float)
+  BidForwardPoints?: number// [42] 189 (Float)
+  OfferForwardPoints?: number// [43] 191 (Float)
+  MidPx?: number// [44] 631 (Float)
+  BidYield?: number// [45] 632 (Float)
+  MidYield?: number// [46] 633 (Float)
+  OfferYield?: number// [47] 634 (Float)
+  TransactTime?: Date// [48] 60 (UtcTimestamp)
+  OrdType?: string// [49] 40 (String)
+  BidForwardPoints2?: number// [50] 642 (Float)
+  OfferForwardPoints2?: number// [51] 643 (Float)
+  SettlCurrBidFxRate?: number// [52] 656 (Float)
+  SettlCurrOfferFxRate?: number// [53] 657 (Float)
+  SettlCurrFxRateCalc?: string// [54] 156 (String)
+  CommType?: string// [55] 13 (String)
+  Commission?: number// [56] 12 (Float)
+  CustOrderCapacity?: number// [57] 582 (Int)
+  ExDestination?: string// [58] 100 (String)
+  QuoteStatus?: number// [59] 297 (Int)
+  Text?: string// [60] 58 (String)
+  EncodedTextLen?: number// [61] 354 (Length)
+  EncodedText?: Buffer// [62] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [63] SignatureLength.93, Signature.89, CheckSum.10
 }

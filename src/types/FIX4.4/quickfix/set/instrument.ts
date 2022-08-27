@@ -2,47 +2,47 @@ import { ISecAltIDGrp } from './sec_alt_id_grp'
 import { IEvntGrp } from './evnt_grp'
 
 export interface IInstrument {
-  Symbol?: string// 55
-  SymbolSfx?: string// 65
-  SecurityID?: string// 48
-  SecurityIDSource?: string// 22
-  SecAltIDGrp?: ISecAltIDGrp
-  Product?: number// 460
-  CFICode?: string// 461
-  SecurityType?: string// 167
-  SecuritySubType?: string// 762
-  MaturityMonthYear?: string// 200
-  MaturityDate?: Date// 541
-  PutOrCall?: number// 201
-  CouponPaymentDate?: Date// 224
-  IssueDate?: Date// 225
-  RepoCollateralSecurityType?: string// 239
-  RepurchaseTerm?: number// 226
-  RepurchaseRate?: number// 227
-  Factor?: number// 228
-  CreditRating?: string// 255
-  InstrRegistry?: string// 543
-  CountryOfIssue?: string// 470
-  StateOrProvinceOfIssue?: string// 471
-  LocaleOfIssue?: string// 472
-  RedemptionDate?: Date// 240
-  StrikePrice?: number// 202
-  StrikeCurrency?: string// 947
-  OptAttribute?: string// 206
-  ContractMultiplier?: number// 231
-  CouponRate?: number// 223
-  SecurityExchange?: string// 207
-  Issuer?: string// 106
-  EncodedIssuerLen?: number// 348
-  EncodedIssuer?: Buffer// 349
-  SecurityDesc?: string// 107
-  EncodedSecurityDescLen?: number// 350
-  EncodedSecurityDesc?: Buffer// 351
-  Pool?: string// 691
-  ContractSettlMonth?: string// 667
-  CPProgram?: number// 875
-  CPRegType?: string// 876
-  EvntGrp?: IEvntGrp
-  DatedDate?: Date// 873
-  InterestAccrualDate?: Date// 874
+  Symbol?: string// [1] 55 (String)
+  SymbolSfx?: string// [2] 65 (String)
+  SecurityID?: string// [3] 48 (String)
+  SecurityIDSource?: string// [4] 22 (String)
+  SecAltIDGrp?: ISecAltIDGrp// [5] NoSecurityAltID.454, SecurityAltID.455, SecurityAltIDSource.456
+  Product?: number// [6] 460 (Int)
+  CFICode?: string// [7] 461 (String)
+  SecurityType?: string// [8] 167 (String)
+  SecuritySubType?: string// [9] 762 (String)
+  MaturityMonthYear?: string// [10] 200 (String)
+  MaturityDate?: Date// [11] 541 (LocalDate)
+  PutOrCall?: number// [12] 201 (Int)
+  CouponPaymentDate?: Date// [13] 224 (LocalDate)
+  IssueDate?: Date// [14] 225 (LocalDate)
+  RepoCollateralSecurityType?: string// [15] 239 (String)
+  RepurchaseTerm?: number// [16] 226 (Int)
+  RepurchaseRate?: number// [17] 227 (Float)
+  Factor?: number// [18] 228 (Float)
+  CreditRating?: string// [19] 255 (String)
+  InstrRegistry?: string// [20] 543 (String)
+  CountryOfIssue?: string// [21] 470 (String)
+  StateOrProvinceOfIssue?: string// [22] 471 (String)
+  LocaleOfIssue?: string// [23] 472 (String)
+  RedemptionDate?: Date// [24] 240 (LocalDate)
+  StrikePrice?: number// [25] 202 (Float)
+  StrikeCurrency?: string// [26] 947 (String)
+  OptAttribute?: string// [27] 206 (String)
+  ContractMultiplier?: number// [28] 231 (Float)
+  CouponRate?: number// [29] 223 (Float)
+  SecurityExchange?: string// [30] 207 (String)
+  Issuer?: string// [31] 106 (String)
+  EncodedIssuerLen?: number// [32] 348 (Length)
+  EncodedIssuer?: Buffer// [33] 349 (RawData)
+  SecurityDesc?: string// [34] 107 (String)
+  EncodedSecurityDescLen?: number// [35] 350 (Length)
+  EncodedSecurityDesc?: Buffer// [36] 351 (RawData)
+  Pool?: string// [37] 691 (String)
+  ContractSettlMonth?: string// [38] 667 (String)
+  CPProgram?: number// [39] 875 (Int)
+  CPRegType?: string// [40] 876 (String)
+  EvntGrp?: IEvntGrp// [41] NoEvents.864, EventType.865 .. EventText.868
+  DatedDate?: Date// [42] 873 (LocalDate)
+  InterestAccrualDate?: Date// [43] 874 (LocalDate)
 }

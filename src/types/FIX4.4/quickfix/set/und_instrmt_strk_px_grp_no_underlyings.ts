@@ -1,14 +1,14 @@
 import { IUnderlyingInstrument } from './underlying_instrument'
 
 export interface IUndInstrmtStrkPxGrpNoUnderlyings {
-  UnderlyingInstrument?: IUnderlyingInstrument
-  PrevClosePx?: number// 140
-  ClOrdID?: string// 11
-  SecondaryClOrdID?: string// 526
-  Side?: string// 54
-  Price: number// 44
-  Currency?: string// 15
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
+  UnderlyingInstrument?: IUnderlyingInstrument// [1] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingStipValue.889
+  PrevClosePx?: number// [2] 140 (Float)
+  ClOrdID?: string// [3] 11 (String)
+  SecondaryClOrdID?: string// [4] 526 (String)
+  Side?: string// [5] 54 (String)
+  Price: number// [6] 44 (Float)
+  Currency?: string// [7] 15 (String)
+  Text?: string// [8] 58 (String)
+  EncodedTextLen?: number// [9] 354 (Length)
+  EncodedText?: Buffer// [10] 355 (RawData)
 }

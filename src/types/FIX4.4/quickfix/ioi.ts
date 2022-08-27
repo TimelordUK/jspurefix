@@ -12,33 +12,33 @@ import { IYieldData } from './set/yield_data'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IIOI {
-  StandardHeader: IStandardHeader
-  IOIID: string// 23
-  IOITransType: string// 28
-  IOIRefID?: string// 26
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp
-  Side: string// 54
-  QtyType?: number// 854
-  OrderQtyData?: IOrderQtyData
-  IOIQty: string// 27
-  Currency?: string// 15
-  Stipulations?: IStipulations
-  InstrmtLegIOIGrp?: IInstrmtLegIOIGrp
-  PriceType?: number// 423
-  Price?: number// 44
-  ValidUntilTime?: Date// 62
-  IOIQltyInd?: string// 25
-  IOINaturalFlag?: boolean// 130
-  IOIQualGrp?: IIOIQualGrp
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  TransactTime?: Date// 60
-  URLLink?: string// 149
-  RoutingGrp?: IRoutingGrp
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  YieldData?: IYieldData
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  IOIID: string// [2] 23 (String)
+  IOITransType: string// [3] 28 (String)
+  IOIRefID?: string// [4] 26 (String)
+  Instrument?: IInstrument// [5] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [6] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [7] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  Side: string// [8] 54 (String)
+  QtyType?: number// [9] 854 (Int)
+  OrderQtyData?: IOrderQtyData// [10] OrderQty.38, CashOrderQty.152 .. RoundingModulus.469
+  IOIQty: string// [11] 27 (String)
+  Currency?: string// [12] 15 (String)
+  Stipulations?: IStipulations// [13] NoStipulations.232, StipulationType.233, StipulationValue.234
+  InstrmtLegIOIGrp?: IInstrmtLegIOIGrp// [14] NoLegs.555, LegSymbol.600 .. LegStipulationValue.689
+  PriceType?: number// [15] 423 (Int)
+  Price?: number// [16] 44 (Float)
+  ValidUntilTime?: Date// [17] 62 (UtcTimestamp)
+  IOIQltyInd?: string// [18] 25 (String)
+  IOINaturalFlag?: boolean// [19] 130 (Boolean)
+  IOIQualGrp?: IIOIQualGrp// [20] NoIOIQualifiers.199, IOIQualifier.104
+  Text?: string// [21] 58 (String)
+  EncodedTextLen?: number// [22] 354 (Length)
+  EncodedText?: Buffer// [23] 355 (RawData)
+  TransactTime?: Date// [24] 60 (UtcTimestamp)
+  URLLink?: string// [25] 149 (String)
+  RoutingGrp?: IRoutingGrp// [26] NoRoutingIDs.215, RoutingType.216, RoutingID.217
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [27] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  YieldData?: IYieldData// [28] YieldType.235, Yield.236 .. YieldRedemptionPriceType.698
+  StandardTrailer: IStandardTrailer// [29] SignatureLength.93, Signature.89, CheckSum.10
 }

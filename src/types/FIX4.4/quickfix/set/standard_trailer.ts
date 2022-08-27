@@ -1,5 +1,5 @@
 export interface IStandardTrailer {
-  SignatureLength?: number// 93
-  Signature?: Buffer// 89
-  CheckSum: string// 10
+  SignatureLength?: number// [1] 93 (Length)
+  Signature?: Buffer// [2] 89 (RawData)
+  CheckSum: string// [3] 10 (String)
 }

@@ -17,6 +17,8 @@ export abstract class ContainedFieldSet {
   public readonly fields: ContainedField[] = []
     // any tag at any level i.e. does this set contain a tag
   public readonly containedTag: INumericKeyed<boolean> = {}
+    // any tag at any level ordered ie. all tags flattened to list
+  public readonly flattenedTag: number[] = []
     // any data tags contained length within this set.
   public readonly containedLength: INumericKeyed<boolean> = {}
     // tags only in repository at this level, not from any at deeper levels
@@ -56,6 +58,18 @@ export abstract class ContainedFieldSet {
   }
 
   public abstract getPrefix (): string
+
+  public getFieldName (tag: number) {
+    const s = this.tagToSimple[tag]
+    if (s == null) {
+      const gf = this.tagToField[tag] as ContainedGroupField
+      if (gf !== null) {
+        return `${gf.definition.name}`
+      }
+      return `${tag}`
+    }
+    return s.name
+  }
 
   public add (field: ContainedField): void {
     this.fields.push(field)
@@ -149,8 +163,11 @@ export abstract class ContainedFieldSet {
     }
     const definition = groupField.definition
     this.groups.add(groupField.name, groupField)
-    if (definition.noOfField) {
-      this.containedTag[definition.noOfField.tag] = true
+    const nof = definition.noOfField
+    if (nof) {
+      const tag = nof.tag
+      this.containedTag[tag] = true
+      this.flattenedTag.push(tag)
     }
     this.addAllFields(definition)
     this.mapAllBelow(definition, groupField)
@@ -206,6 +223,7 @@ export abstract class ContainedFieldSet {
     const tag = field.definition.tag
     this.simple.add(field.name, field)
     this.containedTag[tag] = true
+    this.flattenedTag.push(tag)
     this.tagToSimple[tag] = field
   }
 }

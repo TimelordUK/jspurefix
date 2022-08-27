@@ -10,9 +10,9 @@ import { INestedParties } from './nested_parties'
 ***************************************************************
 */
 export interface IPositionQty {
-  PosType?: string// 703
-  LongQty?: number// 704
-  ShortQty?: number// 705
-  PosQtyStatus?: number// 706
-  NestedParties?: INestedParties[]
+  PosType?: string// [1] 703 (String)
+  LongQty?: number// [2] 704 (Float)
+  ShortQty?: number// [3] 705 (Float)
+  PosQtyStatus?: number// [4] 706 (Int)
+  NestedParties?: INestedParties[]// [5] NestedPartyID.524, NestedPartyIDSource.525 .. NestedPartySubIDType.805
 }

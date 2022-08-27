@@ -1,6 +1,6 @@
 export interface IEvntGrpNoEvents {
-  EventType?: number// 865
-  EventDate?: Date// 866
-  EventPx?: number// 867
-  EventText?: string// 868
+  EventType?: number// [1] 865 (Int)
+  EventDate?: Date// [2] 866 (LocalDate)
+  EventPx?: number// [3] 867 (Float)
+  EventText?: string// [4] 868 (String)
 }

@@ -1,10 +1,10 @@
 export interface IAllocAckGrpNoAllocs {
-  AllocAccount?: string// 79
-  AllocAcctIDSource?: number// 661
-  AllocPrice?: number// 366
-  IndividualAllocID?: string// 467
-  IndividualAllocRejCode?: number// 776
-  AllocText?: string// 161
-  EncodedAllocTextLen?: number// 360
-  EncodedAllocText?: Buffer// 361
+  AllocAccount?: string// [1] 79 (String)
+  AllocAcctIDSource?: number// [2] 661 (Int)
+  AllocPrice?: number// [3] 366 (Float)
+  IndividualAllocID?: string// [4] 467 (String)
+  IndividualAllocRejCode?: number// [5] 776 (Int)
+  AllocText?: string// [6] 161 (String)
+  EncodedAllocTextLen?: number// [7] 360 (Length)
+  EncodedAllocText?: Buffer// [8] 361 (RawData)
 }

@@ -6,25 +6,25 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IRequestForPositionsAck {
-  StandardHeader: IStandardHeader
-  PosMaintRptID: string// 721
-  PosReqID?: string// 710
-  TotalNumPosReports?: number// 727
-  UnsolicitedIndicator?: boolean// 325
-  PosReqResult: number// 728
-  PosReqStatus: number// 729
-  Parties?: IParties
-  Account: string// 1
-  AcctIDSource?: number// 660
-  AccountType: number// 581
-  Instrument?: IInstrument
-  Currency?: string// 15
-  InstrmtLegGrp?: IInstrmtLegGrp
-  UndInstrmtGrp?: IUndInstrmtGrp
-  ResponseTransportType?: number// 725
-  ResponseDestination?: string// 726
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  PosMaintRptID: string// [2] 721 (String)
+  PosReqID?: string// [3] 710 (String)
+  TotalNumPosReports?: number// [4] 727 (Int)
+  UnsolicitedIndicator?: boolean// [5] 325 (Boolean)
+  PosReqResult: number// [6] 728 (Int)
+  PosReqStatus: number// [7] 729 (Int)
+  Parties?: IParties// [8] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Account: string// [9] 1 (String)
+  AcctIDSource?: number// [10] 660 (Int)
+  AccountType: number// [11] 581 (Int)
+  Instrument?: IInstrument// [12] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  Currency?: string// [13] 15 (String)
+  InstrmtLegGrp?: IInstrmtLegGrp// [14] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  UndInstrmtGrp?: IUndInstrmtGrp// [15] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  ResponseTransportType?: number// [16] 725 (Int)
+  ResponseDestination?: string// [17] 726 (String)
+  Text?: string// [18] 58 (String)
+  EncodedTextLen?: number// [19] 354 (Length)
+  EncodedText?: Buffer// [20] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [21] SignatureLength.93, Signature.89, CheckSum.10
 }

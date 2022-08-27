@@ -10,37 +10,37 @@ import { IYieldData } from './yield_data'
 import { IParties } from './parties'
 
 export interface IQuotReqRjctGrpNoRelatedSym {
-  Instrument: IInstrument
-  FinancingDetails: IFinancingDetails
-  UndInstrmtGrp: IUndInstrmtGrp
-  PrevClosePx?: number// 140
-  QuoteRequestType?: number// 303
-  QuoteType?: number// 537
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  TradeOriginationDate?: Date// 229
-  Side?: string// 54
-  QtyType?: number// 854
-  OrderQtyData: IOrderQtyData
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  SettlDate2?: Date// 193
-  OrderQty2?: number// 192
-  Currency?: string// 15
-  Stipulations: IStipulations
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  QuotReqLegsGrp: IQuotReqLegsGrp
-  QuotQualGrp: IQuotQualGrp
-  QuotePriceType?: number// 692
-  OrdType?: string// 40
-  ExpireTime?: Date// 126
-  TransactTime?: Date// 60
-  SpreadOrBenchmarkCurveData: ISpreadOrBenchmarkCurveData
-  PriceType?: number// 423
-  Price?: number// 44
-  Price2?: number// 640
-  YieldData: IYieldData
-  Parties: IParties
+  Instrument: IInstrument// [1] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails: IFinancingDetails// [2] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp: IUndInstrmtGrp// [3] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  PrevClosePx?: number// [4] 140 (Float)
+  QuoteRequestType?: number// [5] 303 (Int)
+  QuoteType?: number// [6] 537 (Int)
+  TradingSessionID?: string// [7] 336 (String)
+  TradingSessionSubID?: string// [8] 625 (String)
+  TradeOriginationDate?: Date// [9] 229 (LocalDate)
+  Side?: string// [10] 54 (String)
+  QtyType?: number// [11] 854 (Int)
+  OrderQtyData: IOrderQtyData// [12] OrderQty.38, CashOrderQty.152 .. RoundingModulus.469
+  SettlType?: string// [13] 63 (String)
+  SettlDate?: Date// [14] 64 (LocalDate)
+  SettlDate2?: Date// [15] 193 (LocalDate)
+  OrderQty2?: number// [16] 192 (Float)
+  Currency?: string// [17] 15 (String)
+  Stipulations: IStipulations// [18] NoStipulations.232, StipulationType.233, StipulationValue.234
+  Account?: string// [19] 1 (String)
+  AcctIDSource?: number// [20] 660 (Int)
+  AccountType?: number// [21] 581 (Int)
+  QuotReqLegsGrp: IQuotReqLegsGrp// [22] NoLegs.555, LegSymbol.600 .. LegBenchmarkPriceType.680
+  QuotQualGrp: IQuotQualGrp// [23] NoQuoteQualifiers.735, QuoteQualifier.695
+  QuotePriceType?: number// [24] 692 (Int)
+  OrdType?: string// [25] 40 (String)
+  ExpireTime?: Date// [26] 126 (UtcTimestamp)
+  TransactTime?: Date// [27] 60 (UtcTimestamp)
+  SpreadOrBenchmarkCurveData: ISpreadOrBenchmarkCurveData// [28] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  PriceType?: number// [29] 423 (Int)
+  Price?: number// [30] 44 (Float)
+  Price2?: number// [31] 640 (Float)
+  YieldData: IYieldData// [32] YieldType.235, Yield.236 .. YieldRedemptionPriceType.698
+  Parties: IParties// [33] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
 }

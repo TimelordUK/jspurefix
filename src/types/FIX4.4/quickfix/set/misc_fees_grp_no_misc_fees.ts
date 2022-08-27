@@ -1,6 +1,6 @@
 export interface IMiscFeesGrpNoMiscFees {
-  MiscFeeAmt?: number// 137
-  MiscFeeCurr?: string// 138
-  MiscFeeType?: string// 139
-  MiscFeeBasis?: number// 891
+  MiscFeeAmt?: number// [1] 137 (Float)
+  MiscFeeCurr?: string// [2] 138 (String)
+  MiscFeeType?: string// [3] 139 (String)
+  MiscFeeBasis?: number// [4] 891 (Int)
 }

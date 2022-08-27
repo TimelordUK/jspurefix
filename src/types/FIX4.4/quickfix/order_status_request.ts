@@ -6,18 +6,18 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IOrderStatusRequest {
-  StandardHeader: IStandardHeader
-  OrderID?: string// 37
-  ClOrdID: string// 11
-  SecondaryClOrdID?: string// 526
-  ClOrdLinkID?: string// 583
-  Parties?: IParties
-  OrdStatusReqID?: string// 790
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp
-  Side: string// 54
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  OrderID?: string// [2] 37 (String)
+  ClOrdID: string// [3] 11 (String)
+  SecondaryClOrdID?: string// [4] 526 (String)
+  ClOrdLinkID?: string// [5] 583 (String)
+  Parties?: IParties// [6] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  OrdStatusReqID?: string// [7] 790 (String)
+  Account?: string// [8] 1 (String)
+  AcctIDSource?: number// [9] 660 (Int)
+  Instrument?: IInstrument// [10] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [11] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [12] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  Side: string// [13] 54 (String)
+  StandardTrailer: IStandardTrailer// [14] SignatureLength.93, Signature.89, CheckSum.10
 }

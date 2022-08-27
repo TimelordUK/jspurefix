@@ -2,7 +2,7 @@ import { IInstrumentLeg } from './instrument_leg'
 import { ILegStipulations } from './leg_stipulations'
 
 export interface IInstrmtLegIOIGrpNoLegs {
-  InstrumentLeg?: IInstrumentLeg
-  LegIOIQty?: string// 682
-  LegStipulations?: ILegStipulations
+  InstrumentLeg?: IInstrumentLeg// [1] LegSymbol.600, LegSymbolSfx.601 .. LegInterestAccrualDate.956
+  LegIOIQty?: string// [2] 682 (String)
+  LegStipulations?: ILegStipulations// [3] NoLegStipulations.683, LegStipulationType.688, LegStipulationValue.689
 }

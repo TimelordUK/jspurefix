@@ -2,31 +2,31 @@ import { IInstrument } from './instrument'
 import { IInstrmtLegGrp } from './instrmt_leg_grp'
 
 export interface IQuotEntryAckGrpNoQuoteEntries {
-  QuoteEntryID?: string// 299
-  Instrument?: IInstrument
-  InstrmtLegGrp?: IInstrmtLegGrp
-  BidPx?: number// 132
-  OfferPx?: number// 133
-  BidSize?: number// 134
-  OfferSize?: number// 135
-  ValidUntilTime?: Date// 62
-  BidSpotRate?: number// 188
-  OfferSpotRate?: number// 190
-  BidForwardPoints?: number// 189
-  OfferForwardPoints?: number// 191
-  MidPx?: number// 631
-  BidYield?: number// 632
-  MidYield?: number// 633
-  OfferYield?: number// 634
-  TransactTime?: Date// 60
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  SettlDate?: Date// 64
-  OrdType?: string// 40
-  SettlDate2?: Date// 193
-  OrderQty2?: number// 192
-  BidForwardPoints2?: number// 642
-  OfferForwardPoints2?: number// 643
-  Currency?: string// 15
-  QuoteEntryRejectReason?: number// 368
+  QuoteEntryID?: string// [1] 299 (String)
+  Instrument?: IInstrument// [2] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  InstrmtLegGrp?: IInstrmtLegGrp// [3] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  BidPx?: number// [4] 132 (Float)
+  OfferPx?: number// [5] 133 (Float)
+  BidSize?: number// [6] 134 (Float)
+  OfferSize?: number// [7] 135 (Float)
+  ValidUntilTime?: Date// [8] 62 (UtcTimestamp)
+  BidSpotRate?: number// [9] 188 (Float)
+  OfferSpotRate?: number// [10] 190 (Float)
+  BidForwardPoints?: number// [11] 189 (Float)
+  OfferForwardPoints?: number// [12] 191 (Float)
+  MidPx?: number// [13] 631 (Float)
+  BidYield?: number// [14] 632 (Float)
+  MidYield?: number// [15] 633 (Float)
+  OfferYield?: number// [16] 634 (Float)
+  TransactTime?: Date// [17] 60 (UtcTimestamp)
+  TradingSessionID?: string// [18] 336 (String)
+  TradingSessionSubID?: string// [19] 625 (String)
+  SettlDate?: Date// [20] 64 (LocalDate)
+  OrdType?: string// [21] 40 (String)
+  SettlDate2?: Date// [22] 193 (LocalDate)
+  OrderQty2?: number// [23] 192 (Float)
+  BidForwardPoints2?: number// [24] 642 (Float)
+  OfferForwardPoints2?: number// [25] 643 (Float)
+  Currency?: string// [26] 15 (String)
+  QuoteEntryRejectReason?: number// [27] 368 (Int)
 }

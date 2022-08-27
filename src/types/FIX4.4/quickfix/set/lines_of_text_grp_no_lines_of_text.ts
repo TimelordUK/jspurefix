@@ -1,5 +1,5 @@
 export interface ILinesOfTextGrpNoLinesOfText {
-  Text: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
+  Text: string// [1] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [3] 355 (RawData)
 }

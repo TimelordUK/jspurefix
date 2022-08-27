@@ -7,28 +7,28 @@ import { ITrdgSesGrp } from './set/trdg_ses_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IRequestForPositions {
-  StandardHeader: IStandardHeader
-  PosReqID: string// 710
-  PosReqType: number// 724
-  MatchStatus?: string// 573
-  SubscriptionRequestType?: string// 263
-  Parties?: IParties
-  Account: string// 1
-  AcctIDSource?: number// 660
-  AccountType: number// 581
-  Instrument?: IInstrument
-  Currency?: string// 15
-  InstrmtLegGrp?: IInstrmtLegGrp
-  UndInstrmtGrp?: IUndInstrmtGrp
-  ClearingBusinessDate: Date// 715
-  SettlSessID?: string// 716
-  SettlSessSubID?: string// 717
-  TrdgSesGrp?: ITrdgSesGrp
-  TransactTime: Date// 60
-  ResponseTransportType?: number// 725
-  ResponseDestination?: string// 726
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  PosReqID: string// [2] 710 (String)
+  PosReqType: number// [3] 724 (Int)
+  MatchStatus?: string// [4] 573 (String)
+  SubscriptionRequestType?: string// [5] 263 (String)
+  Parties?: IParties// [6] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Account: string// [7] 1 (String)
+  AcctIDSource?: number// [8] 660 (Int)
+  AccountType: number// [9] 581 (Int)
+  Instrument?: IInstrument// [10] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  Currency?: string// [11] 15 (String)
+  InstrmtLegGrp?: IInstrmtLegGrp// [12] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  UndInstrmtGrp?: IUndInstrmtGrp// [13] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  ClearingBusinessDate: Date// [14] 715 (LocalDate)
+  SettlSessID?: string// [15] 716 (String)
+  SettlSessSubID?: string// [16] 717 (String)
+  TrdgSesGrp?: ITrdgSesGrp// [17] NoTradingSessions.386, TradingSessionID.336, TradingSessionSubID.625
+  TransactTime: Date// [18] 60 (UtcTimestamp)
+  ResponseTransportType?: number// [19] 725 (Int)
+  ResponseDestination?: string// [20] 726 (String)
+  Text?: string// [21] 58 (String)
+  EncodedTextLen?: number// [22] 354 (Length)
+  EncodedText?: Buffer// [23] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [24] SignatureLength.93, Signature.89, CheckSum.10
 }

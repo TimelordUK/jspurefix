@@ -13,48 +13,48 @@ import { IStipulations } from './set/stipulations'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ICollateralResponse {
-  StandardHeader: IStandardHeader
-  CollRespID: string// 904
-  CollAsgnID: string// 902
-  CollReqID?: string// 894
-  CollAsgnReason: number// 895
-  CollAsgnTransType?: number// 903
-  CollAsgnRespType: number// 905
-  CollAsgnRejectReason?: number// 906
-  TransactTime: Date// 60
-  Parties?: IParties
-  Account?: string// 1
-  AccountType?: number// 581
-  ClOrdID?: string// 11
-  OrderID?: string// 37
-  SecondaryOrderID?: string// 198
-  SecondaryClOrdID?: string// 526
-  ExecCollGrp?: IExecCollGrp
-  TrdCollGrp?: ITrdCollGrp
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  SettlDate?: Date// 64
-  Quantity?: number// 53
-  QtyType?: number// 854
-  Currency?: string// 15
-  InstrmtLegGrp?: IInstrmtLegGrp
-  UndInstrmtCollGrp?: IUndInstrmtCollGrp
-  MarginExcess?: number// 899
-  TotalNetValue?: number// 900
-  CashOutstanding?: number// 901
-  TrdRegTimestamps?: ITrdRegTimestamps
-  Side?: string// 54
-  MiscFeesGrp?: IMiscFeesGrp
-  Price?: number// 44
-  PriceType?: number// 423
-  AccruedInterestAmt?: number// 159
-  EndAccruedInterestAmt?: number// 920
-  StartCash?: number// 921
-  EndCash?: number// 922
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  Stipulations?: IStipulations
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  CollRespID: string// [2] 904 (String)
+  CollAsgnID: string// [3] 902 (String)
+  CollReqID?: string// [4] 894 (String)
+  CollAsgnReason: number// [5] 895 (Int)
+  CollAsgnTransType?: number// [6] 903 (Int)
+  CollAsgnRespType: number// [7] 905 (Int)
+  CollAsgnRejectReason?: number// [8] 906 (Int)
+  TransactTime: Date// [9] 60 (UtcTimestamp)
+  Parties?: IParties// [10] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Account?: string// [11] 1 (String)
+  AccountType?: number// [12] 581 (Int)
+  ClOrdID?: string// [13] 11 (String)
+  OrderID?: string// [14] 37 (String)
+  SecondaryOrderID?: string// [15] 198 (String)
+  SecondaryClOrdID?: string// [16] 526 (String)
+  ExecCollGrp?: IExecCollGrp// [17] NoExecs.124, ExecID.17
+  TrdCollGrp?: ITrdCollGrp// [18] NoTrades.897, TradeReportID.571, SecondaryTradeReportID.818
+  Instrument?: IInstrument// [19] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  FinancingDetails?: IFinancingDetails// [20] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  SettlDate?: Date// [21] 64 (LocalDate)
+  Quantity?: number// [22] 53 (Float)
+  QtyType?: number// [23] 854 (Int)
+  Currency?: string// [24] 15 (String)
+  InstrmtLegGrp?: IInstrmtLegGrp// [25] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  UndInstrmtCollGrp?: IUndInstrmtCollGrp// [26] NoUnderlyings.711, UnderlyingSymbol.311 .. CollAction.944
+  MarginExcess?: number// [27] 899 (Float)
+  TotalNetValue?: number// [28] 900 (Float)
+  CashOutstanding?: number// [29] 901 (Float)
+  TrdRegTimestamps?: ITrdRegTimestamps// [30] NoTrdRegTimestamps.768, TrdRegTimestamp.769 .. TrdRegTimestampOrigin.771
+  Side?: string// [31] 54 (String)
+  MiscFeesGrp?: IMiscFeesGrp// [32] NoMiscFees.136, MiscFeeAmt.137 .. MiscFeeBasis.891
+  Price?: number// [33] 44 (Float)
+  PriceType?: number// [34] 423 (Int)
+  AccruedInterestAmt?: number// [35] 159 (Float)
+  EndAccruedInterestAmt?: number// [36] 920 (Float)
+  StartCash?: number// [37] 921 (Float)
+  EndCash?: number// [38] 922 (Float)
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [39] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  Stipulations?: IStipulations// [40] NoStipulations.232, StipulationType.233, StipulationValue.234
+  Text?: string// [41] 58 (String)
+  EncodedTextLen?: number// [42] 354 (Length)
+  EncodedText?: Buffer// [43] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [44] SignatureLength.93, Signature.89, CheckSum.10
 }

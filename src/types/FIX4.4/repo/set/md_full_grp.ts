@@ -1,35 +1,35 @@
 export interface IMDFullGrp {
-  MDEntryType: string// 269
-  MDEntryPx?: number// 270
-  Currency?: string// 15
-  MDEntrySize?: number// 271
-  MDEntryDate?: Date// 272
-  MDEntryTime?: string// 273
-  TickDirection?: string// 274
-  MDMkt?: string// 275
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  QuoteCondition?: string// 276
-  TradeCondition?: string// 277
-  MDEntryOriginator?: string// 282
-  LocationID?: string// 283
-  DeskID?: string// 284
-  OpenCloseSettlFlag?: string// 286
-  TimeInForce?: string// 59
-  ExpireDate?: Date// 432
-  ExpireTime?: Date// 126
-  MinQty?: number// 110
-  ExecInst?: string// 18
-  SellerDays?: number// 287
-  OrderID?: string// 37
-  QuoteEntryID?: string// 299
-  MDEntryBuyer?: string// 288
-  MDEntrySeller?: string// 289
-  NumberOfOrders?: number// 346
-  MDEntryPositionNo?: number// 290
-  Scope?: string// 546
-  PriceDelta?: number// 811
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
+  MDEntryType: string// [1] 269 (String)
+  MDEntryPx?: number// [2] 270 (Float)
+  Currency?: string// [3] 15 (String)
+  MDEntrySize?: number// [4] 271 (Float)
+  MDEntryDate?: Date// [5] 272 (UtcDateOnly)
+  MDEntryTime?: string// [6] 273 (String)
+  TickDirection?: string// [7] 274 (String)
+  MDMkt?: string// [8] 275 (String)
+  TradingSessionID?: string// [9] 336 (String)
+  TradingSessionSubID?: string// [10] 625 (String)
+  QuoteCondition?: string// [11] 276 (String)
+  TradeCondition?: string// [12] 277 (String)
+  MDEntryOriginator?: string// [13] 282 (String)
+  LocationID?: string// [14] 283 (String)
+  DeskID?: string// [15] 284 (String)
+  OpenCloseSettlFlag?: string// [16] 286 (String)
+  TimeInForce?: string// [17] 59 (String)
+  ExpireDate?: Date// [18] 432 (LocalDate)
+  ExpireTime?: Date// [19] 126 (UtcTimestamp)
+  MinQty?: number// [20] 110 (Float)
+  ExecInst?: string// [21] 18 (String)
+  SellerDays?: number// [22] 287 (Int)
+  OrderID?: string// [23] 37 (String)
+  QuoteEntryID?: string// [24] 299 (String)
+  MDEntryBuyer?: string// [25] 288 (String)
+  MDEntrySeller?: string// [26] 289 (String)
+  NumberOfOrders?: number// [27] 346 (Int)
+  MDEntryPositionNo?: number// [28] 290 (Int)
+  Scope?: string// [29] 546 (String)
+  PriceDelta?: number// [30] 811 (Float)
+  Text?: string// [31] 58 (String)
+  EncodedTextLen?: number// [32] 354 (Int)
+  EncodedText?: Buffer// [33] 355 (RawData)
 }

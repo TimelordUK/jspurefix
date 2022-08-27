@@ -1,4 +1,4 @@
 export interface IPtysSubGrpNoPartySubIDs {
-  PartySubID?: string// 523
-  PartySubIDType?: number// 803
+  PartySubID?: string// [1] 523 (String)
+  PartySubIDType?: number// [2] 803 (Int)
 }

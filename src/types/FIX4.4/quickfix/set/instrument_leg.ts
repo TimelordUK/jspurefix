@@ -1,46 +1,46 @@
 import { ILegSecAltIDGrp } from './leg_sec_alt_id_grp'
 
 export interface IInstrumentLeg {
-  LegSymbol?: string// 600
-  LegSymbolSfx?: string// 601
-  LegSecurityID?: string// 602
-  LegSecurityIDSource?: string// 603
-  LegSecAltIDGrp?: ILegSecAltIDGrp
-  LegProduct?: number// 607
-  LegCFICode?: string// 608
-  LegSecurityType?: string// 609
-  LegSecuritySubType?: string// 764
-  LegMaturityMonthYear?: string// 610
-  LegMaturityDate?: Date// 611
-  LegCouponPaymentDate?: Date// 248
-  LegIssueDate?: Date// 249
-  LegRepoCollateralSecurityType?: string// 250
-  LegRepurchaseTerm?: number// 251
-  LegRepurchaseRate?: number// 252
-  LegFactor?: number// 253
-  LegCreditRating?: string// 257
-  LegInstrRegistry?: string// 599
-  LegCountryOfIssue?: string// 596
-  LegStateOrProvinceOfIssue?: string// 597
-  LegLocaleOfIssue?: string// 598
-  LegRedemptionDate?: Date// 254
-  LegStrikePrice?: number// 612
-  LegStrikeCurrency?: string// 942
-  LegOptAttribute?: string// 613
-  LegContractMultiplier?: number// 614
-  LegCouponRate?: number// 615
-  LegSecurityExchange?: string// 616
-  LegIssuer?: string// 617
-  EncodedLegIssuerLen?: number// 618
-  EncodedLegIssuer?: Buffer// 619
-  LegSecurityDesc?: string// 620
-  EncodedLegSecurityDescLen?: number// 621
-  EncodedLegSecurityDesc?: Buffer// 622
-  LegRatioQty?: number// 623
-  LegSide?: string// 624
-  LegCurrency?: string// 556
-  LegPool?: string// 740
-  LegDatedDate?: Date// 739
-  LegContractSettlMonth?: string// 955
-  LegInterestAccrualDate?: Date// 956
+  LegSymbol?: string// [1] 600 (String)
+  LegSymbolSfx?: string// [2] 601 (String)
+  LegSecurityID?: string// [3] 602 (String)
+  LegSecurityIDSource?: string// [4] 603 (String)
+  LegSecAltIDGrp?: ILegSecAltIDGrp// [5] NoLegSecurityAltID.604, LegSecurityAltID.605, LegSecurityAltIDSource.606
+  LegProduct?: number// [6] 607 (Int)
+  LegCFICode?: string// [7] 608 (String)
+  LegSecurityType?: string// [8] 609 (String)
+  LegSecuritySubType?: string// [9] 764 (String)
+  LegMaturityMonthYear?: string// [10] 610 (String)
+  LegMaturityDate?: Date// [11] 611 (LocalDate)
+  LegCouponPaymentDate?: Date// [12] 248 (LocalDate)
+  LegIssueDate?: Date// [13] 249 (LocalDate)
+  LegRepoCollateralSecurityType?: string// [14] 250 (String)
+  LegRepurchaseTerm?: number// [15] 251 (Int)
+  LegRepurchaseRate?: number// [16] 252 (Float)
+  LegFactor?: number// [17] 253 (Float)
+  LegCreditRating?: string// [18] 257 (String)
+  LegInstrRegistry?: string// [19] 599 (String)
+  LegCountryOfIssue?: string// [20] 596 (String)
+  LegStateOrProvinceOfIssue?: string// [21] 597 (String)
+  LegLocaleOfIssue?: string// [22] 598 (String)
+  LegRedemptionDate?: Date// [23] 254 (LocalDate)
+  LegStrikePrice?: number// [24] 612 (Float)
+  LegStrikeCurrency?: string// [25] 942 (String)
+  LegOptAttribute?: string// [26] 613 (String)
+  LegContractMultiplier?: number// [27] 614 (Float)
+  LegCouponRate?: number// [28] 615 (Float)
+  LegSecurityExchange?: string// [29] 616 (String)
+  LegIssuer?: string// [30] 617 (String)
+  EncodedLegIssuerLen?: number// [31] 618 (Length)
+  EncodedLegIssuer?: Buffer// [32] 619 (RawData)
+  LegSecurityDesc?: string// [33] 620 (String)
+  EncodedLegSecurityDescLen?: number// [34] 621 (Length)
+  EncodedLegSecurityDesc?: Buffer// [35] 622 (RawData)
+  LegRatioQty?: number// [36] 623 (Float)
+  LegSide?: string// [37] 624 (String)
+  LegCurrency?: string// [38] 556 (String)
+  LegPool?: string// [39] 740 (String)
+  LegDatedDate?: Date// [40] 739 (LocalDate)
+  LegContractSettlMonth?: string// [41] 955 (String)
+  LegInterestAccrualDate?: Date// [42] 956 (LocalDate)
 }

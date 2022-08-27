@@ -1,4 +1,4 @@
 export interface INstdPtysSubGrpNoNestedPartySubIDs {
-  NestedPartySubID?: string// 545
-  NestedPartySubIDType?: number// 805
+  NestedPartySubID?: string// [1] 545 (String)
+  NestedPartySubIDType?: number// [2] 805 (Int)
 }

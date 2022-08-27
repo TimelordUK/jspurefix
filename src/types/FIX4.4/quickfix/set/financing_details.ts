@@ -1,11 +1,11 @@
 export interface IFinancingDetails {
-  AgreementDesc?: string// 913
-  AgreementID?: string// 914
-  AgreementDate?: Date// 915
-  AgreementCurrency?: string// 918
-  TerminationType?: number// 788
-  StartDate?: Date// 916
-  EndDate?: Date// 917
-  DeliveryType?: number// 919
-  MarginRatio?: number// 898
+  AgreementDesc?: string// [1] 913 (String)
+  AgreementID?: string// [2] 914 (String)
+  AgreementDate?: Date// [3] 915 (LocalDate)
+  AgreementCurrency?: string// [4] 918 (String)
+  TerminationType?: number// [5] 788 (Int)
+  StartDate?: Date// [6] 916 (LocalDate)
+  EndDate?: Date// [7] 917 (LocalDate)
+  DeliveryType?: number// [8] 919 (Int)
+  MarginRatio?: number// [9] 898 (Float)
 }

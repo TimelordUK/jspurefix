@@ -1,31 +1,31 @@
 import { IHop } from './hop'
 
 export interface IStandardHeader {
-  BeginString: string// 8
-  BodyLength: number// 9
-  MsgType: string// 35
-  SenderCompID: string// 49
-  TargetCompID: string// 56
-  OnBehalfOfCompID?: string// 115
-  DeliverToCompID?: string// 128
-  SecureDataLen?: number// 90
-  SecureData?: Buffer// 91
-  MsgSeqNum: number// 34
-  SenderSubID?: string// 50
-  SenderLocationID?: string// 142
-  TargetSubID?: string// 57
-  TargetLocationID?: string// 143
-  OnBehalfOfSubID?: string// 116
-  OnBehalfOfLocationID?: string// 144
-  DeliverToSubID?: string// 129
-  DeliverToLocationID?: string// 145
-  PossDupFlag?: boolean// 43
-  PossResend?: boolean// 97
-  SendingTime: Date// 52
-  OrigSendingTime?: Date// 122
-  XmlDataLen?: number// 212
-  XmlData?: Buffer// 213
-  MessageEncoding?: string// 347
-  LastMsgSeqNumProcessed?: number// 369
-  Hop?: IHop
+  BeginString: string// [1] 8 (String)
+  BodyLength: number// [2] 9 (Length)
+  MsgType: string// [3] 35 (String)
+  SenderCompID: string// [4] 49 (String)
+  TargetCompID: string// [5] 56 (String)
+  OnBehalfOfCompID?: string// [6] 115 (String)
+  DeliverToCompID?: string// [7] 128 (String)
+  SecureDataLen?: number// [8] 90 (Length)
+  SecureData?: Buffer// [9] 91 (RawData)
+  MsgSeqNum: number// [10] 34 (Int)
+  SenderSubID?: string// [11] 50 (String)
+  SenderLocationID?: string// [12] 142 (String)
+  TargetSubID?: string// [13] 57 (String)
+  TargetLocationID?: string// [14] 143 (String)
+  OnBehalfOfSubID?: string// [15] 116 (String)
+  OnBehalfOfLocationID?: string// [16] 144 (String)
+  DeliverToSubID?: string// [17] 129 (String)
+  DeliverToLocationID?: string// [18] 145 (String)
+  PossDupFlag?: boolean// [19] 43 (Boolean)
+  PossResend?: boolean// [20] 97 (Boolean)
+  SendingTime: Date// [21] 52 (UtcTimestamp)
+  OrigSendingTime?: Date// [22] 122 (UtcTimestamp)
+  XmlDataLen?: number// [23] 212 (Length)
+  XmlData?: Buffer// [24] 213 (RawData)
+  MessageEncoding?: string// [25] 347 (String)
+  LastMsgSeqNumProcessed?: number// [26] 369 (Int)
+  Hop?: IHop// [27] NoHops.627, HopCompID.628 .. HopRefID.630
 }

@@ -7,21 +7,21 @@ import { ILinesOfTextGrp } from './set/lines_of_text_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface IEmail {
-  StandardHeader: IStandardHeader
-  EmailThreadID: string// 164
-  EmailType: string// 94
-  OrigTime?: Date// 42
-  Subject: string// 147
-  EncodedSubjectLen?: number// 356
-  EncodedSubject?: Buffer// 357
-  RoutingGrp?: IRoutingGrp
-  InstrmtGrp?: IInstrmtGrp
-  UndInstrmtGrp?: IUndInstrmtGrp
-  InstrmtLegGrp?: IInstrmtLegGrp
-  OrderID?: string// 37
-  ClOrdID?: string// 11
-  LinesOfTextGrp?: ILinesOfTextGrp
-  RawDataLength?: number// 95
-  RawData?: Buffer// 96
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  EmailThreadID: string// [2] 164 (String)
+  EmailType: string// [3] 94 (String)
+  OrigTime?: Date// [4] 42 (UtcTimestamp)
+  Subject: string// [5] 147 (String)
+  EncodedSubjectLen?: number// [6] 356 (Length)
+  EncodedSubject?: Buffer// [7] 357 (RawData)
+  RoutingGrp?: IRoutingGrp// [8] NoRoutingIDs.215, RoutingType.216, RoutingID.217
+  InstrmtGrp?: IInstrmtGrp// [9] NoRelatedSym.146, Symbol.55 .. InterestAccrualDate.874
+  UndInstrmtGrp?: IUndInstrmtGrp// [10] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  InstrmtLegGrp?: IInstrmtLegGrp// [11] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  OrderID?: string// [12] 37 (String)
+  ClOrdID?: string// [13] 11 (String)
+  LinesOfTextGrp?: ILinesOfTextGrp// [14] NoLinesOfText.33, Text.58 .. EncodedText.355
+  RawDataLength?: number// [15] 95 (Length)
+  RawData?: Buffer// [16] 96 (RawData)
+  StandardTrailer: IStandardTrailer// [17] SignatureLength.93, Signature.89, CheckSum.10
 }

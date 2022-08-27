@@ -6,15 +6,15 @@ import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface ISecurityStatusRequest {
-  StandardHeader: IStandardHeader
-  SecurityStatusReqID: string// 324
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  UndInstrmtGrp?: IUndInstrmtGrp
-  InstrmtLegGrp?: IInstrmtLegGrp
-  Currency?: string// 15
-  SubscriptionRequestType: string// 263
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  SecurityStatusReqID: string// [2] 324 (String)
+  Instrument?: IInstrument// [3] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  InstrumentExtension?: IInstrumentExtension// [4] DeliveryForm.668, PctAtRisk.869 .. InstrAttribValue.872
+  UndInstrmtGrp?: IUndInstrmtGrp// [5] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingStipValue.889
+  InstrmtLegGrp?: IInstrmtLegGrp// [6] NoLegs.555, LegSymbol.600 .. LegInterestAccrualDate.956
+  Currency?: string// [7] 15 (String)
+  SubscriptionRequestType: string// [8] 263 (String)
+  TradingSessionID?: string// [9] 336 (String)
+  TradingSessionSubID?: string// [10] 625 (String)
+  StandardTrailer: IStandardTrailer// [11] SignatureLength.93, Signature.89, CheckSum.10
 }

@@ -3,25 +3,25 @@ import { IListOrdGrp } from './set/list_ord_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
 export interface INewOrderList {
-  StandardHeader: IStandardHeader
-  ListID: string// 66
-  BidID?: string// 390
-  ClientBidID?: string// 391
-  ProgRptReqs?: number// 414
-  BidType: number// 394
-  ProgPeriodInterval?: number// 415
-  CancellationRights?: string// 480
-  MoneyLaunderingStatus?: string// 481
-  RegistID?: string// 513
-  ListExecInstType?: string// 433
-  ListExecInst?: string// 69
-  EncodedListExecInstLen?: number// 352
-  EncodedListExecInst?: Buffer// 353
-  AllowableOneSidednessPct?: number// 765
-  AllowableOneSidednessValue?: number// 766
-  AllowableOneSidednessCurr?: string// 767
-  TotNoOrders: number// 68
-  LastFragment?: boolean// 893
-  ListOrdGrp?: IListOrdGrp
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  ListID: string// [2] 66 (String)
+  BidID?: string// [3] 390 (String)
+  ClientBidID?: string// [4] 391 (String)
+  ProgRptReqs?: number// [5] 414 (Int)
+  BidType: number// [6] 394 (Int)
+  ProgPeriodInterval?: number// [7] 415 (Int)
+  CancellationRights?: string// [8] 480 (String)
+  MoneyLaunderingStatus?: string// [9] 481 (String)
+  RegistID?: string// [10] 513 (String)
+  ListExecInstType?: string// [11] 433 (String)
+  ListExecInst?: string// [12] 69 (String)
+  EncodedListExecInstLen?: number// [13] 352 (Length)
+  EncodedListExecInst?: Buffer// [14] 353 (RawData)
+  AllowableOneSidednessPct?: number// [15] 765 (Float)
+  AllowableOneSidednessValue?: number// [16] 766 (Float)
+  AllowableOneSidednessCurr?: string// [17] 767 (String)
+  TotNoOrders: number// [18] 68 (Int)
+  LastFragment?: boolean// [19] 893 (Boolean)
+  ListOrdGrp?: IListOrdGrp// [20] NoOrders.73, ClOrdID.11 .. Designation.494
+  StandardTrailer: IStandardTrailer// [21] SignatureLength.93, Signature.89, CheckSum.10
 }

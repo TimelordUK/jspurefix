@@ -5,32 +5,32 @@ import { IClrInstGrp } from './clr_inst_grp'
 import { ISettlInstructionsData } from './settl_instructions_data'
 
 export interface IAllocGrpNoAllocs {
-  AllocAccount?: string// 79
-  AllocAcctIDSource?: number// 661
-  MatchStatus?: string// 573
-  AllocPrice?: number// 366
-  AllocQty?: number// 80
-  IndividualAllocID?: string// 467
-  ProcessCode?: string// 81
-  NestedParties?: INestedParties
-  NotifyBrokerOfCredit?: boolean// 208
-  AllocHandlInst?: number// 209
-  AllocText?: string// 161
-  EncodedAllocTextLen?: number// 360
-  EncodedAllocText?: Buffer// 361
-  CommissionData?: ICommissionData
-  AllocAvgPx?: number// 153
-  AllocNetMoney?: number// 154
-  SettlCurrAmt?: number// 119
-  AllocSettlCurrAmt?: number// 737
-  SettlCurrency?: string// 120
-  AllocSettlCurrency?: string// 736
-  SettlCurrFxRate?: number// 155
-  SettlCurrFxRateCalc?: string// 156
-  AllocAccruedInterestAmt?: number// 742
-  AllocInterestAtMaturity?: number// 741
-  MiscFeesGrp?: IMiscFeesGrp
-  ClrInstGrp?: IClrInstGrp
-  AllocSettlInstType?: number// 780
-  SettlInstructionsData?: ISettlInstructionsData
+  AllocAccount?: string// [1] 79 (String)
+  AllocAcctIDSource?: number// [2] 661 (Int)
+  MatchStatus?: string// [3] 573 (String)
+  AllocPrice?: number// [4] 366 (Float)
+  AllocQty?: number// [5] 80 (Float)
+  IndividualAllocID?: string// [6] 467 (String)
+  ProcessCode?: string// [7] 81 (String)
+  NestedParties?: INestedParties// [8] NoNestedPartyIDs.539, NestedPartyID.524 .. NestedPartySubIDType.805
+  NotifyBrokerOfCredit?: boolean// [9] 208 (Boolean)
+  AllocHandlInst?: number// [10] 209 (Int)
+  AllocText?: string// [11] 161 (String)
+  EncodedAllocTextLen?: number// [12] 360 (Length)
+  EncodedAllocText?: Buffer// [13] 361 (RawData)
+  CommissionData?: ICommissionData// [14] Commission.12, CommType.13 .. FundRenewWaiv.497
+  AllocAvgPx?: number// [15] 153 (Float)
+  AllocNetMoney?: number// [16] 154 (Float)
+  SettlCurrAmt?: number// [17] 119 (Float)
+  AllocSettlCurrAmt?: number// [18] 737 (Float)
+  SettlCurrency?: string// [19] 120 (String)
+  AllocSettlCurrency?: string// [20] 736 (String)
+  SettlCurrFxRate?: number// [21] 155 (Float)
+  SettlCurrFxRateCalc?: string// [22] 156 (String)
+  AllocAccruedInterestAmt?: number// [23] 742 (Float)
+  AllocInterestAtMaturity?: number// [24] 741 (Float)
+  MiscFeesGrp?: IMiscFeesGrp// [25] NoMiscFees.136, MiscFeeAmt.137 .. MiscFeeBasis.891
+  ClrInstGrp?: IClrInstGrp// [26] NoClearingInstructions.576, ClearingInstruction.577
+  AllocSettlInstType?: number// [27] 780 (Int)
+  SettlInstructionsData?: ISettlInstructionsData// [28] SettlDeliveryType.172, StandInstDbType.169 .. SettlPartySubIDType.786
 }

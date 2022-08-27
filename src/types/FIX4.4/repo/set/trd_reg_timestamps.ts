@@ -8,7 +8,7 @@
 ****************************************************************
 */
 export interface ITrdRegTimestamps {
-  TrdRegTimestamp?: Date// 769
-  TrdRegTimestampType?: number// 770
-  TrdRegTimestampOrigin?: string// 771
+  TrdRegTimestamp?: Date// [1] 769 (UtcTimestamp)
+  TrdRegTimestampType?: number// [2] 770 (Int)
+  TrdRegTimestampOrigin?: string// [3] 771 (String)
 }

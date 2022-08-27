@@ -1,3 +1,3 @@
 export interface IClrInstGrpNoClearingInstructions {
-  ClearingInstruction?: number// 577
+  ClearingInstruction?: number// [1] 577 (Int)
 }

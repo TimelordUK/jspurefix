@@ -1,3 +1,3 @@
 export interface IMDReqGrpNoMDEntryTypes {
-  MDEntryType: string// 269
+  MDEntryType: string// [1] 269 (String)
 }

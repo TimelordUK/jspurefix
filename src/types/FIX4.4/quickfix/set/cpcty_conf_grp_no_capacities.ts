@@ -1,5 +1,5 @@
 export interface ICpctyConfGrpNoCapacities {
-  OrderCapacity: string// 528
-  OrderRestrictions?: string// 529
-  OrderCapacityQty: number// 863
+  OrderCapacity: string// [1] 528 (String)
+  OrderRestrictions?: string// [2] 529 (String)
+  OrderCapacityQty: number// [3] 863 (Float)
 }
