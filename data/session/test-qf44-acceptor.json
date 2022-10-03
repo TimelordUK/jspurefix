@@ -17,5 +17,5 @@
   "SenderCompId": "accept-comp",
   "TargetCompID": "init-comp",
   "TargetSubID": "fix",
-  "BeginString": "FIX4.4"
+  "BeginString": "FIX.4.4"
 }

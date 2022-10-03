@@ -81,7 +81,7 @@ test('encode heartbeat', async () => {
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual('0')
   const len = res.view.getTyped(Tags.BodyLengthTag)
-  const expected = fix.length - '8=FIX4.4|9=0000081|'.length - '10=159|'.length
+  const expected = fix.length - '8=FIX.4.4|9=0000081|'.length - '10=159|'.length
   expect(len).toEqual(expected)
 })
 
@@ -562,7 +562,7 @@ test('encode custom header - include MsgSeqNum (for resends we do not want to ov
   const h: IStandardHeader = parsed.StandardHeader
   expect(h.DeliverToCompID).toEqual('DepC')
   expect(h.MsgSeqNum).toEqual(seqNum)
-  expect(h.BeginString).toEqual('FIX4.4')
+  expect(h.BeginString).toEqual('FIX.4.4')
   expect(h.PossDupFlag).toEqual(true)
   expect(h.MsgType).toEqual(MsgType.NewOrderSingle)
 })

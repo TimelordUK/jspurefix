@@ -25,6 +25,6 @@
   "SenderCompId": "accept-tls-comp",
   "TargetCompID": "init-tls-comp",
   "TargetSubID": "fix",
-  "BeginString": "FIX4.4",
+  "BeginString": "FIX.4.4",
   "BodyLengthChars": 6
 }

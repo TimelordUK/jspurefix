@@ -22,8 +22,8 @@ let setup: Setup = null
 
 beforeAll(async () => {
   setup = new Setup(
-    'session/test-initiator-tls.json',
-    'session/test-acceptor-tls.json')
+    'session/test-initiator.json',
+    'session/test-acceptor.json')
   await setup.init()
   definitions = setup.definitions
   const serverConfig = setup.serverConfig

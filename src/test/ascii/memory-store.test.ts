@@ -26,7 +26,7 @@ beforeAll(async () => {
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
   store = new FixMsgMemoryStore('test', setup.clientConfig)
   records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
-    if (v.getString(MsgTag.SenderCompID) === 'accept-tls-comp') {
+    if (v.getString(MsgTag.SenderCompID) === 'accept-comp') {
       agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
     }
     return agg
