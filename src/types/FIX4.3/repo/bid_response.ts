@@ -20,23 +20,23 @@ import { IStandardTrailer } from './set/standard_trailer'
 ***************************************************************
 */
 export interface IBidResponse {
-  StandardHeader: IStandardHeader
-  BidID?: string// 390
-  ClientBidID?: string// 391
-  NoBidComponents: number// 420
-  CommissionData: ICommissionData
-  ListID?: string// 66
-  Country?: string// 421
-  Side?: string// 54
-  Price?: number// 44
-  PriceType?: number// 423
-  FairValue?: number// 406
-  NetGrossInd?: number// 430
-  SettlmntTyp?: string// 63
-  FutSettDate?: Date// 64
-  TradingSessionID?: string// 336
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  BidID?: string// [2] 390 (String)
+  ClientBidID?: string// [3] 391 (String)
+  NoBidComponents: number// [4] 420 (Int)
+  CommissionData: ICommissionData// [5] Commission.12, CommType.13
+  ListID?: string// [6] 66 (String)
+  Country?: string// [7] 421 (String)
+  Side?: string// [8] 54 (String)
+  Price?: number// [9] 44 (Float)
+  PriceType?: number// [10] 423 (Int)
+  FairValue?: number// [11] 406 (Float)
+  NetGrossInd?: number// [12] 430 (Int)
+  SettlmntTyp?: string// [13] 63 (String)
+  FutSettDate?: Date// [14] 64 (LocalDate)
+  TradingSessionID?: string// [15] 336 (String)
+  Text?: string// [16] 58 (String)
+  EncodedTextLen?: number// [17] 354 (Int)
+  EncodedText?: Buffer// [18] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [19] SignatureLength.93, Signature.89, CheckSum.10
 }

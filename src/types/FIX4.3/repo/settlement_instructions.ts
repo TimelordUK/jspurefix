@@ -10,41 +10,41 @@ import { IStandardTrailer } from './set/standard_trailer'
 **************************************************************
 */
 export interface ISettlementInstructions {
-  StandardHeader: IStandardHeader
-  SettlInstID: string// 162
-  SettlInstTransType: string// 163
-  SettlInstRefID: string// 214
-  SettlInstMode: string// 160
-  SettlInstSource: string// 165
-  AllocAccount: string// 79
-  ClOrdID?: string// 11
-  TradeDate?: Date// 75
-  AllocID?: string// 70
-  LastMkt?: string// 30
-  TradingSessionID?: string// 336
-  Side?: string// 54
-  SecurityType?: string// 167
-  EffectiveTime?: Date// 168
-  TransactTime: Date// 60
-  Parties?: IParties[]
-  StandInstDbType?: number// 169
-  StandInstDbName?: string// 170
-  StandInstDbID?: string// 171
-  SettlDeliveryType?: number// 172
-  SettlDepositoryCode?: string// 173
-  SettlBrkrCode?: string// 174
-  SettlInstCode?: string// 175
-  SecuritySettlAgentName?: string// 176
-  SecuritySettlAgentCode?: string// 177
-  SecuritySettlAgentAcctNum?: string// 178
-  SecuritySettlAgentAcctName?: string// 179
-  SecuritySettlAgentContactName?: string// 180
-  SecuritySettlAgentContactPhone?: string// 181
-  CashSettlAgentName?: string// 182
-  CashSettlAgentCode?: string// 183
-  CashSettlAgentAcctNum?: string// 184
-  CashSettlAgentAcctName?: string// 185
-  CashSettlAgentContactName?: string// 186
-  CashSettlAgentContactPhone?: string// 187
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  SettlInstID: string// [2] 162 (String)
+  SettlInstTransType: string// [3] 163 (String)
+  SettlInstRefID: string// [4] 214 (String)
+  SettlInstMode: string// [5] 160 (String)
+  SettlInstSource: string// [6] 165 (String)
+  AllocAccount: string// [7] 79 (String)
+  ClOrdID?: string// [8] 11 (String)
+  TradeDate?: Date// [9] 75 (LocalDate)
+  AllocID?: string// [10] 70 (String)
+  LastMkt?: string// [11] 30 (String)
+  TradingSessionID?: string// [12] 336 (String)
+  Side?: string// [13] 54 (String)
+  SecurityType?: string// [14] 167 (String)
+  EffectiveTime?: Date// [15] 168 (UtcTimestamp)
+  TransactTime: Date// [16] 60 (UtcTimestamp)
+  Parties?: IParties[]// [17] 
+  StandInstDbType?: number// [18] 169 (Int)
+  StandInstDbName?: string// [19] 170 (String)
+  StandInstDbID?: string// [20] 171 (String)
+  SettlDeliveryType?: number// [21] 172 (Int)
+  SettlDepositoryCode?: string// [22] 173 (String)
+  SettlBrkrCode?: string// [23] 174 (String)
+  SettlInstCode?: string// [24] 175 (String)
+  SecuritySettlAgentName?: string// [25] 176 (String)
+  SecuritySettlAgentCode?: string// [26] 177 (String)
+  SecuritySettlAgentAcctNum?: string// [27] 178 (String)
+  SecuritySettlAgentAcctName?: string// [28] 179 (String)
+  SecuritySettlAgentContactName?: string// [29] 180 (String)
+  SecuritySettlAgentContactPhone?: string// [30] 181 (String)
+  CashSettlAgentName?: string// [31] 182 (String)
+  CashSettlAgentCode?: string// [32] 183 (String)
+  CashSettlAgentAcctNum?: string// [33] 184 (String)
+  CashSettlAgentAcctName?: string// [34] 185 (String)
+  CashSettlAgentContactName?: string// [35] 186 (String)
+  CashSettlAgentContactPhone?: string// [36] 187 (String)
+  StandardTrailer: IStandardTrailer// [37] SignatureLength.93, Signature.89, CheckSum.10
 }

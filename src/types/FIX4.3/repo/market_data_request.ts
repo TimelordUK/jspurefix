@@ -12,18 +12,18 @@ import { IStandardTrailer } from './set/standard_trailer'
 ***********************************************************
 */
 export interface IMarketDataRequest {
-  StandardHeader: IStandardHeader
-  MDReqID: string// 262
-  SubscriptionRequestType: string// 263
-  MarketDepth: number// 264
-  MDUpdateType?: number// 265
-  AggregatedBook?: boolean// 266
-  OpenCloseSettleFlag?: string// 286
-  NoMDEntryTypes: number// 267
-  MDEntryType: string// 269
-  NoRelatedSym: number// 146
-  Instrument: IInstrument
-  NoTradingSessions?: number// 386
-  TradingSessionID?: string// 336
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  MDReqID: string// [2] 262 (String)
+  SubscriptionRequestType: string// [3] 263 (String)
+  MarketDepth: number// [4] 264 (Int)
+  MDUpdateType?: number// [5] 265 (Int)
+  AggregatedBook?: boolean// [6] 266 (Boolean)
+  OpenCloseSettleFlag?: string// [7] 286 (String)
+  NoMDEntryTypes: number// [8] 267 (Int)
+  MDEntryType: string// [9] 269 (String)
+  NoRelatedSym: number// [10] 146 (Int)
+  Instrument: IInstrument// [11] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  NoTradingSessions?: number// [12] 386 (Int)
+  TradingSessionID?: string// [13] 336 (String)
+  StandardTrailer: IStandardTrailer// [14] SignatureLength.93, Signature.89, CheckSum.10
 }

@@ -6,5 +6,5 @@
 ***************************************************************
 */
 export interface ISpreadOrBenchmarkCurveData {
-  SpreadToBenchmark?: number// 218
+  SpreadToBenchmark?: number// [1] 218 (Float)
 }

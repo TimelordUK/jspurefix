@@ -14,18 +14,18 @@ import { IStandardTrailer } from './set/standard_trailer'
 **************************************************************
 */
 export interface ITradeCaptureReportRequest {
-  StandardHeader: IStandardHeader
-  SubscriptionRequestType?: string// 263
-  ExecID?: string// 17
-  OrderID?: string// 37
-  ClOrdID?: string// 11
-  Parties?: IParties[]
-  Instrument?: IInstrument
-  TradeDate?: Date// 75
-  TransactTime?: Date// 60
-  Side?: string// 54
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  SubscriptionRequestType?: string// [2] 263 (String)
+  ExecID?: string// [3] 17 (String)
+  OrderID?: string// [4] 37 (String)
+  ClOrdID?: string// [5] 11 (String)
+  Parties?: IParties[]// [6] 
+  Instrument?: IInstrument// [7] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  TradeDate?: Date// [8] 75 (LocalDate)
+  TransactTime?: Date// [9] 60 (UtcTimestamp)
+  Side?: string// [10] 54 (String)
+  Text?: string// [11] 58 (String)
+  EncodedTextLen?: number// [12] 354 (Int)
+  EncodedText?: Buffer// [13] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [14] SignatureLength.93, Signature.89, CheckSum.10
 }

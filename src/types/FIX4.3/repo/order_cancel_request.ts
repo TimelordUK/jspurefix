@@ -11,20 +11,20 @@ import { IStandardTrailer } from './set/standard_trailer'
 **************************************************************
 */
 export interface IOrderCancelRequest {
-  StandardHeader: IStandardHeader
-  OrigClOrdID: string// 41
-  OrderID?: string// 37
-  ClOrdID: string// 11
-  ListID?: string// 66
-  Account?: string// 1
-  Parties?: IParties[]
-  Instrument: IInstrument
-  Side: string// 54
-  TransactTime: Date// 60
-  OrderQtyData: IOrderQtyData
-  ComplianceID?: string// 376
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  OrigClOrdID: string// [2] 41 (String)
+  OrderID?: string// [3] 37 (String)
+  ClOrdID: string// [4] 11 (String)
+  ListID?: string// [5] 66 (String)
+  Account?: string// [6] 1 (String)
+  Parties?: IParties[]// [7] 
+  Instrument: IInstrument// [8] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  Side: string// [9] 54 (String)
+  TransactTime: Date// [10] 60 (UtcTimestamp)
+  OrderQtyData: IOrderQtyData// [11] OrderQty.38, CashOrderQty.152
+  ComplianceID?: string// [12] 376 (String)
+  Text?: string// [13] 58 (String)
+  EncodedTextLen?: number// [14] 354 (Int)
+  EncodedText?: Buffer// [15] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [16] SignatureLength.93, Signature.89, CheckSum.10
 }

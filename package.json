@@ -56,6 +56,7 @@
     "repo50sp2-compile": "cd dist && node jsfix-cmd \"--dict=repo50sp2\" \"--compile\"",
     "repofixml-compile": "cd dist && node jsfix-cmd \"--dict=repofixml\" \"--compile\"",
     "qf44-compile": "cd dist && node jsfix-cmd \"--dict=qf44\" \"--compile\"",
+    "qf43-compile": "cd dist && node jsfix-cmd \"--dict=qf43\" \"--compile\"",
     "unzip-repo": "cd data && node ../src/util/unzip fix_repo.zip",
     "fixml-test-print": "cd dist && node jsfix-cmd --session=data/session/test-http-initiator.json --fix=data/examples/fixml/jsfix.test_http-client.txt --objects",
     "fix-test-print": "cd dist && node jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt --objects --delimiter=\"|\""

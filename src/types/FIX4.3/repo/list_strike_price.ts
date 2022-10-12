@@ -9,18 +9,18 @@ import { IStandardTrailer } from './set/standard_trailer'
 *************************************************************
 */
 export interface IListStrikePrice {
-  StandardHeader: IStandardHeader
-  ListID: string// 66
-  TotNoStrikes: number// 422
-  NoStrikes: number// 428
-  Instrument: IInstrument
-  PrevClosePx?: number// 140
-  ClOrdID?: string// 11
-  Side?: string// 54
-  Price: number// 44
-  Currency?: string// 15
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  ListID: string// [2] 66 (String)
+  TotNoStrikes: number// [3] 422 (Int)
+  NoStrikes: number// [4] 428 (Int)
+  Instrument: IInstrument// [5] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  PrevClosePx?: number// [6] 140 (Float)
+  ClOrdID?: string// [7] 11 (String)
+  Side?: string// [8] 54 (String)
+  Price: number// [9] 44 (Float)
+  Currency?: string// [10] 15 (String)
+  Text?: string// [11] 58 (String)
+  EncodedTextLen?: number// [12] 354 (Int)
+  EncodedText?: Buffer// [13] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [14] SignatureLength.93, Signature.89, CheckSum.10
 }

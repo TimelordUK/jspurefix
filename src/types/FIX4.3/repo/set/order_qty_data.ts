@@ -9,6 +9,6 @@
 ***************************************************************
 */
 export interface IOrderQtyData {
-  OrderQty?: number// 38
-  CashOrderQty?: number// 152
+  OrderQty?: number// [1] 38 (Float)
+  CashOrderQty?: number// [2] 152 (Float)
 }

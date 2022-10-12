@@ -15,50 +15,50 @@ import { IStandardTrailer } from './set/standard_trailer'
 *********************************************************
 */
 export interface ITradeCaptureReport {
-  StandardHeader: IStandardHeader
-  ExecType: string// 150
-  ExecID?: string// 17
-  ExecRestatementReason?: number// 378
-  Instrument: IInstrument
-  OrderQtyData?: IOrderQtyData
-  LastShares: number// 32
-  LastPx: number// 31
-  LastSpotRate?: number// 194
-  LastForwardPoints?: number// 195
-  LastMkt?: string// 30
-  TradeDate: Date// 75
-  TransactTime: Date// 60
-  SettlmntTyp?: string// 63
-  FutSettDate?: Date// 64
-  Side: string// 54
-  OrderID: string// 37
-  SecondaryOrderID?: string// 198
-  ClOrdID?: string// 11
-  Parties?: IParties[]
-  Account?: string// 1
-  ProcessCode?: string// 81
-  Currency?: string// 15
-  ComplianceID?: string// 376
-  SolicitedFlag?: boolean// 377
-  TradingSessionID?: string// 336
-  CommissionData?: ICommissionData
-  GrossTradeAmt?: number// 381
-  NumDaysInterest?: number// 157
-  AccruedInterestRate?: number// 158
-  AccruedInterestAmt?: number// 159
-  NetMoney?: number// 118
-  SettlCurrAmt?: number// 119
-  SettlCurrency?: string// 120
-  SettlCurrFxRate?: number// 155
-  SettlCurrFxRateCalc?: string// 156
-  OpenClose?: string// 77
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  MultiLegReportingType?: string// 442
-  NoMiscFees?: number// 136
-  MiscFeeAmt?: number// 137
-  MiscFeeCurr?: string// 138
-  MiscFeeType?: string// 139
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  ExecType: string// [2] 150 (String)
+  ExecID?: string// [3] 17 (String)
+  ExecRestatementReason?: number// [4] 378 (Int)
+  Instrument: IInstrument// [5] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  OrderQtyData?: IOrderQtyData// [6] OrderQty.38, CashOrderQty.152
+  LastShares: number// [7] 32 (Float)
+  LastPx: number// [8] 31 (Float)
+  LastSpotRate?: number// [9] 194 (Float)
+  LastForwardPoints?: number// [10] 195 (Float)
+  LastMkt?: string// [11] 30 (String)
+  TradeDate: Date// [12] 75 (LocalDate)
+  TransactTime: Date// [13] 60 (UtcTimestamp)
+  SettlmntTyp?: string// [14] 63 (String)
+  FutSettDate?: Date// [15] 64 (LocalDate)
+  Side: string// [16] 54 (String)
+  OrderID: string// [17] 37 (String)
+  SecondaryOrderID?: string// [18] 198 (String)
+  ClOrdID?: string// [19] 11 (String)
+  Parties?: IParties[]// [20] 
+  Account?: string// [21] 1 (String)
+  ProcessCode?: string// [22] 81 (String)
+  Currency?: string// [23] 15 (String)
+  ComplianceID?: string// [24] 376 (String)
+  SolicitedFlag?: boolean// [25] 377 (Boolean)
+  TradingSessionID?: string// [26] 336 (String)
+  CommissionData?: ICommissionData// [27] Commission.12, CommType.13
+  GrossTradeAmt?: number// [28] 381 (Float)
+  NumDaysInterest?: number// [29] 157 (Int)
+  AccruedInterestRate?: number// [30] 158 (Float)
+  AccruedInterestAmt?: number// [31] 159 (Float)
+  NetMoney?: number// [32] 118 (Float)
+  SettlCurrAmt?: number// [33] 119 (Float)
+  SettlCurrency?: string// [34] 120 (String)
+  SettlCurrFxRate?: number// [35] 155 (Float)
+  SettlCurrFxRateCalc?: string// [36] 156 (String)
+  OpenClose?: string// [37] 77 (String)
+  Text?: string// [38] 58 (String)
+  EncodedTextLen?: number// [39] 354 (Int)
+  EncodedText?: Buffer// [40] 355 (RawData)
+  MultiLegReportingType?: string// [41] 442 (String)
+  NoMiscFees?: number// [42] 136 (Int)
+  MiscFeeAmt?: number// [43] 137 (Float)
+  MiscFeeCurr?: string// [44] 138 (String)
+  MiscFeeType?: string// [45] 139 (String)
+  StandardTrailer: IStandardTrailer// [46] SignatureLength.93, Signature.89, CheckSum.10
 }

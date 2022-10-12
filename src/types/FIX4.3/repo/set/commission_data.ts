@@ -6,6 +6,6 @@
 *************************************************************
 */
 export interface ICommissionData {
-  Commission?: number// 12
-  CommType?: string// 13
+  Commission?: number// [1] 12 (Float)
+  CommType?: string// [2] 13 (String)
 }

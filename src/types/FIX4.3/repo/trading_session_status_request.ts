@@ -8,11 +8,11 @@ import { IStandardTrailer } from './set/standard_trailer'
 *********************************************************
 */
 export interface ITradingSessionStatusRequest {
-  StandardHeader: IStandardHeader
-  TradSesReqID: string// 335
-  TradingSessionID?: string// 336
-  TradSesMethod?: number// 338
-  TradSesMode?: number// 339
-  SubscriptionRequestType: string// 263
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  TradSesReqID: string// [2] 335 (String)
+  TradingSessionID?: string// [3] 336 (String)
+  TradSesMethod?: number// [4] 338 (Int)
+  TradSesMode?: number// [5] 339 (Int)
+  SubscriptionRequestType: string// [6] 263 (String)
+  StandardTrailer: IStandardTrailer// [7] SignatureLength.93, Signature.89, CheckSum.10
 }

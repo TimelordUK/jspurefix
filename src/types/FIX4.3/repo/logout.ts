@@ -8,9 +8,9 @@ import { IStandardTrailer } from './set/standard_trailer'
 ***************************************************************
 */
 export interface ILogout {
-  StandardHeader: IStandardHeader
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [3] 354 (Int)
+  EncodedText?: Buffer// [4] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [5] SignatureLength.93, Signature.89, CheckSum.10
 }

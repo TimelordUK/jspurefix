@@ -8,15 +8,15 @@ import { IStandardTrailer } from './set/standard_trailer'
 ***********************************************************
 */
 export interface ISecurityTypes {
-  StandardHeader: IStandardHeader
-  SecurityReqID: string// 320
-  SecurityResponseID: string// 322
-  SecurityResponseType: number// 323
-  SecurityType?: string// 167
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  TradingSessionID?: string// 336
-  SubscriptionRequestType?: string// 263
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  SecurityReqID: string// [2] 320 (String)
+  SecurityResponseID: string// [3] 322 (String)
+  SecurityResponseType: number// [4] 323 (Int)
+  SecurityType?: string// [5] 167 (String)
+  Text?: string// [6] 58 (String)
+  EncodedTextLen?: number// [7] 354 (Int)
+  EncodedText?: Buffer// [8] 355 (RawData)
+  TradingSessionID?: string// [9] 336 (String)
+  SubscriptionRequestType?: string// [10] 263 (String)
+  StandardTrailer: IStandardTrailer// [11] SignatureLength.93, Signature.89, CheckSum.10
 }

@@ -16,16 +16,16 @@ import { IStandardTrailer } from './set/standard_trailer'
 **************************************************************
 */
 export interface ISecurityDefinition {
-  StandardHeader: IStandardHeader
-  SecurityReqID: string// 320
-  SecurityResponseID: string// 322
-  SecurityResponseType: number// 323
-  Instrument?: IInstrument
-  Currency?: string// 15
-  TradingSessionID?: string// 336
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  InstrumentLeg?: IInstrumentLeg
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  SecurityReqID: string// [2] 320 (String)
+  SecurityResponseID: string// [3] 322 (String)
+  SecurityResponseType: number// [4] 323 (Int)
+  Instrument?: IInstrument// [5] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  Currency?: string// [6] 15 (String)
+  TradingSessionID?: string// [7] 336 (String)
+  Text?: string// [8] 58 (String)
+  EncodedTextLen?: number// [9] 354 (Int)
+  EncodedText?: Buffer// [10] 355 (RawData)
+  InstrumentLeg?: IInstrumentLeg// [11] 
+  StandardTrailer: IStandardTrailer// [12] SignatureLength.93, Signature.89, CheckSum.10
 }

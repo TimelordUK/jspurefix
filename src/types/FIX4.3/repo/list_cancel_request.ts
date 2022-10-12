@@ -9,11 +9,11 @@ import { IStandardTrailer } from './set/standard_trailer'
 ****************************************************************
 */
 export interface IListCancelRequest {
-  StandardHeader: IStandardHeader
-  ListID: string// 66
-  TransactTime: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  ListID: string// [2] 66 (String)
+  TransactTime: Date// [3] 60 (UtcTimestamp)
+  Text?: string// [4] 58 (String)
+  EncodedTextLen?: number// [5] 354 (Int)
+  EncodedText?: Buffer// [6] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [7] SignatureLength.93, Signature.89, CheckSum.10
 }

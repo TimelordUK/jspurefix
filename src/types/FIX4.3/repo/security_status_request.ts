@@ -9,11 +9,11 @@ import { IStandardTrailer } from './set/standard_trailer'
 ****************************************************************
 */
 export interface ISecurityStatusRequest {
-  StandardHeader: IStandardHeader
-  SecurityStatusReqID: string// 324
-  Instrument: IInstrument
-  Currency?: string// 15
-  SubscriptionRequestType: string// 263
-  TradingSessionID?: string// 336
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  SecurityStatusReqID: string// [2] 324 (String)
+  Instrument: IInstrument// [3] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  Currency?: string// [4] 15 (String)
+  SubscriptionRequestType: string// [5] 263 (String)
+  TradingSessionID?: string// [6] 336 (String)
+  StandardTrailer: IStandardTrailer// [7] SignatureLength.93, Signature.89, CheckSum.10
 }

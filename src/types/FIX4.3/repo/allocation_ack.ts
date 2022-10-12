@@ -9,15 +9,15 @@ import { IStandardTrailer } from './set/standard_trailer'
 *********************************************************
 */
 export interface IAllocationAck {
-  StandardHeader: IStandardHeader
-  Parties?: IParties[]
-  AllocID: string// 70
-  TradeDate: Date// 75
-  TransactTime?: Date// 60
-  AllocStatus: number// 87
-  AllocRejCode?: number// 88
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  Parties?: IParties[]// [2] 
+  AllocID: string// [3] 70 (String)
+  TradeDate: Date// [4] 75 (LocalDate)
+  TransactTime?: Date// [5] 60 (UtcTimestamp)
+  AllocStatus: number// [6] 87 (Int)
+  AllocRejCode?: number// [7] 88 (Int)
+  Text?: string// [8] 58 (String)
+  EncodedTextLen?: number// [9] 354 (Int)
+  EncodedText?: Buffer// [10] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [11] SignatureLength.93, Signature.89, CheckSum.10
 }

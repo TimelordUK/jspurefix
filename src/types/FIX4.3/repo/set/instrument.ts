@@ -10,21 +10,21 @@
 ****************************************************************
 */
 export interface IInstrument {
-  Symbol?: string// 55
-  SymbolSfx?: string// 65
-  SecurityID?: string// 48
-  IDSource?: string// 22
-  SecurityType?: string// 167
-  MaturityMonthYear?: string// 200
-  StrikePrice?: number// 202
-  OptAttribute?: string// 206
-  ContractMultiplier?: number// 231
-  CouponRate?: number// 223
-  SecurityExchange?: string// 207
-  Issuer?: string// 106
-  EncodedIssuerLen?: number// 348
-  EncodedIssuer?: Buffer// 349
-  SecurityDesc?: string// 107
-  EncodedSecurityDescLen?: number// 350
-  EncodedSecurityDesc?: Buffer// 351
+  Symbol?: string// [1] 55 (String)
+  SymbolSfx?: string// [2] 65 (String)
+  SecurityID?: string// [3] 48 (String)
+  IDSource?: string// [4] 22 (String)
+  SecurityType?: string// [5] 167 (String)
+  MaturityMonthYear?: string// [6] 200 (String)
+  StrikePrice?: number// [7] 202 (Float)
+  OptAttribute?: string// [8] 206 (String)
+  ContractMultiplier?: number// [9] 231 (Float)
+  CouponRate?: number// [10] 223 (Float)
+  SecurityExchange?: string// [11] 207 (String)
+  Issuer?: string// [12] 106 (String)
+  EncodedIssuerLen?: number// [13] 348 (Int)
+  EncodedIssuer?: Buffer// [14] 349 (RawData)
+  SecurityDesc?: string// [15] 107 (String)
+  EncodedSecurityDescLen?: number// [16] 350 (Int)
+  EncodedSecurityDesc?: Buffer// [17] 351 (RawData)
 }

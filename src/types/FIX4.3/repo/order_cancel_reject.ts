@@ -9,19 +9,19 @@ import { IStandardTrailer } from './set/standard_trailer'
 ****************************************************************
 */
 export interface IOrderCancelReject {
-  StandardHeader: IStandardHeader
-  OrderID: string// 37
-  SecondaryOrderID?: string// 198
-  ClOrdID: string// 11
-  OrigClOrdID: string// 41
-  OrdStatus: string// 39
-  ListID?: string// 66
-  Account?: string// 1
-  TransactTime?: Date// 60
-  CxlRejResponseTo: string// 434
-  CxlRejReason?: number// 102
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  OrderID: string// [2] 37 (String)
+  SecondaryOrderID?: string// [3] 198 (String)
+  ClOrdID: string// [4] 11 (String)
+  OrigClOrdID: string// [5] 41 (String)
+  OrdStatus: string// [6] 39 (String)
+  ListID?: string// [7] 66 (String)
+  Account?: string// [8] 1 (String)
+  TransactTime?: Date// [9] 60 (UtcTimestamp)
+  CxlRejResponseTo: string// [10] 434 (String)
+  CxlRejReason?: number// [11] 102 (Int)
+  Text?: string// [12] 58 (String)
+  EncodedTextLen?: number// [13] 354 (Int)
+  EncodedText?: Buffer// [14] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [15] SignatureLength.93, Signature.89, CheckSum.10
 }

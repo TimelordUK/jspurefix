@@ -11,12 +11,12 @@ import { IStandardTrailer } from './set/standard_trailer'
 **************************************************************
 */
 export interface IOrderMassStatusRequest {
-  StandardHeader: IStandardHeader
-  Parties?: IParties[]
-  Account?: string// 1
-  TradingSessionID?: string// 336
-  Instrument?: IInstrument
-  UnderlyingInstrument?: IUnderlyingInstrument
-  Side?: string// 54
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  Parties?: IParties[]// [2] 
+  Account?: string// [3] 1 (String)
+  TradingSessionID?: string// [4] 336 (String)
+  Instrument?: IInstrument// [5] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  UnderlyingInstrument?: IUnderlyingInstrument// [6] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. EncodedUnderlyingSecurityDesc.365
+  Side?: string// [7] 54 (String)
+  StandardTrailer: IStandardTrailer// [8] SignatureLength.93, Signature.89, CheckSum.10
 }

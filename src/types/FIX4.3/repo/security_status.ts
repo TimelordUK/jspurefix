@@ -9,27 +9,27 @@ import { IStandardTrailer } from './set/standard_trailer'
 ***********************************************************
 */
 export interface ISecurityStatus {
-  StandardHeader: IStandardHeader
-  SecurityStatusReqID?: string// 324
-  Instrument: IInstrument
-  Currency?: string// 15
-  TradingSessionID?: string// 336
-  UnsolicitedIndicator?: boolean// 325
-  SecurityTradingStatus?: number// 326
-  FinancialStatus?: string// 291
-  CorporateAction?: string// 292
-  HaltReason?: string// 327
-  InViewOfCommon?: boolean// 328
-  DueToRelated?: boolean// 329
-  BuyVolume?: number// 330
-  SellVolume?: number// 331
-  HighPx?: number// 332
-  LowPx?: number// 333
-  LastPx?: number// 31
-  TransactTime?: Date// 60
-  Adjustment?: number// 334
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  SecurityStatusReqID?: string// [2] 324 (String)
+  Instrument: IInstrument// [3] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  Currency?: string// [4] 15 (String)
+  TradingSessionID?: string// [5] 336 (String)
+  UnsolicitedIndicator?: boolean// [6] 325 (Boolean)
+  SecurityTradingStatus?: number// [7] 326 (Int)
+  FinancialStatus?: string// [8] 291 (String)
+  CorporateAction?: string// [9] 292 (String)
+  HaltReason?: string// [10] 327 (String)
+  InViewOfCommon?: boolean// [11] 328 (Boolean)
+  DueToRelated?: boolean// [12] 329 (Boolean)
+  BuyVolume?: number// [13] 330 (Float)
+  SellVolume?: number// [14] 331 (Float)
+  HighPx?: number// [15] 332 (Float)
+  LowPx?: number// [16] 333 (Float)
+  LastPx?: number// [17] 31 (Float)
+  TransactTime?: Date// [18] 60 (UtcTimestamp)
+  Adjustment?: number// [19] 334 (Int)
+  Text?: string// [20] 58 (String)
+  EncodedTextLen?: number// [21] 354 (Int)
+  EncodedText?: Buffer// [22] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [23] SignatureLength.93, Signature.89, CheckSum.10
 }

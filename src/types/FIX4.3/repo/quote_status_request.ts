@@ -16,12 +16,12 @@ import { IStandardTrailer } from './set/standard_trailer'
 ***************************************************************
 */
 export interface IQuoteStatusRequest {
-  StandardHeader: IStandardHeader
-  QuoteID?: string// 117
-  Instrument: IInstrument
-  Parties?: IParties[]
-  Account?: string// 1
-  TradingSessionID?: string// 336
-  SubscriptionRequestType?: string// 263
-  StandardTrailer: IStandardTrailer
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  QuoteID?: string// [2] 117 (String)
+  Instrument: IInstrument// [3] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
+  Parties?: IParties[]// [4] 
+  Account?: string// [5] 1 (String)
+  TradingSessionID?: string// [6] 336 (String)
+  SubscriptionRequestType?: string// [7] 263 (String)
+  StandardTrailer: IStandardTrailer// [8] SignatureLength.93, Signature.89, CheckSum.10
 }

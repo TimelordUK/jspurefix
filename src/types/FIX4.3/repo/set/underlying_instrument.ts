@@ -10,22 +10,22 @@
 ****************************************************************
 */
 export interface IUnderlyingInstrument {
-  UnderlyingSymbol?: string// 311
-  UnderlyingSymbolSfx?: string// 312
-  UnderlyingSecurityID?: string// 309
-  UnderlyingIDSource?: string// 305
-  UnderlyingSecurityType?: string// 310
-  UnderlyingMaturityMonthYear?: string// 313
-  UnderlyingPutOrCall?: number// 315
-  UnderlyingStrikePrice?: number// 316
-  UnderlyingOptAttribute?: string// 317
-  UnderlyingContractMultiplier?: number// 436
-  UnderlyingCouponRate?: number// 435
-  UnderlyingSecurityExchange?: string// 308
-  UnderlyingIssuer?: string// 306
-  EncodedUnderlyingIssuerLen?: number// 362
-  EncodedUnderlyingIssuer?: Buffer// 363
-  UnderlyingSecurityDesc?: string// 307
-  EncodedUnderlyingSecurityDescLen?: number// 364
-  EncodedUnderlyingSecurityDesc?: Buffer// 365
+  UnderlyingSymbol?: string// [1] 311 (String)
+  UnderlyingSymbolSfx?: string// [2] 312 (String)
+  UnderlyingSecurityID?: string// [3] 309 (String)
+  UnderlyingIDSource?: string// [4] 305 (String)
+  UnderlyingSecurityType?: string// [5] 310 (String)
+  UnderlyingMaturityMonthYear?: string// [6] 313 (String)
+  UnderlyingPutOrCall?: number// [7] 315 (Int)
+  UnderlyingStrikePrice?: number// [8] 316 (Float)
+  UnderlyingOptAttribute?: string// [9] 317 (String)
+  UnderlyingContractMultiplier?: number// [10] 436 (Float)
+  UnderlyingCouponRate?: number// [11] 435 (Float)
+  UnderlyingSecurityExchange?: string// [12] 308 (String)
+  UnderlyingIssuer?: string// [13] 306 (String)
+  EncodedUnderlyingIssuerLen?: number// [14] 362 (Int)
+  EncodedUnderlyingIssuer?: Buffer// [15] 363 (RawData)
+  UnderlyingSecurityDesc?: string// [16] 307 (String)
+  EncodedUnderlyingSecurityDescLen?: number// [17] 364 (Int)
+  EncodedUnderlyingSecurityDesc?: Buffer// [18] 365 (RawData)
 }
