@@ -1,0 +1,42 @@
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
+
+export interface IOrderCancelRequest {
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  OrigClOrdID: string// [2] 41 (String)
+  OrderID?: string// [3] 37 (String)
+  ClOrdID: string// [4] 11 (String)
+  ListID?: string// [5] 66 (String)
+  Account?: string// [6] 1 (String)
+  ClientID?: string// [7] 109 (String)
+  ExecBroker?: string// [8] 76 (String)
+  Symbol: string// [9] 55 (String)
+  SymbolSfx?: string// [10] 65 (String)
+  SecurityID?: string// [11] 48 (String)
+  IDSource?: string// [12] 22 (String)
+  SecurityType?: string// [13] 167 (String)
+  MaturityMonthYear?: string// [14] 200 (String)
+  MaturityDay?: string// [15] 205 (String)
+  PutOrCall?: number// [16] 201 (Int)
+  StrikePrice?: number// [17] 202 (Float)
+  OptAttribute?: string// [18] 206 (String)
+  ContractMultiplier?: number// [19] 231 (Float)
+  CouponRate?: number// [20] 223 (Float)
+  SecurityExchange?: string// [21] 207 (String)
+  Issuer?: string// [22] 106 (String)
+  EncodedIssuerLen?: number// [23] 348 (Length)
+  EncodedIssuer?: Buffer// [24] 349 (RawData)
+  SecurityDesc?: string// [25] 107 (String)
+  EncodedSecurityDescLen?: number// [26] 350 (Length)
+  EncodedSecurityDesc?: Buffer// [27] 351 (RawData)
+  Side: string// [28] 54 (String)
+  TransactTime: Date// [29] 60 (UtcTimestamp)
+  OrderQty?: number// [30] 38 (Float)
+  CashOrderQty?: number// [31] 152 (Float)
+  ComplianceID?: string// [32] 376 (String)
+  SolicitedFlag?: boolean// [33] 377 (Boolean)
+  Text?: string// [34] 58 (String)
+  EncodedTextLen?: number// [35] 354 (Length)
+  EncodedText?: Buffer// [36] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [37] SignatureLength.93, Signature.89, CheckSum.10
+}

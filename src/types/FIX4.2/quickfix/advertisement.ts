@@ -1,0 +1,41 @@
+import { IStandardHeader } from './set/standard_header'
+import { IStandardTrailer } from './set/standard_trailer'
+
+export interface IAdvertisement {
+  StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
+  AdvId: string// [2] 2 (String)
+  AdvTransType: string// [3] 5 (String)
+  AdvRefID?: string// [4] 3 (String)
+  Symbol: string// [5] 55 (String)
+  SymbolSfx?: string// [6] 65 (String)
+  SecurityID?: string// [7] 48 (String)
+  IDSource?: string// [8] 22 (String)
+  SecurityType?: string// [9] 167 (String)
+  MaturityMonthYear?: string// [10] 200 (String)
+  MaturityDay?: string// [11] 205 (String)
+  PutOrCall?: number// [12] 201 (Int)
+  StrikePrice?: number// [13] 202 (Float)
+  OptAttribute?: string// [14] 206 (String)
+  ContractMultiplier?: number// [15] 231 (Float)
+  CouponRate?: number// [16] 223 (Float)
+  SecurityExchange?: string// [17] 207 (String)
+  Issuer?: string// [18] 106 (String)
+  EncodedIssuerLen?: number// [19] 348 (Length)
+  EncodedIssuer?: Buffer// [20] 349 (RawData)
+  SecurityDesc?: string// [21] 107 (String)
+  EncodedSecurityDescLen?: number// [22] 350 (Length)
+  EncodedSecurityDesc?: Buffer// [23] 351 (RawData)
+  AdvSide: string// [24] 4 (String)
+  Shares: number// [25] 53 (Float)
+  Price?: number// [26] 44 (Float)
+  Currency?: string// [27] 15 (String)
+  TradeDate?: Date// [28] 75 (LocalDate)
+  TransactTime?: Date// [29] 60 (UtcTimestamp)
+  Text?: string// [30] 58 (String)
+  EncodedTextLen?: number// [31] 354 (Length)
+  EncodedText?: Buffer// [32] 355 (RawData)
+  URLLink?: string// [33] 149 (String)
+  LastMkt?: string// [34] 30 (String)
+  TradingSessionID?: string// [35] 336 (String)
+  StandardTrailer: IStandardTrailer// [36] SignatureLength.93, Signature.89, CheckSum.10
+}
