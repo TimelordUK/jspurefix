@@ -8,6 +8,7 @@ import { IInstrumentLeg, IMarketDataRequest, MDEntryType, SubscriptionRequestTyp
 import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
 import { Setup } from '../env/setup'
 import { ParsingResult } from '../env/parsing-result'
+import { AsciiView } from '../../buffer/ascii'
 
 const root: string = path.join(__dirname, '../../../data')
 
@@ -159,6 +160,14 @@ test('nested view fetch' , () => {
   expect(legGrp).toBeTruthy()
   expect(Array.isArray(legGrp))
   expect(legGrp.length).toEqual(3)
+})
+
+test('view buffer' , () => {
+  const asciiView: AsciiView = view as AsciiView
+  const buffer = asciiView.toBuffer('?'.charCodeAt(0))
+  const txt = buffer.toString()
+  expect(txt.startsWith('8=FIX4.4?9='))
+  expect(txt.endsWith('?10=198?'))
 })
 
 function toFixMessage (o: ILooseObject, msg: MessageDefinition): string {
