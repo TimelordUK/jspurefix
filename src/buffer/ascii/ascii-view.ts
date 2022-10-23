@@ -34,6 +34,26 @@ export class AsciiView extends MsgView {
     return new AsciiView(segment, buffer, null, this.ptr, delimiter, writeDelimiter)
   }
 
+  private replaceDelimiter (viewBuffer: Buffer, replaceDelimiter?: number): void {
+    const delimiter = replaceDelimiter ?? this.delimiter
+    if (delimiter !== this.writeDelimiter) {
+      const structure = this.structure
+      const tags = structure.tags.tagPos
+      for (let i = 0; i < structure.tags.nextTagPos; ++i) {
+        const tag: TagPos = tags[i]
+        const p: number = tag.start + tag.len
+        viewBuffer.writeUInt8(delimiter, p)
+      }
+    }
+  }
+
+  // turn our view back to a raw msg
+  public toBuffer (replaceDelimiter?: number): Buffer {
+    const viewBuffer = this.buffer.slice()
+    this.replaceDelimiter(viewBuffer, replaceDelimiter)
+    return viewBuffer
+  }
+
   public checksum (): number {
     const t = this.getPosition(MsgTag.CheckSum)
     const structure = this.structure

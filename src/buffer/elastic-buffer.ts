@@ -44,7 +44,7 @@ export class ElasticBuffer {
 
   public setPos (ptr: number): number {
     const r = this.ptr
-    if (ptr >= 0 && ptr < this.size) {
+    if (ptr >= 0 && ptr <= this.size) {
       this.ptr = ptr
     }
     return r
