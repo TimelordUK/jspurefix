@@ -24,8 +24,8 @@ export class SessionContainer {
     container.reset()
   }
 
-  public registerGlobal (loggerFactory: JsFixLoggerFactory): void;
-  public registerGlobal (level?: string): void;
+  public registerGlobal (loggerFactory?: JsFixLoggerFactory): void;
+  public registerGlobal (level: string): void;
   public registerGlobal (levelOrLoggerFactory: string | JsFixLoggerFactory = 'info'): void {
     container.registerInstance(DefinitionFactory, new DefinitionFactory())
     let lf: JsFixLoggerFactory;
