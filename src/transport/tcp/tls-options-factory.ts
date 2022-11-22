@@ -30,11 +30,12 @@ export class TlsOptionsFactory {
       if (tls.ca && tls.ca.length > 0) {
         tlsOptions.ca = tls.ca.map(i => TlsOptionsFactory.read(i))
       }
-    }
-    if (tls.nodeTlsServerOptions) {
-      tlsOptions = {
-        ...tlsOptions,
-        ...tls.nodeTlsServerOptions,
+
+      if (tls.nodeTlsServerOptions) {
+        tlsOptions = {
+          ...tlsOptions,
+          ...tls.nodeTlsServerOptions,
+        }
       }
     }
     return tlsOptions
@@ -61,11 +62,11 @@ export class TlsOptionsFactory {
       if (tcp.tls.sessionTimeout) {
         connectionOptions.sessionTimeout = tcp.tls.sessionTimeout
       }
-    }
-    if (tls.nodeTlsConnectionOptions) {
-      connectionOptions = {
-        ...connectionOptions,
-        ...tls.nodeTlsConnectionOptions,
+      if (tls.nodeTlsConnectionOptions) {
+        connectionOptions = {
+          ...connectionOptions,
+          ...tls.nodeTlsConnectionOptions,
+        }
       }
     }
     return connectionOptions
