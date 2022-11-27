@@ -1,6 +1,6 @@
 import { container, DependencyContainer } from 'tsyringe'
 import { DefinitionFactory } from '../util'
-import { IJsFixConfig, JsFixWinstonLogFactory, WinstonLogger } from '../config'
+import { IJsFixConfig, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { DITokens } from './di-tokens'
 import { RuntimeFactory } from './make-config'
 
@@ -24,9 +24,16 @@ export class SessionContainer {
     container.reset()
   }
 
-  public registerGlobal (level: string = 'info'): void {
+  public registerGlobal (loggerFactory?: JsFixLoggerFactory): void;
+  public registerGlobal (level: string): void;
+  public registerGlobal (levelOrLoggerFactory: string | JsFixLoggerFactory = 'info'): void {
     container.registerInstance(DefinitionFactory, new DefinitionFactory())
-    const lf = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions(level))
+    let lf: JsFixLoggerFactory;
+    if (typeof levelOrLoggerFactory === 'string') {
+      lf = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions(levelOrLoggerFactory))
+    } else {
+      lf = levelOrLoggerFactory;
+    }
     container.registerInstance(DITokens.JsFixLoggerFactory, lf)
     container.register<RuntimeFactory>(RuntimeFactory, {
       useClass: RuntimeFactory

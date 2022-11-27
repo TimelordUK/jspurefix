@@ -1,20 +1,26 @@
 import * as path from 'path'
-import { IJsFixConfig, IJsFixLogger, JsFixWinstonLogFactory, WinstonLogger } from '../config'
+import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger } from '../config'
 import { ISessionDescription, FixEntity, FixSession } from '../transport'
 import { DependencyContainer } from 'tsyringe'
 import { EngineFactory } from './engine-factory'
 import { SessionContainer } from './session-container'
 import { DITokens } from './di-tokens'
 
-const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
+const defaultLoggerFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
 
 export abstract class SessionLauncher {
   public root: string = '../../'
   protected readonly logger: IJsFixLogger
-  protected constructor (public readonly initiatorConfig: string,
-                         public readonly acceptorConfig: string = null) {
-    this.logger = logFactory.logger('launcher')
+  public readonly initiatorConfig: ISessionDescription;
+  public readonly acceptorConfig: ISessionDescription;
+  protected constructor (initiatorConfig: string | ISessionDescription,
+                         acceptorConfig: string | ISessionDescription = null,
+                         private readonly loggerFactory: JsFixLoggerFactory = defaultLoggerFactory) {
+    this.logger = this.loggerFactory.logger('launcher')
+    this.initiatorConfig = this.loadConfig(initiatorConfig)
+    this.acceptorConfig = this.loadConfig(acceptorConfig)
   }
+
   protected sessionContainer: SessionContainer = new SessionContainer()
 
   private empty (): Promise<any> {
@@ -102,26 +108,31 @@ export abstract class SessionLauncher {
   }
 
   private async makeClient (): Promise<any> {
-    const description: ISessionDescription = require(path.join(this.root, this.initiatorConfig))
-    const sessionContainer = await this.makeSystem(description)
+    const sessionContainer = await this.makeSystem(this.initiatorConfig)
     this.register(sessionContainer)
     this.logger.info('create initiator')
     return this.getInitiator(sessionContainer)
   }
 
   private async makeServer (): Promise<any> {
-    const description: ISessionDescription = require(path.join(this.root, this.acceptorConfig))
-    const sessionContainer = await this.makeSystem(description)
+    const sessionContainer = await this.makeSystem(this.acceptorConfig)
     this.register(sessionContainer)
     this.logger.info('create acceptor')
     return this.getAcceptor(sessionContainer)
   }
 
   private async setup () {
-    this.sessionContainer.registerGlobal()
+    this.sessionContainer.registerGlobal(this.loggerFactory)
     const server = this.acceptorConfig ? this.makeServer() : this.empty()
     const client = this.initiatorConfig ? this.makeClient() : this.empty()
     this.logger.info('launching ....')
     return Promise.all([server, client])
+  }
+
+  private loadConfig(config: string | ISessionDescription): ISessionDescription {
+    if (typeof config === 'string') {
+      return require(path.join(this.root, config))
+    }
+    return config
   }
 }
