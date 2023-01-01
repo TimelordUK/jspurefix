@@ -204,11 +204,7 @@ test('client logon reject missing 108', async () => {
 
 // transport.transmitter
 
-test('client unknown msg type', async () => {
-  const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
-  const changed = logonMsg
-    .replace('35=A', '35=ZZ')
-    .replace('34=1', `34=${at.msgSeqNum + 1}`)
+async function runCheckReject (experiment: Experiment, changed: string): Promise<void> {
   await runSkeletons(2, changed)
   const cviews = experiment.client.views
   const sviews = experiment.server.views
@@ -218,6 +214,16 @@ test('client unknown msg type', async () => {
   expect(cviews[0].segment.name).toEqual('Logon')
   expect(cviews[1].segment.name).toEqual('Reject')
   expect(sviews[0].segment.name).toEqual('Logon')
+}
+
+test('client unknown msg type', async () => {
+  const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
+  const changed = logonMsg
+    .replace('35=A', '35=ZZ')
+    .replace('34=1', `34=${at.msgSeqNum + 1}`)
+  const cviews = experiment.client.views
+  const sviews = experiment.server.views
+  await runCheckReject(experiment, changed)
   expect(sviews[1].segment.name).toEqual('unknown')
   const reject: IReject = cviews[1].toObject()
   expect(reject.SessionRejectReason === SessionRejectReason.InvalidMsgType)
@@ -232,11 +238,7 @@ test('heartbeat invalid tag', async () => {
   await runSkeletons(2, changed)
   const cviews = experiment.client.views
   const sviews = experiment.server.views
-  expect(cviews.length === 3).toEqual(true)
-  expect(sviews.length === 3).toEqual(true)
-  expect(cviews[0].segment.name).toEqual('Logon')
-  expect(cviews[1].segment.name).toEqual('Reject')
-  expect(sviews[0].segment.name).toEqual('Logon')
+  await runCheckReject(experiment, changed)
   expect(sviews[1].segment.name).toEqual('Heartbeat')
   const reject: IReject = experiment.client.views[1].toObject()
   expect(reject.SessionRejectReason === SessionRejectReason.InvalidTagNumber)
@@ -249,14 +251,9 @@ test('heartbeat invalid sender comp', async () => {
   const changed = heartbeat
     .replace('49=init-comp', '49=init-not!')
     .replace('34=1', `34=${at.msgSeqNum + 1}`)
-  await runSkeletons(2, changed)
   const cviews = experiment.client.views
   const sviews = experiment.server.views
-  expect(cviews.length).toEqual(3)
-  expect(sviews.length).toEqual(3)
-  expect(cviews[0].segment.name).toEqual('Logon')
-  expect(cviews[1].segment.name).toEqual('Reject')
-  expect(sviews[0].segment.name).toEqual('Logon')
+  await runCheckReject(experiment, changed)
   expect(sviews[1].segment.name).toEqual('Heartbeat')
   const reject: IReject = cviews[1].toObject()
   expect(reject.SessionRejectReason === SessionRejectReason.CompIDProblem)
