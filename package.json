@@ -24,7 +24,7 @@
   },
   "scripts": {
     "circular": "madge --circular --extensions js dist && madge --circular --extensions ts src",
-    "test": "jest",
+    "test": "jest --maxWorkers=1 --coverage",
     "build": "tsc",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "cmd": "cd dist && node jsfix-cmd",
