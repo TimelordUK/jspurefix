@@ -242,9 +242,9 @@ export abstract class MsgView {
   protected abstract toTyped (field: SimpleFieldDefinition): any
 
   protected resolveTag (tagOrName: number | string): number {
-    if (this.segment.set == null) return 0
     let tag: number
     if (typeof (tagOrName) === 'string') {
+      if (this.segment.set == null) return 0
       const cf = this.segment.set.simple.get(tagOrName)
       const f: SimpleFieldDefinition | null = cf ? cf.definition : this.structure?.tags.definitions.simple.get(tagOrName) ?? null
       if (f == null) {
