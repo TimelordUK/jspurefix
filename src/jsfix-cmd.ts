@@ -448,6 +448,44 @@ export class JsfixCmd {
     await this.dispatch(ft)
   }
 
+  private async promisedRead (f: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      fs.readFile(f, 'utf8', async (err: Error, contents: string) => {
+        if (err) {
+          reject(err)
+        }
+        resolve(contents)
+      })
+    })
+  }
+
+  async benchParse (contents: string, iterations: number, print: boolean): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const toParse = new StringDuplex(contents.repeat(iterations), false)
+      const startsAt: Date = new Date()
+      let i = 0
+      const config = this.config
+      const buffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
+      const asciiParser: MsgParser = new AsciiParser(config, toParse.readable, buffer)
+      function printer (msgType: string, v: MsgView): void {
+        const elapsed: number = new Date().getTime() - startsAt.getTime()
+        console.log(contents)
+        console.log(v.toString())
+        console.log(`[${msgType}]: iterations = ${iterations}, fields = ${v?.structure?.tags.nextTagPos}, length = ${contents.length} chars, elapsed ms ${elapsed}, ${(elapsed / iterations) * 1000} micros per msg`)
+      }
+      asciiParser.on('msg', (msgType: string, v: MsgView) => {
+        ++i
+        if (i === iterations) {
+          if (print) {
+            printer(msgType, v)
+          }
+          resolve()
+        }
+      })
+      asciiParser.on('error', e => reject(e))
+    })
+  }
+
   private async benchmark (repeats: number): Promise<any> {
     if (!argv.fix) {
       console.log('provide a path to fix file i.e. --fix=data/examples/execution-report/fix.txt')
@@ -455,28 +493,14 @@ export class JsfixCmd {
     }
     return await new Promise<any>((resolve, reject) => {
       const fix: string = this.norm(argv.fix)
-      const fs = require('fs')
-      fs.readFile(fix, 'utf8', async (err: Error, contents: string) => {
-        if (err) {
-          reject(err)
-        }
-        const toParse = new StringDuplex(contents.repeat(repeats), false)
-        const startsAt: Date = new Date()
-        let i = 0
-        const config = this.config
-        const buffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
-        const asciiParser: MsgParser = new AsciiParser(config, toParse.readable, buffer)
-        asciiParser.on('msg', (msgType: string, v: MsgView) => {
-          ++i
-          if (i === repeats) {
-            const elapsed: number = new Date().getTime() - startsAt.getTime()
-            console.log(contents)
-            console.log(v.toString())
-            console.log(`[${msgType}]: repeats = ${repeats}, fields = ${v?.structure?.tags.nextTagPos}, length = ${contents.length} chars, elapsed ms ${elapsed}, ${(elapsed / repeats) * 1000} micros per msg`)
-            resolve(true)
-          }
+      this.promisedRead(fix)
+        .then(contents => {
+          this.benchParse(contents, repeats, true)
+            .then((a: any) => resolve(a))
+            .catch(e => reject(e))
+        }).catch(e => {
+          reject(e)
         })
-      })
     })
   }
 
@@ -522,22 +546,22 @@ function showHelp (): void {
 
   console.log('token format use fix repo dictionary')
   console.log('jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --fix=data/examples/quickfix/FIX.4.4/execution-report/fix.txt' +
-        ' --delimiter="|" --tokens')
+    ' --delimiter="|" --tokens')
   console.log()
 
   console.log('structure format i.e. show locations of components etc.')
   console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
-        ' --delimiter="|" --tokens --structures')
+    ' --delimiter="|" --tokens --structures')
   console.log()
 
   console.log('full JS object in JSON format.')
   console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
-        ' --delimiter="|" --tokens --objects')
+    ' --delimiter="|" --tokens --objects')
   console.log()
 
   console.log('full JS object in JSON format - filter only type messages.')
   console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
-        ' --delimiter="|" --tokens --type=8 --objects')
+    ' --delimiter="|" --tokens --type=8 --objects')
   console.log()
 
   console.log('timing stats and message counts. Structured parsing of all messages.')
@@ -546,7 +570,7 @@ function showHelp (): void {
 
   console.log('encode a json object to fix format')
   console.log('jsfix-cmd --json=data/examples/FIX.4.4/quickfix/execution-report/object.json' +
-        ' --session=data/session.json --type=8 --delimiter="|"')
+    ' --session=data/session.json --type=8 --delimiter="|"')
   console.log()
 
   console.log('display field definition')
