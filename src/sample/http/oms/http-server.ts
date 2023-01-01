@@ -28,6 +28,12 @@ export class HttpServer extends FixmlSession {
         this.logger.info(`received order id ${order.ClOrdID}`)
         const fill: IExecutionReport = this.factory.fillOrder(order)
         this.send('ExecutionReport', fill)
+        break
+      }
+
+      default: {
+        this.logger.warning(`received unknown msgType ${msgType}`)
+        break
       }
     }
   }

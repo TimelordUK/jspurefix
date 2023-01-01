@@ -82,3 +82,5 @@ data/session/certs/client/client.crt
 data/session/certs/client/client.key
 data/session/certs/server/server.crt
 data/session/certs/server/server.key
+/jsfix.test_http-client.txt
+/jsfix.test_http-server.txt

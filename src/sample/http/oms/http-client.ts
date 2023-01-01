@@ -30,7 +30,7 @@ export class HttpClient extends FixmlSession {
 
       case 'ExecRpt': {
         const fill: IExecutionReport = view.toObject()
-        this.logger.warning(`received execution report ${fill?.OrderQtyData?.OrderQty}@${fill.Price}`)
+        this.logger.info(`received execution report ${fill?.OrderQtyData?.OrderQty}@${fill.Price}`)
         break
       }
     }
