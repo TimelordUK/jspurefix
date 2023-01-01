@@ -39,6 +39,7 @@
     "repo44-bench-sd": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/security-definition/fix.txt --benchmark --delimiter=\"|\" --repeats=150000",
     "repo44-bench-lo": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
     "qf-bench-lo": "node dist/jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/quickfix/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
+    "qf-bench-hb": "node dist/jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/quickfix/heartbeat/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
     "fixml": "node dist/jsfix-cmd --dict=repofixml",
     "tcp-qf-md": "node dist/sample/tcp/qf-md/app",
     "tcp-tls-tc": "node dist/sample/tcp/tls-trade-capture/app",

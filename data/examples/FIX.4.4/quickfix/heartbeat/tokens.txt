@@ -1,0 +1,5 @@
+[0] 8 (BeginString) = FIX.4.4, [1] 9 (BodyLength) = 0000104
+[2] 35 (MsgType) = 0[Heartbeat], [3] 49 (SenderCompID) = init-comp
+[4] 56 (TargetCompID) = accept-comp, [5] 34 (MsgSeqNum) = 2
+[6] 57 (TargetSubID) = fix, [7] 52 (SendingTime) = 20230101-14:14:20.930
+[8] 112 (TestReqID) = Sun, 01 Jan 2023 14:14:20 GMT, [9] 10 (CheckSum) = 029
