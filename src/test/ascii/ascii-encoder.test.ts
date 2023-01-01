@@ -527,9 +527,7 @@ function createOrder (id: number, symbol: string, securityType: SecurityType, si
   } as INewOrderSingle
 }
 
-test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
-  const type = SecurityType.CommonStock
-  const o1 = createOrder(1, 'MS', type, Side.Buy, 100, 1000.0)
+async function getNewOrderSingle (o1: INewOrderSingle): Promise<any> {
   const nosd = definitions.message.get('NewOrderSingle')
   expect(nosd).toBeTruthy()
   if (!nosd) return
@@ -537,6 +535,13 @@ test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
   expect(fix).toBeTruthy()
   const res: ParsingResult = await setup.client.parseText(fix)
   const tag = res.view?.getTyped('DeliverToCompID')
+  return { res, tag }
+}
+
+test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
+  const type = SecurityType.CommonStock
+  const o1 = createOrder(1, 'MS', type, Side.Buy, 100, 1000.0)
+  const { res, tag } = await getNewOrderSingle(o1)
   expect(tag).toEqual('DepA')
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)
@@ -547,13 +552,7 @@ test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
 test('encode custom header 2 - expect DeliverToCompID DepC', async () => {
   const type = SecurityType.ConvertibleBond
   const o1 = createOrder(1, 'MSCb', type, Side.Buy, 100, 1000.0)
-  const nosd = definitions.message.get('NewOrderSingle')
-  expect(nosd).toBeTruthy()
-  if (!nosd) return
-  const fix = toFixMessage(o1, nosd)
-  expect(fix).toBeTruthy()
-  const res: ParsingResult = await setup.client.parseText(fix)
-  const tag = res.view?.getTyped('DeliverToCompID')
+  const { res, tag } = await getNewOrderSingle(o1)
   expect(tag).toEqual('DepC')
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)

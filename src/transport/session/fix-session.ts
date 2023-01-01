@@ -274,7 +274,7 @@ export abstract class FixSession extends events.EventEmitter {
       }
 
       case SessionState.ConfirmingLogout: {
-        // this instance responds to logout
+        // this instance responds to log out
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} confirming logout`
         this.sessionLogger.info(msg)

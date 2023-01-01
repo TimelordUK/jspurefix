@@ -52,7 +52,7 @@ export class SkeletonRunner {
 
   sendMsg (msgType: string, o: ILooseObject): void {
     let count = 0
-    this.experiment.client.transport.receiver.on('msg', m => {
+    this.experiment.client.transport.receiver.on('msg', _ => {
       if (count === 0) {
         count++
         this.clientSkeleton.sendMessage(msgType, o)

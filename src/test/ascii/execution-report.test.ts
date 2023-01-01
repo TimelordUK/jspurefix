@@ -642,6 +642,18 @@ test('instrumentLeg structure', () => {
   expect(instrumentLeg[2].endTag).toEqual(956)
 })
 
+function getnoLegSecurityAltID (index: number): SegmentDescription[] {
+  const noLegSecurityAltID: SegmentDescription[] = structure?.layout.NoLegSecurityAltID
+  expect(noLegSecurityAltID).toBeTruthy()
+  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
+  expect(noLegSecurityAltID.length).toEqual(3)
+
+  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
+  expect(noLegSecurityAltID[index].depth).toEqual(5)
+  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  return noLegSecurityAltID
+}
+
 test('LegSecAltIDGrp [0] structure', () => {
   const legSecAltIDGrp: SegmentDescription[] = structure?.layout.LegSecAltIDGrp
   expect(legSecAltIDGrp).toBeTruthy()
@@ -655,14 +667,7 @@ test('LegSecAltIDGrp [0] structure', () => {
   expect(legSecAltIDGrp[index].endPosition).toEqual(406)
   expect(legSecAltIDGrp[index].endTag).toEqual(606)
 
-  const noLegSecurityAltID: SegmentDescription[] = structure?.layout.NoLegSecurityAltID
-  expect(noLegSecurityAltID).toBeTruthy()
-  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
-  expect(noLegSecurityAltID.length).toEqual(3)
-
-  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
-  expect(noLegSecurityAltID[index].depth).toEqual(5)
-  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  const noLegSecurityAltID: SegmentDescription[] = getnoLegSecurityAltID(index)
   expect(noLegSecurityAltID[index].startPosition).toEqual(400)
   expect(noLegSecurityAltID[index].endPosition).toEqual(406)
   expect(noLegSecurityAltID[index].endTag).toEqual(606)
@@ -683,14 +688,7 @@ test('LegSecAltIDGrp [1] structure', () => {
   expect(legSecAltIDGrp[index].endPosition).toEqual(475)
   expect(legSecAltIDGrp[index].endTag).toEqual(606)
 
-  const noLegSecurityAltID: SegmentDescription[] = structure?.layout.NoLegSecurityAltID
-  expect(noLegSecurityAltID).toBeTruthy()
-  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
-  expect(noLegSecurityAltID.length).toEqual(3)
-
-  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
-  expect(noLegSecurityAltID[index].depth).toEqual(5)
-  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  const noLegSecurityAltID: SegmentDescription[] = getnoLegSecurityAltID(index)
   expect(noLegSecurityAltID[index].startPosition).toEqual(469)
   expect(noLegSecurityAltID[index].endPosition).toEqual(475)
   expect(noLegSecurityAltID[index].endTag).toEqual(606)
@@ -711,14 +709,7 @@ test('LegSecAltIDGrp [2] structure', () => {
   expect(legSecAltIDGrp[index].endPosition).toEqual(564)
   expect(legSecAltIDGrp[index].endTag).toEqual(606)
 
-  const noLegSecurityAltID: SegmentDescription[] = structure?.layout.NoLegSecurityAltID
-  expect(noLegSecurityAltID).toBeTruthy()
-  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
-  expect(noLegSecurityAltID.length).toEqual(3)
-
-  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
-  expect(noLegSecurityAltID[index].depth).toEqual(5)
-  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  const noLegSecurityAltID: SegmentDescription[] = getnoLegSecurityAltID(index)
   expect(noLegSecurityAltID[index].startPosition).toEqual(558)
   expect(noLegSecurityAltID[index].endPosition).toEqual(564)
   expect(noLegSecurityAltID[index].endTag).toEqual(606)

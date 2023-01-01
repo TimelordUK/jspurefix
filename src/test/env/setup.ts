@@ -89,7 +89,7 @@ export class Setup {
     }
   }
 
-  async init () {
+  async init (): Promise<void> {
     if (this.client) {
       await this.client.make()
       this.definitions = this.client.config.definitions

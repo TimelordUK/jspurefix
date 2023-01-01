@@ -38,7 +38,7 @@ export class Experiment {
     this.client = new FixEntity(clientConfig)
     this.server = new FixEntity(serverConfig)
 
-    // using a string duplex so pipe a write to client to read to server
+    // using a string duplex so pipe to client to read to server
     // to simulate a tcp connection.
     this.loopBack(this.client.duplex, this.server.duplex)
     this.loopBack(this.server.duplex, this.client.duplex)

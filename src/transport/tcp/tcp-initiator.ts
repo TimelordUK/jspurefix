@@ -68,7 +68,7 @@ export class TcpInitiator extends FixInitiator {
           this.logger.info(`connecting with timeout ${timeoutSeconds}`)
           this.tryConnect()
             .then((t: MsgTransport) => resolve(t))
-            .catch((e: Error) => {
+            .catch((_: Error) => {
               this.repeatConnect(timeoutSeconds)
                 .then((t: MsgTransport) => resolve(t))
                 .catch((e: Error) => reject(e))

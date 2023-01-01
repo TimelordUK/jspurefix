@@ -386,7 +386,7 @@ export class JsfixCmd {
         if (!stats[msgType]) {
           i = 1
         } else {
-          i = stats[msgType] + 1
+          i = stats[msgType] as number + 1
         }
         stats[msgType] = i
         break

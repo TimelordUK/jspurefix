@@ -45,12 +45,16 @@ export class TcpInitiatorConnector extends FixEntity {
 
   async delay (p: number): Promise<any> {
     return await new Promise<any>((resolve, reject) => {
-      if (!p) {
-        resolve(true)
+      try {
+        if (!p) {
+          resolve(true)
+        }
+        setTimeout(() => {
+          resolve(true)
+        }, p)
+      } catch (e) {
+        reject(e)
       }
-      setTimeout(() => {
-        resolve(true)
-      }, p)
     })
   }
 

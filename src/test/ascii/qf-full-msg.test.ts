@@ -26,7 +26,7 @@ beforeAll(async () => {
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
   // encode to FIX format from provided object.
-  return await new Promise(async (resolve, reject) => {
+  return await new Promise(async function (resolve, reject) {
     const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
     const parseBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
     const parser: AsciiParser = new AsciiParser(config, session.encodeStream, parseBuffer)
