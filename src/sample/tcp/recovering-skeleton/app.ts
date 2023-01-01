@@ -17,6 +17,27 @@ class AppLauncher extends SessionLauncher {
       'data/session/test-acceptor.json')
   }
 
+  private asInitiator (sessionContainer: DependencyContainer): void {
+    sessionContainer.register<FixSession>(DITokens.FixSession, {
+      useClass: SkeletonClient
+    })
+    sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+      useClass: RecoveringTcpInitiator
+    })
+  }
+
+  private asAcceptor (sessionContainer: DependencyContainer): void {
+    sessionContainer.register<FixEntity>(DITokens.FixEntity, {
+      useClass: RespawnAcceptor
+    })
+    sessionContainer.register<FixSession>(DITokens.FixSession, {
+      useClass: SkeletonServer
+    })
+    sessionContainer.register('logoutSeconds', {
+      useValue: 45
+    })
+  }
+
   protected override registerApplication (sessionContainer: DependencyContainer): void {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     // use a different log delimiter as an example
@@ -24,23 +45,11 @@ class AppLauncher extends SessionLauncher {
 
     const isInitiator = this.isInitiator(config.description)
     if (isInitiator) {
-      sessionContainer.register<FixSession>(DITokens.FixSession, {
-        useClass: SkeletonClient
-      })
-      sessionContainer.register<FixEntity>(DITokens.FixEntity, {
-        useClass: RecoveringTcpInitiator
-      })
+      this.asInitiator(sessionContainer)
     } else {
-      sessionContainer.register<FixEntity>(DITokens.FixEntity, {
-        useClass: RespawnAcceptor
-      })
-      sessionContainer.register<FixSession>(DITokens.FixSession, {
-        useClass: SkeletonServer
-      })
-      sessionContainer.register('logoutSeconds', {
-        useValue: 45
-      })
+      this.asAcceptor(sessionContainer)
     }
+
     sessionContainer.register('logoutSeconds', {
       useValue: 45
     })
