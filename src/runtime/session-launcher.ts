@@ -25,28 +25,32 @@ export abstract class SessionLauncher {
 
   private async empty (): Promise<any> {
     return await new Promise((resolve, reject) => {
-      setImmediate(() => {
-        this.logger.info('resolving an empty promise')
-        resolve(null)
-      })
+      try {
+        setImmediate(() => {
+          this.logger.info('resolving an empty promise')
+          resolve(null)
+        })
+      } catch (e) {
+        reject(e)
+      }
     })
   }
 
   protected async getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
     if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
       const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
-      return await entity.start()
+      return entity.start()
     } else {
-      return await this.empty()
+      return this.empty()
     }
   }
 
   protected async getInitiator (sessionContainer: DependencyContainer): Promise<any> {
     if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
       const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
-      return await entity.start()
+      return entity.start()
     } else {
-      return await this.empty()
+      return this.empty()
     }
   }
 
@@ -124,10 +128,20 @@ export abstract class SessionLauncher {
     return await this.getAcceptor(sessionContainer)
   }
 
+  async serverOrEmpty (): Promise<any> {
+    const server = this.acceptorConfig ? this.makeServer() : this.empty()
+    return server
+  }
+
+  async clientOrEmpty (): Promise<any> {
+    const client = this.initiatorConfig ? this.makeClient() : this.empty()
+    return client
+  }
+
   private async setup (): Promise<any> {
     this.sessionContainer.registerGlobal(this.loggerFactory)
-    const server = this.acceptorConfig ? await this.makeServer() : await this.empty()
-    const client = this.initiatorConfig ? await this.makeClient() : await this.empty()
+    const server = this.serverOrEmpty()
+    const client = this.clientOrEmpty()
     this.logger.info('launching ....')
     return await Promise.all([server, client])
   }
