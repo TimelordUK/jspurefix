@@ -41,12 +41,28 @@ export abstract class FixSession extends events.EventEmitter {
   }
 
   public setState (state: SessionState): void {
-    if (state === this.sessionState.state) return
     const logger = this.sessionLogger
     const prevState = this.sessionState.state
-    const msg = `current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`
-    logger.info(msg)
-    this.sessionState.state = state
+
+    if (state === prevState) return
+    switch (prevState) {
+      case SessionState.ConfirmingLogout:
+      case SessionState.Stopped:
+        if (state !== SessionState.NetworkConnectionEstablished) {
+          logger.info(`ignoring request to change state as now already in ${SessionState[prevState]} `)
+        } else {
+          const msg = `current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`
+          logger.info(msg)
+          this.sessionState.state = state
+        }
+        break
+
+      default: {
+        const msg = `current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`
+        logger.info(msg)
+        this.sessionState.state = state
+      }
+    }
   }
 
   public getState (): SessionState {
@@ -94,15 +110,10 @@ export abstract class FixSession extends events.EventEmitter {
     return await this.waitPromise()
   }
 
-  protected expectedState (): boolean {
+  protected expectedEndState (): boolean {
     switch (this.sessionState.state) {
-      case SessionState.ActiveNormalSession:
-      case SessionState.ReceiveLogout:
       case SessionState.Stopped:
       case SessionState.ConfirmingLogout:
-      case SessionState.HandleResendRequest:
-      case SessionState.AwaitingProcessingResponseToTestRequest:
-      case SessionState.AwaitingProcessingResponseToResendRequest:
         return true
 
       default:
@@ -110,64 +121,96 @@ export abstract class FixSession extends events.EventEmitter {
     }
   }
 
+  protected rxOnEnd (): void {
+    const logger = this.sessionLogger
+    logger.info(`rx end received sessionState = [${this.sessionState.toString()}]`)
+    const expectedState = this.expectedEndState()
+    if (expectedState) {
+      logger.info(`rx receives end state = ${this.stateString()} - stop session`)
+      this.stop()
+    } else {
+      this.setState(SessionState.DetectBrokenNetworkConnection)
+      const e = new Error(`unexpected state - transport failed? = ${this.stateString()}`)
+      logger.info(`rx error ${e.message}`)
+      this.terminate(e)
+    }
+  }
+
+  protected rxOnMsg (msgType: string, view: MsgView): void {
+    const logger = this.sessionLogger
+
+    if (this.logReceivedMsgs) {
+      const name = view.segment.type !== SegmentType.Unknown ? view?.segment?.set?.name : 'unknown'
+      logger.info(`${msgType}: ${name}`)
+      logger.info(`${view.toString()}`)
+    }
+    this.sessionState.lastReceivedAt = new Date()
+    if (this.manageSession) {
+      this.onMsg(msgType, view)
+    } else {
+      this.checkForwardMsg(msgType, view)
+    }
+  }
+
+  protected rxOnDone (): void {
+    const logger = this.sessionLogger
+    logger.info('rx done received')
+    this.done()
+  }
+
+  protected rxOnError (e: Error): void {
+    const logger = this.sessionLogger
+    logger.warning(`rx error event: ${e.message} ${e.stack ?? ''}`)
+    this.terminate(e)
+  }
+
+  protected rxOnDecoded (msgType: string, data: ElasticBuffer, ptr: number): void {
+    const logger = this.sessionLogger
+    logger.debug(`rx: [${msgType}] ${ptr} bytes`)
+    this.onDecoded(msgType, data.toString(ptr))
+  }
+
+  protected txOnError (e: Error): void {
+    const logger = this.sessionLogger
+    logger.warning(`tx error event: ${e.message} ${e.stack ?? ''}`)
+    this.terminate(e)
+  }
+
+  protected txOnEncoded (msgType: string, data: string): void {
+    const logger = this.sessionLogger
+    logger.debug(`tx: [${msgType}] ${data.length} bytes`)
+    this.onEncoded(msgType, data)
+  }
+
+  protected unsubscribe (): void {
+    const logger = this.sessionLogger
+    logger.info(`unsubscribe sessionState = [${this.sessionState.toString()}]`)
+    const transport = this.transport
+    const rx = transport?.receiver
+    const tx = transport?.transmitter
+
+    rx?.removeListener('msg', this.rxOnMsg)
+    rx?.removeListener('error', this.rxOnError)
+    rx?.removeListener('done', this.rxOnDone)
+    rx?.removeListener('end', this.rxOnEnd)
+    rx?.removeListener('decoded', this.rxOnDecoded)
+    tx?.removeListener('error', this.txOnError)
+    tx?.removeListener('encoded', this.txOnEncoded)
+  }
+
   protected subscribe (): void {
     const transport = this.transport
-    const logger = this.sessionLogger
 
     const rx = transport?.receiver
     const tx = transport?.transmitter
 
-    rx?.on('msg', (msgType: string, view: MsgView) => {
-      if (this.logReceivedMsgs) {
-        const name = view.segment.type !== SegmentType.Unknown ? view?.segment?.set?.name : 'unknown'
-        logger.info(`${msgType}: ${name}`)
-        logger.info(`${view.toString()}`)
-      }
-      this.sessionState.lastReceivedAt = new Date()
-      if (this.manageSession) {
-        this.onMsg(msgType, view)
-      } else {
-        this.checkForwardMsg(msgType, view)
-      }
-    })
-
-    rx?.on('error', (e: Error) => {
-      logger.warning(`rx error event: ${e.message} ${e.stack ?? ''}`)
-      this.terminate(e)
-    })
-
-    rx?.on('done', () => {
-      logger.info('rx done received')
-      this.done()
-    })
-
-    rx?.on('end', () => {
-      logger.info(`rx end received sessionState = [${this.sessionState.toString()}]`)
-      const expectedState = this.expectedState()
-      if (expectedState) {
-        logger.info(`rx graceful end state = ${this.stateString()}`)
-        this.done()
-      } else {
-        const e = new Error(`unexpected state - transport failed? = ${this.stateString()}`)
-        logger.info(`rx error ${e.message}`)
-        this.terminate(e)
-      }
-    })
-
-    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
-      logger.debug(`rx: [${msgType}] ${ptr} bytes`)
-      this.onDecoded(msgType, data.toString(ptr))
-    })
-
-    tx?.on('error', (e: Error) => {
-      logger.warning(`tx error event: ${e.message} ${e.stack ?? ''}`)
-      this.terminate(e)
-    })
-
-    tx?.on('encoded', (msgType: string, data: string) => {
-      logger.debug(`tx: [${msgType}] ${data.length} bytes`)
-      this.onEncoded(msgType, data)
-    })
+    rx?.on('msg', (msgType: string, view: MsgView) => this.rxOnMsg(msgType, view))
+    rx?.on('error', (e: Error) => this.rxOnError(e))
+    rx?.on('done', () => this.rxOnDone())
+    rx?.on('end', () => this.rxOnEnd())
+    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => this.rxOnDecoded(msgType, data, ptr))
+    tx?.on('error', (e: Error) => this.txOnError(e))
+    tx?.on('encoded', (msgType: string, data: string) => this.txOnEncoded(msgType, data))
   }
 
   protected validStateApplicationMsg (): boolean {
@@ -214,6 +257,7 @@ export abstract class FixSession extends events.EventEmitter {
     const state = this.sessionState.state
     switch (state) {
       case SessionState.WaitingLogoutConfirm: {
+        this.unsubscribe()
         this.sessionLogger.info(`peer confirms logout Text = '${msg}'`)
         this.stop()
         break
@@ -275,10 +319,12 @@ export abstract class FixSession extends events.EventEmitter {
 
       case SessionState.ConfirmingLogout: {
         // this instance responds to log out
+        this.setState(SessionState.ConfirmingLogout)
         sessionState.logoutSentAt = new Date()
         const msg = `${this.me} confirming logout`
         this.sessionLogger.info(msg)
         this.sendLogout(msg)
+        this.unsubscribe()
         break
       }
 
@@ -326,6 +372,7 @@ export abstract class FixSession extends events.EventEmitter {
     if (this.timer) {
       clearInterval(this.timer)
     }
+    this.unsubscribe()
     this.sessionLogger.info('stop: kill transport')
     this.transport?.end()
     if (error) {
