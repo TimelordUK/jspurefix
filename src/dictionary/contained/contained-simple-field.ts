@@ -4,11 +4,11 @@ import { ContainedFieldType } from './contained-field-type'
 
 export class ContainedSimpleField extends ContainedField {
   constructor (public readonly definition: SimpleFieldDefinition,
-               public readonly position: number,
-               public readonly required: boolean,
-               public readonly attribute: boolean,
-               public readonly override?: string) {
-    super(override || definition.name, position, ContainedFieldType.Simple, required)
+    public readonly position: number,
+    public readonly required: boolean,
+    public readonly attribute: boolean,
+    public readonly override?: string) {
+    super(override ?? definition.name, position, ContainedFieldType.Simple, required)
   }
 
   public toString (): string {

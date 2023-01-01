@@ -12,10 +12,10 @@ export class HttpClient extends FixmlSession {
   private readonly fixLog: IJsFixLogger
   private readonly factory: OmsFactory = new OmsFactory('TradersRUs')
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
-               @inject('logoutSeconds') public readonly logoutSeconds: number = 45) {
+    @inject('logoutSeconds') public readonly logoutSeconds: number = 45) {
     super(config)
     this.logReceivedMsgs = true
-    this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
+    this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}`)
   }
 
@@ -30,7 +30,7 @@ export class HttpClient extends FixmlSession {
 
       case 'ExecRpt': {
         const fill: IExecutionReport = view.toObject()
-        this.logger.warning(`received execution report ${fill.OrderQtyData.OrderQty}@${fill.Price}`)
+        this.logger.warning(`received execution report ${fill?.OrderQtyData?.OrderQty}@${fill.Price}`)
         break
       }
     }

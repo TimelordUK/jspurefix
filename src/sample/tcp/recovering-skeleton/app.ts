@@ -11,14 +11,13 @@ import { SkeletonServer } from './skeleton-server'
 import { FixSession, FixEntity } from '../../../transport'
 
 class AppLauncher extends SessionLauncher {
-
   public constructor () {
     super(
       'data/session/test-initiator.json',
       'data/session/test-acceptor.json')
   }
 
-  protected override registerApplication (sessionContainer: DependencyContainer) {
+  protected override registerApplication (sessionContainer: DependencyContainer): void {
     const config: IJsFixConfig = sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     // use a different log delimiter as an example
     config.logDelimiter = AsciiChars.Carat

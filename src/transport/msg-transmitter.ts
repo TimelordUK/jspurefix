@@ -11,8 +11,8 @@ export abstract class MsgTransmitter extends events.EventEmitter {
   public encoder: MsgEncoder
 
   protected constructor (public readonly buffer: ElasticBuffer,
-                         public readonly definitions: FixDefinitions,
-                         public readonly session: ISessionDescription) {
+    public readonly definitions: FixDefinitions,
+    public readonly session: ISessionDescription) {
     super()
     this.encodeStream = this.encoderStream()
     this.encodeStream.on('error', (e: Error) => {

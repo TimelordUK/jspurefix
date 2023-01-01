@@ -28,7 +28,7 @@ import { ParsingResult } from '../env/parsing-result'
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter
 let encoder: AsciiEncoder
-let nos: MessageDefinition
+let nos: MessageDefinition | null
 let er: MessageDefinition
 
 const localDate: Date = new Date(2018, 6, 25)
@@ -48,7 +48,10 @@ beforeAll(async () => {
   buffer = setup.client.txBuffer
   encoder = session.encoder as AsciiEncoder
   nos = definitions.message.get('NewOrderSingle')
-  er = definitions.message.get('ExecutionReport')
+  const erd = definitions.message.get('ExecutionReport')
+  if (erd) {
+    er = erd
+  }
 }, 45000)
 
 test('expect a definition ', () => {
@@ -56,12 +59,12 @@ test('expect a definition ', () => {
 })
 
 function toFix (o: ILooseObject, set?: ContainedFieldSet, enc?: AsciiEncoder): string {
-  const theEncode = enc ? enc : encoder
+  const theEncode = enc ?? encoder
   session.buffer.reset()
   if (set) {
     theEncode.encode(o, set.name)
   } else {
-    theEncode.encode(o, nos.name)
+    theEncode.encode(o, nos?.name ?? '')
   }
   return session.buffer.toString()
 }
@@ -73,14 +76,18 @@ function toFixMessage (o: ILooseObject, msg: MessageDefinition): string {
 
 test('encode heartbeat', async () => {
   const factory = session.config.factory
+  expect(factory).toBeTruthy()
+  if (!factory) return
   const hb = factory.heartbeat('test01')
   const hbd = definitions.message.get('Heartbeat')
+  expect(hbd).toBeTruthy()
+  if (!hbd) return
   const fix = toFixMessage(hb, hbd)
   expect(fix).toBeTruthy()
   const res: ParsingResult = await setup.client.parseText(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual('0')
-  const len = res.view.getTyped(Tags.BodyLengthTag)
+  const len = res.view?.getTyped(Tags.BodyLengthTag)
   const expected = fix.length - '8=FIX.4.4|9=0000081|'.length - '10=159|'.length
   expect(len).toEqual(expected)
 })
@@ -91,7 +98,8 @@ test('encode custom header PossDupFlag', () => {
       PossDupFlag: true
     }
   }
-  const fix: string = toFixMessage(no, definitions.message.get('Heartbeat'))
+  const hb = definitions.message.get('Heartbeat')
+  const fix: string = hb ? toFixMessage(no, hb) : ''
   expect(fix).toMatch('43=Y|')
 })
 
@@ -101,7 +109,8 @@ test('encode custom header PossDupFlag', () => {
       MsgSeqNum: 9999
     }
   }
-  const fix: string = toFixMessage(no, definitions.message.get('Heartbeat'))
+  const hb = definitions.message.get('Heartbeat')
+  const fix: string = hb ? toFixMessage(no, hb) : ''
   expect(fix).toMatch('34=9999|')
 })
 
@@ -190,8 +199,9 @@ test('encode UTCTIMESTAMP ExpireTime - check padding', () => {
 })
 
 test('encode UTCDATEONLY MDEntryDate', () => {
-  const mdGrp: ComponentFieldDefinition = definitions.component.get('MDFullGrp')
+  const mdGrp: ComponentFieldDefinition | null = definitions.component.get('MDFullGrp')
   expect(mdGrp).toBeTruthy()
+  if (!mdGrp) return
   const grp: ILooseObject = {
     NoMDEntries: [
       {
@@ -205,7 +215,7 @@ test('encode UTCDATEONLY MDEntryDate', () => {
 })
 
 test('encode UTCTIMEONLY MDEntryTime', () => {
-  const mdGrp: ComponentFieldDefinition = definitions.component.get('MDFullGrp')
+  const mdGrp: ComponentFieldDefinition | null = definitions.component.get('MDFullGrp')
   expect(mdGrp).toBeTruthy()
   const grp: ILooseObject = {
     NoMDEntries: [
@@ -215,6 +225,7 @@ test('encode UTCTIMEONLY MDEntryTime', () => {
       }
     ]
   }
+  if (!mdGrp) return
   const fix: string = toFix(grp, mdGrp)
   expect(fix).toEqual('268=1|269=0|273=16:35:00.246|')
 })
@@ -242,6 +253,7 @@ function getTCR1 (): ITradeCaptureReportRequest {
 test('encode TradeCaptureReportRequest with TransactTime', () => {
   const tcr = getTCR1()
   const d = definitions.message.get('TradeCaptureReportRequest')
+  if (!d) return
   const fix: string = toFix(tcr, d)
   expect(fix).toEqual('568=all-trades|569=0|263=1|580=2|60=20181201-00:00:00.000|60=20181202-00:00:00.000|')
 })
@@ -308,17 +320,17 @@ test('encode empty RawData EncodedText', () => {
 
 function getParties (): ILooseObject {
   return {
-    'Parties': {
-      'NoPartyIDs': [
+    Parties: {
+      NoPartyIDs: [
         {
-          'PartyID': 'magna.',
-          'PartyIDSource': '9',
-          'PartyRole': 28
+          PartyID: 'magna.',
+          PartyIDSource: '9',
+          PartyRole: 28
         },
         {
-          'PartyID': 'iaculis',
-          'PartyIDSource': 'F',
-          'PartyRole': 2
+          PartyID: 'iaculis',
+          PartyIDSource: 'F',
+          PartyRole: 2
         }]
     }
   }
@@ -326,12 +338,12 @@ function getParties (): ILooseObject {
 
 function getPartiesNoPartyID (): ILooseObject {
   return {
-    'Parties': {
-      'NoPartyIDs': [
+    Parties: {
+      NoPartyIDs: [
         {
-                    // missing PartyID
-          'PartyIDSource': '9',
-          'PartyRole': 28
+          // missing PartyID
+          PartyIDSource: '9',
+          PartyRole: 28
         }
       ]
     }
@@ -373,8 +385,8 @@ test('encode repeated group with no PartyID - should encode', () => {
 test('encode repeated group with no array - should throw', () => {
   expect(er).toBeTruthy()
   const e: ILooseObject = {
-    'Parties': {
-      'NoPartyIDs': 'should be an array'
+    Parties: {
+      NoPartyIDs: 'should be an array'
     }
   }
   function run (): void {
@@ -386,8 +398,8 @@ test('encode repeated group with no array - should throw', () => {
 test('encode repeated group with empty array', () => {
   expect(er).toBeTruthy()
   const e: ILooseObject = {
-    'Parties': {
-      'NoPartyIDs': []
+    Parties: {
+      NoPartyIDs: []
     }
   }
   expect(toFix(e, er)).toEqual('453=0|')
@@ -395,36 +407,36 @@ test('encode repeated group with empty array', () => {
 
 function getInstrument (): ILooseObject {
   return {
-    'Instrument': {
-      'Symbol': 'ac,',
-      'SymbolSfx': 'non',
-      'SecurityID': 'Pellentesque',
-      'SecurityIDSource': 'B',
-      'Product': 2
+    Instrument: {
+      Symbol: 'ac,',
+      SymbolSfx: 'non',
+      SecurityID: 'Pellentesque',
+      SecurityIDSource: 'B',
+      Product: 2
     }
   }
 }
 
 function getInstrumentNestedGroup (): ILooseObject {
   return {
-    'Instrument': {
-      'Symbol': 'ac,',
-      'SymbolSfx': 'non',
-      'SecurityID': 'Pellentesque',
-      'SecurityIDSource': 'B',
-      'SecAltIDGrp': {
-        'NoSecurityAltID': [
+    Instrument: {
+      Symbol: 'ac,',
+      SymbolSfx: 'non',
+      SecurityID: 'Pellentesque',
+      SecurityIDSource: 'B',
+      SecAltIDGrp: {
+        NoSecurityAltID: [
           {
-            'SecurityAltID': 'lorem',
-            'SecurityAltIDSource': 'consequat'
+            SecurityAltID: 'lorem',
+            SecurityAltIDSource: 'consequat'
           },
           {
-            'SecurityAltID': 'sapien',
-            'SecurityAltIDSource': 'tempor'
+            SecurityAltID: 'sapien',
+            SecurityAltIDSource: 'tempor'
           }
         ]
       },
-      'Product': 2
+      Product: 2
     }
   }
 }
@@ -444,30 +456,30 @@ test('encode component nested group', () => {
 test('encode group missing delimiter', () => {
   expect(er).toBeTruthy()
   const e: ILooseObject = getInstrumentNestedGroup()
-  delete e.Instrument.SecAltIDGrp.NoSecurityAltID[0]['SecurityAltID']
-  function run () {
+  delete e.Instrument.SecAltIDGrp.NoSecurityAltID[0].SecurityAltID
+  function run (): void {
     toFix(e, er)
   }
-  expect(run).toThrow(/group instance \[1] inconsisent delimeter 455 expected tag 456/)
+  expect(run).toThrow(/group instance \[1] inconsistent delimiter 455 expected tag 456/)
 })
 
 test('encode group not an array of', () => {
   expect(er).toBeTruthy()
   const e: ILooseObject = {
-    'Instrument': {
-      'Symbol': 'ac,',
-      'SymbolSfx': 'non',
-      'SecurityID': 'Pellentesque',
-      'SecurityIDSource': 'B',
-      'SecAltIDGrp': {
-        'NoSecurityAltID': {
+    Instrument: {
+      Symbol: 'ac,',
+      SymbolSfx: 'non',
+      SecurityID: 'Pellentesque',
+      SecurityIDSource: 'B',
+      SecAltIDGrp: {
+        NoSecurityAltID: {
           elements: []
         }
       },
-      'Product': 2
+      Product: 2
     }
   }
-  function run () {
+  function run (): void {
     toFix(e, er)
   }
   expect(run).toThrow(/expected array instance for group NoSecurityAltID/)
@@ -519,14 +531,16 @@ test('encode custom header 1 - expect DeliverToCompID DepA', async () => {
   const type = SecurityType.CommonStock
   const o1 = createOrder(1, 'MS', type, Side.Buy, 100, 1000.0)
   const nosd = definitions.message.get('NewOrderSingle')
+  expect(nosd).toBeTruthy()
+  if (!nosd) return
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
   const res: ParsingResult = await setup.client.parseText(fix)
-  const tag = res.view.getTyped('DeliverToCompID')
+  const tag = res.view?.getTyped('DeliverToCompID')
   expect(tag).toEqual('DepA')
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)
-  const parsed: INewOrderSingle = res.view.toObject()
+  const parsed: INewOrderSingle = res.view?.toObject()
   expect(parsed.StandardHeader.DeliverToCompID).toEqual('DepA')
 })
 
@@ -534,14 +548,16 @@ test('encode custom header 2 - expect DeliverToCompID DepC', async () => {
   const type = SecurityType.ConvertibleBond
   const o1 = createOrder(1, 'MSCb', type, Side.Buy, 100, 1000.0)
   const nosd = definitions.message.get('NewOrderSingle')
+  expect(nosd).toBeTruthy()
+  if (!nosd) return
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
   const res: ParsingResult = await setup.client.parseText(fix)
-  const tag = res.view.getTyped('DeliverToCompID')
+  const tag = res.view?.getTyped('DeliverToCompID')
   expect(tag).toEqual('DepC')
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)
-  const parsed: INewOrderSingle = res.view.toObject()
+  const parsed: INewOrderSingle = res.view?.toObject()
   expect(parsed.StandardHeader.DeliverToCompID).toEqual('DepC')
 })
 
@@ -553,12 +569,13 @@ test('encode custom header - include MsgSeqNum (for resends we do not want to ov
   o1.StandardHeader.PossDupFlag = true
   const nosd = definitions.message.get('NewOrderSingle')
   expect(nosd).toBeTruthy()
+  if (!nosd) return
   const fix = toFixMessage(o1, nosd)
   expect(fix).toBeTruthy()
   const res: ParsingResult = await setup.client.parseText(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)
-  const parsed: INewOrderSingle = res.view.toObject()
+  const parsed: INewOrderSingle = res.view?.toObject()
   const h: IStandardHeader = parsed.StandardHeader
   expect(h.DeliverToCompID).toEqual('DepC')
   expect(h.MsgSeqNum).toEqual(seqNum)

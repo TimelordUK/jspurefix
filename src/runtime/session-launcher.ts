@@ -11,20 +11,20 @@ const defaultLoggerFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOpt
 export abstract class SessionLauncher {
   public root: string = '../../'
   protected readonly logger: IJsFixLogger
-  public readonly initiatorConfig: ISessionDescription;
-  public readonly acceptorConfig: ISessionDescription;
+  public readonly initiatorConfig: ISessionDescription
+  public readonly acceptorConfig: ISessionDescription | null
   protected constructor (initiatorConfig: string | ISessionDescription,
-                         acceptorConfig: string | ISessionDescription = null,
-                         private readonly loggerFactory: JsFixLoggerFactory = defaultLoggerFactory) {
+    acceptorConfig: string | ISessionDescription | null = null,
+    private readonly loggerFactory: JsFixLoggerFactory = defaultLoggerFactory) {
     this.logger = this.loggerFactory.logger('launcher')
     this.initiatorConfig = this.loadConfig(initiatorConfig)
-    this.acceptorConfig = this.loadConfig(acceptorConfig)
+    this.acceptorConfig = acceptorConfig ? this.loadConfig(acceptorConfig) : null
   }
 
   protected sessionContainer: SessionContainer = new SessionContainer()
 
-  private empty (): Promise<any> {
-    return new Promise((resolve, _) => {
+  private async empty (): Promise<any> {
+    return await new Promise((resolve, reject) => {
       setImmediate(() => {
         this.logger.info('resolving an empty promise')
         resolve(null)
@@ -32,35 +32,35 @@ export abstract class SessionLauncher {
     })
   }
 
-  protected getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
+  protected async getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
     if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
       const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
-      return entity.start()
+      return await entity.start()
     } else {
-      return this.empty()
+      return await this.empty()
     }
   }
 
-  protected getInitiator (sessionContainer: DependencyContainer): Promise<any> {
+  protected async getInitiator (sessionContainer: DependencyContainer): Promise<any> {
     if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
       const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
-      return entity.start()
+      return await entity.start()
     } else {
-      return this.empty()
+      return await this.empty()
     }
   }
 
-  protected makeFactory (config: IJsFixConfig): EngineFactory {
+  protected makeFactory (config: IJsFixConfig): EngineFactory | null {
     return null
   }
 
-  public run () {
-    return new Promise<any>((accept, reject) => {
+  public async run (): Promise<boolean> {
+    return await new Promise<any>((resolve, reject) => {
       const logger = this.logger
       logger.info('launching ..')
       this.setup().then(() => {
         logger.info('.. done')
-        accept(true)
+        resolve(true)
       }).catch((e: Error) => {
         logger.error(e)
         reject(e)
@@ -68,7 +68,7 @@ export abstract class SessionLauncher {
     })
   }
 
-  public exec () {
+  public exec (): void {
     this.run().then(() => {
       console.log('finished.')
     }).catch(e => {
@@ -88,9 +88,11 @@ export abstract class SessionLauncher {
     this.logger.info('bypass register via DI')
   }
 
-  private makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
-    this.logger.info(`creating app ${description.application.name} [protocol ${description.application.protocol}]`)
-    return this.sessionContainer.makeSystem(description)
+  private async makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
+    const name = description.application?.name ?? 'na'
+    const protocol = description.application?.protocol ?? 'ascii'
+    this.logger.info(`creating app ${name} [protocol ${protocol}]`)
+    return await this.sessionContainer.makeSystem(description)
   }
 
   private register (container: DependencyContainer): void {
@@ -111,25 +113,26 @@ export abstract class SessionLauncher {
     const sessionContainer = await this.makeSystem(this.initiatorConfig)
     this.register(sessionContainer)
     this.logger.info('create initiator')
-    return this.getInitiator(sessionContainer)
+    return await this.getInitiator(sessionContainer)
   }
 
   private async makeServer (): Promise<any> {
+    if (!this.acceptorConfig) return
     const sessionContainer = await this.makeSystem(this.acceptorConfig)
     this.register(sessionContainer)
     this.logger.info('create acceptor')
-    return this.getAcceptor(sessionContainer)
+    return await this.getAcceptor(sessionContainer)
   }
 
-  private async setup () {
+  private async setup (): Promise<any> {
     this.sessionContainer.registerGlobal(this.loggerFactory)
-    const server = this.acceptorConfig ? this.makeServer() : this.empty()
-    const client = this.initiatorConfig ? this.makeClient() : this.empty()
+    const server = this.acceptorConfig ? await this.makeServer() : await this.empty()
+    const client = this.initiatorConfig ? await this.makeClient() : await this.empty()
     this.logger.info('launching ....')
-    return Promise.all([server, client])
+    return await Promise.all([server, client])
   }
 
-  private loadConfig(config: string | ISessionDescription): ISessionDescription {
+  private loadConfig (config: string | ISessionDescription): ISessionDescription {
     if (typeof config === 'string') {
       return require(path.join(this.root, config))
     }

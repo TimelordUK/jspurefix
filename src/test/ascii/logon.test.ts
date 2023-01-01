@@ -12,8 +12,8 @@ const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let views: MsgView[]
-let structure: Structure
-let setup: Setup = null
+let structure: Structure | null
+let setup: Setup
 
 const asStrings: string[] = [
   'FIX4.4',
@@ -41,7 +41,7 @@ const asStrings: string[] = [
 ]
 
 beforeAll(async () => {
-  setup = new Setup('session/qf-fix44.json',null)
+  setup = new Setup('session/qf-fix44.json', null)
   await setup.init()
   definitions = setup.client.config.definitions
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
@@ -55,7 +55,7 @@ test('expect a structure from fix msg', () => {
 })
 
 test('Logon structure', () => {
-  const logon: SegmentDescription = structure.layout.Logon
+  const logon: SegmentDescription = structure?.layout.Logon
   expect(logon).toBeTruthy()
   expect(logon.type).toEqual(SegmentType.Msg)
   expect(logon.startPosition).toEqual(0)
@@ -65,7 +65,7 @@ test('Logon structure', () => {
 })
 
 test('Logon MsgTypes', () => {
-  const msgTypes: SegmentDescription = structure.layout.NoMsgTypes
+  const msgTypes: SegmentDescription = structure?.layout.NoMsgTypes
   expect(msgTypes).toBeTruthy()
   expect(msgTypes.type).toEqual(SegmentType.Group)
   expect(msgTypes.delimiterTag).toEqual(372)
@@ -87,6 +87,6 @@ test('Logon Object', () => {
 
 test('values as strings', () => {
   const view: MsgView = views[0]
-  const strings: string[] = view.getStrings()
+  const strings: Array<(string | null)> | null = view.getStrings()
   expect(strings).toEqual(asStrings)
 })

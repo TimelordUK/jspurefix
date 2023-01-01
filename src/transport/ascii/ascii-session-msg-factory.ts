@@ -11,10 +11,9 @@ import {
 } from '../../types/FIX4.4/repo'
 
 export class AsciiSessionMsgFactory extends ASessionMsgFactory {
-
-  constructor (readonly description: ISessionDescription, mutator: ObjectMutator = null) {
+  constructor (readonly description: ISessionDescription, mutator: ObjectMutator | null = null) {
     super(description, mutator)
-    this.isAscii = description.application.protocol === 'ascii'
+    this.isAscii = description.application?.protocol === 'ascii'
   }
 
   public logon (): ILooseObject {
@@ -31,14 +30,14 @@ export class AsciiSessionMsgFactory extends ASessionMsgFactory {
 
   public logout (text: string): ILooseObject {
     const o: ILogout = {
-      Text:  text
+      Text: text
     } as ILogout
     return this.mutate(o, MsgType.Logout)
   }
 
   public header (msgType: string, seqNum: number, time: Date, overrideData?: Partial<IStandardHeader>): ILooseObject {
     const description = this.description
-    const bodyLength: number = Math.max(4, description.BodyLengthChars || 7)
+    const bodyLength: number = Math.max(4, description.BodyLengthChars ?? 7)
     const placeHolder = Math.pow(10, bodyLength - 1) + 1
     const o: IStandardHeader = {
       BeginString: description.BeginString,
@@ -56,7 +55,7 @@ export class AsciiSessionMsgFactory extends ASessionMsgFactory {
 }
 
 export class SessionMsgFactory extends AsciiSessionMsgFactory {
-  constructor (public readonly description: ISessionDescription, public mutator: ObjectMutator = null) {
+  constructor (public readonly description: ISessionDescription, public mutator: ObjectMutator | null = null) {
     super(description, mutator)
   }
 }

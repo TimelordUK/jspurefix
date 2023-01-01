@@ -25,9 +25,9 @@ beforeAll(async () => {
 }, 45000)
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
-    // encode to FIX format from provided object.
-  return new Promise(async (resolve, reject) => {
-    let session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
+  // encode to FIX format from provided object.
+  return await new Promise(async (resolve, reject) => {
+    const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
     const parseBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
     const parser: AsciiParser = new AsciiParser(config, session.encodeStream, parseBuffer)
     parser.on('msg', (msgType: string, view: AsciiView) => {
@@ -83,8 +83,8 @@ test('parse MD snapshot msg', async () => {
   const res: ParsingResult = await setup.client.parseText(msg)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.MarketDataSnapshotFullRefresh)
-  const v2 = res.view.getView('MDFullGrp')
-  const o = v2.toObject()
+  const v2 = res.view?.getView('MDFullGrp')
+  const o = v2?.toObject()
   expect(o).toBeTruthy()
   // console.log(JSON.stringify(o, null, 4))
 })

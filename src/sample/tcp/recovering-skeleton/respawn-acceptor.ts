@@ -15,12 +15,12 @@ export class RespawnAcceptor extends FixEntity {
   // if acceptor errors e.g. via a forced connection drop, then respawn
   // a set number of times.
 
-  public start (): Promise<any> {
-    return this.waitFor()
+  public async start (): Promise<any> {
+    return await this.waitFor()
   }
 
   public async waitFor (respawns: number = 1): Promise<any> {
-    return new Promise<any>(async (resolve, reject) => {
+    return await new Promise<any>(async (resolve, reject) => {
       let respawned = 0
       while (respawned <= respawns) {
         try {

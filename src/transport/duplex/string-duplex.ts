@@ -2,7 +2,6 @@ import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
 
 export class StringDuplex extends FixDuplex {
-
   constructor (public readonly text: string = '', public chunks: boolean = false) {
     super()
     this.readable = StringDuplex.makeReadable(text, chunks)
@@ -13,7 +12,7 @@ export class StringDuplex extends FixDuplex {
     const Readable = require('stream').Readable
     let total: number = 0
     const reader = {
-      read:  (size: number) => {
+      read: (size: number) => {
         total += size
         if (text.length > 0 && total > text.length) {
           readable.push(null)
@@ -47,17 +46,17 @@ export class StringDuplex extends FixDuplex {
     return receiver
   }
 
-  private static sendReaderChunks (text: string, readable: Readable) {
+  private static sendReaderChunks (text: string, readable: Readable): void {
     // simulate a set of chunks sent to parser
     let start = 0
     let iteration = 0
     let remaining = text.length
     while (remaining > 0) {
       iteration++
-      let chunk = Math.min(remaining, iteration % 10)
+      const chunk = Math.min(remaining, iteration % 10)
       remaining -= chunk
       const end = start + chunk
-      let snippet = text.slice(start, end)
+      const snippet = text.slice(start, end)
       readable.push(snippet)
       start = end
     }

@@ -10,8 +10,7 @@ export class ElasticBuffer {
   private stretched: number
 
   constructor (@inject(DITokens.elasticBufferSize) public readonly size: number = 6 * 1024,
-               @inject(DITokens.elasticBufferReturnSize) public readonly returnTo: number = 6 * 1024) {
-
+    @inject(DITokens.elasticBufferReturnSize) public readonly returnTo: number = 6 * 1024) {
     this.size = Math.max(1, this.size)
     this.buffer = Buffer.allocUnsafe(this.size)
     this.returnTo = Math.max(this.size, this.returnTo)
@@ -117,7 +116,7 @@ export class ElasticBuffer {
     return this.ptr
   }
 
-  public writeNumber (v: number, places: number = 13) {
+  public writeNumber (v: number, places: number = 13): number {
     const rounded: number = Math.floor(v)
     const fraction: number = ElasticBuffer.precisionRound(v - rounded, places)
     if (fraction === 0) {
@@ -259,7 +258,7 @@ export class ElasticBuffer {
     return b === AsciiChars.Y
   }
 
-  public getFloat (start: number, vend: number): number {
+  public getFloat (start: number, vend: number): number | null {
     let n: number = 0
     let digits: number = 0
     let dotPosition: number = 0

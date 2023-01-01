@@ -23,21 +23,22 @@ export enum InitiatorState {
 
 @injectable()
 export class TcpInitiator extends FixInitiator {
-  public tcp: ITcpTransportDescription
+  public tcp: ITcpTransportDescription | null
   public state: InitiatorState = InitiatorState.Idle
   private readonly logger: IJsFixLogger
   private duplex: FixDuplex
-  private th: Timeout = null
+  private th: Timeout | null = null
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
-    super(jsFixConfig.description.application)
-    this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:TcpInitiator`)
+    super(jsFixConfig.description.application ?? null)
+    const name = this.application?.name ?? 'initiator'
+    this.logger = jsFixConfig.logFactory.logger(`${name}:TcpInitiator`)
     if (!this.application) {
-      throw new Error(`no application in session description.`)
+      throw new Error('no application in session description.')
     }
-    this.tcp = this.application.tcp
+    this.tcp = this.application.tcp ?? null
     if (!this.tcp) {
-      throw new Error(`no tcp in session description need tcp { host: hostname, port: port }`)
+      throw new Error('no tcp in session description need tcp { host: hostname, port: port }')
     }
   }
 
@@ -59,8 +60,8 @@ export class TcpInitiator extends FixInitiator {
     }
   }
 
-  public connect (timeoutSeconds: number): Promise<MsgTransport> {
-    return new Promise<MsgTransport>(async (resolve, reject) => {
+  public async connect (timeoutSeconds: number): Promise<MsgTransport> {
+    return await new Promise<MsgTransport>(async (resolve, reject) => {
       switch (this.state) {
         case InitiatorState.Idle: {
           this.state = InitiatorState.Connecting
@@ -75,29 +76,36 @@ export class TcpInitiator extends FixInitiator {
           break
         }
 
-        default:
-          const e: Error = new Error(`connect not valid from non idle state`)
+        default: {
+          const e: Error = new Error('connect not valid from non idle state')
           this.logger.warning(`rejecting from state ${this.state}`)
           reject(e)
+        }
       }
     })
   }
 
-  private unsecureDuplex (): Promise<TcpDuplex> {
+  private async unsecureDuplex (): Promise<TcpDuplex> {
     const tcp = this.tcp
-    return new Promise<TcpDuplex>((resolve, reject) => {
+    return await new Promise<TcpDuplex>((resolve, reject) => {
       try {
-        this.logger.info(`unsecureDuplex try to connect to endPoint`)
-        const socket = createConnection(tcp, () => {
-          try {
-            this.logger.info(`net.createConnection cb, resolving`)
-            const tcpDuplex = new TcpDuplex(socket)
-            resolve(tcpDuplex)
-          } catch (e) {
-            reject(e)
-          }
-        })
-        socket.on('error', (err) => {
+        this.logger.info('unsecureDuplex try to connect to endPoint')
+        const socket = tcp
+          ? createConnection(tcp, () => {
+            try {
+              this.logger.info('net.createConnection cb, resolving')
+              if (socket) {
+                const tcpDuplex = new TcpDuplex(socket)
+                resolve(tcpDuplex)
+              } else {
+                reject(new Error('no socket in tcp initiator'))
+              }
+            } catch (e) {
+              reject(e)
+            }
+          })
+          : null
+        socket?.on('error', (err) => {
           reject(err)
         })
       } catch (e) {
@@ -106,14 +114,15 @@ export class TcpInitiator extends FixInitiator {
     })
   }
 
-  private tlsDuplex (): Promise < TcpDuplex > {
-    return new Promise<TcpDuplex>((resolve, reject) => {
-      let tlsSocket: TLSSocket = null
+  private async tlsDuplex (): Promise<TcpDuplex > {
+    return await new Promise<TcpDuplex>((resolve, reject) => {
+      let tlsSocket: TLSSocket | null = null
       const tcp = this.tcp
-      const connectionOptions: ConnectionOptions = TlsOptionsFactory.getTlsConnectionOptions(tcp)
+      const connectionOptions: ConnectionOptions | null = tcp ? TlsOptionsFactory.getTlsConnectionOptions(tcp) : null
       if (connectionOptions) {
         try {
           tlsSocket = tlsConnect(connectionOptions, () => {
+            if (!tlsSocket) return null
             this.logger.info(`client connected ${tlsSocket.authorized ? 'authorized' : 'unauthorized'}`)
             if (!tlsSocket.authorized) {
               const error = tlsSocket.authorizationError
@@ -123,11 +132,11 @@ export class TcpInitiator extends FixInitiator {
             } else {
               tlsSocket.setEncoding('utf8')
               const tlsDuplex = new TcpDuplex(tlsSocket)
-              if (tcp.tls.enableTrace) {
-                this.logger.info(`enabling tls session trace`)
+              if (tcp?.tls?.enableTrace) {
+                this.logger.info('enabling tls session trace')
                 tlsSocket.enableTrace()
               }
-              this.logger.info(`tlsDuplex resolving`)
+              this.logger.info('tlsDuplex resolving')
               resolve(tlsDuplex)
             }
           })
@@ -141,12 +150,12 @@ export class TcpInitiator extends FixInitiator {
     })
   }
 
-  private tryConnect (): Promise < MsgTransport > {
-    return new Promise<MsgTransport>((resolve, reject) => {
+  private async tryConnect (): Promise < MsgTransport > {
+    return await new Promise<MsgTransport>((resolve, reject) => {
       const tcp = this.tcp
-      const connectionOptions: ConnectionOptions = TlsOptionsFactory.getTlsConnectionOptions(tcp)
+      const connectionOptions: ConnectionOptions | null = tcp ? TlsOptionsFactory.getTlsConnectionOptions(tcp) : null
       const connector = connectionOptions ? this.tlsDuplex() : this.unsecureDuplex()
-      this.logger.info(`tryConnect ${tcp.host}:${tcp.port}`)
+      this.logger.info(`tryConnect ${tcp?.host}:${tcp?.port}`)
       connector.then(duplex => {
         this.duplex = duplex
         resolve(new MsgTransport(0, this.jsFixConfig, duplex))
@@ -156,20 +165,22 @@ export class TcpInitiator extends FixInitiator {
     })
   }
 
-  public clearTimer () {
-    if (this .th) {
+  public clearTimer (): void {
+    if (this.th) {
       clearInterval(this.th)
       this.th = null
     }
   }
 
-  private repeatConnect (timeoutSeconds: number): Promise < MsgTransport > {
-    return new Promise<MsgTransport>(async (resolve, reject) => {
+  private async repeatConnect (timeoutSeconds: number): Promise < MsgTransport > {
+    return await new Promise<MsgTransport>(async (resolve, reject) => {
       const application = this.application
       const promisify = util.promisify
       const timeoutPromise = promisify(setTimeout)
+      const reconnectSeconds = application?.reconnectSeconds ?? 5
       let retries = 0
       let lastError: Error
+      const name = application?.name ?? 'initiator'
       this.th = setInterval(() => {
         ++retries
         this.tryConnect()
@@ -177,15 +188,15 @@ export class TcpInitiator extends FixInitiator {
             this.state = InitiatorState.Connected
             this.clearTimer()
             resolve(t)
-        }).catch((e: Error) => {
-          lastError = e
-          this.logger.info(`${application.name}: retries ${retries} ${e.message}`)
-        })
-      }, application.reconnectSeconds * 1000)
+          }).catch((e: Error) => {
+            lastError = e
+            this.logger.info(`${name}: retries ${retries} ${e.message}`)
+          })
+      }, reconnectSeconds * 1000)
       timeoutPromise(timeoutSeconds * 1000).then(() => {
         this.clearTimer()
         this.state = InitiatorState.Stopped
-        const e = lastError ?? new Error(`${application.name}: timeout of ${timeoutSeconds} whilst connecting`)
+        const e = lastError ?? new Error(`${name}: timeout of ${timeoutSeconds} whilst connecting`)
         reject(e)
       }).catch(e => {
         reject(e)

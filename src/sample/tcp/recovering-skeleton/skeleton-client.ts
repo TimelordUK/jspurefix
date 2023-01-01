@@ -9,10 +9,10 @@ export class SkeletonClient extends AsciiSession {
   private readonly fixLog: IJsFixLogger
 
   constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig,
-               @inject('logoutSeconds') public readonly logoutSeconds: number) {
+    @inject('logoutSeconds') public readonly logoutSeconds: number) {
     super(config)
     this.logReceivedMsgs = true
-    this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
+    this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}`)
   }
 

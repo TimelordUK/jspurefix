@@ -18,8 +18,8 @@ export class FixDefinitions {
   constructor (public readonly source: FixDefinitionSource, public readonly version: FixVersion) {
   }
 
-  public containedSet (type: string): ContainedFieldSet {
-    return this.message.get(type) || this.component.get(type)
+  public containedSet (type: string): ContainedFieldSet | null {
+    return this.message.get(type) ?? this.component.get(type)
   }
 
   public addMessage (message: MessageDefinition): void {
@@ -39,10 +39,10 @@ export class FixDefinitions {
     this.component.addUpdate(field.name, field)
   }
 
-  public getSimple (name: string, cat?: string): SimpleFieldDefinition {
-    let sf: SimpleFieldDefinition = null
+  public getSimple (name: string, cat?: string | null): SimpleFieldDefinition | null {
+    let sf: SimpleFieldDefinition | null = null
     if (cat) {
-      let category: CategorySimpleSet = this.categorySimple.get(cat)
+      const category: CategorySimpleSet | null = this.categorySimple.get(cat)
       if (category) {
         sf = category.simple.get(name)
       }
@@ -60,7 +60,7 @@ export class FixDefinitions {
     }
   }
 
-  public addSimpleFieldDef (field: SimpleFieldDefinition, typeName: string = null): void {
+  public addSimpleFieldDef (field: SimpleFieldDefinition, typeName: string | null = null): void {
     this.assignCategory(field)
     const simple = this.simple
     simple.addUpdate(field.num, field)
@@ -76,9 +76,9 @@ export class FixDefinitions {
     }
   }
 
-  private assignCategory (field: SimpleFieldDefinition) {
+  private assignCategory (field: SimpleFieldDefinition): void {
     if (field.baseCategory && field.baseCategoryAbbreviation) {
-      let category: CategorySimpleSet = this.categorySimple.get(field.baseCategory)
+      let category: CategorySimpleSet | null = this.categorySimple.get(field.baseCategory)
       if (!category) {
         category = new CategorySimpleSet(field.baseCategory)
         this.categorySimple.add(field.baseCategory, category)

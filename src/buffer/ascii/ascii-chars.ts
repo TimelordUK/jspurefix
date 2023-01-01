@@ -1,5 +1,4 @@
 export abstract class AsciiChars {
-
   public static readonly Minus: number = '-'.charCodeAt(0)
   public static readonly Equal: number = '='.charCodeAt(0)
   public static readonly ForwardSlash: number = '/'.charCodeAt(0)

@@ -20,7 +20,6 @@ export class FieldsDispatch {
           try {
             dispatcher.simple(field as ContainedSimpleField)
           } catch (ex) {
-            let x = 0
           }
         }
         break

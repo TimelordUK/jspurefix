@@ -51,7 +51,7 @@ export class CompilerType {
     }
   }
 
-  public getFieldGroupName (field: ContainedField) {
+  public getFieldGroupName (field: ContainedField): string {
     switch (field.type) {
       case ContainedFieldType.Group: {
         const gf = field as ContainedGroupField

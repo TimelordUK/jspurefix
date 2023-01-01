@@ -11,8 +11,9 @@ export class SegmentSummary {
     public readonly delimiterTag: number,
     public readonly delimiterPositions: number[]) {
   }
+
   public static fromDescription (d: SegmentDescription): SegmentSummary {
-    return new SegmentSummary(d.set.name, d.depth, d.startTag, d.startPosition,
-            d.endTag, d.endPosition, d.delimiterTag, d.delimiterPositions || [])
+    return new SegmentSummary(d.set?.name ?? 'na', d.depth, d.startTag, d.startPosition,
+      d.endTag, d.endPosition, d.delimiterTag, d.delimiterPositions || [])
   }
 }

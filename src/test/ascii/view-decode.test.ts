@@ -15,12 +15,12 @@ const root: string = path.join(__dirname, '../../../data')
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter
 let views: MsgView[]
-let structure: Structure
+let structure: Structure | null
 let view: MsgView
-let setup: Setup = null
+let setup: Setup
 
 beforeAll(async () => {
-  setup = new Setup('session/qf-fix44.json',null)
+  setup = new Setup('session/qf-fix44.json', null)
   await setup.init()
   definitions = setup.definitions
   session = setup.client.transmitter as AsciiMsgTransmitter
@@ -36,26 +36,26 @@ test('expect a structure from fix msg', () => {
 })
 
 test('get NoMDEntries directly - expect an array', () => {
-  const noMDEntriesView: MsgView = view.getView('NoMDEntries')
+  const noMDEntriesView: MsgView | null = view?.getView('NoMDEntries')
   expect(noMDEntriesView).toBeTruthy()
-  const noMDEntries: ILooseObject[] = noMDEntriesView.toObject()
+  const noMDEntries: ILooseObject[] = noMDEntriesView?.toObject()
   expect(Array.isArray(noMDEntries)).toEqual(true)
   expect(noMDEntries.length).toEqual(2)
 })
 
 test('get NoMDEntries via MDFullGrp - array within a component', () => {
-  const mdFullGrp: MsgView = view.getView('MDFullGrp')
+  const mdFullGrp: MsgView | null = view.getView('MDFullGrp')
   expect(mdFullGrp).toBeTruthy()
-  const mdFullGrpAsObject: ILooseObject = mdFullGrp.toObject()
+  const mdFullGrpAsObject: ILooseObject = mdFullGrp?.toObject()
   const noMDEntries: ILooseObject[] = mdFullGrpAsObject.NoMDEntries
   expect(Array.isArray(noMDEntries)).toEqual(true)
   expect(noMDEntries.length).toEqual(2)
 })
 
 function getMdEntriesObjects (): ILooseObject[] {
-  const noMDEntriesView: MsgView = view.getView('NoMDEntries')
+  const noMDEntriesView: MsgView | null = view.getView('NoMDEntries')
   expect(noMDEntriesView).toBeTruthy()
-  const noMDEntries: ILooseObject[] = noMDEntriesView.toObject()
+  const noMDEntries: ILooseObject[] = noMDEntriesView?.toObject()
   expect(Array.isArray(noMDEntries)).toEqual(true)
   expect(noMDEntries.length).toEqual(2)
   return noMDEntries
@@ -65,13 +65,13 @@ function getMdEntriesObjects (): ILooseObject[] {
 
 test('get UTCDATEONLY from NoMDEntries instance 1', () => {
   const noMdEntriesAsObjects: ILooseObject[] = getMdEntriesObjects()
-  const noMDEntriesView: MsgView = view.getView('NoMDEntries')
-  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(1)
+  const noMDEntriesView: MsgView | null = view.getView('NoMDEntries')
+  const mmEntryView: MsgView | null = noMDEntriesView?.getGroupInstance(1) ?? null
 
   const instance: ILooseObject = noMdEntriesAsObjects[1]
-  const mmEntryDateAsString: string = mmEntryView.getString('MDEntryDate')
+  const mmEntryDateAsString: string | null = mmEntryView?.getString('MDEntryDate') ?? null
   expect(mmEntryDateAsString).toEqual('20210129')
-  expect(mmEntryView.getString(272)).toEqual('20210129')
+  expect(mmEntryView?.getString(272)).toEqual('20210129')
   const asUtc: Date = new Date(Date.UTC(2021, 0, 29))
   expect(instance.MDEntryDate).toEqual(asUtc)
 })
@@ -80,13 +80,12 @@ test('get UTCDATEONLY from NoMDEntries instance 1', () => {
 
 test('get UTCTIMEONLY from NoMDEntries instance 0', () => {
   const noMdEntriesAsObjects: ILooseObject[] = getMdEntriesObjects()
-  const noMDEntriesView: MsgView = view.getView('NoMDEntries')
-  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(0)
-
+  const noMDEntriesView: MsgView | null = view.getView('NoMDEntries')
+  const mmEntryView: MsgView | null = noMDEntriesView?.getGroupInstance(0) ?? null
   const instance: ILooseObject = noMdEntriesAsObjects[0]
-  const mmEntryTimeAsString: string = mmEntryView.getString('MDEntryTime')
+  const mmEntryTimeAsString: string | null = mmEntryView?.getString('MDEntryTime') ?? null
   expect(mmEntryTimeAsString).toEqual('19:45:19.852')
-  expect(mmEntryView.getString(273)).toEqual('19:45:19.852')
+  expect(mmEntryView?.getString(273)).toEqual('19:45:19.852')
   const asUtc: Date = new Date(Date.UTC(0, 0, 0, 19, 45, 19, 852))
   expect(instance.MDEntryTime).toEqual(asUtc)
 })
@@ -95,13 +94,13 @@ test('get UTCTIMEONLY from NoMDEntries instance 0', () => {
 
 test('get UTCTIMESTAMP from NoMDEntries instance 1', () => {
   const noMdEntriesAsObjects: ILooseObject[] = getMdEntriesObjects()
-  const noMDEntriesView: MsgView = view.getView('NoMDEntries')
-  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(1)
+  const noMDEntriesView: MsgView | null = view.getView('NoMDEntries')
+  const mmEntryView: MsgView | null = noMDEntriesView?.getGroupInstance(1) ?? null
 
   const instance: ILooseObject = noMdEntriesAsObjects[1]
-  const mmEntryExpireTimeAsString: string = mmEntryView.getString('ExpireTime')
+  const mmEntryExpireTimeAsString: string | null = mmEntryView?.getString('ExpireTime') ?? null
   expect(mmEntryExpireTimeAsString).toEqual('20210129-19:45:19.000')
-  expect(mmEntryView.getString(126)).toEqual('20210129-19:45:19.000')
+  expect(mmEntryView?.getString(126)).toEqual('20210129-19:45:19.000')
   const asUtc: Date = new Date(Date.UTC(2021, 0, 29, 19, 45, 19, 0))
   const d: Date = instance.ExpireTime
   expect(d).toEqual(asUtc)
@@ -111,13 +110,13 @@ test('get UTCTIMESTAMP from NoMDEntries instance 1', () => {
 
 test('get MinQty from NoMDEntries instance 1', () => {
   const noMdEntriesAsObjects: ILooseObject[] = getMdEntriesObjects()
-  const noMDEntriesView: MsgView = view.getView('NoMDEntries')
-  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(1)
+  const noMDEntriesView: MsgView | null = view.getView('NoMDEntries')
+  const mmEntryView: MsgView | null = noMDEntriesView?.getGroupInstance(1) ?? null
 
   const instance: ILooseObject = noMdEntriesAsObjects[1]
-  const mmEntryMinQtyAsString: string = mmEntryView.getString('MinQty')
+  const mmEntryMinQtyAsString: string | null = mmEntryView?.getString('MinQty') ?? null
   expect(mmEntryMinQtyAsString).toEqual('9.6478')
-  expect(mmEntryView.getString(110)).toEqual('9.6478')
+  expect(mmEntryView?.getString(110)).toEqual('9.6478')
   expect(instance.MinQty).toEqual(9.6478)
 })
 
@@ -153,16 +152,16 @@ test('get selection tags one call - tag names', () => {
   expect(f).toEqual('ipsum')
 })
 
-test('nested view fetch' , () => {
+test('nested view fetch', () => {
   const legGrpView = view.getView('InstrmtLegGrp.NoLegs')
   expect(legGrpView).toBeTruthy()
-  const legGrp: IInstrumentLeg[] = legGrpView.toObject()
+  const legGrp: IInstrumentLeg[] = legGrpView?.toObject()
   expect(legGrp).toBeTruthy()
   expect(Array.isArray(legGrp))
   expect(legGrp.length).toEqual(3)
 })
 
-test('view buffer' , () => {
+test('view buffer', () => {
   const asciiView: AsciiView = view as AsciiView
   const buffer = asciiView.toBuffer('?'.charCodeAt(0))
   const txt = buffer.toString()
@@ -205,18 +204,20 @@ function BidOfferRequest (symbol: string): IMarketDataRequest {
 test('market data request', async () => {
   const mdr = BidOfferRequest('EUR/USD')
   const def = definitions.message.get('MarketDataRequest')
+  expect(def).toBeTruthy()
+  if (!def) return
   const fix = toFixMessage(mdr, def)
   expect(fix).toBeTruthy()
   const res: ParsingResult = await setup.client.parseText(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(def.msgType)
-  const gv = res.view.getView('MDReqGrp')
+  const gv = res?.view?.getView('MDReqGrp')
   expect(gv).toBeTruthy()
-  const s = gv.toString()
+  const s = gv?.toString()
   const newLine = require('os').EOL
   expect(s).toEqual(`[0] 267 (NoMDEntryTypes) = 2, [1] 269 (MDEntryType) = 0[Bid]${newLine}[2] 269 (MDEntryType) = 1[Offer]`)
-  const iv = res.view.getView('InstrmtMDReqGrp.NoRelatedSym')
+  const iv = res?.view?.getView('InstrmtMDReqGrp.NoRelatedSym')
   expect(iv).toBeTruthy()
-  const s2 = iv.toString()
+  const s2 = iv?.toString()
   expect(s2).toEqual(`[0] 146 (NoRelatedSym) = 1, [1] 55 (Symbol) = EUR/USD${newLine}`)
 })

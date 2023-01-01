@@ -16,13 +16,13 @@ export class FixmlMsgTransmitter extends MsgTransmitter {
   }
 
   public encodeMessage (msgType: string, obj: ILooseObject): void {
-    const adapter = this.config.description.application.http.adapter
+    const adapter = this?.config?.description?.application?.http?.adapter
     if (adapter) {
       adapter.beginMessage(msgType)
     }
     const fe = this.encoder as FixmlEncoder
     const factory = this.config.factory
-    obj.StandardHeader = factory.header()
+    obj.StandardHeader = factory?.header()
     fe.encode(obj, msgType)
   }
 }

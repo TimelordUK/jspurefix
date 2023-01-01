@@ -4,11 +4,11 @@ import { ComponentFieldDefinition, GroupFieldDefinition, MessageDefinition } fro
 export class ParseContext {
   public required: boolean
 
-  constructor (public name: string, public defining: boolean, public set: ContainedFieldSet) {
+  constructor (public name: string, public defining: boolean, public set: ContainedFieldSet | null) {
     this.required = false
   }
 
-  public asMessage (): MessageDefinition {
+  public asMessage (): MessageDefinition | null {
     const res: boolean = this.set != null && this.set instanceof MessageDefinition
     if (res) {
       return (this.set) as MessageDefinition
@@ -17,7 +17,7 @@ export class ParseContext {
     }
   }
 
-  public asComponent (): ComponentFieldDefinition {
+  public asComponent (): ComponentFieldDefinition | null {
     const res: boolean = this.set != null && this.set instanceof ComponentFieldDefinition
     if (res) {
       return (this.set) as ComponentFieldDefinition
@@ -26,7 +26,7 @@ export class ParseContext {
     }
   }
 
-  public asGroup (): GroupFieldDefinition {
+  public asGroup (): GroupFieldDefinition | null {
     const res: boolean = this.set != null && this.set instanceof GroupFieldDefinition
     if (res) {
       return (this.set) as GroupFieldDefinition

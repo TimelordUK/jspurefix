@@ -14,5 +14,5 @@ export interface ISessionDescription {
   readonly SenderSubID: string
   readonly TargetSubID: string
   readonly BeginString: string
-  readonly BodyLengthChars?: number,
+  readonly BodyLengthChars?: number
 }

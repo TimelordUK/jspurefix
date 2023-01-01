@@ -11,8 +11,8 @@ import { SegmentType } from '../../buffer/segment/segment-type'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false
-  protected timer: NodeJS.Timer = null
-  protected transport: MsgTransport = null
+  protected timer: NodeJS.Timer | null = null
+  protected transport: MsgTransport | null = null
   public manageSession: boolean = true
   public checkMsgIntegrity: boolean = false
   protected readonly me: string
@@ -27,18 +27,20 @@ export abstract class FixSession extends events.EventEmitter {
   protected constructor (public readonly config: IJsFixConfig) {
     super()
     const description = config.description
-    this.me = description.application.name
+    this.me = description?.application?.name ?? 'me'
     this.sessionState = new FixSessionState(
-      { heartBeat: config.description.HeartBtInt,
-        lastPeerMsgSeqNum: config.description.LastReceivedSeqNum})
+      {
+        heartBeat: config.description.HeartBtInt,
+        lastPeerMsgSeqNum: config.description.LastReceivedSeqNum
+      })
     this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`)
-    this.initiator = description.application.type === 'initiator'
+    this.initiator = description?.application?.type === 'initiator'
     this.acceptor = !this.initiator
     this.checkMsgIntegrity = this.acceptor
     this.sessionState.compId = description.SenderCompId
   }
 
-  public setState (state: SessionState) {
+  public setState (state: SessionState): void {
     if (state === this.sessionState.state) return
     const logger = this.sessionLogger
     const prevState = this.sessionState.state
@@ -51,13 +53,16 @@ export abstract class FixSession extends events.EventEmitter {
     return this.sessionState.state
   }
 
-  public sendLogon () {
-    this.send(this.requestLogonType, this.config.factory.logon())
+  public sendLogon (): void {
+    const lo = this.config.factory?.logon()
+    if (lo) {
+      this.send(this.requestLogonType, lo)
+    }
   }
 
-  private waitPromise (): Promise<any> {
+  private async waitPromise (): Promise<number> {
     const logger = this.sessionLogger
-    return new Promise<any>((accept, reject) => {
+    return await new Promise<any>((resolve, reject) => {
       if (this.initiator) {
         logger.debug(`initiator sending logon state = ${this.stateString()}`)
         this.sendLogon()
@@ -73,12 +78,12 @@ export abstract class FixSession extends events.EventEmitter {
       })
 
       this.on('done', () => {
-        accept(this.transport.id)
+        resolve(this.transport?.id)
       })
     })
   }
 
-  public run (transport: MsgTransport): Promise<number> {
+  public async run (transport: MsgTransport): Promise<number> {
     const logger = this.sessionLogger
     if (this.transport) {
       logger.info(`reset from previous transport. state ${this.stateString()}`)
@@ -86,7 +91,7 @@ export abstract class FixSession extends events.EventEmitter {
     }
     this.transport = transport
     this.subscribe()
-    return this.waitPromise()
+    return await this.waitPromise()
   }
 
   protected expectedState (): boolean {
@@ -105,17 +110,16 @@ export abstract class FixSession extends events.EventEmitter {
     }
   }
 
-  protected subscribe () {
-
+  protected subscribe (): void {
     const transport = this.transport
     const logger = this.sessionLogger
 
-    const rx = transport.receiver
-    const tx = transport.transmitter
+    const rx = transport?.receiver
+    const tx = transport?.transmitter
 
-    rx.on('msg', (msgType: string, view: MsgView) => {
+    rx?.on('msg', (msgType: string, view: MsgView) => {
       if (this.logReceivedMsgs) {
-        const name = view.segment.type !== SegmentType.Unknown ? view.segment.set.name : 'unknown'
+        const name = view.segment.type !== SegmentType.Unknown ? view?.segment?.set?.name : 'unknown'
         logger.info(`${msgType}: ${name}`)
         logger.info(`${view.toString()}`)
       }
@@ -127,17 +131,17 @@ export abstract class FixSession extends events.EventEmitter {
       }
     })
 
-    rx.on('error', (e: Error) => {
-      logger.warning(`rx error event: ${e.message} ${e.stack || ''}`)
+    rx?.on('error', (e: Error) => {
+      logger.warning(`rx error event: ${e.message} ${e.stack ?? ''}`)
       this.terminate(e)
     })
 
-    rx.on('done', () => {
+    rx?.on('done', () => {
       logger.info('rx done received')
       this.done()
     })
 
-    rx.on('end', () => {
+    rx?.on('end', () => {
       logger.info(`rx end received sessionState = [${this.sessionState.toString()}]`)
       const expectedState = this.expectedState()
       if (expectedState) {
@@ -150,17 +154,17 @@ export abstract class FixSession extends events.EventEmitter {
       }
     })
 
-    rx.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
+    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => {
       logger.debug(`rx: [${msgType}] ${ptr} bytes`)
       this.onDecoded(msgType, data.toString(ptr))
     })
 
-    tx.on('error', (e: Error) => {
-      logger.warning(`tx error event: ${e.message} ${e.stack || ''}`)
+    tx?.on('error', (e: Error) => {
+      logger.warning(`tx error event: ${e.message} ${e.stack ?? ''}`)
       this.terminate(e)
     })
 
-    tx.on('encoded', (msgType: string, data: string) => {
+    tx?.on('encoded', (msgType: string, data: string) => {
       logger.debug(`tx: [${msgType}] ${data.length} bytes`)
       this.onEncoded(msgType, data)
     })
@@ -205,7 +209,7 @@ export abstract class FixSession extends events.EventEmitter {
     this.emit('error', error)
   }
 
-  protected peerLogout (view: MsgView) {
+  protected peerLogout (view: MsgView): void {
     const msg = view.getString(MsgTag.Text)
     const state = this.sessionState.state
     switch (state) {
@@ -225,7 +229,7 @@ export abstract class FixSession extends events.EventEmitter {
     }
   }
 
-  protected send (msgType: string, obj: ILooseObject) {
+  protected send (msgType: string, obj: ILooseObject): void {
     const state = this.sessionState.state
     switch (state) {
       case SessionState.Stopped: {
@@ -235,16 +239,19 @@ export abstract class FixSession extends events.EventEmitter {
 
       default: {
         this.sessionState.LastSentAt = new Date()
-        this.transport.transmitter.send(msgType, obj)
+        this.transport?.transmitter.send(msgType, obj)
         break
       }
     }
   }
 
-  protected sendLogout (msg: string) {
+  protected sendLogout (msg: string): void {
     const factory = this.config.factory
     this.sessionLogger.info(`sending logout with ${msg}`)
-    this.send(this.requestLogoutType, factory.logout(this.requestLogoutType, msg))
+    const lo = factory?.logout(this.requestLogoutType, msg)
+    if (lo) {
+      this.send(this.requestLogoutType, lo)
+    }
   }
 
   protected sessionLogout (): void {
@@ -291,7 +298,7 @@ export abstract class FixSession extends events.EventEmitter {
       }
 
       case SessionState.Stopped:
-        this.sessionLogger.info(`done. session is now stopped`)
+        this.sessionLogger.info('done. session is now stopped')
         break
 
       default: {
@@ -312,15 +319,15 @@ export abstract class FixSession extends events.EventEmitter {
     this.setState(SessionState.NetworkConnectionEstablished)
   }
 
-  protected stop (error: Error = null): void {
+  protected stop (error: Error | null = null): void {
     if (this.sessionState.state === SessionState.Stopped) {
       return
     }
     if (this.timer) {
       clearInterval(this.timer)
     }
-    this.sessionLogger.info(`stop: kill transport`)
-    this.transport.end()
+    this.sessionLogger.info('stop: kill transport')
+    this.transport?.end()
     if (error) {
       this.sessionLogger.info(`stop: emit error ${error.message}`)
       this.emit('error', error)
@@ -329,7 +336,7 @@ export abstract class FixSession extends events.EventEmitter {
     }
 
     this.setState(SessionState.Stopped)
-    this.onStopped(error)
+    this.onStopped(error ?? undefined)
     this.transport = null
   }
 

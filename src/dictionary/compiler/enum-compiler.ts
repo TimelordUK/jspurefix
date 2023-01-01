@@ -21,8 +21,8 @@ export class EnumCompiler {
 
   private static getIndex (): string {
     const lines = [
-      `export * from './all-enum'`,
-      `export * from './msg_tag'`,
+      'export * from \'./all-enum\'',
+      'export * from \'./msg_tag\'',
       ''
     ]
     return lines.join(require('os').EOL)
@@ -36,12 +36,11 @@ export class EnumCompiler {
 }
    */
 
-  public async generate (asOneFile: string = null) {
+  public async generate (asOneFile: string | null = null): Promise<void> {
     this.generateTagEnum('MsgTag').then(async () => {
       const toDo: SimpleFieldDefinition[] = this.toDo()
-      toDo.forEach(async (field: SimpleFieldDefinition) => {
-        await this.oneEnum(field, asOneFile)
-      })
+      const promised = toDo.map(async field => await this.oneEnum(field, asOneFile))
+      await Promise.all(promised)
       if (asOneFile) {
         await this.writeAsOne(asOneFile)
         await this.writeFile('index', EnumCompiler.getIndex())
@@ -51,7 +50,7 @@ export class EnumCompiler {
     })
   }
 
-  public async oneEnum (field: SimpleFieldDefinition, asOneFile: string) {
+  public async oneEnum (field: SimpleFieldDefinition, asOneFile: string | null): Promise<void> {
     const newLine = require('os').EOL
     const api = this.generateEnum(field)
     if (!asOneFile) {
@@ -75,7 +74,7 @@ export class EnumCompiler {
     return this.create(field.name, field.description, () => {
       const newLine = require('os').EOL
       return field.enums.keys().reduce((a: number, latest: string, i: number, arr: string[]) => {
-        let k = field.resolveEnum(latest)
+        const k = field.resolveEnum(latest)
         let v: any = latest
         switch (field.tagType) {
           case TagType.Int: {
@@ -94,7 +93,7 @@ export class EnumCompiler {
     })
   }
 
-  public async generateTagEnum (name: string) {
+  public async generateTagEnum (name: string): Promise<void> {
     const newLine = require('os').EOL
     const tags = this.definitions.tagToSimple
     const snippets = this.snippets
@@ -130,7 +129,7 @@ export class EnumCompiler {
     }, [])
   }
 
-  private async writeAsOne (asOneFile: string) {
+  private async writeAsOne (asOneFile: string): Promise<void> {
     const writer = util.promisify(fs.writeFile)
     await writer(asOneFile, this.consolidated.toString(), {
       encoding: 'utf8'
@@ -140,7 +139,7 @@ export class EnumCompiler {
     })
   }
 
-  private commentBlock (comment: string) {
+  private commentBlock (comment: string): void {
     const buffer = this.buffer
     const snippets = this.snippets
     const newLine = require('os').EOL
@@ -152,11 +151,10 @@ export class EnumCompiler {
     buffer.writeString(newLine)
   }
 
-  private async writeFile (name: string, api: string) {
+  private async writeFile (name: string, api: string): Promise<void> {
     const writer = util.promisify(fs.writeFile)
     const fullName = this.getFileName(name)
-    await writer(fullName, api, {
-      encoding: 'utf8'}
+    await writer(fullName, api, { encoding: 'utf8' }
     ).catch((e: Error) => {
       throw e
     })
@@ -166,11 +164,11 @@ export class EnumCompiler {
     const snake = _.snakeCase(name)
     const settings = this.settings
     const fileName = `${snake}.ts`
-    let path: string = `${settings.output}/enum/`
+    const path: string = `${settings.output}/enum/`
     return Path.join(path, fileName)
   }
 
-  private create (name: string, description: string, populateMembers: Function): string {
+  private create (name: string, description: string | null, populateMembers: Function): string {
     const newLine = require('os').EOL
     const buffer = this.buffer
     buffer.reset()

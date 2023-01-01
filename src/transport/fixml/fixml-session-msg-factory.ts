@@ -12,8 +12,7 @@ import {
 } from '../../types/FIXML50SP2'
 
 export class FixmlSessionMsgFactory extends ASessionMsgFactory {
-
-  constructor (readonly description: ISessionDescription, mutator: ObjectMutator = null) {
+  constructor (readonly description: ISessionDescription, mutator: ObjectMutator | null = null) {
     super(description, mutator)
   }
 

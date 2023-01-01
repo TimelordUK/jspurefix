@@ -9,10 +9,10 @@ export class SkeletonServer extends AsciiSession {
   private readonly fixLog: IJsFixLogger
 
   constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig,
-               @inject('dropConnectionTimeout') public readonly dropConnectionTimeout: number) {
+    @inject('dropConnectionTimeout') public readonly dropConnectionTimeout: number) {
     super(config)
     this.logReceivedMsgs = true
-    this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
+    this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}`)
   }
 
@@ -47,12 +47,12 @@ export class SkeletonServer extends AsciiSession {
       this.logger.info(`acceptor is ready for requests - drop connection in ${this.dropConnectionTimeout}`)
       setTimeout(() => {
         setImmediate(() => {
-          this.logger.info(`kill transport`)
+          this.logger.info('kill transport')
           this.stop(new Error(`loss of tcp. ${this.me}`))
         })
       }, this.dropConnectionTimeout * 1000)
     } else {
-      this.logger.info(`acceptor is ready for requests`)
+      this.logger.info('acceptor is ready for requests')
     }
   }
 

@@ -7,11 +7,11 @@ import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'
 import { IMsgApplication } from '../msg-application'
 import { SegmentType } from '../../buffer/segment/segment-type'
+import { factory } from 'mathjs'
 
 export abstract class AsciiSession extends FixSession {
-
   public heartbeat: boolean = true
-  protected store: IFixMsgStore = null
+  protected store: IFixMsgStore | null = null
   protected resender: FixMsgAsciiStoreResend
 
   protected constructor (public readonly config: IJsFixConfig) {
@@ -23,7 +23,6 @@ export abstract class AsciiSession extends FixSession {
   }
 
   private checkSeqNo (msgType: string, view: MsgView): boolean {
-
     switch (msgType) {
       case MsgType.SequenceReset: {
         return true
@@ -74,22 +73,26 @@ export abstract class AsciiSession extends FixSession {
 
   private sendReject (msgType: string, seqNo: number, msg: string, reason: number): void {
     const factory = this.config.factory
-    const reject = factory.reject(msgType, seqNo, msg, reason)
-    this.sessionLogger.warning(`rejecting with ${JSON.stringify(reject)}`)
-    this.send(MsgType.Reject, reject)
+    const reject = factory?.reject(msgType, seqNo, msg, reason)
+    if (reject) {
+      this.sessionLogger.warning(`rejecting with ${JSON.stringify(reject)}`)
+      this.send(MsgType.Reject, reject)
+    }
   }
 
-  protected sendResendRequest (lastSeq: number, receivedSeq: number) {
-    const resend = this.config.factory.resendRequest(lastSeq + 1, 0)
-    this.sessionLogger.warning(`received seq ${receivedSeq}, but last known seq is ${lastSeq}. Sending resend request for all messages > ${lastSeq}`)
-    this.send(MsgType.ResendRequest, resend)
+  protected sendResendRequest (lastSeq: number, receivedSeq: number): void {
+    const resend = this.config.factory?.resendRequest(lastSeq + 1, 0)
+    if (resend) {
+      this.sessionLogger.warning(`received seq ${receivedSeq}, but last known seq is ${lastSeq}. Sending resend request for all messages > ${lastSeq}`)
+      this.send(MsgType.ResendRequest, resend)
+    }
   }
 
   private checkIntegrity (msgType: string, view: MsgView): boolean {
     const state = this.sessionState
     const seqNum = view.getTyped(MsgTag.MsgSeqNum)
 
-    const received: number = parseInt(view.getString(MsgTag.CheckSum), 10)
+    const received: number = parseInt(view.getString(MsgTag.CheckSum) ?? '', 10)
     const computed = view.checksum()
     if (received !== computed) {
       const msg: string = `msgType ${msgType} checksum failed. received = ${received} computed = ${computed}`
@@ -110,7 +113,7 @@ export abstract class AsciiSession extends FixSession {
       return false
     }
 
-    const undefinedMsg: string = view.undefinedForMsg()
+    const undefinedMsg: string | null = view.undefinedForMsg()
     if (undefinedMsg) {
       const msg: string = `msgType ${msgType} ${undefinedMsg}`
       this.sendReject(msgType, seqNum, msg, SessionRejectReason.TagNotDefinedForThisMessageType)
@@ -155,7 +158,7 @@ export abstract class AsciiSession extends FixSession {
    * Override to resend stored messages following a sequence reset.
    * @protected
    */
-  protected onResendRequest (view: MsgView) {
+  protected onResendRequest (view: MsgView): void {
     // if no records are in store then send a gap fill for entire sequence
     this.setState(SessionState.HandleResendRequest)
     const [beginSeqNo, endSeqNo] = view.getTypedTags([MsgTag.BeginSeqNo, MsgTag.EndSeqNo])
@@ -164,7 +167,9 @@ export abstract class AsciiSession extends FixSession {
       const validRecords = records.filter(rec => rec.obj !== null)
       this.sessionLogger.info(`sending ${validRecords.length}`)
       validRecords.forEach(rec => {
-        this.send(rec.msgType, rec.obj)
+        if (rec.obj) {
+          this.send(rec.msgType, rec.obj)
+        }
       })
       this.setState(SessionState.ActiveNormalSession)
     }).catch(e => {
@@ -181,7 +186,6 @@ export abstract class AsciiSession extends FixSession {
   }
 
   protected onSessionMsg (msgType: string, view: MsgView): void {
-
     const logger = this.sessionLogger
 
     switch (msgType) {
@@ -202,8 +206,10 @@ export abstract class AsciiSession extends FixSession {
       }
 
       case MsgType.TestRequest: {
-        const req: string = view.getString(MsgTag.TestReqID)
-        this.sendHeartbeat(req)
+        const req: string | null = view.getString(MsgTag.TestReqID)
+        if (req) {
+          this.sendHeartbeat(req)
+        }
         break
       }
 
@@ -235,7 +241,6 @@ export abstract class AsciiSession extends FixSession {
   }
 
   protected onMsg (msgType: string, view: MsgView): void {
-
     if (!this.checkSeqNo(msgType, view)) {
       this.sessionLogger.info(`message '${msgType}' failed checkSeqNo.`)
       return
@@ -272,13 +277,13 @@ export abstract class AsciiSession extends FixSession {
     }
   }
 
-  private startTimer (interval: number = 200) {
+  private startTimer (interval: number = 200): void {
     this.timer = setInterval(() => {
       this.tick()
     }, interval)
   }
 
-  private peerLogon (view: MsgView) {
+  private peerLogon (view: MsgView): void {
     const logger = this.sessionLogger
     const [heartBtInt, peerCompId, userName, password] = view.getTypedTags([MsgTag.HeartBtInt, MsgTag.SenderCompID, MsgTag.Username, MsgTag.Password])
     logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, userName = ${userName}`)
@@ -297,29 +302,35 @@ export abstract class AsciiSession extends FixSession {
       this.setState(SessionState.InitiationLogonReceived)
     }
     if (this.heartbeat) {
-      logger.debug(`start heartbeat timer.`)
+      logger.debug('start heartbeat timer.')
       this.startTimer()
     }
-    logger.info(`system ready, inform app`)
+    logger.info('system ready, inform app')
     this.onReady(view)
   }
 
-  private sendTestRequest () {
+  private sendTestRequest (): void {
     const factory = this.config.factory
     this.setState(SessionState.AwaitingProcessingResponseToTestRequest)
-    this.send(MsgType.TestRequest, factory.testRequest())
+    const tr = factory?.testRequest()
+    if (tr) {
+      this.send(MsgType.TestRequest, tr)
+    }
   }
 
-  private sendHeartbeat (testReqId: string) {
+  private sendHeartbeat (testReqId: string): void {
     const factory = this.config.factory
-    this.send(MsgType.Heartbeat, factory.heartbeat(testReqId))
+    const hb = factory?.heartbeat(testReqId)
+    if (hb) {
+      this.send(MsgType.Heartbeat, hb)
+    }
   }
 
   private tick (): void {
     if (!this.transport) return
     const sessionState = this.sessionState
     const action: TickAction = sessionState.calcAction(new Date())
-    const application: IMsgApplication = this.transport.config.description.application
+    const application: IMsgApplication | null = this.transport.config.description.application ?? null
     const logger = this.sessionLogger
 
     switch (action) {
@@ -342,7 +353,7 @@ export abstract class AsciiSession extends FixSession {
 
       case TickAction.TerminateOnError: {
         logger.info(sessionState.toString())
-        this.terminate(new Error(`${application.name}: peer not responding`))
+        this.terminate(new Error(`${application?.name}: peer not responding`))
         break
       }
 
@@ -354,7 +365,7 @@ export abstract class AsciiSession extends FixSession {
       }
 
       default:
-        throw new Error(`unexpected action`)
+        throw new Error('unexpected action')
     }
   }
 }

@@ -1,8 +1,10 @@
 import { MsgView } from '../../../buffer'
 import { AsciiSession } from '../../../transport'
 import { MsgType } from '../../../types'
-import { ITradeCaptureReport, ITradeCaptureReportRequest,
-  ITradeCaptureReportRequestAck } from '../../../types/FIX4.4/repo'
+import {
+  ITradeCaptureReport, ITradeCaptureReportRequest,
+  ITradeCaptureReportRequestAck
+} from '../../../types/FIX4.4/repo'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
 import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
@@ -10,13 +12,13 @@ import { TradeFactory } from './trade-factory'
 export class TradeCaptureClient extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
-  private reports: Dictionary<ITradeCaptureReport>
+  private readonly reports: Dictionary<ITradeCaptureReport>
 
   constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.reports = new Dictionary<ITradeCaptureReport>()
-    this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
+    this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`)
   }
 
@@ -53,7 +55,7 @@ export class TradeCaptureClient extends AsciiSession {
     this.fixLog.info(txt)
   }
 
-  private logoutTimer (logoutSeconds: number = 32) {
+  private logoutTimer (logoutSeconds: number = 32): void {
     setTimeout(() => {
       this.done()
     }, logoutSeconds * 1000)

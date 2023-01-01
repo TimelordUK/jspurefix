@@ -12,12 +12,11 @@ export class MsgTransport {
   public readonly receiver: MsgParser
 
   constructor (@inject(DITokens.sessionId) public readonly id: number,
-               @inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
-               @inject(DITokens.FixDuplex) public readonly duplex: FixDuplex) {
-
+    @inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
+    @inject(DITokens.FixDuplex) public readonly duplex: FixDuplex) {
     const delimiter = config.delimiter
     if (!delimiter) {
-      throw new Error(`no delimiter char given.`)
+      throw new Error('no delimiter char given.')
     }
 
     const sessionContainer = this.config.sessionContainer
@@ -39,8 +38,8 @@ export class MsgTransport {
     this.duplex.end()
   }
 
-  public wait (): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  public async wait (): Promise<any> {
+    return await new Promise<any>((resolve, reject) => {
       this.receiver.on('end', () => {
         resolve(this.id)
       })

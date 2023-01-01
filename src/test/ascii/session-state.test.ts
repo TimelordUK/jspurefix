@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { SessionState,TickAction, FixSessionState } from '../../transport'
+import { SessionState, TickAction, FixSessionState } from '../../transport'
 
 let state: FixSessionState
 let now: Date

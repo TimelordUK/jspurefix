@@ -3,8 +3,10 @@ import { SegmentDescription } from './segment/segment-description'
 import { Structure } from './structure'
 import { Dictionary } from '../collections'
 import { Tags } from './tag/tags'
-import { ContainedGroupField, ContainedComponentField, ContainedField,
-  ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
+import {
+  ContainedGroupField, ContainedComponentField, ContainedField,
+  ContainedFieldSet, ContainedSimpleField
+} from '../dictionary/contained'
 import { SetReduce } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
@@ -16,7 +18,7 @@ export abstract class MsgView {
   protected sortedTagPosForwards: TagPos[]
   protected sortedTagPosBackwards: TagPos[]
 
-  protected constructor (public readonly segment: SegmentDescription, public readonly structure: Structure) {
+  protected constructor (public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
   }
 
   protected static asVerbose (field: SimpleFieldDefinition, val: string, i: number, count: number, tp: TagPos): string {
@@ -26,12 +28,13 @@ export abstract class MsgView {
     if (field) {
       name = field.name || 'unknown'
       if (field.isEnum()) {
-        desc = `${val}[${field.resolveEnum(val)}]${newLine}\t${field.description || ''}${newLine}${newLine}`
+        desc = `${val}[${field.resolveEnum(val)}]${newLine}\t${field.description ?? ''}${newLine}${newLine}`
       } else {
-        desc = `${val}${newLine}t${field.description || ''}${newLine}${newLine}`
+        desc = `${val}${newLine}t${field.description ?? ''}${newLine}${newLine}`
       }
     } else {
       name = 'unknown'
+      desc = 'na'
     }
     return `[${i}] ${tp.tag} (${name}) = ${desc}`
   }
@@ -66,7 +69,9 @@ export abstract class MsgView {
   public invalid (): number[] {
     const invalidTags: number[] = []
     const set = this.segment.set
-    const tags = this.structure.tags
+    if (set == null) return []
+    const tags = this.structure?.tags ?? null
+    if (tags == null) return []
     for (let i = 0; i < tags.nextTagPos; ++i) {
       const tag = tags.tagPos[i].tag
       if (tag <= 0 || !set.containedTag[tag]) {
@@ -78,6 +83,8 @@ export abstract class MsgView {
 
   // list of tags that must be present
   public missing (): number[] {
+    if (this.segment == null) return []
+    if (this.segment.set == null) return []
     return this.missingRequired(this.segment.set, [])
   }
 
@@ -87,24 +94,24 @@ export abstract class MsgView {
     return position >= 0
   }
 
-  public getGroupInstance (i: number): MsgView {
-    const instance: SegmentDescription = this.segment.getInstance(i)
+  public getGroupInstance (i: number): MsgView | null {
+    const instance: SegmentDescription | null = this.segment?.getInstance(i)
     if (!instance) {
       return null
     }
     return this.create(instance)
   }
 
-  public getUndefined (): SegmentDescription | SegmentDescription[] {
-    return this.structure.layout['.undefined']
+  public getUndefined (): SegmentDescription | SegmentDescription[] | null {
+    return this.structure?.layout['.undefined']
   }
 
-  public undefinedForMsg (): string {
-    let msg: string = null
+  public undefinedForMsg (): string | null {
+    let msg: string | null = null
     const undefinedTags = this.getUndefined()
     if (undefinedTags) {
       if (Array.isArray(undefinedTags)) {
-        msg = `undefined tags = ` + undefinedTags.map((e: SegmentDescription) => e.startTag.toString()).join(', ')
+        msg = 'undefined tags = ' + undefinedTags.map((e: SegmentDescription) => e.startTag.toString()).join(', ')
       } else {
         msg = `undefined tag = ${undefinedTags.startTag}`
       }
@@ -117,7 +124,7 @@ export abstract class MsgView {
     return positions ? positions.length : 0
   }
 
-  public getString (tagOrName: number | string): string {
+  public getString (tagOrName: number | string): string | null {
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
       return null
@@ -129,7 +136,7 @@ export abstract class MsgView {
     return this.stringAtPosition(position)
   }
 
-  public getStrings (tagOrName: number | string = -1): string[] {
+  public getStrings (tagOrName: number | string = -1): Array<(string | null)> | null {
     if (tagOrName < 0) {
       return this.allStrings()
     }
@@ -151,7 +158,7 @@ export abstract class MsgView {
     if (tag == null) {
       return null
     }
-    const field: SimpleFieldDefinition = this.structure.tags.definitions.tagToSimple[tag]
+    const field: SimpleFieldDefinition | null = this.structure?.tags.definitions.tagToSimple[tag] ?? null
     if (field == null) {
       return null
     }
@@ -164,6 +171,7 @@ export abstract class MsgView {
 
   public toObject (): any {
     const segment: SegmentDescription = this.segment
+    if (segment.set == null) return null
     if (segment.delimiterTag) {
       switch (segment.set.type) {
         case ContainedSetType.Group: {
@@ -174,7 +182,8 @@ export abstract class MsgView {
           const hdrView = this.getView('Hdr')
           const batch: ILooseObject = {}
           if (hdrView) {
-            batch[hdrView.segment.set.name] = hdrView.toObject()
+            const name = hdrView.segment.set?.name ?? 'na'
+            batch[name] = hdrView.toObject()
           }
           batch[segment.name] = this.asInstances(segment.name)
           return batch
@@ -196,27 +205,30 @@ export abstract class MsgView {
     return JSON.stringify(this.toObject(), null, 4)
   }
 
-  public getView (name: string): MsgView {
+  public getView (name: string): MsgView | null {
     const parts: string[] = name.split('.')
-    return parts.reduce((a: MsgView, current: string) => {
+    const reducer = (a: MsgView, current: string): MsgView | null => {
       if (!a) {
         return a
       }
       const structure = a.structure
-      const singleton: SegmentDescription = structure.firstContainedWithin(current, a.segment)
+      const singleton: SegmentDescription | null = structure?.firstContainedWithin(current, a.segment) ?? null
       if (singleton) {
         return a.create(singleton)
       }
       // is this a full name where abbreviation exists
-      const component: ContainedField = a.segment.set.localNameToField.get(current)
+      const component: ContainedField | null = a.segment.set?.localNameToField.get(current) ?? null
+      // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       if (component) {
-        const abbreviated: SegmentDescription = structure.firstContainedWithin(component.name, a.segment)
+        const abbreviated: SegmentDescription | null = structure?.firstContainedWithin(component.name, a.segment) ?? null
         if (abbreviated) {
           return a.create(abbreviated)
         }
       }
       return null
-    }, this as MsgView)
+    }
+    const reduced: MsgView | null = parts.reduce<MsgView | null>(reducer, this)
+    return reduced
   }
 
   public abstract checksum (): number
@@ -225,17 +237,18 @@ export abstract class MsgView {
 
   protected abstract create (singleton: SegmentDescription): MsgView
 
-  protected abstract stringAtPosition (position: number): string
+  protected abstract stringAtPosition (position: number): string | null
 
   protected abstract toTyped (field: SimpleFieldDefinition): any
 
   protected resolveTag (tagOrName: number | string): number {
+    if (this.segment.set == null) return 0
     let tag: number
-    if (typeof(tagOrName) === 'string') {
-      let cf = this.segment.set.simple.get(tagOrName)
-      const f: SimpleFieldDefinition = cf ? cf.definition : this.structure.tags.definitions.simple.get(tagOrName)
+    if (typeof (tagOrName) === 'string') {
+      const cf = this.segment.set.simple.get(tagOrName)
+      const f: SimpleFieldDefinition | null = cf ? cf.definition : this.structure?.tags.definitions.simple.get(tagOrName) ?? null
       if (f == null) {
-        return null
+        return -1
       }
       tag = f.tag
     } else {
@@ -250,7 +263,7 @@ export abstract class MsgView {
     const backwards: TagPos[] = this.sortedTagPosBackwards
     const position: number = this.binarySearch(tag)
     if (position < 0) {
-      return null
+      return []
     }
 
     const count: number = forwards.length
@@ -288,7 +301,7 @@ export abstract class MsgView {
     }
   }
 
-  private allStrings (): string[] {
+  private allStrings (): Array<(string | null)> {
     const segment: SegmentDescription = this.segment
     const range: number[] = []
     for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
@@ -297,73 +310,75 @@ export abstract class MsgView {
     return range.map((i: number) => this.stringAtPosition(i))
   }
 
-  private asInstances (name: string): ILooseObject[] {
-    const groupView: MsgView = this.getView(name)
+  private asInstances (name: string): ILooseObject[] | null {
+    const groupView: MsgView | null = this.getView(name)
     if (groupView == null) {
-      return
+      return null
     }
     const groupArray: ILooseObject[] = new Array(groupView.groupCount())
     const count: number = groupView.groupCount()
     for (let j: number = 0; j < count; ++j) {
-      const instance: MsgView = groupView.getGroupInstance(j)
-      groupArray[j] = instance.toObject()
+      const instance: MsgView | null = groupView.getGroupInstance(j)
+      groupArray[j] = instance?.toObject()
     }
     return groupArray
   }
 
   private asLoose (def: ContainedFieldSet): ILooseObject {
     const reducer = new SetReduce<ILooseObject>()
+    // eslint-disable-next-line
     return reducer.reduce(def, {
       group: (a: ILooseObject, field: ContainedGroupField) => this.asLooseGroup(a, field),
       simple: (a: ILooseObject, field: ContainedSimpleField) => this.asLooseSimple(a, field),
       component: (a: ILooseObject, field: ContainedComponentField) => this.asLooseComponent(a, field)
-    } as ITypeDispatcher<ILooseObject>, def.localAttribute.reduce((a: ILooseObject, sf: ContainedSimpleField) => {
+    } as ITypeDispatcher<ILooseObject>, def.localAttribute.reduce<ILooseObject>((a: ILooseObject, sf: ContainedSimpleField) => {
       const def = sf.definition
       const position: number = this.getPosition(def.tag)
       if (position >= 0) {
         a[def.name] = this.toTyped(def)
       }
       return a
-    }, {} as ILooseObject))
+    }, {}))
   }
 
   private missingRequired (def: ContainedFieldSet, tags: number []): number[] {
     const reducer = new SetReduce<number[]>()
-    return reducer.reduce(def, {
+    const dispatcher: ITypeDispatcher<number[]> = {
       group: (a: number[], field: ContainedGroupField) => this.missingGroup(def, field, a),
       simple: (a: number[], field: ContainedSimpleField) => this.missingSimple(field, a),
       component: (a: number[], field: ContainedComponentField) => this.missingComponent(field, a)
-    } as ITypeDispatcher<number[]>, tags)
+    }
+    return reducer.reduce(def, dispatcher, tags)
   }
 
-  private missingSimple (sf: ContainedSimpleField, a: number[]) {
+  private missingSimple (sf: ContainedSimpleField, a: number[]): void {
     if (sf.required && this.getPosition(sf.definition.tag) < 0) {
       a.push(sf.definition.tag)
     }
   }
 
-  private missingComponent (cf: ContainedComponentField, a: number[]) {
-    const view: MsgView = this.getView(cf.name)
+  private missingComponent (cf: ContainedComponentField, a: number[]): void {
+    const view: MsgView | null = this.getView(cf.name)
     if (view) {
       view.missingRequired(cf.definition, a)
     }
   }
 
-  private missingGroup (def: ContainedFieldSet, gf: ContainedGroupField, tags: number []) {
+  private missingGroup (def: ContainedFieldSet, gf: ContainedGroupField, tags: number []): void {
     const name = gf.definition.noOfField ? gf.definition.noOfField.name : def.name
-    const groupView: MsgView = this.getView(name) || this.getView(gf.definition.name)
+    const groupView: MsgView | null = this.getView(name) ?? this.getView(gf.definition.name)
     if (groupView == null) {
       return
     }
     const count: number = groupView.groupCount()
     for (let j: number = 0; j < count; ++j) {
-      const instance: MsgView = groupView.getGroupInstance(j)
-      instance.missingRequired(gf.definition, tags)
+      const instance: MsgView | null = groupView.getGroupInstance(j)
+      instance?.missingRequired(gf.definition, tags)
     }
   }
 
-  private asLooseComponent (a: ILooseObject, cf: ContainedComponentField) {
-    const view: MsgView = this.getView(cf.name)
+  private asLooseComponent (a: ILooseObject, cf: ContainedComponentField): void {
+    const view: MsgView | null = this.getView(cf.name)
     if (view) {
       const component = view.toObject()
       if (component) {
@@ -372,7 +387,7 @@ export abstract class MsgView {
     }
   }
 
-  private asLooseSimple (a: ILooseObject, sf: ContainedSimpleField) {
+  private asLooseSimple (a: ILooseObject, sf: ContainedSimpleField): void {
     const def = sf.definition
     const position: number = this.getPosition(def.tag)
     if (position >= 0) {
@@ -383,16 +398,17 @@ export abstract class MsgView {
     }
   }
 
-  private asLooseGroup (a: ILooseObject, gf: ContainedGroupField) {
+  private asLooseGroup (a: ILooseObject, gf: ContainedGroupField): void {
     const def = gf.definition
     const name = def.noOfField ? def.noOfField.name : def.name
-    const instances: ILooseObject = this.asInstances(name) || this.asInstances(def.name)
+    const instances: ILooseObject | null = this.asInstances(name) ?? this.asInstances(def.name)
     if (instances) {
       a[def.name] = instances
     }
   }
 
   private binarySearch (tag: number): number {
+    if (this.structure == null) return -1
     let forwards = this.sortedTagPosForwards
     if (!forwards) {
       const segment = this.segment
@@ -407,14 +423,16 @@ export abstract class MsgView {
     const structure = this.structure
     const buffer: ElasticBuffer = new ElasticBuffer()
     const segment: SegmentDescription = this.segment
+    if (structure == null) return ''
     const tags: Tags = structure.tags
     const count: number = segment.endPosition - segment.startPosition
     const simple: Dictionary<SimpleFieldDefinition> = tags.definitions.simple
 
     for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
       const tagPos: TagPos = tags.tagPos[i]
-      const field: SimpleFieldDefinition = simple.get(tagPos.tag.toString())
-      const val: string = this.stringAtPosition(i)
+      const field: SimpleFieldDefinition | null = simple.get(tagPos.tag.toString())
+      const val: string | null = this.stringAtPosition(i) ?? ''
+      if (!field) return ''
       const token = getToken(field, val, i - segment.startPosition, count, tagPos)
       buffer.writeString(token)
     }

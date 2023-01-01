@@ -16,7 +16,6 @@ import { VersionUtil } from '../../version-util'
 import { ParseState } from './parse-state'
 
 export class QuickFixXmlFileParser extends FixParser {
-
   public parseState: ParseState = ParseState.Begin
   public numberPasses: number = 0
   public definitions: FixDefinitions
@@ -27,7 +26,7 @@ export class QuickFixXmlFileParser extends FixParser {
   }
 
   private static subscribe (instance: QuickFixXmlFileParser, saxStream: SAXStream, done: IDictDoneCb): void {
-    let parser: NodeParser
+    let parser: NodeParser | null
 
     instance.numberPasses++
     switch (instance.parseState) {
@@ -79,7 +78,6 @@ export class QuickFixXmlFileParser extends FixParser {
       const saxNode: ISaxNode = node as ISaxNode
 
       switch (saxNode.name) {
-
         case 'fix': {
           switch (instance.parseState) {
             case ParseState.FieldDefinitions: {
@@ -120,9 +118,9 @@ export class QuickFixXmlFileParser extends FixParser {
         }
 
         case 'components': {
-                    // can have a group containing components which contain themselves components of groups
-                    // each step will build forward references to a deeper level to ensure final messages
-                    // have all dependencies correctly defined.
+          // can have a group containing components which contain themselves components of groups
+          // each step will build forward references to a deeper level to ensure final messages
+          // have all dependencies correctly defined.
           switch (instance.parseState) {
             case ParseState.ComponentsFirstPass:
             case ParseState.ComponentsSecondPass:
@@ -175,7 +173,7 @@ export class QuickFixXmlFileParser extends FixParser {
     saxStream.on('ready', () => {
       if (done) {
         parser = null
-        done(null, instance.definitions)
+        done(undefined, instance.definitions)
       }
     })
   }
@@ -187,15 +185,15 @@ export class QuickFixXmlFileParser extends FixParser {
     keys.forEach(k => {
       const message = messages.get(k)
       const trailer = this.definitions.component.get(trailerName)
-      if (trailer && !message.components.containsKey(trailerName)) {
-        const contained = new ContainedComponentField(trailer, message.fields.length, true)
-        message.add(contained)
+      if (trailer && !message?.components.containsKey(trailerName)) {
+        const contained = new ContainedComponentField(trailer, message?.fields?.length ?? 0, true)
+        message?.add(contained)
       }
     })
   }
 
-  public parse (): Promise<FixDefinitions> {
-    return new Promise<FixDefinitions>(async (accept, reject) => {
+  public async parse (): Promise<FixDefinitions> {
+    return await new Promise<FixDefinitions>(async (resolve, reject) => {
       try {
         await this.onePass() // first fetch all field definitions
         await this.onePass() // first pass of components, will not know about forward components.
@@ -203,17 +201,17 @@ export class QuickFixXmlFileParser extends FixParser {
         await this.onePass() // third pass of components all fully resolved i.e. pick up versions from pass above
         await this.onePass() // lastly messages with all dependencies
         this.encloseMessages()
-        accept(this.definitions)
+        resolve(this.definitions)
       } catch (e) {
         reject(e)
       }
     })
   }
 
-  private async onePass (): Promise<FixDefinitions> {
+  private async onePass (): Promise<FixDefinitions | undefined | null> {
     const pass: fs.ReadStream = fs.createReadStream(this.xmlPath)
     const saxStream: SAXStream = require('sax').createStream(true, {})
     pass.pipe(saxStream)
-    return this.singlePass(this, saxStream)
+    return await this.singlePass(this, saxStream)
   }
 }

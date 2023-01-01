@@ -9,9 +9,9 @@ export class FixMsgMemoryStore implements IFixMsgStore {
   protected readonly logger: IJsFixLogger
   public heartbeat: boolean = true
   private sortedBySeqNum: IFixMsgStoreRecord[] = []
-  private excluded: Dictionary<boolean> = new Dictionary<boolean>()
+  private readonly excluded: Dictionary<boolean> = new Dictionary<boolean>()
   public length: number = 0
-  private sessionMessages: string[] = [
+  private readonly sessionMessages: string[] = [
     MsgType.Logon,
     MsgType.Logout,
     MsgType.ResendRequest,
@@ -25,7 +25,7 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     this.setExcMsgType([])
   }
 
-  public static search (ar: IFixMsgStoreRecord[], target?: number, isDate?: boolean): number {
+  public static search (ar: IFixMsgStoreRecord[], target: number, isDate?: boolean): number {
     let m: number = 0
     let n: number = ar.length - 1
     while (m <= n) {
@@ -43,8 +43,8 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     return -m - 1
   }
 
-  public getMsgType (msgType: string): Promise<IFixMsgStoreRecord[]> {
-    return new Promise((resolve, reject: any) => {
+  public async getMsgType (msgType: string): Promise<IFixMsgStoreRecord[]> {
+    return await new Promise((resolve, reject: any) => {
       const data = this.sortedBySeqNum
       if (data === null) reject(new Error('no store'))
       const required = data.filter(x => x.msgType === msgType)
@@ -61,13 +61,13 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     return index
   }
 
-  private bounded (fromIdx: number, toIdx: number) {
+  private bounded (fromIdx: number, toIdx: number): boolean {
     const arr = this.sortedBySeqNum
     return fromIdx >= 0 && fromIdx <= arr.length && toIdx >= fromIdx && toIdx <= arr.length
   }
 
-  public get (from: number): Promise<IFixMsgStoreRecord> {
-    return new Promise((resolve, reject) => {
+  public async get (from: number): Promise<IFixMsgStoreRecord> {
+    return await new Promise((resolve, reject) => {
       this.getSeqNumRange(from, from).then(res => {
         if (res.length > 0) {
           const record = res[0].clone()
@@ -81,14 +81,15 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     })
   }
 
-  public getSeqNumRange (from: number, to?: number): Promise<IFixMsgStoreRecord[]> {
-    return new Promise((resolve, reject) => {
+  public async getSeqNumRange (from: number, to?: number): Promise<IFixMsgStoreRecord[]> {
+    return await new Promise((resolve, reject) => {
+      to = to ?? 0
       const arr = this.sortedBySeqNum
       if (from < 0) reject(new Error(`illegal from ${from}`))
       if (to < 0) reject(new Error(`illegal to ${to}`))
-      let fromIdx = this.getIndex(from)
+      const fromIdx = this.getIndex(from)
       const toEnd = to === 0 || isNaN(to)
-      let toIdx = toEnd ? arr.length - 1 : this.getIndex(to)
+      const toIdx = toEnd ? arr.length - 1 : this.getIndex(to)
       if (this.bounded(fromIdx, toIdx)) {
         resolve(arr.slice(fromIdx, toIdx + 1))
       } else {
@@ -107,8 +108,8 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     } as IFixMsgStoreState
   }
 
-  public getState (): Promise<IFixMsgStoreState> {
-    return new Promise((resolve, reject) => {
+  public async getState (): Promise<IFixMsgStoreState> {
+    return await new Promise((resolve, reject) => {
       try {
         resolve(this.buildState())
       } catch (e) {
@@ -117,9 +118,9 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     })
   }
 
-  public clear (): Promise<IFixMsgStoreState> {
+  public async clear (): Promise<IFixMsgStoreState> {
     this.sortedBySeqNum = []
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       try {
         resolve(this.buildState())
       } catch (e) {
@@ -128,8 +129,8 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     })
   }
 
-  public put (record: IFixMsgStoreRecord): Promise<IFixMsgStoreState> {
-    return new Promise((resolve, reject) => {
+  public async put (record: IFixMsgStoreRecord): Promise<IFixMsgStoreState> {
+    return await new Promise((resolve, reject) => {
       if (this.excluded.containsKey(record.msgType)) {
         resolve(this.buildState())
       } else {
@@ -157,11 +158,11 @@ export class FixMsgMemoryStore implements IFixMsgStore {
     })
   }
 
-  exists (seqNum: number): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+  async exists (seqNum: number): Promise<boolean> {
+    return await new Promise((resolve, reject) => {
       try {
         const arr = this.sortedBySeqNum
-        let index = FixMsgMemoryStore.search(arr, seqNum)
+        const index = FixMsgMemoryStore.search(arr, seqNum)
         resolve(index >= 0)
       } catch (e) {
         reject(e)

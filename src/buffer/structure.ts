@@ -4,28 +4,28 @@ import { SegmentSummary } from './segment/segment-summary'
 import { Tags } from './tag/tags'
 
 export class Structure {
-  public readonly layout: ILooseObject = null
+  public readonly layout: ILooseObject
 
   constructor (public readonly tags: Tags,
-               public readonly segments: SegmentDescription[]) {
+    public readonly segments: SegmentDescription[]) {
     this.layout = this.boundLayout()
   }
 
   public msg (): SegmentDescription {
-        // trailer = -1, msg = -2
+    // trailer = -1, msg = -2
     return this.segments[this.segments.length - 2]
   }
 
   public summary (): SegmentSummary[] {
-    return this.segments.map(((s: SegmentDescription) => SegmentSummary.fromDescription(s)))
+    return this.segments.map((s: SegmentDescription) => SegmentSummary.fromDescription(s))
   }
 
-  public firstContainedWithin (name: string, segment: SegmentDescription): SegmentDescription {
+  public firstContainedWithin (name: string, segment: SegmentDescription): SegmentDescription | null {
     const all: SegmentDescription | SegmentDescription[] = this.layout[name]
     if (!all) {
       return null
     }
-    let ret: SegmentDescription = null
+    let ret: SegmentDescription | null = null
     if (!Array.isArray(all)) {
       const instance: SegmentDescription = all
       ret = segment.contains(instance) ? instance : null

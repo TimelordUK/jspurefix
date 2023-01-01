@@ -9,23 +9,23 @@ export class SegmentDescription {
   public endPosition: number = 0
   public delimiterTag: number = 0
   public delimiterPositions: number[]
-  public currentField: ContainedField
+  public currentField: ContainedField | null
   public containedDelimiterPositions: INumericKeyed<boolean>
 
   constructor (
-               public name: string,
-               public startTag: number,
-               public set: ContainedFieldSet,
-               public startPosition: number,
-               public readonly depth: number,
-               public readonly type: SegmentType) {
+    public name: string,
+    public startTag: number,
+    public set: ContainedFieldSet | null,
+    public startPosition: number,
+    public readonly depth: number,
+    public readonly type: SegmentType) {
   }
 
   public contains (segment: SegmentDescription): boolean {
     return segment.startPosition >= this.startPosition && segment.endPosition <= this.endPosition
   }
 
-  public getInstance (instance: number): SegmentDescription {
+  public getInstance (instance: number): SegmentDescription | null {
     const delimiters: number[] = this.delimiterPositions
     if (!delimiters) {
       return null
@@ -34,10 +34,10 @@ export class SegmentDescription {
       return null
     }
     const start: number = delimiters[instance]
-    const end: number = instance < delimiters.length - 1 ?
-            delimiters[instance + 1] - 1 :
-            this.endPosition
-    const name = this.type === SegmentType.Batch ? this.set.abbreviation : this.name
+    const end: number = instance < delimiters.length - 1
+      ? delimiters[instance + 1] - 1
+      : this.endPosition
+    const name: string = this.type === SegmentType.Batch ? this.set?.abbreviation ?? this.name : this.name ?? this.name ?? 'na'
     const d: SegmentDescription = new SegmentDescription(name, this.startTag, this.set, start, this.depth, this.type)
     d.endPosition = end
     d.endTag = this.endTag
@@ -60,7 +60,7 @@ export class SegmentDescription {
   }
 
   public setCurrentField (tag: number): void {
-    this.currentField = this.set.localTag[tag] || this.set.tagToField[tag]
+    this.currentField = this.set?.localTag[tag] ?? this.set?.tagToField[tag] ?? null
   }
 
   public groupAddDelimiter (tag: number, position: number): boolean {

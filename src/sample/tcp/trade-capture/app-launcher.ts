@@ -5,7 +5,7 @@ import { TradeCaptureServer } from './trade-capture-server'
 
 export class AppLauncher extends SessionLauncher {
   public constructor (client: string = 'data/session/test-initiator.json',
-                      server: string = 'data/session/test-acceptor.json') {
+    server: string = 'data/session/test-acceptor.json') {
     super(
       client,
       server)
@@ -14,9 +14,9 @@ export class AppLauncher extends SessionLauncher {
   protected override makeFactory (config: IJsFixConfig): EngineFactory {
     const isInitiator = this.isInitiator(config.description)
     return {
-      makeSession: () => isInitiator ?
-        new TradeCaptureClient(config) :
-        new TradeCaptureServer(config)
+      makeSession: () => isInitiator
+        ? new TradeCaptureClient(config)
+        : new TradeCaptureServer(config)
     } as EngineFactory
   }
 }

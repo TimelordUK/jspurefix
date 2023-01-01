@@ -11,21 +11,21 @@ import { DITokens } from '../../runtime/di-tokens'
 @injectable()
 export class TcpAcceptor extends FixAcceptor {
   private server: Server
-  private logger: IJsFixLogger
+  private readonly logger: IJsFixLogger
   private nextId: number = 0
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
-    super(config.description.application)
-    this.logger = config.logFactory.logger(`${config.description.application.name}:TcpAcceptor`)
-    const tlsOptions: TlsOptions = this.tlsOptions()
+    super(config.description.application ?? null)
+    this.logger = config.logFactory.logger(`${config.description.application?.name}:TcpAcceptor`)
+    const tlsOptions: TlsOptions | null = this.tlsOptions()
     if (tlsOptions) {
       this.tlsServer()
     } else {
       this.unsecureServer()
     }
-    this.server.on('error', ((err: Error) => {
+    this.server.on('error', (err: Error) => {
       throw err
-    }))
+    })
   }
 
   getId (): number {
@@ -36,12 +36,13 @@ export class TcpAcceptor extends FixAcceptor {
   tlsServer (): void {
     try {
       const config: IJsFixConfig = this.config
-      const tcp = this.config.description.application.tcp
-      const tlsOptions: TlsOptions = TlsOptionsFactory.getTlsOptions(tcp.tls)
-      this.logger.info(`create tls server`)
+      const tcp = this.config.description.application?.tcp
+      const tlsOptions: TlsOptions | null = tcp?.tls ? TlsOptionsFactory.getTlsOptions(tcp.tls) : null
+      this.logger.info('create tls server')
+      if (!tlsOptions) return
       this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
-        if (tcp.tls.enableTrace) {
-          this.logger.info(`enabling tls session trace`)
+        if (tcp?.tls?.enableTrace) {
+          this.logger.info('enabling tls session trace')
           tlsSocket.enableTrace()
         }
         if (tlsSocket.authorized) {
@@ -50,7 +51,7 @@ export class TcpAcceptor extends FixAcceptor {
           this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
           this.onSocket(id, tlsSocket, config)
         } else {
-          this.logger.info(`no transport created on tls with no authorized connection`)
+          this.logger.info('no transport created on tls with no authorized connection')
         }
       })
     } catch (e) {
@@ -59,10 +60,10 @@ export class TcpAcceptor extends FixAcceptor {
     }
   }
 
-  unsecureServer () {
+  unsecureServer (): void {
     try {
       const config = this.config
-      this.logger.info(`create unsecured server`)
+      this.logger.info('create unsecured server')
       this.server = netCreateServer((socket: Socket) => {
         const id: number = this.getId()
         this.logger.info(`net creates session ${id}`)
@@ -75,12 +76,12 @@ export class TcpAcceptor extends FixAcceptor {
     }
   }
 
-  tlsOptions (): TlsOptions {
-    const tcp = this.config.description.application.tcp
-    return TlsOptionsFactory.getTlsOptions(tcp.tls)
+  tlsOptions (): TlsOptions | null {
+    const tcp = this.config.description.application?.tcp
+    return tcp?.tls ? TlsOptionsFactory.getTlsOptions(tcp?.tls) : null
   }
 
-  private onSocket (id: number, socket: Socket, config: IJsFixConfig) {
+  private onSocket (id: number, socket: Socket, config: IJsFixConfig): void {
     const transport: MsgTransport = new MsgTransport(id, config, new TcpDuplex(socket))
     this.saveTransport(id, transport)
     transport.receiver.on('end', () => {
@@ -93,7 +94,7 @@ export class TcpAcceptor extends FixAcceptor {
   }
 
   public listen (): void {
-    const port = this.config.description.application.tcp.port
+    const port = this.config.description.application?.tcp?.port
     this.logger.info(`start to listen ${port}`)
     this.server.on('connection', () => {
       this.logger.info('insecure connection established')
@@ -105,19 +106,19 @@ export class TcpAcceptor extends FixAcceptor {
   }
 
   public close (callback?: (err?: Error) => void): void {
-    const port = this.config.description.application.tcp.port
+    const port = this.config.description.application?.tcp?.port ?? -1
     this.logger.info(`close listener on port ${port}`)
     this.server.close(callback)
   }
 
-  private saveTransport (tid: number, transport: MsgTransport) {
+  private saveTransport (tid: number, transport: MsgTransport): void {
     this.transports[tid] = transport
     const keys: string[] = Object.keys(this.transports)
     this.logger.info(`new transport id = ${tid} created total transports = ${keys.length}`)
     this.emit('transport', transport)
   }
 
-  private harvestTransport (tid: number) {
+  private harvestTransport (tid: number): void {
     delete this.transports[tid]
     const keys: string[] = Object.keys(this.transports)
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)

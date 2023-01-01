@@ -11,7 +11,7 @@ export class MessageGenerator {
   constructor (public readonly words: string[], public readonly definitions: FixDefinitions) {
   }
 
-  public static getRandomEnum (field: SimpleFieldDefinition) {
+  public static getRandomEnum (field: SimpleFieldDefinition): any {
     const tagType: TagType = field.tagType
     const keys: string[] = field.enums.keys()
     const choice: string = keys[Math.floor(Math.random() * keys.length)]
@@ -56,7 +56,7 @@ export class MessageGenerator {
     }
     density = Math.max(0.2, density)
     density = Math.min(1.0, density)
-    const def: MessageDefinition = this.definitions.message.get(msgType)
+    const def: MessageDefinition | null = this.definitions.message.get(msgType)
     if (!def) {
       throw new Error(`definitions do not contain type ${msgType}`)
     }
@@ -68,7 +68,7 @@ export class MessageGenerator {
     return reducer.reduce(set, {
       simple: (a: ILooseObject, sf: ContainedSimpleField) => {
         const tag: number = sf.definition.tag
-        let include = tag === set.firstSimple.definition.tag || this.length > 0 || Math.random() <= density
+        const include = tag === set.firstSimple.definition.tag || this.length > 0 || Math.random() <= density
         if (include) {
           const val: any = sf.definition.isEnum() ? MessageGenerator.getRandomEnum(sf.definition) : this.createSimple(sf)
           if (val != null) {
@@ -97,7 +97,6 @@ export class MessageGenerator {
   private createSimple (field: ContainedSimpleField): any {
     const tagType: TagType = field.definition.tagType
     switch (tagType) {
-
       case TagType.String: {
         return this.nextString()
       }
@@ -131,21 +130,21 @@ export class MessageGenerator {
         this.length = 0
         const now: Date = new Date()
         return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()
-                    , 0, 0, 0, 0))
+          , 0, 0, 0, 0))
       }
 
       case TagType.UtcTimeOnly: {
         this.length = 0
         const s: Date = new Date()
         return new Date(Date.UTC(0, 0, 0, s.getUTCHours(), s.getUTCMinutes(),
-                    s.getUTCSeconds(), s.getUTCMilliseconds()))
+          s.getUTCSeconds(), s.getUTCMilliseconds()))
       }
 
       case TagType.UtcTimestamp: {
         this.length = 0
         const now: Date = new Date()
         return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),
-                    now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()))
+          now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds()))
       }
 
       case TagType.LocalDate: {

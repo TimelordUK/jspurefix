@@ -2,9 +2,11 @@ import { MsgParser } from '../msg-parser'
 import { Tags } from '../tag/tags'
 import { SAXStream } from '../../dictionary'
 import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
-import { ContainedField, ContainedComponentField,
+import {
+  ContainedField, ContainedComponentField,
   ContainedFieldType, ContainedGroupField,
-  ContainedSimpleField, ContainedFieldSet } from '../../dictionary/contained'
+  ContainedSimpleField, ContainedFieldSet
+} from '../../dictionary/contained'
 import { SegmentDescription } from '../segment/segment-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { MsgView } from '../msg-view'
@@ -25,16 +27,16 @@ export class FiXmlParser extends MsgParser {
   private readonly segments: SegmentDescription[] = []
   private readonly segmentStack: SegmentDescription[] = []
   private readonly logger: IJsFixLogger
-  private last: SegmentDescription
-  private raw: string
+  private last: SegmentDescription | null
+  private raw: string | null
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
-               @inject(DITokens.readStream) public readonly readStream: Readable,
-               @inject(DITokens.maxMessageLocations) public readonly maxMessageLocations: number = 10 * 1024) {
+    @inject(DITokens.readStream) public readonly readStream: Readable,
+    @inject(DITokens.maxMessageLocations) public readonly maxMessageLocations: number = 10 * 1024) {
     super()
     this.definitions = this.config.definitions
     const description = config.description
-    const me = description.application.name
+    const me = description?.application?.name
     this.logger = config.logFactory.logger(`${me}:FiXmlParser`)
     this.saxStream = require('sax').createStream(true, {})
     this.locations = new Tags(this.definitions, maxMessageLocations)
@@ -60,7 +62,7 @@ export class FiXmlParser extends MsgParser {
   private subscribe (): void {
     const writeStream = this.saxStream
     const readStream = this.readStream
-    let instance = this
+    const instance = this
     readStream.pipe(writeStream).on('ready', () => {
       this.logger.info('stream close event')
       this.emit('close')
@@ -138,13 +140,17 @@ export class FiXmlParser extends MsgParser {
     if (stack.length === 0) {
       throw new Error(`Hdr not expected before batch or message ${saxNode.name}`)
     }
-    let peek: SegmentDescription = stack[stack.length - 1]
+    const peek: SegmentDescription = stack[stack.length - 1]
     switch (peek.type) {
       case SegmentType.Batch: {
         // manually handle this component
         const hdr = this.definitions.component.get('StandardHeader')
-        const segment: SegmentDescription = this.parseAttributes(saxNode.name, hdr, saxNode, SegmentType.Component)
-        this.segmentStack.push(segment)
+        if (hdr) {
+          const segment: SegmentDescription | null = this.parseAttributes(saxNode.name, hdr, saxNode, SegmentType.Component)
+          if (segment) {
+            this.segmentStack.push(segment)
+          }
+        }
         break
       }
 
@@ -177,71 +183,75 @@ export class FiXmlParser extends MsgParser {
     return new FixmlView(last, this.values, structure)
   }
 
-  private pop (name: string): SegmentDescription {
+  private pop (name: string): SegmentDescription | null {
     const locations = this.locations
     const stack = this.segmentStack
     const segments = this.segments
     while (stack.length > 0) {
       const pop = stack.pop()
       const ptr = locations.nextTagPos - 1
-      pop.end(segments.length, ptr, locations.tagPos[ptr].tag)
-      segments[segments.length] = pop
-      switch (pop.type) {
-        case SegmentType.Msg: {
-          // raise msg event
-          const last = segments[segments.length - 1]
-          this.last = last
-          this.emit('msg', last.name, this.getView())
-          if (this.raw) {
-            this.emit('decoded', this.last.name, this.raw)
-            this.raw = null
+      pop?.end(segments.length, ptr, locations.tagPos[ptr].tag)
+      if (pop) {
+        segments[segments.length] = pop
+        switch (pop.type) {
+          case SegmentType.Msg: {
+            // raise msg event
+            const last = segments[segments.length - 1]
+            this.last = last
+            this.emit('msg', last.name, this.getView())
+            if (this.raw) {
+              this.emit('decoded', this.last.name, this.raw)
+              this.raw = null
+            }
+            break
           }
-          break
+          case SegmentType.Batch: {
+            const last = segments[segments.length - 1]
+            this.logger.debug(`emit batch with ${pop.delimiterPositions.length} elements`)
+            this.emit('batch', last?.set?.abbreviation, this.getView())
+            break
+          }
         }
-        case SegmentType.Batch: {
-          const last = segments[segments.length - 1]
-          this.logger.debug(`emit batch with ${pop.delimiterPositions.length} elements`)
-          this.emit('batch', last.set.abbreviation, this.getView())
-          break
+        if (pop.name === name) {
+          return pop
         }
-      }
-      if (pop.name === name) {
-        return pop
       }
     }
     return null
   }
 
-  private startGroup (saxNode: ISaxNode, gf: ContainedGroupField) {
+  private startGroup (saxNode: ISaxNode, gf: ContainedGroupField): void {
     const locations = this.locations
     const stack: SegmentDescription[] = this.segmentStack
     const ptr = locations.nextTagPos
     const def = gf.definition
-    const segment: SegmentDescription = this.parseAttributes(saxNode.name, def, saxNode, SegmentType.Component)
-    const group: SegmentDescription = new SegmentDescription(def.name,
-      locations.tagPos[ptr].tag,
-      def,
-      ptr,
-      stack.length,
-      SegmentType.Group)
-    group.startGroup(locations.tagPos[ptr].tag)
-    group.addDelimiterPosition(ptr)
-    stack.push(group)
-    stack.push(segment)
+    const segment: SegmentDescription | null = this.parseAttributes(saxNode.name, def, saxNode, SegmentType.Component)
+    if (segment) {
+      const group: SegmentDescription = new SegmentDescription(def.name,
+        locations.tagPos[ptr].tag,
+        def,
+        ptr,
+        stack.length,
+        SegmentType.Group)
+      group.startGroup(locations.tagPos[ptr].tag)
+      group.addDelimiterPosition(ptr)
+      stack.push(group)
+      stack.push(segment)
+    }
   }
 
-  private getNextField (saxNode: ISaxNode): ContainedField {
+  private getNextField (saxNode: ISaxNode): ContainedField | null {
     const stack: SegmentDescription[] = this.segmentStack
     while (stack.length > 0) {
-      let peek: SegmentDescription = stack[stack.length - 1]
-      let field = peek.set.localNameToField.get(saxNode.name)
+      const peek: SegmentDescription = stack[stack.length - 1]
+      const field = peek?.set?.localNameToField.get(saxNode.name)
       if (field) {
         return field
       }
       // if this is a group of the same type as already on stack
       // take the field from the next level up
       if (peek.type === SegmentType.Group && stack.length > 1) {
-        const contained = stack[stack.length - 2].set.localNameToField.get(saxNode.name)
+        const contained = stack[stack.length - 2]?.set?.localNameToField.get(saxNode.name)
         if (contained instanceof ContainedGroupField) {
           if (contained.definition.name === peek.name) {
             // this is the same type for next instance in the same group.
@@ -254,18 +264,22 @@ export class FiXmlParser extends MsgParser {
       const ptr = locations.nextTagPos - 1
       const pop = stack.pop()
       const segments = this.segments
-      pop.end(segments.length, ptr, locations.tagPos[ptr].tag)
-      segments[segments.length] = pop
+      if (pop) {
+        pop.end(segments.length, ptr, locations.tagPos[ptr].tag)
+        segments[segments.length] = pop
+      }
     }
     return null
   }
 
-  private dispatch (saxNode: ISaxNode, field: ContainedField) {
+  private dispatch (saxNode: ISaxNode, field: ContainedField): void {
     switch (field.type) {
       case ContainedFieldType.Component: {
         const cf: ContainedComponentField = field as ContainedComponentField
-        const segment: SegmentDescription = this.parseAttributes(saxNode.name, cf.definition, saxNode, SegmentType.Component)
-        this.segmentStack.push(segment)
+        const segment: SegmentDescription | null = this.parseAttributes(saxNode.name, cf.definition, saxNode, SegmentType.Component)
+        if (segment) {
+          this.segmentStack.push(segment)
+        }
         break
       }
 
@@ -290,7 +304,10 @@ export class FiXmlParser extends MsgParser {
         if (gf.name === saxNode.name) {
           const ptr = this.locations.nextTagPos
           peek.addDelimiterPosition(ptr)
-          stack[stack.length] = this.parseAttributes(saxNode.name, gf.definition, saxNode, SegmentType.Component)
+          const a = this.parseAttributes(saxNode.name, gf.definition, saxNode, SegmentType.Component)
+          if (a) {
+            stack.push(a)
+          }
         } else {
           throw new Error(`expected another group instance of ${gf.name} but got ${saxNode.name}`)
         }
@@ -307,8 +324,8 @@ export class FiXmlParser extends MsgParser {
     const field = this.getNextField(saxNode)
     if (!field) {
       const stack: SegmentDescription[] = this.segmentStack
-      let peek: SegmentDescription = stack[stack.length - 1]
-      throw new Error(`field ${saxNode.name} not known in set ${peek.set.name}`)
+      const peek: SegmentDescription = stack[stack.length - 1]
+      throw new Error(`field ${saxNode.name} not known in set ${peek?.set?.name}`)
     }
     this.dispatch(saxNode, field)
   }
@@ -316,7 +333,7 @@ export class FiXmlParser extends MsgParser {
   private msg (saxNode: ISaxNode, inBatch: boolean = false): void {
     this.logger.debug(`${saxNode.name}: begin parse msg`)
     const type: string = saxNode.name
-    const def: MessageDefinition = this.definitions.message.get(type)
+    const def: MessageDefinition | null = this.definitions.message.get(type)
     if (!def) {
       throw new Error(`unknown message type ${type}`)
     }
@@ -324,11 +341,13 @@ export class FiXmlParser extends MsgParser {
       const batch = this.segmentStack[0]
       batch.set = def
     }
-    const segment: SegmentDescription = this.parseAttributes(type, def, saxNode, SegmentType.Msg)
-    this.segmentStack.push(segment)
+    const segment: SegmentDescription | null = this.parseAttributes(type, def, saxNode, SegmentType.Msg)
+    if (segment) {
+      this.segmentStack.push(segment)
+    }
   }
 
-  private parseAttributes (name: string, set: ContainedFieldSet, saxNode: ISaxNode, type: SegmentType): SegmentDescription {
+  private parseAttributes (name: string, set: ContainedFieldSet, saxNode: ISaxNode, type: SegmentType): SegmentDescription | null {
     const locations = this.locations
     const attributes = saxNode.attributes
     const values = this.values
@@ -350,5 +369,6 @@ export class FiXmlParser extends MsgParser {
       }
       return new SegmentDescription(name, locations.tagPos[ptr].tag, set, ptr, this.segmentStack.length, type)
     }
+    return null
   }
 }

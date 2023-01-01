@@ -1,8 +1,7 @@
 import { IDictIteratorCb } from './collection'
 
 export class Dictionary<T> {
-
-  private container: { [id: string]: T; } = {}
+  private container: { [id: string]: T } = {}
 
   public count (): number {
     const keys: string[] = Object.keys(this.container)
@@ -23,7 +22,7 @@ export class Dictionary<T> {
   public toString (): string {
     return this.keys().reduce((a: string, current: string) => {
       const token = a.length > 0 ? ', ' : ''
-      return a + `${token}${this.container[current].toString() || ''}`
+      return a + `${token}${this.container[current]?.toString() ?? ''}`
     }, '')
   }
 
@@ -47,11 +46,11 @@ export class Dictionary<T> {
     delete this.container[key]
   }
 
-  public get (key: string): T {
+  public get (key: string): T | null {
     return this.container[key]
   }
 
-  public clear () {
+  public clear (): void {
     this.keys().forEach(k => {
       this.remove(k)
     })

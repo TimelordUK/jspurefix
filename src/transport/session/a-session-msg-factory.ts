@@ -13,12 +13,11 @@ import {
   ITestRequest
 } from '../../types/FIX4.4/repo'
 
-export interface ObjectMutator { (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject
-}
+export type ObjectMutator = (description: ISessionDescription, type: string, o: ILooseObject) => ILooseObject
 
 export abstract class ASessionMsgFactory implements ISessionMsgFactory {
   public isAscii: boolean
-  constructor (public readonly description: ISessionDescription, public mutator: ObjectMutator = null) {
+  protected constructor (public readonly description: ISessionDescription, public mutator: ObjectMutator | null = null) {
   }
 
   public reject (msgType: string, seqNo: number, msg: string, reason: number): ILooseObject {

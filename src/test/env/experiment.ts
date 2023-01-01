@@ -11,8 +11,8 @@ class FixEntity {
   public readonly errors: Error[] = []
 
   constructor (public readonly config: IJsFixConfig,
-               public readonly duplex: FixDuplex = new StringDuplex(),
-               public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
+    public readonly duplex: FixDuplex = new StringDuplex(),
+    public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
   }
 }
 
@@ -22,7 +22,7 @@ export class Experiment {
   public readonly serverFactory: AsciiSessionMsgFactory
   public readonly server: FixEntity
 
-  loopBack (lhs: FixDuplex, rhs: FixDuplex) {
+  loopBack (lhs: FixDuplex, rhs: FixDuplex): void {
     lhs.writable.on('data', (data: Buffer) => {
       rhs.readable.push(data)
     })

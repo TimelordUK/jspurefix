@@ -7,10 +7,10 @@ import { SessionState } from './session-state'
 export class FixSessionState {
   public nextTickAction: TickAction = TickAction.Nothing
 
-  public lastReceivedAt: Date = null
-  public LastSentAt: Date = null
-  public lastTestRequestAt: Date = null
-  public logoutSentAt: Date = null
+  public lastReceivedAt: Date | null = null
+  public LastSentAt: Date | null = null
+  public lastTestRequestAt: Date | null = null
+  public logoutSentAt: Date | null = null
   public now: Date = new Date()
   public compId: string = ''
   public peerCompId: string = ''
@@ -40,11 +40,13 @@ export class FixSessionState {
     }
   }
 
-  public constructor ({ heartBeat,
-                        state = SessionState.Idle,
-                        waitLogoutConfirmSeconds = 5,
-                        stopSeconds = 2,
-                        lastPeerMsgSeqNum = 0 }: IFixSessionStateArgs) {
+  public constructor ({
+    heartBeat,
+    state = SessionState.Idle,
+    waitLogoutConfirmSeconds = 5,
+    stopSeconds = 2,
+    lastPeerMsgSeqNum = 0
+  }: IFixSessionStateArgs) {
     this.heartBeat = heartBeat
     this.state = state
     this.waitLogoutConfirmSeconds = waitLogoutConfirmSeconds
@@ -52,7 +54,7 @@ export class FixSessionState {
     this.lastPeerMsgSeqNum = lastPeerMsgSeqNum
   }
 
-  private static dateAsString (d: Date) {
+  private static dateAsString (d: Date | null): string {
     if (!d) {
       return 'null'
     }
@@ -60,7 +62,6 @@ export class FixSessionState {
   }
 
   public toString (): string {
-
     const buffer = new ElasticBuffer(1024)
 
     buffer.writeString(`compId = ${this.compId}, `)
@@ -91,7 +92,6 @@ export class FixSessionState {
     this.calcState()
 
     switch (this.state) {
-
       case SessionState.PeerLogonRejected: {
         if (this.secondsSinceSent >= this.stopSeconds) {
           this.nextTickAction = TickAction.Stop
@@ -154,7 +154,7 @@ export class FixSessionState {
     const time = this.now.getTime()
     this.nextTickAction = TickAction.Nothing
     this.secondsSinceLogoutSent = this.logoutSentAt ? (time - this.logoutSentAt.getTime()) / 1000 : -1
-    this.secondsSinceSent = (time - this.LastSentAt.getTime()) / 1000
-    this.secondsSinceReceive = (time - this.lastReceivedAt.getTime()) / 1000
+    this.secondsSinceSent = this.LastSentAt != null ? (time - this.LastSentAt.getTime()) / 1000 : 0
+    this.secondsSinceReceive = this.lastReceivedAt != null ? (time - this.lastReceivedAt.getTime()) / 1000 : 0
   }
 }

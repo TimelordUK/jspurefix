@@ -28,12 +28,12 @@ export class AsciiParser extends MsgParser {
   // want to keep one slice of memory and constantly reuse it
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
-               @inject(DITokens.readStream) public readonly readStream: Readable,
-               @inject(DITokens.ParseBuffer) protected readonly receivingBuffer: ElasticBuffer) {
+    @inject(DITokens.readStream) public readonly readStream: Readable | null,
+    @inject(DITokens.ParseBuffer) protected readonly receivingBuffer: ElasticBuffer) {
     super()
 
-    this.delimiter = config.delimiter
-    this.writeDelimiter = config.logDelimiter || AsciiChars.Pipe
+    this.delimiter = config.delimiter ?? AsciiChars.Soh
+    this.writeDelimiter = config.logDelimiter ?? AsciiChars.Pipe
     const definitions = config.definitions
     this.id = AsciiParser.nextId++
     this.segmentParser = config.sessionContainer.resolve<AsciiSegmentParser>(AsciiSegmentParser)
@@ -65,13 +65,13 @@ export class AsciiParser extends MsgParser {
     })
 
     // receive from say a socket or file and pipe to parser which discovers messages
-    stream.pipe(receiver).on('finish', () => {
+    stream?.pipe(receiver).on('finish', () => {
       this.emit('done')
     })
-    stream.on('error', (e) => {
+    stream?.on('error', (e) => {
       this.emit('error', e)
     })
-    stream.on('end', () => {
+    stream?.on('end', () => {
       this.emit('end')
     })
   }
@@ -86,7 +86,7 @@ export class AsciiParser extends MsgParser {
     state.beginMessage()
   }
 
-  public parseText (text: string) {
+  public parseText (text: string): void {
     const buff = Buffer.from(text)
     this.parse(buff, buff.length)
   }
@@ -103,11 +103,10 @@ export class AsciiParser extends MsgParser {
     let readPtr: number = 0
 
     while (readPtr < end) {
-      let charAtPos: number = readBuffer[readPtr]
+      const charAtPos: number = readBuffer[readPtr]
 
       const writePtr = receivingBuffer.saveChar(charAtPos) - 1
       switch (state.parseState) {
-
         case ParseState.MsgComplete: {
           this.msg(writePtr)
           continue
@@ -157,7 +156,8 @@ export class AsciiParser extends MsgParser {
         }
 
         default: {
-          throw new Error(`fix parser in unknown state ${state}`)
+          const st = state.parseState
+          throw new Error(`fix parser in unknown state ${st}`)
         }
       }
       readPtr++
@@ -171,15 +171,18 @@ export class AsciiParser extends MsgParser {
     }
   }
 
-  private getView (ptr: number): MsgView {
+  private getView (ptr: number): MsgView | null {
     const state = this.state
     const locations = state.locations
     const source = this.receivingBuffer
     const delimiter = this.delimiter
     const replace = this.writeDelimiter
+    const msgType = state.msgType ?? null
+    if (!msgType) return null
     if (state.message) {
-      const structure: Structure = this.segmentParser.parse(state.msgType, locations,
+      const structure: Structure | null = this.segmentParser.parse(msgType, locations,
         locations.nextTagPos - 1)
+      if (!structure) return null
       return new AsciiView(structure.msg(),
         source,
         structure,

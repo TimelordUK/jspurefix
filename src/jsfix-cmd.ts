@@ -11,7 +11,6 @@ import { MsgTag } from './types'
 import { IJsFixConfig } from './config'
 
 import * as util from 'util'
-const fs = require('node-fs-extra')
 import * as minimist from 'minimist'
 import * as path from 'path'
 import { MsgTransport } from './transport/factory'
@@ -19,6 +18,7 @@ import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compi
 import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 import { SessionContainer } from './runtime'
 import { DITokens } from './runtime/di-tokens'
+const fs = require('node-fs-extra')
 
 const argv: any = minimist(process.argv.slice(2))
 
@@ -49,7 +49,7 @@ export class JsfixCmd {
   private sessionDescription: ISessionDescription
   private delimiter: number = AsciiChars.Soh
   private stats: ILooseObject = {}
-  private filter: string = null
+  private filter: string | null = null
   private messages: number = 0
   private print: boolean = true
 
@@ -89,20 +89,19 @@ export class JsfixCmd {
     return mode
   }
 
-  private static async writeFile (name: string, api: string) {
+  private static async writeFile (name: string, api: string): Promise<void> {
     const writer = util.promisify(fs.writeFile)
-    await writer(name, api, {
-      encoding: 'utf8'}
+    await writer(name, api, { encoding: 'utf8' }
     ).catch((e: Error) => {
       throw e
     })
   }
 
-  public exec (): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  public async exec (): Promise<any> {
+    return await new Promise<any>((resolve, reject) => {
       this.init().then(async () => {
         let actioned: boolean = true
-        let command = JsfixCmd.getCommand()
+        const command = JsfixCmd.getCommand()
 
         switch (command) {
           case Command.Generate: {
@@ -168,8 +167,8 @@ export class JsfixCmd {
     })
   }
 
-  private firstMessage (t: MsgTransport): Promise<MsgView> {
-    return new Promise<MsgView>((resolve, reject) => {
+  private async firstMessage (t: MsgTransport): Promise<MsgView> {
+    return await new Promise<MsgView>((resolve, reject) => {
       t.receiver.on('msg', (msgType: string, msgView: MsgView) => {
         resolve(msgView.clone())
       })
@@ -179,7 +178,7 @@ export class JsfixCmd {
     })
   }
 
-  private async generate () {
+  protected async generate (): Promise<void> {
     const lipPath: string = path.join(this.root, 'data/examples/lipsum.txt')
     const words: string[] = await getWords(lipPath)
     const generator = new MessageGenerator(words, this.definitions)
@@ -199,7 +198,7 @@ export class JsfixCmd {
     }
   }
 
-  private async single (generator: MessageGenerator, density: number) {
+  private async single (generator: MessageGenerator, density: number): Promise<void> {
     if (!argv.type) {
       console.log('specify type to generate e.g. --type = AE')
       return
@@ -220,14 +219,14 @@ export class JsfixCmd {
     }
   }
 
-  private async script (generator: MessageGenerator, density: number) {
-    let buffer: ElasticBuffer = new ElasticBuffer()
+  private async script (generator: MessageGenerator, density: number): Promise<void> {
+    const buffer: ElasticBuffer = new ElasticBuffer()
     const repeats: number = argv.repeats || 50
     const key: string = MsgTag.MsgType.toString()
     const sf = this.definitions.simple.get(key)
     const session: AsciiMsgTransmitter = this.session
     for (let i = 0; i < repeats; ++i) {
-      const msgType: string = MessageGenerator.getRandomEnum(sf).toString()
+      const msgType: string = sf ? MessageGenerator.getRandomEnum(sf).toString() : ''
       console.log(`i = ${i} ${msgType}`)
       const obj: ILooseObject = generator.generate(msgType, density)
       session.encodeMessage(msgType, obj)
@@ -237,9 +236,9 @@ export class JsfixCmd {
     await JsfixCmd.writeFile('./fix.txt', buffer.slice().toString('utf8'))
   }
 
-  private async unitTest (fix: string, obj: ILooseObject, ft: MsgTransport) {
+  private async unitTest (fix: string, obj: ILooseObject, ft: MsgTransport): Promise<void> {
     const view: MsgView = await this.firstMessage(ft)
-    const summary = view.structure.summary()
+    const summary = view?.structure?.summary()
 
     await JsfixCmd.writeFile('./fix.txt', fix)
     await JsfixCmd.writeFile('./object.json', JSON.stringify(obj, null, 4))
@@ -262,7 +261,7 @@ export class JsfixCmd {
   }
 
   private field (): void {
-    let sf: SimpleFieldDefinition
+    let sf: SimpleFieldDefinition | null
     const tag: number = parseInt(argv.field, 10)
     const definitions = this.definitions
     if (!isNaN(tag)) {
@@ -275,19 +274,19 @@ export class JsfixCmd {
     }
   }
 
-  ensureExists (path: string): Promise<any> {
-    return new Promise<any>((accept, reject) => {
+  async ensureExists (path: string): Promise<any> {
+    return await new Promise<any>((resolve, reject) => {
       fs.mkdirp(path, (err: Error) => {
         if (err) {
           reject(err)
         } else {
-          accept(true)
+          resolve(true)
         }
       })
     })
   }
 
-  private async compileDefinitions (outputPath: string) {
+  private async compileDefinitions (outputPath: string): Promise<void> {
     await this.ensureExists(path.join(outputPath, 'set'))
     await this.ensureExists(path.join(outputPath, 'enum'))
     const definitions = this.definitions
@@ -300,7 +299,7 @@ export class JsfixCmd {
     await enumCompiler.generate(writeFile)
   }
 
-  private async compile () {
+  private async compile (): Promise<void> {
     let output = argv.output
     const dp = new DefinitionFactory().getDictPath(argv.dict)
     if (dp) {
@@ -361,13 +360,12 @@ export class JsfixCmd {
     }
   }
 
-  private subscribe (ft: MsgTransport) {
+  private subscribe (ft: MsgTransport): void {
     this.messages = 0
     this.stats = {}
     const filter = this.filter
     // the receiver is message parser which is piped from an input stream - file, socket
     ft.receiver.on('msg', (msgType: string, m: AsciiView) => {
-
       if (filter) {
         if (msgType !== filter) {
           return
@@ -378,17 +376,19 @@ export class JsfixCmd {
     })
   }
 
-  private onMsg (msgType: string, m: MsgView) {
+  private onMsg (msgType: string, m: MsgView): void {
     const mode: PrintMode = JsfixCmd.getPrintMode()
     const print = this.print
     const stats = this.stats
     switch (mode) {
       case PrintMode.Stats: {
+        let i: number = 0
         if (!stats[msgType]) {
-          stats[msgType] = 1
+          i = 1
         } else {
-          stats[msgType] = stats[msgType] + 1
+          i = stats[msgType] + 1
         }
+        stats[msgType] = i
         break
       }
 
@@ -404,14 +404,14 @@ export class JsfixCmd {
         const asObject: ILooseObject = m.toObject()
         if (print) {
           const def = this.definitions.message.get(msgType)
-          console.log(`${msgType} [${def.name}] = ${JSON.stringify(asObject, null, 4)}`)
+          console.log(`${msgType} [${def?.name}] = ${JSON.stringify(asObject, null, 4)}`)
           console.log()
         }
         break
       }
 
       case PrintMode.Structure: {
-        const summary = m.structure.summary()
+        const summary = m?.structure?.summary()
         if (print) {
           console.log(JSON.stringify(summary, null, 4))
         }
@@ -453,7 +453,7 @@ export class JsfixCmd {
       console.log('provide a path to fix file i.e. --fix=data/examples/execution-report/fix.txt')
       return
     }
-    return new Promise<any>((accept, reject) => {
+    return await new Promise<any>((resolve, reject) => {
       const fix: string = this.norm(argv.fix)
       const fs = require('fs')
       fs.readFile(fix, 'utf8', async (err: Error, contents: string) => {
@@ -472,8 +472,8 @@ export class JsfixCmd {
             const elapsed: number = new Date().getTime() - startsAt.getTime()
             console.log(contents)
             console.log(v.toString())
-            console.log(`[${msgType}]: repeats = ${repeats}, fields = ${v.structure.tags.nextTagPos}, length = ${contents.length} chars, elapsed ms ${elapsed}, ${(elapsed / repeats) * 1000} micros per msg`)
-            accept(true)
+            console.log(`[${msgType}]: repeats = ${repeats}, fields = ${v?.structure?.tags.nextTagPos}, length = ${contents.length} chars, elapsed ms ${elapsed}, ${(elapsed / repeats) * 1000} micros per msg`)
+            resolve(true)
           }
         })
       })
@@ -521,8 +521,8 @@ function showHelp (): void {
   console.log()
 
   console.log('token format use fix repo dictionary')
-  console.log('jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --fix=data/examples/quickfix/FIX.4.4/execution-report/fix.txt'
-        + ' --delimiter="|" --tokens')
+  console.log('jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --fix=data/examples/quickfix/FIX.4.4/execution-report/fix.txt' +
+        ' --delimiter="|" --tokens')
   console.log()
 
   console.log('structure format i.e. show locations of components etc.')

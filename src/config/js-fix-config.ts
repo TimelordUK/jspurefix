@@ -6,7 +6,7 @@ import { AsciiChars } from '../buffer/ascii'
 import { DependencyContainer } from 'tsyringe'
 
 export interface IJsFixConfig {
-  factory: ISessionMsgFactory
+  factory: ISessionMsgFactory | null
   definitions: FixDefinitions
   description: ISessionDescription
   delimiter?: number
@@ -19,10 +19,10 @@ export class JsFixConfig implements IJsFixConfig {
   public logDelimiter: number = AsciiChars.Pipe
   public sessionContainer: DependencyContainer
   constructor (
-               public readonly factory: ISessionMsgFactory,
-               public readonly definitions: FixDefinitions,
-               public readonly description: ISessionDescription,
-               public readonly delimiter: number = AsciiChars.Soh,
-               public readonly logFactory: JsFixLoggerFactory = new EmptyLogFactory()) {
+    public readonly factory: ISessionMsgFactory | null,
+    public readonly definitions: FixDefinitions,
+    public readonly description: ISessionDescription,
+    public readonly delimiter: number = AsciiChars.Soh,
+    public readonly logFactory: JsFixLoggerFactory = new EmptyLogFactory()) {
   }
 }

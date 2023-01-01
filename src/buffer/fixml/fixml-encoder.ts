@@ -63,12 +63,13 @@ export class FixmlEncoder extends MsgEncoder {
         return moment(d).utc(true).format('YYYY-MM-DD')
       }
     }
+    return ''
   }
 
   public encodeSet (o: ILooseObject, set: ContainedFieldSet): void {
     const batch: ILooseObject[] = o.Batch
     const toWrite: ILooseObject[] = batch || [o]
-    let depth = batch ? 1 : 0
+    const depth = batch ? 1 : 0
     const buffer = this.buffer
     const begin = this.beginDoc
     const indent: string = '\t'
@@ -80,7 +81,7 @@ export class FixmlEncoder extends MsgEncoder {
       this.batchStart(o, set, depth)
     }
     toWrite.forEach((next: ILooseObject) => {
-      this.toXml(next, set.abbreviation, set, depth + 1)
+      this.toXml(next, set.abbreviation ?? '', set, depth + 1)
       buffer.writeString(eol)
     })
     if (batch) {
@@ -90,7 +91,7 @@ export class FixmlEncoder extends MsgEncoder {
     buffer.writeString(this.endDoc)
   }
 
-  private batchStart (o: ILooseObject, set: ContainedFieldSet, depth: number) {
+  private batchStart (o: ILooseObject, set: ContainedFieldSet, depth: number): void {
     const buffer = this.buffer
     const indent: string = '\t'
     const beginBatch = this.beginBatch
@@ -105,7 +106,6 @@ export class FixmlEncoder extends MsgEncoder {
   }
 
   private toXml (o: ILooseObject, name: string, set: ContainedFieldSet, depth: number): void {
-
     const buffer = this.buffer
     const selfClose: string = '/>'
     const close: string = '>'
@@ -131,7 +131,7 @@ export class FixmlEncoder extends MsgEncoder {
   private getPopulatedFields (set: ContainedFieldSet, o: ILooseObject): ContainedField[] {
     const keys: string[] = Object.keys(o)
     const fields: ContainedField[] = keys.reduce((a: ContainedField[], current: string) => {
-      const field: ContainedField = set.localNameToField.get(current)
+      const field: ContainedField | null = set.localNameToField.get(current)
       if (field && !set.nameToLocalAttribute.containsKey(current)) {
         a.push(field)
       }
@@ -176,7 +176,7 @@ export class FixmlEncoder extends MsgEncoder {
   }
 
   private getPopulatedAttributes (o: ILooseObject, attributes: ContainedSimpleField[]): IPopulatedAttributes {
-    return attributes.reduce((a: IPopulatedAttributes, f: ContainedSimpleField) => {
+    return attributes.reduce<IPopulatedAttributes>((a: IPopulatedAttributes, f: ContainedSimpleField) => {
       let v: any = o[f.definition.name]
       if (v == null) {
         v = o[f.name]
@@ -189,17 +189,17 @@ export class FixmlEncoder extends MsgEncoder {
     }, {
       values: [],
       fields: []
-    } as IPopulatedAttributes)
+    })
   }
 
-  private complexGroup (o: ILooseObject, field: ContainedField, depth: number) {
+  private complexGroup (o: ILooseObject, field: ContainedField, depth: number): void {
     const gf: ContainedGroupField = field as ContainedGroupField
     const elements: ILooseObject[] = o[gf.definition.name]
     if (elements) {
       if (Array.isArray(elements)) {
         for (const e of elements) {
           this.buffer.writeString(this.eol)
-          this.toXml(e, gf.name, gf.definition,depth + 1)
+          this.toXml(e, gf.name, gf.definition, depth + 1)
         }
       } else {
         throw new Error(`expected array for member ${gf.definition.name}`)
@@ -207,7 +207,7 @@ export class FixmlEncoder extends MsgEncoder {
     }
   }
 
-  private complexComponent (o: ILooseObject, field: ContainedField, depth: number) {
+  private complexComponent (o: ILooseObject, field: ContainedField, depth: number): void {
     const cf: ContainedComponentField = field as ContainedComponentField
     const def = cf.definition
     const instance: ILooseObject = o[def.name]

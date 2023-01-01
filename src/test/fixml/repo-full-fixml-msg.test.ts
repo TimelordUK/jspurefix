@@ -15,7 +15,7 @@ let definitions: FixDefinitions
 let jsonHelper: JsonHelper
 let sessionDescription: ISessionDescription
 const root: string = path.join(__dirname, '../../../data/examples/FIXML')
-let setup: Setup = null
+let setup: Setup
 
 beforeAll(async () => {
   setup = new Setup('session/test-initiator.json', null)
@@ -27,7 +27,7 @@ beforeAll(async () => {
 
 async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<ILooseObject> {
   // encode to FIXML format from provided object.
-  return new Promise(async (resolve, reject) => {
+  return await new Promise(async (resolve, reject) => {
     const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
     fe.encode(asObj, msgType)
     const fixml: string = fe.buffer.toString()
@@ -53,7 +53,7 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
 
 test('MktDataFull settle fixml object', async () => {
   const msgType: string = 'MktDataFull'
-  const file: string = path.join(root,'cme/md/settle')
+  const file: string = path.join(root, 'cme/md/settle')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -61,7 +61,7 @@ test('MktDataFull settle fixml object', async () => {
 
 test('AllocInstrctn fixml object', async () => {
   const msgType: string = 'AllocInstrctn'
-  const file: string = path.join(root,'cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
+  const file: string = path.join(root, 'cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -69,7 +69,7 @@ test('AllocInstrctn fixml object', async () => {
 
 test('AllocRpt fixml object', async () => {
   const msgType: string = 'AllocRpt'
-  const file: string = path.join(root,'cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
+  const file: string = path.join(root, 'cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -77,7 +77,7 @@ test('AllocRpt fixml object', async () => {
 
 test('TrdCaptRpt fixml object', async () => {
   const msgType: string = 'TrdCaptRpt'
-  const file: string = path.join(root,'cme/tc/Delivery Fixed Commodity Swap')
+  const file: string = path.join(root, 'cme/tc/Delivery Fixed Commodity Swap')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -85,7 +85,7 @@ test('TrdCaptRpt fixml object', async () => {
 
 test('MktDataFull fixml object', async () => {
   const msgType: string = 'MktDataFull'
-  const file: string = path.join(root,'cme/md/futures')
+  const file: string = path.join(root, 'cme/md/futures')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -93,7 +93,7 @@ test('MktDataFull fixml object', async () => {
 
 test('UserReq logon fixml object', async () => {
   const msgType: string = 'UserReq'
-  const file: string = path.join(root,'cme/ur/logon')
+  const file: string = path.join(root, 'cme/ur/logon')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -101,7 +101,7 @@ test('UserReq logon fixml object', async () => {
 
 test('UserReq logoff fixml object', async () => {
   const msgType: string = 'UserReq'
-  const file: string = path.join(root,'cme/ur/logoff')
+  const file: string = path.join(root, 'cme/ur/logoff')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -109,7 +109,7 @@ test('UserReq logoff fixml object', async () => {
 
 test('TrdCaptRpt 2 fixml object', async () => {
   const msgType: string = 'TrdCaptRpt'
-  const file: string = path.join(root,'cme/tc/Initial Single Side Submission')
+  const file: string = path.join(root, 'cme/tc/Initial Single Side Submission')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -117,7 +117,7 @@ test('TrdCaptRpt 2 fixml object', async () => {
 
 test('TrdCaptRpt 3 fixml object', async () => {
   const msgType: string = 'TrdCaptRpt'
-  const file: string = path.join(root,'cme/tc/Accepted Unmatched')
+  const file: string = path.join(root, 'cme/tc/Accepted Unmatched')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -125,7 +125,7 @@ test('TrdCaptRpt 3 fixml object', async () => {
 
 test('TrdCaptRptReq fixml object', async () => {
   const msgType: string = 'TrdCaptRptReq'
-  const file: string = path.join(root,'cme/tc/Trading Firm Continued Subscription')
+  const file: string = path.join(root, 'cme/tc/Trading Firm Continued Subscription')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -133,7 +133,7 @@ test('TrdCaptRptReq fixml object', async () => {
 
 test('Order fixml object', async () => {
   const msgType: string = 'Order'
-  const file: string = path.join(root,'om/nso')
+  const file: string = path.join(root, 'om/nso')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)
@@ -141,7 +141,7 @@ test('Order fixml object', async () => {
 
 test('ExecRpt fixml object', async () => {
   const msgType: string = 'ExecRpt'
-  const file: string = path.join(root,'om/er')
+  const file: string = path.join(root, 'om/er')
   const asObj: ILooseObject = jsonHelper.fromJson(`${file}/object.json`, msgType)
   const o: ILooseObject = await testEncodeDecode(asObj, msgType)
   expect(o).toEqual(asObj)

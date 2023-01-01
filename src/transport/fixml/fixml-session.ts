@@ -6,7 +6,6 @@ import { FixSession } from '../session/fix-session'
 import { SessionState } from '../session/session-state'
 
 export abstract class FixmlSession extends FixSession {
-
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.requestLogoutType = 'UserReq'
@@ -15,7 +14,6 @@ export abstract class FixmlSession extends FixSession {
   }
 
   protected onMsg (msgType: string, view: MsgView): void {
-
     switch (msgType) {
       case 'UserReq':
       case 'UserRsp': {
@@ -66,16 +64,19 @@ export abstract class FixmlSession extends FixSession {
     }
   }
 
-  private peerLogon (view: MsgView) {
+  private peerLogon (view: MsgView): void {
     const logger = this.sessionLogger
     const state = this.sessionState
     state.state = SessionState.InitiationLogonReceived
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     if (this.acceptor) {
-      const reqId: string = view.getString('UserReqID')
-      this.send('UserRsp', this.config.factory.logon(reqId, true))
+      const reqId: string = view.getString('UserReqID') ?? 'req'
+      const o = this?.config?.factory?.logon(reqId, true)
+      if (o) {
+        this.send('UserRsp', o)
+      }
     }
-    logger.info(`system ready, inform app`)
+    logger.info('system ready, inform app')
     this.onReady(view)
   }
 }

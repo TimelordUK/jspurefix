@@ -13,45 +13,45 @@ export abstract class ContainedFieldSet {
   public readonly groups: Dictionary<ContainedGroupField> = new Dictionary<ContainedGroupField>()
   public readonly components: Dictionary<ContainedComponentField> = new Dictionary<ContainedComponentField>()
   public readonly simple: Dictionary<ContainedSimpleField> = new Dictionary<ContainedSimpleField>()
-    // sequence of fields representing this type - can be simple, group or component
+  // sequence of fields representing this type - can be simple, group or component
   public readonly fields: ContainedField[] = []
-    // any tag at any level i.e. does this set contain a tag
+  // any tag at any level i.e. does this set contain a tag
   public readonly containedTag: INumericKeyed<boolean> = {}
-    // any tag at any level ordered ie. all tags flattened to list
+  // any tag at any level ordered ie. all tags flattened to list
   public readonly flattenedTag: number[] = []
-    // any data tags contained length within this set.
+  // any data tags contained length within this set.
   public readonly containedLength: INumericKeyed<boolean> = {}
-    // tags only in repository at this level, not from any at deeper levels
+  // tags only in repository at this level, not from any at deeper levels
   public readonly localTag: INumericKeyed<ContainedSimpleField> = {}
   // tags marked required at this level only
   public readonly localRequired: INumericKeyed<ContainedSimpleField> = {}
-    // all tags contained within this field set flattened from all levels
+  // all tags contained within this field set flattened from all levels
   public readonly tagToSimple: INumericKeyed<ContainedSimpleField> = {}
-    // direct any tag contained within this set to field one level down where it belongs.
+  // direct any tag contained within this set to field one level down where it belongs.
   public readonly tagToField: INumericKeyed<ContainedField> = {}
-    // only repository directly in this set indexed by name
+  // only repository directly in this set indexed by name
   public readonly localNameToField: Dictionary<ContainedField> = new Dictionary<ContainedField>()
-    // for FixMl notation this set of fields appear as attributes i.e. <Pty ID="323" R="38">
+  // for FixMl notation this set of fields appear as attributes i.e. <Pty ID="323" R="38">
   public readonly nameToLocalAttribute: Dictionary<ContainedSimpleField> = new Dictionary<ContainedSimpleField>()
-    // all attributes in order of being declared
+  // all attributes in order of being declared
   public readonly localAttribute: ContainedSimpleField[] = []
-    // at any level on this set, first declared simple field
+  // at any level on this set, first declared simple field
   public firstSimple: ContainedSimpleField
-    // parser needs to know about raw fields
+  // parser needs to know about raw fields
   public containsRaw: boolean = false
 
   protected constructor (public readonly type: ContainedSetType,
-               public readonly name: string,
-               public readonly category: string,
-               public readonly abbreviation: string,
-               public readonly description: string) {
+    public readonly name: string,
+    public readonly category: string | null,
+    public readonly abbreviation: string | null,
+    public readonly description: string | null) {
   }
 
-  public toString () {
+  public toString (): string {
     const buffer = new ElasticBuffer(2 * 1024)
     const fields = this.fields
     buffer.writeString(`Set: ${this.name}(${this.getPrefix()}) fields [${fields.length}]: `)
-    const set = fields.map(f => f.toString())
+    const set: string[] = fields.map((f: ContainedField) => f.toString())
     const s = set.join(', ')
     buffer.writeString(s)
     return buffer.toString()
@@ -59,7 +59,7 @@ export abstract class ContainedFieldSet {
 
   public abstract getPrefix (): string
 
-  public getFieldName (tag: number) {
+  public getFieldName (tag: number): string {
     const s = this.tagToSimple[tag]
     if (s == null) {
       const gf = this.tagToField[tag] as ContainedGroupField
@@ -108,7 +108,7 @@ export abstract class ContainedFieldSet {
     }
   }
 
-  private addLocalSimple (field: ContainedSimpleField) {
+  private addLocalSimple (field: ContainedSimpleField): void {
     const definition = field.definition
     if (definition.abbreviation && definition.abbreviation !== definition.name) {
       this.localNameToField.addUpdate(definition.abbreviation, field)
@@ -194,7 +194,7 @@ export abstract class ContainedFieldSet {
   }
 
   private mapAllBelow (set: ContainedFieldSet, field: ContainedField): void {
-        // point all tags in this component to this field.
+    // point all tags in this component to this field.
     const tagsBelow: number[] = set.keys()
     for (const t of tagsBelow) {
       this.tagToField[t] = field

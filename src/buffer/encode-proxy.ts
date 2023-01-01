@@ -33,14 +33,14 @@ export class EncodeProxy {
       }
 
       case TagType.Boolean: {
-        if (typeof(val) !== typeof(true)) {
+        if (typeof (val) !== typeof (true)) {
           throw new Error(`field ${field.name} expects boolean but receives "${typeof val}"`)
         }
         break
       }
 
       case TagType.String: {
-        if (typeof(val) !== 'string') {
+        if (typeof (val) !== 'string') {
           throw new Error(`field ${field.name} expects string but receives "${typeof val}"`)
         }
         break
@@ -67,7 +67,7 @@ export class EncodeProxy {
 
   private static checkProperties (wrapped: ILooseObject, val: ILooseObject): ILooseObject {
     const keys: string[] = Object.keys(val)
-    for (let k of keys) {
+    for (const k of keys) {
       wrapped[k] = val[k]
     }
     return wrapped
@@ -108,7 +108,7 @@ export class EncodeProxy {
   private static handler (set: ContainedFieldSet): Object {
     return {
       set (target: ILooseObject, prop: string, val: any): boolean {
-        const field: ContainedField = set.localNameToField.get(prop)
+        const field: ContainedField | null = set.localNameToField.get(prop)
         if (!field) {
           throw new Error(`type ${set.name} has no field named ${prop}`)
         }
@@ -137,8 +137,9 @@ export class EncodeProxy {
     }
     return val
   }
+
   public wrap (msgName: string): ILooseObject {
-    const msg: MessageDefinition = this.definitions.message.get(msgName)
+    const msg: MessageDefinition | null = this.definitions.message.get(msgName)
     if (!msg) {
       throw new Error(`no message defined for type ${msgName}`)
     }

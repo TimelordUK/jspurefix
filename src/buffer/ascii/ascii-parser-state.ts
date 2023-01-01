@@ -7,7 +7,7 @@ import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class AsciiParserState {
-  public message: MessageDefinition
+  public message: MessageDefinition | null
   public locations: Tags
   public parseState: ParseState
   public bodyLen: number
@@ -19,12 +19,12 @@ export class AsciiParserState {
   public currentTag: number
   public rawDataLen: number
   public rawDataRead: number
-  public msgType: string
+  public msgType: string | null
 
   constructor (@inject(DITokens.ParseBuffer) public readonly elasticBuffer: ElasticBuffer) {
   }
 
-  public beginTag (pos: number) {
+  public beginTag (pos: number): void {
     this.parseState = ParseState.ParsingTag
     this.tagStartPos = pos
     this.equalPos = this.valueEndPos = -1
@@ -54,7 +54,7 @@ export class AsciiParserState {
 
   public checkRawTag (): void {
     const msg = this.message
-    if (!msg || !msg.containsRaw) {
+    if (!msg?.containsRaw) {
       // optimisation as will never hit raw data
       this.parseState = ParseState.ParsingValue
       return

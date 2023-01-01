@@ -7,26 +7,25 @@ import * as moment from 'moment'
 import { TagType } from '../tag/tag-type'
 
 export class FixmlView extends MsgView {
-
   constructor (public readonly segment: SegmentDescription,
-               public readonly values: string[],
-               public readonly structure: Structure) {
+    public readonly values: string[],
+    public readonly structure: Structure) {
     super(segment, structure)
   }
 
   private static getTimestamp (s: string, useUtc: boolean): Date {
-    let m = moment(s)
+    const m = moment(s)
     return useUtc ? m.utc(true).toDate() : m.toDate()
   }
 
   // 01:00:08.201
   private static getTimeOnly (s: string, useUtc: boolean): Date {
-    let m = moment(s, [moment.HTML5_FMT.TIME_MS, moment.HTML5_FMT.TIME_SECONDS])
+    const m = moment(s, [moment.HTML5_FMT.TIME_MS, moment.HTML5_FMT.TIME_SECONDS])
     return useUtc ? m.utc(true).toDate() : m.toDate()
   }
 
   private static getDateOnly (s: string, useUtc: boolean): Date {
-    let m = moment(s)
+    const m = moment(s)
     let d: Date
     if (useUtc) {
       d = m.utc(true).toDate()
@@ -45,7 +44,7 @@ export class FixmlView extends MsgView {
     return 0
   }
 
-  protected create (singleton: SegmentDescription) {
+  protected create (singleton: SegmentDescription): FixmlView {
     return new FixmlView(singleton,
       this.values,
       this.structure)

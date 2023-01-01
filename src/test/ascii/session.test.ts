@@ -14,8 +14,8 @@ import { SkeletonRunner } from '../env/skeleton-runner'
 const logonMsg: string = '8=FIX4.4|9=0000136|35=A|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:28.980|98=0|108=30|141=Y|553=js-client|554=pwd-client|10=177|'
 const heartbeat: string = '8=FIX4.4|9=0000123|35=0|49=init-comp|56=accept-comp|34=1|57=fix|52=20180902-12:25:59.161|112=Sun, 02 Sep 2018 12:25:59 GMT|10=95|'
 
-let setup: Setup = null
-let experiment: Experiment = null
+let setup: Setup
+let experiment: Experiment
 
 beforeEach(async () => {
   setup = new Setup()
@@ -31,8 +31,8 @@ class ParsingResult {
   }
 }
 
-function clientToServerWaitFirstMessage (type: string, obj: ILooseObject): Promise<ParsingResult> {
-  return new Promise<any>((resolve, reject) => {
+async function clientToServerWaitFirstMessage (type: string, obj: ILooseObject): Promise<ParsingResult> {
+  return await new Promise<any>((resolve, reject) => {
     const clt = experiment.client.transport
     const svt = experiment.server.transport
     clt.transmitter.on('error', (e: Error) => {
@@ -49,28 +49,32 @@ function clientToServerWaitFirstMessage (type: string, obj: ILooseObject): Promi
   })
 }
 
-async function runSkeletons (logoutSeconds: number = 1, followOn: string = null) {
+async function runSkeletons (logoutSeconds: number = 1, followOn: string | null = null): Promise<void> {
   const runner: SkeletonRunner = new SkeletonRunner(experiment, logoutSeconds)
   runner.sendText(followOn)
   await runner.wait()
 }
 
 test('end to end logon', async () => {
-  const lo = experiment.client.config.factory.logon()
+  const lo = experiment?.client?.config?.factory?.logon()
+  expect(lo).toBeTruthy()
+  if (!lo) return
   const res: ParsingResult = await clientToServerWaitFirstMessage(MsgType.Logon, lo)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual('A')
   const received = res.view.toObject()
   expect(received).toBeTruthy()
-  delete received['StandardHeader']
-  delete received['StandardTrailer']
+  delete received.StandardHeader
+  delete received.StandardTrailer
   expect(received).toEqual(lo)
 })
 
 test('session send resendRequest when logged on', async () => {
   const runner: SkeletonRunner = new SkeletonRunner(experiment, 2)
   const factory = experiment.client.config.factory
-  const resend = factory.resendRequest(1, 2)
+  const resend = factory?.resendRequest(1, 2)
+  expect(resend).toBeTruthy()
+  if (!resend) return
   runner.sendMsg(MsgType.ResendRequest, resend)
   try {
     const cViews = experiment.client.views
@@ -89,7 +93,9 @@ test('session send resendRequest when logged on', async () => {
 
 test('session send logon when logged on', async () => {
   const runner: SkeletonRunner = new SkeletonRunner(experiment, 2)
-  const logon = experiment.client.config.factory.logon()
+  const logon = experiment?.client?.config?.factory?.logon()
+  expect(logon).toBeTruthy()
+  if (!logon) return
   runner.sendMsg(MsgType.Logon, logon)
   try {
     await runner.wait()
@@ -117,8 +123,8 @@ test('session logon / logout', async () => {
   expect(sViews[1].segment.name).toEqual('Logout')
 })
 
-function checkSeqNos (views: MsgView[]) {
-  const seqNo: number[] = views.map((v: MsgView) => (v.getView('StandardHeader').toObject() as IStandardHeader).MsgSeqNum)
+function checkSeqNos (views: MsgView[]): void {
+  const seqNo: number[] = views.map((v: MsgView) => (v.getView('StandardHeader')?.toObject() as IStandardHeader)?.MsgSeqNum)
   expect(seqNo).toBeTruthy()
   const delta = seqNo.reduce((c: number, latest: number) => {
     return latest - c === 1 ? c + 1 : c - 1
@@ -173,7 +179,8 @@ function mutateRemoveRequiredHeartBtInt (description: ISessionDescription, type:
   switch (type) {
     case 'A': {
       const logon = o as ILogon
-      delete logon['HeartBtInt']
+      // @ts-expect-error
+      delete logon.HeartBtInt
       break
     }
   }
@@ -199,7 +206,9 @@ test('client logon reject missing 108', async () => {
 
 test('client unknown msg type', async () => {
   const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
-  const changed = logonMsg.replace('35=A', '35=ZZ').replace('34=1', `34=${at.msgSeqNum + 1}`)
+  const changed = logonMsg
+    .replace('35=A', '35=ZZ')
+    .replace('34=1', `34=${at.msgSeqNum + 1}`)
   await runSkeletons(2, changed)
   const cviews = experiment.client.views
   const sviews = experiment.server.views
@@ -217,7 +226,9 @@ test('client unknown msg type', async () => {
 
 test('heartbeat invalid tag', async () => {
   const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
-  const changed = heartbeat.replace('112=', '999=').replace('34=1', `34=${at.msgSeqNum + 1}`)
+  const changed = heartbeat
+    .replace('112=', '999=')
+    .replace('34=1', `34=${at.msgSeqNum + 1}`)
   await runSkeletons(2, changed)
   const cviews = experiment.client.views
   const sviews = experiment.server.views
@@ -235,12 +246,14 @@ test('heartbeat invalid tag', async () => {
 
 test('heartbeat invalid sender comp', async () => {
   const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
-  const changed = heartbeat.replace('49=init-comp', '49=init-not!').replace('34=1', `34=${at.msgSeqNum + 1}`)
+  const changed = heartbeat
+    .replace('49=init-comp', '49=init-not!')
+    .replace('34=1', `34=${at.msgSeqNum + 1}`)
   await runSkeletons(2, changed)
   const cviews = experiment.client.views
   const sviews = experiment.server.views
-  expect(cviews.length === 3).toEqual(true)
-  expect(sviews.length === 3).toEqual(true)
+  expect(cviews.length).toEqual(3)
+  expect(sviews.length).toEqual(3)
   expect(cviews[0].segment.name).toEqual('Logon')
   expect(cviews[1].segment.name).toEqual('Reject')
   expect(sviews[0].segment.name).toEqual('Logon')

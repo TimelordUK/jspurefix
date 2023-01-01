@@ -17,7 +17,7 @@ export class JsonHelper {
   constructor (public readonly definitions: FixDefinitions) {
   }
 
-  private static patchSimple (object: ILooseObject, field: ContainedSimpleField) {
+  private static patchSimple (object: ILooseObject, field: ContainedSimpleField): void {
     let name: string = field.definition.name
     let v: any = object[name]
     if (v == null) {
@@ -35,11 +35,12 @@ export class JsonHelper {
         break
       }
 
-      case TagType.UtcTimestamp:
+      case TagType.UtcTimestamp: {
         const m = moment(v)
         const d = m.toDate()
         object[name] = d
         break
+      }
 
       case TagType.UtcDateOnly: {
         const m = moment(v)
@@ -74,7 +75,7 @@ export class JsonHelper {
 
   public fromJson (fileName: string, msgType: string): ILooseObject {
     const msg: ILooseObject = require(fileName)
-    const def: MessageDefinition = this.definitions.message.get(msgType)
+    const def: MessageDefinition | null = this.definitions.message.get(msgType)
     if (!def) {
       return msg
     }
@@ -103,14 +104,14 @@ export class JsonHelper {
     this.dispatcher.dispatchFields(set.fields, dispatcher)
   }
 
-  private patchComponent (object: ILooseObject, cf: ContainedComponentField) {
+  private patchComponent (object: ILooseObject, cf: ContainedComponentField): void {
     const c = object[cf.name] || object[cf.definition.name]
     if (c) {
       this.patchJsonFields(cf.definition, c)
     }
   }
 
-  private patchGroup (object: ILooseObject, gf: ContainedGroupField) {
+  private patchGroup (object: ILooseObject, gf: ContainedGroupField): void {
     const arr: ILooseObject[] = object[gf.definition.name] || object[gf.name]
     if (arr) {
       arr.forEach((o) => {

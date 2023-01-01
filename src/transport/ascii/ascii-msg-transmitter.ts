@@ -14,17 +14,17 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   public msgSeqNum: number
   public time: Date
 
-  private readonly header: ContainedFieldSet
-  private readonly trailer: ContainedFieldSet
+  private readonly header: ContainedFieldSet | null
+  private readonly trailer: ContainedFieldSet | null
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config.sessionContainer.resolve<ElasticBuffer>(DITokens.TransmitBuffer), config.definitions, config.description)
-    this.msgSeqNum = (config.description.LastSentSeqNum || 0) + 1 // adding 1 as this the next sequence # to use.
+    this.msgSeqNum = (config.description.LastSentSeqNum ?? 0) + 1 // adding 1 as this the next sequence # to use.
     const buffer = this.buffer
     const tf: TimeFormatter = new TimeFormatter(buffer)
     this.encoder = new AsciiEncoder(buffer, config.definitions, tf,
-      config.delimiter || AsciiChars.Soh,
-      config.logDelimiter || AsciiChars.Pipe)
+      config.delimiter ?? AsciiChars.Soh,
+      config.logDelimiter ?? AsciiChars.Pipe)
     const components = config.definitions.component
     this.header = components.get('StandardHeader')
     this.trailer = components.get('StandardTrailer')
@@ -55,28 +55,32 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     }
 
     const sendingTime = this.time || new Date()
-    const hdr: ILooseObject = factory.header(msgType, this.msgSeqNum, sendingTime, headerProps)
-
+    const hdr: ILooseObject | null = factory?.header(msgType, this.msgSeqNum, sendingTime, headerProps) ?? null
     // Only increment sequence number if this is not a duplicate message.
+    if (!hdr) return
     if (!headerProps.PossDupFlag) {
       this.msgSeqNum++
     }
 
     const buffer = this.buffer
     buffer.reset()
-    const msgDef: MessageDefinition = this.definitions.message.get(msgType)
+    const msgDef: MessageDefinition | null = this.definitions.message.get(msgType)
     if (!msgDef) {
       this.emit('error', new Error(`ascii transmitter cannot find definition for ${msgType}`))
       return
     }
-    encoder.encode(hdr, this.header.name)
+    const headerName = this.header?.name ?? 'header'
+    const trailerName = this.trailer?.name ?? 'trailer'
+    encoder.encode(hdr, headerName)
     encoder.encode(bodyProps, msgDef.name)
     const lenPos = encoder.bodyLengthPos
-    const bodyLength: number = Math.max(4, this.config.description.BodyLengthChars || 7)
+    const bodyLength: number = Math.max(4, this.config.description.BodyLengthChars ?? 7)
     const len = buffer.getPos() - encoder.msgTypePos
     buffer.patchPaddedNumberAtPos(lenPos, len, bodyLength)
-    let checksum: number = this.checksum()
-    const trl: ILooseObject = factory.trailer(checksum)
-    encoder.encode(trl, this.trailer.name)
+    const checksum: number = this.checksum()
+    const trl: ILooseObject | null = factory?.trailer(checksum) ?? null
+    if (trl) {
+      encoder.encode(trl, trailerName)
+    }
   }
 }

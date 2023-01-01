@@ -5,8 +5,8 @@ export class StandardSnippet {
   constructor (public readonly settings: ICompilerSettings) {
   }
 
-  private static rhsJustify (txt: string, width: number) {
-    let align = require('align-text')
+  private static rhsJustify (txt: string, width: number): string {
+    const align = require('align-text')
     return align(txt, width)
   }
 
@@ -18,27 +18,27 @@ export class StandardSnippet {
     return `${spaces}import { I${name} } from '${path}'`
   }
 
-  public interface (name: string, indent: number) {
+  public interface (name: string, indent: number): string {
     const spaces: string = this.spaces(indent)
     return `${spaces}export interface I${name}`
   }
 
-  public startBlockComment (indent: number) {
+  public startBlockComment (indent: number): string {
     const spaces: string = this.spaces(indent)
     return `${spaces}/*`
   }
 
-  public endBlockComment (indent: number) {
+  public endBlockComment (indent: number): string {
     const spaces: string = this.spaces(indent)
     return `${spaces}*/`
   }
 
-  public startBlock (indent: number) {
+  public startBlock (indent: number): string {
     const spaces: string = this.spaces(indent)
     return `${spaces}{`
   }
 
-  public endBlock (indent: number) {
+  public endBlock (indent: number): string {
     const spaces: string = this.spaces(indent)
     return `${spaces}}`
   }
@@ -58,50 +58,51 @@ export class StandardSnippet {
     return `${spaces}${name}${required ? '' : '?'}: ${type}`
   }
 
-  public enum (name: string, indent: number) {
+  public enum (name: string, indent: number): string {
     const spaces: string = this.spaces(indent)
     return `export ${spaces}enum ${name}`
   }
 
-  public enumValue (name: string, val: any, indent: number) {
+  public enumValue (name: string, val: any, indent: number): string {
     const spaces: string = this.spaces(indent)
-    if (typeof(val) === 'string') {
+    if (typeof (val) === 'string') {
       return `${spaces}${name} = '${val}'`
     }
     return `${spaces}${name} = ${val}`
   }
 
-  public spaces (indent: number) {
+  public spaces (indent: number): string {
     return ' '.repeat(this.settings.spaces * indent)
   }
 
-  public commentLine (line: string, justify: number) {
+  public commentLine (line: string, justify: number): string {
     return StandardSnippet.rhsJustify(`// ${line}`, justify)
   }
 
-  public commentBox (str: string) {
-
-    let wrap = require('word-wrap')
-    let text = wrap(str, {
+  public commentBox (str: string): string {
+    const wrap = require('word-wrap')
+    const text = wrap(str, {
       width: 60,
-      indent: ' '}
-      )
+      indent: ' '
+    }
+    )
     let lines = text.split('\n').map((a: string) => a.trim())
-    let max = this.longest(lines).length + 2
-    const newLine = require('os').EOL
+    const max = this.longest(lines).length + 2
+    const newLine: string = require('os').EOL
     lines = lines.map(function (line: string) {
       line = ` ${line} `
-      let diff = max - line.length
+      const diff = max - line.length
       return '*' + line + ' '.repeat(diff) + '*'
     })
-    let stars = '*'.repeat(lines[0].length)
-    return stars + newLine
-      + lines.join(newLine)
-      + newLine
-      + stars
+    const stars: string = '*'.repeat(lines[0].length)
+    const joined: string = lines.join(newLine)
+    return stars + newLine +
+      joined +
+      newLine +
+      stars
   }
 
-  private longest (arr: string[]) {
+  private longest (arr: string[]): string {
     return arr.reduce(function (a, b) {
       return a.length > b.length ? a : b
     })
