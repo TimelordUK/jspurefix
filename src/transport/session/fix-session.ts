@@ -227,14 +227,14 @@ export abstract class FixSession extends events.EventEmitter {
 
     const rx = transport?.receiver
     const tx = transport?.transmitter
-
-    rx?.on('msg', (msgType: string, view: MsgView) => this.rxOnMsg(msgType, view))
-    rx?.on('error', (e: Error) => this.rxOnError(e))
-    rx?.on('done', () => this.rxOnDone())
-    rx?.on('end', () => this.rxOnEnd())
-    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => this.rxOnDecoded(msgType, data, ptr))
-    tx?.on('error', (e: Error) => this.txOnError(e))
-    tx?.on('encoded', (msgType: string, data: string, hdr: ILooseObject) => this.txOnEncoded(msgType, data, hdr))
+    const inst = this
+    rx?.on('msg', (msgType: string, view: MsgView) => inst.rxOnMsg(msgType, view))
+    rx?.on('error', (e: Error) => inst.rxOnError(e))
+    rx?.on('done', () => inst.rxOnDone())
+    rx?.on('end', () => inst.rxOnEnd())
+    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => inst.rxOnDecoded(msgType, data, ptr))
+    tx?.on('error', (e: Error) => inst.txOnError(e))
+    tx?.on('encoded', (msgType: string, data: string, hdr: ILooseObject) => inst.txOnEncoded(msgType, data, hdr))
   }
 
   protected validStateApplicationMsg (): boolean {

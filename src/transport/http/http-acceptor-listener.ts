@@ -14,7 +14,7 @@ export class HttpAcceptorListener extends FixEntity {
   }
 
   async start (): Promise<any> {
-    return await new Promise<any>(async (resolve, reject) => {
+    return new Promise<any>(async (resolve, reject) => {
       const logger = this.config.logFactory.logger('acceptor')
       const sessionContainer = this.config.sessionContainer
       if (!sessionContainer.isRegistered(DITokens.FixSession)) {

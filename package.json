@@ -67,6 +67,7 @@
   "license": "MIT",
   "dependencies": {
     "align-text": "^1.0.2",
+    "axios": "^1.2.2",
     "express": "^4.18.2",
     "lodash": "^4.17.21",
     "mathjs": "^11.5.0",
@@ -74,8 +75,6 @@
     "moment": "^2.29.4",
     "node-fs-extra": "^0.8.2",
     "reflect-metadata": "^0.1.13",
-    "request": "^2.88.2",
-    "request-promise-native": "^1.0.9",
     "sax": "^1.2.4",
     "tsyringe": "^4.7.0",
     "uuid": "^9.0.0",

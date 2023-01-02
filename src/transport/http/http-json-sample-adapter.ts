@@ -34,10 +34,10 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     const next: HttpTransaction | null = q.shift() ?? null
     if (next == null) return null
     const options = next.options
-    options.body = {
+    options.data = {
       fixml: data.toString()
     }
-    this.logger.info(`${next.msgType}: ${next.options.method} ${next.options.uri} ${data.length}`)
+    this.logger.info(`${next.msgType}: ${next.options.method} ${next.options.url} ${data.length}`)
     return options
   }
 
@@ -48,7 +48,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
       this.token = headers.authorization
       this.logger.info(`receive token ${this.token}`)
     }
-    return m.body
+    return m.data
   }
 
   beginMessage (msgType: string): void {
@@ -57,7 +57,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     const route = routes.get(msgType) ?? routes.get('default')
     const options = {
       method: route?.value.method,
-      uri: route?.value.uri,
+      url: route?.value.url,
       json: route?.value.json,
       resolveWithFullResponse: route?.value.resolveWithFullResponse,
       headers: route?.value.headers

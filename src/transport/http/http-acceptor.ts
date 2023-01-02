@@ -69,14 +69,14 @@ export class HttpAcceptor extends FixAcceptor {
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
   }
 
-  private async respond (duplex: FixDuplex, res: express.Response, token: string | null = null): Promise<any> {
-    return await new Promise<any>((resolve, reject) => {
-      res.setHeader('Content-Type', 'application/json')
+  private async respond (duplex: FixDuplex, response: express.Response, token: string | null = null): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      response.setHeader('Content-Type', 'application/json')
       const timer = setTimeout(() => {
         const businessReject = '<FIXML><BizMsgRej BizRejRsn="4" Txt="no response from application"/></FIXML>'
         const b = Buffer.from(businessReject, 'utf-8')
         duplex.writable.removeListener('data', transmit)
-        res.send(b)
+        response.send(b)
         reject(new Error('no response'))
       }, 5000)
 
@@ -84,10 +84,10 @@ export class HttpAcceptor extends FixAcceptor {
         this.logger.info('responding to request')
         clearTimeout(timer)
         if (token) {
-          res.setHeader('authorization', token)
+          response.setHeader('authorization', token)
         }
         duplex.writable.removeListener('data', transmit)
-        res.send(d)
+        response.send(d)
         resolve(true)
       }
 

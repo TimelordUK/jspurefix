@@ -1,6 +1,6 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
-import * as rp from 'request-promise-native'
+import axios, { isCancel, AxiosError } from 'axios'
 import { IHttpAdapter } from '../http/http-adapter'
 
 export class HttpDuplex extends FixDuplex {
@@ -29,7 +29,7 @@ export class HttpDuplex extends FixDuplex {
           const adapter = this.adapter
           const options = adapter.getOptions(data)
           if (options) {
-            rp(options).then((message: any) => {
+            axios(options).then((message: any) => {
               const body = adapter.endMessage(message)
               forward.push(body)
               done()
