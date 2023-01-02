@@ -61,12 +61,20 @@ export class RecoveringTcpInitiator extends FixEntity {
     return this.session.getState()
   }
 
+  public lastSentSeqNum (): number {
+    return this.session.lastSentSeqNum()
+  }
+
+  private resetSeq (): boolean {
+    return this.jsFixConfig.description.ResetSeqNumFlag
+  }
+
   private newTransport (transport: MsgTransport): void {
     this.transport = transport
     this.emit('transport', transport)
     this.logger.info(`initiator connects id ${(transport.id)}`)
     const session = this.session
-    if (this.jsFixConfig.description.ResetSeqNumFlag) {
+    if (this.resetSeq()) {
       this.logger.info('reset sequence numbers')
       session.reset()
     }
@@ -99,6 +107,13 @@ export class RecoveringTcpInitiator extends FixEntity {
   private recover (): void {
     this.session.setState(SessionState.DetectBrokenNetworkConnection)
     this.logger.info(`recover session transport - attempt in ${this.recoveryAttemptSecs} secs`)
+    if (!this.resetSeq()) {
+      const lastSentSeqNum = this.lastSentSeqNum()
+      if (lastSentSeqNum > 0) {
+        this.logger.info(`recover session set LastSentSeqNum ${lastSentSeqNum} for new transport`)
+        this.config.description.LastSentSeqNum = lastSentSeqNum
+      }
+    }
     this.th = setTimeout(() => {
       this.connect(60).then(t => {
         this.logger.info(`new transport ${t.id}`)
@@ -106,7 +121,9 @@ export class RecoveringTcpInitiator extends FixEntity {
         this.logger.info(`failed to re-connect ${e.message} - backoff for ${this.backoffFailConnectSecs}`)
         this.th = setTimeout(() => {
           this.logger.info('returning to recover()')
-          this.recover()
+          setImmediate(() => {
+            this.recover()
+          })
         }, this.backoffFailConnectSecs * 1000)
       })
     }, this.recoveryAttemptSecs * 1000)

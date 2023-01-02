@@ -277,6 +277,8 @@ export abstract class AsciiSession extends FixSession {
   }
 
   private startTimer (interval: number = 200): void {
+    const logger = this.sessionLogger
+    logger.info(`start heartbeat timer. interval = ${interval}`)
     this.timer = setInterval(() => {
       this.tick()
     }, interval)
@@ -301,7 +303,6 @@ export abstract class AsciiSession extends FixSession {
       this.setState(SessionState.InitiationLogonReceived)
     }
     if (this.heartbeat) {
-      logger.debug('start heartbeat timer.')
       this.startTimer()
     }
     logger.info('system ready, inform app')

@@ -8,13 +8,23 @@ import { RespawnAcceptor } from './respawn-acceptor'
 import { AsciiChars } from '../../../buffer/ascii'
 import { DependencyContainer } from 'tsyringe'
 import { SkeletonServer } from './skeleton-server'
-import { FixSession, FixEntity } from '../../../transport'
+import { FixSession, FixEntity, ISessionDescription } from '../../../transport'
+import * as path from 'path'
+
+const root: string = '../../../../'
+
+function makeConfig (config: string): ISessionDescription {
+  const o = require(path.join(root, config))
+  o.ResetSeqNumFlag = false
+  console.log(JSON.stringify(o, null, 4))
+  return o as ISessionDescription
+}
 
 class AppLauncher extends SessionLauncher {
   public constructor () {
     super(
-      'data/session/test-initiator.json',
-      'data/session/test-acceptor.json')
+      makeConfig('data/session/test-initiator.json'),
+      makeConfig('data/session/test-acceptor.json'))
   }
 
   private asInitiator (sessionContainer: DependencyContainer): void {

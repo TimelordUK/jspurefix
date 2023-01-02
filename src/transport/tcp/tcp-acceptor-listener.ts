@@ -25,6 +25,7 @@ export class TcpAcceptorListener extends FixEntity {
       acceptor.on('transport', (t: MsgTransport) => {
         logger.info(`creates new transport using DI token ${DITokens.FixSession}.`)
         const acceptorSession = sessionContainer.resolve<FixSession>(DITokens.FixSession)
+        this.emit('session', acceptorSession, t)
         acceptorSession.run(t).then(() => {
           logger.info('ends')
           acceptor.close(() => {

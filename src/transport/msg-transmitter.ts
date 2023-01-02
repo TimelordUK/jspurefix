@@ -28,7 +28,7 @@ export abstract class MsgTransmitter extends events.EventEmitter {
     this.encodeStream.write(new MsgPayload(msgType, obj))
   }
 
-  public abstract encodeMessage (msgType: string, obj: ILooseObject): void
+  public abstract encodeMessage (msgType: string, obj: ILooseObject): any
 
   // read fix messages from one side, encode buffers on other ready to pipe
   // to output stream, say a socket
@@ -41,11 +41,11 @@ export abstract class MsgTransmitter extends events.EventEmitter {
         try {
           const msgType = payload.msgType
           transmitter.encoder.reset()
-          transmitter.encodeMessage(msgType, payload.obj)
+          const state = transmitter.encodeMessage(msgType, payload.obj)
           payload.encoded = transmitter.encoder.trim()
           this.push(payload.encoded)
           const encodedTxt = transmitter.buffer.toString()
-          transmitter.emit('encoded', msgType, encodedTxt)
+          transmitter.emit('encoded', msgType, encodedTxt, state)
           done()
         } catch (e) {
           done(e)

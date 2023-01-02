@@ -43,7 +43,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     return checksum
   }
 
-  public encodeMessage (msgType: string, obj: ILooseObject): void {
+  public encodeMessage (msgType: string, obj: ILooseObject): any {
     const encoder: AsciiEncoder = this.encoder as AsciiEncoder
     const factory = this.config.factory
     let headerProps: Partial<IStandardHeader> = {}
@@ -54,10 +54,11 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
       headerProps.OrigSendingTime = SendingTime // when first sent
     }
 
+    const msgSeqNum = this.msgSeqNum
     const sendingTime = this.time || new Date()
-    const hdr: ILooseObject | null = factory?.header(msgType, this.msgSeqNum, sendingTime, headerProps) ?? null
+    const hdr: ILooseObject | null = factory?.header(msgType, msgSeqNum, sendingTime, headerProps) ?? null
     // Only increment sequence number if this is not a duplicate message.
-    if (!hdr) return
+    if (!hdr) return null
     if (!headerProps.PossDupFlag) {
       this.msgSeqNum++
     }
@@ -82,5 +83,6 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     if (trl) {
       encoder.encode(trl, trailerName)
     }
+    return hdr
   }
 }

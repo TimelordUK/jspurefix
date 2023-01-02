@@ -8,6 +8,8 @@ import { ILooseObject } from '../../collections/collection'
 import * as events from 'events'
 import { SessionState } from './session-state'
 import { SegmentType } from '../../buffer/segment/segment-type'
+import { MsgTransmitter } from '../msg-transmitter'
+import { boolean } from 'mathjs'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false
@@ -40,33 +42,50 @@ export abstract class FixSession extends events.EventEmitter {
     this.sessionState.compId = description.SenderCompId
   }
 
+  stateStr (theState: SessionState): string {
+    return SessionState[theState]
+  }
+
+  assignState (newState: SessionState): void {
+    const currentState = this.sessionState.state
+    const currentStateStr = this.stateStr(currentState)
+    const logger = this.sessionLogger
+    const msg = `current state ${currentStateStr} (${currentState}) moves to ${SessionState[newState]} (${newState})`
+    logger.info(msg)
+    this.sessionState.state = newState
+  }
+
   public setState (state: SessionState): void {
     const logger = this.sessionLogger
-    const prevState = this.sessionState.state
-
-    if (state === prevState) return
-    switch (prevState) {
+    const currentState = this.sessionState.state
+    const currentStateStr = this.stateStr(currentState)
+    if (state === currentState) return
+    switch (currentState) {
       case SessionState.ConfirmingLogout:
       case SessionState.Stopped:
         if (state !== SessionState.NetworkConnectionEstablished) {
-          logger.info(`ignoring request to change state as now already in ${SessionState[prevState]} `)
+          logger.info(`ignoring request to change state as now already in ${currentStateStr}`)
         } else {
-          const msg = `current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`
-          logger.info(msg)
-          this.sessionState.state = state
+          this.assignState(state)
         }
         break
 
       default: {
-        const msg = `current state ${SessionState[prevState]} (${prevState}) moves to ${SessionState[state]} (${state})`
-        logger.info(msg)
-        this.sessionState.state = state
+        this.assignState(state)
       }
     }
   }
 
   public getState (): SessionState {
     return this.sessionState.state
+  }
+
+  public lastSentSeqNum (): number {
+    return this.sessionState.lastSentSeqNum()
+  }
+
+  public lastPeerSeqNum (): number {
+    return this.sessionState.lastPeerMsgSeqNum
   }
 
   public sendLogon (): void {
@@ -176,10 +195,15 @@ export abstract class FixSession extends events.EventEmitter {
     this.terminate(e)
   }
 
-  protected txOnEncoded (msgType: string, data: string): void {
+  protected txOnEncoded (msgType: string, data: string, hdr: ILooseObject): void {
     const logger = this.sessionLogger
-    logger.debug(`tx: [${msgType}] ${data.length} bytes`)
+    this.sessionState.lastHeader = hdr
+    logger.debug(`tx: [${msgType}] ${data.length} bytes seqNo = ${this.lastSentSeqNum()}`)
     this.onEncoded(msgType, data)
+  }
+
+  public getTransport (): MsgTransport | null {
+    return this.transport
   }
 
   protected unsubscribe (): void {
@@ -210,7 +234,7 @@ export abstract class FixSession extends events.EventEmitter {
     rx?.on('end', () => this.rxOnEnd())
     rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => this.rxOnDecoded(msgType, data, ptr))
     tx?.on('error', (e: Error) => this.txOnError(e))
-    tx?.on('encoded', (msgType: string, data: string) => this.txOnEncoded(msgType, data))
+    tx?.on('encoded', (msgType: string, data: string, hdr: ILooseObject) => this.txOnEncoded(msgType, data, hdr))
   }
 
   protected validStateApplicationMsg (): boolean {
@@ -238,12 +262,18 @@ export abstract class FixSession extends events.EventEmitter {
     this.onApplicationMsg(msgType, view)
   }
 
+  private stopTimer (): void {
+    if (this.timer) {
+      this.sessionLogger.info('stopTimer')
+      clearInterval(this.timer)
+      this.timer = null
+    }
+  }
+
   protected terminate (error: Error): void {
     if (this.sessionState.state === SessionState.Stopped) return
     this.sessionLogger.error(error)
-    if (this.timer) {
-      clearInterval(this.timer)
-    }
+    this.stopTimer()
     if (this.transport) {
       this.transport.end()
     }
@@ -257,7 +287,6 @@ export abstract class FixSession extends events.EventEmitter {
     const state = this.sessionState.state
     switch (state) {
       case SessionState.WaitingLogoutConfirm: {
-        this.unsubscribe()
         this.sessionLogger.info(`peer confirms logout Text = '${msg}'`)
         this.stop()
         break
@@ -324,7 +353,6 @@ export abstract class FixSession extends events.EventEmitter {
         const msg = `${this.me} confirming logout`
         this.sessionLogger.info(msg)
         this.sendLogout(msg)
-        this.unsubscribe()
         break
       }
 
@@ -355,13 +383,12 @@ export abstract class FixSession extends events.EventEmitter {
     this.sessionLogger.info(`done. check logout sequence state ${this.stateString()}`)
   }
 
-  public reset (): void {
-    if (this.timer) {
-      clearInterval(this.timer)
-    }
+  public reset (resetSeqNum?: number | null): void {
+    this.stopTimer()
     this.transport = null
-    const resetSeqNum = this.config.description.ResetSeqNumFlag || true
-    this.sessionState.reset(resetSeqNum) // from header def ... eventually
+    const resetFlag = this.config.description.ResetSeqNumFlag
+    const seqNum = resetFlag ? 0 : resetSeqNum ?? this.sessionState.lastPeerMsgSeqNum
+    this.sessionState.reset(seqNum) // from header def ... eventually
     this.setState(SessionState.NetworkConnectionEstablished)
   }
 
@@ -369,9 +396,7 @@ export abstract class FixSession extends events.EventEmitter {
     if (this.sessionState.state === SessionState.Stopped) {
       return
     }
-    if (this.timer) {
-      clearInterval(this.timer)
-    }
+    this.stopTimer()
     this.unsubscribe()
     this.sessionLogger.info('stop: kill transport')
     this.transport?.end()

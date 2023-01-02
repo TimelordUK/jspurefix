@@ -3,6 +3,7 @@ import moment = require('moment')
 import { TickAction } from '../tick-action'
 import { IFixSessionStateArgs } from './fix-session-state-args'
 import { SessionState } from './session-state'
+import { ILooseObject } from '../../collections/collection'
 
 export class FixSessionState {
   public nextTickAction: TickAction = TickAction.Nothing
@@ -24,8 +25,9 @@ export class FixSessionState {
   private secondsSinceLogoutSent: number = -1
   private secondsSinceSent: number = -1
   private secondsSinceReceive: number = -1
+  public lastHeader: ILooseObject | null = null
 
-  public reset (resetSeqNo: boolean): void {
+  public reset (lastPeerMsgSeqNum: number = 0): void {
     this.lastReceivedAt = null
     this.LastSentAt = null
     this.lastTestRequestAt = null
@@ -35,9 +37,8 @@ export class FixSessionState {
     this.peerHeartBeatSecs = 0
     this.logoutSentAt = null
     this.nextTickAction = TickAction.Nothing
-    if (resetSeqNo) {
-      this.lastPeerMsgSeqNum = 0
-    }
+    this.lastPeerMsgSeqNum = lastPeerMsgSeqNum
+    this.lastHeader = null
   }
 
   public constructor ({
@@ -61,6 +62,10 @@ export class FixSessionState {
     return moment(d).format('HH:mm:ss.SSS')
   }
 
+  public lastSentSeqNum (): number {
+    return this?.lastHeader?.MsgSeqNum ?? 0
+  }
+
   public toString (): string {
     const buffer = new ElasticBuffer(1024)
 
@@ -80,6 +85,7 @@ export class FixSessionState {
     buffer.writeString(`peerHeartBeatSecs = ${this.peerHeartBeatSecs}, `)
     buffer.writeString(`peerCompId = ${this.peerCompId}, `)
     buffer.writeString(`lastPeerMsgSeqNum = ${this.lastPeerMsgSeqNum}, `)
+    buffer.writeString(`LastSentSeqNum = ${this.lastSentSeqNum()}, `)
     buffer.writeString(`secondsSinceLogoutSent = ${this.secondsSinceLogoutSent}, `)
     buffer.writeString(`secondsSinceSent = ${this.secondsSinceSent}, `)
     buffer.writeString(`secondsSinceReceive = ${this.secondsSinceReceive}`)
