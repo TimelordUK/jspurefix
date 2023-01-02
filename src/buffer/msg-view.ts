@@ -4,8 +4,11 @@ import { Structure } from './structure'
 import { Dictionary } from '../collections'
 import { Tags } from './tag/tags'
 import {
-  ContainedGroupField, ContainedComponentField, ContainedField,
-  ContainedFieldSet, ContainedSimpleField
+  ContainedComponentField,
+  ContainedField,
+  ContainedFieldSet,
+  ContainedGroupField,
+  ContainedSimpleField
 } from '../dictionary/contained'
 import { SetReduce } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
@@ -227,8 +230,7 @@ export abstract class MsgView {
       }
       return null
     }
-    const reduced: MsgView | null = parts.reduce<MsgView | null>(reducer, this)
-    return reduced
+    return parts.reduce<MsgView | null>(reducer, this)
   }
 
   public abstract checksum (): number

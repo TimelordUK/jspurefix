@@ -85,6 +85,6 @@ export class SimpleFieldDefinition {
     if (baseCategoryAbbreviation.length > 0 && this.baseCategory) {
       baseCategoryAbbreviation = `${this.baseCategory} ${baseCategoryAbbreviation}`
     }
-    return `${this.num} ${this.name} ${abbreviation} ${baseCategoryAbbreviation} ${this.type} ${this.description || ''} ${this.enums ? `enumerated = [ ${this.enums.toString()} ]` : ''}`
+    return `${this.num} ${this.name} ${abbreviation} ${baseCategoryAbbreviation} ${this.type} ${this.description ?? ''} ${this.enums ? `enumerated = [ ${this.enums.toString()} ]` : ''}`
   }
 }

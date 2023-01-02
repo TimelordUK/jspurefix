@@ -140,7 +140,7 @@ export class ElasticBuffer {
   }
 
   public slice (): Buffer {
-    return this.buffer.slice(0, this.ptr)
+    return this.buffer.subarray(0, this.ptr)
   }
 
   public copy (): Buffer {
@@ -250,7 +250,7 @@ export class ElasticBuffer {
   }
 
   public getBuffer (start: number, end: number): Buffer {
-    return this.buffer.slice(start, end)
+    return this.buffer.subarray(start, end)
   }
 
   public getBoolean (start: number): boolean {

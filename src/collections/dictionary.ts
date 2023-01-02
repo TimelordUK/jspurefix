@@ -1,7 +1,7 @@
 import { IDictIteratorCb } from './collection'
 
 export class Dictionary<T> {
-  private container: { [id: string]: T } = {}
+  private container: Record<string, T> = {}
 
   public count (): number {
     const keys: string[] = Object.keys(this.container)
