@@ -11,7 +11,7 @@ import { IMsgApplication } from '../msg-application'
 import { FixEntity } from '../fix-entity'
 
 /*
-   create one application session instance - and recover a lost transport.  Hence the application
+   create one application session instance - and recover a lost transport.  Hence, the application
    will automatically re-connected and the "message recovery" policy enacted i.e. replay from
    last known sequence number or sequence reset.
  */

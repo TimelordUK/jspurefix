@@ -8,8 +8,6 @@ import { ILooseObject } from '../../collections/collection'
 import * as events from 'events'
 import { SessionState } from './session-state'
 import { SegmentType } from '../../buffer/segment/segment-type'
-import { MsgTransmitter } from '../msg-transmitter'
-import { boolean } from 'mathjs'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false
@@ -200,10 +198,6 @@ export abstract class FixSession extends events.EventEmitter {
     this.sessionState.lastHeader = hdr
     logger.debug(`tx: [${msgType}] ${data.length} bytes seqNo = ${this.lastSentSeqNum()}`)
     this.onEncoded(msgType, data)
-  }
-
-  public getTransport (): MsgTransport | null {
-    return this.transport
   }
 
   protected unsubscribe (): void {
