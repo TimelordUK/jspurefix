@@ -16,7 +16,6 @@ const root: string = '../../../../'
 function makeConfig (config: string): ISessionDescription {
   const o = require(path.join(root, config))
   o.ResetSeqNumFlag = false
-  console.log(JSON.stringify(o, null, 4))
   return o as ISessionDescription
 }
 
