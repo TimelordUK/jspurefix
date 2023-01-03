@@ -8,7 +8,7 @@ import { ReadStream } from 'fs'
 import { ISessionDescription, StringDuplex, MsgPayload } from './transport'
 import { FixDefinitions } from './dictionary/definition'
 import { MsgType } from './types'
-import { JsFixWinstonLogFactory, JsFixConfig, WinstonLogger } from './config'
+import { JsFixWinstonLogFactory, JsFixConfig, WinstonLogger, IJsFixConfig } from './config'
 import { BusinessRejectReason, IBusinessMessageReject } from './types/FIXML50SP2'
 import * as rp from 'request-promise-native'
 import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'
@@ -18,7 +18,7 @@ async function testEncodeDecode (): Promise<any> {
   const msgType: string = 'W'
   const root: string = path.join(__dirname, '../')
   const sessionDescription: ISessionDescription = require('../data/session/test-initiator.json')
-  const definitions = await new DefinitionFactory().getDefinitions(path.join(root, sessionDescription.application.dictionary))
+  const definitions = await new DefinitionFactory().getDefinitions(path.join(root, sessionDescription.application?.dictionary ?? ''))
   const jh: JsonHelper = new JsonHelper(definitions)
   const msg: ILooseObject = jh.fromJson(path.join(root, 'data/examples/FIXML/cme/tc/Initial Single Side Submission/fix.xml'), msgType)
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
@@ -30,7 +30,7 @@ async function testEncodeDecode (): Promise<any> {
   const parser: MsgParser = new AsciiParser(config, encoderStream, new ElasticBuffer(160 * 1024))
   const fix: string = session.buffer.toString()
   console.log(fix)
-  return new Promise(async (resolve, reject) => {
+  return await new Promise(async (resolve, reject) => {
     parser.on('msg', (msgType: string, view: AsciiView) => {
       resolve(view.toObject())
     })
@@ -49,7 +49,7 @@ async function testGenerator (): Promise<any> {
   const msgType: string = MsgType.NewOrderSingle
   const example: ILooseObject = generator.generate(msgType)
   console.log(JSON.stringify(example, null, 4))
-  const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
+  const config: IJsFixConfig = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
   session.encodeMessage(msgType, example)
   const fix: string = session.buffer.toString()
@@ -82,7 +82,7 @@ async function repository (): Promise<any> {
   // const file: string = path.join(root,'data/examples/FIXML/cme/alloc/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/settle')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange/')
-  const file: string = path.join(root,'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
+  const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap/')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Trading Firm Continued Subscription')
   // const file: string = path.join(root,'data/examples/FIXML/cme/md/futures')
   // const file: string = path.join(root, 'data/examples/FIXML/cme/tc/Delivery Fixed Commodity Swap')
@@ -95,7 +95,7 @@ async function repository (): Promise<any> {
   const t855 = definitions.simple.get('SecondaryTrdType')
 
   const reject = {
-    Text: `no response`,
+    Text: 'no response',
     BusinessRejectReason: BusinessRejectReason.ApplicationNotAvailable
   } as IBusinessMessageReject
   const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
@@ -104,7 +104,7 @@ async function repository (): Promise<any> {
   // console.log(fixml)
   const jh: JsonHelper = new JsonHelper(definitions)
   const fs: any = require('fs')
-  let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
+  const readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
   const sessionDescription: ISessionDescription = require('../data/session/test-initiator.json')
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
   const xmlParser: MsgParser = new FiXmlParser(config, readStream)
@@ -131,10 +131,10 @@ async function repository (): Promise<any> {
 }
 
 async function runTest (): Promise<any> {
-  return new Promise<any>(async (accept, reject) => {
+  return await new Promise<any>(async (resolve, reject) => {
     try {
       const res: any = await testGenerator()
-      accept(res)
+      resolve(res)
     } catch (e) {
       console.log(e.message)
       reject(e)
@@ -142,15 +142,15 @@ async function runTest (): Promise<any> {
   })
 }
 
-function streamExample () {
+async function streamExample (): Promise<void> {
   const fs: any = require('fs')
   const root: string = path.join(__dirname, '../')
-  const file: string = path.join(root,'data/examples/FIXML/cme/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
-  let readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
+  const file: string = path.join(root, 'data/examples/FIXML/cme/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
+  const readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
   const Writable = require('stream').Writable
   const receiver = new Writable({
     write: (data: Buffer, _: any, done: Function) => {
-      console.log('receive ' + data)
+      console.log('receive ' + data.toString())
       done()
     }
   })
@@ -159,7 +159,7 @@ function streamExample () {
   })
 }
 
-async function compileDefinitions (definitionPath: string, outputPath: string) {
+async function compileDefinitions (definitionPath: string, outputPath: string): Promise<void> {
   const definitions = await new DefinitionFactory().getDefinitions(definitionPath)
   const compilerSettings: ICompilerSettings = require('../data/compiler.json')
   compilerSettings.output = outputPath
@@ -173,14 +173,14 @@ async function compileDefinitions (definitionPath: string, outputPath: string) {
   await enumCompiler.generate(writeFile)
 }
 
-async function compiler () {
+async function compiler (): Promise<void> {
   // 'C:/Users/Stephen/dev/js/jsfix/data/fix_repo/fixmlschema_FIX.5.0SP2_EP228'
   // await compileDefinitions('data/fix_repo/FIX.4.4/Base', 'C:/Users/Stephen/dev/ts/jsfix/src/types/FIX4.4/repo')
   // await compileDefinitions('data/FIX44.xml', 'C:/Users/Stephen/dev/ts/jsfix/src/types/FIX4.4/quickfix')
   await compileDefinitions('data/fix_repo/fixmlschema_FIX.5.0SP2_EP228', 'C:/Users/Stephen/dev/ts/jsfix/src/types/FIXML50SP2')
 }
 
-async function generateMessage () {
+async function generateMessage (): Promise<void> {
   await testGenerator()
 }
 
@@ -205,7 +205,7 @@ async function decode (): Promise<any> {
 
 async function http (): Promise<any> {
   const sessionDescription: ISessionDescription = require('../data/session/test-http-acceptor.json')
-  const definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application.dictionary)
+  const definitions = await new DefinitionFactory().getDefinitions(sessionDescription.application?.dictionary ?? '')
   const logFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions('info'))
   const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe, logFactory)
   // const acceptor = acceptor(config)
@@ -220,7 +220,7 @@ async function http (): Promise<any> {
     method: 'POST',
     uri: 'http://localhost:2343/session',
     body: {
-      fixml : xml
+      fixml: xml
     },
     json: true // Automatically stringifies the body to JSON
   }).then(function (parsedBody) {
@@ -240,7 +240,9 @@ async function http (): Promise<any> {
 // stronglyTyped()
 // streamExample()
 // testEncodeDecode()
-repository()
+repository().then(() => {}).catch(e => {
+  console.error(e)
+})
 // testEncodeDecode()
 // runTest();
 // testSocket()

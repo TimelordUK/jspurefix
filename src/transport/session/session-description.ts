@@ -9,10 +9,10 @@ export interface ISessionDescription {
   readonly SenderCompId: string
   readonly TargetCompID: string
   readonly ResetSeqNumFlag: boolean
-  readonly LastSentSeqNum?: number
+  LastSentSeqNum?: number
   readonly LastReceivedSeqNum?: number
   readonly SenderSubID: string
   readonly TargetSubID: string
   readonly BeginString: string
-  readonly BodyLengthChars?: number,
+  readonly BodyLengthChars?: number
 }

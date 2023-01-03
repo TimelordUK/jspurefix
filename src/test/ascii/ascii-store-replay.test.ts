@@ -18,7 +18,7 @@ let definitions: FixDefinitions
 
 let server: TestRecovery
 let client: TestRecovery
-let setup: Setup = null
+let setup: Setup
 
 beforeAll(async () => {
   setup = new Setup(
@@ -61,12 +61,12 @@ server: (application only)
 8=FIX4.4|9=000206|35=AE|49=accept-tls-comp|56=init-tls-comp|34=10|57=fix|52=20210307-16:17:14.477|571=100006|487=0|856=0|828=0|17=600006|39=2|570=N|55=Silver|48=Silver.INC|32=105|31=61.2|75=20210307|60=20210307-16:17:14.477|10=191|
  */
 
-test('server store states',async () => {
+test('server store states', async () => {
   const s1 = await server.recovery.store.getState()
   expect(s1.length).toEqual(9)
 })
 
-test('client store states',async () => {
+test('client store states', async () => {
   const s1 = await client.recovery.store.getState()
   expect(s1.length).toEqual(1)
 })
@@ -110,7 +110,7 @@ test('client replay request from seq=1 to seq=10', async () => {
   checkSeqReset(vec[2], 3, 11)
 })
 
-function checkSeqReset (rec: IFixMsgStoreRecord, from: number, to: number) {
+function checkSeqReset (rec: IFixMsgStoreRecord, from: number, to: number): void {
   const reset: ISequenceReset = rec.obj as ISequenceReset
   expect(rec.msgType).toEqual(MsgType.SequenceReset)
   expect(rec.obj).toBeTruthy()

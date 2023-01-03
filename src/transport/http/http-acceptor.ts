@@ -14,16 +14,16 @@ import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class HttpAcceptor extends FixAcceptor {
-  private app: express.Express = express()
+  private readonly app: express.Express = express()
   private server: http.Server
   private readonly logger: IJsFixLogger
   private readonly router: express.Router
   private nextId: number = 0
-  private keys: Dictionary<MsgTransport> = new Dictionary()
+  private readonly keys: Dictionary<MsgTransport> = new Dictionary()
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
-    super(config.description.application)
-    this.logger = config.logFactory.logger(`${config.description.application.name}:HttpAcceptor`)
+    super(config?.description?.application ?? null)
+    this.logger = config.logFactory.logger(`${config?.description?.application?.name}:HttpAcceptor`)
     this.logger.info('creating http server')
     this.router = express.Router()
     this.router.use(bodyParser.json())
@@ -33,21 +33,21 @@ export class HttpAcceptor extends FixAcceptor {
 
   public listen (): void {
     const app = this.config.description.application
-    const port = app.http.port
+    const port = app?.http?.port ?? 0
     const logger = this.logger
     logger.info(`start to listen ${port}`)
     this.server = this.app.listen(port, () => {
-      logger.info(`app listening at http://localhost:${port}${app.http.uri}`)
+      logger.info(`app listening at http://localhost:${port}${app?.http?.uri}`)
     })
-    this.server.on('error', ((err: Error) => {
+    this.server.on('error', (err: Error) => {
       logger.error(err)
       this.emit('error', err)
-    }))
+    })
   }
 
   public close (callback?: (err?: Error) => void): void {
     const app = this.config.description.application
-    const port = app.http.port
+    const port = app?.http?.port
     this.logger.info(`close listener on port ${port}`)
     this.server.close(callback)
   }
@@ -69,36 +69,36 @@ export class HttpAcceptor extends FixAcceptor {
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
   }
 
-  private respond (duplex: FixDuplex, res: express.Response, token: string = null): Promise<any> {
-    return new Promise<any>((accept, reject) => {
-      res.setHeader('Content-Type', 'application/json')
+  private async respond (duplex: FixDuplex, response: express.Response, token: string | null = null): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      response.setHeader('Content-Type', 'application/json')
       const timer = setTimeout(() => {
-        const businessReject = `<FIXML><BizMsgRej BizRejRsn="4" Txt="no response from application"/></FIXML>`
+        const businessReject = '<FIXML><BizMsgRej BizRejRsn="4" Txt="no response from application"/></FIXML>'
         const b = Buffer.from(businessReject, 'utf-8')
         duplex.writable.removeListener('data', transmit)
-        res.send(b)
+        response.send(b)
         reject(new Error('no response'))
       }, 5000)
 
-      const transmit = (d: Buffer) => {
+      const transmit = (d: Buffer): void => {
         this.logger.info('responding to request')
         clearTimeout(timer)
         if (token) {
-          res.setHeader('authorization', token)
+          response.setHeader('authorization', token)
         }
         duplex.writable.removeListener('data', transmit)
-        res.send(d)
-        accept(true)
+        response.send(d)
+        resolve(true)
       }
 
       duplex.writable.on('data', transmit)
     })
   }
 
-  private async logon (req: express.Request, res: express.Response) {
+  private async logon (req: express.Request, res: express.Response): Promise<void> {
     const body: IFixmlRequest = req.body
     const id = this.nextId++
-    this.logger.info(JSON.stringify(body, null,4))
+    this.logger.info(JSON.stringify(body, null, 4))
     // check hand back session key
     const d = new StringDuplex()
     const transport = new MsgTransport(id, this.config, d)
@@ -111,28 +111,30 @@ export class HttpAcceptor extends FixAcceptor {
     d.readable.push(body.fixml)
   }
 
-  private async logout (req: express.Request, res: express.Response) {
+  private async logout (req: express.Request, res: express.Response): Promise<void> {
     const headers = req.headers
     const body: IFixmlRequest = req.body
-    const t: MsgTransport = this.keys.get(headers.authorization)
+    const t: MsgTransport | null = this.keys.get(headers?.authorization ?? '')
     if (t) {
       const token = req.headers.authorization
-      this.harvestTransport(token, t.id)
-      const d = t.duplex
-      this.respond(d, res, token).then(() => {
-        this.logger.info('responded to logout')
-        t.end()
-      }).catch((e: Error) => {
-        this.logger.error(e)
-      })
-      d.readable.push(body.fixml)
+      if (token) {
+        this.harvestTransport(token, t.id)
+        const d = t.duplex
+        this.respond(d, res, token).then(() => {
+          this.logger.info('responded to logout')
+          t.end()
+        }).catch((e: Error) => {
+          this.logger.error(e)
+        })
+        d.readable.push(body.fixml)
+      }
     }
   }
 
   private subscribe (): void {
     const router = this.router
     const app = this.config.description.application
-    const root = app.http.uri
+    const root = app?.http?.uri
     const authorise = `${root}authorise`
     const query = `${root}query`
     this.logger.info(`uri: authorise ${authorise}, query ${query}`)
@@ -149,9 +151,9 @@ export class HttpAcceptor extends FixAcceptor {
     router.get(query, async (req: express.Request, res: express.Response) => {
       const headers = req.headers
       const body: IFixmlRequest = req.body
-      const t: MsgTransport = this.keys.get(headers.authorization)
+      const t: MsgTransport | null = this.keys.get(headers.authorization ?? '') ?? null
       if (!t) {
-        this.logger.info(`received request with no token`)
+        this.logger.info('received request with no token')
         res.send({
           error: 'no key with query'
         })

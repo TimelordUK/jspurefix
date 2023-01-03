@@ -28,15 +28,15 @@ export class TestEntity {
   }
 
   async getViews (fix: string = 'examples/FIX.4.4/fix.txt'): Promise<MsgView[]> {
-    return this.replayer.replayFixFile(path.join(root, fix))
+    return await this.replayer.replayFixFile(path.join(root, fix))
   }
 
   getAsciiParser (text: string, chunks: boolean = false): AsciiParser {
     return new AsciiParser(this.config, new StringDuplex(text, chunks).readable, this.rxBuffer)
   }
 
-  parseText (text: string, chunks: boolean = false): Promise<ParsingResult> {
-    return new Promise<any>((resolve, reject) => {
+  async parseText (text: string, chunks: boolean = false): Promise<ParsingResult> {
+    return await new Promise<any>((resolve, reject) => {
       const parser = this.getAsciiParser(text, chunks)
       parser.on('error', (e: Error) => {
         reject(e)
@@ -45,12 +45,12 @@ export class TestEntity {
         resolve(new ParsingResult('msg', msgType, view.clone(), parser.state.elasticBuffer.toString(), parser))
       })
       parser.on('done', () => {
-        resolve(new ParsingResult('done', null,null, parser.state.elasticBuffer.toString(), parser))
+        resolve(new ParsingResult('done', null, null, parser.state.elasticBuffer.toString(), parser))
       })
     })
   }
 
-  async make () {
+  async make (): Promise<void> {
     this.fixContainer.reset()
     this.fixContainer.registerGlobal('error')
     this.sessionContainer = await this.fixContainer.makeSystem(this.description)
@@ -82,15 +82,14 @@ export class Setup {
   clientSessionContainer: DependencyContainer
 
   constructor (public readonly clientPath: string = 'session/test-initiator.json',
-               public readonly serverPath: string = 'session/test-acceptor.json') {
-
+    public readonly serverPath: string | null = 'session/test-acceptor.json') {
     this.client = new TestEntity(clientPath)
     if (serverPath) {
       this.server = new TestEntity(serverPath)
     }
   }
 
-  async init () {
+  async init (): Promise<void> {
     if (this.client) {
       await this.client.make()
       this.definitions = this.client.config.definitions

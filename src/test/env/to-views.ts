@@ -11,7 +11,7 @@ import { DefinitionFactory } from '../../util'
 export class ToViews {
   public definitions: FixDefinitions
   public readonly views: MsgView[] = []
-  public batch: MsgView = null
+  public batch: MsgView | null = null
   private readonly root: string = path.join(__dirname, '../../../data')
 
   constructor (public readonly testFolder: string) {
@@ -29,7 +29,7 @@ export class ToViews {
     const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
     const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
     const xmlParser: MsgParser = new FiXmlParser(config, readStream)
-    return new Promise((accept, reject) => {
+    return await new Promise((resolve, reject) => {
       xmlParser.on('msg', (msgType: string, v: MsgView) => {
         views.push(v.clone())
       })
@@ -37,7 +37,7 @@ export class ToViews {
         this.batch = v.clone()
       })
       xmlParser.on('close', () => {
-        accept(true)
+        resolve(true)
       })
       xmlParser.on('error', (e: Error) => {
         reject(e)

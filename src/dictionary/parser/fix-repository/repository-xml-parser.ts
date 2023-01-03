@@ -30,8 +30,8 @@ export class RepositoryXmlParser extends FixParser {
   }
 
   private static subscribe (instance: RepositoryXmlParser, saxStream: SAXStream, done: IDictDoneCb): void {
-    let parser: BaseParser
-    let pending: string
+    let parser: BaseParser | null
+    let pending: string | null
     const saxParser: SAXParser = saxStream._parser
 
     saxStream.on('error', (e: Error) => {
@@ -39,7 +39,6 @@ export class RepositoryXmlParser extends FixParser {
     })
 
     saxStream.on('closetag', (name) => {
-
       switch (name) {
         case 'Datatypes':
         case 'Abbreviations':
@@ -79,7 +78,7 @@ export class RepositoryXmlParser extends FixParser {
     saxStream.on('text', (t: string) => {
       t = t.trim()
       if (pending) {
-        parser.value(saxParser.line, pending, t)
+        parser?.value(saxParser.line, pending, t)
       }
     })
 
@@ -143,13 +142,13 @@ export class RepositoryXmlParser extends FixParser {
     saxStream.on('ready', () => {
       if (done) {
         parser = null
-        done(null, instance.repository.definitions)
+        done(undefined, instance.repository.definitions)
       }
     })
   }
 
-  public parse (): Promise<FixDefinitions> {
-    return new Promise<FixDefinitions>(async (accept, reject) => {
+  public async parse (): Promise<FixDefinitions> {
+    return await new Promise<FixDefinitions>(async (resolve, reject) => {
       try {
         await this.onePass('Datatypes.xml')
         await this.onePass('Fields.xml')
@@ -160,7 +159,7 @@ export class RepositoryXmlParser extends FixParser {
         if (this.repository.includesAbbreviations) {
           await this.onePass('Abbreviations.xml')
         }
-        accept(this.repository.definitions)
+        resolve(this.repository.definitions)
       } catch (e) {
         reject(e)
       }

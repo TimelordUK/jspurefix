@@ -33,7 +33,7 @@ export class SkeletonRunner {
     })
   }
 
-  watchdog () {
+  watchdog (): void {
     const experiment = this.experiment
     const cviews = experiment.client.views
     const sviews = experiment.server.views
@@ -52,7 +52,7 @@ export class SkeletonRunner {
 
   sendMsg (msgType: string, o: ILooseObject): void {
     let count = 0
-    this.experiment.client.transport.receiver.on('msg', m => {
+    this.experiment.client.transport.receiver.on('msg', _ => {
       if (count === 0) {
         count++
         this.clientSkeleton.sendMessage(msgType, o)
@@ -60,39 +60,38 @@ export class SkeletonRunner {
     })
   }
 
-  sendText (followOn: string): void {
+  sendText (followOn: string | null): void {
     const experiment = this.experiment
-    if (followOn) {
-      let sent: boolean = false
-      experiment.client.transport.transmitter.on('encoded', () => {
-        const b1 = new ElasticBuffer()
-        b1.writeString(followOn)
-        if (!sent) {
-          experiment.client.transport.duplex.writable.write(b1.slice())
-          const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
-          at.msgSeqNum++
-          sent = true
-        }
-      })
-    }
+    if (!followOn) return
+    let sent: boolean = false
+    experiment.client.transport.transmitter.on('encoded', () => {
+      const b1 = new ElasticBuffer()
+      b1.writeString(followOn)
+      if (!sent) {
+        experiment.client.transport.duplex.writable.write(b1.slice())
+        const at = experiment.client.transport.transmitter as AsciiMsgTransmitter
+        at.msgSeqNum++
+        sent = true
+      }
+    })
   }
 
-  done () {
+  done (): void {
     this.clientSkeleton.done()
     this.serverSkeleton.done()
   }
 
-  async wait () {
+  async wait (): Promise<void> {
     const experiment = this.experiment
     await Promise.all([
       this.clientSkeleton.run(experiment.client.transport),
       this.serverSkeleton.run(experiment.server.transport),
-      new Promise((accept, reject) => {
+      new Promise((resolve, reject) => {
         let handle = null
         try {
           handle = setTimeout(() => {
             this.done()
-            accept(true)
+            resolve(true)
           }, (this.logoutSeconds + 2) * 1000)
         } catch (e) {
           if (handle) {

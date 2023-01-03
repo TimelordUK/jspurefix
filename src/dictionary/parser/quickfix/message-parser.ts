@@ -5,7 +5,6 @@ import { ContainedComponentField } from '../../contained'
 import { ISaxNode } from '../../sax-node'
 
 export class MessageParser extends NodeParser {
-
   constructor (definitions: FixDefinitions, public passes: number) {
     super(definitions, passes)
   }
@@ -17,9 +16,13 @@ export class MessageParser extends NodeParser {
         const msg: MessageDefinition = new MessageDefinition(att.name, att.name, att.msgtype, att.msgcat, null)
         const context: ParseContext = new ParseContext(msg.name, true, msg)
         const hdr = this.definitions.component.get('StandardHeader')
-        const contained = new ContainedComponentField(hdr, msg.fields.length, true)
-        msg.add(contained)
-        this.parseContexts.push(context)
+        const contained = hdr
+          ? new ContainedComponentField(hdr, msg.fields.length, true)
+          : null
+        if (contained) {
+          msg.add(contained)
+          this.parseContexts.push(context)
+        }
         break
       }
 
@@ -47,8 +50,8 @@ export class MessageParser extends NodeParser {
   public close (line: number, name: string): void {
     switch (name) {
       case 'message': {
-        const parent: ParseContext = this.parseContexts.pop()
-        const message: MessageDefinition = parent.asMessage()
+        const parent: ParseContext | null = this.parseContexts.pop() ?? null
+        const message: MessageDefinition | null = parent?.asMessage() ?? null
         if (message != null) {
           this.definitions.addMessage(message)
         }

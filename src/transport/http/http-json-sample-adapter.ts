@@ -9,14 +9,14 @@ import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class HttpJsonSampleAdapter implements IHttpAdapter {
-  private logger: IJsFixLogger
-  private queue: HttpTransaction[] = []
-  private token: string = null
-  private routes: Dictionary<IHtmlRoute> = new Dictionary()
+  private readonly logger: IJsFixLogger
+  private readonly queue: HttpTransaction[] = []
+  private token: string | null = null
+  private readonly routes: Dictionary<IHtmlRoute> = new Dictionary()
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger('http.adapter')
     const routes = this.routes
-    const options = config.description.application.http.options
+    const options = config?.description?.application?.http?.options
     if (!options) {
       return
     }
@@ -26,17 +26,18 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
     this.logger.info(`instance created routes ${routes.count()}`)
   }
 
-  public getOptions (data: Buffer): IHtmlOptions {
+  public getOptions (data: Buffer): IHtmlOptions | null {
     const q = this.queue
     if (q.length === 0) {
       return null
     }
-    const next: HttpTransaction = q.shift()
+    const next: HttpTransaction | null = q.shift() ?? null
+    if (next == null) return null
     const options = next.options
-    options.body = {
+    options.data = {
       fixml: data.toString()
     }
-    this.logger.info(`${next.msgType}: ${next.options.method} ${next.options.uri} ${data.length}`)
+    this.logger.info(`${next.msgType}: ${next.options.method} ${next.options.url} ${data.length}`)
     return options
   }
 
@@ -47,19 +48,19 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
       this.token = headers.authorization
       this.logger.info(`receive token ${this.token}`)
     }
-    return m.body
+    return m.data
   }
 
   beginMessage (msgType: string): void {
     // build options based on type
     const routes = this.routes
-    const route = routes.get(msgType) || routes.get('default')
+    const route = routes.get(msgType) ?? routes.get('default')
     const options = {
-      method: route.value.method,
-      uri: route.value.uri,
-      json: route.value.json,
-      resolveWithFullResponse: route.value.resolveWithFullResponse,
-      headers: route.value.headers
+      method: route?.value.method,
+      url: route?.value.url,
+      json: route?.value.json,
+      resolveWithFullResponse: route?.value.resolveWithFullResponse,
+      headers: route?.value.headers
     } as IHtmlOptions
     const headers = options.headers
     if (headers) {

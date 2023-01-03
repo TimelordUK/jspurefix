@@ -1,0 +1,16 @@
+{
+  "StandardHeader": {
+    "BeginString": "FIX.4.4",
+    "BodyLength": 104,
+    "MsgType": "0",
+    "SenderCompID": "init-comp",
+    "TargetCompID": "accept-comp",
+    "MsgSeqNum": 2,
+    "TargetSubID": "fix",
+    "SendingTime": "2023-01-01T14:14:20.930Z"
+  },
+  "TestReqID": "Sun, 01 Jan 2023 14:14:20 GMT",
+  "StandardTrailer": {
+    "CheckSum": "029"
+  }
+}

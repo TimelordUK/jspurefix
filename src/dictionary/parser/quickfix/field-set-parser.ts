@@ -55,14 +55,14 @@ export class FieldSetParser extends NodeParser {
       case 'component':
       case 'header':
       case 'trailer': {
-        const latest: ParseContext = this.parseContexts.pop()
+        const latest: ParseContext | null = this.parseContexts.pop() ?? null
         if (latest == null) {
           throw new Error(`component field ${name} closes yet does not exist.`)
         }
         if (!latest.defining) {
           return
         }
-        const asComponent: ComponentFieldDefinition = latest.asComponent()
+        const asComponent: ComponentFieldDefinition | null = latest.asComponent() ?? null
         if (asComponent != null) {
           this.definitions.addComponentFieldDef(asComponent)
         } else {

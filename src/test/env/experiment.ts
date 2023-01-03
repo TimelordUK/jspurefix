@@ -11,8 +11,8 @@ class FixEntity {
   public readonly errors: Error[] = []
 
   constructor (public readonly config: IJsFixConfig,
-               public readonly duplex: FixDuplex = new StringDuplex(),
-               public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
+    public readonly duplex: FixDuplex = new StringDuplex(),
+    public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
   }
 }
 
@@ -22,7 +22,7 @@ export class Experiment {
   public readonly serverFactory: AsciiSessionMsgFactory
   public readonly server: FixEntity
 
-  loopBack (lhs: FixDuplex, rhs: FixDuplex) {
+  loopBack (lhs: FixDuplex, rhs: FixDuplex): void {
     lhs.writable.on('data', (data: Buffer) => {
       rhs.readable.push(data)
     })
@@ -38,7 +38,7 @@ export class Experiment {
     this.client = new FixEntity(clientConfig)
     this.server = new FixEntity(serverConfig)
 
-    // using a string duplex so pipe a write to client to read to server
+    // using a string duplex so pipe to client to read to server
     // to simulate a tcp connection.
     this.loopBack(this.client.duplex, this.server.duplex)
     this.loopBack(this.server.duplex, this.client.duplex)

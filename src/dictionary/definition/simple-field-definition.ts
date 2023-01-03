@@ -12,12 +12,12 @@ export class SimpleFieldDefinition {
   public enumVals: Dictionary<boolean>
 
   constructor (public readonly num: string,
-                public readonly name: string,
-                public readonly abbreviation: string,
-                public readonly baseCategory: string,
-                public readonly baseCategoryAbbreviation: string,
-                public readonly type: string,
-                public readonly description: string) {
+    public readonly name: string,
+    public readonly abbreviation: string,
+    public readonly baseCategory: string | null,
+    public readonly baseCategoryAbbreviation: string | null,
+    public readonly type: string,
+    public readonly description: string | null) {
     this.tag = parseInt(num, 10)
     this.tagType = Tags.toType(type)
   }
@@ -39,7 +39,7 @@ export class SimpleFieldDefinition {
     if (!enums) {
       return key
     }
-    const e: FieldEnum = enums.get(key)
+    const e: FieldEnum | null = enums.get(key)
     if (e) {
       return e.val
     }
@@ -69,7 +69,7 @@ export class SimpleFieldDefinition {
       this.enumVals = enumVals = new Dictionary<boolean>()
     }
     val = this.patchEnumValue(val)
-    enums.add(key, new FieldEnum(key, val, description))
+    enums.add(key, new FieldEnum(key, val, description ?? ''))
     enumVals.add(val, true)
   }
 
@@ -85,6 +85,6 @@ export class SimpleFieldDefinition {
     if (baseCategoryAbbreviation.length > 0 && this.baseCategory) {
       baseCategoryAbbreviation = `${this.baseCategory} ${baseCategoryAbbreviation}`
     }
-    return `${this.num} ${this.name} ${abbreviation} ${baseCategoryAbbreviation} ${this.type} ${this.description || ''} ${this.enums ? `enumerated = [ ${this.enums.toString()} ]` : ''}`
+    return `${this.num} ${this.name} ${abbreviation} ${baseCategoryAbbreviation} ${this.type} ${this.description ?? ''} ${this.enums ? `enumerated = [ ${this.enums.toString()} ]` : ''}`
   }
 }

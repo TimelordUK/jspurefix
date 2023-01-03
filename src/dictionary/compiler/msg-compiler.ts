@@ -34,9 +34,9 @@ export class MsgCompiler {
     this.snippets = new StandardSnippet(this.settings)
   }
 
-  public async generate () {
-    const types: string[] = this.settings.types || this.definitions.message.keys()
-    return this.createTypes(types)
+  public async generate (): Promise<void> {
+    const types: string[] = this.settings.types ?? this.definitions.message.keys()
+    return await this.createTypes(types)
   }
 
   private getFileName (compilerType: CompilerType): string {
@@ -45,7 +45,7 @@ export class MsgCompiler {
     return Path.join(settings.output, fileName)
   }
 
-  private async createTypes (types: string[]) {
+  private async createTypes (types: string[]): Promise<void> {
     const definitions = this.definitions
     types.forEach((type: string) => {
       const definition = definitions.containedSet(type)
@@ -59,35 +59,33 @@ export class MsgCompiler {
     await this.index()
   }
 
-  private async work () {
+  private async work (): Promise<void> {
     const q = this.queue
     const writeFile = Util.promisify(fs.writeFile)
     while (q.length > 0) {
-      const compilerType: CompilerType = q.pop()
+      const compilerType = q.pop()
+      if (!compilerType) continue
       const api: string = this.generateMessages(compilerType)
       const fullName = this.getFileName(compilerType)
-      await writeFile(fullName, api, {
-        encoding: 'utf8'}
+      await writeFile(fullName, api, { encoding: 'utf8' }
       )
     }
   }
 
-  private async index () {
+  private async index (): Promise<void> {
     const writeFile = Util.promisify(fs.writeFile)
     const settings = this.settings
     const fileName = 'index.ts'
     const done = this.completed.values()
-    const exports: string[] = done.reduce((prev: string[], current: CompilerType) => {
+    const exports: string[] = done.reduce<string[]>((prev: string[], current: CompilerType) => {
       prev.push(`export * from '${current.snaked}'`)
       return prev
-    }, [`export * from './enum'`] as string[])
+    }, ['export * from \'./enum\''])
     exports.sort()
     exports.push('')
     const api: string = exports.join(newLine)
     const fullName: string = Path.join(settings.output, fileName)
-    await writeFile(fullName, api, {
-      encoding: 'utf8'}
-    )
+    return await writeFile(fullName, api, { encoding: 'utf8' })
   }
 
   private generateMessages (compilerType: CompilerType): string {
@@ -96,7 +94,7 @@ export class MsgCompiler {
     buffer.reset()
     const snippets = this.snippets
     // a single class with dependencies included
-    let ptr: number = this.imports(compilerType)
+    const ptr: number = this.imports(compilerType)
     if (ptr > 0) {
       buffer.writeString(newLine)
       buffer.writeString(newLine)
@@ -154,12 +152,12 @@ export class MsgCompiler {
   }
 
   private tagSummary (definition: ContainedFieldSet, max: number = 3): string {
-    function tagTxt (tag: number) {
+    function tagTxt (tag: number): string {
       const name = definition.getFieldName(tag)
       return `${name}.${tag}`
     }
 
-    function setTxt (flattened: number[]) {
+    function setTxt (flattened: number[]): string {
       return flattened.map(f => tagTxt(f)).join(', ')
     }
 

@@ -21,7 +21,7 @@ test('expect 2 views from fix msg', () => {
 })
 
 test('expect 1 batch from fix msg', () => {
-  const batch: IBatch = toViews.batch.toObject()
+  const batch: IBatch = toViews?.batch?.toObject()
   expect(batch).toBeTruthy()
   expect(batch.Batch).toBeTruthy()
   expect(Array.isArray(batch.Batch)).toBeTruthy()

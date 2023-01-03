@@ -11,13 +11,13 @@ import { inject, injectable } from 'tsyringe'
 export class MDServer extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
-  private timerHandle: NodeJS.Timer = null
+  private readonly timerHandle: NodeJS.Timer | null = null
 
   constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.logger = config.logFactory.logger(`${this.me}:MDServer`)
-    this.fixLog = config.logFactory.plain(`jsfix.${config!.description!.application!.name}.txt`)
+    this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
   }
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {

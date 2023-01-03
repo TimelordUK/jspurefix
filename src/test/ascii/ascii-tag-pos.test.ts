@@ -11,8 +11,8 @@ const root: string = path.join(__dirname, '../../../data')
 let definitions: FixDefinitions
 let session: AsciiMsgTransmitter
 let views: MsgView[]
-let structure: Structure
-let tp: TagPos[]
+let structure: Structure | null
+let tp: TagPos[] | undefined
 
 const testTags: TagPos[] = [
   new TagPos(0, 120, 0, 1), // 3
@@ -54,7 +54,7 @@ const unsortedLogon = [
   new TagPos(20, 554, 196, 11)
 ]
 
-let setup: Setup = null
+let setup: Setup
 beforeAll(async () => {
   setup = new Setup('session/test-initiator.json', null)
   await setup.init()
@@ -63,7 +63,7 @@ beforeAll(async () => {
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure
-    tp = views[0].structure.tags.tagPos.slice(0, views[0].segment.endPosition)
+    tp = views[0].structure?.tags.tagPos.slice(0, views[0].segment.endPosition)
   }
 }, 45000)
 
@@ -104,7 +104,9 @@ test('binary search duplicate tag', () => {
 })
 
 test('check logon', () => {
-  const sorted = tp.slice().sort(TagPos.compare)
+  const sorted = tp?.slice().sort(TagPos.compare)
+  expect(sorted).toBeTruthy()
+  if (!sorted) return
   expect(sorted[0].tag).toEqual(8)
   expect(sorted[sorted.length - 1].tag).toEqual(789)
 })

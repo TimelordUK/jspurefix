@@ -12,8 +12,9 @@ export class HttpAcceptorListener extends FixEntity {
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
   }
-  start (): Promise<any> {
-    return new Promise<any>(async (accept, reject) => {
+
+  async start (): Promise<any> {
+    return new Promise<any>(async (resolve, reject) => {
       const logger = this.config.logFactory.logger('acceptor')
       const sessionContainer = this.config.sessionContainer
       if (!sessionContainer.isRegistered(DITokens.FixSession)) {
@@ -24,15 +25,16 @@ export class HttpAcceptorListener extends FixEntity {
       acceptor.on('transport', (t: MsgTransport) => {
         logger.info(`creates new transport using DI token ${DITokens.FixSession}.`)
         const acceptorSession = sessionContainer.resolve<FixSession>(DITokens.FixSession)
+        this.emit('session', acceptorSession, t)
         acceptorSession.run(t).then(() => {
           logger.info('ends')
           acceptor.close(() => {
             logger.info('acceptor closed.')
-            accept(true)
+            resolve(true)
           })
         }).catch((e: Error) => {
           logger.error(e)
-          logger.info(e.stack)
+          logger.info(e?.stack ?? '')
           reject(e)
         })
       })

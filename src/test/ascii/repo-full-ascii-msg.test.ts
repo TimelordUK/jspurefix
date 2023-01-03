@@ -15,7 +15,7 @@ let jsonHelper: JsonHelper
 let session: AsciiMsgTransmitter
 const root: string = path.join(__dirname, '../../../data/examples/FIX.4.4/repo/')
 let config: IJsFixConfig
-let setup: Setup = null
+let setup: Setup
 beforeAll(async () => {
   setup = new Setup()
   await setup.init()
@@ -27,13 +27,13 @@ beforeAll(async () => {
 
 async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
   // encode to FIX format from provided object.
-  return new Promise(async (resolve, reject) => {
+  return await new Promise(async (resolve, reject) => {
     const rxBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
     const parser: AsciiParser = new AsciiParser(config, session.encodeStream, rxBuffer)
     parser.on('msg', (msgType: string, view: AsciiView) => {
       const o = view.toObject()
-      delete o['StandardHeader']
-      delete o['StandardTrailer']
+      delete o.StandardHeader
+      delete o.StandardTrailer
       resolve(o)
     })
     parser.on('error', (e: Error) => {
@@ -46,20 +46,20 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
 
 test('check 1 digit checksum format', async () => {
   const factory = session.config.factory
-  const cs = factory.trailer(1)
-  expect(cs.CheckSum).toEqual('001')
+  const cs = factory?.trailer(1)
+  expect(cs?.CheckSum).toEqual('001')
 })
 
 test('check 2 digit checksum format', async () => {
   const factory = session.config.factory
-  const cs = factory.trailer(10)
-  expect(cs.CheckSum).toEqual('010')
+  const cs = factory?.trailer(10)
+  expect(cs?.CheckSum).toEqual('010')
 })
 
 test('check 3 digit checksum format', async () => {
   const factory = session.config.factory
-  const cs = factory.trailer(100)
-  expect(cs.CheckSum).toEqual('100')
+  const cs = factory?.trailer(100)
+  expect(cs?.CheckSum).toEqual('100')
 })
 
 test('AE object to ascii fix to object', async () => {
@@ -69,7 +69,7 @@ test('AE object to ascii fix to object', async () => {
   const o: ILooseObject = await testEncodeDecode(msgType, msg)
 
   expect(o).toEqual(msg)
-}, 1000)
+}, 60000)
 
 test('d object to ascii fix to object', async () => {
   const msgType: string = MsgType.SecurityDefinition

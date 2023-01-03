@@ -10,8 +10,8 @@ interface ISimpleField extends ILooseObject {
   Protocol: string
   simpleTypeName: string
   name: string
-  ComponentType: string,
-  Tag: string,
+  ComponentType: string
+  Tag: string
   Type: string
   AbbrName: string
   Category: string
@@ -26,7 +26,7 @@ interface IAlias {
 }
 
 export class FieldsParser extends XsdParser {
-  private alias: IAlias[] = []
+  private readonly alias: IAlias[] = []
   public constructor (public readonly definitions: FixDefinitions) {
     super(definitions)
   }
@@ -39,7 +39,7 @@ export class FieldsParser extends XsdParser {
         break
       }
       case 'xs:documentation': {
-        this.current['documentation'] = v
+        this.current.documentation = v
         break
       }
     }
@@ -48,7 +48,7 @@ export class FieldsParser extends XsdParser {
   public close (line: number, node: string): void {
     const current: ISimpleField = this.current as ISimpleField
     switch (node) {
-      case'xs:simpleType': {
+      case 'xs:simpleType': {
         this.data[this.data.length] = current
         break
       }
@@ -62,10 +62,9 @@ export class FieldsParser extends XsdParser {
 
   public open (line: number, node: ISaxNode): void {
     switch (node.name) {
-
       case 'xs:simpleType': {
         this.current = {
-          simpleTypeName: node.attributes['name']
+          simpleTypeName: node.attributes.name
         } as ISimpleField
         break
       }
@@ -76,7 +75,7 @@ export class FieldsParser extends XsdParser {
       }
 
       case 'xs:restriction': {
-        this.current.restrictionBase = node.attributes['base']
+        this.current.restrictionBase = node.attributes.base
         break
       }
 
@@ -84,7 +83,7 @@ export class FieldsParser extends XsdParser {
         if (!this.current.enums) {
           this.current.enums = new Dictionary<string>()
         }
-        this.current.currentEnum = node.attributes['value']
+        this.current.currentEnum = node.attributes.value
         this.pending = node.name
         break
       }
@@ -120,7 +119,7 @@ export class FieldsParser extends XsdParser {
         }
         alias.push({
           name: f.simpleTypeName,
-          mapped: mapped
+          mapped
         })
       }
     })

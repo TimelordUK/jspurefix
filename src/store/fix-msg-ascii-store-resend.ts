@@ -12,13 +12,12 @@ export class FixMsgAsciiStoreResend {
     this.parser = new AsciiParser(this.config, null, new ElasticBuffer(160 * 1024))
   }
 
-  public getResendRequest (startSeq: number, endSeq: number): Promise<IFixMsgStoreRecord[]> {
-
+  public async getResendRequest (startSeq: number, endSeq: number): Promise<IFixMsgStoreRecord[]> {
     // need to cover request from start to end where any missing numbers are
     // included as gaps to allow vector of messages to be sent by the session
     // on a request
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       this.store.getSeqNumRange(startSeq, endSeq).then(res => {
         resolve(this.inflateRange(startSeq, endSeq, res))
       }).catch(e => {
@@ -49,7 +48,7 @@ export class FixMsgAsciiStoreResend {
     return toResend
   }
 
-  public gap (beginGap: number, seqNum: number, arr: IFixMsgStoreRecord[]) {
+  public gap (beginGap: number, seqNum: number, arr: IFixMsgStoreRecord[]): void {
     if (beginGap > 0) {
       arr.push(this.sequenceResetGap(beginGap, seqNum))
     }
@@ -74,8 +73,8 @@ export class FixMsgAsciiStoreResend {
 
   public sequenceResetGap (startGap: number, newSeq: number): IFixMsgStoreRecord {
     const factory = this.config.factory
-    const gapFill: ISequenceReset = factory.sequenceReset(newSeq, true) as ISequenceReset
-    gapFill.StandardHeader = factory.header(MsgType.SequenceReset, startGap) as IStandardHeader
+    const gapFill: ISequenceReset = factory?.sequenceReset(newSeq, true) as ISequenceReset
+    gapFill.StandardHeader = factory?.header(MsgType.SequenceReset, startGap) as IStandardHeader
     gapFill.StandardHeader.PossDupFlag = true
     gapFill.NewSeqNo = newSeq
     return new FixMsgStoreRecord(

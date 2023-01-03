@@ -1,9 +1,5 @@
-export interface INumericKeyed<T> {
-  [prop: number]: T
-}
+export type INumericKeyed<T> = Record<number, T>
 
-export interface ILooseObject {
-  [prop: string]: any
-}
+export type ILooseObject = Record<string, any>
 
 export type IDictIteratorCb<T> = (key: string, val: T) => void

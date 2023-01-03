@@ -1,8 +1,8 @@
 export interface IHtmlOptions {
-  method: string,
-  uri: string,
-  json: boolean,
-  body: any,
-  headers: any,
+  method: string
+  url: string
+  json: boolean
+  data: any
+  headers: any
   resolveWithFullResponse: boolean
 }

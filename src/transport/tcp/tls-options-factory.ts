@@ -5,7 +5,7 @@ const path = require('path')
 const fs = require('fs')
 
 export class TlsOptionsFactory {
-  static read (filePath: string) {
+  static read (filePath: string): string {
     const root: string = path.join(__dirname, '../../../')
     const fullPath = path.join(root, filePath)
     return fs.readFileSync(fullPath,
@@ -14,8 +14,8 @@ export class TlsOptionsFactory {
       })
   }
 
-  static getTlsOptions (tls: ITlsOptions): TlsOptions {
-    let tlsOptions: TlsOptions = null
+  static getTlsOptions (tls: ITlsOptions): TlsOptions | null {
+    let tlsOptions: TlsOptions | null = null
     if (tls) {
       tlsOptions = {
         requestCert: tls.requestCert,
@@ -24,7 +24,7 @@ export class TlsOptionsFactory {
 
       if (tls.key) {
         tlsOptions.key = TlsOptionsFactory.read(tls.key)
-        tlsOptions.cert = TlsOptionsFactory.read(tls.cert)
+        tlsOptions.cert = tls?.cert ? TlsOptionsFactory.read(tls?.cert) : undefined
       }
 
       if (tls.ca && tls.ca.length > 0) {
@@ -34,15 +34,15 @@ export class TlsOptionsFactory {
       if (tls.nodeTlsServerOptions) {
         tlsOptions = {
           ...tlsOptions,
-          ...tls.nodeTlsServerOptions,
+          ...tls.nodeTlsServerOptions
         }
       }
     }
     return tlsOptions
   }
 
-  static getTlsConnectionOptions (tcp: ITcpTransportDescription): ConnectionOptions {
-    let connectionOptions: ConnectionOptions = null
+  static getTlsConnectionOptions (tcp: ITcpTransportDescription): ConnectionOptions | null {
+    let connectionOptions: ConnectionOptions | null = null
     const tls = tcp.tls
     if (tls) {
       connectionOptions = {
@@ -50,8 +50,8 @@ export class TlsOptionsFactory {
         host: tcp.host
       } as ConnectionOptions
       if (tls.key) {
-        connectionOptions.key = TlsOptionsFactory.read(tcp.tls.key)
-        connectionOptions.cert = TlsOptionsFactory.read(tcp.tls.cert)
+        connectionOptions.key = TlsOptionsFactory.read(tcp.tls?.key ?? '')
+        connectionOptions.cert = tcp.tls?.cert ? TlsOptionsFactory.read(tcp?.tls?.cert) : undefined
       }
       if (tcp.tls.ca && tcp.tls.ca.length > 0) {
         connectionOptions.ca = tcp.tls.ca.map(i => TlsOptionsFactory.read(i))
@@ -65,7 +65,7 @@ export class TlsOptionsFactory {
       if (tls.nodeTlsConnectionOptions) {
         connectionOptions = {
           ...connectionOptions,
-          ...tls.nodeTlsConnectionOptions,
+          ...tls.nodeTlsConnectionOptions
         }
       }
     }

@@ -56,31 +56,31 @@ export class TimeFormatter implements ITimeFormatter {
     buffer.writePaddedHundreds(ms)
   }
 
-  public getLocalTime (start: number): Date {
+  public getLocalTime (start: number): Date | null {
     return this.getTime(start, false)
   }
 
-  public getUtcTime (start: number): Date {
+  public getUtcTime (start: number): Date | null {
     return this.getTime(start, true)
   }
 
-  public getUtcDate (start: number): Date {
+  public getUtcDate (start: number): Date | null {
     return this.getDate(start, true)
   }
 
-  public getLocalDate (start: number): Date {
+  public getLocalDate (start: number): Date | null {
     return this.getDate(start, false)
   }
 
-  public getUtcTimestamp (start: number, end: number): Date {
-    return this.getTimestamp(start, end,true)
+  public getUtcTimestamp (start: number, end: number): Date | null {
+    return this.getTimestamp(start, end, true)
   }
 
-  public getLocalTimestamp (start: number, end: number): Date {
-    return this.getTimestamp(start, end,false)
+  public getLocalTimestamp (start: number, end: number): Date | null {
+    return this.getTimestamp(start, end, false)
   }
 
-  private getTimestamp (start: number, end: number, useUtc: boolean): Date {
+  private getTimestamp (start: number, end: number, useUtc: boolean): Date | null {
     const buffer = this.buffer
     const n: number = buffer.getWholeNumber(start, start + 7)
     if (n == null) {
@@ -145,7 +145,7 @@ export class TimeFormatter implements ITimeFormatter {
     return t
   }
 
-  private getTime (start: number, useUtc: boolean): Date {
+  private getTime (start: number, useUtc: boolean): Date | null {
     const buffer = this.buffer
     let offset = 0
     const hh: number = buffer.getWholeNumber(start + offset, start + offset + 1)
@@ -179,8 +179,7 @@ export class TimeFormatter implements ITimeFormatter {
     return t
   }
 
-  private getDate (start: number, useUtc: boolean): Date {
-
+  private getDate (start: number, useUtc: boolean): Date | null {
     // = 20150417
 
     const n: number = this.buffer.getWholeNumber(start, start + 7)

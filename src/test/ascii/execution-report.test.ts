@@ -4,7 +4,7 @@ import * as path from 'path'
 import { SegmentDescription, MsgView, Structure } from '../../buffer'
 import { ILooseObject } from '../../collections/collection'
 import { FixDefinitions } from '../../dictionary/definition'
-import { IUndInstrmtGrp, IUnderlyingInstrument } from '../../types/FIX4.4/quickfix'
+import { IUndInstrmtGrp, IUnderlyingInstrument, IUndInstrmtGrpNoUnderlyings } from '../../types/FIX4.4/quickfix'
 import { SegmentType } from '../../buffer/segment/segment-type'
 import { Setup } from '../env/setup'
 
@@ -12,9 +12,9 @@ const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
 let views: MsgView[]
-let structure: Structure
+let structure: Structure | undefined
 
-let setup: Setup = null
+let setup: Setup
 beforeAll(async () => {
   setup = new Setup('session/qf-fix44.json', null)
   await setup.init()
@@ -23,7 +23,7 @@ beforeAll(async () => {
 
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/execution-report/fix.txt'))
   if (views && views.length > 0) {
-    structure = views[0].structure
+    structure = views[0].structure ?? undefined
   }
 }, 45000)
 
@@ -48,8 +48,8 @@ test('expect a structure from fix msg', () => {
  */
 
 test('Parties structure', () => {
-  const parties: SegmentDescription = structure.layout.Parties
-  const noPartyIDs: SegmentDescription = structure.layout.NoPartyIDs
+  const parties: SegmentDescription = structure?.layout.Parties
+  const noPartyIDs: SegmentDescription = structure?.layout.NoPartyIDs
   expect(parties).toBeTruthy()
   expect(parties.startPosition === 20)
   expect(parties.endPosition === 44)
@@ -62,7 +62,7 @@ test('Parties structure', () => {
 })
 
 test('Parties PartySubIDType sub-structure', () => {
-  const ptysSubGrp: SegmentDescription[] = structure.layout.PtysSubGrp
+  const ptysSubGrp: SegmentDescription[] = structure?.layout.PtysSubGrp
   expect(ptysSubGrp).toBeTruthy()
   expect(Array.isArray(ptysSubGrp)).toEqual(true)
   expect(ptysSubGrp.length).toEqual(3)
@@ -73,7 +73,7 @@ test('Parties PartySubIDType sub-structure', () => {
   expect(ptysSubGrp[2].startPosition).toEqual(42)
   expect(ptysSubGrp[2].type).toEqual(SegmentType.Component)
 
-  const noPartySubIDs: SegmentDescription[] = structure.layout.NoPartySubIDs
+  const noPartySubIDs: SegmentDescription[] = structure?.layout.NoPartySubIDs
   expect(noPartySubIDs).toBeTruthy()
   expect(Array.isArray(noPartySubIDs)).toEqual(true)
   expect(noPartySubIDs.length).toEqual(3)
@@ -106,20 +106,19 @@ test('Parties PartySubIDType sub-structure', () => {
  */
 
 test('ContraGrp structure', () => {
-  const contraGrp: SegmentDescription = structure.layout.ContraGrp
+  const contraGrp: SegmentDescription = structure?.layout.ContraGrp
   expect(contraGrp).toBeTruthy()
   expect(contraGrp.depth).toEqual(1)
   expect(contraGrp.type).toEqual(SegmentType.Component)
   expect(contraGrp.startPosition).toEqual(46)
   expect(contraGrp.endPosition).toEqual(61)
 
-  const noContraBrokers: SegmentDescription = structure.layout.NoContraBrokers
+  const noContraBrokers: SegmentDescription = structure?.layout.NoContraBrokers
   expect(noContraBrokers).toBeTruthy()
   expect(noContraBrokers.depth).toEqual(2)
   expect(noContraBrokers.type).toEqual(SegmentType.Group)
   expect(noContraBrokers.delimiterTag).toEqual(375)
   expect(noContraBrokers.delimiterPositions).toEqual([47, 52, 57])
-
 })
 
 /*
@@ -152,7 +151,7 @@ test('ContraGrp structure', () => {
  */
 
 test('Instrument structure', () => {
-  const instrument: SegmentDescription = structure.layout.Instrument
+  const instrument: SegmentDescription = structure?.layout.Instrument
   expect(instrument).toBeTruthy()
   expect(instrument.type).toEqual(SegmentType.Component)
   expect(instrument.startPosition).toEqual(83)
@@ -160,7 +159,7 @@ test('Instrument structure', () => {
   expect(instrument.endPosition).toEqual(133)
   expect(instrument.endTag).toEqual(874)
 
-  const noSecurityAltID: SegmentDescription = structure.layout.NoSecurityAltID
+  const noSecurityAltID: SegmentDescription = structure?.layout.NoSecurityAltID
   expect(noSecurityAltID).toBeTruthy()
   expect(noSecurityAltID.type).toEqual(SegmentType.Group)
   expect(noSecurityAltID.delimiterTag).toEqual(455)
@@ -176,7 +175,7 @@ test('Instrument structure', () => {
  */
 
 test('FinancingDetails structure', () => {
-  const financingDetails: SegmentDescription = structure.layout.FinancingDetails
+  const financingDetails: SegmentDescription = structure?.layout.FinancingDetails
   expect(financingDetails).toBeTruthy()
   expect(financingDetails.depth).toEqual(1)
   expect(financingDetails.type).toEqual(SegmentType.Component)
@@ -193,7 +192,7 @@ test('FinancingDetails structure', () => {
  */
 
 test('PegInstructions structure', () => {
-  const pegInstructions: SegmentDescription = structure.layout.PegInstructions
+  const pegInstructions: SegmentDescription = structure?.layout.PegInstructions
   expect(pegInstructions).toBeTruthy()
   expect(pegInstructions.depth).toEqual(1)
   expect(pegInstructions.type).toEqual(SegmentType.Component)
@@ -211,7 +210,7 @@ test('PegInstructions structure', () => {
  */
 
 test('DiscretionInstructions structure', () => {
-  const discretionInstructions: SegmentDescription = structure.layout.DiscretionInstructions
+  const discretionInstructions: SegmentDescription = structure?.layout.DiscretionInstructions
   expect(discretionInstructions).toBeTruthy()
   expect(discretionInstructions.depth).toEqual(1)
   expect(discretionInstructions.type).toEqual(SegmentType.Component)
@@ -226,7 +225,7 @@ test('DiscretionInstructions structure', () => {
 [326] 479 (CommCurrency) = 25841, [327] 497 (FundRenewWaiv) = N[NO]
  */
 test('CommissionData structure', () => {
-  const commisionData: SegmentDescription = structure.layout.CommissionData
+  const commisionData: SegmentDescription = structure?.layout.CommissionData
   expect(commisionData).toBeTruthy()
   expect(commisionData.depth).toEqual(1)
   expect(commisionData.type).toEqual(SegmentType.Component)
@@ -244,7 +243,7 @@ test('CommissionData structure', () => {
  */
 
 test('SpreadOrBenchmarkCurveData structure', () => {
-  const spreadBenchData: SegmentDescription = structure.layout.SpreadOrBenchmarkCurveData
+  const spreadBenchData: SegmentDescription = structure?.layout.SpreadOrBenchmarkCurveData
   expect(spreadBenchData).toBeTruthy()
   expect(spreadBenchData.depth).toEqual(1)
   expect(spreadBenchData.type).toEqual(SegmentType.Component)
@@ -261,7 +260,7 @@ test('SpreadOrBenchmarkCurveData structure', () => {
  */
 
 test('YieldData structure', () => {
-  const yieldData: SegmentDescription = structure.layout.YieldData
+  const yieldData: SegmentDescription = structure?.layout.YieldData
   expect(yieldData).toBeTruthy()
   expect(yieldData.depth).toEqual(1)
   expect(yieldData.type).toEqual(SegmentType.Component)
@@ -281,7 +280,7 @@ test('YieldData structure', () => {
  */
 
 test('ContAmtGrp structure', () => {
-  const contAmtGrp: SegmentDescription = structure.layout.ContAmtGrp
+  const contAmtGrp: SegmentDescription = structure?.layout.ContAmtGrp
   expect(contAmtGrp).toBeTruthy()
   expect(contAmtGrp.depth).toEqual(1)
   expect(contAmtGrp.type).toEqual(SegmentType.Component)
@@ -290,7 +289,7 @@ test('ContAmtGrp structure', () => {
   expect(contAmtGrp.endPosition).toEqual(394)
   expect(contAmtGrp.endTag).toEqual(521)
 
-  const noContAmts: SegmentDescription = structure.layout.NoContAmts
+  const noContAmts: SegmentDescription = structure?.layout.NoContAmts
   expect(noContAmts).toBeTruthy()
   expect(noContAmts.depth).toEqual(2)
   expect(noContAmts.type).toEqual(SegmentType.Group)
@@ -311,7 +310,7 @@ test('ContAmtGrp structure', () => {
  */
 
 test('MiscFeesGrp structure', () => {
-  const miscFees: SegmentDescription = structure.layout.MiscFeesGrp
+  const miscFees: SegmentDescription = structure?.layout.MiscFeesGrp
   expect(miscFees).toBeTruthy()
   expect(miscFees.depth).toEqual(1)
   expect(miscFees.type).toEqual(SegmentType.Component)
@@ -320,7 +319,7 @@ test('MiscFeesGrp structure', () => {
   expect(miscFees.endPosition).toEqual(644)
   expect(miscFees.endTag).toEqual(891)
 
-  const noMiscfees: SegmentDescription = structure.layout.NoMiscFees
+  const noMiscfees: SegmentDescription = structure?.layout.NoMiscFees
   expect(noMiscfees).toBeTruthy()
   expect(noMiscfees.depth).toEqual(2)
   expect(noMiscfees.type).toEqual(SegmentType.Group)
@@ -394,7 +393,7 @@ test('MiscFeesGrp structure', () => {
  */
 
 test('UndInstrmtGrp structure', () => {
-  const undInstrmtGrp: SegmentDescription = structure.layout.UndInstrmtGrp
+  const undInstrmtGrp: SegmentDescription = structure?.layout.UndInstrmtGrp
   expect(undInstrmtGrp).toBeTruthy()
   expect(undInstrmtGrp.type).toEqual(SegmentType.Component)
   expect(undInstrmtGrp.startPosition).toEqual(143)
@@ -403,14 +402,14 @@ test('UndInstrmtGrp structure', () => {
   expect(undInstrmtGrp.endTag).toEqual(889)
   expect(undInstrmtGrp.depth).toEqual(1)
 
-  const noUnderlyings: SegmentDescription = structure.layout.NoUnderlyings
+  const noUnderlyings: SegmentDescription = structure?.layout.NoUnderlyings
   expect(noUnderlyings).toBeTruthy()
   expect(noUnderlyings.delimiterTag).toEqual(311)
   expect(noUnderlyings.delimiterPositions).toEqual([144, 203])
   expect(noUnderlyings.depth).toEqual(2)
   expect(noUnderlyings.type).toEqual(SegmentType.Group)
 
-  const underlyingInstrument: SegmentDescription[] = structure.layout.UnderlyingInstrument
+  const underlyingInstrument: SegmentDescription[] = structure?.layout.UnderlyingInstrument
   expect(underlyingInstrument).toBeTruthy()
   expect(underlyingInstrument.length).toEqual(2)
   expect(underlyingInstrument).toBeTruthy()
@@ -429,7 +428,7 @@ test('UndInstrmtGrp structure', () => {
   expect(underlyingInstrument[1].depth).toEqual(3)
   expect(underlyingInstrument[1].type).toEqual(SegmentType.Component)
 
-  const undSecAltIDGrp: SegmentDescription[] = structure.layout.UndSecAltIDGrp
+  const undSecAltIDGrp: SegmentDescription[] = structure?.layout.UndSecAltIDGrp
   expect(undSecAltIDGrp.length).toEqual(2)
   expect(undSecAltIDGrp[0].startPosition).toEqual(148)
   expect(undSecAltIDGrp[0].startTag).toEqual(457)
@@ -445,7 +444,7 @@ test('UndInstrmtGrp structure', () => {
   expect(undSecAltIDGrp[1].depth).toEqual(4)
   expect(undSecAltIDGrp[1].type).toEqual(SegmentType.Component)
 
-  const noUnderlyingSecurityAltID: SegmentDescription[] = structure.layout.NoUnderlyingSecurityAltID
+  const noUnderlyingSecurityAltID: SegmentDescription[] = structure?.layout.NoUnderlyingSecurityAltID
   expect(noUnderlyingSecurityAltID.length).toEqual(2)
   expect(noUnderlyingSecurityAltID).toBeTruthy()
 
@@ -463,9 +462,9 @@ test('UndInstrmtGrp structure', () => {
   expect(noUnderlyingSecurityAltID[1].endPosition).toEqual(209)
   expect(noUnderlyingSecurityAltID[1].delimiterPositions).toEqual([208])
 
-  const boundNoUnderlyingSecurityAltID: SegmentDescription = structure.firstContainedWithin(
-        'NoUnderlyingSecurityAltID',
-        underlyingInstrument[1])
+  const boundNoUnderlyingSecurityAltID: SegmentDescription | null = structure?.firstContainedWithin(
+    'NoUnderlyingSecurityAltID',
+    underlyingInstrument[1]) ?? null
   expect(boundNoUnderlyingSecurityAltID).toBeTruthy()
 })
 
@@ -594,7 +593,7 @@ test('UndInstrmtGrp structure', () => {
  */
 
 test('InstrmtLegExecGrp structure', () => {
-  const instrmtLegExecGrp: SegmentDescription = structure.layout.InstrmtLegExecGrp
+  const instrmtLegExecGrp: SegmentDescription = structure?.layout.InstrmtLegExecGrp
   expect(instrmtLegExecGrp).toBeTruthy()
   expect(instrmtLegExecGrp.type).toEqual(SegmentType.Component)
   expect(instrmtLegExecGrp.startPosition).toEqual(395)
@@ -603,7 +602,7 @@ test('InstrmtLegExecGrp structure', () => {
   expect(instrmtLegExecGrp.endPosition).toEqual(634)
   expect(instrmtLegExecGrp.depth).toEqual(1)
 
-  const noLegs: SegmentDescription = structure.layout.NoLegs
+  const noLegs: SegmentDescription = structure?.layout.NoLegs
   expect(noLegs).toBeTruthy()
   expect(noLegs.type).toEqual(SegmentType.Group)
   expect(noLegs.startPosition).toEqual(395)
@@ -616,7 +615,7 @@ test('InstrmtLegExecGrp structure', () => {
 })
 
 test('instrumentLeg structure', () => {
-  const instrumentLeg: SegmentDescription[] = structure.layout.InstrumentLeg
+  const instrumentLeg: SegmentDescription[] = structure?.layout.InstrumentLeg
   expect(instrumentLeg).toBeTruthy()
   expect(Array.isArray(instrumentLeg)).toEqual(true)
   expect(instrumentLeg.length).toEqual(3)
@@ -643,8 +642,20 @@ test('instrumentLeg structure', () => {
   expect(instrumentLeg[2].endTag).toEqual(956)
 })
 
+function getnoLegSecurityAltID (index: number): SegmentDescription[] {
+  const noLegSecurityAltID: SegmentDescription[] = structure?.layout.NoLegSecurityAltID
+  expect(noLegSecurityAltID).toBeTruthy()
+  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
+  expect(noLegSecurityAltID.length).toEqual(3)
+
+  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
+  expect(noLegSecurityAltID[index].depth).toEqual(5)
+  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  return noLegSecurityAltID
+}
+
 test('LegSecAltIDGrp [0] structure', () => {
-  const legSecAltIDGrp: SegmentDescription[] = structure.layout.LegSecAltIDGrp
+  const legSecAltIDGrp: SegmentDescription[] = structure?.layout.LegSecAltIDGrp
   expect(legSecAltIDGrp).toBeTruthy()
   expect(Array.isArray(legSecAltIDGrp)).toEqual(true)
   expect(legSecAltIDGrp.length).toEqual(3)
@@ -656,14 +667,7 @@ test('LegSecAltIDGrp [0] structure', () => {
   expect(legSecAltIDGrp[index].endPosition).toEqual(406)
   expect(legSecAltIDGrp[index].endTag).toEqual(606)
 
-  const noLegSecurityAltID: SegmentDescription[] = structure.layout.NoLegSecurityAltID
-  expect(noLegSecurityAltID).toBeTruthy()
-  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
-  expect(noLegSecurityAltID.length).toEqual(3)
-
-  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
-  expect(noLegSecurityAltID[index].depth).toEqual(5)
-  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  const noLegSecurityAltID: SegmentDescription[] = getnoLegSecurityAltID(index)
   expect(noLegSecurityAltID[index].startPosition).toEqual(400)
   expect(noLegSecurityAltID[index].endPosition).toEqual(406)
   expect(noLegSecurityAltID[index].endTag).toEqual(606)
@@ -672,7 +676,7 @@ test('LegSecAltIDGrp [0] structure', () => {
 })
 
 test('LegSecAltIDGrp [1] structure', () => {
-  const legSecAltIDGrp: SegmentDescription[] = structure.layout.LegSecAltIDGrp
+  const legSecAltIDGrp: SegmentDescription[] = structure?.layout.LegSecAltIDGrp
   expect(legSecAltIDGrp).toBeTruthy()
   expect(Array.isArray(legSecAltIDGrp)).toEqual(true)
   expect(legSecAltIDGrp.length).toEqual(3)
@@ -684,14 +688,7 @@ test('LegSecAltIDGrp [1] structure', () => {
   expect(legSecAltIDGrp[index].endPosition).toEqual(475)
   expect(legSecAltIDGrp[index].endTag).toEqual(606)
 
-  const noLegSecurityAltID: SegmentDescription[] = structure.layout.NoLegSecurityAltID
-  expect(noLegSecurityAltID).toBeTruthy()
-  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
-  expect(noLegSecurityAltID.length).toEqual(3)
-
-  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
-  expect(noLegSecurityAltID[index].depth).toEqual(5)
-  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  const noLegSecurityAltID: SegmentDescription[] = getnoLegSecurityAltID(index)
   expect(noLegSecurityAltID[index].startPosition).toEqual(469)
   expect(noLegSecurityAltID[index].endPosition).toEqual(475)
   expect(noLegSecurityAltID[index].endTag).toEqual(606)
@@ -700,7 +697,7 @@ test('LegSecAltIDGrp [1] structure', () => {
 })
 
 test('LegSecAltIDGrp [2] structure', () => {
-  const legSecAltIDGrp: SegmentDescription[] = structure.layout.LegSecAltIDGrp
+  const legSecAltIDGrp: SegmentDescription[] = structure?.layout.LegSecAltIDGrp
   expect(legSecAltIDGrp).toBeTruthy()
   expect(Array.isArray(legSecAltIDGrp)).toEqual(true)
   expect(legSecAltIDGrp.length).toEqual(3)
@@ -712,14 +709,7 @@ test('LegSecAltIDGrp [2] structure', () => {
   expect(legSecAltIDGrp[index].endPosition).toEqual(564)
   expect(legSecAltIDGrp[index].endTag).toEqual(606)
 
-  const noLegSecurityAltID: SegmentDescription[] = structure.layout.NoLegSecurityAltID
-  expect(noLegSecurityAltID).toBeTruthy()
-  expect(Array.isArray(noLegSecurityAltID)).toEqual(true)
-  expect(noLegSecurityAltID.length).toEqual(3)
-
-  expect(noLegSecurityAltID[index].type).toEqual(SegmentType.Group)
-  expect(noLegSecurityAltID[index].depth).toEqual(5)
-  expect(noLegSecurityAltID[index].startTag).toEqual(604)
+  const noLegSecurityAltID: SegmentDescription[] = getnoLegSecurityAltID(index)
   expect(noLegSecurityAltID[index].startPosition).toEqual(558)
   expect(noLegSecurityAltID[index].endPosition).toEqual(564)
   expect(noLegSecurityAltID[index].endTag).toEqual(606)
@@ -754,9 +744,9 @@ test('simple repeated tag decoding', () => {
 
 test('repeated group decoding of Parties', () => {
   const erView: MsgView = views[0]
-  const partyView: MsgView = erView.getView('Parties')
+  const partyView: MsgView | null = erView.getView('Parties')
   expect(partyView).toBeTruthy()
-  const partyViewAsObject: ILooseObject = partyView.toObject()
+  const partyViewAsObject: ILooseObject = partyView?.toObject()
   expect(partyViewAsObject).toBeTruthy()
   expect(partyViewAsObject.NoPartyIDs.length).toEqual(3)
   expect(partyViewAsObject.NoPartyIDs[0]).toEqual({
@@ -776,42 +766,48 @@ test('repeated group decoding of Parties', () => {
       ]
     }
   })
-  const noParties: MsgView = partyView.getView('NoPartyIDs')
+  const noParties: MsgView | null = partyView?.getView('NoPartyIDs') ?? null
   expect(noParties).toBeTruthy()
-  expect(noParties.groupCount()).toEqual(3)
-  const np0View: MsgView = noParties.getGroupInstance(0)
+  expect(noParties?.groupCount()).toEqual(3)
+  const np0View: MsgView | null = noParties?.getGroupInstance(0) ?? null
   expect(np0View).toBeTruthy()
-  expect(np0View.getString('PartyID')).toEqual('magna.')
-  expect(np0View.getString('PartyIDSource')).toEqual('9')
-  const np0ViewPtysSubGrp: MsgView = np0View.getView('PtysSubGrp')
-  const np0ViewPtysSubGrpAsObject: ILooseObject = np0ViewPtysSubGrp.toObject()
+  expect(np0View?.getString('PartyID')).toEqual('magna.')
+  expect(np0View?.getString('PartyIDSource')).toEqual('9')
+  const np0ViewPtysSubGrp: MsgView | null = np0View?.getView('PtysSubGrp') ?? null
+  const np0ViewPtysSubGrpAsObject: ILooseObject = np0ViewPtysSubGrp?.toObject()
   expect(np0ViewPtysSubGrpAsObject).toBeTruthy()
   expect(np0ViewPtysSubGrpAsObject).toEqual(partyViewAsObject.NoPartyIDs[0].PtysSubGrp)
 }, 1000)
 
 test('instrument component decode', () => {
   const erView: MsgView = views[0]
-    // check the instrument component
-  const instrumentView: MsgView = erView.getView('Instrument')
+  // check the instrument component
+  const instrumentView: MsgView | null = erView.getView('Instrument')
   expect(instrumentView).toBeTruthy()
-  expect(instrumentView.getString('Symbol')).toEqual('ac,')
-  const secAltIDGrpAsObject: ILooseObject = instrumentView.getView('SecAltIDGrp').toObject()
+  expect(instrumentView?.getString('Symbol')).toEqual('ac,')
+  const secAltIDGrpAsObject: ILooseObject | null = instrumentView?.getView('SecAltIDGrp')?.toObject() ?? null
   expect(secAltIDGrpAsObject).toBeTruthy()
-  expect(secAltIDGrpAsObject.NoSecurityAltID.length).toEqual(2)
+  expect(secAltIDGrpAsObject?.NoSecurityAltID.length).toEqual(2)
 }, 1000)
 
 test('UndInstrmtGrp component decode', () => {
   const erView: MsgView = views[0]
-    // check the instrument component
-  const undInstrmtGrpView: MsgView = erView.getView('UndInstrmtGrp')
+  // check the instrument component
+  const undInstrmtGrpView: MsgView | null = erView.getView('UndInstrmtGrp')
   expect(undInstrmtGrpView).toBeTruthy()
-  const undInstrmtGrpViewAsObject: IUndInstrmtGrp = undInstrmtGrpView.toObject()
+  const undInstrmtGrpViewAsObject: IUndInstrmtGrp | null = undInstrmtGrpView?.toObject()
   expect(undInstrmtGrpViewAsObject).toBeTruthy()
-  expect(undInstrmtGrpViewAsObject.NoUnderlyings.length).toEqual(2)
-  const underlying0: IUnderlyingInstrument = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
+  expect(undInstrmtGrpViewAsObject?.NoUnderlyings?.length).toEqual(2)
+  const underlyings: IUndInstrmtGrpNoUnderlyings[] | null = undInstrmtGrpViewAsObject?.NoUnderlyings ?? null
+  expect(underlyings).toBeTruthy()
+  if (!underlyings) return
+  const u0: IUndInstrmtGrpNoUnderlyings | null = underlyings ? underlyings[0] : null
+  const underlying0: IUnderlyingInstrument | null = u0
+    ? u0.UnderlyingInstrument ?? null
+    : null
   expect(underlying0).toBeTruthy()
-  expect(underlying0.UnderlyingSymbol).toEqual('massa.')
-  expect(underlying0.UndSecAltIDGrp).toEqual(
+  expect(underlying0?.UnderlyingSymbol).toEqual('massa.')
+  expect(underlying0?.UndSecAltIDGrp).toEqual(
     {
       NoUnderlyingSecurityAltID: [
         {
@@ -827,10 +823,13 @@ test('UndInstrmtGrp component decode', () => {
           UnderlyingSecurityAltIDSource: 'Pellentesque'
         }]
     })
-  const underlying1: ILooseObject = undInstrmtGrpViewAsObject.NoUnderlyings[1].UnderlyingInstrument
+  const underlyings2: IUndInstrmtGrpNoUnderlyings[] | null = undInstrmtGrpViewAsObject?.NoUnderlyings ?? null
+  expect(underlyings2).toBeTruthy()
+  if (!underlyings2) return
+  const underlying1: ILooseObject | null = underlyings2[1].UnderlyingInstrument ?? null
   expect(underlying1).toBeTruthy()
-  expect(underlying1.UnderlyingSymbol).toEqual('erat')
-  expect(underlying1.UndSecAltIDGrp).toEqual(
+  expect(underlying1?.UnderlyingSymbol).toEqual('erat')
+  expect(underlying1?.UndSecAltIDGrp).toEqual(
     {
       NoUnderlyingSecurityAltID: [
         {

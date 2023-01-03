@@ -5,7 +5,8 @@ import { MsgView } from '../../buffer'
 
 import {
   IStandardHeader, IInstrument, IPtysSubGrp, IParties, INstdPtysSubGrp,
-  IAllocationInstruction, IAllocationReport, IOrdAllocGrp } from '../../types/FIXML50SP2'
+  IAllocationInstruction, IAllocationReport, IOrdAllocGrp
+} from '../../types/FIXML50SP2'
 
 import { ToViews } from '../env/to-views'
 import * as moment from 'moment'
@@ -25,7 +26,7 @@ test('expect a view from fix msg', () => {
 test('expect Hdr view to be available', () => {
   const views = toViews.views
   const v = views[0]
-  const hdr: MsgView = v.getView('Hdr')
+  const hdr: MsgView | null = v.getView('Hdr')
   expect(hdr).toBeTruthy()
 })
 
@@ -42,7 +43,7 @@ test('expect Hdr view to be available', () => {
 test('fetch attributes from Hdr', () => {
   const views = toViews.views
   const v = views[0]
-  const hdr: IStandardHeader = v.getView('Hdr').toObject() as IStandardHeader
+  const hdr: IStandardHeader | null = v?.getView('Hdr')?.toObject() as IStandardHeader
   expect(hdr).toBeTruthy()
   expect(hdr.SenderCompID).toEqual('CME')
   expect(v.getTyped('SID')).toEqual('CME')
@@ -76,7 +77,11 @@ test('test complex sub structure OrdAllocGrp', () => {
   const v = views[0]
   const allocInstruction: IAllocationInstruction = v.toObject()
   expect(allocInstruction).toBeTruthy()
-  expect(allocInstruction.OrdAllocGrp[0].ClOrdID).toEqual('SX1')
+  const ag = allocInstruction?.OrdAllocGrp
+  expect(ag).toBeTruthy()
+  if (!ag) return
+  const f0 = ag[0]
+  expect(f0?.ClOrdID).toEqual('SX1')
 })
 
 /*
@@ -93,14 +98,14 @@ test('test complex sub structure OrdAllocGrp', () => {
 test('test instrument on fixml allocation - use abbreviation', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: IInstrument = v.getView('Instrmt').toObject()
+  const instrument: IInstrument = v.getView('Instrmt')?.toObject()
   expect(instrument).toBeTruthy()
 })
 
 test('test instrument attributes', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: IInstrument = v.getView('Instrmt').toObject()
+  const instrument: IInstrument = v.getView('Instrmt')?.toObject()
   expect(instrument).toBeTruthy()
   expect(instrument.SecurityID).toEqual('ED')
   expect(instrument.CFICode).toEqual('FFDCSO')
@@ -113,7 +118,7 @@ test('test instrument attributes', () => {
 test('test instrument on fixml allocation - use full name', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: IInstrument = v.getView('Instrument').toObject()
+  const instrument: IInstrument = v.getView('Instrument')?.toObject()
   expect(instrument).toBeTruthy()
 })
 
@@ -123,19 +128,21 @@ test('test complex sub structure AllocGrp', () => {
   const allocInstruction: IAllocationInstruction = v.toObject()
   expect(allocInstruction).toBeTruthy()
   expect(Array.isArray(allocInstruction.AllocGrp)).toBeTruthy()
-  expect(allocInstruction.AllocGrp.length).toEqual(1)
-  expect(allocInstruction.AllocGrp[0].AllocQty).toEqual(4)
-  expect(allocInstruction.AllocGrp[0].IndividualAllocID).toEqual('307006')
-  expect(allocInstruction.AllocGrp[0].SecondaryIndividualAllocID).toEqual('178004')
-  expect(allocInstruction.AllocGrp[0].AllocCustomerCapacity).toEqual('4')
-  expect(allocInstruction.AllocGrp[0].OriginalSecondaryTradeID).toEqual('12A80D9ED85HI040083A')
-
+  expect(allocInstruction.AllocGrp?.length).toEqual(1)
+  const fa = allocInstruction.AllocGrp
+  const f0 = fa ? fa[0] : null
+  expect(f0).toBeTruthy()
+  expect(f0?.AllocQty).toEqual(4)
+  expect(f0?.IndividualAllocID).toEqual('307006')
+  expect(f0?.SecondaryIndividualAllocID).toEqual('178004')
+  expect(f0?.AllocCustomerCapacity).toEqual('4')
+  expect(f0?.OriginalSecondaryTradeID).toEqual('12A80D9ED85HI040083A')
 })
 
 test('test OrdAllocGrp', () => {
   const views = toViews.views
   const v = views[0]
-  const ordAlloc: IOrdAllocGrp[] = v.getView('OrdAllocGrp').toObject()
+  const ordAlloc: IOrdAllocGrp[] = v.getView('OrdAllocGrp')?.toObject()
   expect(ordAlloc).toBeTruthy()
   expect(Array.isArray(ordAlloc)).toBeTruthy()
   expect(ordAlloc.length).toEqual(1)
@@ -145,7 +152,7 @@ test('test OrdAllocGrp', () => {
 test('main Party Group', () => {
   const views = toViews.views
   const v = views[0]
-  const parties: IParties[] = v.getView('Parties').toObject()
+  const parties: IParties[] = v.getView('Parties')?.toObject()
   expect(parties).toBeTruthy()
   expect(Array.isArray(parties)).toBeTruthy()
   expect(parties.length).toEqual(4)
@@ -166,7 +173,7 @@ test('main Party Group', () => {
 test('test party sub group', () => {
   const views = toViews.views
   const v = views[0]
-  const parties: IPtysSubGrp[] = v.getView('Parties.PtysSubGrp').toObject()
+  const parties: IPtysSubGrp[] = v.getView('Parties.PtysSubGrp')?.toObject()
   expect(parties).toBeTruthy()
   expect(Array.isArray(parties)).toBeTruthy()
   expect(parties.length).toEqual(1)
@@ -180,7 +187,7 @@ test('test party sub group', () => {
 test('test AllocGrp.NestedParties.NstdPtysSubGrp', () => {
   const views = toViews.views
   const v = views[0]
-  const parties: INstdPtysSubGrp[] = v.getView('AllocGrp.NestedParties.NstdPtysSubGrp').toObject()
+  const parties: INstdPtysSubGrp[] = v.getView('AllocGrp.NestedParties.NstdPtysSubGrp')?.toObject()
   expect(parties).toBeTruthy()
   expect(Array.isArray(parties)).toBeTruthy()
   expect(parties.length).toEqual(1)

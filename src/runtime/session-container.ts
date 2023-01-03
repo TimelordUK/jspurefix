@@ -4,8 +4,10 @@ import { IJsFixConfig, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger
 import { DITokens } from './di-tokens'
 import { RuntimeFactory } from './make-config'
 
-import { TcpAcceptorListener, RecoveringTcpInitiator,
-  TcpInitiatorConnector, TcpInitiator } from '../transport/tcp'
+import {
+  TcpAcceptorListener, RecoveringTcpInitiator,
+  TcpInitiatorConnector, TcpInitiator
+} from '../transport/tcp'
 import { HttpInitiator, HttpAcceptorListener, HttpJsonSampleAdapter } from '../transport/http'
 import { ISessionMsgFactory, MsgTransmitter, ISessionDescription } from '../transport'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
@@ -19,20 +21,19 @@ import { FixEntity } from '../transport/fix-entity'
 import { IHttpAdapter } from '../transport/http/http-adapter'
 
 export class SessionContainer {
-
   public reset (): void {
     container.reset()
   }
 
-  public registerGlobal (loggerFactory?: JsFixLoggerFactory): void;
-  public registerGlobal (level: string): void;
+  public registerGlobal (loggerFactory?: JsFixLoggerFactory): void
+  public registerGlobal (level: string): void
   public registerGlobal (levelOrLoggerFactory: string | JsFixLoggerFactory = 'info'): void {
     container.registerInstance(DefinitionFactory, new DefinitionFactory())
-    let lf: JsFixLoggerFactory;
+    let lf: JsFixLoggerFactory
     if (typeof levelOrLoggerFactory === 'string') {
       lf = new JsFixWinstonLogFactory(WinstonLogger.consoleOptions(levelOrLoggerFactory))
     } else {
-      lf = levelOrLoggerFactory;
+      lf = levelOrLoggerFactory
     }
     container.registerInstance(DITokens.JsFixLoggerFactory, lf)
     container.register<RuntimeFactory>(RuntimeFactory, {
@@ -45,9 +46,9 @@ export class SessionContainer {
 
   protected makeSessionFactory (description: ISessionDescription): ISessionMsgFactory {
     const fixml = !this.isAscii(description)
-    return fixml ?
-      new FixmlSessionMsgFactory(description) :
-      new AsciiSessionMsgFactory(description)
+    return fixml
+      ? new FixmlSessionMsgFactory(description)
+      : new AsciiSessionMsgFactory(description)
   }
 
   public newChild (description: ISessionDescription): DependencyContainer {
@@ -58,8 +59,8 @@ export class SessionContainer {
     return sessionContainer
   }
 
-  public makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
-    return new Promise<DependencyContainer>((resolve, reject) => {
+  public async makeSystem (description: ISessionDescription): Promise<DependencyContainer> {
+    return await new Promise<DependencyContainer>((resolve, reject) => {
       const sessionContainer = this.newChild(description)
       const factory = sessionContainer.resolve<RuntimeFactory>(RuntimeFactory)
       factory.makeConfig().then((c: IJsFixConfig) => {
@@ -72,14 +73,14 @@ export class SessionContainer {
   }
 
   public isAscii (description: ISessionDescription): boolean {
-    return description.application.protocol === 'ascii'
+    return description.application?.protocol === 'ascii'
   }
 
   public isInitiator (description: ISessionDescription): boolean {
-    return description.application.type === 'initiator'
+    return description.application?.type === 'initiator'
   }
 
-  public asAscii (description: ISessionDescription, sessionContainer: DependencyContainer) {
+  public asAscii (description: ISessionDescription, sessionContainer: DependencyContainer): void {
     sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
       useClass: AsciiMsgTransmitter
     })
@@ -112,7 +113,7 @@ export class SessionContainer {
       sessionContainer.register<TcpInitiatorConnector>(TcpInitiatorConnector, {
         useClass: TcpInitiatorConnector
       })
-      if (description.application.resilient) {
+      if (description.application?.resilient) {
         sessionContainer.register<FixEntity>(DITokens.FixEntity, {
           useClass: RecoveringTcpInitiator
         })
@@ -128,7 +129,7 @@ export class SessionContainer {
     }
   }
 
-  public asFixml (description: ISessionDescription, sessionContainer: DependencyContainer) {
+  public asFixml (description: ISessionDescription, sessionContainer: DependencyContainer): void {
     sessionContainer.register<MsgTransmitter>(DITokens.MsgTransmitter, {
       useClass: FixmlMsgTransmitter
     })
@@ -164,7 +165,7 @@ export class SessionContainer {
     }
   }
 
-  protected asciiConstants (c: IJsFixConfig, sessionContainer: DependencyContainer) {
+  protected asciiConstants (c: IJsFixConfig, sessionContainer: DependencyContainer): void {
     sessionContainer.register(DITokens.delimiter, {
       useValue: c.delimiter
     })
@@ -173,7 +174,7 @@ export class SessionContainer {
     })
   }
 
-  public registerSession (c: IJsFixConfig, sessionContainer: DependencyContainer) {
+  public registerSession (c: IJsFixConfig, sessionContainer: DependencyContainer): void {
     if (this.isAscii(c.description)) {
       this.asAscii(c.description, sessionContainer)
       this.asciiConstants(c, sessionContainer)

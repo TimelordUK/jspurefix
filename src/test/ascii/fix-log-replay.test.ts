@@ -11,10 +11,10 @@ const root: string = path.join(__dirname, '../../../data')
 let definitions: FixDefinitions
 let views: MsgView[]
 let expected: ILooseObject
-let setup: Setup = null
+let setup: Setup
 
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator.json',null)
+  setup = new Setup('session/test-initiator.json', null)
   await setup.init()
   definitions = setup.client.config.definitions
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
@@ -26,8 +26,8 @@ test('expect 50 messages in log', () => {
 })
 
 test('expect 50 messages of specific types in log', () => {
-  const layout = views.reduce((a: ILooseObject, latest: MsgView) => {
-    const def: MessageDefinition = definitions.message.get(latest.segment.name)
+  const layout = views.reduce<ILooseObject>((a: ILooseObject, latest: MsgView) => {
+    const def: MessageDefinition | null = definitions.message.get(latest.segment.name)
     if (def) {
       let lookup = a[def.msgType]
       if (!lookup) {
@@ -38,6 +38,6 @@ test('expect 50 messages of specific types in log', () => {
       a[def.msgType] = lookup
     }
     return a
-  }, {} as ILooseObject)
+  }, {})
   expect(layout).toEqual(expected)
 })

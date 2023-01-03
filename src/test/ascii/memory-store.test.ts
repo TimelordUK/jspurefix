@@ -5,7 +5,7 @@ import { FixDefinitions } from '../../dictionary/definition'
 import { MsgView } from '../../buffer'
 import { AsciiView } from '../../buffer/ascii'
 import { ILooseObject } from '../../collections/collection'
-import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../../store'
+import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
 import { MsgTag } from '../../types'
 import { Setup } from '../env/setup'
 
@@ -15,23 +15,23 @@ let definitions: FixDefinitions
 let views: MsgView[]
 let expected: ILooseObject
 let store: IFixMsgStore
-let records: FixMsgStoreRecord[]
-let setup: Setup = null
+let records: IFixMsgStoreRecord[]
+let setup: Setup
 
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator.json',null)
+  setup = new Setup('session/test-initiator.json', null)
   await setup.init()
   definitions = setup.clientConfig.definitions
   expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
   store = new FixMsgMemoryStore('test', setup.clientConfig)
-  records = views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
+  records = views.reduce((agg: IFixMsgStoreRecord[], v: AsciiView) => {
     if (v.getString(MsgTag.SenderCompID) === 'accept-comp') {
       agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
     }
     return agg
-  }, [])
-  const toWrite = records.map(r => store.put(r))
+  }, new Array<IFixMsgStoreRecord>())
+  const toWrite = records.map(async r => await store.put(r))
   await Promise.all(toWrite)
 }, 45000)
 

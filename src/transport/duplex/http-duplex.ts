@@ -1,6 +1,6 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
-import * as rp from 'request-promise-native'
+import axios, { isCancel, AxiosError } from 'axios'
 import { IHttpAdapter } from '../http/http-adapter'
 
 export class HttpDuplex extends FixDuplex {
@@ -13,7 +13,7 @@ export class HttpDuplex extends FixDuplex {
   private static makeReadable (): Readable {
     const Readable = require('stream').Readable
     const reader = {
-      read:  () => {
+      read: () => {
         // nothing
       }
     }
@@ -28,13 +28,15 @@ export class HttpDuplex extends FixDuplex {
         try {
           const adapter = this.adapter
           const options = adapter.getOptions(data)
-          rp(options).then((message: any) => {
-            const body = adapter.endMessage(message)
-            forward.push(body)
-            done()
-          }).catch((err: Error) => {
-            receiver.emit('error', err)
-          })
+          if (options) {
+            axios(options).then((message: any) => {
+              const body = adapter.endMessage(message)
+              forward.push(body)
+              done()
+            }).catch((err: Error) => {
+              receiver.emit('error', err)
+            })
+          }
         } catch (e) {
           done(e)
         }

@@ -11,38 +11,39 @@ import { IMsgApplication } from '../msg-application'
 import { FixEntity } from '../fix-entity'
 
 /*
-   create one application session instance - and recover a lost transport.  Hence the application
+   create one application session instance - and recover a lost transport.  Hence, the application
    will automatically re-connected and the "message recovery" policy enacted i.e. replay from
    last known sequence number or sequence reset.
  */
 
 @injectable()
 export class RecoveringTcpInitiator extends FixEntity {
-  public tcp: ITcpTransportDescription
+  public tcp: ITcpTransportDescription | null
   public session: FixSession
   private readonly logger: IJsFixLogger
-  private application: IMsgApplication
+  private readonly application: IMsgApplication | null
   private initiator: TcpInitiator
   private transport: MsgTransport
-  private th: Timeout = null
+  private th: Timeout | null = null
   public recoveryAttemptSecs: number = 5
   public backoffFailConnectSecs: number = 30
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
     super(jsFixConfig)
-    this.application = this.jsFixConfig.description.application
-    this.logger = jsFixConfig.logFactory.logger(`${this.application.name}:RecoveringTcpInitiator`)
+    this.application = this.jsFixConfig.description.application ?? null
+    const name = this.application?.name ?? 'na'
+    this.logger = jsFixConfig.logFactory.logger(`${name}:RecoveringTcpInitiator`)
     if (!this.application) {
-      throw new Error(`no application in session description.`)
+      throw new Error('no application in session description.')
     }
-    this.tcp = this.application.tcp
+    this.tcp = this.application.tcp ?? null
     if (!this.tcp) {
-      throw new Error(`no tcp in session description need tcp { host: hostname, port: port }`)
+      throw new Error('no tcp in session description need tcp { host: hostname, port: port }')
     }
     this.createSession(jsFixConfig)
   }
 
-  private createSession (jsFixConfig: IJsFixConfig) {
+  private createSession (jsFixConfig: IJsFixConfig): void {
     this.logger.info(`creating an application session with DI token ${DITokens.FixSession}.`)
     this.session = jsFixConfig.sessionContainer.resolve<FixSession>(DITokens.FixSession)
     this.session.on('done', () => {
@@ -60,12 +61,20 @@ export class RecoveringTcpInitiator extends FixEntity {
     return this.session.getState()
   }
 
-  private newTransport (transport: MsgTransport) {
+  public lastSentSeqNum (): number {
+    return this.session.lastSentSeqNum()
+  }
+
+  private resetSeq (): boolean {
+    return this.jsFixConfig.description.ResetSeqNumFlag
+  }
+
+  private newTransport (transport: MsgTransport): void {
     this.transport = transport
     this.emit('transport', transport)
     this.logger.info(`initiator connects id ${(transport.id)}`)
     const session = this.session
-    if (this.jsFixConfig.description.ResetSeqNumFlag) {
+    if (this.resetSeq()) {
       this.logger.info('reset sequence numbers')
       session.reset()
     }
@@ -84,7 +93,7 @@ export class RecoveringTcpInitiator extends FixEntity {
     this.logger.info(`running session with transport ${transport.id} state = ${session.getState()}`)
   }
 
-  private clearTimer () {
+  private clearTimer (): void {
     if (this.th) {
       clearTimeout(this.th)
       this.th = null
@@ -98,6 +107,13 @@ export class RecoveringTcpInitiator extends FixEntity {
   private recover (): void {
     this.session.setState(SessionState.DetectBrokenNetworkConnection)
     this.logger.info(`recover session transport - attempt in ${this.recoveryAttemptSecs} secs`)
+    if (!this.resetSeq()) {
+      const lastSentSeqNum = this.lastSentSeqNum()
+      if (lastSentSeqNum > 0) {
+        this.logger.info(`recover session set LastSentSeqNum ${lastSentSeqNum} for new transport`)
+        this.config.description.LastSentSeqNum = lastSentSeqNum
+      }
+    }
     this.th = setTimeout(() => {
       this.connect(60).then(t => {
         this.logger.info(`new transport ${t.id}`)
@@ -105,22 +121,24 @@ export class RecoveringTcpInitiator extends FixEntity {
         this.logger.info(`failed to re-connect ${e.message} - backoff for ${this.backoffFailConnectSecs}`)
         this.th = setTimeout(() => {
           this.logger.info('returning to recover()')
-          this.recover()
+          setImmediate(() => {
+            this.recover()
+          })
         }, this.backoffFailConnectSecs * 1000)
       })
-    },this.recoveryAttemptSecs * 1000)
+    }, this.recoveryAttemptSecs * 1000)
   }
 
-  public start (): Promise<any> {
-    return this.run()
+  public async start (): Promise<any> {
+    return await this.run()
   }
 
   // for first connection - reject if no initial connection established within timeout
   // once connection established, will not resolve until session is ended - i.e. lost
   // connections are re-established using the same session instance.
 
-  public run (initialTimeout: number = 60): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+  public async run (initialTimeout: number = 60): Promise<any> {
+    return await new Promise<any>((resolve, reject) => {
       this.connect(initialTimeout).then(() => {
         this.on('end', () => {
           this.clearTimer()
@@ -137,8 +155,8 @@ export class RecoveringTcpInitiator extends FixEntity {
 
   // return a promise for new transport - or reject if no connection within timeout
 
-  private connect (timeout: number): Promise<MsgTransport> {
-    return new Promise<MsgTransport>((resolve, reject) => {
+  private async connect (timeout: number): Promise<MsgTransport> {
+    return await new Promise<MsgTransport>((resolve, reject) => {
       this.logger.info(`connect: start initiator timeout ${timeout}`)
       this.session.setState(SessionState.InitiateConnection)
       this.initiator = new TcpInitiator(this.jsFixConfig)

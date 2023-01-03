@@ -6,21 +6,21 @@ export interface IFixMsgStoreRecord {
   readonly msgType: string
   readonly timestamp: Date
   readonly seqNum: number
-  obj?: ILooseObject
-  readonly encoded?: string
-  clone (): IFixMsgStoreRecord
+  obj?: ILooseObject | null
+  readonly encoded?: string | null
+  clone: () => IFixMsgStoreRecord
 }
 
 export class FixMsgStoreRecord implements IFixMsgStoreRecord {
   constructor (public readonly msgType: string,
-               public readonly timestamp: Date,
-               public readonly seqNum: number,
-               public obj?: ILooseObject,
-               public readonly encoded?: string) {
+    public readonly timestamp: Date,
+    public readonly seqNum: number,
+    public obj?: ILooseObject,
+    public readonly encoded?: string | null) {
   }
 
   static toMsgStoreRecord (v: MsgView): IFixMsgStoreRecord {
-    return new FixMsgStoreRecord(v.getString(MsgTag.MsgType), v.getTyped(MsgTag.SendingTime), v.getTyped(MsgTag.MsgSeqNum), v.toObject())
+    return new FixMsgStoreRecord(v.getString(MsgTag.MsgType) ?? '', v.getTyped(MsgTag.SendingTime), v.getTyped(MsgTag.MsgSeqNum), v.toObject())
   }
 
   clone (): IFixMsgStoreRecord {

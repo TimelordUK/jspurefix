@@ -12,11 +12,11 @@ export class SkeletonSession extends AsciiSession {
   private readonly fixLog: IJsFixLogger
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
-               @inject('logoutSeconds') public readonly logoutSeconds: number,
-               @inject('useInMemoryStore') public useInMemoryStore: boolean) {
+    @inject('logoutSeconds') public readonly logoutSeconds: number,
+    @inject('useInMemoryStore') public useInMemoryStore: boolean) {
     super(config)
     this.logReceivedMsgs = true
-    this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
+    this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}`)
   }
 
@@ -24,7 +24,7 @@ export class SkeletonSession extends AsciiSession {
     // dispatch messages
     if (this.useInMemoryStore) {
       const rec = FixMsgStoreRecord.toMsgStoreRecord(view)
-      this.store.put(rec).then(r => {
+      this.store?.put(rec).then(r => {
         this.logger.info(`store state ${JSON.stringify(r, null, 4)}`)
         this.dispatch(msgType, view)
       }).catch(e => {
@@ -35,7 +35,7 @@ export class SkeletonSession extends AsciiSession {
     }
   }
 
-  private dispatch (msgType: string, view: MsgView) {
+  private dispatch (msgType: string, view: MsgView): void {
     const o = view.toObject()
     switch (msgType) {
       default: {
@@ -67,7 +67,7 @@ export class SkeletonSession extends AsciiSession {
   protected onReady (view: MsgView): void {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
-    const t = this.config.description.application.type
+    const t = this.config?.description?.application?.type
     switch (t) {
       case 'initiator': {
         this.logger.info(`will logout after ${logoutSeconds}`)
@@ -78,7 +78,7 @@ export class SkeletonSession extends AsciiSession {
       }
 
       case 'acceptor': {
-        this.logger.info(`acceptor is ready for requests`)
+        this.logger.info('acceptor is ready for requests')
         break
       }
 

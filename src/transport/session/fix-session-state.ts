@@ -3,14 +3,15 @@ import moment = require('moment')
 import { TickAction } from '../tick-action'
 import { IFixSessionStateArgs } from './fix-session-state-args'
 import { SessionState } from './session-state'
+import { ILooseObject } from '../../collections/collection'
 
 export class FixSessionState {
   public nextTickAction: TickAction = TickAction.Nothing
 
-  public lastReceivedAt: Date = null
-  public LastSentAt: Date = null
-  public lastTestRequestAt: Date = null
-  public logoutSentAt: Date = null
+  public lastReceivedAt: Date | null = null
+  public LastSentAt: Date | null = null
+  public lastTestRequestAt: Date | null = null
+  public logoutSentAt: Date | null = null
   public now: Date = new Date()
   public compId: string = ''
   public peerCompId: string = ''
@@ -24,8 +25,9 @@ export class FixSessionState {
   private secondsSinceLogoutSent: number = -1
   private secondsSinceSent: number = -1
   private secondsSinceReceive: number = -1
+  public lastHeader: ILooseObject | null = null
 
-  public reset (resetSeqNo: boolean): void {
+  public reset (lastPeerMsgSeqNum: number = 0): void {
     this.lastReceivedAt = null
     this.LastSentAt = null
     this.lastTestRequestAt = null
@@ -35,16 +37,17 @@ export class FixSessionState {
     this.peerHeartBeatSecs = 0
     this.logoutSentAt = null
     this.nextTickAction = TickAction.Nothing
-    if (resetSeqNo) {
-      this.lastPeerMsgSeqNum = 0
-    }
+    this.lastPeerMsgSeqNum = lastPeerMsgSeqNum
+    this.lastHeader = null
   }
 
-  public constructor ({ heartBeat,
-                        state = SessionState.Idle,
-                        waitLogoutConfirmSeconds = 5,
-                        stopSeconds = 2,
-                        lastPeerMsgSeqNum = 0 }: IFixSessionStateArgs) {
+  public constructor ({
+    heartBeat,
+    state = SessionState.Idle,
+    waitLogoutConfirmSeconds = 5,
+    stopSeconds = 2,
+    lastPeerMsgSeqNum = 0
+  }: IFixSessionStateArgs) {
     this.heartBeat = heartBeat
     this.state = state
     this.waitLogoutConfirmSeconds = waitLogoutConfirmSeconds
@@ -52,15 +55,18 @@ export class FixSessionState {
     this.lastPeerMsgSeqNum = lastPeerMsgSeqNum
   }
 
-  private static dateAsString (d: Date) {
+  private static dateAsString (d: Date | null): string {
     if (!d) {
       return 'null'
     }
     return moment(d).format('HH:mm:ss.SSS')
   }
 
-  public toString (): string {
+  public lastSentSeqNum (): number {
+    return this?.lastHeader?.MsgSeqNum ?? 0
+  }
 
+  public toString (): string {
     const buffer = new ElasticBuffer(1024)
 
     buffer.writeString(`compId = ${this.compId}, `)
@@ -79,6 +85,7 @@ export class FixSessionState {
     buffer.writeString(`peerHeartBeatSecs = ${this.peerHeartBeatSecs}, `)
     buffer.writeString(`peerCompId = ${this.peerCompId}, `)
     buffer.writeString(`lastPeerMsgSeqNum = ${this.lastPeerMsgSeqNum}, `)
+    buffer.writeString(`LastSentSeqNum = ${this.lastSentSeqNum()}, `)
     buffer.writeString(`secondsSinceLogoutSent = ${this.secondsSinceLogoutSent}, `)
     buffer.writeString(`secondsSinceSent = ${this.secondsSinceSent}, `)
     buffer.writeString(`secondsSinceReceive = ${this.secondsSinceReceive}`)
@@ -91,7 +98,6 @@ export class FixSessionState {
     this.calcState()
 
     switch (this.state) {
-
       case SessionState.PeerLogonRejected: {
         if (this.secondsSinceSent >= this.stopSeconds) {
           this.nextTickAction = TickAction.Stop
@@ -154,7 +160,7 @@ export class FixSessionState {
     const time = this.now.getTime()
     this.nextTickAction = TickAction.Nothing
     this.secondsSinceLogoutSent = this.logoutSentAt ? (time - this.logoutSentAt.getTime()) / 1000 : -1
-    this.secondsSinceSent = (time - this.LastSentAt.getTime()) / 1000
-    this.secondsSinceReceive = (time - this.lastReceivedAt.getTime()) / 1000
+    this.secondsSinceSent = this.LastSentAt != null ? (time - this.LastSentAt.getTime()) / 1000 : 0
+    this.secondsSinceReceive = this.lastReceivedAt != null ? (time - this.lastReceivedAt.getTime()) / 1000 : 0
   }
 }

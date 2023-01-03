@@ -8,7 +8,7 @@
           "name": "UserReq",
           "value": {
             "method": "POST",
-            "uri": "http://localhost:2434/authorise",
+            "url": "http://localhost:2434/authorise",
             "json":true,
             "resolveWithFullResponse": true,
             "headers": {
@@ -21,7 +21,7 @@
           "name": "default",
           "value": {
             "method": "GET",
-            "uri": "http://localhost:2434/query",
+            "url": "http://localhost:2434/query",
             "json": true,
             "resolveWithFullResponse": true,
             "headers": {

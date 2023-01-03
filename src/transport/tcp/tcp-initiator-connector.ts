@@ -12,8 +12,10 @@ export class TcpInitiatorConnector extends FixEntity {
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
   }
-  start (reconnectTimeout: number = 0): Promise<any> {
-    return new Promise<any>(async (accept, reject) => {
+
+  async start (reconnectTimeout: number = 0): Promise<any> {
+    // eslint-disable-next-line no-async-promise-executor
+    return await new Promise<any>(async (resolve, reject) => {
       const logger = this.config.logFactory.logger('initiator')
       const sessionContainer = this.config.sessionContainer
       if (!sessionContainer.isRegistered(DITokens.FixSession)) {
@@ -27,7 +29,7 @@ export class TcpInitiatorConnector extends FixEntity {
           await this.connect(initiatorSession)
           logger.info('session has ended')
           connecting = false
-          accept(true)
+          resolve(true)
         } catch (e) {
           if (!reconnectTimeout) {
             connecting = false
@@ -41,14 +43,18 @@ export class TcpInitiatorConnector extends FixEntity {
     })
   }
 
-  delay (p: number): Promise<any> {
-    return new Promise<any>((accept) => {
-      if (!p) {
-        accept(true)
+  async delay (p: number): Promise<any> {
+    return await new Promise<any>((resolve, reject) => {
+      try {
+        if (!p) {
+          resolve(true)
+        }
+        setTimeout(() => {
+          resolve(true)
+        }, p)
+      } catch (e) {
+        reject(e)
       }
-      setTimeout(() => {
-        accept(true)
-      }, p)
     })
   }
 

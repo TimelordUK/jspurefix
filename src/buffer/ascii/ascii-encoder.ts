@@ -14,17 +14,16 @@ import { Tags } from '../tag/tags'
 import { TagType } from '../tag/tag-type'
 
 export class AsciiEncoder extends MsgEncoder {
-
   public bodyLengthPos: number
   public msgTypePos: number
   public tags: Tags
   public checkGroups: boolean = true
 
   constructor (public readonly buffer: ElasticBuffer,
-               public readonly definitions: FixDefinitions,
-               public readonly timeFormatter: ITimeFormatter = new TimeFormatter(buffer),
-               public readonly delimiter: number = AsciiChars.Soh,
-               public readonly logDelimiter: number = AsciiChars.Pipe) {
+    public readonly definitions: FixDefinitions,
+    public readonly timeFormatter: ITimeFormatter = new TimeFormatter(buffer),
+    public readonly delimiter: number = AsciiChars.Soh,
+    public readonly logDelimiter: number = AsciiChars.Pipe) {
     super(definitions)
     this.tags = new Tags(definitions)
   }
@@ -87,7 +86,7 @@ export class AsciiEncoder extends MsgEncoder {
     const keys: string[] = Object.keys(o)
     let j: number = 0
     const fields: ContainedField[] = keys.reduce((a: ContainedField[], current: string) => {
-      const field: ContainedField = set.localNameToField.get(current)
+      const field: ContainedField | null = set.localNameToField.get(current)
       if (field) {
         a[j++] = field
       }
@@ -98,7 +97,8 @@ export class AsciiEncoder extends MsgEncoder {
   }
 
   private encodeInstances (o: ILooseObject, gf: ContainedGroupField): void {
-    const noOfField: SimpleFieldDefinition = gf.definition.noOfField
+    const noOfField: SimpleFieldDefinition | null = gf.definition.noOfField
+    if (!noOfField) return
     const instances: ILooseObject[] = o[gf.name] || o[noOfField.name]
 
     const buffer = this.buffer
@@ -167,7 +167,6 @@ export class AsciiEncoder extends MsgEncoder {
     }
 
     switch (tagType) {
-
       case TagType.RawData: {
         // may need to first write raw message length (see below)
         break
@@ -262,7 +261,7 @@ class GroupValidator {
     public readonly test: AsciiEncodeSetSummary = new AsciiEncodeSetSummary()) {
   }
 
-  getSummary (field: number) {
+  getSummary (field: number): AsciiEncodeSetSummary {
     return field === 0 ? this.first : this.test
   }
 
@@ -270,31 +269,34 @@ class GroupValidator {
     const first = this.first
     const test = this.test
     if (field === 0 && first.empty()) {
-      throw new Error(`first group instance has no delimeter present ${this.gf.name}`)
+      throw new Error(`first group instance has no delimiter present ${this.gf.name}`)
     }
     if (field > 0 && test.empty()) {
-      throw new Error(`group instance [${field}] has no delimeter present ${this.gf.name}`)
+      throw new Error(`group instance [${field}] has no delimiter present ${this.gf.name}`)
     }
     if (field > 0) {
-      const firstTag = first.firstSimple.definition.tag
-      const tag = test.firstSimple.definition.tag
+      const firstTag = first.firstSimple?.definition.tag
+      const tag = test.firstSimple?.definition.tag
       if (firstTag !== tag) {
-        throw new Error(`group instance [${field}] inconsisent delimeter ${tag} expected tag ${firstTag}`)
+        const msg = `group instance [${field}] inconsistent delimiter ${tag} expected tag ${firstTag}`
+        throw new Error(msg)
       }
     }
   }
 }
 
 class AsciiEncodeSetSummary {
-  constructor (public firstSimple: ContainedSimpleField = null,
-    public lastSimple: ContainedSimpleField = null,
+  constructor (public firstSimple: ContainedSimpleField | null = null,
+    public lastSimple: ContainedSimpleField | null = null,
     public count: number = 0) {
   }
+
   public reset (): void {
     this.firstSimple = null
     this.lastSimple = null
     this.count = 0
   }
+
   public empty (): boolean {
     return this.firstSimple === null || this.count === 0
   }

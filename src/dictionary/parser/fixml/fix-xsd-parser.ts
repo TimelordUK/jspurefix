@@ -10,7 +10,6 @@ import { FixDefinitionSource } from '../../fix-definition-source'
 import { FixVersion } from '../../fix-versions'
 
 export class FixXsdParser extends FixParser {
-
   public readonly definitions: FixDefinitions
   private readonly logger: IJsFixLogger
 
@@ -28,7 +27,7 @@ export class FixXsdParser extends FixParser {
     logger.info(`resolve includes ${main} from root ${this.rootPath}`)
     const t = new IncludeGraph(this.rootPath, main)
     await t.build()
-    const resolved: string[] = t.resolve(main)
+    const resolved: string[] = t.resolve(main) ?? []
     const fields: FieldsParser = new FieldsParser(definitions)
     const components: ComponentsParser = new ComponentsParser(definitions)
     const filtered: string[] = resolved.reduce((a: string[], f: string) => {
@@ -38,7 +37,7 @@ export class FixXsdParser extends FixParser {
       return a
     }, [])
 
-    for (let f of filtered) {
+    for (const f of filtered) {
       const parser: XsdParser = f.indexOf('-fields-') > 0 ? fields : components
       logger.info(`parsing file ${f}`)
       await parser.parse(path.join(this.rootPath, f))

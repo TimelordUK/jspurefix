@@ -37,7 +37,7 @@ const expectedTagPos = [
   new TagPos(20, 554, 196, 11),
   new TagPos(21, 10, 211, 2)]
 
-let setup: Setup = null
+let setup: Setup
 beforeAll(async () => {
   expect.assertions(1)
   setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
@@ -48,38 +48,38 @@ beforeAll(async () => {
   jsonHelper = new JsonHelper(definitions)
 }, 45000)
 
-test('begin string incorrectly placed', () => {
-  return expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
+test('begin string incorrectly placed', async () => {
+  return await expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
     new Error('BeginString: not expected at position [2]')
   )
 })
 
-test('body length incorrectly placed', () => {
-  return expect(setup.client.parseText('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
+test('body length incorrectly placed', async () => {
+  return await expect(setup.client.parseText('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
     new Error('BodyLengthTag: not expected at position [3]')
   )
 })
 
-test('msg type incorrectly placed', () => {
-  return expect(setup.client.parseText('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
+test('msg type incorrectly placed', async () => {
+  return await expect(setup.client.parseText('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
     new Error('MsgTag: not expected at position [4]')
   )
 })
 
-test('do not start with 8=', () => {
-  return expect(setup.client.parseText('59=FIX4.4|')).rejects.toEqual(
+test('do not start with 8=', async () => {
+  return await expect(setup.client.parseText('59=FIX4.4|')).rejects.toEqual(
     new Error('position 1 [59] must be BeginString: 8=')
   )
 })
 
-test('body length incorrectly placed', () => {
-  return expect(setup.client.parseText('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
+test('body length incorrectly placed', async () => {
+  return await expect(setup.client.parseText('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
     new Error('position 2 [59] must be BodyLengthTag: 9=')
   )
 })
 
-test('msgTag incorrectly placed', () => {
-  return expect(setup.client.parseText('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
+test('msgTag incorrectly placed', async () => {
+  return await expect(setup.client.parseText('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
     new Error('position 3 [59] must be MsgTag: 35=')
   )
 })
@@ -110,13 +110,13 @@ test('msg sent in chunks matches parser buffer', async () => {
 test('logon parsers to correct tag set', async () => {
   const res: ParsingResult = await setup.client.parseText(logon, true)
   expect(res.msgType).toEqual(MsgType.Logon)
-  expect(res.view.structure.tags.tagPos).toEqual(expectedTagPos)
+  expect(res?.view?.structure?.tags.tagPos).toEqual(expectedTagPos)
 })
 
 test('tags other than 10 past body length', async () => {
   const begin = '8=FIX4.4|9=0000208|'
-  const changed = logon.replace('10=49|','555=you know nothin|10=49')
-  return expect(setup.client.parseText(changed)).rejects.toEqual(
+  const changed = logon.replace('10=49|', '555=you know nothin|10=49')
+  return await expect(setup.client.parseText(changed)).rejects.toEqual(
     new Error(`Tag: [555] cant be after ${208 + begin.length - 1}`)
   )
 })
@@ -125,23 +125,22 @@ test('unknown message type', async () => {
   const changed = logon.replace('35=A', '35=ZZ')
   const res = await setup.client.parseText(changed)
   expect(res.view).toBeTruthy()
-  expect(res.view.segment.type).toEqual(SegmentType.Unknown)
+  expect(res?.view?.segment.type).toEqual(SegmentType.Unknown)
 })
 
 test('missing 1 required tag', async () => {
-  const changed = logon.replace('108=62441|','000=62441|')
+  const changed = logon.replace('108=62441|', '000=62441|')
   const res = await setup.client.parseText(changed)
   expect(res.view).toBeTruthy()
-  const missing = res.view.missing()
+  const missing = res?.view?.missing()
   expect(missing).toEqual([108])
 })
 
 test('missing 2 required tags', async () => {
   // const changed = logon.replace('108=62441|','000=62441|')
-  const changed = logon.replace('98=2|108=62441|','01=2|000=62441|')
+  const changed = logon.replace('98=2|108=62441|', '01=2|000=62441|')
   const res = await setup.client.parseText(changed)
   expect(res.view).toBeTruthy()
-  const missing = res.view.missing()
+  const missing = res?.view?.missing()
   expect(missing).toEqual([98, 108])
 })
-

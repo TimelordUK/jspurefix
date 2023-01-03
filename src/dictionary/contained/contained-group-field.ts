@@ -4,10 +4,10 @@ import { ContainedFieldType } from './contained-field-type'
 
 export class ContainedGroupField extends ContainedField {
   constructor (public readonly definition: GroupFieldDefinition,
-               public readonly position: number,
-               public readonly required: boolean,
-               public readonly override?: string) {
-    super(override || definition.name, position, ContainedFieldType.Group, required)
+    public readonly position: number,
+    public readonly required: boolean,
+    public readonly override?: string) {
+    super(override ?? definition.name, position, ContainedFieldType.Group, required)
   }
 
   public toString (): string {

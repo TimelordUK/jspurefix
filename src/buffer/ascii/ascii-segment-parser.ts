@@ -20,14 +20,13 @@ import { SegmentType } from '../segment/segment-type'
 
 @injectable()
 export class AsciiSegmentParser {
-
   constructor (@inject(DITokens.Definitions) public readonly definitions: FixDefinitions) {
   }
 
-  public parse (msgType: string, tags: Tags, last: number): Structure {
+  public parse (msgType: string, tags: Tags, last: number): Structure | null {
     // completed segments in that they are fully parsed
     const segments: SegmentDescription[] = []
-    const msgDefinition: MessageDefinition = this.definitions.message.get(msgType)
+    const msgDefinition: MessageDefinition | null = this.definitions.message.get(msgType)
     if (!msgDefinition) {
       return null
     }
@@ -41,11 +40,12 @@ export class AsciiSegmentParser {
     // having finished one segments keep unwinding until tag matches further up stack
     function unwind (tag: number): void {
       while (structureStack.length > 1) {
-        const done: SegmentDescription = structureStack.pop()
+        const done = structureStack.pop()
+        if (!done) continue
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
         segments.push(done)
         peek = structureStack[structureStack.length - 1]
-        if (peek.set.containedTag[tag]) {
+        if (peek.set?.containedTag[tag]) {
           // unwound to point this tag lives in this set.
           break
         }
@@ -56,10 +56,10 @@ export class AsciiSegmentParser {
       }
     }
 
-    function examine (tag: number): SegmentDescription {
-      let structure: SegmentDescription = null
-      switch (peek.currentField.type) {
-
+    function examine (tag: number): SegmentDescription | null {
+      let structure: SegmentDescription | null = null
+      const type = peek.currentField?.type
+      switch (type) {
         case ContainedFieldType.Simple: {
           const sf: ContainedSimpleField = peek.currentField as ContainedSimpleField
           if (sf.definition.tag === tag) {
@@ -71,14 +71,14 @@ export class AsciiSegmentParser {
         case ContainedFieldType.Component: {
           const cf: ContainedComponentField = peek.currentField as ContainedComponentField
           structure = new SegmentDescription(cf.name, tag, cf.definition,
-                        currentTagPosition, structureStack.length, SegmentType.Component)
+            currentTagPosition, structureStack.length, SegmentType.Component)
           break
         }
         // for a group also need to know where all delimiters are positioned
         case ContainedFieldType.Group: {
           const gf: ContainedComponentField = peek.currentField as ContainedGroupField
           structure = new SegmentDescription(gf.name, tag, gf.definition,
-                        currentTagPosition, structureStack.length, SegmentType.Group)
+            currentTagPosition, structureStack.length, SegmentType.Group)
           currentTagPosition = currentTagPosition + 1
           structure.startGroup(tags.tagPos[currentTagPosition].tag)
           break
@@ -96,8 +96,8 @@ export class AsciiSegmentParser {
       if (tag === peek.delimiterTag) {
         peek.addDelimiterPosition(currentTagPosition)
       } else if (structureStack.length > 1) {
-                // if a group is represented by a repeated component, then the tag representing delimiter
-                // needs to be added further up stack to group itself.
+        // if a group is represented by a repeated component, then the tag representing delimiter
+        // needs to be added further up stack to group itself.
         delimiter = structureStack[structureStack.length - 2].groupAddDelimiter(tag, currentTagPosition)
       }
       return delimiter
@@ -116,7 +116,7 @@ export class AsciiSegmentParser {
         const tag: number = tags.tagPos[currentTagPosition].tag
         peek = structureStack[structureStack.length - 1]
         peek.setCurrentField(tag)
-        if (!peek.set.containedTag[tag] || groupDelimiter(tag)) {
+        if (!peek.set?.containedTag[tag] || groupDelimiter(tag)) {
           // unravelled all way back to root hence this is not recognised
           const unknown = peek.type === SegmentType.Msg
           if (unknown) {
@@ -137,7 +137,8 @@ export class AsciiSegmentParser {
     function clean (): void {
       // any remainder components can be closed.
       while (structureStack.length > 0) {
-        const done: SegmentDescription = structureStack.pop()
+        const done = structureStack.pop()
+        if (!done) continue
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
         segments[segments.length] = done
       }

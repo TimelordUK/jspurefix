@@ -52,11 +52,11 @@ export class OmsFactory {
       Side: order.Side,
       Price: order.Price,
       OrderQtyData: {
-        OrderQty: order.OrderQtyData.OrderQty
+        OrderQty: order?.OrderQtyData?.OrderQty
       } as IOrderQtyData,
       Instrument: {
-        Symbol: order.Instrument.Symbol,
-        SecurityID: order.Instrument.SecurityID,
+        Symbol: order?.Instrument?.Symbol,
+        SecurityID: order?.Instrument?.SecurityID,
         SecurityIDSource: SecurityIDSource.IsinNumber
       } as IInstrument
     } as IExecutionReport

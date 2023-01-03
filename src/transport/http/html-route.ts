@@ -1,6 +1,6 @@
 import { IHtmlOptions } from './html-options'
 
 export interface IHtmlRoute {
-  name: string,
+  name: string
   value: IHtmlOptions
 }

@@ -5,7 +5,7 @@ import * as path from 'path'
 
 let includes: IncludeGraph
 const ver: string = '5-0-SP2'
-const root: string = path.join(__dirname, `../../../data/fix_repo/fixmlschema_FIX.5.0SP2_EP228`)
+const root: string = path.join(__dirname, '../../../data/fix_repo/fixmlschema_FIX.5.0SP2_EP228')
 const dataTypes: string = `fixml-datatypes-${ver}.xsd`
 const fieldsBase: string = `fixml-fields-base-${ver}.xsd`
 const fieldsImpl: string = `fixml-fields-impl-${ver}.xsd`

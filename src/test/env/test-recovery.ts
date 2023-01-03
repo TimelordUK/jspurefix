@@ -1,4 +1,10 @@
-import { FixMsgAsciiStoreResend, FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore } from '../../store'
+import {
+  FixMsgAsciiStoreResend,
+  FixMsgMemoryStore,
+  FixMsgStoreRecord,
+  IFixMsgStore,
+  IFixMsgStoreRecord
+} from '../../store'
 import { MsgView } from '../../buffer'
 import { IJsFixConfig } from '../../config'
 import { AsciiView } from '../../buffer/ascii'
@@ -6,7 +12,7 @@ import { MsgTag } from '../../types'
 
 export class TestRecovery {
   public readonly store: IFixMsgStore
-  public readonly records: FixMsgStoreRecord[]
+  public readonly records: IFixMsgStoreRecord[]
   public readonly recovery: FixMsgAsciiStoreResend
 
   constructor (public readonly views: MsgView[], public readonly config: IJsFixConfig) {
@@ -17,14 +23,14 @@ export class TestRecovery {
     this.recovery = new FixMsgAsciiStoreResend(this.store, config)
   }
 
-  async populate () {
+  async populate (): Promise<void> {
     const records = this.records
-    const toWrite = records.map(r => this.store.put(r))
+    const toWrite = records.map(async r => await this.store.put(r))
     await Promise.all(toWrite)
   }
 
-  getRecords (comp: string) {
-    return this.views.reduce((agg: FixMsgStoreRecord[], v: AsciiView) => {
+  getRecords (comp: string): IFixMsgStoreRecord[] {
+    return this.views.reduce((agg: IFixMsgStoreRecord[], v: AsciiView) => {
       if (v.getString(MsgTag.SenderCompID) === comp) {
         agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
       }

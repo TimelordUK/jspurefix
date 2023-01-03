@@ -31,7 +31,7 @@ test('expect an instrument from fix msg', () => {
   const views = toViews.views
   const v0 = views[0].getView('Instrument')
   expect(v0).toBeTruthy()
-  const i: IInstrument = v0.toObject()
+  const i: IInstrument = v0?.toObject()
   expect(i).toBeTruthy()
   expect(i.Symbol).toEqual('ZCZ9')
   expect(i.SecurityID).toEqual('01')
@@ -46,7 +46,7 @@ test('expect an md group from fix msg', () => {
   const views = toViews.views
   const v0 = views[0].getView('MDFullGrp')
   expect(v0).toBeTruthy()
-  const fullGrp: IMDFullGrp[] = v0.toObject()
+  const fullGrp: IMDFullGrp[] = v0?.toObject()
   expect(fullGrp).toBeTruthy()
   expect(Array.isArray(fullGrp))
   expect(fullGrp.length).toEqual(1)

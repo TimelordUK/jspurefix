@@ -1,4 +1,3 @@
 import { IJsFixLogger } from './js-fix-logger'
 
-export interface GetJsFixLogger { (type: string): IJsFixLogger
-}
+export type GetJsFixLogger = (type: string) => IJsFixLogger

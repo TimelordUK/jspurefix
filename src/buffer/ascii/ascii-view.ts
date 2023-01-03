@@ -12,12 +12,11 @@ import { TagType } from '../tag/tag-type'
 export class AsciiView extends MsgView {
   private readonly timeFormatter: ITimeFormatter = new TimeFormatter(this.buffer)
   constructor (public readonly segment: SegmentDescription,
-               public readonly buffer: ElasticBuffer,
-               public readonly structure: Structure,
-               public readonly ptr: number,
-               public readonly delimiter: number,
-               public readonly writeDelimiter: number) {
-
+    public readonly buffer: ElasticBuffer,
+    public readonly structure: Structure | null,
+    public readonly ptr: number,
+    public readonly delimiter: number,
+    public readonly writeDelimiter: number) {
     super(segment, structure)
   }
 
@@ -35,6 +34,7 @@ export class AsciiView extends MsgView {
   }
 
   private replaceDelimiter (viewBuffer: Buffer, replaceDelimiter?: number): void {
+    if (this.structure == null) return
     const delimiter = replaceDelimiter ?? this.delimiter
     if (delimiter !== this.writeDelimiter) {
       const structure = this.structure
@@ -55,6 +55,7 @@ export class AsciiView extends MsgView {
   }
 
   public checksum (): number {
+    if (this.structure == null) return -1
     const t = this.getPosition(MsgTag.CheckSum)
     const structure = this.structure
     const prev = structure.tags.tagPos[t - 1]
@@ -127,7 +128,8 @@ export class AsciiView extends MsgView {
       this.writeDelimiter)
   }
 
-  protected stringAtPosition (position: number): string {
+  protected stringAtPosition (position: number): string | null {
+    if (this.structure == null) return null
     const tags = this.structure.tags
     if (position < 0 || position >= tags.nextTagPos) {
       return null
@@ -136,12 +138,14 @@ export class AsciiView extends MsgView {
     return this.buffer.getString(tag.start, tag.start + tag.len)
   }
 
-  private getBuffer (position: number): Buffer {
+  private getBuffer (position: number): Buffer | null {
+    if (this.structure == null) return null
     const tag: TagPos = this.structure.tags.tagPos[position]
     return this.buffer.getBuffer(tag.start, tag.start + tag.len)
   }
 
-  private getNumber (position: number, isFloat: boolean = false): number {
+  private getNumber (position: number, isFloat: boolean = false): number | null {
+    if (this.structure == null) return null
     const buffer = this.buffer
     const tag: TagPos = this.structure.tags.tagPos[position]
     if (isFloat) {
@@ -151,7 +155,8 @@ export class AsciiView extends MsgView {
     }
   }
 
-  private getTime (tag: number, useUtc: boolean): Date {
+  private getTime (tag: number, useUtc: boolean): Date | null {
+    if (this.structure == null) return null
     const formatter = this.timeFormatter
     const position: number = this.getPosition(tag)
     const tagPos: TagPos = this.structure.tags.tagPos[position]
@@ -165,7 +170,8 @@ export class AsciiView extends MsgView {
     }
   }
 
-  private getDate (tag: number, useUtc: boolean): Date {
+  private getDate (tag: number, useUtc: boolean): Date | null {
+    if (this.structure == null) return null
     const formatter = this.timeFormatter
     const position: number = this.getPosition(tag)
     if (position < 0) {
@@ -183,14 +189,15 @@ export class AsciiView extends MsgView {
     }
   }
 
-  private getDateTime (tag: number, useUtc: boolean): Date {
+  private getDateTime (tag: number, useUtc: boolean): Date | null {
+    if (this.structure == null) return null
     const position: number = this.getPosition(tag)
     const tagPos: TagPos = this.structure.tags.tagPos[position]
     const formatter = this.timeFormatter
     if (position < 0) {
       return null
     }
-        // (SendingTime) = 20150417-01:00:08.201
+    // (SendingTime) = 20150417-01:00:08.201
     if (tagPos.len < 8) {
       return null
     }
@@ -202,7 +209,8 @@ export class AsciiView extends MsgView {
     }
   }
 
-  private getBoolean (tag: number): boolean {
+  private getBoolean (tag: number): boolean | null {
+    if (this.structure == null) return null
     const position: number = this.getPosition(tag)
     if (position < 0) {
       return null

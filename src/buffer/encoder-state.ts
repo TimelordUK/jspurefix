@@ -2,11 +2,15 @@ export class EncodedStatus {
   public ptr: number = 0
   public bodyLengthPos: number
   public bodyEndPos: number
-  public begin: Date
-  public end: Date
+  public begin: Date | null
+  public end: Date | null
   public elapsed (): number {
-    return this.begin.getTime() - this.end.getTime()
+    if (this.begin && this.end) {
+      return this.begin.getTime() - this.end.getTime()
+    }
+    return 0
   }
+
   public reset (): void {
     this.ptr = 0
     this.bodyLengthPos = 0

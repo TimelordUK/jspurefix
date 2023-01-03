@@ -13,9 +13,9 @@ export class FieldDefinitionParser extends NodeParser {
     switch (node.name) {
       case 'field': {
         this.currentField = new SimpleFieldDefinition(
-                    node.attributes.number,
-                    node.attributes.name,
-                    node.attributes.name,
+          node.attributes.number,
+          node.attributes.name,
+          node.attributes.name,
           null,
           null,
           node.attributes.type,
@@ -32,7 +32,5 @@ export class FieldDefinitionParser extends NodeParser {
   }
 
   public close (line: number, name: string): void {
-    switch (name) {
-    }
   }
 }

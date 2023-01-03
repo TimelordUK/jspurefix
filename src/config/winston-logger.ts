@@ -7,9 +7,11 @@ export class WinstonLogger {
   public static readonly appFormat = printf((info: any) => {
     return `${info.timestamp} [${info.type}] ${info.level}: ${info.message}`
   })
+
   public static readonly plainFormat = printf((info: any) => {
     return `${info.message}`
   })
+
   private readonly appLogger: Logger
 
   constructor (public readonly options: any = WinstonLogger.consoleOptions()) {
@@ -22,7 +24,7 @@ export class WinstonLogger {
         timestamp(),
         WinstonLogger.appFormat
       ),
-      level: level,
+      level,
       transports: [
         new transports.Console()
       ]
@@ -34,8 +36,8 @@ export class WinstonLogger {
     WinstonLogger.appFormat
   )): any {
     return {
-      format: format,
-      level: level,
+      format,
+      level,
       transports: [
         new transports.File({
           filename: fileName,
@@ -85,25 +87,25 @@ export class WinstonLogger {
     return {
       info: function (msg: string): void {
         logger.info({
-          type: type,
+          type,
           message: msg
         })
       },
       debug: function (msg: string): void {
         logger.debug({
-          type: type,
+          type,
           message: msg
         })
       },
       warning: function (msg: string): void {
         logger.warn({
-          type: type,
+          type,
           message: msg
         })
       },
       error: function (e: Error): void {
         logger.error({
-          type: type,
+          type,
           message: `${e.message} : ${e.stack}`
         })
       }

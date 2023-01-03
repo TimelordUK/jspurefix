@@ -1,6 +1,6 @@
 import { ContainedSimpleField } from '../../dictionary/contained'
 
 export interface IPopulatedAttributes {
-  fields: ContainedSimpleField[],
+  fields: ContainedSimpleField[]
   values: any[]
 }

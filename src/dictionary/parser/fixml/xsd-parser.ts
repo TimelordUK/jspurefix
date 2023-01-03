@@ -8,13 +8,13 @@ import { ISaxNode } from '../../sax-node'
 export abstract class XsdParser {
   public readonly data: ILooseObject[] = []
   public current: ILooseObject
-  protected pending: string
+  protected pending: string | null
 
   protected constructor (public readonly definitions: FixDefinitions) {
   }
 
-  public parse (file: string): Promise<FixDefinitions> {
-    return new Promise<FixDefinitions>((accept, reject) => {
+  public async parse (file: string): Promise<FixDefinitions> {
+    return await new Promise<FixDefinitions>((resolve, reject) => {
       const pass: fs.ReadStream = fs.createReadStream(file)
       const saxStream: SAXStream = require('sax').createStream(true, {})
       const saxParser: SAXParser = saxStream._parser
@@ -27,7 +27,7 @@ export abstract class XsdParser {
       })
 
       saxStream.on('ready', () => {
-        accept(this.definitions)
+        resolve(this.definitions)
       })
 
       saxStream.on('text', (t: string) => {
@@ -53,7 +53,7 @@ export abstract class XsdParser {
       target = this.current
     }
     const keys: string[] = Object.keys(node.attributes)
-    for (let k of keys) {
+    for (const k of keys) {
       target[k] = node.attributes[k]
     }
   }

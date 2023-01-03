@@ -14,16 +14,16 @@ export class HttpInitiator extends FixEntity {
     this.logger = config.logFactory.logger('initiator')
   }
 
-  start (): Promise<any> {
-    return this.connect(this.config)
+  async start (): Promise<any> {
+    return await this.connect(this.config)
   }
 
-// the adapter will be provided on config
-  connect (config: IJsFixConfig): Promise<any> {
-    return new Promise<any>(async (accept, reject) => {
-      const adapter = config.description.application.http.adapter
+  // the adapter will be provided on config
+  async connect (config: IJsFixConfig): Promise<any> {
+    return await new Promise<any>(async (resolve, reject) => {
+      const adapter = config?.description?.application?.http?.adapter
       if (!adapter) {
-        reject('http initiator needs config.description.application.http.adapter')
+        reject(new Error('http initiator needs config.description.application.http.adapter'))
       }
       const sessionContainer = this.config.sessionContainer
       if (!sessionContainer.isRegistered(DITokens.FixSession)) {
@@ -32,15 +32,21 @@ export class HttpInitiator extends FixEntity {
       this.logger.info(`create session with DI Token ${DITokens.FixSession}`)
       const initiatorSession = sessionContainer.resolve<FixSession>(DITokens.FixSession)
       this.logger.info('connecting ...')
-      const initiatorTransport: MsgTransport = new MsgTransport(0, config, new HttpDuplex(adapter))
-      this.logger.info('... connected, run session')
-      initiatorSession.run(initiatorTransport).then(() => {
-        this.logger.info('ends')
-        accept(true)
-      }).catch((e: Error) => {
-        this.logger.error(e)
-        reject(e)
-      })
+      const initiatorTransport: MsgTransport | null = adapter
+        ? new MsgTransport(0, config, new HttpDuplex(adapter))
+        : null
+      if (!initiatorTransport) {
+        reject(new Error('no initiatorTransport for http'))
+      } else {
+        this.logger.info('... connected, run session')
+        initiatorSession.run(initiatorTransport).then(() => {
+          this.logger.info('ends')
+          resolve(true)
+        }).catch((e: Error) => {
+          this.logger.error(e)
+          reject(e)
+        })
+      }
     })
   }
 }

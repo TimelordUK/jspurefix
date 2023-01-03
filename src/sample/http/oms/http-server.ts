@@ -15,7 +15,7 @@ export class HttpServer extends FixmlSession {
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
-    this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
+    this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}`)
   }
 
@@ -28,6 +28,12 @@ export class HttpServer extends FixmlSession {
         this.logger.info(`received order id ${order.ClOrdID}`)
         const fill: IExecutionReport = this.factory.fillOrder(order)
         this.send('ExecutionReport', fill)
+        break
+      }
+
+      default: {
+        this.logger.warning(`received unknown msgType ${msgType}`)
+        break
       }
     }
   }

@@ -33,8 +33,8 @@ export class IncludeGraph {
     this.getGraph()
   }
 
-  public resolve (file: string): string[] {
-    const label: number = this.nodes.get(file)
+  public resolve (file: string): string[] | null {
+    const label: number | null = this.nodes.get(file)
     if (label == null) {
       return null
     }
@@ -47,18 +47,21 @@ export class IncludeGraph {
 
   private resolve_nodes (label: number, depends: number[]): void {
     const node: IGraphNode = this.graph[label]
-    for (let e of node.edges) {
-      if (depends.indexOf(e) < 0) {
-        this.resolve_nodes(e, depends)
-      }
+    if (node) {
+      node.edges.forEach(e => {
+        if (!depends.includes(e)) {
+          this.resolve_nodes(e, depends)
+        }
+      })
     }
     depends.push(label)
   }
 
-  private getGraph () {
+  private getGraph (): void {
     const nodes = this.nodes
-    this.graph = this.includes.reduce((a: INumericKeyed<IGraphNode>, current: IInclude) => {
-      const parent: number = nodes.get(current.parent)
+    this.graph = this.includes.reduce<INumericKeyed<IGraphNode>>((a: INumericKeyed<IGraphNode>, current: IInclude) => {
+      const parent: number | null = nodes.get(current.parent)
+      if (parent == null) return a
       let parentNode = a[parent]
       if (!parentNode) {
         a[parent] = parentNode = {
@@ -68,16 +71,18 @@ export class IncludeGraph {
         } as IGraphNode
       }
       current.children.forEach((s: string) => {
-        const child: number = nodes.get(s)
-        if (parentNode.edges.indexOf(child) < 0) {
-          parentNode.edges.push(child)
+        const child: number | null = nodes.get(s)
+        if (child) {
+          if (!parentNode.edges.includes(child)) {
+            parentNode.edges.push(child)
+          }
         }
       })
       return a
-    }, {} as INumericKeyed<IGraphNode>)
+    }, {})
   }
 
-  private assignNodes () {
+  private assignNodes (): void {
     let next: number = 0
     this.nodes = this.includes.reduce((a: Dictionary<number>, current: IInclude) => {
       if (!a.containsKey(current.parent)) {
@@ -92,8 +97,8 @@ export class IncludeGraph {
     }, new Dictionary<number>())
   }
 
-  private scanIncludes (file: string): Promise<string[]> {
-    return new Promise<string[]>((accept, reject) => {
+  private async scanIncludes (file: string): Promise<string[]> {
+    return await new Promise<string[]>((resolve, reject) => {
       const includes: string[] = []
       const pass: fs.ReadStream = fs.createReadStream(path.join(this.root, file))
       const saxStream: SAXStream = require('sax').createStream(true, {})
@@ -107,7 +112,7 @@ export class IncludeGraph {
         }
       })
       saxStream.on('ready', () => {
-        accept(includes)
+        resolve(includes)
       })
       saxStream.on('error', (r) => {
         reject(r)
@@ -116,16 +121,16 @@ export class IncludeGraph {
     })
   }
 
-  private getIncludes (main: string): Promise<IInclude[]> {
+  private async getIncludes (main: string): Promise<IInclude[]> {
     const q: any[] = []
     q.push([main])
     const ordered: IInclude[] = []
     const seen: Dictionary<boolean> = new Dictionary<boolean>()
-    return new Promise<IInclude[]>(async (accept, reject) => {
+    return await new Promise<IInclude[]>(async (resolve, reject) => {
       try {
         while (q.length > 0) {
           const batch: string[] = q.pop()
-          for (let next of batch) {
+          for (const next of batch) {
             if (seen.containsKey(next)) {
               continue
             }
@@ -138,7 +143,7 @@ export class IncludeGraph {
             q.push(includes)
           }
         }
-        accept(ordered)
+        resolve(ordered)
       } catch (e) {
         reject(e)
       }

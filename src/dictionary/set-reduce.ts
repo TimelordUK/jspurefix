@@ -1,9 +1,10 @@
-import { ContainedField, ContainedFieldSet,
-  ContainedGroupField, ContainedSimpleField, ContainedComponentField, ContainedFieldType } from './contained'
+import {
+  ContainedField, ContainedFieldSet,
+  ContainedGroupField, ContainedSimpleField, ContainedComponentField, ContainedFieldType
+} from './contained'
 import { ITypeDispatcher } from './type-dispatcher'
 
 export class SetReduce<T> {
-
   reduceField (a: T, field: ContainedField, dispatcher: ITypeDispatcher<T>): void {
     switch (field.type) {
       case ContainedFieldType.Group: {

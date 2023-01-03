@@ -1,6 +1,8 @@
 import { ILooseObject } from '../../../collections/collection'
-import { SimpleFieldDefinition, GroupFieldDefinition, ComponentFieldDefinition,
-  MessageDefinition, FixDefinitions } from '../../definition'
+import {
+  SimpleFieldDefinition, GroupFieldDefinition, ComponentFieldDefinition,
+  MessageDefinition, FixDefinitions
+} from '../../definition'
 import { Dictionary } from '../../../collections'
 import { ContainedFieldSet, ContainedComponentField, ContainedGroupField, ContainedSimpleField } from '../../contained'
 import { FixVersion } from '../../fix-versions'
@@ -24,7 +26,7 @@ export class Repository {
   public MsgContents: IRepositoryMsgContent[]
   public Abbreviations: IRepositoryAbbreviation[]
   public includesAbbreviations: boolean
-    // derived from above
+  // derived from above
   public readonly definitions: FixDefinitions
   private readonly groupLookup: Dictionary<GroupFieldDefinition> = new Dictionary<GroupFieldDefinition>()
   private contentLookup: Dictionary<IRepositoryMsgContent[]>
@@ -127,13 +129,17 @@ export class Repository {
   }
 
   private header (): void {
-    const h: ComponentFieldDefinition = this.definitions.component.get('StandardHeader')
-    this.definitions.component.add('header', h)
+    const h: ComponentFieldDefinition | null = this.definitions.component.get('StandardHeader')
+    if (h) {
+      this.definitions.component.add('header', h)
+    }
   }
 
   private trailer (): void {
-    const t: ComponentFieldDefinition = this.definitions.component.get('StandardTrailer')
-    this.definitions.component.add('trailer', t)
+    const t: ComponentFieldDefinition | null = this.definitions.component.get('StandardTrailer')
+    if (t) {
+      this.definitions.component.add('trailer', t)
+    }
   }
 
   private static isNative (f: IRepositoryField): boolean {
@@ -144,7 +150,7 @@ export class Repository {
       f.Type === 'UTCTimestamp'
   }
 
-  private static makeSimple (f: IRepositoryField, type: string) {
+  private static makeSimple (f: IRepositoryField, type: string): SimpleFieldDefinition {
     return new SimpleFieldDefinition(
       f.Tag,
       f.Name,
@@ -166,7 +172,7 @@ export class Repository {
     return type
   }
 
-  private fieldEnums () {
+  private fieldEnums (): void {
     const definitions = this.definitions
     for (const e of this.Enums) {
       const field: SimpleFieldDefinition = definitions.tagToSimple[parseInt(e.Tag, 10)]
@@ -194,7 +200,7 @@ export class Repository {
 
   private contents (): Dictionary<IRepositoryMsgContent[]> {
     return this.MsgContents.reduce((a, current) => {
-      let content: IRepositoryMsgContent[] = a.get(current.ComponentID)
+      let content: IRepositoryMsgContent[] | null = a.get(current.ComponentID)
       if (!content) {
         content = []
         a.add(current.ComponentID, content)
@@ -214,27 +220,29 @@ export class Repository {
           parentSet.add(new ContainedSimpleField(sf, parentSet.fields.length, required, false))
         }
       } else {
-                // is there a definition for this type yet create.
-        let childSet: ContainedFieldSet = this.definitions.component.get(current.TagText)
+        // is there a definition for this type yet create.
+        let childSet: ContainedFieldSet | null = this.definitions.component.get(current.TagText)
         if (!childSet) {
-          const cl: IRepositoryComponent = this.componentLookup.get(current.TagText)
+          const cl: IRepositoryComponent | null = this.componentLookup.get(current.TagText)
           if (cl) {
             childSet = this.resolve(cl)
           }
         }
-        switch (childSet.type) {
-          case ContainedSetType.Component: {
-            parentSet.add(new ContainedComponentField(childSet, parentSet.fields.length, required))
-            break
-          }
+        if (childSet) {
+          switch (childSet.type) {
+            case ContainedSetType.Component: {
+              parentSet.add(new ContainedComponentField(childSet as ComponentFieldDefinition, parentSet.fields.length, required))
+              break
+            }
 
-          case ContainedSetType.Group: {
-            parentSet.add(new ContainedGroupField(childSet as GroupFieldDefinition, parentSet.fields.length, required))
-            break
-          }
+            case ContainedSetType.Group: {
+              parentSet.add(new ContainedGroupField(childSet as GroupFieldDefinition, parentSet.fields.length, required))
+              break
+            }
 
-          default: {
-            throw new Error(`unknown set type ${childSet.type}`)
+            default: {
+              throw new Error(`unknown set type ${childSet.type}`)
+            }
           }
         }
       }
@@ -246,9 +254,9 @@ export class Repository {
     switch (c.ComponentType) {
       case 'ImplicitBlockRepeating':
       case 'BlockRepeating': {
-        const content: IRepositoryMsgContent[] = this.contentLookup.get(c.ComponentID)
+        const content: IRepositoryMsgContent[] | null = this.contentLookup.get(c.ComponentID) ?? []
         const noField: SimpleFieldDefinition = this.definitions.tagToSimple[parseInt(content[0].TagText, 10)]
-        let def: GroupFieldDefinition = this.groupLookup.get(c.ComponentID)
+        let def: GroupFieldDefinition | null = this.groupLookup.get(c.ComponentID)
         if (!def) {
           def = new GroupFieldDefinition(c.Name, c.AbbrName, c.CategoryID, noField, c.Description)
           this.resolveToFieldSet(content.slice(1), def)
@@ -258,8 +266,8 @@ export class Repository {
       }
 
       default: {
-        const content: IRepositoryMsgContent[] = this.contentLookup.get(c.ComponentID)
-        let def: ComponentFieldDefinition = this.definitions.component.get(c.Name)
+        const content: IRepositoryMsgContent[] | null = this.contentLookup.get(c.ComponentID) ?? []
+        let def: ComponentFieldDefinition | null = this.definitions.component.get(c.Name)
         if (!def) {
           def = new ComponentFieldDefinition(c.Name, c.AbbrName, c.CategoryID, c.Description)
           this.resolveToFieldSet(content, def)
@@ -272,8 +280,8 @@ export class Repository {
 
   private message (m: IRepositoryMessage): MessageDefinition {
     const definitions = this.definitions
-    const content: IRepositoryMsgContent[] = this.contentLookup.get(m.ComponentID)
-    let def: MessageDefinition = definitions.message.get(m.Name)
+    const content: IRepositoryMsgContent[] = this.contentLookup.get(m.ComponentID) ?? []
+    let def: MessageDefinition | null = definitions.message.get(m.Name)
     if (!def) {
       def = new MessageDefinition(m.Name, m.AbbrName, m.MsgType, m.CategoryID, m.Description)
       this.resolveToFieldSet(content, def)

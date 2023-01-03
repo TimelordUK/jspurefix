@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": "src",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "target": "es6",
@@ -11,6 +12,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "pretty": true,
+    "strictNullChecks": true,
     "outDir": "./dist"
   },
   "compileOnSave": true,
