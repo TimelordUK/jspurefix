@@ -1,7 +1,7 @@
 [
     {
         "name": "StandardHeader",
-        "depth": 2,
+        "depth": 1,
         "startTag": 8,
         "startPosition": 0,
         "endTag": 52,
@@ -10,38 +10,104 @@
         "delimiterPositions": []
     },
     {
+        "name": "PtysSubGrp",
+        "depth": 2,
+        "startTag": 802,
+        "startPosition": 24,
+        "endTag": 803,
+        "endPosition": 28,
+        "delimiterTag": 523,
+        "delimiterPositions": [
+            25,
+            27
+        ]
+    },
+    {
+        "name": "PtysSubGrp",
+        "depth": 2,
+        "startTag": 802,
+        "startPosition": 32,
+        "endTag": 803,
+        "endPosition": 38,
+        "delimiterTag": 523,
+        "delimiterPositions": [
+            33,
+            35,
+            37
+        ]
+    },
+    {
+        "name": "PtysSubGrp",
+        "depth": 2,
+        "startTag": 802,
+        "startPosition": 42,
+        "endTag": 803,
+        "endPosition": 44,
+        "delimiterTag": 523,
+        "delimiterPositions": [
+            43
+        ]
+    },
+    {
+        "name": "Parties",
+        "depth": 1,
+        "startTag": 453,
+        "startPosition": 20,
+        "endTag": 803,
+        "endPosition": 44,
+        "delimiterTag": 448,
+        "delimiterPositions": [
+            21,
+            29,
+            39
+        ]
+    },
+    {
+        "name": "ContraGrp",
+        "depth": 1,
+        "startTag": 382,
+        "startPosition": 46,
+        "endTag": 655,
+        "endPosition": 61,
+        "delimiterTag": 375,
+        "delimiterPositions": [
+            47,
+            52,
+            57
+        ]
+    },
+    {
         "name": "SecAltIDGrp",
         "depth": 2,
         "startTag": 454,
-        "startPosition": 30,
+        "startPosition": 87,
         "endTag": 456,
-        "endPosition": 32,
+        "endPosition": 91,
         "delimiterTag": 455,
         "delimiterPositions": [
-            31
+            88,
+            90
         ]
     },
     {
         "name": "EvntGrp",
         "depth": 2,
         "startTag": 864,
-        "startPosition": 53,
+        "startPosition": 127,
         "endTag": 868,
-        "endPosition": 62,
+        "endPosition": 131,
         "delimiterTag": 865,
         "delimiterPositions": [
-            54,
-            57,
-            60
+            128
         ]
     },
     {
         "name": "Instrument",
         "depth": 1,
         "startTag": 55,
-        "startPosition": 26,
+        "startPosition": 83,
         "endTag": 874,
-        "endPosition": 64,
+        "endPosition": 133,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -49,29 +115,9 @@
         "name": "FinancingDetails",
         "depth": 1,
         "startTag": 913,
-        "startPosition": 65,
+        "startPosition": 134,
         "endTag": 898,
-        "endPosition": 71,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "OrderQtyData",
-        "depth": 1,
-        "startTag": 38,
-        "startPosition": 72,
-        "endTag": 469,
-        "endPosition": 76,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "YieldData",
-        "depth": 1,
-        "startTag": 235,
-        "startPosition": 78,
-        "endTag": 698,
-        "endPosition": 83,
+        "endPosition": 142,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -79,35 +125,73 @@
         "name": "UndSecAltIDGrp",
         "depth": 3,
         "startTag": 457,
-        "startPosition": 89,
+        "startPosition": 148,
         "endTag": 459,
-        "endPosition": 95,
+        "endPosition": 154,
         "delimiterTag": 458,
         "delimiterPositions": [
-            90,
-            92,
-            94
+            149,
+            151,
+            153
         ]
     },
     {
         "name": "UnderlyingStipulations",
         "depth": 3,
         "startTag": 887,
-        "startPosition": 128,
-        "endTag": 888,
-        "endPosition": 129,
+        "startPosition": 196,
+        "endTag": 889,
+        "endPosition": 202,
         "delimiterTag": 888,
         "delimiterPositions": [
-            129
+            197,
+            199,
+            201
         ]
     },
     {
         "name": "UnderlyingInstrument",
         "depth": 2,
         "startTag": 311,
-        "startPosition": 85,
-        "endTag": 888,
-        "endPosition": 129,
+        "startPosition": 144,
+        "endTag": 889,
+        "endPosition": 202,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "UndSecAltIDGrp",
+        "depth": 3,
+        "startTag": 457,
+        "startPosition": 207,
+        "endTag": 459,
+        "endPosition": 209,
+        "delimiterTag": 458,
+        "delimiterPositions": [
+            208
+        ]
+    },
+    {
+        "name": "UnderlyingStipulations",
+        "depth": 3,
+        "startTag": 887,
+        "startPosition": 251,
+        "endTag": 889,
+        "endPosition": 257,
+        "delimiterTag": 888,
+        "delimiterPositions": [
+            252,
+            254,
+            256
+        ]
+    },
+    {
+        "name": "UnderlyingInstrument",
+        "depth": 2,
+        "startTag": 311,
+        "startPosition": 203,
+        "endTag": 889,
+        "endPosition": 257,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -115,56 +199,122 @@
         "name": "UndInstrmtGrp",
         "depth": 1,
         "startTag": 711,
-        "startPosition": 84,
-        "endTag": 888,
-        "endPosition": 129,
+        "startPosition": 143,
+        "endTag": 889,
+        "endPosition": 257,
         "delimiterTag": 311,
         "delimiterPositions": [
-            85
+            144,
+            203
         ]
+    },
+    {
+        "name": "Stipulations",
+        "depth": 1,
+        "startTag": 232,
+        "startPosition": 259,
+        "endTag": 234,
+        "endPosition": 261,
+        "delimiterTag": 233,
+        "delimiterPositions": [
+            260
+        ]
+    },
+    {
+        "name": "OrderQtyData",
+        "depth": 1,
+        "startTag": 38,
+        "startPosition": 263,
+        "endTag": 469,
+        "endPosition": 267,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "PegInstructions",
+        "depth": 1,
+        "startTag": 211,
+        "startPosition": 272,
+        "endTag": 840,
+        "endPosition": 277,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "DiscretionInstructions",
+        "depth": 1,
+        "startTag": 388,
+        "startPosition": 278,
+        "endTag": 846,
+        "endPosition": 284,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "CommissionData",
+        "depth": 1,
+        "startTag": 12,
+        "startPosition": 324,
+        "endTag": 497,
+        "endPosition": 327,
+        "delimiterTag": 0,
+        "delimiterPositions": []
     },
     {
         "name": "SpreadOrBenchmarkCurveData",
         "depth": 1,
         "startTag": 218,
-        "startPosition": 136,
+        "startPosition": 328,
         "endTag": 761,
-        "endPosition": 140,
+        "endPosition": 335,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
     {
-        "name": "PositionAmountData",
+        "name": "YieldData",
         "depth": 1,
-        "startTag": 753,
-        "startPosition": 141,
-        "endTag": 708,
-        "endPosition": 143,
-        "delimiterTag": 707,
+        "startTag": 235,
+        "startPosition": 336,
+        "endTag": 698,
+        "endPosition": 341,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "ContAmtGrp",
+        "depth": 1,
+        "startTag": 518,
+        "startPosition": 385,
+        "endTag": 521,
+        "endPosition": 394,
+        "delimiterTag": 519,
         "delimiterPositions": [
-            142
+            386,
+            389,
+            392
         ]
     },
     {
         "name": "LegSecAltIDGrp",
         "depth": 3,
         "startTag": 604,
-        "startPosition": 151,
+        "startPosition": 400,
         "endTag": 606,
-        "endPosition": 155,
+        "endPosition": 406,
         "delimiterTag": 605,
         "delimiterPositions": [
-            152,
-            154
+            401,
+            403,
+            405
         ]
     },
     {
         "name": "InstrumentLeg",
         "depth": 2,
         "startTag": 600,
-        "startPosition": 147,
+        "startPosition": 396,
         "endTag": 956,
-        "endPosition": 181,
+        "endPosition": 443,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
@@ -172,313 +322,251 @@
         "name": "LegStipulations",
         "depth": 2,
         "startTag": 683,
-        "startPosition": 184,
+        "startPosition": 446,
         "endTag": 689,
-        "endPosition": 189,
+        "endPosition": 450,
         "delimiterTag": 688,
         "delimiterPositions": [
-            185,
-            187,
-            188
+            447,
+            449
         ]
     },
     {
         "name": "NstdPtysSubGrp",
         "depth": 3,
         "startTag": 804,
-        "startPosition": 196,
+        "startPosition": 457,
         "endTag": 805,
-        "endPosition": 201,
+        "endPosition": 459,
         "delimiterTag": 545,
         "delimiterPositions": [
-            197,
-            199,
-            200
+            458
         ]
     },
     {
         "name": "NestedParties",
         "depth": 2,
         "startTag": 539,
-        "startPosition": 192,
+        "startPosition": 453,
         "endTag": 805,
-        "endPosition": 201,
+        "endPosition": 459,
         "delimiterTag": 524,
         "delimiterPositions": [
-            193
+            454
         ]
     },
     {
-        "name": "TrdInstrmtLegGrp",
-        "depth": 1,
-        "startTag": 555,
-        "startPosition": 146,
-        "endTag": 637,
-        "endPosition": 205,
-        "delimiterTag": 600,
-        "delimiterPositions": [
-            147
-        ]
-    },
-    {
-        "name": "TrdRegTimestamps",
-        "depth": 1,
-        "startTag": 768,
-        "startPosition": 207,
-        "endTag": 770,
-        "endPosition": 215,
-        "delimiterTag": 769,
-        "delimiterPositions": [
-            208,
-            211,
-            214
-        ]
-    },
-    {
-        "name": "PtysSubGrp",
+        "name": "LegSecAltIDGrp",
         "depth": 3,
-        "startTag": 802,
-        "startPosition": 227,
-        "endTag": 523,
-        "endPosition": 230,
-        "delimiterTag": 523,
+        "startTag": 604,
+        "startPosition": 469,
+        "endTag": 606,
+        "endPosition": 475,
+        "delimiterTag": 605,
         "delimiterPositions": [
-            228,
-            230
+            470,
+            472,
+            474
         ]
     },
     {
-        "name": "PtysSubGrp",
-        "depth": 3,
-        "startTag": 802,
-        "startPosition": 234,
-        "endTag": 803,
-        "endPosition": 236,
-        "delimiterTag": 523,
-        "delimiterPositions": [
-            235
-        ]
-    },
-    {
-        "name": "Parties",
+        "name": "InstrumentLeg",
         "depth": 2,
-        "startTag": 453,
-        "startPosition": 223,
-        "endTag": 803,
-        "endPosition": 236,
-        "delimiterTag": 448,
-        "delimiterPositions": [
-            224,
-            231
-        ]
-    },
-    {
-        "name": "ClrInstGrp",
-        "depth": 2,
-        "startTag": 576,
-        "startPosition": 240,
-        "endTag": 577,
-        "endPosition": 241,
-        "delimiterTag": 577,
-        "delimiterPositions": [
-            241
-        ]
-    },
-    {
-        "name": "CommissionData",
-        "depth": 2,
-        "startTag": 12,
-        "startPosition": 255,
-        "endTag": 497,
-        "endPosition": 258,
+        "startTag": 600,
+        "startPosition": 465,
+        "endTag": 956,
+        "endPosition": 512,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
     {
-        "name": "ContAmtGrp",
+        "name": "LegStipulations",
         "depth": 2,
-        "startTag": 518,
-        "startPosition": 276,
-        "endTag": 521,
-        "endPosition": 285,
-        "delimiterTag": 519,
+        "startTag": 683,
+        "startPosition": 515,
+        "endTag": 689,
+        "endPosition": 521,
+        "delimiterTag": 688,
         "delimiterPositions": [
-            277,
-            280,
-            283
+            516,
+            518,
+            520
         ]
     },
     {
-        "name": "Stipulations",
-        "depth": 2,
-        "startTag": 232,
-        "startPosition": 286,
-        "endTag": 233,
-        "endPosition": 290,
-        "delimiterTag": 233,
+        "name": "NstdPtysSubGrp",
+        "depth": 3,
+        "startTag": 804,
+        "startPosition": 528,
+        "endTag": 805,
+        "endPosition": 530,
+        "delimiterTag": 545,
         "delimiterPositions": [
-            287,
-            288,
-            290
+            529
+        ]
+    },
+    {
+        "name": "NstdPtysSubGrp",
+        "depth": 3,
+        "startTag": 804,
+        "startPosition": 534,
+        "endTag": 805,
+        "endPosition": 540,
+        "delimiterTag": 545,
+        "delimiterPositions": [
+            535,
+            537,
+            539
+        ]
+    },
+    {
+        "name": "NstdPtysSubGrp",
+        "depth": 3,
+        "startTag": 804,
+        "startPosition": 544,
+        "endTag": 805,
+        "endPosition": 548,
+        "delimiterTag": 545,
+        "delimiterPositions": [
+            545,
+            547
+        ]
+    },
+    {
+        "name": "NestedParties",
+        "depth": 2,
+        "startTag": 539,
+        "startPosition": 524,
+        "endTag": 805,
+        "endPosition": 548,
+        "delimiterTag": 524,
+        "delimiterPositions": [
+            525,
+            531,
+            541
+        ]
+    },
+    {
+        "name": "LegSecAltIDGrp",
+        "depth": 3,
+        "startTag": 604,
+        "startPosition": 558,
+        "endTag": 606,
+        "endPosition": 564,
+        "delimiterTag": 605,
+        "delimiterPositions": [
+            559,
+            561,
+            563
+        ]
+    },
+    {
+        "name": "InstrumentLeg",
+        "depth": 2,
+        "startTag": 600,
+        "startPosition": 554,
+        "endTag": 956,
+        "endPosition": 601,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "LegStipulations",
+        "depth": 2,
+        "startTag": 683,
+        "startPosition": 604,
+        "endTag": 689,
+        "endPosition": 608,
+        "delimiterTag": 688,
+        "delimiterPositions": [
+            605,
+            607
+        ]
+    },
+    {
+        "name": "NstdPtysSubGrp",
+        "depth": 3,
+        "startTag": 804,
+        "startPosition": 615,
+        "endTag": 805,
+        "endPosition": 621,
+        "delimiterTag": 545,
+        "delimiterPositions": [
+            616,
+            618,
+            620
+        ]
+    },
+    {
+        "name": "NstdPtysSubGrp",
+        "depth": 3,
+        "startTag": 804,
+        "startPosition": 625,
+        "endTag": 805,
+        "endPosition": 629,
+        "delimiterTag": 545,
+        "delimiterPositions": [
+            626,
+            628
+        ]
+    },
+    {
+        "name": "NestedParties",
+        "depth": 2,
+        "startTag": 539,
+        "startPosition": 611,
+        "endTag": 805,
+        "endPosition": 629,
+        "delimiterTag": 524,
+        "delimiterPositions": [
+            612,
+            622
+        ]
+    },
+    {
+        "name": "InstrmtLegExecGrp",
+        "depth": 1,
+        "startTag": 555,
+        "startPosition": 395,
+        "endTag": 637,
+        "endPosition": 634,
+        "delimiterTag": 600,
+        "delimiterPositions": [
+            396,
+            465,
+            554
         ]
     },
     {
         "name": "MiscFeesGrp",
-        "depth": 2,
+        "depth": 1,
         "startTag": 136,
-        "startPosition": 291,
+        "startPosition": 636,
         "endTag": 891,
-        "endPosition": 301,
+        "endPosition": 644,
         "delimiterTag": 137,
         "delimiterPositions": [
-            292,
-            295,
-            298
+            637,
+            641
         ]
     },
     {
-        "name": "NstdPtys2SubGrp",
-        "depth": 4,
-        "startTag": 806,
-        "startPosition": 313,
-        "endTag": 807,
-        "endPosition": 316,
-        "delimiterTag": 760,
-        "delimiterPositions": [
-            314,
-            315
-        ]
-    },
-    {
-        "name": "NstdPtys2SubGrp",
-        "depth": 4,
-        "startTag": 806,
-        "startPosition": 319,
-        "endTag": 807,
-        "endPosition": 325,
-        "delimiterTag": 760,
-        "delimiterPositions": [
-            320,
-            322,
-            324
-        ]
-    },
-    {
-        "name": "NestedParties2",
-        "depth": 3,
-        "startTag": 756,
-        "startPosition": 310,
-        "endTag": 807,
-        "endPosition": 325,
-        "delimiterTag": 757,
-        "delimiterPositions": [
-            311,
-            317
-        ]
-    },
-    {
-        "name": "NstdPtys2SubGrp",
-        "depth": 4,
-        "startTag": 806,
-        "startPosition": 334,
-        "endTag": 807,
-        "endPosition": 338,
-        "delimiterTag": 760,
-        "delimiterPositions": [
-            335,
-            337
-        ]
-    },
-    {
-        "name": "NestedParties2",
-        "depth": 3,
-        "startTag": 756,
-        "startPosition": 330,
-        "endTag": 807,
-        "endPosition": 338,
-        "delimiterTag": 757,
-        "delimiterPositions": [
-            331
-        ]
-    },
-    {
-        "name": "NstdPtys2SubGrp",
-        "depth": 4,
-        "startTag": 806,
-        "startPosition": 346,
-        "endTag": 760,
-        "endPosition": 349,
-        "delimiterTag": 760,
-        "delimiterPositions": [
-            347,
-            349
-        ]
-    },
-    {
-        "name": "NestedParties2",
-        "depth": 3,
-        "startTag": 756,
-        "startPosition": 343,
-        "endTag": 760,
-        "endPosition": 349,
-        "delimiterTag": 757,
-        "delimiterPositions": [
-            344
-        ]
-    },
-    {
-        "name": "TrdAllocGrp",
-        "depth": 2,
-        "startTag": 78,
-        "startPosition": 306,
-        "endTag": 760,
-        "endPosition": 349,
-        "delimiterTag": 79,
-        "delimiterPositions": [
-            307,
-            327,
-            339
-        ]
-    },
-    {
-        "name": "TrdCapRptSideGrp",
-        "depth": 1,
-        "startTag": 552,
-        "startPosition": 219,
-        "endTag": 760,
-        "endPosition": 349,
-        "delimiterTag": 54,
-        "delimiterPositions": [
-            220
-        ]
-    },
-    {
-        "name": "StandardTrailer",
-        "depth": 1,
-        "startTag": 10,
-        "startPosition": 352,
-        "endTag": 10,
-        "endPosition": 352,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "TradeCaptureReport",
-        "depth": 1,
+        "name": "ExecutionReport",
+        "depth": 0,
         "startTag": 8,
         "startPosition": 0,
         "endTag": 10,
-        "endPosition": 352,
+        "endPosition": 645,
         "delimiterTag": 0,
         "delimiterPositions": []
     },
     {
         "name": "StandardTrailer",
-        "depth": 0,
+        "depth": 1,
         "startTag": 10,
-        "startPosition": 353,
+        "startPosition": 645,
         "endTag": 10,
-        "endPosition": 352,
+        "endPosition": 645,
         "delimiterTag": 0,
         "delimiterPositions": []
     }
