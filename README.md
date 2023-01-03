@@ -220,8 +220,8 @@ Additionally, make sure to include the original message sequence and the duplica
 
 ```typescript
 {
-  ...messageBodyData, 
-  StandardHeader: { PossDupFlag: true, MsgSeqNum: sequenceNumber},
+...messageBodyData,
+    StandardHeader: { PossDupFlag: true, MsgSeqNum: sequenceNumber},
 }
 
 ```
@@ -300,47 +300,47 @@ the method onApplicationMsg is called when a message is received.  In this case 
 
 ```typescript
   constructor (public readonly config: IJsFixConfig) {
-    super(config)
-    this.logReceivedMsgs = true
-    this.reports = new Dictionary<ITradeCaptureReport>()
-    this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
-    this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`)
-  }
+  super(config)
+  this.logReceivedMsgs = true
+  this.reports = new Dictionary<ITradeCaptureReport>()
+  this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
+  this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`)
+}
 
-  protected onApplicationMsg (msgType: string, view: MsgView): void {
-    this.logger.info(`${view.toJson()}`)
-    switch (msgType) {
-      case MsgType.TradeCaptureReport: {
-        // create an object and cast to the interface
-        const tc: ITradeCaptureReport = view.toObject()
-        this.reports.addUpdate(tc.TradeReportID, tc)
-        this.logger.info(`[reports: ${this.reports.count()}] received tc ExecID = ${tc.ExecID} TradeReportID  = ${tc.TradeReportID} Symbol = ${tc.Instrument.Symbol} ${tc.LastQty} @ ${tc.LastPx}`)
-        break
-      }
+protected onApplicationMsg (msgType: string, view: MsgView): void {
+  this.logger.info(`${view.toJson()}`)
+  switch (msgType) {
+  case MsgType.TradeCaptureReport: {
+      // create an object and cast to the interface
+      const tc: ITradeCaptureReport = view.toObject()
+      this.reports.addUpdate(tc.TradeReportID, tc)
+      this.logger.info(`[reports: ${this.reports.count()}] received tc ExecID = ${tc.ExecID} TradeReportID  = ${tc.TradeReportID} Symbol = ${tc.Instrument.Symbol} ${tc.LastQty} @ ${tc.LastPx}`)
+      break
+    }
 
-      case MsgType.TradeCaptureReportRequestAck: {
-        const tc: ITradeCaptureReportRequestAck = view.toObject()
-        this.logger.info(`received tcr ack ${tc.TradeRequestID} ${tc.TradeRequestStatus}`)
-        break
-      }
+  case MsgType.TradeCaptureReportRequestAck: {
+      const tc: ITradeCaptureReportRequestAck = view.toObject()
+      this.logger.info(`received tcr ack ${tc.TradeRequestID} ${tc.TradeRequestStatus}`)
+      break
     }
   }
+}
 ```
 
 the client onReady method is called when a connection is made and logon established and confirmed.  In this case, client sends a trade capture request to the server.
 
 ```typescript
   protected onReady (view: MsgView): void {
-    this.logger.info('ready')
-    const tcr: ITradeCaptureReportRequest = TradeFactory.tradeCaptureReportRequest('all-trades', new Date())
-    // send request to server
-    this.send(MsgType.TradeCaptureReportRequest, tcr)
-    const logoutSeconds = 32
-    this.logger.info(`will logout after ${logoutSeconds}`)
-    setTimeout(() => {
-      this.done()
-    }, logoutSeconds * 1000)
-  }
+  this.logger.info('ready')
+  const tcr: ITradeCaptureReportRequest = TradeFactory.tradeCaptureReportRequest('all-trades', new Date())
+// send request to server
+this.send(MsgType.TradeCaptureReportRequest, tcr)
+const logoutSeconds = 32
+this.logger.info(`will logout after ${logoutSeconds}`)
+setTimeout(() => {
+  this.done()
+}, logoutSeconds * 1000)
+}
 
 ```
 
@@ -348,55 +348,56 @@ the client onReady method is called when a connection is made and logon establis
 
 see src/test/view-decode.test.ts
 
+
 note that a view can only be used within a callback context unless it is cloned.  Once returned, the memory is re-used for next message.  It is intended to convert to an object or parsed into an application specific message.
 
 fetch a group view
 
 ```typescript
   const noMDEntriesView: MsgView = view.getView('NoMDEntries')
-  const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(1)
+const mmEntryView: MsgView = noMDEntriesView.getGroupInstance(1)
 
-  const mmEntryExpireTimeAsString: string = mmEntryView.getString('ExpireTime')
-  expect(mmEntryExpireTimeAsString).toEqual('20180608-20:53:14.000')
-  expect(mmEntryView.getString(126)).toEqual('20180608-20:53:14.000')
+const mmEntryExpireTimeAsString: string = mmEntryView.getString('ExpireTime')
+expect(mmEntryExpireTimeAsString).toEqual('20180608-20:53:14.000')
+expect(mmEntryView.getString(126)).toEqual('20180608-20:53:14.000')
 ```
 
 fetch single tags
 
 ```typescript
   const erView: MsgView = views[0]
-  expect(erView.getString(35)).toEqual('8')
-  expect(erView.getString('MsgType')).toEqual('8')
-  expect(erView.getString(8)).toEqual('FIX4.4')
-  expect(erView.getTyped(9)).toEqual(6542)
-  expect(erView.getTyped('TotNumReports')).toEqual(19404)
-  expect(erView.getTyped('StrikePrice')).toEqual(52639)
+expect(erView.getString(35)).toEqual('8')
+expect(erView.getString('MsgType')).toEqual('8')
+expect(erView.getString(8)).toEqual('FIX4.4')
+expect(erView.getTyped(9)).toEqual(6542)
+expect(erView.getTyped('TotNumReports')).toEqual(19404)
+expect(erView.getTyped('StrikePrice')).toEqual(52639)
 ```
 
 fetch repeated tag
 
 ```typescript
   const erView: MsgView = views[0]
-  expect(erView.getStrings('PartyID')).toEqual(['magna.', 'iaculis', 'vitae,'])
+expect(erView.getStrings('PartyID')).toEqual(['magna.', 'iaculis', 'vitae,'])
 ```
 
 fetch a set of tags
 
 ```typescript
   const [a, b, c, d] = view.getTypedTags([8, 9, 35, 49])
-  expect(a).toEqual('FIX4.4')
-  expect(b).toEqual(2955)
-  expect(c).toEqual('W')
-  expect(d).toEqual('sender-10')
+expect(a).toEqual('FIX4.4')
+expect(b).toEqual(2955)
+expect(c).toEqual('W')
+expect(d).toEqual('sender-10')
 ```
 
 convert view into an object which can be used alongside an interface for intellisense.
 
 ```typescript
   import { ITradeCaptureReport } from '../../../types/FIX4.4/repo/trade_capture_report'
-  import { ITradeCaptureReportRequest } from '../../../types/FIX4.4/repo/trade_capture_report_request'
+import { ITradeCaptureReportRequest } from '../../../types/FIX4.4/repo/trade_capture_report_request'
 
-  const tc: ITradeCaptureReport = view.toObject()
+const tc: ITradeCaptureReport = view.toObject()
 ```
 
 from data/examples/FIX.4.4/quickfix/execution-report
@@ -405,24 +406,24 @@ get first in group fetched from object where group is array
 
 ```typescript
   import { IUndInstrmtGrp } from '../types/FIX4.4/quickfix/set/und_instrmt_grp'
-  import { IUnderlyingInstrument } from '../types/FIX4.4/quickfix/set/underlying_instrument'
-  const erView: MsgView = views[0]
-  const undInstrmtGrpView: MsgView = erView.getView('UndInstrmtGrp')
-  const undInstrmtGrpViewAsObject: IUndInstrmtGrp = undInstrmtGrpView.toObject()
-  expect(undInstrmtGrpViewAsObject.NoUnderlyings.length).toEqual(2)
-  const underlying0: IUnderlyingInstrument = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
-  expect(underlying0.UnderlyingSymbol).toEqual('massa.')
+import { IUnderlyingInstrument } from '../types/FIX4.4/quickfix/set/underlying_instrument'
+const erView: MsgView = views[0]
+const undInstrmtGrpView: MsgView = erView.getView('UndInstrmtGrp')
+const undInstrmtGrpViewAsObject: IUndInstrmtGrp = undInstrmtGrpView.toObject()
+expect(undInstrmtGrpViewAsObject.NoUnderlyings.length).toEqual(2)
+const underlying0: IUnderlyingInstrument = undInstrmtGrpViewAsObject.NoUnderlyings[0].UnderlyingInstrument
+expect(underlying0.UnderlyingSymbol).toEqual('massa.')
 ```
 
 fetch nested structure in one call
 
 ```typescript
   const legGrpView = view.getView('InstrmtLegGrp.NoLegs')
-  expect(legGrpView).toBeTruthy()
-  const legGrp: IInstrumentLeg[] = legGrpView.toObject()
-  expect(legGrp).toBeTruthy()
-  expect(Array.isArray(legGrp))
-  expect(legGrp.length).toEqual(2)
+expect(legGrpView).toBeTruthy()
+const legGrp: IInstrumentLeg[] = legGrpView.toObject()
+expect(legGrp).toBeTruthy()
+expect(Array.isArray(legGrp))
+expect(legGrp.length).toEqual(2)
 ```
 
 get a tokenised view of tags in view
@@ -435,7 +436,7 @@ get a component from parent - this is very low cost
 
 ```typescript
  const instrumentView: MsgView = view.getView('Instrument')
- const instrumentObject: IInstrument = view.getView('Instrument').toObject()
+const instrumentObject: IInstrument = view.getView('Instrument').toObject()
 ```
 
 ## FIXML
@@ -444,46 +445,46 @@ Please see sample code src/sample/http for an example of how fixml can be used. 
 
 ```typescript
   protected onReady (view: MsgView): void {
-    this.logger.info('onReady')
-    const logoutSeconds = this.logoutSeconds
-    const req = this.factory.createOrder('IBM', Side.Buy, 10000, 100.12)
-    this.send('NewOrderSingle', req)
-    this.logger.info(`will logout after ${logoutSeconds}`)
-    setTimeout(() => {
-      this.done()
-    }, 11 * 1000)
-  }
+  this.logger.info('onReady')
+  const logoutSeconds = this.logoutSeconds
+  const req = this.factory.createOrder('IBM', Side.Buy, 10000, 100.12)
+  this.send('NewOrderSingle', req)
+  this.logger.info(`will logout after ${logoutSeconds}`)
+  setTimeout(() => {
+  this.done()
+}, 11 * 1000)
+}
 
-    public createOrder (symbol: string, side: Side, qty: number, price: number): INewOrderSingle {
-    const id: number = this.id++
-    return {
-      ClOrdID: `Cli${id}`,
-      Account: this.account,
-      Side: side,
-      Price: price,
-      OrdType: OrdType.Limit,
-      OrderQtyData: {
-        OrderQty: qty
-      } as IOrderQtyData,
-      Instrument: {
-        Symbol: symbol,
-        SecurityID: '459200101',
-        SecurityIDSource: SecurityIDSource.IsinNumber
-      } as IInstrument,
-      TimeInForce: TimeInForce.GoodTillCancelGtc
-    } as INewOrderSingle
-  }
+public createOrder (symbol: string, side: Side, qty: number, price: number): INewOrderSingle {
+  const id: number = this.id++
+  return {
+    ClOrdID: `Cli${id}`,
+    Account: this.account,
+    Side: side,
+    Price: price,
+    OrdType: OrdType.Limit,
+    OrderQtyData: {
+      OrderQty: qty
+    } as IOrderQtyData,
+    Instrument: {
+      Symbol: symbol,
+      SecurityID: '459200101',
+      SecurityIDSource: SecurityIDSource.IsinNumber
+    } as IInstrument,
+    TimeInForce: TimeInForce.GoodTillCancelGtc
+  } as INewOrderSingle
+}
 ```
 
 this renders to this message sent over http
 
 ```xml
 <FIXML>
- <Order ID="Cli1" Acct="TradersRUs" Side="1" Typ="2" Px="100.12" TmInForce="1">
-  <Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
-  <Instrmt Sym="IBM" ID="459200101" Src="4"/>
-  <OrdQty Qty="10000"/>
- </Order>
+    <Order ID="Cli1" Acct="TradersRUs" Side="1" Typ="2" Px="100.12" TmInForce="1">
+        <Hdr SID="accept-comp" TID="init-comp" SSub="user123" TSub="INC"/>
+        <Instrmt Sym="IBM" ID="459200101" Src="4"/>
+        <OrdQty Qty="10000"/>
+    </Order>
 </FIXML>
 ```
 
@@ -491,57 +492,57 @@ the server receives this message and sends back an execution report :-
 
 ```typescript
   protected onApplicationMsg (msgType: string, view: MsgView): void {
-    // dispatch messages
-    this.logger.info(view.toJson())
-    switch (msgType) {
-      case 'Order': {
-        const order: INewOrderSingle = view.toObject()
-        this.logger.info(`received order id ${order.ClOrdID}`)
-        const fill: IExecutionReport = this.factory.fillOrder(order)
-        this.send('ExecutionReport', fill)
-      }
+  // dispatch messages
+  this.logger.info(view.toJson())
+  switch (msgType) {
+  case 'Order': {
+      const order: INewOrderSingle = view.toObject()
+      this.logger.info(`received order id ${order.ClOrdID}`)
+      const fill: IExecutionReport = this.factory.fillOrder(order)
+      this.send('ExecutionReport', fill)
     }
   }
+}
 
-   public fillOrder (order: INewOrderSingle): IExecutionReport {
-    const id: number = this.execId++
-    return {
-      ClOrdID: order.ClOrdID,
-      OrdType: order.OrdType,
-      TransactTime: new Date(),
-      AvgPx: order.Price,
-      LeavesQty: 0,
-      LastPx: order.Price,
-      ExecType: ExecType.OrderStatus,
-      OrdStatus: OrdStatus.Filled,
-      ExecID: `exec${id}`,
-      Side: order.Side,
-      Price: order.Price,
-      OrderQtyData: {
-        OrderQty: order.OrderQtyData.OrderQty
-      } as IOrderQtyData,
-      Instrument: {
-        Symbol: order.Instrument.Symbol,
-        SecurityID: order.Instrument.SecurityID,
-        SecurityIDSource: SecurityIDSource.IsinNumber
-      } as IInstrument
-    } as IExecutionReport
-  }
+public fillOrder (order: INewOrderSingle): IExecutionReport {
+  const id: number = this.execId++
+  return {
+    ClOrdID: order.ClOrdID,
+    OrdType: order.OrdType,
+    TransactTime: new Date(),
+    AvgPx: order.Price,
+    LeavesQty: 0,
+    LastPx: order.Price,
+    ExecType: ExecType.OrderStatus,
+    OrdStatus: OrdStatus.Filled,
+    ExecID: `exec${id}`,
+    Side: order.Side,
+    Price: order.Price,
+    OrderQtyData: {
+      OrderQty: order.OrderQtyData.OrderQty
+    } as IOrderQtyData,
+    Instrument: {
+      Symbol: order.Instrument.Symbol,
+      SecurityID: order.Instrument.SecurityID,
+      SecurityIDSource: SecurityIDSource.IsinNumber
+    } as IInstrument
+  } as IExecutionReport
+}
 ```
 
 the fixml is sent back to the client :-
 
 ```xml
 <FIXML>
- <ExecRpt ID="Cli1" ExecID="exec1" ExecTyp="I" Stat="2" Side="1" Typ="2" Px="100.12" LastPx="100.12" LeavesQty="0" AvgPx="100.12" TxnTm="2018-10-07T12:16:12.584">
-  <Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
-  <Instrmt Sym="IBM" ID="459200101" Src="4"/>
-  <OrdQty Qty="10000"/>
- </ExecRpt>
+    <ExecRpt ID="Cli1" ExecID="exec1" ExecTyp="I" Stat="2" Side="1" Typ="2" Px="100.12" LastPx="100.12" LeavesQty="0" AvgPx="100.12" TxnTm="2018-10-07T12:16:12.584">
+        <Hdr SID="accept-comp" TID="init-comp" TSub="fix"/>
+        <Instrmt Sym="IBM" ID="459200101" Src="4"/>
+        <OrdQty Qty="10000"/>
+    </ExecRpt>
 </FIXML>
 ```
 
-## performance on Windows Intel Core I7-4770 @ 3.5 GHz
+## Performance
 
 These messages have been randomly generated with command line tool. They are syntactically valid.
 
@@ -550,9 +551,13 @@ These messages have been randomly generated with command line tool. They are syn
 ```shell
 npm run repo44-bench-er
 ```
-
+### performance on Windows Intel Core I7-4770 @ 3.5 GHz
 ```shell
 [8]: repeats = 250000, fields = 58, length = 604 chars, elapsed ms 3658, 14.632 micros per msg
+```
+### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
+```shell
+[8]: iterations = 80000, fields = 646, length = 6572 chars, elapsed ms 7476, 93.45 micros per msg
 ```
 
 ### data/examples/FIX.4.4/repo/security-definition/fix.txt
@@ -561,8 +566,13 @@ npm run repo44-bench-er
 npm run repo44-bench-sd
 ```
 
+### performance on Windows Intel Core I7-4770 @ 3.5 GHz
 ```shell
 [d]: repeats = 150000, fields = 223, length = 2233 chars, elapsed ms 7962, 53.080000000000005 micros per msg
+```
+### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
+```
+[d]: iterations = 150000, fields = 229, length = 2466 chars, elapsed ms 4628, 30.85333333333333 micros per msg
 ```
 
 ### data/examples/FIX.4.4/repo/trade-capture/fix.txt
@@ -570,9 +580,13 @@ npm run repo44-bench-sd
 ```shell
 npm run repo44-bench-tc
 ```
-
+### performance on Windows Intel Core I7-4770 @ 3.5 GHz
 ```shell
 [AE]: repeats = 30000, fields = 613, length = 5818 chars, elapsed ms 5206, 173.53333333333333 micros per msg
+```
+### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
+```shell
+[AE]: iterations = 125000, fields = 353, length = 3544 chars, elapsed ms 7107, 56.855999999999995 micros per msg
 ```
 
 ## Log parsing
@@ -604,12 +618,12 @@ npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt -
 ```json
 messages 13 elapsed ms 8
 {
-    "0": 1,
-    "5": 2,
-    "A": 2,
-    "AD": 1,
-    "AQ": 2,
-    "AE": 5
+  "0": 1,
+  "5": 2,
+  "A": 2,
+  "AD": 1,
+  "AQ": 2,
+  "AE": 5
 }
 ```
 
@@ -622,12 +636,12 @@ npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt -
 ```json
 messages 13 elapsed ms 0
 {
-    "0": 1,
-    "5": 2,
-    "A": 2,
-    "AD": 1,
-    "AQ": 2,
-    "AE": 5
+  "0": 1,
+  "5": 2,
+  "A": 2,
+  "AD": 1,
+  "AQ": 2,
+  "AE": 5
 }
 ```
 
@@ -639,27 +653,27 @@ npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt -
 
 ```json
 {
-    "StandardHeader": {
-        "BeginString": "FIX4.4",
-        "BodyLength": 135,
-        "MsgType": "AD",
-        "SenderCompID": "init-comp",
-        "TargetCompID": "accept-comp",
-        "MsgSeqNum": 2,
-        "TargetSubID": "fix",
-        "SendingTime": "2018-09-23T16:07:04.763Z"
-    },
-    "TradeRequestID": "all-trades",
-    "TradeRequestType": 0,
-    "SubscriptionRequestType": "1",
-    "TrdCapDtGrp": [
-        {
-            "TradeDate": "2018-09-22T23:00:00.000Z"
-        }
-    ],
-    "StandardTrailer": {
-        "CheckSum": "250"
+  "StandardHeader": {
+    "BeginString": "FIX4.4",
+    "BodyLength": 135,
+    "MsgType": "AD",
+    "SenderCompID": "init-comp",
+    "TargetCompID": "accept-comp",
+    "MsgSeqNum": 2,
+    "TargetSubID": "fix",
+    "SendingTime": "2018-09-23T16:07:04.763Z"
+  },
+  "TradeRequestID": "all-trades",
+  "TradeRequestType": 0,
+  "SubscriptionRequestType": "1",
+  "TrdCapDtGrp": [
+    {
+      "TradeDate": "2018-09-22T23:00:00.000Z"
     }
+  ],
+  "StandardTrailer": {
+    "CheckSum": "250"
+  }
 }
 ```
 
@@ -667,34 +681,34 @@ as above where --type=AE --objects
 
 ```json
 {
-    "StandardHeader": {
-        "BeginString": "FIX4.4",
-        "BodyLength": 213,
-        "MsgType": "AE",
-        "SenderCompID": "accept-comp",
-        "TargetCompID": "init-comp",
-        "MsgSeqNum": 4,
-        "TargetSubID": "fix",
-        "SendingTime": "2018-09-23T16:07:04.986Z"
-    },
-    "TradeReportID": "100001",
-    "TradeReportTransType": 0,
-    "TradeReportType": 0,
-    "TrdType": 0,
-    "ExecID": "600001",
-    "OrdStatus": "2",
-    "PreviouslyReported": false,
-    "Instrument": {
-        "Symbol": "Gold",
-        "SecurityID": "Gold.INC"
-    },
-    "LastQty": 107,
-    "LastPx": 45.38,
-    "TradeDate": "2018-09-22T23:00:00.000Z",
-    "TransactTime": "2018-09-23T16:07:04.776Z",
-    "StandardTrailer": {
-        "CheckSum": "54"
-    }
+  "StandardHeader": {
+    "BeginString": "FIX4.4",
+    "BodyLength": 213,
+    "MsgType": "AE",
+    "SenderCompID": "accept-comp",
+    "TargetCompID": "init-comp",
+    "MsgSeqNum": 4,
+    "TargetSubID": "fix",
+    "SendingTime": "2018-09-23T16:07:04.986Z"
+  },
+  "TradeReportID": "100001",
+  "TradeReportTransType": 0,
+  "TradeReportType": 0,
+  "TrdType": 0,
+  "ExecID": "600001",
+  "OrdStatus": "2",
+  "PreviouslyReported": false,
+  "Instrument": {
+    "Symbol": "Gold",
+    "SecurityID": "Gold.INC"
+  },
+  "LastQty": 107,
+  "LastPx": 45.38,
+  "TradeDate": "2018-09-22T23:00:00.000Z",
+  "TransactTime": "2018-09-23T16:07:04.776Z",
+  "StandardTrailer": {
+    "CheckSum": "54"
+  }
 }
 ```
 
@@ -706,57 +720,57 @@ npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt -
 
 ```json
 [
-    {
-        "name": "StandardHeader",
-        "depth": 2,
-        "startTag": 8,
-        "startPosition": 0,
-        "endTag": 52,
-        "endPosition": 7,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "TrdCapDtGrp",
-        "depth": 1,
-        "startTag": 580,
-        "startPosition": 11,
-        "endTag": 75,
-        "endPosition": 12,
-        "delimiterTag": 75,
-        "delimiterPositions": [
-            12
-        ]
-    },
-    {
-        "name": "StandardTrailer",
-        "depth": 1,
-        "startTag": 10,
-        "startPosition": 13,
-        "endTag": 10,
-        "endPosition": 13,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "TradeCaptureReportRequest",
-        "depth": 1,
-        "startTag": 8,
-        "startPosition": 0,
-        "endTag": 10,
-        "endPosition": 13,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    },
-    {
-        "name": "StandardTrailer",
-        "depth": 0,
-        "startTag": 10,
-        "startPosition": 14,
-        "endTag": 10,
-        "endPosition": 13,
-        "delimiterTag": 0,
-        "delimiterPositions": []
-    }
+  {
+    "name": "StandardHeader",
+    "depth": 2,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 52,
+    "endPosition": 7,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "TrdCapDtGrp",
+    "depth": 1,
+    "startTag": 580,
+    "startPosition": 11,
+    "endTag": 75,
+    "endPosition": 12,
+    "delimiterTag": 75,
+    "delimiterPositions": [
+      12
+    ]
+  },
+  {
+    "name": "StandardTrailer",
+    "depth": 1,
+    "startTag": 10,
+    "startPosition": 13,
+    "endTag": 10,
+    "endPosition": 13,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "TradeCaptureReportRequest",
+    "depth": 1,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 10,
+    "endPosition": 13,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StandardTrailer",
+    "depth": 0,
+    "startTag": 10,
+    "startPosition": 14,
+    "endTag": 10,
+    "endPosition": 13,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  }
 ]
 ```
