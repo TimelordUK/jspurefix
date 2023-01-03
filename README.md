@@ -554,6 +554,7 @@ npm run repo44-bench-er
 ### performance on Windows Intel Core I7-4770 @ 3.5 GHz
 ```shell
 [8]: repeats = 250000, fields = 58, length = 604 chars, elapsed ms 3658, 14.632 micros per msg
+[8]: iterations = 80000, fields = 646, length = 6572 chars, elapsed ms 16499, 206.23749999999998 micros per msg
 ```
 ### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
 ```shell
@@ -569,6 +570,7 @@ npm run repo44-bench-sd
 ### performance on Windows Intel Core I7-4770 @ 3.5 GHz
 ```shell
 [d]: repeats = 150000, fields = 223, length = 2233 chars, elapsed ms 7962, 53.080000000000005 micros per msg
+d]: iterations = 150000, fields = 229, length = 2466 chars, elapsed ms 8672, 57.81333333333333 micros per msg
 ```
 ### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
 ```
@@ -583,10 +585,42 @@ npm run repo44-bench-tc
 ### performance on Windows Intel Core I7-4770 @ 3.5 GHz
 ```shell
 [AE]: repeats = 30000, fields = 613, length = 5818 chars, elapsed ms 5206, 173.53333333333333 micros per msg
+[AE]: iterations = 30000, fields = 578, length = 5741 chars, elapsed ms 5245, 174.83333333333334 micros per msg```
+```
+
+### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
+```shell
+[AE]: iterations = 30000, fields = 578, length = 5741 chars, elapsed ms 2725, 90.83333333333333 micros per msg```
+```
+
+### data/examples/FIX.4.4/quickfix/heartbeat/fix.txt
+
+```shell
+npm run qf-bench-hb
+```
+
+### performance on Windows Intel Core I7-4770 @ 3.5 GHz
+```shell
+[0]: iterations = 250000, fields = 10, length = 131 chars, elapsed ms 950, 3.8 micros per msg
 ```
 ### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
 ```shell
-[AE]: iterations = 125000, fields = 353, length = 3544 chars, elapsed ms 7107, 56.855999999999995 micros per msg
+[0]: iterations = 250000, fields = 10, length = 131 chars, elapsed ms 468, 1.8719999999999999 micros per msg
+````
+
+### data/examples/FIX.4.4/quickfix/logon/fix.txt
+
+```shell
+npm run qf-bench-lo
+```
+
+### performance on Windows Intel Core I7-4770 @ 3.5 GHz
+```shell
+[A]: iterations = 250000, fields = 22, length = 214 chars, elapsed ms 1466, 5.864 micros per msg
+```
+### performance on Windows 12th Gen Intel(R) Core(TM) i7-12700H 2.30 GHz
+```shell
+[A]: iterations = 250000, fields = 22, length = 214 chars, elapsed ms 693, 2.7720000000000002 micros per msg
 ```
 
 ## Log parsing
