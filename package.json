@@ -35,7 +35,7 @@
     "repo44-repscr": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/fix.txt --delimiter=\"|\" --stats--delimiter=\"|\" --stats",
     "repo44-bench": "node dist/jsfix-cmd --dict=repo44 --benchmark --delimiter=\"|\"",
     "qf44-bench-er": "node dist/jsfix-cmd  --dict=qf44 --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
-    "repo44-bench-er": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=125000",
+    "repo44-bench-er": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
     "repo44-bench-tc": "node dist/jsfix-cmd jsfix-cmd ---dict=repo44 --fix=data/examples/FIX.4.4/repo/trade-capture/fix.txt --benchmark --delimiter=\"|\" --repeats=30000",
     "repo44-bench-sd": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/security-definition/fix.txt --benchmark --delimiter=\"|\" --repeats=150000",
     "repo44-bench-lo": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
