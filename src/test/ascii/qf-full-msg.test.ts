@@ -24,16 +24,16 @@ beforeAll(async () => {
   config = setup.clientConfig
 }, 45000)
 
-async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
+async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<(ILooseObject|null)> {
   // encode to FIX format from provided object.
   return await new Promise(async function (resolve, reject) {
     const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
     const parseBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
     const parser: AsciiParser = new AsciiParser(config, session.encodeStream, parseBuffer)
     parser.on('msg', (msgType: string, view: AsciiView) => {
-      const o = view.toObject()
-      delete o.StandardHeader
-      delete o.StandardTrailer
+      const o = view!.toObject() as ILooseObject
+      delete o!.StandardHeader
+      delete o!.StandardTrailer
       resolve(o)
     })
     parser.on('error', (e: Error) => {
@@ -44,7 +44,7 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
 }
 
 test('test logon JSON => object => fix => object', async () => {
-  const msgType: string = MsgType.Logon
+  const msgType: string =  MsgType.Logon
   const file: string = path.join(root, 'logon/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(msgType, msg)).resolves.toEqual(msg)

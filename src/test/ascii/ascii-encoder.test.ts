@@ -574,7 +574,7 @@ test('encode custom header - include MsgSeqNum (for resends we do not want to ov
   const res: ParsingResult = await setup.client.parseText(fix)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual(MsgType.NewOrderSingle)
-  const parsed: INewOrderSingle = res.view?.toObject()
+  const parsed: INewOrderSingle = res.view!.toObject() as INewOrderSingle
   const h: IStandardHeader = parsed.StandardHeader
   expect(h.DeliverToCompID).toEqual('DepC')
   expect(h.MsgSeqNum).toEqual(seqNum)

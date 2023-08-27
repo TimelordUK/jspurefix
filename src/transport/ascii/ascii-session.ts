@@ -162,7 +162,7 @@ export abstract class AsciiSession extends FixSession {
     this.setState(SessionState.HandleResendRequest)
     const [beginSeqNo, endSeqNo] = view.getTypedTags([MsgTag.BeginSeqNo, MsgTag.EndSeqNo])
     this.sessionLogger.info(`onResendRequest getResendRequest beginSeqNo = ${beginSeqNo}, endSeqNo = ${endSeqNo}`)
-    this.resender.getResendRequest(beginSeqNo, endSeqNo).then((records: IFixMsgStoreRecord[]) => {
+    this.resender.getResendRequest(beginSeqNo as number, endSeqNo as number).then((records: IFixMsgStoreRecord[]) => {
       const validRecords = records.filter(rec => rec.obj !== null)
       this.sessionLogger.info(`sending ${validRecords.length}`)
       validRecords.forEach(rec => {
@@ -291,7 +291,7 @@ export abstract class AsciiSession extends FixSession {
     const state = this.sessionState
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt)
     state.peerCompId = view.getTyped(MsgTag.SenderCompID)
-    const res = this.onLogon(view, userName, password)
+    const res = this.onLogon(view, userName as string, password as string)
     // currently not using this.
     logger.info(`peerLogon onLogon returns ${res}`)
     if (this.acceptor) {

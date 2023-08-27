@@ -20,7 +20,7 @@ export class FixMsgStoreRecord implements IFixMsgStoreRecord {
   }
 
   static toMsgStoreRecord (v: MsgView): IFixMsgStoreRecord {
-    return new FixMsgStoreRecord(v.getString(MsgTag.MsgType) ?? '', v.getTyped(MsgTag.SendingTime), v.getTyped(MsgTag.MsgSeqNum), v.toObject())
+    return new FixMsgStoreRecord(v.getString(MsgTag.MsgType) ?? '', v.getTyped(MsgTag.SendingTime), v.getTyped(MsgTag.MsgSeqNum), v.toObject() as ILooseObject)
   }
 
   clone (): IFixMsgStoreRecord {

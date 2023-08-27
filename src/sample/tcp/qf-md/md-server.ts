@@ -11,7 +11,7 @@ import { inject, injectable } from 'tsyringe'
 export class MDServer extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
-  private readonly timerHandle: NodeJS.Timer | null = null
+  private readonly timerHandle: NodeJS.Timeout | null = null
 
   constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
     super(config)
@@ -24,7 +24,7 @@ export class MDServer extends AsciiSession {
     this.logger.info(`${view.toJson()}`)
     switch (msgType) {
       case MsgType.MarketDataRequest: {
-        const req: IMarketDataRequest = view.toObject()
+        const req: IMarketDataRequest = view.toObject() as IMarketDataRequest
         break
       }
     }

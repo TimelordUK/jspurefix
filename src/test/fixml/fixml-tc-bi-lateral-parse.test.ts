@@ -21,7 +21,7 @@ test('expect a view from fix msg', () => {
 test('expect a batch view ', () => {
   const batch = toViews.batch
   expect(batch).toBeTruthy()
-  const o: IBatch = batch?.toObject()
+  const o: IBatch = batch!.toObject() as IBatch
   expect(o).toBeTruthy()
   const instances: ILooseObject[] = o.Batch
   expect(Array.isArray(instances)).toEqual(true)
@@ -30,7 +30,7 @@ test('expect a batch view ', () => {
 
 test('expect an instrument', () => {
   const views = toViews.views
-  const t: ITradeCaptureReport = views[0].toObject()
+  const t: ITradeCaptureReport = views[0]!.toObject() as ITradeCaptureReport
   expect(t).toBeTruthy()
   const i = t.Instrument
   expect(i).toBeTruthy()
@@ -38,7 +38,7 @@ test('expect an instrument', () => {
 
 test('check instrument attributes', () => {
   const views = toViews.views
-  const t: ITradeCaptureReport = views[0].toObject()
+  const t: ITradeCaptureReport = views[0].toObject() as ITradeCaptureReport
   const i = t.Instrument
   expect(i).toBeTruthy()
   const iv = views[0].getView('Instrument')
@@ -51,7 +51,7 @@ test('check instrument attributes', () => {
 
 test('check instrument groups', () => {
   const views = toViews.views
-  const t: ITradeCaptureReport = views[0].toObject()
+  const t: ITradeCaptureReport = views[0].toObject() as ITradeCaptureReport
   const i: IInstrument | null = t.Instrument ?? null
   const stream = i?.StreamGrp
   expect(stream).toBeTruthy()
@@ -104,7 +104,7 @@ test('check instrument groups', () => {
 
 test('expect Hdr view to be on Batch', () => {
   const batch = toViews.batch
-  const o: IBatch = batch?.toObject()
+  const o: IBatch = batch?.toObject() as IBatch
   const hdr: IStandardHeader = o.StandardHeader
   expect(hdr).toBeTruthy()
   expect(hdr.SenderCompID).toEqual('CME')

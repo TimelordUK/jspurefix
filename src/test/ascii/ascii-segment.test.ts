@@ -28,7 +28,7 @@ test('0 gaps', async () => {
   expect(res.msgType).toEqual(MsgType.Logon)
   const unknowns: SegmentDescription[] = res.view?.structure?.layout['.undefined']
   expect(unknowns).toBeFalsy()
-  const o: ILogon = res?.view?.toObject()
+  const o: ILogon = res?.view?.toObject() as ILogon
   expect(o).toBeTruthy()
   expect(o.Password).toEqual('consectetur')
   expect(o.Username).toEqual('sit')
@@ -43,7 +43,7 @@ test('1 gap', async () => {
   expect(unknown).toBeTruthy()
   expect(unknown.startTag).toEqual(9999)
   expect(unknown.startPosition).toEqual(10)
-  const o: ILogon = res?.view?.toObject()
+  const o: ILogon = res?.view?.toObject() as ILogon
   expect(o).toBeTruthy()
   expect(o.Password).toEqual('consectetur')
   expect(o.Username).toEqual('sit')
@@ -61,7 +61,7 @@ test('1 gap next to 1 gap', async () => {
   expect(unknowns[0].startPosition).toEqual(10)
   expect(unknowns[1].startTag).toEqual(2)
   expect(unknowns[1].startPosition).toEqual(11)
-  const o: ILogon = res?.view?.toObject()
+  const o: ILogon = res?.view?.toObject() as ILogon
   expect(o).toBeTruthy()
   expect(o.Password).toEqual('consectetur')
   expect(o.Username).toEqual('sit')
