@@ -31,7 +31,7 @@ async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<IL
     const rxBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
     const parser: AsciiParser = new AsciiParser(config, session.encodeStream, rxBuffer)
     parser.on('msg', (msgType: string, view: AsciiView) => {
-      const o = view.toObject()
+      const o = view.toObject() as ILooseObject
       delete o.StandardHeader
       delete o.StandardTrailer
       resolve(o)

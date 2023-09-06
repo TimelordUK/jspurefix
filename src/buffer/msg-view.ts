@@ -139,10 +139,11 @@ export abstract class MsgView {
     return this.stringAtPosition(position)
   }
 
-  public getStrings (tagOrName: number | string = -1): Array<(string | null)> | null {
-    if (tagOrName < 0) {
+  public getStrings (tagOrName: number | string | null = null): Array<(string | null)> | null {
+    if (!tagOrName) {
       return this.allStrings()
     }
+    tagOrName = tagOrName || -1
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
       return null
@@ -168,11 +169,11 @@ export abstract class MsgView {
     return this.toTyped(field)
   }
 
-  public getTypedTags (tagOrName: any[]): any[] {
+  public getTypedTags (tagOrName: (string|number)[]): (boolean|string|number|Date|null)[] {
     return tagOrName.map((s) => this.getTyped(s))
   }
 
-  public toObject (): any {
+  public toObject (): ILooseObject|ILooseObject[]|null {
     const segment: SegmentDescription = this.segment
     if (segment.set == null) return null
     if (segment.delimiterTag) {
@@ -241,7 +242,7 @@ export abstract class MsgView {
 
   protected abstract stringAtPosition (position: number): string | null
 
-  protected abstract toTyped (field: SimpleFieldDefinition): any
+  protected abstract toTyped (field: SimpleFieldDefinition): boolean|string|number|Date
 
   protected resolveTag (tagOrName: number | string): number {
     let tag: number
@@ -312,16 +313,16 @@ export abstract class MsgView {
     return range.map((i: number) => this.stringAtPosition(i))
   }
 
-  private asInstances (name: string): ILooseObject[] | null {
+  private asInstances (name: string): (ILooseObject|null)[] | null {
     const groupView: MsgView | null = this.getView(name)
     if (groupView == null) {
       return null
     }
-    const groupArray: ILooseObject[] = new Array(groupView.groupCount())
+    const groupArray: (ILooseObject|null)[] = new Array(groupView.groupCount())
     const count: number = groupView.groupCount()
     for (let j: number = 0; j < count; ++j) {
       const instance: MsgView | null = groupView.getGroupInstance(j)
-      groupArray[j] = instance?.toObject()
+      groupArray[j] = instance?.toObject() ?? null
     }
     return groupArray
   }
@@ -393,7 +394,7 @@ export abstract class MsgView {
     const def = sf.definition
     const position: number = this.getPosition(def.tag)
     if (position >= 0) {
-      const asSimple: any = this.toTyped(def)
+      const asSimple: boolean|string|number|Date = this.toTyped(def)
       if (asSimple != null) { // beware, may be false value
         a[sf.name] = asSimple
       }

@@ -24,7 +24,7 @@ export class HttpServer extends FixmlSession {
     this.logger.info(view.toJson())
     switch (msgType) {
       case 'Order': {
-        const order: INewOrderSingle = view.toObject()
+        const order: INewOrderSingle = view!.toObject() as INewOrderSingle
         this.logger.info(`received order id ${order.ClOrdID}`)
         const fill: IExecutionReport = this.factory.fillOrder(order)
         this.send('ExecutionReport', fill)

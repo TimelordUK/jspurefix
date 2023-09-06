@@ -74,7 +74,7 @@ test('Logon MsgTypes', () => {
 })
 
 test('Logon Object', () => {
-  const logonAsObject: ILooseObject = views[0].toObject()
+  const logonAsObject: ILooseObject = views[0].toObject() as ILooseObject
   expect(logonAsObject).toBeTruthy()
   expect(logonAsObject.Username).toEqual('sit')
   expect(logonAsObject.Password).toEqual('consectetur')

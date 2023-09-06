@@ -11,7 +11,7 @@ import { SegmentType } from '../../buffer/segment/segment-type'
 
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false
-  protected timer: NodeJS.Timer | null = null
+  protected timer: NodeJS.Timeout | null = null
   protected transport: MsgTransport | null = null
   public manageSession: boolean = true
   public checkMsgIntegrity: boolean = false

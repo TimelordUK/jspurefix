@@ -110,7 +110,7 @@ async function repository (): Promise<any> {
   const xmlParser: MsgParser = new FiXmlParser(config, readStream)
   xmlParser.on('batch', (msgType: string, v: MsgView) => {
     console.log(`received message ${msgType}`)
-    const o: ILooseObject = v.toObject()
+    const o: ILooseObject = v.toObject() as ILooseObject
     console.log(JSON.stringify(o, null, 4))
     const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
     fe.encode(o, msgType)
@@ -120,7 +120,7 @@ async function repository (): Promise<any> {
   })
   xmlParser.on('msg', (msgType: string, v: MsgView) => {
     console.log(`received message ${msgType}`)
-    const o: ILooseObject = v.toObject()
+    const o: ILooseObject = v.toObject() as ILooseObject
     console.log(JSON.stringify(o, null, 4))
     console.log(v.toString())
     const fe = new FixmlEncoder(new ElasticBuffer(), definitions)
@@ -142,22 +142,6 @@ async function runTest (): Promise<any> {
   })
 }
 
-async function streamExample (): Promise<void> {
-  const fs: any = require('fs')
-  const root: string = path.join(__dirname, '../')
-  const file: string = path.join(root, 'data/examples/FIXML/cme/Claiming Firm Requests Sub-allocation with Allocation Instructions/')
-  const readStream: ReadStream = fs.createReadStream(`${file}/fix.xml`)
-  const Writable = require('stream').Writable
-  const receiver = new Writable({
-    write: (data: Buffer, _: any, done: Function) => {
-      console.log('receive ' + data.toString())
-      done()
-    }
-  })
-  readStream.pipe(receiver).on('finish', () => {
-    console.log('done')
-  })
-}
 
 async function compileDefinitions (definitionPath: string, outputPath: string): Promise<void> {
   const definitions = await new DefinitionFactory().getDefinitions(definitionPath)

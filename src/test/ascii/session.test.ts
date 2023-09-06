@@ -56,13 +56,13 @@ async function runSkeletons (logoutSeconds: number = 1, followOn: string | null 
 }
 
 test('end to end logon', async () => {
-  const lo = experiment?.client?.config?.factory?.logon()
+  const lo = experiment?.client?.config?.factory?.logon() as ILogon
   expect(lo).toBeTruthy()
   if (!lo) return
   const res: ParsingResult = await clientToServerWaitFirstMessage(MsgType.Logon, lo)
   expect(res.event).toEqual('msg')
   expect(res.msgType).toEqual('A')
-  const received = res.view.toObject()
+  const received = res.view.toObject() as ILooseObject
   expect(received).toBeTruthy()
   delete received.StandardHeader
   delete received.StandardTrailer
@@ -179,7 +179,7 @@ function mutateRemoveRequiredHeartBtInt (description: ISessionDescription, type:
   switch (type) {
     case 'A': {
       const logon = o as ILogon
-      // @ts-expect-error
+      // @ts-ignore
       delete logon.HeartBtInt
       break
     }
@@ -197,7 +197,7 @@ test('client logon reject missing 108', async () => {
   expect(sviews.length === 1).toEqual(true)
   expect(cviews[0].segment.name).toEqual('Reject')
   expect(sviews[0].segment.name).toEqual('Logon')
-  const reject: IReject = cviews[0].toObject()
+  const reject: IReject = cviews[0].toObject() as IReject
   expect(reject.SessionRejectReason === SessionRejectReason.RequiredTagMissing)
   expect(reject.Text).toEqual('msgType A missing required tag 108')
 }, 10000)
@@ -225,7 +225,7 @@ test('client unknown msg type', async () => {
   const sviews = experiment.server.views
   await runCheckReject(experiment, changed)
   expect(sviews[1].segment.name).toEqual('unknown')
-  const reject: IReject = cviews[1].toObject()
+  const reject: IReject = cviews[1].toObject() as IReject
   expect(reject.SessionRejectReason === SessionRejectReason.InvalidMsgType)
   expect(reject.Text).toEqual('msgType ZZ unknown')
 }, 10000)
@@ -240,7 +240,7 @@ test('heartbeat invalid tag', async () => {
   const sviews = experiment.server.views
   await runCheckReject(experiment, changed)
   expect(sviews[1].segment.name).toEqual('Heartbeat')
-  const reject: IReject = experiment.client.views[1].toObject()
+  const reject: IReject = experiment.client.views[1].toObject() as IReject
   expect(reject.SessionRejectReason === SessionRejectReason.InvalidTagNumber)
   checkSeqNos(cviews)
   checkSeqNos(sviews)
@@ -255,7 +255,7 @@ test('heartbeat invalid sender comp', async () => {
   const sviews = experiment.server.views
   await runCheckReject(experiment, changed)
   expect(sviews[1].segment.name).toEqual('Heartbeat')
-  const reject: IReject = cviews[1].toObject()
+  const reject: IReject = cviews[1].toObject() as IReject
   expect(reject.SessionRejectReason === SessionRejectReason.CompIDProblem)
   checkSeqNos(cviews)
   checkSeqNos(sviews)

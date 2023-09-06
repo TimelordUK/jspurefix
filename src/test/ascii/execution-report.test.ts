@@ -723,7 +723,7 @@ test('expect one message view from one line fix file', () => {
 
 test('can create object from view', () => {
   const erView: MsgView = views[0]
-  const erAsObject: ILooseObject = erView.toObject()
+  const erAsObject: (ILooseObject|null) = erView.toObject()
   expect(erAsObject).toBeTruthy()
 }, 1000)
 
@@ -746,10 +746,10 @@ test('repeated group decoding of Parties', () => {
   const erView: MsgView = views[0]
   const partyView: MsgView | null = erView.getView('Parties')
   expect(partyView).toBeTruthy()
-  const partyViewAsObject: ILooseObject = partyView?.toObject()
+  const partyViewAsObject: (ILooseObject|null) = partyView!.toObject()
   expect(partyViewAsObject).toBeTruthy()
-  expect(partyViewAsObject.NoPartyIDs.length).toEqual(3)
-  expect(partyViewAsObject.NoPartyIDs[0]).toEqual({
+  expect(partyViewAsObject!.NoPartyIDs.length).toEqual(3)
+  expect(partyViewAsObject!.NoPartyIDs[0]).toEqual({
     PartyID: 'magna.',
     PartyIDSource: '9',
     PartyRole: 28,
@@ -774,9 +774,9 @@ test('repeated group decoding of Parties', () => {
   expect(np0View?.getString('PartyID')).toEqual('magna.')
   expect(np0View?.getString('PartyIDSource')).toEqual('9')
   const np0ViewPtysSubGrp: MsgView | null = np0View?.getView('PtysSubGrp') ?? null
-  const np0ViewPtysSubGrpAsObject: ILooseObject = np0ViewPtysSubGrp?.toObject()
+  const np0ViewPtysSubGrpAsObject: (ILooseObject|null) = np0ViewPtysSubGrp!.toObject()
   expect(np0ViewPtysSubGrpAsObject).toBeTruthy()
-  expect(np0ViewPtysSubGrpAsObject).toEqual(partyViewAsObject.NoPartyIDs[0].PtysSubGrp)
+  expect(np0ViewPtysSubGrpAsObject).toEqual(partyViewAsObject!.NoPartyIDs[0].PtysSubGrp)
 }, 1000)
 
 test('instrument component decode', () => {
@@ -795,7 +795,7 @@ test('UndInstrmtGrp component decode', () => {
   // check the instrument component
   const undInstrmtGrpView: MsgView | null = erView.getView('UndInstrmtGrp')
   expect(undInstrmtGrpView).toBeTruthy()
-  const undInstrmtGrpViewAsObject: IUndInstrmtGrp | null = undInstrmtGrpView?.toObject()
+  const undInstrmtGrpViewAsObject: IUndInstrmtGrp = undInstrmtGrpView!.toObject() as IUndInstrmtGrp
   expect(undInstrmtGrpViewAsObject).toBeTruthy()
   expect(undInstrmtGrpViewAsObject?.NoUnderlyings?.length).toEqual(2)
   const underlyings: IUndInstrmtGrpNoUnderlyings[] | null = undInstrmtGrpViewAsObject?.NoUnderlyings ?? null

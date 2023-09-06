@@ -26,7 +26,7 @@ export class RespawnAcceptor extends FixEntity {
 
   protected rxOnMsg (session: FixSession, msgType: string, view: MsgView): void {
     this.logger.info(`rxOnMsg msgType = ${msgType}`)
-    const o: ILooseObject = view.toObject()
+    const o: ILooseObject = view.toObject() as ILooseObject
     const key: string = o.StandardHeader.SenderCompID
     if (!this.sessions.containsKey(key)) {
       this.logger.info(`onSession: new session acceptor SenderCompID = ${key} created, count = ${this.sessions.count()}}`)

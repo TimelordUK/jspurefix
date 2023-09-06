@@ -48,6 +48,7 @@ export class AsciiSessionMsgFactory extends ASessionMsgFactory {
       SendingTime: time,
       TargetCompID: description.TargetCompID,
       TargetSubID: description.TargetSubID,
+      SenderSubID: description.SenderSubID,
       ...overrideData
     }
     return this.mutate(o, 'StandardHeader')

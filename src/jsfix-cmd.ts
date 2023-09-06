@@ -401,7 +401,7 @@ export class JsfixCmd {
       }
 
       case PrintMode.Object: {
-        const asObject: ILooseObject = m.toObject()
+        const asObject: ILooseObject = m.toObject() as ILooseObject
         if (print) {
           const def = this.definitions.message.get(msgType)
           console.log(`${msgType} [${def?.name}] = ${JSON.stringify(asObject, null, 4)}`)
@@ -427,7 +427,7 @@ export class JsfixCmd {
       }
 
       case PrintMode.Encoded: {
-        const fix: string = this.encodeObject(msgType, m.toObject())
+        const fix: string = this.encodeObject(msgType, m.toObject() as ILooseObject)
         console.log(fix)
         break
       }

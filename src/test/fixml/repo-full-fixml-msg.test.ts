@@ -35,12 +35,12 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
     const xmlParser: MsgParser = new FiXmlParser(config, new StringDuplex(fixml).readable)
     if (asObj.Batch) {
       xmlParser.on('batch', (msgType: string, v: MsgView) => {
-        const o: ILooseObject = v.toObject()
+        const o: ILooseObject = v.toObject() as ILooseObject
         resolve(o)
       })
     } else {
       xmlParser.on('msg', (msgType: string, v: MsgView) => {
-        const o: ILooseObject = v.toObject()
+        const o: ILooseObject = v.toObject() as ILooseObject
         resolve(o)
       })
     }

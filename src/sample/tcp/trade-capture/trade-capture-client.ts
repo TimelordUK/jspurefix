@@ -27,14 +27,14 @@ export class TradeCaptureClient extends AsciiSession {
     switch (msgType) {
       case MsgType.TradeCaptureReport: {
         // create an object and cast to the interface
-        const tc: ITradeCaptureReport = view.toObject()
+        const tc: ITradeCaptureReport = view.toObject() as ITradeCaptureReport
         this.reports.addUpdate(tc.TradeReportID, tc)
         this.logger.info(`[reports: ${this.reports.count()}] received tc ExecID = ${tc.ExecID} TradeReportID  = ${tc.TradeReportID} Symbol = ${tc.Instrument.Symbol} ${tc.LastQty} @ ${tc.LastPx}`)
         break
       }
 
       case MsgType.TradeCaptureReportRequestAck: {
-        const tc: ITradeCaptureReportRequestAck = view.toObject()
+        const tc: ITradeCaptureReportRequestAck = view.toObject() as ITradeCaptureReportRequestAck
         this.logger.info(`received tcr ack ${tc.TradeRequestID} ${tc.TradeRequestStatus}`)
         break
       }
