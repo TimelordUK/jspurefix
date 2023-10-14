@@ -1,0 +1,70 @@
+import { IYieldData } from './yield_data'
+import { ISpreadOrBenchmarkCurveData } from './spread_or_benchmark_curve_data'
+import { ISecSizesGrp } from './sec_sizes_grp'
+import { IParties } from './parties'
+import { IRateSource } from './rate_source'
+
+export interface IMDFullGrp {
+  MDEntryType: string// [1] 269 (String)
+  MDEntryID?: string// [2] 278 (String)
+  MDEntryPx?: number// [3] 270 (Float)
+  PriceType?: number// [4] 423 (Int)
+  YieldData?: IYieldData// [5] YieldType.235, Yield.236 .. YieldRedemptionPriceType.698
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [6] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  OrdType?: string// [7] 40 (String)
+  Currency?: string// [8] 15 (String)
+  MDEntrySize?: number// [9] 271 (Float)
+  SecSizesGrp?: ISecSizesGrp[]// [10] MDSecSizeType.1178, MDSecSize.1179
+  LotType?: string// [11] 1093 (String)
+  MDEntryDate?: Date// [12] 272 (UtcDateOnly)
+  MDEntryTime?: string// [13] 273 (String)
+  TickDirection?: string// [14] 274 (String)
+  MDMkt?: string// [15] 275 (String)
+  TradingSessionID?: string// [16] 336 (String)
+  TradingSessionSubID?: string// [17] 625 (String)
+  SecurityTradingStatus?: number// [18] 326 (Int)
+  HaltReason?: number// [19] 327 (Int)
+  QuoteCondition?: string// [20] 276 (String)
+  TradeCondition?: string// [21] 277 (String)
+  MDEntryOriginator?: string// [22] 282 (String)
+  LocationID?: string// [23] 283 (String)
+  DeskID?: string// [24] 284 (String)
+  OpenCloseSettlFlag?: string// [25] 286 (String)
+  TimeInForce?: string// [26] 59 (String)
+  ExpireDate?: Date// [27] 432 (LocalDate)
+  ExpireTime?: Date// [28] 126 (UtcTimestamp)
+  MinQty?: number// [29] 110 (Float)
+  ExecInst?: string// [30] 18 (String)
+  SellerDays?: number// [31] 287 (Int)
+  OrderID?: string// [32] 37 (String)
+  SecondaryOrderID?: string// [33] 198 (String)
+  QuoteEntryID?: string// [34] 299 (String)
+  MDEntryBuyer?: string// [35] 288 (String)
+  MDEntrySeller?: string// [36] 289 (String)
+  NumberOfOrders?: number// [37] 346 (Int)
+  MDEntryPositionNo?: number// [38] 290 (Int)
+  Scope?: string// [39] 546 (String)
+  PriceDelta?: number// [40] 811 (Float)
+  Text?: string// [41] 58 (String)
+  EncodedTextLen?: number// [42] 354 (Int)
+  EncodedText?: Buffer// [43] 355 (RawData)
+  MDPriceLevel?: number// [44] 1023 (Int)
+  OrderCapacity?: string// [45] 528 (String)
+  MDOriginType?: number// [46] 1024 (Int)
+  HighPx?: number// [47] 332 (Float)
+  LowPx?: number// [48] 333 (Float)
+  TradeVolume?: number// [49] 1020 (Float)
+  SettlType?: string// [50] 63 (String)
+  SettlDate?: Date// [51] 64 (LocalDate)
+  MDQuoteType?: number// [52] 1070 (Int)
+  RptSeq?: number// [53] 83 (Int)
+  DealingCapacity?: string// [54] 1048 (String)
+  MDEntrySpotRate?: number// [55] 1026 (Float)
+  MDEntryForwardPoints?: number// [56] 1027 (Float)
+  Parties?: IParties[]// [57] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
+  SettlCurrency?: string// [58] 120 (String)
+  RateSource?: IRateSource[]// [59] RateSource.1446, RateSourceType.1447, ReferencePage.1448
+  TrdType?: number// [60] 828 (Int)
+  FirstPx?: number// [61] 1025 (Float)
+  LastPx?: number// [62] 31 (Float)
+}

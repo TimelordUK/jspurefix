@@ -58,6 +58,7 @@
     "repo50sp2-compile": "node dist/jsfix-cmd \"--dict=repo50sp2\" \"--compile\"",
     "repofixml-compile": "node dist/jsfix-cmd \"--dict=repofixml\" \"--compile\"",
     "qf44-compile": "node dist/jsfix-cmd \"--dict=qf44\" \"--compile\"",
+    "qf50sp2-compile": "node dist/jsfix-cmd \"--dict=qf50sp2\" \"--compile\"",
     "qf43-compile": "node dist/jsfix-cmd \"--dict=qf43\" \"--compile\"",
     "qf42-compile": "node dist/jsfix-cmd \"--dict=qf42\" \"--compile\"",
     "unzip-repo": "cd data && node ../src/util/unzip fix_repo.zip",
