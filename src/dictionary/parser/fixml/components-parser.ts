@@ -1,4 +1,3 @@
-
 import { Dictionary } from '../../../collections'
 import { XsdParser } from './xsd-parser'
 import {

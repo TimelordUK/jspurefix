@@ -1,8 +1,10 @@
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import {
-  ContainedComponentField, ContainedField,
-  ContainedFieldSet, ContainedFieldType,
+  ContainedComponentField,
+  ContainedField,
+  ContainedFieldSet,
+  ContainedFieldType,
   ContainedGroupField,
   ContainedSimpleField
 } from '../dictionary/contained'
@@ -33,7 +35,7 @@ export class EncodeProxy {
       }
 
       case TagType.Boolean: {
-        if (typeof (val) !== typeof (true)) {
+        if (typeof (val) !== typeof true) {
           throw new Error(`field ${field.name} expects boolean but receives "${typeof val}"`)
         }
         break
@@ -78,8 +80,7 @@ export class EncodeProxy {
     if (!isComplex) {
       throw new Error(`type ${field.name} is a component but is given type "${typeof val}"`)
     }
-    const cf: ContainedComponentField = field
-    return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(cf.definition)), val)
+    return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(field.definition)), val)
   }
 
   private static GroupFieldCheck (field: ContainedGroupField, val: any): object {
