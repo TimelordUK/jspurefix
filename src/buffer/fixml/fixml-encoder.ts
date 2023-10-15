@@ -119,8 +119,8 @@ export class FixmlEncoder extends MsgEncoder {
     this.attributes(o, set, depth, this.attributePerLine)
     buffer.writeString(`${eol}`)
     new FieldsDispatch().dispatchFields(fields, {
-      group: (g: ContainedGroupField) => this.complexGroup(o, g, depth),
-      component: (c: ContainedComponentField) => this.complexComponent(o, c, depth)
+      group: (g: ContainedGroupField) => { this.complexGroup(o, g, depth) },
+      component: (c: ContainedComponentField) => { this.complexComponent(o, c, depth) }
     } as IFieldDispatcher)
     if (fields.length) {
       const end: string = `${newLine}${indent}</${name}>`

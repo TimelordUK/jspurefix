@@ -54,7 +54,7 @@ export abstract class SessionLauncher {
     }
   }
 
-  protected makeFactory (config: IJsFixConfig): EngineFactory | null {
+  protected makeFactory (_: IJsFixConfig): EngineFactory | null {
     return null
   }
 
@@ -88,7 +88,7 @@ export abstract class SessionLauncher {
     return this.sessionContainer.isInitiator(description)
   }
 
-  protected registerApplication (sessionContainer: DependencyContainer): void {
+  protected registerApplication (_: DependencyContainer): void {
     this.logger.info('bypass register via DI')
   }
 

@@ -41,6 +41,27 @@ enum Command {
   Unknown = 7
 }
 
+class ParseSummary {
+  public readonly micros_per_msg: number
+  public readonly chars_per_second: number
+  public readonly fields_per_second: number
+  public readonly content_length: number
+
+  constructor (
+    public readonly content: string,
+    public readonly view: string,
+    public readonly msg_type: string,
+    public readonly iterations: number,
+    public readonly elapsed_ms: number,
+    public readonly fields: number
+  ) {
+    this.content_length = this.content.length
+    this.micros_per_msg = (this.elapsed_ms / this.iterations) * 1000
+    this.chars_per_second = Math.round(this.content_length * this.iterations / this.elapsed_ms * 1000)
+    this.fields_per_second = Math.round(this.fields * this.iterations / this.elapsed_ms * 1000)
+  }
+}
+
 export class JsfixCmd {
   private readonly root: string = path.join(__dirname, '../')
   private definitions: FixDefinitions
@@ -133,7 +154,8 @@ export class JsfixCmd {
             // time how long to parse 10000 repeats of contents of file
             const repeats: number = !isNaN(argv.repeats) ? argv.repeats : 10000
             try {
-              await this.benchmark(repeats)
+              const summary = await this.benchmark(repeats)
+              console.log(JSON.stringify(summary, null, 4))
             } catch (e) {
               reject(e)
             }
@@ -459,7 +481,7 @@ export class JsfixCmd {
     })
   }
 
-  async benchParse (contents: string, iterations: number, print: boolean): Promise<void> {
+  async benchParse (contents: string, iterations: number): Promise<ParseSummary> {
     return new Promise((resolve, reject) => {
       const toParse = new StringDuplex(contents.repeat(iterations), false)
       const startsAt: Date = new Date()
@@ -467,37 +489,33 @@ export class JsfixCmd {
       const config = this.config
       const buffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
       const asciiParser: MsgParser = new AsciiParser(config, toParse.readable, buffer)
-      function printer (msgType: string, v: MsgView): void {
-        const elapsed: number = new Date().getTime() - startsAt.getTime()
-        console.log(contents)
-        console.log(v.toString())
-        console.log(`[${msgType}]: iterations = ${iterations}, fields = ${v?.structure?.tags.nextTagPos}, length = ${contents.length} chars, elapsed ms ${elapsed}, ${(elapsed / iterations) * 1000} micros per msg`)
-      }
       asciiParser.on('msg', (msgType: string, v: MsgView) => {
         ++i
         if (i === iterations) {
-          if (print) {
-            printer(msgType, v)
-          }
-          resolve()
+          const elapsed: number = new Date().getTime() - startsAt.getTime()
+          const fields = v?.structure?.tags.nextTagPos ?? 0
+          const summary = new ParseSummary(contents, v.toString(), msgType, iterations, elapsed, fields)
+          resolve(summary)
         }
       })
-      asciiParser.on('error', e => reject(e))
+      asciiParser.on('error', e => { reject(e) })
     })
   }
 
-  private async benchmark (repeats: number): Promise<any> {
+  private async benchmark (repeats: number): Promise<(ParseSummary | null)> {
     if (!argv.fix) {
       console.log('provide a path to fix file i.e. --fix=data/examples/execution-report/fix.txt')
-      return
+      return null
     }
     return await new Promise<any>((resolve, reject) => {
       const fix: string = this.norm(argv.fix)
       this.promisedRead(fix)
         .then(contents => {
-          this.benchParse(contents, repeats, true)
-            .then((a: any) => resolve(a))
-            .catch(e => reject(e))
+          this.benchParse(contents, repeats)
+            .then((a: ParseSummary) => {
+              resolve(a)
+            })
+            .catch(e => { reject(e) })
         }).catch(e => {
           reject(e)
         })

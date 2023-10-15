@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 
 import { ComponentFieldDefinition, FixDefinitions, MessageDefinition } from '../../dictionary/definition'
-import { ElasticBuffer, Tags } from '../../buffer'
+import { Tags } from '../../buffer'
 import { AsciiChars, AsciiEncoder, TimeFormatter } from '../../buffer/ascii'
 import { ILooseObject } from '../../collections/collection'
 import {
@@ -36,7 +36,6 @@ const utcTimeStamp: Date = new Date(Date.UTC(2018, 5, 10, 16, 35, 0, 246))
 const utcDate: Date = new Date(Date.UTC(2018, 5, 10, 0, 0, 0, 0))
 const utcTime: Date = new Date(Date.UTC(2018, 0, 1, 16, 35, 0, 246))
 let setup: Setup
-let buffer: ElasticBuffer
 
 beforeAll(async () => {
   setup = new Setup('session/qf-fix44.json', null)
@@ -45,7 +44,6 @@ beforeAll(async () => {
   const config = setup.clientConfig
   definitions = config.definitions
   session = setup.client.transmitter as AsciiMsgTransmitter
-  buffer = setup.client.txBuffer
   encoder = session.encoder as AsciiEncoder
   nos = definitions.message.get('NewOrderSingle')
   const erd = definitions.message.get('ExecutionReport')

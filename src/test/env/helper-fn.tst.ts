@@ -11,7 +11,7 @@ export async function testEncodeDecode (config: IJsFixConfig, msgType: string, m
     const session: AsciiMsgTransmitter = new AsciiMsgTransmitter(config)
     const parseBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
     const parser: AsciiParser = new AsciiParser(config, session.encodeStream, parseBuffer)
-    parser.on('msg', (msgType: string, view: AsciiView) => {
+    parser.on('msg', (_: string, view: AsciiView) => {
       const o = view.toObject() as ILooseObject
       delete o.StandardHeader
       delete o.StandardTrailer
