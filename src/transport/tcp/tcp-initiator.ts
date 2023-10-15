@@ -1,4 +1,3 @@
-
 import { FixInitiator } from '../fix-initiator'
 import { MsgTransport } from '../factory'
 
@@ -67,11 +66,11 @@ export class TcpInitiator extends FixInitiator {
           this.state = InitiatorState.Connecting
           this.logger.info(`connecting with timeout ${timeoutSeconds}`)
           this.tryConnect()
-            .then((t: MsgTransport) => resolve(t))
+            .then((t: MsgTransport) => { resolve(t) })
             .catch((_: Error) => {
               this.repeatConnect(timeoutSeconds)
-                .then((t: MsgTransport) => resolve(t))
-                .catch((e: Error) => reject(e))
+                .then((t: MsgTransport) => { resolve(t) })
+                .catch((e: Error) => { reject(e) })
             })
           break
         }

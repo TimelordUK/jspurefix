@@ -75,7 +75,7 @@ test('fetch attributes from main object', () => {
 test('test complex sub structure OrdAllocGrp', () => {
   const views = toViews.views
   const v = views[0]
-  const allocInstruction: IAllocationInstruction = v!.toObject() as IAllocationInstruction
+  const allocInstruction: IAllocationInstruction = v.toObject() as IAllocationInstruction
   expect(allocInstruction).toBeTruthy()
   const ag = allocInstruction?.OrdAllocGrp
   expect(ag).toBeTruthy()
@@ -98,14 +98,14 @@ test('test complex sub structure OrdAllocGrp', () => {
 test('test instrument on fixml allocation - use abbreviation', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: IInstrument = v.getView('Instrmt')!.toObject() as IInstrument
+  const instrument: IInstrument = v.getView('Instrmt')?.toObject() as IInstrument
   expect(instrument).toBeTruthy()
 })
 
 test('test instrument attributes', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: IInstrument = v.getView('Instrmt')!.toObject() as IInstrument
+  const instrument: IInstrument = v.getView('Instrmt')?.toObject() as IInstrument
   expect(instrument).toBeTruthy()
   expect(instrument.SecurityID).toEqual('ED')
   expect(instrument.CFICode).toEqual('FFDCSO')
@@ -118,14 +118,14 @@ test('test instrument attributes', () => {
 test('test instrument on fixml allocation - use full name', () => {
   const views = toViews.views
   const v = views[0]
-  const instrument: IInstrument = v.getView('Instrument')!.toObject() as IInstrument
+  const instrument: IInstrument = v.getView('Instrument')?.toObject() as IInstrument
   expect(instrument).toBeTruthy()
 })
 
 test('test complex sub structure AllocGrp', () => {
   const views = toViews.views
   const v = views[0]
-  const allocInstruction: IAllocationInstruction = v!.toObject() as IAllocationInstruction
+  const allocInstruction: IAllocationInstruction = v.toObject() as IAllocationInstruction
   expect(allocInstruction).toBeTruthy()
   expect(Array.isArray(allocInstruction.AllocGrp)).toBeTruthy()
   expect(allocInstruction.AllocGrp?.length).toEqual(1)
@@ -142,7 +142,7 @@ test('test complex sub structure AllocGrp', () => {
 test('test OrdAllocGrp', () => {
   const views = toViews.views
   const v = views[0]
-  const ordAlloc: IOrdAllocGrp[] = v.getView('OrdAllocGrp')!.toObject() as IOrdAllocGrp[]
+  const ordAlloc: IOrdAllocGrp[] = v.getView('OrdAllocGrp')?.toObject() as IOrdAllocGrp[]
   expect(ordAlloc).toBeTruthy()
   expect(Array.isArray(ordAlloc)).toBeTruthy()
   expect(ordAlloc.length).toEqual(1)
@@ -152,7 +152,7 @@ test('test OrdAllocGrp', () => {
 test('main Party Group', () => {
   const views = toViews.views
   const v = views[0]
-  const parties: IParties[] = v.getView('Parties')!.toObject() as IParties[]
+  const parties: IParties[] = v.getView('Parties')?.toObject() as IParties[]
   expect(parties).toBeTruthy()
   expect(Array.isArray(parties)).toBeTruthy()
   expect(parties.length).toEqual(4)
@@ -173,7 +173,7 @@ test('main Party Group', () => {
 test('test party sub group', () => {
   const views = toViews.views
   const v = views[0]
-  const parties: IPtysSubGrp[] = v.getView('Parties.PtysSubGrp')!.toObject() as IPtysSubGrp[]
+  const parties: IPtysSubGrp[] = v.getView('Parties.PtysSubGrp')?.toObject() as IPtysSubGrp[]
   expect(parties).toBeTruthy()
   expect(Array.isArray(parties)).toBeTruthy()
   expect(parties.length).toEqual(1)
@@ -187,7 +187,7 @@ test('test party sub group', () => {
 test('test AllocGrp.NestedParties.NstdPtysSubGrp', () => {
   const views = toViews.views
   const v = views[0]
-  const parties: INstdPtysSubGrp[] = v.getView('AllocGrp.NestedParties.NstdPtysSubGrp')!.toObject() as INstdPtysSubGrp[]
+  const parties: INstdPtysSubGrp[] = v.getView('AllocGrp.NestedParties.NstdPtysSubGrp')?.toObject() as INstdPtysSubGrp[]
   expect(parties).toBeTruthy()
   expect(Array.isArray(parties)).toBeTruthy()
   expect(parties.length).toEqual(1)

@@ -49,37 +49,37 @@ beforeAll(async () => {
 }, 45000)
 
 test('begin string incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
     new Error('BeginString: not expected at position [2]')
   )
 })
 
 test('body length incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
     new Error('BodyLengthTag: not expected at position [3]')
   )
 })
 
 test('msg type incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
     new Error('MsgTag: not expected at position [4]')
   )
 })
 
 test('do not start with 8=', async () => {
-  return await expect(setup.client.parseText('59=FIX4.4|')).rejects.toEqual(
+  await expect(setup.client.parseText('59=FIX4.4|')).rejects.toEqual(
     new Error('position 1 [59] must be BeginString: 8=')
   )
 })
 
 test('body length incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
     new Error('position 2 [59] must be BodyLengthTag: 9=')
   )
 })
 
 test('msgTag incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
     new Error('position 3 [59] must be MsgTag: 35=')
   )
 })
@@ -116,7 +116,7 @@ test('logon parsers to correct tag set', async () => {
 test('tags other than 10 past body length', async () => {
   const begin = '8=FIX4.4|9=0000208|'
   const changed = logon.replace('10=49|', '555=you know nothin|10=49')
-  return await expect(setup.client.parseText(changed)).rejects.toEqual(
+  await expect(setup.client.parseText(changed)).rejects.toEqual(
     new Error(`Tag: [555] cant be after ${208 + begin.length - 1}`)
   )
 })

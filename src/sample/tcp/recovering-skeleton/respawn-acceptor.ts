@@ -60,11 +60,11 @@ export class RespawnAcceptor extends FixEntity {
   private onSession (session: FixSession, transport: MsgTransport): void {
     this.resetSessionSeqNo(session)
     const rx = transport.receiver
-    rx?.on('msg', (msgType: string, view: MsgView) => this.rxOnMsg(session, msgType, view))
+    rx?.on('msg', (msgType: string, view: MsgView) => { this.rxOnMsg(session, msgType, view) })
   }
 
   private subscribe (listener: TcpAcceptorListener): void {
-    listener.on('session', (s, transport) => this.onSession(s, transport))
+    listener.on('session', (s, transport) => { this.onSession(s, transport) })
   }
 
   /*

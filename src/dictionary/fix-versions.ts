@@ -1,5 +1,5 @@
 export enum FixVersion {
-  Unknown = 1,
+  Unknown = 0,
   FIX40 = 1,
   FIX41 = 2,
   FIX42 = 3,

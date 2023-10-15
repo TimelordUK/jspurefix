@@ -9,7 +9,6 @@ import { IDictionaryPath } from './dictionary-path'
 const root: string = path.join(__dirname, '../../')
 
 export class DefinitionFactory {
-
   getDictPath (p: string): IDictionaryPath {
     const dictionary = require(path.join(root, 'data/dictionary.json'))
     return dictionary[p]
@@ -27,7 +26,7 @@ export class DefinitionFactory {
 
   getParser (path: string, getLogger: GetJsFixLogger): FixParser {
     let parser: FixParser
-    if (fs.lstatSync(path).isDirectory() && path.indexOf('fixml') >= 0) {
+    if (fs.lstatSync(path).isDirectory() && path.includes('fixml')) {
       parser = new FixXsdParser(path, getLogger)
     } else if (fs.lstatSync(path).isDirectory()) {
       parser = new RepositoryXmlParser(path, getLogger)

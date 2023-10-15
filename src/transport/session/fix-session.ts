@@ -222,13 +222,13 @@ export abstract class FixSession extends events.EventEmitter {
     const rx = transport?.receiver
     const tx = transport?.transmitter
     const inst = this
-    rx?.on('msg', (msgType: string, view: MsgView) => inst.rxOnMsg(msgType, view))
-    rx?.on('error', (e: Error) => inst.rxOnError(e))
-    rx?.on('done', () => inst.rxOnDone())
-    rx?.on('end', () => inst.rxOnEnd())
-    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => inst.rxOnDecoded(msgType, data, ptr))
-    tx?.on('error', (e: Error) => inst.txOnError(e))
-    tx?.on('encoded', (msgType: string, data: string, hdr: ILooseObject) => inst.txOnEncoded(msgType, data, hdr))
+    rx?.on('msg', (msgType: string, view: MsgView) => { inst.rxOnMsg(msgType, view) })
+    rx?.on('error', (e: Error) => { inst.rxOnError(e) })
+    rx?.on('done', () => { inst.rxOnDone() })
+    rx?.on('end', () => { inst.rxOnEnd() })
+    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => { inst.rxOnDecoded(msgType, data, ptr) })
+    tx?.on('error', (e: Error) => { inst.txOnError(e) })
+    tx?.on('encoded', (msgType: string, data: string, hdr: ILooseObject) => { inst.txOnEncoded(msgType, data, hdr) })
   }
 
   protected validStateApplicationMsg (): boolean {

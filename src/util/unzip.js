@@ -12,7 +12,7 @@ let lenArg
 let endArg
 const args = process.argv.slice(2)
 for (let i = 0; i < args.length; i++) {
-  let arg = args[i]
+  const arg = args[i]
   if (arg === '--offset') {
     i += 1
     offsetArg = parseInt(args[i])
@@ -25,7 +25,7 @@ for (let i = 0; i < args.length; i++) {
     i += 1
     endArg = parseInt(args[i])
     if (isNaN(endArg)) throw new Error('--end argument not parsable as an int')
-  } else if (['-h', '--help'].indexOf(arg) !== -1) {
+  } else if (['-h', '--help'].includes(arg)) {
     // print help
     zipFilePath = null
     break
@@ -75,6 +75,7 @@ if (offsetArg != null || lenArg != null || endArg != null) {
   yauzl.open(zipFilePath, { lazyEntries: true }, handleZipFile)
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function openMiddleOfFile (zipFilePath, options, offsetArg, lenArg, endArg, handleZipFile) {
   fs.open(zipFilePath, 'r', function (err, fd) {
     if (err != null) throw err
@@ -101,7 +102,7 @@ function openMiddleOfFile (zipFilePath, options, offsetArg, lenArg, endArg, hand
       // implement required and option methods
       MiddleOfFileReader.prototype._readStreamForRange = function (start, end) {
         return fs.createReadStream(null, {
-          fd: fd,
+          fd,
           // shift the start and end offsets
           start: start + offsetArg,
           end: end + offsetArg - 1, // the -1 is because fs.createReadStream()'s end option is inclusive

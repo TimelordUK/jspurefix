@@ -26,7 +26,7 @@ export class TradeCaptureServer extends AsciiSession {
     this.logger.info(`${view.toJson()}`)
     switch (msgType) {
       case MsgType.TradeCaptureReportRequest: {
-        this.tradeCaptureReportRequest(view!.toObject() as ITradeCaptureReportRequest)
+        this.tradeCaptureReportRequest(view.toObject() as ITradeCaptureReportRequest)
         break
       }
 

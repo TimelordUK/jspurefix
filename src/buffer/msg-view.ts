@@ -169,11 +169,11 @@ export abstract class MsgView {
     return this.toTyped(field)
   }
 
-  public getTypedTags (tagOrName: (string|number)[]): (boolean|string|number|Date|null)[] {
+  public getTypedTags (tagOrName: Array<string | number>): Array<boolean | string | number | Date | null> {
     return tagOrName.map((s) => this.getTyped(s))
   }
 
-  public toObject (): ILooseObject|ILooseObject[]|null {
+  public toObject (): ILooseObject | ILooseObject[] | null {
     const segment: SegmentDescription = this.segment
     if (segment.set == null) return null
     if (segment.delimiterTag) {
@@ -242,7 +242,7 @@ export abstract class MsgView {
 
   protected abstract stringAtPosition (position: number): string | null
 
-  protected abstract toTyped (field: SimpleFieldDefinition): boolean|string|number|Date
+  protected abstract toTyped (field: SimpleFieldDefinition): boolean | string | number | Date
 
   protected resolveTag (tagOrName: number | string): number {
     let tag: number
@@ -313,12 +313,12 @@ export abstract class MsgView {
     return range.map((i: number) => this.stringAtPosition(i))
   }
 
-  private asInstances (name: string): (ILooseObject|null)[] | null {
+  private asInstances (name: string): Array<ILooseObject | null> | null {
     const groupView: MsgView | null = this.getView(name)
     if (groupView == null) {
       return null
     }
-    const groupArray: (ILooseObject|null)[] = new Array(groupView.groupCount())
+    const groupArray = new Array<ILooseObject | null>(groupView.groupCount())
     const count: number = groupView.groupCount()
     for (let j: number = 0; j < count; ++j) {
       const instance: MsgView | null = groupView.getGroupInstance(j)
@@ -331,9 +331,9 @@ export abstract class MsgView {
     const reducer = new SetReduce<ILooseObject>()
     // eslint-disable-next-line
     return reducer.reduce(def, {
-      group: (a: ILooseObject, field: ContainedGroupField) => this.asLooseGroup(a, field),
-      simple: (a: ILooseObject, field: ContainedSimpleField) => this.asLooseSimple(a, field),
-      component: (a: ILooseObject, field: ContainedComponentField) => this.asLooseComponent(a, field)
+      group: (a: ILooseObject, field: ContainedGroupField) => { this.asLooseGroup(a, field) },
+      simple: (a: ILooseObject, field: ContainedSimpleField) => { this.asLooseSimple(a, field) },
+      component: (a: ILooseObject, field: ContainedComponentField) => { this.asLooseComponent(a, field) }
     } as ITypeDispatcher<ILooseObject>, def.localAttribute.reduce<ILooseObject>((a: ILooseObject, sf: ContainedSimpleField) => {
       const def = sf.definition
       const position: number = this.getPosition(def.tag)
@@ -347,9 +347,9 @@ export abstract class MsgView {
   private missingRequired (def: ContainedFieldSet, tags: number []): number[] {
     const reducer = new SetReduce<number[]>()
     const dispatcher: ITypeDispatcher<number[]> = {
-      group: (a: number[], field: ContainedGroupField) => this.missingGroup(def, field, a),
-      simple: (a: number[], field: ContainedSimpleField) => this.missingSimple(field, a),
-      component: (a: number[], field: ContainedComponentField) => this.missingComponent(field, a)
+      group: (a: number[], field: ContainedGroupField) => { this.missingGroup(def, field, a) },
+      simple: (a: number[], field: ContainedSimpleField) => { this.missingSimple(field, a) },
+      component: (a: number[], field: ContainedComponentField) => { this.missingComponent(field, a) }
     }
     return reducer.reduce(def, dispatcher, tags)
   }
@@ -394,7 +394,7 @@ export abstract class MsgView {
     const def = sf.definition
     const position: number = this.getPosition(def.tag)
     if (position >= 0) {
-      const asSimple: boolean|string|number|Date = this.toTyped(def)
+      const asSimple: boolean | string | number | Date = this.toTyped(def)
       if (asSimple != null) { // beware, may be false value
         a[sf.name] = asSimple
       }

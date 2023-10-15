@@ -95,9 +95,9 @@ export class JsonHelper {
     }
 
     const dispatcher: IFieldDispatcher = {
-      simple: (field: ContainedSimpleField) => JsonHelper.patchSimple(object, field),
-      group: (gf: ContainedGroupField) => this.patchGroup(object, gf),
-      component: (cf: ContainedComponentField) => this.patchComponent(object, cf)
+      simple: (field: ContainedSimpleField) => { JsonHelper.patchSimple(object, field) },
+      group: (gf: ContainedGroupField) => { this.patchGroup(object, gf) },
+      component: (cf: ContainedComponentField) => { this.patchComponent(object, cf) }
     }
 
     this.dispatcher.dispatchFields(set.localAttribute, dispatcher)

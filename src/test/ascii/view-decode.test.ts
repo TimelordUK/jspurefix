@@ -46,7 +46,7 @@ test('get NoMDEntries directly - expect an array', () => {
 test('get NoMDEntries via MDFullGrp - array within a component', () => {
   const mdFullGrp: MsgView | null = view.getView('MDFullGrp')
   expect(mdFullGrp).toBeTruthy()
-  const mdFullGrpAsObject: ILooseObject = mdFullGrp!.toObject() as ILooseObject
+  const mdFullGrpAsObject: ILooseObject = mdFullGrp?.toObject() as ILooseObject
   const noMDEntries: ILooseObject[] = mdFullGrpAsObject.NoMDEntries
   expect(Array.isArray(noMDEntries)).toEqual(true)
   expect(noMDEntries.length).toEqual(2)
@@ -55,7 +55,7 @@ test('get NoMDEntries via MDFullGrp - array within a component', () => {
 function getMdEntriesObjects (): ILooseObject[] {
   const noMDEntriesView: MsgView | null = view.getView('NoMDEntries')
   expect(noMDEntriesView).toBeTruthy()
-  const noMDEntries: ILooseObject[] = noMDEntriesView!.toObject() as ILooseObject[]
+  const noMDEntries: ILooseObject[] = noMDEntriesView?.toObject() as ILooseObject[]
   expect(Array.isArray(noMDEntries)).toEqual(true)
   expect(noMDEntries.length).toEqual(2)
   return noMDEntries

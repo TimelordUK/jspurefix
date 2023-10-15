@@ -1,19 +1,15 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { FixDefinitions } from '../../dictionary/definition'
 import { MsgView } from '../../buffer'
 import { AsciiView } from '../../buffer/ascii'
-import { ILooseObject } from '../../collections/collection'
 import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
 import { MsgTag } from '../../types'
 import { Setup } from '../env/setup'
 
 const root: string = path.join(__dirname, '../../../data')
 
-let definitions: FixDefinitions
 let views: MsgView[]
-let expected: ILooseObject
 let store: IFixMsgStore
 let records: IFixMsgStoreRecord[]
 let setup: Setup
@@ -21,8 +17,6 @@ let setup: Setup
 beforeAll(async () => {
   setup = new Setup('session/test-initiator.json', null)
   await setup.init()
-  definitions = setup.clientConfig.definitions
-  expected = require(path.join(root, 'examples/FIX.4.4/fix.json'))
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
   store = new FixMsgMemoryStore('test', setup.clientConfig)
   records = views.reduce((agg: IFixMsgStoreRecord[], v: AsciiView) => {

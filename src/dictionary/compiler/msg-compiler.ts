@@ -36,7 +36,7 @@ export class MsgCompiler {
 
   public async generate (): Promise<void> {
     const types: string[] = this.settings.types ?? this.definitions.message.keys()
-    return await this.createTypes(types)
+    await this.createTypes(types)
   }
 
   private getFileName (compilerType: CompilerType): string {
@@ -85,7 +85,7 @@ export class MsgCompiler {
     exports.push('')
     const api: string = exports.join(newLine)
     const fullName: string = Path.join(settings.output, fileName)
-    return await writeFile(fullName, api, { encoding: 'utf8' })
+    await writeFile(fullName, api, { encoding: 'utf8' })
   }
 
   private generateMessages (compilerType: CompilerType): string {
@@ -191,9 +191,9 @@ export class MsgCompiler {
   private fields (compilerType: CompilerType): void {
     this.attributes(compilerType)
     new FieldsDispatch().dispatchFields(compilerType.set.fields, {
-      group: (g: ContainedGroupField) => this.fieldGroup(g, compilerType),
-      simple: (simple: ContainedSimpleField) => this.fieldSimple(simple),
-      component: (c: ContainedComponentField) => this.fieldComponent(c, compilerType)
+      group: (g: ContainedGroupField) => { this.fieldGroup(g, compilerType) },
+      simple: (simple: ContainedSimpleField) => { this.fieldSimple(simple) },
+      component: (c: ContainedComponentField) => { this.fieldComponent(c, compilerType) }
     })
   }
 

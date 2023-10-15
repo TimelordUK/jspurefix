@@ -21,7 +21,7 @@ test('expect a view from fix msg', () => {
 test('expect a batch view ', () => {
   const batch = toViews.batch
   expect(batch).toBeTruthy()
-  const o: IBatch = batch!.toObject() as IBatch
+  const o: IBatch = batch?.toObject() as IBatch
   expect(o).toBeTruthy()
   const instances: ILooseObject[] = o.Batch
   expect(Array.isArray(instances)).toEqual(true)
@@ -30,7 +30,7 @@ test('expect a batch view ', () => {
 
 test('expect an instrument', () => {
   const views = toViews.views
-  const t: ITradeCaptureReport = views[0]!.toObject() as ITradeCaptureReport
+  const t: ITradeCaptureReport = views[0]?.toObject() as ITradeCaptureReport
   expect(t).toBeTruthy()
   const i = t.Instrument
   expect(i).toBeTruthy()

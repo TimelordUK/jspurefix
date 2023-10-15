@@ -3,14 +3,12 @@ import 'reflect-metadata'
 import * as path from 'path'
 import { SegmentDescription, Structure, MsgView } from '../../buffer'
 import { ILooseObject } from '../../collections/collection'
-import { FixDefinitions } from '../../dictionary/definition'
 
 import { Setup } from '../env/setup'
 import { SegmentType } from '../../buffer/segment/segment-type'
 
 const root: string = path.join(__dirname, '../../../data')
 
-let definitions: FixDefinitions
 let views: MsgView[]
 let structure: Structure | null
 let setup: Setup
@@ -43,7 +41,6 @@ const asStrings: string[] = [
 beforeAll(async () => {
   setup = new Setup('session/qf-fix44.json', null)
   await setup.init()
-  definitions = setup.client.config.definitions
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
   if (views && views.length > 0) {
     structure = views[0].structure

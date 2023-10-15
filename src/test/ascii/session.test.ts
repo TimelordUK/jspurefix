@@ -179,7 +179,7 @@ function mutateRemoveRequiredHeartBtInt (description: ISessionDescription, type:
   switch (type) {
     case 'A': {
       const logon = o as ILogon
-      // @ts-ignore
+      // @ts-expect-error
       delete logon.HeartBtInt
       break
     }

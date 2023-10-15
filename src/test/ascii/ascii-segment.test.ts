@@ -1,25 +1,17 @@
 import 'reflect-metadata'
 
 import { SegmentDescription } from '../../buffer'
-import { FixDefinitions } from '../../dictionary/definition'
 import { ILogon } from '../../types/FIX4.4/repo'
-import { JsonHelper } from '../../util'
-import { IJsFixConfig, MsgType } from '../../index'
+import { MsgType } from '../../index'
 import { Setup } from '../env/setup'
 import { ParsingResult } from '../env/parsing-result'
 
-let definitions: FixDefinitions
-let jsonHelper: JsonHelper
 const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57=sub-a|52=20180610-10:39:01.621|98=2|108=62441|95=20|96=VgfoSqo56NqSVI1fLdlI|141=Y|789=4886|383=20|384=1|372=ipsum|385=R|464=N|553=sit|554=consectetur|10=49|'
-let config: IJsFixConfig
 
 let setup: Setup
 beforeAll(async () => {
   setup = new Setup()
   await setup.init()
-  definitions = setup.definitions
-  jsonHelper = new JsonHelper(definitions)
-  config = setup.clientConfig
 }, 45000)
 
 test('0 gaps', async () => {
