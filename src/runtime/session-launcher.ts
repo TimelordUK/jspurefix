@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger } from '../config'
-import { ISessionDescription, FixEntity, FixSession } from '../transport'
+import { FixEntity, FixSession, ISessionDescription } from '../transport'
 import { DependencyContainer } from 'tsyringe'
 import { EngineFactory } from './engine-factory'
 import { SessionContainer } from './session-container'
@@ -129,13 +129,11 @@ export abstract class SessionLauncher {
   }
 
   async serverOrEmpty (): Promise<any> {
-    const server = this.acceptorConfig ? this.makeServer() : this.empty()
-    return server
+    return this.acceptorConfig ? this.makeServer() : this.empty()
   }
 
   async clientOrEmpty (): Promise<any> {
-    const client = this.initiatorConfig ? this.makeClient() : this.empty()
-    return client
+    return this.initiatorConfig ? this.makeClient() : this.empty()
   }
 
   private async setup (): Promise<any> {

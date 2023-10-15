@@ -1,16 +1,10 @@
 import 'reflect-metadata'
 
 import { TagPos } from '../../buffer'
-import { FixDefinitions } from '../../dictionary/definition'
-import { JsonHelper } from '../../util'
-import { IJsFixConfig, MsgType } from '../../index'
+import { MsgType } from '../../index'
 import { Setup } from '../env/setup'
 import { SegmentType } from '../../buffer/segment/segment-type'
 import { ParsingResult } from '../env/parsing-result'
-
-let config: IJsFixConfig
-let definitions: FixDefinitions
-let jsonHelper: JsonHelper
 
 const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57=sub-a|52=20180610-10:39:01.621|98=2|108=62441|95=20|96=VgfoSqo56NqSVI1fLdlI|141=Y|789=4886|383=20|384=1|372=ipsum|385=R|464=N|553=sit|554=consectetur|10=49|'
 const expectedTagPos = [
@@ -42,10 +36,6 @@ beforeAll(async () => {
   expect.assertions(1)
   setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
   await setup.init()
-  definitions = setup.definitions
-  config = setup.clientConfig
-  definitions = setup.definitions
-  jsonHelper = new JsonHelper(definitions)
 }, 45000)
 
 test('begin string incorrectly placed', async () => {

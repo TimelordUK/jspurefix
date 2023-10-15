@@ -30,10 +30,10 @@ export class ToViews {
     const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
     const xmlParser: MsgParser = new FiXmlParser(config, readStream)
     return await new Promise((resolve, reject) => {
-      xmlParser.on('msg', (msgType: string, v: MsgView) => {
+      xmlParser.on('msg', (_: string, v: MsgView) => {
         views.push(v.clone())
       })
-      xmlParser.on('batch', (msgType: string, v: MsgView) => {
+      xmlParser.on('batch', (_: string, v: MsgView) => {
         this.batch = v.clone()
       })
       xmlParser.on('close', () => {

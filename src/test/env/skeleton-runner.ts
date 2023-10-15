@@ -14,12 +14,12 @@ export class SkeletonRunner {
     this.clientSkeleton.checkMsgIntegrity = true
     this.serverSkeleton.checkMsgIntegrity = true
 
-    experiment.client.transport.receiver.on('msg', (type: string, view: MsgView) => {
+    experiment.client.transport.receiver.on('msg', (_: string, view: MsgView) => {
       experiment.client.views.push(view.clone())
       this.watchdog()
     })
 
-    experiment.server.transport.receiver.on('msg', (type: string, view: MsgView) => {
+    experiment.server.transport.receiver.on('msg', (_: string, view: MsgView) => {
       experiment.server.views.push(view.clone())
       this.watchdog()
     })

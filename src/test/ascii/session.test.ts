@@ -143,7 +143,7 @@ test('seq No OK', async () => {
   checkSeqNos(sviews)
 })
 
-function mutateSeqNo (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject {
+function mutateSeqNo (_: ISessionDescription, type: string, o: ILooseObject): ILooseObject {
   switch (type) {
     case 'StandardHeader': {
       const hdr = o as IStandardHeader
@@ -175,11 +175,11 @@ function countOfType (type: string, views: MsgView[]): number {
   }, 0)
 }
 
-function mutateRemoveRequiredHeartBtInt (description: ISessionDescription, type: string, o: ILooseObject): ILooseObject {
+function mutateRemoveRequiredHeartBtInt (_: ISessionDescription, type: string, o: ILooseObject): ILooseObject {
   switch (type) {
     case 'A': {
       const logon = o as ILogon
-      // @ts-expect-error
+      // @ts-expect-error - this is for test purposed
       delete logon.HeartBtInt
       break
     }

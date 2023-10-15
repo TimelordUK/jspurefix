@@ -1,7 +1,6 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { FixDefinitions } from '../../dictionary/definition'
 
 import {
   IFixMsgStoreRecord
@@ -14,8 +13,6 @@ import { TestRecovery } from '../env/test-recovery'
 
 const root: string = path.join(__dirname, '../../../data')
 
-let definitions: FixDefinitions
-
 let server: TestRecovery
 let client: TestRecovery
 let setup: Setup
@@ -25,7 +22,6 @@ beforeAll(async () => {
     'session/test-initiator.json',
     'session/test-acceptor.json')
   await setup.init()
-  definitions = setup.definitions
   const serverConfig = setup.serverConfig
   const clientConfig = setup.clientConfig
   const views = await setup.server.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))

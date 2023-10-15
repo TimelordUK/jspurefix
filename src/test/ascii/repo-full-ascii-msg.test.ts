@@ -1,14 +1,14 @@
 import 'reflect-metadata'
 import * as path from 'path'
-import { AsciiParser, AsciiView } from '../../buffer/ascii'
 import { ILooseObject } from '../../collections/collection'
 import { FixDefinitions } from '../../dictionary/definition'
 import { JsonHelper } from '../../util'
 import { IJsFixConfig } from '../../config'
-import { ElasticBuffer, MsgType } from '../../index'
+import { MsgType } from '../../index'
 import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
 import { Setup } from '../env/setup'
 import { DITokens } from '../../runtime'
+import { testEncodeDecode } from '../env/helper-fn.tst'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -24,25 +24,6 @@ beforeAll(async () => {
   config = setup.clientConfig
   session = setup.clientSessionContainer.resolve<AsciiMsgTransmitter>(DITokens.MsgTransmitter)
 }, 30000)
-
-async function testEncodeDecode (msgType: string, msg: ILooseObject): Promise<ILooseObject> {
-  // encode to FIX format from provided object.
-  return await new Promise(async (resolve, reject) => {
-    const rxBuffer = config.sessionContainer.resolve<ElasticBuffer>(DITokens.ParseBuffer)
-    const parser: AsciiParser = new AsciiParser(config, session.encodeStream, rxBuffer)
-    parser.on('msg', (msgType: string, view: AsciiView) => {
-      const o = view.toObject() as ILooseObject
-      delete o.StandardHeader
-      delete o.StandardTrailer
-      resolve(o)
-    })
-    parser.on('error', (e: Error) => {
-      reject(e)
-    })
-    // encode the message
-    session.send(msgType, msg)
-  })
-}
 
 test('check 1 digit checksum format', async () => {
   const factory = session.config.factory
@@ -66,7 +47,7 @@ test('AE object to ascii fix to object', async () => {
   const msgType: string = MsgType.TradeCaptureReport
   const file: string = path.join(root, 'trade-capture/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
-  const o: ILooseObject = await testEncodeDecode(msgType, msg)
+  const o = await testEncodeDecode(config, msgType, msg)
 
   expect(o).toEqual(msg)
 }, 60000)
@@ -75,7 +56,7 @@ test('d object to ascii fix to object', async () => {
   const msgType: string = MsgType.SecurityDefinition
   const file: string = path.join(root, 'security-definition/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
-  const o: ILooseObject = await testEncodeDecode(msgType, msg)
+  const o = await testEncodeDecode(config, msgType, msg)
 
   expect(o).toEqual(msg)
 }, 1000)
@@ -84,7 +65,7 @@ test('D object to ascii fix to object', async () => {
   const msgType: string = MsgType.NewOrderSingle
   const file: string = path.join(root, 'new-order-single/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
-  const o: ILooseObject = await testEncodeDecode(msgType, msg)
+  const o = await testEncodeDecode(config, msgType, msg)
 
   expect(o).toEqual(msg)
 }, 1000)

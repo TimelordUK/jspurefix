@@ -37,11 +37,11 @@ export class HttpClient extends FixmlSession {
   }
 
   // use msgType for example to persist only trade capture messages to database
-  protected onDecoded (msgType: string, txt: string): void {
+  protected onDecoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
-  protected onEncoded (msgType: string, txt: string): void {
+  protected onEncoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
@@ -49,7 +49,7 @@ export class HttpClient extends FixmlSession {
     return true
   }
 
-  protected onReady (view: MsgView): void {
+  protected onReady (_: MsgView): void {
     this.logger.info('onReady')
     const logoutSeconds = this.logoutSeconds
     const req = this.factory.createOrder('IBM', Side.Buy, 10000, 100.12)
