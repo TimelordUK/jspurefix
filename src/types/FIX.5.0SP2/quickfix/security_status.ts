@@ -2,54 +2,58 @@ import { IStandardHeader } from './set/standard_header'
 import { IApplicationSequenceControl } from './set/application_sequence_control'
 import { IInstrument } from './set/instrument'
 import { IInstrumentExtension } from './set/instrument_extension'
+import { IFinancingDetails } from './set/financing_details'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
+import { IRelatedInstrumentGrp } from './set/related_instrument_grp'
+import { IClearingPriceParametersGrp } from './set/clearing_price_parameters_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-***************************************************************
-* The Security Status message provides for the ability to     *
-* report changes in status to a security. The Security Status *
-* message contains fields to indicate trading status,         *
-* corporate actions, financial status of the company. The     *
-* Security Status message is used by one trading entity (for  *
-* instance an exchange) to report changes in the state of a   *
-* security.                                                   *
-***************************************************************
-*/
 export interface ISecurityStatus {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
   SecurityStatusReqID?: string// [3] 324 (String)
-  Instrument: IInstrument// [4] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
-  InstrumentExtension?: IInstrumentExtension// [5] DeliveryForm.668, PctAtRisk.869 .. InstrAttribValue.872
-  UndInstrmtGrp?: IUndInstrmtGrp// [6] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingDetachmentPoint.1460
-  InstrmtLegGrp?: IInstrmtLegGrp// [7] NoLegs.555, LegSymbol.600 .. LegFlowScheduleType.1440
-  Currency?: string// [8] 15 (String)
-  MarketID?: string// [9] 1301 (String)
-  MarketSegmentID?: string// [10] 1300 (String)
-  TradingSessionID?: string// [11] 336 (String)
-  TradingSessionSubID?: string// [12] 625 (String)
-  UnsolicitedIndicator?: boolean// [13] 325 (Boolean)
-  SecurityTradingStatus?: number// [14] 326 (Int)
-  SecurityTradingEvent?: number// [15] 1174 (Int)
-  FinancialStatus?: string// [16] 291 (String)
-  CorporateAction?: string// [17] 292 (String)
-  HaltReason?: number// [18] 327 (Int)
-  InViewOfCommon?: boolean// [19] 328 (Boolean)
-  DueToRelated?: boolean// [20] 329 (Boolean)
-  MDBookType?: number// [21] 1021 (Int)
-  MarketDepth?: number// [22] 264 (Int)
-  BuyVolume?: number// [23] 330 (Float)
-  SellVolume?: number// [24] 331 (Float)
-  HighPx?: number// [25] 332 (Float)
-  LowPx?: number// [26] 333 (Float)
-  LastPx?: number// [27] 31 (Float)
-  TransactTime?: Date// [28] 60 (UtcTimestamp)
-  Adjustment?: number// [29] 334 (Int)
-  FirstPx?: number// [30] 1025 (Float)
-  Text?: string// [31] 58 (String)
-  EncodedTextLen?: number// [32] 354 (Int)
-  EncodedText?: Buffer// [33] 355 (RawData)
-  StandardTrailer: IStandardTrailer// [34] SignatureLength.93, Signature.89, CheckSum.10
+  Instrument?: IInstrument// [4] Symbol.55, SymbolSfx.65 .. ExchangeLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [5] DeliveryForm.668, PctAtRisk.869 .. ReferenceDataDateType.2748
+  FinancingDetails?: IFinancingDetails// [6] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [7] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingInstrumentXID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp// [8] NoLegs.555, LegSymbol.600 .. LegMarginRatio.2508
+  RelatedInstrumentGrp?: IRelatedInstrumentGrp// [9] NoRelatedInstruments.1647, RelatedInstrumentType.1648 .. RelatedToDividendPeriodXIDRef.2417
+  Currency?: string// [10] 15 (String)
+  CurrencyCodeSource?: string// [11] 2897 (String)
+  MarketID?: string// [12] 1301 (String)
+  MarketSegmentID?: string// [13] 1300 (String)
+  TradeDate?: Date// [14] 75 (LocalDate)
+  TradingSessionID?: string// [15] 336 (String)
+  TradingSessionSubID?: string// [16] 625 (String)
+  UnsolicitedIndicator?: boolean// [17] 325 (Boolean)
+  SecurityTradingStatus?: number// [18] 326 (Int)
+  MarketMakerActivity?: number// [19] 1655 (Int)
+  FastMarketIndicator?: boolean// [20] 2447 (Boolean)
+  SecurityTradingEvent?: number// [21] 1174 (Int)
+  NextAuctionTime?: Date// [22] 2116 (UtcTimestamp)
+  FinancialStatus?: string// [23] 291 (String)
+  CorporateAction?: string// [24] 292 (String)
+  HaltReasonInt?: number// [25] 327 (Int)
+  InViewOfCommon?: boolean// [26] 328 (Boolean)
+  DueToRelated?: boolean// [27] 329 (Boolean)
+  MDBookType?: number// [28] 1021 (Int)
+  MarketDepth?: number// [29] 264 (Int)
+  BuyVolume?: number// [30] 330 (Float)
+  SellVolume?: number// [31] 331 (Float)
+  HighPx?: number// [32] 332 (Float)
+  LowPx?: number// [33] 333 (Float)
+  LastPx?: number// [34] 31 (Float)
+  ClearingPriceParametersGrp?: IClearingPriceParametersGrp// [35] NoClearingPriceParameters.2580, BusinessDayType.2581 .. CalculationMethod.2592
+  SettlPrice?: number// [36] 730 (Float)
+  SettlPriceType?: number// [37] 731 (Int)
+  SettlPriceDeterminationMethod?: number// [38] 2451 (Int)
+  TransactTime?: Date// [39] 60 (UtcTimestamp)
+  Adjustment?: number// [40] 334 (Int)
+  FirstPx?: number// [41] 1025 (Float)
+  LinkageHandlingIndicator?: boolean// [42] 2448 (Boolean)
+  Text?: string// [43] 58 (String)
+  EncodedTextLen?: number// [44] 354 (Length)
+  EncodedText?: Buffer// [45] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [46] SignatureLength.93, Signature.89, CheckSum.10
 }

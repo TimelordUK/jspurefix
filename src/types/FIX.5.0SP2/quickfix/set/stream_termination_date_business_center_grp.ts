@@ -1,0 +1,5 @@
+import { IStreamTerminationDateBusinessCenterGrpNoStreamTerminationDateBusinessCenters } from './stream_termination_date_business_center_grp_no_stream_termination_date_business_centers'
+
+export interface IStreamTerminationDateBusinessCenterGrp {
+  NoStreamTerminationDateBusinessCenters?: IStreamTerminationDateBusinessCenterGrpNoStreamTerminationDateBusinessCenters[]// [1] StreamTerminationDateBusinessCenter.40067
+}

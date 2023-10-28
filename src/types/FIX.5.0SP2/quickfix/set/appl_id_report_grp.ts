@@ -1,5 +1,5 @@
+import { IApplIDReportGrpNoApplIDs } from './appl_id_report_grp_no_appl_i_ds'
+
 export interface IApplIDReportGrp {
-  RefApplID?: string// [1] 1355 (String)
-  ApplNewSeqNum?: number// [2] 1399 (Int)
-  RefApplLastSeqNum?: number// [3] 1357 (Int)
+  NoApplIDs?: IApplIDReportGrpNoApplIDs[]// [1] RefApplID.1355, ApplNewSeqNum.1399, RefApplLastSeqNum.1357
 }

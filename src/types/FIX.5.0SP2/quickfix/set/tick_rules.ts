@@ -1,6 +1,5 @@
+import { ITickRulesNoTickRules } from './tick_rules_no_tick_rules'
+
 export interface ITickRules {
-  StartTickPriceRange?: number// [1] 1206 (Float)
-  EndTickPriceRange?: number// [2] 1207 (Float)
-  TickIncrement?: number// [3] 1208 (Float)
-  TickRuleType?: number// [4] 1209 (Int)
+  NoTickRules?: ITickRulesNoTickRules[]// [1] StartTickPriceRange.1206, EndTickPriceRange.1207 .. SettlPriceSecondaryIncrement.1831
 }

@@ -1,16 +1,5 @@
-import { IUndlyInstrumentPtysSubGrp } from './undly_instrument_ptys_sub_grp'
+import { IUndlyInstrumentPartiesNoUndlyInstrumentParties } from './undly_instrument_parties_no_undly_instrument_parties'
 
-/*
-***************************************************************
-* The use of this component block is restricted to instrument *
-* definition only and is not permitted to contain             *
-* transactional information. Only a specified subset of party *
-* roles will be supported within the InstrumentParty block.   *
-***************************************************************
-*/
 export interface IUndlyInstrumentParties {
-  UnderlyingInstrumentPartyID?: string// [1] 1059 (String)
-  UnderlyingInstrumentPartyIDSource?: string// [2] 1060 (String)
-  UnderlyingInstrumentPartyRole?: number// [3] 1061 (Int)
-  UndlyInstrumentPtysSubGrp?: IUndlyInstrumentPtysSubGrp[]// [4] UnderlyingInstrumentPartySubID.1063, UnderlyingInstrumentPartySubIDType.1064
+  NoUndlyInstrumentParties?: IUndlyInstrumentPartiesNoUndlyInstrumentParties[]// [1] UnderlyingInstrumentPartyID.1059, UnderlyingInstrumentPartyIDSource.1060 .. UnderlyingInstrumentPartySubIDType.1064
 }

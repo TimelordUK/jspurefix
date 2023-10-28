@@ -1,0 +1,5 @@
+import { IUnderlyingDeliveryStreamCycleGrpNoUnderlyingDeliveryStreamCycles } from './underlying_delivery_stream_cycle_grp_no_underlying_delivery_stream_cycles'
+
+export interface IUnderlyingDeliveryStreamCycleGrp {
+  NoUnderlyingDeliveryStreamCycles?: IUnderlyingDeliveryStreamCycleGrpNoUnderlyingDeliveryStreamCycles[]// [1] UnderlyingDeliveryStreamCycleDesc.41805, EncodedUnderlyingDeliveryStreamCycleDescLen.41806, EncodedUnderlyingDeliveryStreamCycleDesc.41807
+}

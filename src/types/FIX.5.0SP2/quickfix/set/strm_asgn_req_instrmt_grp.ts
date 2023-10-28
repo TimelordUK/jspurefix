@@ -1,8 +1,5 @@
-import { IInstrument } from './instrument'
+import { IStrmAsgnReqInstrmtGrpNoRelatedSym } from './strm_asgn_req_instrmt_grp_no_related_sym'
 
 export interface IStrmAsgnReqInstrmtGrp {
-  Instrument?: IInstrument// [1] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
-  SettlType?: string// [2] 63 (String)
-  MDEntrySize?: number// [3] 271 (Float)
-  MDStreamID?: string// [4] 1500 (String)
+  NoRelatedSym?: IStrmAsgnReqInstrmtGrpNoRelatedSym[]// [1] Symbol.55, SymbolSfx.65 .. MDStreamID.1500
 }

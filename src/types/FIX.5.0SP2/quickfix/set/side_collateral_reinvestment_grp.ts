@@ -1,0 +1,5 @@
+import { ISideCollateralReinvestmentGrpNoSideCollateralReinvestments } from './side_collateral_reinvestment_grp_no_side_collateral_reinvestments'
+
+export interface ISideCollateralReinvestmentGrp {
+  NoSideCollateralReinvestments?: ISideCollateralReinvestmentGrpNoSideCollateralReinvestments[]// [1] SideCollateralReinvestmentType.2867, SideCollateralReinvestmentAmount.2865 .. SideCollateralReinvestmentCurrencyCodeSource.2932
+}

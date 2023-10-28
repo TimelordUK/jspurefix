@@ -1,4 +1,5 @@
+import { IDerivativeInstrumentAttributeNoDerivativeInstrAttrib } from './derivative_instrument_attribute_no_derivative_instr_attrib'
+
 export interface IDerivativeInstrumentAttribute {
-  DerivativeInstrAttribType?: number// [1] 1313 (Int)
-  DerivativeInstrAttribValue?: string// [2] 1314 (String)
+  NoDerivativeInstrAttrib?: IDerivativeInstrumentAttributeNoDerivativeInstrAttrib[]// [1] DerivativeInstrAttribType.1313, DerivativeInstrAttribValue.1314
 }

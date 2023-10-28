@@ -1,10 +1,5 @@
-/*
-***************************************************************
-* The ExpirationQty component block identified the expiration *
-* quantities and type of expiration.                          *
-***************************************************************
-*/
+import { IExpirationQtyNoExpiration } from './expiration_qty_no_expiration'
+
 export interface IExpirationQty {
-  ExpirationQtyType?: number// [1] 982 (Int)
-  ExpQty?: number// [2] 983 (Float)
+  NoExpiration?: IExpirationQtyNoExpiration[]// [1] ExpirationQtyType.982, ExpQty.983
 }

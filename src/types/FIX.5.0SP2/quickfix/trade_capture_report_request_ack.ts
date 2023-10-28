@@ -1,29 +1,10 @@
 import { IStandardHeader } from './set/standard_header'
 import { IInstrument } from './set/instrument'
+import { IInstrumentExtension } from './set/instrument_extension'
 import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-****************************************************************
-* The Trade Capture Request Ack message is used to:            *
-* " Provide an acknowledgement to a Trade Capture Report       *
-* Request in the case where the Trade Capture Report Request   *
-* is used to specify a subscription or delivery of reports via *
-* an out-of-band ResponseTransmissionMethod.                   *
-* " Provide an acknowledgement to a Trade Capture Report       *
-* Request in the case when the return of the Trade Capture     *
-* Reports matching that request will be delayed or delivered   *
-* asynchronously. This is useful in distributed trading system *
-* environments.                                                *
-* " Indicate that no trades were found that matched the        *
-* selection criteria specified on the Trade Capture Report     *
-* Request                                                      *
-* " The Trade Capture Request was invalid for some business    *
-* reason, such as request is not authorized, invalid or        *
-* unknown instrument, party, trading session, etc.             *
-****************************************************************
-*/
 export interface ITradeCaptureReportRequestAck {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   TradeRequestID: string// [2] 568 (String)
@@ -36,15 +17,16 @@ export interface ITradeCaptureReportRequestAck {
   TotNumTradeReports?: number// [9] 748 (Int)
   TradeRequestResult: number// [10] 749 (Int)
   TradeRequestStatus: number// [11] 750 (Int)
-  Instrument?: IInstrument// [12] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
-  UndInstrmtGrp?: IUndInstrmtGrp// [13] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingDetachmentPoint.1460
-  InstrmtLegGrp?: IInstrmtLegGrp// [14] NoLegs.555, LegSymbol.600 .. LegFlowScheduleType.1440
-  MultiLegReportingType?: string// [15] 442 (String)
-  ResponseTransportType?: number// [16] 725 (Int)
-  ResponseDestination?: string// [17] 726 (String)
-  Text?: string// [18] 58 (String)
-  EncodedTextLen?: number// [19] 354 (Int)
-  EncodedText?: Buffer// [20] 355 (RawData)
-  MessageEventSource?: string// [21] 1011 (String)
-  StandardTrailer: IStandardTrailer// [22] SignatureLength.93, Signature.89, CheckSum.10
+  Instrument?: IInstrument// [12] Symbol.55, SymbolSfx.65 .. ExchangeLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [13] DeliveryForm.668, PctAtRisk.869 .. ReferenceDataDateType.2748
+  UndInstrmtGrp?: IUndInstrmtGrp// [14] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingInstrumentXID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp// [15] NoLegs.555, LegSymbol.600 .. LegMarginRatio.2508
+  MultiLegReportingType?: string// [16] 442 (String)
+  ResponseTransportType?: number// [17] 725 (Int)
+  ResponseDestination?: string// [18] 726 (String)
+  Text?: string// [19] 58 (String)
+  EncodedTextLen?: number// [20] 354 (Length)
+  EncodedText?: Buffer// [21] 355 (RawData)
+  MessageEventSource?: string// [22] 1011 (String)
+  StandardTrailer: IStandardTrailer// [23] SignatureLength.93, Signature.89, CheckSum.10
 }

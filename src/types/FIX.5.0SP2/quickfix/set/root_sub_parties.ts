@@ -1,4 +1,5 @@
+import { IRootSubPartiesNoRootPartySubIDs } from './root_sub_parties_no_root_party_sub_i_ds'
+
 export interface IRootSubParties {
-  RootPartySubID?: string// [1] 1121 (String)
-  RootPartySubIDType?: number// [2] 1122 (Int)
+  NoRootPartySubIDs?: IRootSubPartiesNoRootPartySubIDs[]// [1] RootPartySubID.1121, RootPartySubIDType.1122
 }

@@ -1,6 +1,5 @@
-import { IInstrumentLeg } from './instrument_leg'
+import { IInstrmtLegGrpNoLegs } from './instrmt_leg_grp_no_legs'
 
 export interface IInstrmtLegGrp {
-  NoLegs?: number// [1] 555 (Int)
-  InstrumentLeg?: IInstrumentLeg// [2] LegSymbol.600, LegSymbolSfx.601 .. LegFlowScheduleType.1440
+  NoLegs?: IInstrmtLegGrpNoLegs[]// [1] LegSymbol.600, LegSymbolSfx.601 .. LegMarginRatio.2508
 }

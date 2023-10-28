@@ -6,36 +6,35 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 import { IOrderQtyData } from './set/order_qty_data'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-***************************************************************
-* The order cancel request message requests the cancellation  *
-* of all of the remaining quantity of an existing order. Note *
-* that the Order Cancel/Replace Request should be used to     *
-* partially cancel (reduce) an order).                        *
-***************************************************************
-*/
 export interface IOrderCancelRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
-  OrigClOrdID?: string// [2] 41 (String)
-  OrderID?: string// [3] 37 (String)
-  ClOrdID: string// [4] 11 (String)
-  SecondaryClOrdID?: string// [5] 526 (String)
-  ClOrdLinkID?: string// [6] 583 (String)
-  ListID?: string// [7] 66 (String)
-  OrigOrdModTime?: Date// [8] 586 (UtcTimestamp)
-  Account?: string// [9] 1 (String)
-  AcctIDSource?: number// [10] 660 (Int)
-  AccountType?: number// [11] 581 (Int)
-  Parties?: IParties[]// [12] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
-  Instrument: IInstrument// [13] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
-  FinancingDetails?: IFinancingDetails// [14] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
-  UndInstrmtGrp?: IUndInstrmtGrp// [15] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingDetachmentPoint.1460
-  Side: string// [16] 54 (String)
-  TransactTime: Date// [17] 60 (UtcTimestamp)
-  OrderQtyData: IOrderQtyData// [18] OrderQty.38, CashOrderQty.152 .. RoundingModulus.469
-  ComplianceID?: string// [19] 376 (String)
-  Text?: string// [20] 58 (String)
-  EncodedTextLen?: number// [21] 354 (Int)
-  EncodedText?: Buffer// [22] 355 (RawData)
-  StandardTrailer: IStandardTrailer// [23] SignatureLength.93, Signature.89, CheckSum.10
+  OrderRequestID?: number// [2] 2422 (Int)
+  OrigClOrdID?: string// [3] 41 (String)
+  OrderID?: string// [4] 37 (String)
+  ClOrdID: string// [5] 11 (String)
+  SecondaryClOrdID?: string// [6] 526 (String)
+  ClOrdLinkID?: string// [7] 583 (String)
+  ListID?: string// [8] 66 (String)
+  OrigOrdModTime?: Date// [9] 586 (UtcTimestamp)
+  Account?: string// [10] 1 (String)
+  AcctIDSource?: number// [11] 660 (Int)
+  AccountType?: number// [12] 581 (Int)
+  Parties?: IParties// [13] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Instrument?: IInstrument// [14] Symbol.55, SymbolSfx.65 .. ExchangeLookAlike.2603
+  FinancingDetails?: IFinancingDetails// [15] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [16] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingInstrumentXID.2631
+  MarketSegmentID?: string// [17] 1300 (String)
+  ExDestination?: string// [18] 100 (String)
+  ExDestinationIDSource?: string// [19] 1133 (String)
+  Side: string// [20] 54 (String)
+  TransactTime: Date// [21] 60 (UtcTimestamp)
+  OrderQtyData?: IOrderQtyData// [22] OrderQty.38, CashOrderQty.152 .. RoundingModulus.469
+  ComplianceID?: string// [23] 376 (String)
+  ComplianceText?: string// [24] 2404 (String)
+  EncodedComplianceTextLen?: number// [25] 2351 (Length)
+  EncodedComplianceText?: Buffer// [26] 2352 (RawData)
+  Text?: string// [27] 58 (String)
+  EncodedTextLen?: number// [28] 354 (Length)
+  EncodedText?: Buffer// [29] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [30] SignatureLength.93, Signature.89, CheckSum.10
 }

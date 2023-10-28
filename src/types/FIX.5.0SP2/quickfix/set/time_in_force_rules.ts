@@ -1,3 +1,5 @@
+import { ITimeInForceRulesNoTimeInForceRules } from './time_in_force_rules_no_time_in_force_rules'
+
 export interface ITimeInForceRules {
-  TimeInForce?: string// [1] 59 (String)
+  NoTimeInForceRules?: ITimeInForceRulesNoTimeInForceRules[]// [1] TimeInForce.59
 }

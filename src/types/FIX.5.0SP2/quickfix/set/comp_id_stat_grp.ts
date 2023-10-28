@@ -1,8 +1,5 @@
+import { ICompIDStatGrpNoCompIDs } from './comp_id_stat_grp_no_comp_i_ds'
+
 export interface ICompIDStatGrp {
-  RefCompID: string// [1] 930 (String)
-  RefSubID?: string// [2] 931 (String)
-  LocationID?: string// [3] 283 (String)
-  DeskID?: string// [4] 284 (String)
-  StatusValue: number// [5] 928 (Int)
-  StatusText?: string// [6] 929 (String)
+  NoCompIDs?: ICompIDStatGrpNoCompIDs[]// [1] RefCompID.930, RefSubID.931 .. StatusText.929
 }

@@ -1,17 +1,11 @@
 import { IStandardHeader } from './set/standard_header'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-**************************************************************
-* The Security Type Request message is used to return a list *
-* of security types available from a counterparty or market. *
-**************************************************************
-*/
 export interface ISecurityTypeRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   SecurityReqID: string// [2] 320 (String)
   Text?: string// [3] 58 (String)
-  EncodedTextLen?: number// [4] 354 (Int)
+  EncodedTextLen?: number// [4] 354 (Length)
   EncodedText?: Buffer// [5] 355 (RawData)
   MarketID?: string// [6] 1301 (String)
   MarketSegmentID?: string// [7] 1300 (String)

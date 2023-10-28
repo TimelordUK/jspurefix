@@ -1,4 +1,5 @@
+import { ILotTypeRulesNoLotTypeRules } from './lot_type_rules_no_lot_type_rules'
+
 export interface ILotTypeRules {
-  LotType?: string// [1] 1093 (String)
-  MinLotSize?: number// [2] 1231 (Float)
+  NoLotTypeRules?: ILotTypeRulesNoLotTypeRules[]// [1] LotType.1093, MinLotSize.1231
 }

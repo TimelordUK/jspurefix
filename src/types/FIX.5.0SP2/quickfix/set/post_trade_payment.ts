@@ -1,0 +1,17 @@
+export interface IPostTradePayment {
+  PostTradePaymentType: string// [1] 2824 (String)
+  PostTradePaymentAmount: number// [2] 2817 (Float)
+  PostTradePaymentCurrency?: string// [3] 2818 (String)
+  PostTradePaymentCurrencyCodeSource?: string// [4] 2956 (String)
+  PostTradePaymentCalculationDate: Date// [5] 2825 (LocalDate)
+  PostTradePaymentValueDate: Date// [6] 2826 (LocalDate)
+  PostTradePaymentFinalValueDate?: Date// [7] 2827 (LocalDate)
+  PostTradePaymentDebitOrCredit: number// [8] 2819 (Int)
+  PostTradePaymentAccount: string// [9] 2816 (String)
+  PostTradePaymentID?: string// [10] 2821 (String)
+  PostTradePaymentDesc?: string// [11] 2820 (String)
+  EncodedPostTradePaymentDescLen?: number// [12] 2815 (Length)
+  EncodedPostTradePaymentDesc?: Buffer// [13] 2814 (RawData)
+  PostTradePaymentLinkID?: string// [14] 2822 (String)
+  PostTradePaymentStatus?: number// [15] 2823 (Int)
+}

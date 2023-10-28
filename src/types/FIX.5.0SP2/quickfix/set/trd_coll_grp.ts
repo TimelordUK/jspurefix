@@ -1,4 +1,5 @@
+import { ITrdCollGrpNoTrades } from './trd_coll_grp_no_trades'
+
 export interface ITrdCollGrp {
-  TradeReportID?: string// [1] 571 (String)
-  SecondaryTradeReportID?: string// [2] 818 (String)
+  NoTrades?: ITrdCollGrpNoTrades[]// [1] TradeReportID.571, SecondaryTradeReportID.818
 }

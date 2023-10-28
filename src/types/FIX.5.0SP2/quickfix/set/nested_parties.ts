@@ -1,19 +1,5 @@
-import { INstdPtysSubGrp } from './nstd_ptys_sub_grp'
+import { INestedPartiesNoNestedPartyIDs } from './nested_parties_no_nested_party_i_ds'
 
-/*
-**************************************************************
-* The NestedParties component block is identical to the      *
-* Parties Block. It is used in other component blocks and    *
-* repeating groups when nesting will take place resulting in *
-* multiple occurrences of the Parties block within a single  *
-* FIX message.. Use of NestedParties under these conditions  *
-* avoids multiple references to the Parties block within the *
-* same message which is not allowed in FIX tag/value syntax. *
-**************************************************************
-*/
 export interface INestedParties {
-  NestedPartyID?: string// [1] 524 (String)
-  NestedPartyIDSource?: string// [2] 525 (String)
-  NestedPartyRole?: number// [3] 538 (Int)
-  NstdPtysSubGrp?: INstdPtysSubGrp[]// [4] NestedPartySubID.545, NestedPartySubIDType.805
+  NoNestedPartyIDs?: INestedPartiesNoNestedPartyIDs[]// [1] NestedPartyID.524, NestedPartyIDSource.525 .. NestedPartySubIDType.805
 }

@@ -1,5 +1,5 @@
+import { IContAmtGrpNoContAmts } from './cont_amt_grp_no_cont_amts'
+
 export interface IContAmtGrp {
-  ContAmtType?: number// [1] 519 (Int)
-  ContAmtValue?: number// [2] 520 (Float)
-  ContAmtCurr?: string// [3] 521 (String)
+  NoContAmts?: IContAmtGrpNoContAmts[]// [1] ContAmtType.519, ContAmtValue.520, ContAmtCurr.521
 }

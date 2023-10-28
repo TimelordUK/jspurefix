@@ -1,17 +1,11 @@
-/*
-***************************************************************
-* The SpreadOrBenchmarkCurveData component block is primarily *
-* used for Fixed Income to convey spread to a benchmark       *
-* security or curve.                                          *
-***************************************************************
-*/
 export interface ISpreadOrBenchmarkCurveData {
   Spread?: number// [1] 218 (Float)
   BenchmarkCurveCurrency?: string// [2] 220 (String)
-  BenchmarkCurveName?: string// [3] 221 (String)
-  BenchmarkCurvePoint?: string// [4] 222 (String)
-  BenchmarkPrice?: number// [5] 662 (Float)
-  BenchmarkPriceType?: number// [6] 663 (Int)
-  BenchmarkSecurityID?: string// [7] 699 (String)
-  BenchmarkSecurityIDSource?: string// [8] 761 (String)
+  BenchmarkCurveCurrencyCodeSource?: string// [3] 2950 (String)
+  BenchmarkCurveName?: string// [4] 221 (String)
+  BenchmarkCurvePoint?: string// [5] 222 (String)
+  BenchmarkPrice?: number// [6] 662 (Float)
+  BenchmarkPriceType?: number// [7] 663 (Int)
+  BenchmarkSecurityID?: string// [8] 699 (String)
+  BenchmarkSecurityIDSource?: string// [9] 761 (String)
 }

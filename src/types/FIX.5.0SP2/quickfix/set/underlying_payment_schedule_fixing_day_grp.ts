@@ -1,0 +1,5 @@
+import { IUnderlyingPaymentScheduleFixingDayGrpNoUnderlyingPaymentScheduleFixingDays } from './underlying_payment_schedule_fixing_day_grp_no_underlying_payment_schedule_fixing_days'
+
+export interface IUnderlyingPaymentScheduleFixingDayGrp {
+  NoUnderlyingPaymentScheduleFixingDays?: IUnderlyingPaymentScheduleFixingDayGrpNoUnderlyingPaymentScheduleFixingDays[]// [1] UnderlyingPaymentScheduleFixingDayOfWeek.41879, UnderlyingPaymentScheduleFixingDayNumber.41880
+}

@@ -1,7 +1,5 @@
-import { IParties } from './parties'
-import { IStrmAsgnReqInstrmtGrp } from './strm_asgn_req_instrmt_grp'
+import { IStrmAsgnReqGrpNoAsgnReqs } from './strm_asgn_req_grp_no_asgn_reqs'
 
 export interface IStrmAsgnReqGrp {
-  Parties?: IParties[]// [1] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
-  StrmAsgnReqInstrmtGrp?: IStrmAsgnReqInstrmtGrp[]// [2] Symbol.55, SymbolSfx.65 .. MDStreamID.1500
+  NoAsgnReqs?: IStrmAsgnReqGrpNoAsgnReqs[]// [1] Parties.453, PartyID.448 .. MDStreamID.1500
 }

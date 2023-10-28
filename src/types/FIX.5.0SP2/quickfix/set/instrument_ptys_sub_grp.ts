@@ -1,4 +1,5 @@
+import { IInstrumentPtysSubGrpNoInstrumentPartySubIDs } from './instrument_ptys_sub_grp_no_instrument_party_sub_i_ds'
+
 export interface IInstrumentPtysSubGrp {
-  InstrumentPartySubID?: string// [1] 1053 (String)
-  InstrumentPartySubIDType?: number// [2] 1054 (Int)
+  NoInstrumentPartySubIDs?: IInstrumentPtysSubGrpNoInstrumentPartySubIDs[]// [1] InstrumentPartySubID.1053, InstrumentPartySubIDType.1054
 }

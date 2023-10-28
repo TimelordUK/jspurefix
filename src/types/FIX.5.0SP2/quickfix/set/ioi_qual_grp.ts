@@ -1,3 +1,5 @@
+import { IIOIQualGrpNoIOIQualifiers } from './ioi_qual_grp_no_ioi_qualifiers'
+
 export interface IIOIQualGrp {
-  IOIQualifier?: string// [1] 104 (String)
+  NoIOIQualifiers?: IIOIQualGrpNoIOIQualifiers[]// [1] IOIQualifier.104
 }

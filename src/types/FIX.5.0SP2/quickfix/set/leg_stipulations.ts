@@ -1,11 +1,5 @@
-/*
-**************************************************************
-* The LegStipulations component block has the same usage as  *
-* the Stipulations component block, but for a leg instrument *
-* in a multi-legged security.                                *
-**************************************************************
-*/
+import { ILegStipulationsNoLegStipulations } from './leg_stipulations_no_leg_stipulations'
+
 export interface ILegStipulations {
-  LegStipulationType?: string// [1] 688 (String)
-  LegStipulationValue?: string// [2] 689 (String)
+  NoLegStipulations?: ILegStipulationsNoLegStipulations[]// [1] LegStipulationType.688, LegStipulationValue.689
 }

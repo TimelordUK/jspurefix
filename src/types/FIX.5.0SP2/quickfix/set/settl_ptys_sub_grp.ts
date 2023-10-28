@@ -1,4 +1,5 @@
+import { ISettlPtysSubGrpNoSettlPartySubIDs } from './settl_ptys_sub_grp_no_settl_party_sub_i_ds'
+
 export interface ISettlPtysSubGrp {
-  SettlPartySubID?: string// [1] 785 (String)
-  SettlPartySubIDType?: number// [2] 786 (Int)
+  NoSettlPartySubIDs?: ISettlPtysSubGrpNoSettlPartySubIDs[]// [1] SettlPartySubID.785, SettlPartySubIDType.786
 }

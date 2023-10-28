@@ -1,5 +1,5 @@
+import { ICpctyConfGrpNoCapacities } from './cpcty_conf_grp_no_capacities'
+
 export interface ICpctyConfGrp {
-  OrderCapacity: string// [1] 528 (String)
-  OrderRestrictions?: string// [2] 529 (String)
-  OrderCapacityQty: number// [3] 863 (Float)
+  NoCapacities?: ICpctyConfGrpNoCapacities[]// [1] OrderCapacity.528, OrderRestrictions.529, OrderCapacityQty.863
 }

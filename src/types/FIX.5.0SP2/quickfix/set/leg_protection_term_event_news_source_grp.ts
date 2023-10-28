@@ -1,0 +1,5 @@
+import { ILegProtectionTermEventNewsSourceGrpNoLegProtectionTermEventNewsSources } from './leg_protection_term_event_news_source_grp_no_leg_protection_term_event_news_sources'
+
+export interface ILegProtectionTermEventNewsSourceGrp {
+  NoLegProtectionTermEventNewsSources?: ILegProtectionTermEventNewsSourceGrpNoLegProtectionTermEventNewsSources[]// [1] LegProtectionTermEventNewsSource.41615
+}

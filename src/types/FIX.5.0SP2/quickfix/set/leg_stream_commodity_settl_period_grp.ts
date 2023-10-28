@@ -1,0 +1,5 @@
+import { ILegStreamCommoditySettlPeriodGrpNoLegStreamCommoditySettlPeriods } from './leg_stream_commodity_settl_period_grp_no_leg_stream_commodity_settl_periods'
+
+export interface ILegStreamCommoditySettlPeriodGrp {
+  NoLegStreamCommoditySettlPeriods?: ILegStreamCommoditySettlPeriodGrpNoLegStreamCommoditySettlPeriods[]// [1] LegStreamCommoditySettlCountry.41687, LegStreamCommoditySettlTimeZone.41688 .. LegStreamCommoditySettlPeriodXIDRef.41699
+}

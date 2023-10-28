@@ -1,15 +1,5 @@
-import { IRootSubParties } from './root_sub_parties'
+import { IRootPartiesNoRootPartyIDs } from './root_parties_no_root_party_i_ds'
 
-/*
-***************************************************************
-* The RootParties component block is a version of the Parties *
-* component block used to provide root information regarding  *
-* the owning and entering parties of a transaction.           *
-***************************************************************
-*/
 export interface IRootParties {
-  RootPartyID?: string// [1] 1117 (String)
-  RootPartyIDSource?: string// [2] 1118 (String)
-  RootPartyRole?: number// [3] 1119 (Int)
-  RootSubParties?: IRootSubParties[]// [4] RootPartySubID.1121, RootPartySubIDType.1122
+  NoRootPartyIDs?: IRootPartiesNoRootPartyIDs[]// [1] RootPartyID.1117, RootPartyIDSource.1118 .. RootPartySubIDType.1122
 }

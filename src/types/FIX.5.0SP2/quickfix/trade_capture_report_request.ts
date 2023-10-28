@@ -8,16 +8,6 @@ import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 import { ITrdCapDtGrp } from './set/trd_cap_dt_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-**************************************************************
-* The Trade Capture Report Request can be used to:           *
-* " Request one or more trade capture reports based upon     *
-* selection criteria provided on the trade capture report    *
-* request                                                    *
-* " Subscribe for trade capture reports based upon selection *
-* criteria provided on the trade capture report request.     *
-**************************************************************
-*/
 export interface ITradeCaptureReportRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   TradeRequestID: string// [2] 568 (String)
@@ -29,38 +19,40 @@ export interface ITradeCaptureReportRequest {
   SubscriptionRequestType?: string// [8] 263 (String)
   TradeReportID?: string// [9] 571 (String)
   SecondaryTradeReportID?: string// [10] 818 (String)
-  ExecID?: string// [11] 17 (String)
-  ExecType?: string// [12] 150 (String)
-  OrderID?: string// [13] 37 (String)
-  ClOrdID?: string// [14] 11 (String)
-  MatchStatus?: string// [15] 573 (String)
-  TrdType?: number// [16] 828 (Int)
-  TrdSubType?: number// [17] 829 (Int)
-  TradeHandlingInstr?: string// [18] 1123 (String)
-  TransferReason?: string// [19] 830 (String)
-  SecondaryTrdType?: number// [20] 855 (Int)
-  TradeLinkID?: string// [21] 820 (String)
-  TrdMatchID?: string// [22] 880 (String)
-  Parties?: IParties[]// [23] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
-  Instrument?: IInstrument// [24] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
-  InstrumentExtension?: IInstrumentExtension// [25] DeliveryForm.668, PctAtRisk.869 .. InstrAttribValue.872
-  FinancingDetails?: IFinancingDetails// [26] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
-  UndInstrmtGrp?: IUndInstrmtGrp// [27] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingDetachmentPoint.1460
-  InstrmtLegGrp?: IInstrmtLegGrp// [28] NoLegs.555, LegSymbol.600 .. LegFlowScheduleType.1440
-  TrdCapDtGrp?: ITrdCapDtGrp[]// [29] TradeDate.75, LastUpdateTime.779, TransactTime.60
-  ClearingBusinessDate?: Date// [30] 715 (LocalDate)
-  TradingSessionID?: string// [31] 336 (String)
-  TradingSessionSubID?: string// [32] 625 (String)
-  TimeBracket?: string// [33] 943 (String)
-  Side?: string// [34] 54 (String)
-  MultiLegReportingType?: string// [35] 442 (String)
-  TradeInputSource?: string// [36] 578 (String)
-  TradeInputDevice?: string// [37] 579 (String)
-  ResponseTransportType?: number// [38] 725 (Int)
-  ResponseDestination?: string// [39] 726 (String)
-  Text?: string// [40] 58 (String)
-  EncodedTextLen?: number// [41] 354 (Int)
-  EncodedText?: Buffer// [42] 355 (RawData)
-  MessageEventSource?: string// [43] 1011 (String)
-  StandardTrailer: IStandardTrailer// [44] SignatureLength.93, Signature.89, CheckSum.10
+  SecondaryExecID?: string// [11] 527 (String)
+  ExecID?: string// [12] 17 (String)
+  ExecType?: string// [13] 150 (String)
+  OrderID?: string// [14] 37 (String)
+  ClOrdID?: string// [15] 11 (String)
+  MatchStatus?: string// [16] 573 (String)
+  TrdType?: number// [17] 828 (Int)
+  TrdSubType?: number// [18] 829 (Int)
+  OffsetInstruction?: number// [19] 1849 (Int)
+  TradeHandlingInstr?: string// [20] 1123 (String)
+  TransferReason?: string// [21] 830 (String)
+  SecondaryTrdType?: number// [22] 855 (Int)
+  TradeLinkID?: string// [23] 820 (String)
+  TrdMatchID?: string// [24] 880 (String)
+  Parties?: IParties// [25] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Instrument?: IInstrument// [26] Symbol.55, SymbolSfx.65 .. ExchangeLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [27] DeliveryForm.668, PctAtRisk.869 .. ReferenceDataDateType.2748
+  FinancingDetails?: IFinancingDetails// [28] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp// [29] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingInstrumentXID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp// [30] NoLegs.555, LegSymbol.600 .. LegMarginRatio.2508
+  TrdCapDtGrp?: ITrdCapDtGrp// [31] NoDates.580, TradeDate.75 .. TransactTime.60
+  ClearingBusinessDate?: Date// [32] 715 (LocalDate)
+  TradingSessionID?: string// [33] 336 (String)
+  TradingSessionSubID?: string// [34] 625 (String)
+  TimeBracket?: string// [35] 943 (String)
+  Side?: string// [36] 54 (String)
+  MultiLegReportingType?: string// [37] 442 (String)
+  TradeInputSource?: string// [38] 578 (String)
+  TradeInputDevice?: string// [39] 579 (String)
+  ResponseTransportType?: number// [40] 725 (Int)
+  ResponseDestination?: string// [41] 726 (String)
+  Text?: string// [42] 58 (String)
+  EncodedTextLen?: number// [43] 354 (Length)
+  EncodedText?: Buffer// [44] 355 (RawData)
+  MessageEventSource?: string// [45] 1011 (String)
+  StandardTrailer: IStandardTrailer// [46] SignatureLength.93, Signature.89, CheckSum.10
 }

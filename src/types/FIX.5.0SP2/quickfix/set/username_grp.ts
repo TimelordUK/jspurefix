@@ -1,3 +1,5 @@
+import { IUsernameGrpNoUsernames } from './username_grp_no_usernames'
+
 export interface IUsernameGrp {
-  Username?: string// [1] 553 (String)
+  NoUsernames?: IUsernameGrpNoUsernames[]// [1] Username.553
 }

@@ -1,35 +1,36 @@
 import { IStandardHeader } from './set/standard_header'
+import { IParties } from './set/parties'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-****************************************************************
-* The order cancel reject message is issued by the broker upon *
-* receipt of a cancel request or cancel/replace request        *
-* message which cannot be honored.                             *
-****************************************************************
-*/
 export interface IOrderCancelReject {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   OrderID: string// [2] 37 (String)
-  SecondaryOrderID?: string// [3] 198 (String)
-  SecondaryClOrdID?: string// [4] 526 (String)
-  ClOrdID: string// [5] 11 (String)
-  ClOrdLinkID?: string// [6] 583 (String)
-  OrigClOrdID?: string// [7] 41 (String)
-  OrdStatus: string// [8] 39 (String)
-  WorkingIndicator?: boolean// [9] 636 (Boolean)
-  OrigOrdModTime?: Date// [10] 586 (UtcTimestamp)
-  ListID?: string// [11] 66 (String)
-  Account?: string// [12] 1 (String)
-  AcctIDSource?: number// [13] 660 (Int)
-  AccountType?: number// [14] 581 (Int)
-  TradeOriginationDate?: Date// [15] 229 (LocalDate)
-  TradeDate?: Date// [16] 75 (LocalDate)
-  TransactTime?: Date// [17] 60 (UtcTimestamp)
-  CxlRejResponseTo: string// [18] 434 (String)
-  CxlRejReason?: number// [19] 102 (Int)
-  Text?: string// [20] 58 (String)
-  EncodedTextLen?: number// [21] 354 (Int)
-  EncodedText?: Buffer// [22] 355 (RawData)
-  StandardTrailer: IStandardTrailer// [23] SignatureLength.93, Signature.89, CheckSum.10
+  OrderRequestID?: number// [3] 2422 (Int)
+  SecondaryOrderID?: string// [4] 198 (String)
+  SecondaryClOrdID?: string// [5] 526 (String)
+  ClOrdID: string// [6] 11 (String)
+  ClOrdLinkID?: string// [7] 583 (String)
+  OrigClOrdID?: string// [8] 41 (String)
+  OrdStatus: string// [9] 39 (String)
+  WorkingIndicator?: boolean// [10] 636 (Boolean)
+  OrigOrdModTime?: Date// [11] 586 (UtcTimestamp)
+  ListID?: string// [12] 66 (String)
+  Account?: string// [13] 1 (String)
+  AcctIDSource?: number// [14] 660 (Int)
+  AccountType?: number// [15] 581 (Int)
+  TradeOriginationDate?: Date// [16] 229 (LocalDate)
+  TradeDate?: Date// [17] 75 (LocalDate)
+  TransactTime?: Date// [18] 60 (UtcTimestamp)
+  CxlRejResponseTo: string// [19] 434 (String)
+  CxlRejReason?: number// [20] 102 (Int)
+  RejectText?: string// [21] 1328 (String)
+  EncodedRejectTextLen?: number// [22] 1664 (Length)
+  EncodedRejectText?: Buffer// [23] 1665 (RawData)
+  ExDestination?: string// [24] 100 (String)
+  ExDestinationIDSource?: string// [25] 1133 (String)
+  Parties?: IParties// [26] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Text?: string// [27] 58 (String)
+  EncodedTextLen?: number// [28] 354 (Length)
+  EncodedText?: Buffer// [29] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [30] SignatureLength.93, Signature.89, CheckSum.10
 }

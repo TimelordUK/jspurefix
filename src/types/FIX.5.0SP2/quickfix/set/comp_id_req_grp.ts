@@ -1,6 +1,5 @@
+import { ICompIDReqGrpNoCompIDs } from './comp_id_req_grp_no_comp_i_ds'
+
 export interface ICompIDReqGrp {
-  RefCompID?: string// [1] 930 (String)
-  RefSubID?: string// [2] 931 (String)
-  LocationID?: string// [3] 283 (String)
-  DeskID?: string// [4] 284 (String)
+  NoCompIDs?: ICompIDReqGrpNoCompIDs[]// [1] RefCompID.930, RefSubID.931 .. DeskID.284
 }

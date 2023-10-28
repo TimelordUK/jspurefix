@@ -1,7 +1,5 @@
+import { IContraGrpNoContraBrokers } from './contra_grp_no_contra_brokers'
+
 export interface IContraGrp {
-  ContraBroker?: string// [1] 375 (String)
-  ContraTrader?: string// [2] 337 (String)
-  ContraTradeQty?: number// [3] 437 (Float)
-  ContraTradeTime?: Date// [4] 438 (UtcTimestamp)
-  ContraLegRefID?: string// [5] 655 (String)
+  NoContraBrokers?: IContraGrpNoContraBrokers[]// [1] ContraBroker.375, ContraTrader.337 .. ContraLegRefID.655
 }

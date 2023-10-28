@@ -1,10 +1,5 @@
+import { IExecAllocGrpNoExecs } from './exec_alloc_grp_no_execs'
+
 export interface IExecAllocGrp {
-  LastQty?: number// [1] 32 (Float)
-  ExecID?: string// [2] 17 (String)
-  SecondaryExecID?: string// [3] 527 (String)
-  LastPx?: number// [4] 31 (Float)
-  LastParPx?: number// [5] 669 (Float)
-  LastCapacity?: string// [6] 29 (String)
-  TradeID?: string// [7] 1003 (String)
-  FirmTradeID?: string// [8] 1041 (String)
+  NoExecs?: IExecAllocGrpNoExecs[]// [1] LastQty.32, ExecID.17 .. TradePriceCondition.1839
 }

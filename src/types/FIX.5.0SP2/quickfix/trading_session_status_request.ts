@@ -1,16 +1,6 @@
 import { IStandardHeader } from './set/standard_header'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-****************************************************************
-* The Trading Session Status Request is used to request        *
-* information on the status of a market. With the move to      *
-* multiple sessions occurring for a given trading party        *
-* (morning and evening sessions for instance) there is a need  *
-* to be able to provide information on what product is trading *
-* on what market.                                              *
-****************************************************************
-*/
 export interface ITradingSessionStatusRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   TradSesReqID: string// [2] 335 (String)

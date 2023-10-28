@@ -1,15 +1,5 @@
+import { IOrdListStatGrpNoOrders } from './ord_list_stat_grp_no_orders'
+
 export interface IOrdListStatGrp {
-  ClOrdID?: string// [1] 11 (String)
-  OrderID?: string// [2] 37 (String)
-  SecondaryClOrdID?: string// [3] 526 (String)
-  CumQty: number// [4] 14 (Float)
-  OrdStatus: string// [5] 39 (String)
-  WorkingIndicator?: boolean// [6] 636 (Boolean)
-  LeavesQty: number// [7] 151 (Float)
-  CxlQty: number// [8] 84 (Float)
-  AvgPx: number// [9] 6 (Float)
-  OrdRejReason?: number// [10] 103 (Int)
-  Text?: string// [11] 58 (String)
-  EncodedTextLen?: number// [12] 354 (Int)
-  EncodedText?: Buffer// [13] 355 (RawData)
+  NoOrders?: IOrdListStatGrpNoOrders[]// [1] ClOrdID.11, OrderID.37 .. EncodedText.355
 }

@@ -1,12 +1,3 @@
-/*
-****************************************************************
-* The Peg Instructions component block is used to tie the      *
-* price of a security to a market event such as opening price, *
-* mid-price, best price. The Peg Instructions block may also   *
-* be used to tie the price to the behavior of a related        *
-* security.                                                    *
-****************************************************************
-*/
 export interface IPegInstructions {
   PegOffsetValue?: number// [1] 211 (Float)
   PegPriceType?: number// [2] 1094 (Int)

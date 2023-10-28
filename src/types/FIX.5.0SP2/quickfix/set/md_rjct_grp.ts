@@ -1,3 +1,5 @@
+import { IMDRjctGrpNoAltMDSource } from './md_rjct_grp_no_alt_md_source'
+
 export interface IMDRjctGrp {
-  AltMDSourceID?: string// [1] 817 (String)
+  NoAltMDSource?: IMDRjctGrpNoAltMDSource[]// [1] AltMDSourceID.817
 }

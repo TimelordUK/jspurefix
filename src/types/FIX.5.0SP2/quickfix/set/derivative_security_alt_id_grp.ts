@@ -1,4 +1,5 @@
+import { IDerivativeSecurityAltIDGrpNoDerivativeSecurityAltID } from './derivative_security_alt_id_grp_no_derivative_security_alt_id'
+
 export interface IDerivativeSecurityAltIDGrp {
-  DerivativeSecurityAltID?: string// [1] 1219 (String)
-  DerivativeSecurityAltIDSource?: string// [2] 1220 (String)
+  NoDerivativeSecurityAltID?: IDerivativeSecurityAltIDGrpNoDerivativeSecurityAltID[]// [1] DerivativeSecurityAltID.1219, DerivativeSecurityAltIDSource.1220
 }

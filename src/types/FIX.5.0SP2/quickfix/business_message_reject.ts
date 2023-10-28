@@ -1,15 +1,6 @@
 import { IStandardHeader } from './set/standard_header'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-****************************************************************
-* The Business Message Reject message can reject an            *
-* application-level message which fulfills session-level rules *
-* and cannot be rejected via any other means. Note if the      *
-* message fails a session-level rule (e.g. body length is      *
-* incorrect), a session-level Reject message should be issued. *
-****************************************************************
-*/
 export interface IBusinessMessageReject {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   RefSeqNum?: number// [2] 45 (Int)
@@ -20,7 +11,7 @@ export interface IBusinessMessageReject {
   BusinessRejectRefID?: string// [7] 379 (String)
   BusinessRejectReason: number// [8] 380 (Int)
   Text?: string// [9] 58 (String)
-  EncodedTextLen?: number// [10] 354 (Int)
+  EncodedTextLen?: number// [10] 354 (Length)
   EncodedText?: Buffer// [11] 355 (RawData)
   StandardTrailer: IStandardTrailer// [12] SignatureLength.93, Signature.89, CheckSum.10
 }

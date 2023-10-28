@@ -1,9 +1,5 @@
-import { INestedParties } from './nested_parties'
+import { IApplIDRequestGrpNoApplIDs } from './appl_id_request_grp_no_appl_i_ds'
 
 export interface IApplIDRequestGrp {
-  RefApplID?: string// [1] 1355 (String)
-  ApplBegSeqNum?: number// [2] 1182 (Int)
-  ApplEndSeqNum?: number// [3] 1183 (Int)
-  NestedParties?: INestedParties[]// [4] NestedPartyID.524, NestedPartyIDSource.525 .. NestedPartySubIDType.805
-  RefApplReqID?: string// [5] 1433 (String)
+  NoApplIDs?: IApplIDRequestGrpNoApplIDs[]// [1] RefApplID.1355, RefApplReqID.1433 .. NestedPartySubIDType.805
 }

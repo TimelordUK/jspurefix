@@ -1,0 +1,5 @@
+import { IProvisionCashSettlPaymentDateBusinessCenterGrpNoProvisionCashSettlPaymentDateBusinessCenters } from './provision_cash_settl_payment_date_business_center_grp_no_provision_cash_settl_payment_date_business_centers'
+
+export interface IProvisionCashSettlPaymentDateBusinessCenterGrp {
+  NoProvisionCashSettlPaymentDateBusinessCenters?: IProvisionCashSettlPaymentDateBusinessCenterGrpNoProvisionCashSettlPaymentDateBusinessCenters[]// [1] ProvisionCashSettlPaymentDateBusinessCenter.40164
+}

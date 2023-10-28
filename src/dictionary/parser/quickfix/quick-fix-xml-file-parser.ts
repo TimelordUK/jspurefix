@@ -35,19 +35,13 @@ export class QuickFixXmlFileParser extends FixParser {
         break
       }
       case ParseState.FieldDefinitions: {
-        instance.parseState = ParseState.ComponentsFirstPass
+        instance.parseState = ParseState.Components
         break
       }
-      case ParseState.ComponentsFirstPass: {
-        instance.parseState = ParseState.ComponentsSecondPass
-        break
-      }
-      case ParseState.ComponentsSecondPass: {
-        instance.parseState = ParseState.ComponentsThirdPass
-        break
-      }
-      case ParseState.ComponentsThirdPass: {
-        instance.parseState = ParseState.Messages
+      case ParseState.Components: {
+        if (instance.numberPasses > 4) {
+          instance.parseState = ParseState.Messages
+        }
         break
       }
     }
@@ -122,9 +116,7 @@ export class QuickFixXmlFileParser extends FixParser {
           // each step will build forward references to a deeper level to ensure final messages
           // have all dependencies correctly defined.
           switch (instance.parseState) {
-            case ParseState.ComponentsFirstPass:
-            case ParseState.ComponentsSecondPass:
-            case ParseState.ComponentsThirdPass:
+            case ParseState.Components:
               parser = new FieldSetParser(instance.definitions, instance.numberPasses)
               break
           }

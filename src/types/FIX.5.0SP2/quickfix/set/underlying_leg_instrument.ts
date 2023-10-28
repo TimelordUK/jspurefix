@@ -5,7 +5,7 @@ export interface IUnderlyingLegInstrument {
   UnderlyingLegSymbolSfx?: string// [2] 1331 (String)
   UnderlyingLegSecurityID?: string// [3] 1332 (String)
   UnderlyingLegSecurityIDSource?: string// [4] 1333 (String)
-  UnderlyingLegSecurityAltIDGrp?: IUnderlyingLegSecurityAltIDGrp[]// [5] UnderlyingLegSecurityAltID.1335, UnderlyingLegSecurityAltIDSource.1336
+  UnderlyingLegSecurityAltIDGrp?: IUnderlyingLegSecurityAltIDGrp// [5] NoUnderlyingLegSecurityAltID.1334, UnderlyingLegSecurityAltID.1335, UnderlyingLegSecurityAltIDSource.1336
   UnderlyingLegCFICode?: string// [6] 1344 (String)
   UnderlyingLegSecurityType?: string// [7] 1337 (String)
   UnderlyingLegSecuritySubType?: string// [8] 1338 (String)

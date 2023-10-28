@@ -1,3 +1,5 @@
+import { IExecInstRulesNoExecInstRules } from './exec_inst_rules_no_exec_inst_rules'
+
 export interface IExecInstRules {
-  ExecInstValue?: string// [1] 1308 (String)
+  NoExecInstRules?: IExecInstRulesNoExecInstRules[]// [1] ExecInstValue.1308
 }

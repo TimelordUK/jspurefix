@@ -1,0 +1,5 @@
+import { IInstrumentScopeSecurityAltIDGrpNoInstrumentScopeSecurityAltID } from './instrument_scope_security_alt_id_grp_no_instrument_scope_security_alt_id'
+
+export interface IInstrumentScopeSecurityAltIDGrp {
+  NoInstrumentScopeSecurityAltID?: IInstrumentScopeSecurityAltIDGrpNoInstrumentScopeSecurityAltID[]// [1] InstrumentScopeSecurityAltID.1541, InstrumentScopeSecurityAltIDSource.1542
+}

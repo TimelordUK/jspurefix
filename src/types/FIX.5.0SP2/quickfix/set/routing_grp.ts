@@ -1,4 +1,5 @@
+import { IRoutingGrpNoRoutingIDs } from './routing_grp_no_routing_i_ds'
+
 export interface IRoutingGrp {
-  RoutingType?: number// [1] 216 (Int)
-  RoutingID?: string// [2] 217 (String)
+  NoRoutingIDs?: IRoutingGrpNoRoutingIDs[]// [1] RoutingType.216, RoutingID.217
 }

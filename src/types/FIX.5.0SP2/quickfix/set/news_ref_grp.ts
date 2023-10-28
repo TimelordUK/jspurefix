@@ -1,4 +1,5 @@
+import { INewsRefGrpNoNewsRefIDs } from './news_ref_grp_no_news_ref_i_ds'
+
 export interface INewsRefGrp {
-  NewsRefID?: string// [1] 1476 (String)
-  NewsRefType?: number// [2] 1477 (Int)
+  NoNewsRefIDs?: INewsRefGrpNoNewsRefIDs[]// [1] NewsRefID.1476, NewsRefType.1477
 }

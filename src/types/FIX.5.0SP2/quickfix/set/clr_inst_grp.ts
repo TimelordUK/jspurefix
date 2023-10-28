@@ -1,3 +1,5 @@
+import { IClrInstGrpNoClearingInstructions } from './clr_inst_grp_no_clearing_instructions'
+
 export interface IClrInstGrp {
-  ClearingInstruction?: number// [1] 577 (Int)
+  NoClearingInstructions?: IClrInstGrpNoClearingInstructions[]// [1] ClearingInstruction.577
 }

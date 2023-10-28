@@ -1,5 +1,5 @@
+import { ILinesOfTextGrpNoLinesOfText } from './lines_of_text_grp_no_lines_of_text'
+
 export interface ILinesOfTextGrp {
-  Text: string// [1] 58 (String)
-  EncodedTextLen?: number// [2] 354 (Int)
-  EncodedText?: Buffer// [3] 355 (RawData)
+  NoLinesOfText?: ILinesOfTextGrpNoLinesOfText[]// [1] Text.58, EncodedTextLen.354, EncodedText.355
 }

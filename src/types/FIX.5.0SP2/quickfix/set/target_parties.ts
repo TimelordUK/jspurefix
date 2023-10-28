@@ -1,5 +1,5 @@
+import { ITargetPartiesNoTargetPartyIDs } from './target_parties_no_target_party_i_ds'
+
 export interface ITargetParties {
-  TargetPartyID?: string// [1] 1462 (String)
-  TargetPartyIDSource?: string// [2] 1463 (String)
-  TargetPartyRole?: number// [3] 1464 (Int)
+  NoTargetPartyIDs?: ITargetPartiesNoTargetPartyIDs[]// [1] TargetPartyID.1462, TargetPartyIDSource.1463 .. TargetPartySubIDType.2435
 }

@@ -3,12 +3,6 @@ import { IApplicationSequenceControl } from './set/application_sequence_control'
 import { ISecTypesGrp } from './set/sec_types_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-**************************************************************
-* The Security Type Request message is used to return a list *
-* of security types available from a counterparty or market. *
-**************************************************************
-*/
 export interface ISecurityTypes {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
@@ -17,9 +11,9 @@ export interface ISecurityTypes {
   SecurityResponseType: number// [5] 323 (Int)
   TotNoSecurityTypes?: number// [6] 557 (Int)
   LastFragment?: boolean// [7] 893 (Boolean)
-  SecTypesGrp?: ISecTypesGrp[]// [8] SecurityType.167, SecuritySubType.762 .. TransactTime.60
+  SecTypesGrp?: ISecTypesGrp// [8] NoSecurityTypes.558, SecurityType.167 .. TransactTime.60
   Text?: string// [9] 58 (String)
-  EncodedTextLen?: number// [10] 354 (Int)
+  EncodedTextLen?: number// [10] 354 (Length)
   EncodedText?: Buffer// [11] 355 (RawData)
   MarketID?: string// [12] 1301 (String)
   MarketSegmentID?: string// [13] 1300 (String)

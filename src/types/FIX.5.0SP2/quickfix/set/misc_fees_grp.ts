@@ -1,6 +1,5 @@
+import { IMiscFeesGrpNoMiscFees } from './misc_fees_grp_no_misc_fees'
+
 export interface IMiscFeesGrp {
-  MiscFeeAmt?: number// [1] 137 (Float)
-  MiscFeeCurr?: string// [2] 138 (String)
-  MiscFeeType?: string// [3] 139 (String)
-  MiscFeeBasis?: number// [4] 891 (Int)
+  NoMiscFees?: IMiscFeesGrpNoMiscFees[]// [1] MiscFeeAmt.137, MiscFeeCurr.138 .. MiscFeeDesc.2713
 }

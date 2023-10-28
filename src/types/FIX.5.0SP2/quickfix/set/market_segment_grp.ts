@@ -1,9 +1,5 @@
-import { ISecurityTradingRules } from './security_trading_rules'
-import { IStrikeRules } from './strike_rules'
+import { IMarketSegmentGrpNoMarketSegments } from './market_segment_grp_no_market_segments'
 
 export interface IMarketSegmentGrp {
-  MarketID?: string// [1] 1301 (String)
-  MarketSegmentID?: string// [2] 1300 (String)
-  SecurityTradingRules?: ISecurityTradingRules// [3] BaseTradingRules.1205, StartTickPriceRange.1206 .. NestedInstrAttribValue.1211
-  StrikeRules?: IStrikeRules[]// [4] StrikeRuleID.1223, StartStrikePxRange.1202 .. MaturityMonthYearIncrement.1229
+  NoMarketSegments?: IMarketSegmentGrpNoMarketSegments[]// [1] MarketID.1301, MarketSegmentID.1300 .. MaturityMonthYearIncrement.1229
 }

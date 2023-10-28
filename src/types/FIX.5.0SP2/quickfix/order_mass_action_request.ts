@@ -1,38 +1,36 @@
 import { IStandardHeader } from './set/standard_header'
+import { ITargetMarketSegmentGrp } from './set/target_market_segment_grp'
 import { IParties } from './set/parties'
+import { ITargetParties } from './set/target_parties'
 import { IInstrument } from './set/instrument'
 import { IUnderlyingInstrument } from './set/underlying_instrument'
 import { IStandardTrailer } from './set/standard_trailer'
-import { ITargetParties } from './set/target_parties'
 
-/*
-****************************************************************
-* The Order Mass Action Request message can be used to request *
-* the suspension or release of a group of orders that match    *
-* the criteria specified within the request. This is           *
-* equivalent to individual Order Cancel Replace Requests for   *
-* each order with or without adding "S" to the ExecInst        *
-* values. It can also be used for mass order cancellation.     *
-****************************************************************
-*/
 export interface IOrderMassActionRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   ClOrdID: string// [2] 11 (String)
   SecondaryClOrdID?: string// [3] 526 (String)
   MassActionType: number// [4] 1373 (Int)
   MassActionScope: number// [5] 1374 (Int)
-  MarketID?: string// [6] 1301 (String)
-  MarketSegmentID?: string// [7] 1300 (String)
-  TradingSessionID?: string// [8] 336 (String)
-  TradingSessionSubID?: string// [9] 625 (String)
-  Parties?: IParties[]// [10] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
-  Instrument?: IInstrument// [11] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
-  UnderlyingInstrument?: IUnderlyingInstrument// [12] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingDetachmentPoint.1460
-  Side?: string// [13] 54 (String)
-  TransactTime: Date// [14] 60 (UtcTimestamp)
-  Text?: string// [15] 58 (String)
-  EncodedTextLen?: number// [16] 354 (Int)
-  EncodedText?: Buffer// [17] 355 (RawData)
-  StandardTrailer: IStandardTrailer// [18] SignatureLength.93, Signature.89, CheckSum.10
-  TargetParties?: ITargetParties[]// [19] TargetPartyID.1462, TargetPartyIDSource.1463, TargetPartyRole.1464
+  MassActionReason?: number// [6] 2675 (Int)
+  MarketID?: string// [7] 1301 (String)
+  MarketSegmentID?: string// [8] 1300 (String)
+  TargetMarketSegmentGrp?: ITargetMarketSegmentGrp// [9] NoTargetMarketSegments.1789, TargetMarketSegmentID.1790
+  TradingSessionID?: string// [10] 336 (String)
+  TradingSessionSubID?: string// [11] 625 (String)
+  Parties?: IParties// [12] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  TargetParties?: ITargetParties// [13] NoTargetPartyIDs.1461, TargetPartyID.1462 .. TargetPartySubIDType.2435
+  Instrument?: IInstrument// [14] Symbol.55, SymbolSfx.65 .. ExchangeLookAlike.2603
+  UnderlyingInstrument?: IUnderlyingInstrument// [15] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingInstrumentXID.2631
+  Side?: string// [16] 54 (String)
+  Price?: number// [17] 44 (Float)
+  TransactTime: Date// [18] 60 (UtcTimestamp)
+  ComplianceID?: string// [19] 376 (String)
+  ComplianceText?: string// [20] 2404 (String)
+  EncodedComplianceTextLen?: number// [21] 2351 (Length)
+  EncodedComplianceText?: Buffer// [22] 2352 (RawData)
+  Text?: string// [23] 58 (String)
+  EncodedTextLen?: number// [24] 354 (Length)
+  EncodedText?: Buffer// [25] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [26] SignatureLength.93, Signature.89, CheckSum.10
 }

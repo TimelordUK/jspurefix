@@ -1,4 +1,5 @@
+import { IUnderlyingLegSecurityAltIDGrpNoUnderlyingLegSecurityAltID } from './underlying_leg_security_alt_id_grp_no_underlying_leg_security_alt_id'
+
 export interface IUnderlyingLegSecurityAltIDGrp {
-  UnderlyingLegSecurityAltID?: string// [1] 1335 (String)
-  UnderlyingLegSecurityAltIDSource?: string// [2] 1336 (String)
+  NoUnderlyingLegSecurityAltID?: IUnderlyingLegSecurityAltIDGrpNoUnderlyingLegSecurityAltID[]// [1] UnderlyingLegSecurityAltID.1335, UnderlyingLegSecurityAltIDSource.1336
 }

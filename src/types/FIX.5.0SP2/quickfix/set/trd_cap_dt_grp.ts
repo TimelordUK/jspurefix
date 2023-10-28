@@ -1,5 +1,5 @@
+import { ITrdCapDtGrpNoDates } from './trd_cap_dt_grp_no_dates'
+
 export interface ITrdCapDtGrp {
-  TradeDate?: Date// [1] 75 (LocalDate)
-  LastUpdateTime?: Date// [2] 779 (UtcTimestamp)
-  TransactTime?: Date// [3] 60 (UtcTimestamp)
+  NoDates?: ITrdCapDtGrpNoDates[]// [1] TradeDate.75, LastUpdateTime.779, TransactTime.60
 }

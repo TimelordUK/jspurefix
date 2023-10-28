@@ -1,12 +1,5 @@
-/*
-***************************************************************
-* The Stipulations component block is used in Fixed Income to *
-* provide additional information on a given security. These   *
-* additional information are usually not considered static    *
-* data information.                                           *
-***************************************************************
-*/
+import { IStipulationsNoStipulations } from './stipulations_no_stipulations'
+
 export interface IStipulations {
-  StipulationType?: string// [1] 233 (String)
-  StipulationValue?: string// [2] 234 (String)
+  NoStipulations?: IStipulationsNoStipulations[]// [1] StipulationType.233, StipulationValue.234
 }

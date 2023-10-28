@@ -1,0 +1,5 @@
+import { IUnderlyingComplexEventRateSourceGrpNoUnderlyingComplexEventRateSources } from './underlying_complex_event_rate_source_grp_no_underlying_complex_event_rate_sources'
+
+export interface IUnderlyingComplexEventRateSourceGrp {
+  NoUnderlyingComplexEventRateSources?: IUnderlyingComplexEventRateSourceGrpNoUnderlyingComplexEventRateSources[]// [1] UnderlyingComplexEventRateSource.41733, UnderlyingComplexEventRateSourceType.41734 .. UnderlyingComplexEventReferencePageHeading.41736
+}

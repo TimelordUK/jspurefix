@@ -1,11 +1,5 @@
-import { IInstrumentLeg } from './instrument_leg'
-import { ILegStipulations } from './leg_stipulations'
-import { ILegBenchmarkCurveData } from './leg_benchmark_curve_data'
+import { ISecLstUpdRelSymsLegGrpNoLegs } from './sec_lst_upd_rel_syms_leg_grp_no_legs'
 
 export interface ISecLstUpdRelSymsLegGrp {
-  InstrumentLeg?: IInstrumentLeg// [1] LegSymbol.600, LegSymbolSfx.601 .. LegFlowScheduleType.1440
-  LegSwapType?: number// [2] 690 (Int)
-  LegSettlType?: string// [3] 587 (String)
-  LegStipulations?: ILegStipulations[]// [4] LegStipulationType.688, LegStipulationValue.689
-  LegBenchmarkCurveData?: ILegBenchmarkCurveData// [5] LegBenchmarkCurveCurrency.676, LegBenchmarkCurveName.677 .. LegBenchmarkPriceType.680
+  NoLegs?: ISecLstUpdRelSymsLegGrpNoLegs[]// [1] LegSymbol.600, LegSymbolSfx.601 .. LegBenchmarkPriceType.680
 }

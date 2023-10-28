@@ -1,4 +1,5 @@
+import { INstdPtys4SubGrpNoNested4PartySubIDs } from './nstd_ptys_4_sub_grp_no_nested_4_party_sub_i_ds'
+
 export interface INstdPtys4SubGrp {
-  Nested4PartySubID?: string// [1] 1412 (String)
-  Nested4PartySubIDType?: number// [2] 1411 (Int)
+  NoNested4PartySubIDs?: INstdPtys4SubGrpNoNested4PartySubIDs[]// [1] Nested4PartySubID.1412, Nested4PartySubIDType.1411
 }

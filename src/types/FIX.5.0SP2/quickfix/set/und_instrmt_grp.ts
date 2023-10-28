@@ -1,6 +1,5 @@
-import { IUnderlyingInstrument } from './underlying_instrument'
+import { IUndInstrmtGrpNoUnderlyings } from './und_instrmt_grp_no_underlyings'
 
 export interface IUndInstrmtGrp {
-  NoUnderlyings?: number// [1] 711 (Int)
-  UnderlyingInstrument?: IUnderlyingInstrument// [2] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingDetachmentPoint.1460
+  NoUnderlyings?: IUndInstrmtGrpNoUnderlyings[]// [1] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingInstrumentXID.2631
 }

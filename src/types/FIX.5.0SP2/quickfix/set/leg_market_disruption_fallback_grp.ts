@@ -1,0 +1,5 @@
+import { ILegMarketDisruptionFallbackGrpNoLegMarketDisruptionFallbacks } from './leg_market_disruption_fallback_grp_no_leg_market_disruption_fallbacks'
+
+export interface ILegMarketDisruptionFallbackGrp {
+  NoLegMarketDisruptionFallbacks?: ILegMarketDisruptionFallbackGrpNoLegMarketDisruptionFallbacks[]// [1] LegMarketDisruptionFallbackType.41470, LegMarketDisruptionFallbackValue.40990
+}

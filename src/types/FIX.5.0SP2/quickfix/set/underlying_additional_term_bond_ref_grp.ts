@@ -1,0 +1,5 @@
+import { IUnderlyingAdditionalTermBondRefGrpNoUnderlyingAdditionalTermBondRefs } from './underlying_additional_term_bond_ref_grp_no_underlying_additional_term_bond_refs'
+
+export interface IUnderlyingAdditionalTermBondRefGrp {
+  NoUnderlyingAdditionalTermBondRefs?: IUnderlyingAdditionalTermBondRefGrpNoUnderlyingAdditionalTermBondRefs[]// [1] UnderlyingAdditionalTermBondSecurityID.41341, UnderlyingAdditionalTermBondSecurityIDSource.41701 .. UnderlyingAdditionalTermBondDayCount.42035
+}

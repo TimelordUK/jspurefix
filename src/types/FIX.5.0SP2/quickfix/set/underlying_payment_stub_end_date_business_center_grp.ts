@@ -1,0 +1,5 @@
+import { IUnderlyingPaymentStubEndDateBusinessCenterGrpNoUnderlyingPaymentStubEndDateBusinessCenters } from './underlying_payment_stub_end_date_business_center_grp_no_underlying_payment_stub_end_date_business_centers'
+
+export interface IUnderlyingPaymentStubEndDateBusinessCenterGrp {
+  NoUnderlyingPaymentStubEndDateBusinessCenters?: IUnderlyingPaymentStubEndDateBusinessCenterGrpNoUnderlyingPaymentStubEndDateBusinessCenters[]// [1] UnderlyingPaymentStubEndDateBusinessCenter.42992
+}

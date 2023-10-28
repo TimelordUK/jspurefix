@@ -1,10 +1,3 @@
-/*
-****************************************************************
-* The presence of DiscretionInstructions component block on an *
-* order indicates that the trader wishes to display one price  *
-* but will accept trades at another price.                     *
-****************************************************************
-*/
 export interface IDiscretionInstructions {
   DiscretionInst?: string// [1] 388 (String)
   DiscretionOffsetValue?: number// [2] 389 (Float)

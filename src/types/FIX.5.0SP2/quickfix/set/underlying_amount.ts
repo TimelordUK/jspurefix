@@ -1,13 +1,5 @@
-/*
-***************************************************************
-* The UnderlyingAmount component block is used to supply the  *
-* underlying amounts, dates, settlement status and method for *
-* derivative positions.                                       *
-***************************************************************
-*/
+import { IUnderlyingAmountNoUnderlyingAmounts } from './underlying_amount_no_underlying_amounts'
+
 export interface IUnderlyingAmount {
-  UnderlyingPayAmount?: number// [1] 985 (Float)
-  UnderlyingCollectAmount?: number// [2] 986 (Float)
-  UnderlyingSettlementDate?: Date// [3] 987 (LocalDate)
-  UnderlyingSettlementStatus?: string// [4] 988 (String)
+  NoUnderlyingAmounts?: IUnderlyingAmountNoUnderlyingAmounts[]// [1] UnderlyingPayAmount.985, UnderlyingCollectAmount.986 .. UnderlyingSettlementStatus.988
 }

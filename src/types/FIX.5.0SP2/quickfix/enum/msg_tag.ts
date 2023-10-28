@@ -1,8769 +1,1200 @@
 export enum MsgTag {
-/*
-***************************************************************
-* Account mnemonic as agreed between buy and sell sides, e.g. *
-* broker and institution or investor/intermediary and fund    *
-* manager.                                                    *
-***************************************************************
-*/
   Account = 1,
-/*
-*************************************************
-* Unique identifier of advertisement message.   *
-* (Prior to FIX 4.1 this field was of type int) *
-*************************************************
-*/
   AdvId = 2,
-/*
-*****************************************************
-* Reference identifier used with CANCEL and REPLACE *
-* transaction types.                                *
-* (Prior to FIX 4.1 this field was of type int)     *
-*****************************************************
-*/
   AdvRefID = 3,
-/*
-*************************************
-* Broker's side of advertised trade *
-*************************************
-*/
   AdvSide = 4,
-/*
-*****************************************************
-* Identifies advertisement message transaction type *
-*****************************************************
-*/
   AdvTransType = 5,
-/*
-***************************************************************
-* Calculated average price of all fills on this order.        *
-* For Fixed Income trades AvgPx is always expressed as        *
-* percent-of-par, regardless of the PriceType (423) of LastPx *
-* (31). I.e., AvgPx will contain an average of percent-of-par *
-* values (see LastParPx (669)) for issues traded in Yield,    *
-* Spread or Discount.                                         *
-***************************************************************
-*/
   AvgPx = 6,
-/*
-***********************************************************
-* Message sequence number of first message in range to be *
-* resent                                                  *
-***********************************************************
-*/
   BeginSeqNo = 7,
-/*
-*************************************************************
-* Identifies beginning of new message and protocol version. *
-* ALWAYS FIRST FIELD IN MESSAGE. (Always unencrypted)       *
-* Valid values:                                             *
-* FIXT.1.1                                                  *
-*************************************************************
-*/
   BeginString = 8,
-/*
-************************************************************
-* Message length, in bytes, forward to the CheckSum field. *
-* ALWAYS SECOND FIELD IN MESSAGE. (Always unencrypted)     *
-************************************************************
-*/
   BodyLength = 9,
-/*
-****************************************************************
-* Three byte, simple checksum (see Volume 2: "Checksum         *
-* Calculation" for description). ALWAYS LAST FIELD IN MESSAGE; *
-* i.e. serves, with the trailing <SOH>, as the end-of-message  *
-* delimiter. Always defined as three characters. (Always       *
-* unencrypted)                                                 *
-****************************************************************
-*/
   CheckSum = 10,
-/*
-***************************************************************
-* Unique identifier for Order as assigned by the buy-side     *
-* (institution, broker, intermediary etc.) (identified by     *
-* SenderCompID (49) or OnBehalfOfCompID (5) as appropriate).  *
-* Uniqueness must be guaranteed within a single trading day.  *
-* Firms, particularly those which electronically submit       *
-* multi-day orders, trade globally or throughout market close *
-* periods, should ensure uniqueness across days, for example  *
-* by embedding a date within the ClOrdID field.               *
-***************************************************************
-*/
   ClOrdID = 11,
-/*
-***************************************************************
-* Commission. Note if CommType (13) is percentage, Commission *
-* of 5% should be represented as .05.                         *
-***************************************************************
-*/
   Commission = 12,
-/*
-*******************
-* Commission type *
-*******************
-*/
   CommType = 13,
-/*
-**************************************************
-* Total quantity (e.g. number of shares) filled. *
-* (Prior to FIX 4.2 this field was of type int)  *
-**************************************************
-*/
   CumQty = 14,
-/*
-****************************************************************
-* Identifies currency used for price. Absence of this field is *
-* interpreted as the default for the security. It is           *
-* recommended that systems provide the currency value whenever *
-* possible. See "Appendix 6-A: Valid Currency Codes" for       *
-* information on obtaining valid values.                       *
-****************************************************************
-*/
   Currency = 15,
-/*
-***************************************************************
-* Message sequence number of last message in range to be      *
-* resent. If request is for a single message BeginSeqNo (7) = *
-* EndSeqNo. If request is for all messages subsequent to a    *
-* particular message, EndSeqNo = "0" (representing infinity). *
-***************************************************************
-*/
   EndSeqNo = 16,
-/*
-****************************************************************
-* Unique identifier of execution message as assigned by        *
-* sell-side (broker, exchange, ECN) (will be 0 (zero) for      *
-* ExecType (150)=I (Order Status)).                            *
-* Uniqueness must be guaranteed within a single trading day or *
-* the life of a multi-day order. Firms which accept multi-day  *
-* orders should consider embedding a date within the ExecID    *
-* field to assure uniqueness across days.                      *
-* (Prior to FIX 4.1 this field was of type int).               *
-****************************************************************
-*/
   ExecID = 17,
-/*
-****************************************************************
-* Instructions for order handling on exchange trading floor.   *
-* If more than one instruction is applicable to an order, this *
-* field can contain multiple instructions separated by space.  *
-* *** SOME VALUES HAVE BEEN REPLACED - See "Replaced Features  *
-* and Supported Approach" *** (see Volume : "Glossary" for     *
-* value definitions)                                           *
-****************************************************************
-*/
   ExecInst = 18,
-/*
-****************************************************************
-* Reference identifier used with Trade, Trade Cancel and Trade *
-* Correct execution types.                                     *
-* (Prior to FIX 4.1 this field was of type int)                *
-****************************************************************
-*/
   ExecRefID = 19,
-/*
-***********************************************************
-* Instructions for order handling on Broker trading floor *
-***********************************************************
-*/
   HandlInst = 21,
-/*
-************************************************************
-* Identifies class or source of the SecurityID (48) value. *
-* Required if SecurityID is specified.                     *
-* 100+ are reserved for private security identifications   *
-************************************************************
-*/
   SecurityIDSource = 22,
-/*
-*************************************************
-* Unique identifier of IOI message.             *
-* (Prior to FIX 4.1 this field was of type int) *
-*************************************************
-*/
   IOIID = 23,
-/*
-**********************************
-* Relative quality of indication *
-**********************************
-*/
   IOIQltyInd = 25,
-/*
-******************************************************
-* Reference identifier used with CANCEL and REPLACE, *
-* transaction types.                                 *
-* (Prior to FIX 4.1 this field was of type int)      *
-******************************************************
-*/
   IOIRefID = 26,
-/*
-****************************************************************
-* Quantity (e.g. number of shares) in numeric form or relative *
-* size.                                                        *
-****************************************************************
-*/
   IOIQty = 27,
-/*
-*******************************************
-* Identifies IOI message transaction type *
-*******************************************
-*/
   IOITransType = 28,
-/*
-**************************************
-* Broker capacity in order execution *
-**************************************
-*/
   LastCapacity = 29,
-/*
-**************************************************************
-* Market of execution for last fill, or an indication of the *
-* market where an order was routed                           *
-* Valid values:                                              *
-* See "Appendix 6-C"                                         *
-**************************************************************
-*/
   LastMkt = 30,
-/*
-******************************
-* Price of this (last) fill. *
-******************************
-*/
   LastPx = 31,
-/*
-***********************************************************
-* Quantity (e.g. shares) bought/sold on this (last) fill. *
-* (Prior to FIX 4.2 this field was of type int)           *
-***********************************************************
-*/
   LastQty = 32,
-/*
-*******************************************
-* Identifies number of lines of text body *
-*******************************************
-*/
   NoLinesOfText = 33,
-/*
-************************************
-* Integer message sequence number. *
-************************************
-*/
   MsgSeqNum = 34,
-/*
-***************************************************************
-* Defines message type ALWAYS THIRD FIELD IN MESSAGE. (Always *
-* unencrypted)                                                *
-* Note: A "U" as the first character in the MsgType field     *
-* (i.e. U, U2, etc) indicates that the message format is      *
-* privately defined between the sender and receiver.          *
-* *** Note the use of lower case letters ***                  *
-***************************************************************
-*/
   MsgType = 35,
-/*
-***********************
-* New sequence number *
-***********************
-*/
   NewSeqNo = 36,
-/*
-**************************************************************
-* Unique identifier for Order as assigned by sell-side       *
-* (broker, exchange, ECN). Uniqueness must be guaranteed     *
-* within a single trading day. Firms which accept multi-day  *
-* orders should consider embedding a date within the OrderID *
-* field to assure uniqueness across days.                    *
-**************************************************************
-*/
   OrderID = 37,
-/*
-**************************************************************
-* Quantity ordered. This represents the number of shares for *
-* equities or par, face or nominal value for FI instruments. *
-* (Prior to FIX 4.2 this field was of type int)              *
-**************************************************************
-*/
   OrderQty = 38,
-/*
-************************************************************
-* Identifies current status of order. *** SOME VALUES HAVE *
-* BEEN REPLACED - See "Replaced Features and Supported     *
-* Approach" *** (see Volume : "Glossary" for value         *
-* definitions)                                             *
-************************************************************
-*/
   OrdStatus = 39,
-/*
-*************************************************************
-* Order type. *** SOME VALUES ARE NO LONGER USED - See      *
-* "Deprecated (Phased-out) Features and Supported Approach" *
-* *** (see Volume : "Glossary" for value definitions)       *
-*************************************************************
-*/
   OrdType = 40,
-/*
-****************************************************************
-* ClOrdID (11) of the previous order (NOT the initial order of *
-* the day) as assigned by the institution, used to identify    *
-* the previous order in cancel and cancel/replace requests.    *
-****************************************************************
-*/
   OrigClOrdID = 41,
-/*
-********************************************************
-* Time of message origination (always expressed in UTC *
-* (Universal Time Coordinated, also known as "GMT"))   *
-********************************************************
-*/
   OrigTime = 42,
-/*
-**********************************************************
-* Indicates possible retransmission of message with this *
-* sequence number                                        *
-**********************************************************
-*/
   PossDupFlag = 43,
-/*
-***********************************************
-* Price per unit of quantity (e.g. per share) *
-***********************************************
-*/
   Price = 44,
-/*
-*************************************
-* Reference message sequence number *
-*************************************
-*/
   RefSeqNum = 45,
-/*
-**************************************************************
-* Security identifier value of SecurityIDSource (22) type    *
-* (e.g. CUSIP, SEDOL, ISIN, etc). Requires SecurityIDSource. *
-**************************************************************
-*/
   SecurityID = 48,
-/*
-*********************************************************
-* Assigned value used to identify firm sending message. *
-*********************************************************
-*/
   SenderCompID = 49,
-/*
-***************************************************************
-* Assigned value used to identify specific message originator *
-* (desk, trader, etc.)                                        *
-***************************************************************
-*/
   SenderSubID = 50,
-/*
-*********************************************************
-* Time of message transmission (always expressed in UTC *
-* (Universal Time Coordinated, also known as "GMT")     *
-*********************************************************
-*/
   SendingTime = 52,
-/*
-**************************************************
-* Overall/total quantity (e.g. number of shares) *
-* (Prior to FIX 4.2 this field was of type int)  *
-**************************************************
-*/
   Quantity = 53,
-/*
-****************************************************
-* Side of order (see Volume : "Glossary" for value *
-* definitions)                                     *
-****************************************************
-*/
   Side = 54,
-/*
-***************************************************************
-* Ticker symbol. Common, "human understood" representation of *
-* the security. SecurityID (48) value can be specified if no  *
-* symbol exists (e.g. non-exchange traded Collective          *
-* Investment Vehicles)                                        *
-* Use "[N/A]" for products which do not have a symbol.        *
-***************************************************************
-*/
   Symbol = 55,
-/*
-***************************************************
-* Assigned value used to identify receiving firm. *
-***************************************************
-*/
   TargetCompID = 56,
-/*
-***************************************************************
-* Assigned value used to identify specific individual or unit *
-* intended to receive message. "ADMIN" reserved for           *
-* administrative messages not intended for a specific user.   *
-***************************************************************
-*/
   TargetSubID = 57,
-/*
-***************************************************************
-* Free format text string                                     *
-* (Note: this field does not have a specified maximum length) *
-***************************************************************
-*/
   Text = 58,
-/*
-****************************************************************
-* Specifies how long the order remains in effect. Absence of   *
-* this field is interpreted as DAY. NOTE not applicable to CIV *
-* Orders. (see Volume : "Glossary" for value definitions)      *
-****************************************************************
-*/
   TimeInForce = 59,
-/*
-**************************************************************
-* Timestamp when the business transaction represented by the *
-* message occurred.                                          *
-**************************************************************
-*/
   TransactTime = 60,
-/*
-****************
-* Urgency flag *
-****************
-*/
   Urgency = 61,
-/*
-***************************************************************
-* Indicates expiration time of indication message (always     *
-* expressed in UTC (Universal Time Coordinated, also known as *
-* "GMT")                                                      *
-***************************************************************
-*/
   ValidUntilTime = 62,
-/*
-****************************************************************
-* Indicates order settlement period. If present, SettlDate     *
-* (64) overrides this field. If both SettlType (63) and        *
-* SettDate (64) are omitted, the default for SettlType (63) is *
-* 0 (Regular)                                                  *
-* Regular is defined as the default settlement period for the  *
-* particular security on the exchange of execution.            *
-* In Fixed Income the contents of this field may influence the *
-* instrument definition if the SecurityID (48) is ambiguous.   *
-* In the US an active Treasury offering may be re-opened, and  *
-* for a time one CUSIP will apply to both the current and      *
-* "when-issued" securities. Supplying a value of "7" clarifies *
-* the instrument description; any other value or the absence   *
-* of this field should cause the respondent to default to the  *
-* active issue.                                                *
-* Additionally the following patterns may be uses as well as   *
-* enum values                                                  *
-* Dx = FX tenor expression for "days", e.g. "D5", where "x" is *
-* any integer > 0                                              *
-* Mx = FX tenor expression for "months", e.g. "M3", where "x"  *
-* is any integer > 0                                           *
-* Wx = FX tenor expression for "weeks", e.g. "W13", where "x"  *
-* is any integer > 0                                           *
-* Yx = FX tenor expression for "years", e.g. "Y1", where "x"   *
-* is any integer > 0                                           *
-* Noted that for FX the tenors expressed using Dx, Mx, Wx, and *
-* Yx values do not denote business days, but calendar days.    *
-****************************************************************
-*/
   SettlType = 63,
-/*
-***************************************************************
-* Specific date of trade settlement (SettlementDate) in       *
-* YYYYMMDD format.                                            *
-* If present, this field overrides SettlType (63). This field *
-* is required if the value of SettlType (63) is 6 (Future) or *
-* 8 (Sellers Option). This field must be omitted if the value *
-* of SettlType (63) is 7 (When and If Issued)                 *
-* (expressed in local time at place of settlement)            *
-***************************************************************
-*/
   SettlDate = 64,
-/*
-**************************************************************
-* Additional information about the security (e.g. preferred, *
-* warrants, etc.). Note also see SecurityType (167).         *
-* As defined in the NYSE Stock and bond Symbol Directory and *
-* in the AMEX Fitch Directory.                               *
-**************************************************************
-*/
   SymbolSfx = 65,
-/*
-****************************************************************
-* Unique identifier for list as assigned by institution, used  *
-* to associate multiple individual orders. Uniqueness must be  *
-* guaranteed within a single trading day. Firms which generate *
-* multi-day orders should consider embedding a date within the *
-* ListID field to assure uniqueness across days.               *
-****************************************************************
-*/
   ListID = 66,
-/*
-***************************************************************
-* Sequence of individual order within list (i.e. ListSeqNo of *
-* TotNoOrders (68), 2 of 25, 3 of 25, . . . )                 *
-***************************************************************
-*/
   ListSeqNo = 67,
-/*
-***************************************************************
-* Total number of list order entries across all messages.     *
-* Should be the sum of all NoOrders (73) in each message that *
-* has repeating list order entries related to the same ListID *
-* (66). Used to support fragmentation.                        *
-* (Prior to FIX 4.2 this field was named "ListNoOrds")        *
-***************************************************************
-*/
   TotNoOrders = 68,
-/*
-*********************************************************
-* Free format text message containing list handling and *
-* execution instructions.                               *
-*********************************************************
-*/
   ListExecInst = 69,
-/*
-*************************************************
-* Unique identifier for allocation message.     *
-* (Prior to FIX 4.1 this field was of type int) *
-*************************************************
-*/
   AllocID = 70,
-/*
-***************************************************************
-* Identifies allocation transaction type *** SOME VALUES HAVE *
-* BEEN REPLACED - See "Replaced Features and Supported        *
-* Approach" ***                                               *
-***************************************************************
-*/
   AllocTransType = 71,
-/*
-**************************************************************
-* Reference identifier to be used with AllocTransType (71) = *
-* Replace or Cancel.                                         *
-* (Prior to FIX 4.1 this field was of type int)              *
-**************************************************************
-*/
   RefAllocID = 72,
-/*
-*********************************************************
-* Indicates number of orders to be combined for average *
-* pricing and allocation.                               *
-*********************************************************
-*/
   NoOrders = 73,
-/*
-***************************************************************
-* Indicates number of decimal places to be used for average   *
-* pricing. Absence of this field indicates that default       *
-* precision arranged by the broker/institution is to be used. *
-***************************************************************
-*/
   AvgPxPrecision = 74,
-/*
-****************************************************************
-* Indicates date of trade referenced in this message in        *
-* YYYYMMDD format. Absence of this field indicates current day *
-* (expressed in local time at place of trade).                 *
-****************************************************************
-*/
   TradeDate = 75,
-/*
-***************************************************************
-* Indicates whether the resulting position after a trade      *
-* should be an opening position or closing position. Used for *
-* omnibus accounting - where accounts are held on a gross     *
-* basis instead of being netted together.                     *
-***************************************************************
-*/
   PositionEffect = 77,
-/*
-**********************************************************
-* Number of repeating AllocAccount (79)/AllocPrice (366) *
-* entries.                                               *
-**********************************************************
-*/
   NoAllocs = 78,
-/*
-************************
-* Sub-account mnemonic *
-************************
-*/
   AllocAccount = 79,
-/*
-****************************************************
-* Quantity to be allocated to specific sub-account *
-* (Prior to FIX 4.2 this field was of type int)    *
-****************************************************
-*/
   AllocQty = 80,
-/*
-*************************************************************
-* Processing code for sub-account. Absence of this field in *
-* AllocAccount (79) / AllocPrice (366) /AllocQty (80) /     *
-* ProcessCode instance indicates regular trade.             *
-*************************************************************
-*/
   ProcessCode = 81,
-/*
-******************************************
-* Total number of reports within series. *
-******************************************
-*/
   NoRpts = 82,
-/*
-**************************************************************
-* Sequence number of message within report series. Used to   *
-* carry reporting sequence number of the fill as represented *
-* on the Trade Report Side.                                  *
-**************************************************************
-*/
   RptSeq = 83,
-/*
-*************************************************
-* Total quantity canceled for this order.       *
-* (Prior to FIX 4.2 this field was of type int) *
-*************************************************
-*/
   CxlQty = 84,
-/*
-****************************************************************
-* Number of delivery instruction fields in repeating group.    *
-* Note this field was removed in FIX 4.1 and reinstated in FIX *
-* 4.4.                                                         *
-****************************************************************
-*/
   NoDlvyInst = 85,
-/*
-************************************
-* Identifies status of allocation. *
-************************************
-*/
   AllocStatus = 87,
-/*
-************************************
-* Identifies reason for rejection. *
-************************************
-*/
   AllocRejCode = 88,
-/*
-************************
-* Electronic signature *
-************************
-*/
   Signature = 89,
-/*
-*******************************
-* Length of encrypted message *
-*******************************
-*/
   SecureDataLen = 90,
-/*
-********************************
-* Actual encrypted data stream *
-********************************
-*/
   SecureData = 91,
-/*
-**************************************
-* Number of bytes in signature field *
-**************************************
-*/
   SignatureLength = 93,
-/*
-***********************
-* Email message type. *
-***********************
-*/
   EmailType = 94,
-/*
-**************************************
-* Number of bytes in raw data field. *
-**************************************
-*/
   RawDataLength = 95,
-/*
-*************************************************************
-* Unformatted raw data, can include bitmaps, word processor *
-* documents, etc.                                           *
-*************************************************************
-*/
   RawData = 96,
-/*
-****************************************************************
-* Indicates that message may contain information that has been *
-* sent under another sequence number.                          *
-****************************************************************
-*/
   PossResend = 97,
-/*
-*************************
-* Method of encryption. *
-*************************
-*/
   EncryptMethod = 98,
-/*
-***********************************************
-* Price per unit of quantity (e.g. per share) *
-***********************************************
-*/
   StopPx = 99,
-/*
-**************************************************************
-* Execution destination as defined by institution when order *
-* is entered.                                                *
-* Valid values:                                              *
-* See "Appendix 6-C"                                         *
-**************************************************************
-*/
   ExDestination = 100,
-/*
-*************************************************
-* Code to identify reason for cancel rejection. *
-*************************************************
-*/
   CxlRejReason = 102,
-/*
-****************************************************************
-* Code to identify reason for order rejection. Note: Values 3, *
-* 4, and 5 will be used when rejecting an order due to         *
-* pre-allocation information errors.                           *
-****************************************************************
-*/
   OrdRejReason = 103,
-/*
-***************************************************************
-* Code to qualify IOI use. (see Volume : "Glossary" for value *
-* definitions)                                                *
-***************************************************************
-*/
   IOIQualifier = 104,
-/*
-***********************************************************
-* Name of security issuer (e.g. International Business    *
-* Machines, GNMA).                                        *
-* see also Volume 7: "PRODUCT: FIXED INCOME - Euro Issuer *
-* Values"                                                 *
-***********************************************************
-*/
   Issuer = 106,
-/*
-****************************************************************
-* Can be used to provide an optional textual description for a *
-* financial instrument.                                        *
-****************************************************************
-*/
   SecurityDesc = 107,
-/*
-********************************
-* Heartbeat interval (seconds) *
-********************************
-*/
   HeartBtInt = 108,
-/*
-*************************************************
-* Minimum quantity of an order to be executed.  *
-* (Prior to FIX 4.2 this field was of type int) *
-*************************************************
-*/
   MinQty = 110,
-/*
-***************************************************************
-* The quantity to be displayed . Required for reserve orders. *
-* On orders specifies the qty to be displayed, on execution   *
-* reports the currently displayed quantity.                   *
-***************************************************************
-*/
   MaxFloor = 111,
-/*
-**************************************************************
-* Identifier included in Test Request message to be returned *
-* in resulting Heartbeat                                     *
-**************************************************************
-*/
   TestReqID = 112,
-/*
-******************************************************
-* Identifies party of trade responsible for exchange *
-* reporting.                                         *
-******************************************************
-*/
   ReportToExch = 113,
-/*
-**********************************************************
-* Indicates whether the broker is to locate the stock in *
-* conjunction with a short sell order.                   *
-**********************************************************
-*/
   LocateReqd = 114,
-/*
-****************************************************************
-* Assigned value used to identify firm originating message if  *
-* the message was delivered by a third party i.e. the third    *
-* party firm identifier would be delivered in the SenderCompID *
-* field and the firm originating the message in this field.    *
-****************************************************************
-*/
   OnBehalfOfCompID = 115,
-/*
-***************************************************************
-* Assigned value used to identify specific message originator *
-* (i.e. trader) if the message was delivered by a third party *
-***************************************************************
-*/
   OnBehalfOfSubID = 116,
-/*
-*******************************
-* Unique identifier for quote *
-*******************************
-*/
   QuoteID = 117,
-/*
-***************************************************************
-* Total amount due as the result of the transaction (e.g. for *
-* Buy order - principal + commission + fees) reported in      *
-* currency of execution.                                      *
-***************************************************************
-*/
   NetMoney = 118,
-/*
-***************************************************************
-* Total amount due expressed in settlement currency (includes *
-* the effect of the forex transaction)                        *
-***************************************************************
-*/
   SettlCurrAmt = 119,
-/*
-*********************************************
-* Currency code of settlement denomination. *
-*********************************************
-*/
   SettlCurrency = 120,
-/*
-*********************************************************
-* Indicates request for forex accommodation trade to be *
-* executed along with security transaction.             *
-*********************************************************
-*/
   ForexReq = 121,
-/*
-**************************************************************
-* Original time of message transmission (always expressed in *
-* UTC (Universal Time Coordinated, also known as "GMT") when *
-* transmitting orders as the result of a resend request.     *
-**************************************************************
-*/
   OrigSendingTime = 122,
-/*
-************************************************************
-* Indicates that the Sequence Reset message is replacing   *
-* administrative or application messages which will not be *
-* resent.                                                  *
-************************************************************
-*/
   GapFillFlag = 123,
-/*
-******************************************************
-* No of execution repeating group entries to follow. *
-******************************************************
-*/
   NoExecs = 124,
-/*
-***************************************************************
-* Time/Date of order expiration (always expressed in UTC      *
-* (Universal Time Coordinated, also known as "GMT")           *
-* The meaning of expiration is specific to the context where  *
-* the field is used.                                          *
-* For orders, this is the expiration time of a Good Til Date  *
-* TimeInForce.                                                *
-* For Quotes - this is the expiration of the quote.           *
-* Expiration time is provided across the quote message dialog *
-* to control the length of time of the overall quoting        *
-* process.                                                    *
-* For collateral requests, this is the time by which          *
-* collateral must be assigned.                                *
-* For collateral assignments, this is the time by which a     *
-* response to the assignment is expected.                     *
-***************************************************************
-*/
   ExpireTime = 126,
-/*
-***********************************
-* Reason for execution rejection. *
-***********************************
-*/
   DKReason = 127,
-/*
-****************************************************************
-* Assigned value used to identify the firm targeted to receive *
-* the message if the message is delivered by a third party     *
-* i.e. the third party firm identifier would be delivered in   *
-* the TargetCompID (56) field and the ultimate receiver firm   *
-* ID in this field.                                            *
-****************************************************************
-*/
   DeliverToCompID = 128,
-/*
-**************************************************************
-* Assigned value used to identify specific message recipient *
-* (i.e. trader) if the message is delivered by a third party *
-**************************************************************
-*/
   DeliverToSubID = 129,
-/*
-****************************************************************
-* Indicates that IOI is the result of an existing agency order *
-* or a facilitation position resulting from an agency order,   *
-* not from principal trading or order solicitation activity.   *
-****************************************************************
-*/
   IOINaturalFlag = 130,
-/*
-***************************************
-* Unique identifier for quote request *
-***************************************
-*/
   QuoteReqID = 131,
-/*
-******************
-* Bid price/rate *
-******************
-*/
   BidPx = 132,
-/*
-********************
-* Offer price/rate *
-********************
-*/
   OfferPx = 133,
-/*
-*************************************************
-* Quantity of bid                               *
-* (Prior to FIX 4.2 this field was of type int) *
-*************************************************
-*/
   BidSize = 134,
-/*
-*************************************************
-* Quantity of offer                             *
-* (Prior to FIX 4.2 this field was of type int) *
-*************************************************
-*/
   OfferSize = 135,
-/*
-****************************************************
-* Number of repeating groups of miscellaneous fees *
-****************************************************
-*/
   NoMiscFees = 136,
-/*
-***************************
-* Miscellaneous fee value *
-***************************
-*/
   MiscFeeAmt = 137,
-/*
-*********************************
-* Currency of miscellaneous fee *
-*********************************
-*/
   MiscFeeCurr = 138,
-/*
-****************************************
-* Indicates type of miscellaneous fee. *
-****************************************
-*/
   MiscFeeType = 139,
-/*
-***************************************
-* Previous closing price of security. *
-***************************************
-*/
   PrevClosePx = 140,
-/*
-***********************************************************
-* Indicates that the both sides of the FIX session should *
-* reset sequence numbers.                                 *
-***********************************************************
-*/
   ResetSeqNumFlag = 141,
-/*
-****************************************************************
-* Assigned value used to identify specific message             *
-* originator's location (i.e. geographic location and/or desk, *
-* trader)                                                      *
-****************************************************************
-*/
   SenderLocationID = 142,
-/*
-***********************************************************
-* Assigned value used to identify specific message        *
-* destination's location (i.e. geographic location and/or *
-* desk, trader)                                           *
-***********************************************************
-*/
   TargetLocationID = 143,
-/*
-****************************************************************
-* Assigned value used to identify specific message             *
-* originator's location (i.e. geographic location and/or desk, *
-* trader) if the message was delivered by a third party        *
-****************************************************************
-*/
   OnBehalfOfLocationID = 144,
-/*
-****************************************************************
-* Assigned value used to identify specific message recipient's *
-* location (i.e. geographic location and/or desk, trader) if   *
-* the message was delivered by a third party                   *
-****************************************************************
-*/
   DeliverToLocationID = 145,
-/*
-********************************************************
-* Specifies the number of repeating symbols specified. *
-********************************************************
-*/
   NoRelatedSym = 146,
-/*
-***********************************
-* The subject of an Email message *
-***********************************
-*/
   Subject = 147,
-/*
-**********************************
-* The headline of a News message *
-**********************************
-*/
   Headline = 148,
-/*
-****************************************************************
-* A URI (Uniform Resource Identifier) or URL (Uniform Resource *
-* Locator) link to additional information (i.e.                *
-* http://www.XYZ.com/research.html)                            *
-* See "Appendix 6-B FIX Fields Based Upon Other Standards"     *
-****************************************************************
-*/
   URLLink = 149,
-/*
-***************************************************************
-* Describes the specific ExecutionRpt (i.e. Pending Cancel)   *
-* while OrdStatus (39) will always identify the current order *
-* status (i.e. Partially Filled) *** SOME VALUES HAVE BEEN    *
-* REPLACED - See "Replaced Features and Supported Approach"   *
-* ***                                                         *
-***************************************************************
-*/
   ExecType = 150,
-/*
-****************************************************************
-* Quantity open for further execution. If the OrdStatus (39)   *
-* is Canceled, DoneForTheDay, Expired, Calculated, or Rejected *
-* (in which case the order is no longer active) then LeavesQty *
-* could be 0, otherwise LeavesQty = OrderQty (38) - CumQty     *
-* (14).                                                        *
-* (Prior to FIX 4.2 this field was of type int)                *
-****************************************************************
-*/
   LeavesQty = 151,
-/*
-**************************************************************
-* Specifies the approximate order quantity desired in total  *
-* monetary units vs. as tradeable units (e.g. number of      *
-* shares). The broker or fund manager (for CIV orders) would *
-* be responsible for converting and calculating a tradeable  *
-* unit (e.g. share) quantity (OrderQty (38)) based upon this *
-* amount to be used for the actual order and subsequent      *
-* messages.                                                  *
-**************************************************************
-*/
   CashOrderQty = 152,
-/*
-************************************************************
-* AvgPx (6) for a specific AllocAccount (79)               *
-* For Fixed Income this is always expressed as "percent of *
-* par" price type.                                         *
-************************************************************
-*/
   AllocAvgPx = 153,
-/*
-*************************************************
-* NetMoney (8) for a specific AllocAccount (79) *
-*************************************************
-*/
   AllocNetMoney = 154,
-/*
-***************************************************************
-* Foreign exchange rate used to compute SettlCurrAmt (9) from *
-* Currency (5) to SettlCurrency (20)                          *
-***************************************************************
-*/
   SettlCurrFxRate = 155,
-/*
-***********************************************************
-* Specifies whether or not SettlCurrFxRate (55) should be *
-* multiplied or divided.                                  *
-***********************************************************
-*/
   SettlCurrFxRateCalc = 156,
-/*
-**************************************************************
-* Number of Days of Interest for convertible bonds and fixed *
-* income. Note value may be negative.                        *
-**************************************************************
-*/
   NumDaysInterest = 157,
-/*
-****************************************************************
-* The amount the buyer compensates the seller for the portion  *
-* of the next coupon interest payment the seller has earned    *
-* but will not receive from the issuer because the issuer will *
-* send the next coupon payment to the buyer. Accrued Interest  *
-* Rate is the annualized Accrued Interest amount divided by    *
-* the purchase price of the bond.                              *
-****************************************************************
-*/
   AccruedInterestRate = 158,
-/*
-**************************************************************
-* Amount of Accrued Interest for convertible bonds and fixed *
-* income                                                     *
-**************************************************************
-*/
   AccruedInterestAmt = 159,
-/*
-****************************************************************
-* Indicates mode used for Settlement Instructions message. *** *
-* SOME VALUES HAVE BEEN REPLACED - See "Replaced Features and  *
-* Supported Approach" ***                                      *
-****************************************************************
-*/
   SettlInstMode = 160,
-/*
-*************************************************************
-* Free format text related to a specific AllocAccount (79). *
-*************************************************************
-*/
   AllocText = 161,
-/*
-*************************************************
-* Unique identifier for Settlement Instruction. *
-*************************************************
-*/
   SettlInstID = 162,
-/*
-****************************************************
-* Settlement Instructions message transaction type *
-****************************************************
-*/
   SettlInstTransType = 163,
-/*
-***********************************************************
-* Unique identifier for an email thread (new and chain of *
-* replies)                                                *
-***********************************************************
-*/
   EmailThreadID = 164,
-/*
-***********************************************
-* Indicates source of Settlement Instructions *
-***********************************************
-*/
   SettlInstSource = 165,
-/*
-****************************************************************
-* Indicates type of security. Security type enumerations are   *
-* grouped by Product(460) field value. NOTE: Additional values *
-* may be used by mutual agreement of the counterparties.       *
-****************************************************************
-*/
   SecurityType = 167,
-/*
-**************************************************************
-* Time the details within the message should take effect     *
-* (always expressed in UTC (Universal Time Coordinated, also *
-* known as "GMT")                                            *
-**************************************************************
-*/
   EffectiveTime = 168,
-/*
-*****************************************************
-* Identifies the Standing Instruction database used *
-*****************************************************
-*/
   StandInstDbType = 169,
-/*
-**************************************************************
-* Name of the Standing Instruction database represented with *
-* StandInstDbType (169) (i.e. the Global Custodian's name).  *
-**************************************************************
-*/
   StandInstDbName = 170,
-/*
-****************************************************************
-* Unique identifier used on the Standing Instructions database *
-* for the Standing Instructions to be referenced.              *
-****************************************************************
-*/
   StandInstDbID = 171,
-/*
-*********************************
-* Identifies type of settlement *
-*********************************
-*/
   SettlDeliveryType = 172,
-/*
-**********************
-* Bid F/X spot rate. *
-**********************
-*/
   BidSpotRate = 188,
-/*
-****************************************************************
-* Bid F/X forward points added to spot rate. May be a negative *
-* value.                                                       *
-****************************************************************
-*/
   BidForwardPoints = 189,
-/*
-************************
-* Offer F/X spot rate. *
-************************
-*/
   OfferSpotRate = 190,
-/*
-*********************************************************
-* Offer F/X forward points added to spot rate. May be a *
-* negative value.                                       *
-*********************************************************
-*/
   OfferForwardPoints = 191,
-/*
-*********************************************************
-* OrderQty (38) of the future part of a F/X swap order. *
-*********************************************************
-*/
   OrderQty2 = 192,
-/*
-*********************************************************
-* SettDate (64) of the future part of a F/X swap order. *
-*********************************************************
-*/
   SettlDate2 = 193,
-/*
-******************
-* F/X spot rate. *
-******************
-*/
   LastSpotRate = 194,
-/*
-***********************************************************
-* F/X forward points added to LastSpotRate (94). May be a *
-* negative value. Expressed in decimal form. For example, *
-* 61.99 points is expressed and sent as 0.006199          *
-***********************************************************
-*/
   LastForwardPoints = 195,
-/*
-***************************************************************
-* Can be used to link two different Allocation messages (each *
-* with unique AllocID (70)) together, i.e. for F/X "Netting"  *
-* or "Swaps". Should be unique.                               *
-***************************************************************
-*/
   AllocLinkID = 196,
-/*
-**************************************************************
-* Identifies the type of Allocation linkage when AllocLinkID *
-* (96) is used.                                              *
-**************************************************************
-*/
   AllocLinkType = 197,
-/*
-****************************************************************
-* Assigned by the party which accepts the order. Can be used   *
-* to provide the OrderID (37) used by an exchange or executing *
-* system.                                                      *
-****************************************************************
-*/
   SecondaryOrderID = 198,
-/*
-*****************************************************
-* Number of repeating groups of IOIQualifiers (04). *
-*****************************************************
-*/
   NoIOIQualifiers = 199,
-/*
-****************************************************************
-* Can be used with standardized derivatives vs. the            *
-* MaturityDate (54) field.  Month and Year of the maturity     *
-* (used for standardized futures and options).                 *
-* Format:                                                      *
-* YYYYMM (e.g. 199903)                                         *
-* YYYYMMDD (e.g. 20030323)                                     *
-* YYYYMMwN (e.g. 200303w) for week                             *
-* A specific date or can be appended to the MaturityMonthYear. *
-* For instance, if multiple standard products exist that       *
-* mature in the same Year and Month, but actually mature at a  *
-* different time, a value can be appended, such as "w" or "w2" *
-* to indicate week  as opposed to week 2 expiration. Likewise, *
-* the date (0-3) can be appended to indicate a specific        *
-* expiration (maturity date).                                  *
-****************************************************************
-*/
   MaturityMonthYear = 200,
-/*
-*********************************************************
-* Indicates whether an option contract is a put or call *
-*********************************************************
-*/
   PutOrCall = 201,
-/*
-*******************************
-* Strike Price for an Option. *
-*******************************
-*/
   StrikePrice = 202,
-/*
-*************************************************
-* Used for derivative products, such as options *
-*************************************************
-*/
   CoveredOrUncovered = 203,
-/*
-***************************************************************
-* Provided to support versioning of option contracts as a     *
-* result of corporate actions or events. Use of this field is *
-* defined by counterparty agreement or market conventions.    *
-***************************************************************
-*/
   OptAttribute = 206,
-/*
-********************************************
-* Market used to help identify a security. *
-* Valid values:                            *
-* See "Appendix 6-C"                       *
-********************************************
-*/
   SecurityExchange = 207,
-/*
-**************************************************************
-* Indicates whether or not details should be communicated to *
-* BrokerOfCredit (i.e. step-in broker).                      *
-**************************************************************
-*/
   NotifyBrokerOfCredit = 208,
-/*
-***************************************************************
-* Indicates how the receiver (i.e. third party) of Allocation *
-* message should handle/process the account details.          *
-***************************************************************
-*/
   AllocHandlInst = 209,
-/*
-***************************************************************
-* Maximum quantity (e.g. number of shares) within an order to *
-* be shown to other customers (i.e. sent via an IOI).         *
-* (Prior to FIX 4.2 this field was of type int)               *
-***************************************************************
-*/
   MaxShow = 210,
-/*
-**************************************************************
-* Amount (signed) added to the peg for a pegged order in the *
-* context of the PegOffsetType (836)                         *
-* (Prior to FIX 4.4 this field was of type PriceOffset)      *
-**************************************************************
-*/
   PegOffsetValue = 211,
-/*
-*************************************
-* Length of the XmlData data block. *
-*************************************
-*/
   XmlDataLen = 212,
-/*
-***********************************************************
-* Actual XML data stream (e.g. FIXML). See approriate XML *
-* reference (e.g. FIXML). Note: may contain embedded SOH  *
-* characters.                                             *
-***********************************************************
-*/
   XmlData = 213,
-/*
-**************************************************************
-* Reference identifier for the SettlInstID (162) with Cancel *
-* and Replace SettlInstTransType (163) transaction types.    *
-**************************************************************
-*/
   SettlInstRefID = 214,
-/*
-*******************************************************
-* Number of repeating groups of RoutingID (217) and   *
-* RoutingType (216) values.                           *
-* See Volume 3: "Pre-Trade Message Targeting/Routing" *
-*******************************************************
-*/
   NoRoutingIDs = 215,
-/*
-****************************************************
-* Indicates the type of RoutingID (217) specified. *
-****************************************************
-*/
   RoutingType = 216,
-/*
-******************************************************
-* Assigned value used to identify a specific routing *
-* destination.                                       *
-******************************************************
-*/
   RoutingID = 217,
-/*
-****************************************************************
-* For Fixed Income. Either Swap Spread or Spread to Benchmark  *
-* depending upon the order type.                               *
-* Spread to Benchmark: Basis points relative to a benchmark.   *
-* To be expressed as "count of basis points" (vs. an absolute  *
-* value). E.g. High Grade Corporate Bonds may express price as *
-* basis points relative to benchmark (the BenchmarkCurveName   *
-* (22) field). Note: Basis points can be negative.             *
-* Swap Spread: Target spread for a swap.                       *
-****************************************************************
-*/
   Spread = 218,
-/*
-***************************************************************
-* Identifies currency used for benchmark curve. See "Appendix *
-* 6-A: Valid Currency Codes" for information on obtaining     *
-* valid values.                                               *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)      *
-***************************************************************
-*/
   BenchmarkCurveCurrency = 220,
-/*
-**********************************************************
-* Name of benchmark curve.                               *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
   BenchmarkCurveName = 221,
-/*
-****************************************************************
-* Point on benchmark curve. Free form values: e.g. "Y", "7Y",  *
-* "INTERPOLATED".                                              *
-* Sample values:                                               *
-* M = combination of a number between 1-12 and a "M" for month *
-* Y = combination of number between 1-100 and a "Y" for year}  *
-* 10Y-OLD = see above, then add "-OLD" when appropriate        *
-* INTERPOLATED = the point is mathematically derived           *
-* 2/2031 5 3/8 = the point is stated via a combination of      *
-* maturity month / year and coupon                             *
-* See Fixed Income-specific documentation at                   *
-* http://www.fixprotocol.org for additional values.            *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)       *
-****************************************************************
-*/
   BenchmarkCurvePoint = 222,
-/*
-****************************************************************
-* The rate of interest that, when multiplied by the principal, *
-* par value, or face value of a bond, provides the currency    *
-* amount of the periodic interest payment. The coupon is       *
-* always cited, along with maturity, in any quotation of a     *
-* bond's price.                                                *
-****************************************************************
-*/
   CouponRate = 223,
-/*
-**************************************************************
-* Date interest is to be paid. Used in identifying Corporate *
-* Bond issues.                                               *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)     *
-* (prior to FIX 4.4 field was of type UTCDate)               *
-**************************************************************
-*/
   CouponPaymentDate = 224,
-/*
-****************************************************************
-* The date on which a bond or stock offering is issued. It may *
-* or may not be the same as the effective date ("Dated Date")  *
-* or the date on which interest begins to accrue ("Interest    *
-* Accrual Date")                                               *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)       *
-* (prior to FIX 4.4 field was of type UTCDate)                 *
-****************************************************************
-*/
   IssueDate = 225,
-/*
-**************************************************************
-* Number of business days before repurchase of a repo. (Note *
-* tag # was reserved in FIX 4.1, added in FIX 4.3)           *
-**************************************************************
-*/
   RepurchaseTerm = 226,
-/*
-**************************************************************
-* Percent of par at which a Repo will be repaid. Represented *
-* as a percent, e.g. .9525 represents 95-/4 percent of par.  *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)     *
-**************************************************************
-*/
   RepurchaseRate = 227,
-/*
-***************************************************************
-* For Fixed Income: Amorization Factor for deriving Current   *
-* face from Original face for ABS or MBS securities, note the *
-* fraction may be greater than, equal to or less than . In    *
-* TIPS securities this is the Inflation index.                *
-* Qty * Factor * Price = Gross Trade Amount                   *
-* For Derivatives: Contract Value Factor by which price must  *
-* be adjusted to determine the true nominal value of one      *
-* futures/options contract.                                   *
-* (Qty * Price) * Factor = Nominal Value                      *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)      *
-***************************************************************
-*/
   Factor = 228,
-/*
-***********************************************************
-* Used with Fixed Income for Muncipal New Issue Market.   *
-* Agreement in principal between counter-parties prior to *
-* actual trade date.                                      *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)  *
-* (prior to FIX 4.4 field was of type UTCDate)            *
-***********************************************************
-*/
   TradeOriginationDate = 229,
-/*
-***************************************************************
-* The date when a distribution of interest is deducted from a *
-* securities assets or set aside for payment to bondholders.  *
-* On the ex-date, the securities price drops by the amount of *
-* the distribution (plus or minus any market activity).       *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)      *
-* (prior to FIX 4.4 field was of type UTCDate)                *
-***************************************************************
-*/
   ExDate = 230,
-/*
-****************************************************************
-* Specifies the ratio or multiply factor to convert from       *
-* "nominal" units (e.g. contracts) to total units (e.g.        *
-* shares) (e.g. 1.0, 100, 1000, etc). Applicable For Fixed     *
-* Income, Convertible Bonds, Derivatives, etc.                 *
-* In general quantities for all calsses should be expressed in *
-* the basic unit of the instrument, e.g. shares for equities,  *
-* norminal or par amount for bonds, currency for foreign       *
-* exchange. When quantity is expressed in contracts, e.g.      *
-* financing transactions and bond trade reporting,             *
-* ContractMutliplier should contain the number of units in one *
-* contract and can be omitted if the multiplier is the default *
-* amount for the instrument, i.e. 1,000 par of bonds,          *
-* 1,000,000 par for financing transactions.                    *
-****************************************************************
-*/
   ContractMultiplier = 231,
-/*
-***********************************************************
-* Number of stipulation entries                           *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3). *
-***********************************************************
-*/
   NoStipulations = 232,
-/*
-**********************************************************
-* For Fixed Income.                                      *
-* Type of Stipulation.                                   *
-* Other types may be used by mutual agreement of the     *
-* counterparties.                                        *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
   StipulationType = 233,
-/*
-****************************************************************
-* For Fixed Income. Value of stipulation.                      *
-* The expression can be an absolute single value or a          *
-* combination of values and logical operators:                 *
-* < value                                                      *
-* > value                                                      *
-* <= value                                                     *
-* >= value                                                     *
-* value                                                        *
-* value - value2                                               *
-* value OR value2                                              *
-* value AND value2                                             *
-* YES                                                          *
-* NO                                                           *
-* Bargain conditions recognized by the London Stock Exchange - *
-* to be used when StipulationType is "BGNCON".                 *
-* CD = Special cum Dividend                                    *
-* XD = Special ex Dividend                                     *
-* CC = Special cum Coupon                                      *
-* XC = Special ex Coupon                                       *
-* CB = Special cum Bonus                                       *
-* XB = Special ex Bonus                                        *
-* CR = Special cum Rights                                      *
-* XR = Special ex Rights                                       *
-* CP = Special cum Capital Repayments                          *
-* XP = Special ex Capital Repayments                           *
-* CS = Cash Settlement                                         *
-* SP = Special Price                                           *
-* TR = Report for European Equity Market Securities in         *
-* accordance with Chapter 8 of the Rules.                      *
-* GD = Guaranteed Delivery                                     *
-* Values for StipulationType = "PXSOURCE":                     *
-* BB GENERIC                                                   *
-* BB FAIRVALUE                                                 *
-* BROKERTEC                                                    *
-* ESPEED                                                       *
-* GOVPX                                                        *
-* HILLIARD FARBER                                              *
-* ICAP                                                         *
-* TRADEWEB                                                     *
-* TULLETT LIBERTY                                              *
-* If a particular side of the market is wanted append /BID     *
-* /OFFER or /MID.                                              *
-* plus appropriate combinations of the above and other         *
-* expressions by mutual agreement of the counterparties.       *
-* Examples: ">=60", ".25", "ORANGE OR CONTRACOSTA", etc.       *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)       *
-****************************************************************
-*/
   StipulationValue = 234,
-/*
-****************************************************************
-* Type of yield. (Note tag # was reserved in FIX 4.1, added in *
-* FIX 4.3)                                                     *
-****************************************************************
-*/
   YieldType = 235,
-/*
-**********************************************************
-* Yield percentage.                                      *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
   Yield = 236,
-/*
-**************************************************************
-* The price at which the securities are distributed to the   *
-* different members of an underwriting group for the primary *
-* market in Municipals, total gross underwriter's spread.    *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)     *
-**************************************************************
-*/
   TotalTakedown = 237,
-/*
-***************************************************************
-* Provides the reduction in price for the secondary market in *
-* Muncipals.                                                  *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)      *
-***************************************************************
-*/
   Concession = 238,
-/*
-**************************************************************
-* Identifies the collateral used in the transaction.         *
-* Valid values: see SecurityType (167) field (Note tag # was *
-* reserved in FIX 4.1, added in FIX 4.3)                     *
-**************************************************************
-*/
   RepoCollateralSecurityType = 239,
-/*
-*************************************************************
-* Return of investor's principal in a security. Bond        *
-* redemption can occur before maturity date.(Note tag # was *
-* reserved in FIX 4.1, added in FIX 4.3) (prior to FIX 4.4  *
-* field was of type UTCDate)                                *
-*************************************************************
-*/
   RedemptionDate = 240,
-/*
-**********************************************************
-* Underlying security's CouponPaymentDate.               *
-* See CouponPaymentDate (224) field for description      *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-* (prior to FIX 4.4 field was of type UTCDate)           *
-**********************************************************
-*/
   UnderlyingCouponPaymentDate = 241,
-/*
-**********************************************************
-* Underlying security's IssueDate.                       *
-* See IssueDate (225) field for description              *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-* (prior to FIX 4.4 field was of type UTCDate)           *
-**********************************************************
-*/
   UnderlyingIssueDate = 242,
-/*
-****************************************************************
-* Underlying security's RepoCollateralSecurityType. See        *
-* RepoCollateralSecurityType (239) field for description.(Note *
-* tag # was reserved in FIX 4.1, added in FIX 4.3)             *
-****************************************************************
-*/
   UnderlyingRepoCollateralSecurityType = 243,
-/*
-***************************************************************
-* Underlying security's RepurchaseTerm. See RepurchaseTerm    *
-* (226) field for description (Note tag # was reserved in FIX *
-* 4.1, added in FIX 4.3)                                      *
-***************************************************************
-*/
   UnderlyingRepurchaseTerm = 244,
-/*
-***************************************************************
-* Underlying security's RepurchaseRate. See RepurchaseRate    *
-* (227) field for description (Note tag # was reserved in FIX *
-* 4.1, added in FIX 4.3)                                      *
-***************************************************************
-*/
   UnderlyingRepurchaseRate = 245,
-/*
-**********************************************************
-* Underlying security's Factor.                          *
-* See Factor (228) field for description                 *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
   UnderlyingFactor = 246,
-/*
-***************************************************************
-* Underlying security's RedemptionDate. See RedemptionDate    *
-* (240) field for description (Note tag # was reserved in FIX *
-* 4.1, added in FIX 4.3) (prior to FIX 4.4 field was of type  *
-* UTCDate)                                                    *
-***************************************************************
-*/
   UnderlyingRedemptionDate = 247,
-/*
-**********************************************************
-* Multileg instrument's individual leg security's        *
-* CouponPaymentDate.                                     *
-* See CouponPaymentDate (224) field for description      *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-* (prior to FIX 4.4 field was of type UTCDate)           *
-**********************************************************
-*/
   LegCouponPaymentDate = 248,
-/*
-**************************************************************
-* Multileg instrument's individual leg security's IssueDate. *
-* See IssueDate (225) field for description                  *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)     *
-* (prior to FIX 4.4 field was of type UTCDate)               *
-**************************************************************
-*/
   LegIssueDate = 249,
-/*
-***************************************************************
-* Multileg instrument's individual leg security's             *
-* RepoCollateralSecurityType. See RepoCollateralSecurityType  *
-* (239) field for description (Note tag # was reserved in FIX *
-* 4.1, added in FIX 4.3)                                      *
-***************************************************************
-*/
   LegRepoCollateralSecurityType = 250,
-/*
-*************************************************************
-* Multileg instrument's individual leg security's           *
-* RepurchaseTerm. See RepurchaseTerm (226) field for        *
-* description (Note tag # was reserved in FIX 4.1, added in *
-* FIX 4.3)                                                  *
-*************************************************************
-*/
   LegRepurchaseTerm = 251,
-/*
-*************************************************************
-* Multileg instrument's individual leg security's           *
-* RepurchaseRate. See RepurchaseRate (227) field for        *
-* description (Note tag # was reserved in FIX 4.1, added in *
-* FIX 4.3)                                                  *
-*************************************************************
-*/
   LegRepurchaseRate = 252,
-/*
-***********************************************************
-* Multileg instrument's individual leg security's Factor. *
-* See Factor (228) field for description                  *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)  *
-***********************************************************
-*/
   LegFactor = 253,
-/*
-*************************************************************
-* Multileg instrument's individual leg security's           *
-* RedemptionDate. See RedemptionDate (240) field for        *
-* description (Note tag # was reserved in FIX 4.1, added in *
-* FIX 4.3) (prior to FIX 4.4 field was of type UTCDate)     *
-*************************************************************
-*/
   LegRedemptionDate = 254,
-/*
-****************************************************************
-* An evaluation of a company's ability to repay obligations or *
-* its likelihood of not defaulting. These evaluation are       *
-* provided by Credit Rating Agencies, i.e. S&P, Moody's.       *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)       *
-****************************************************************
-*/
   CreditRating = 255,
-/*
-**********************************************************
-* Underlying security's CreditRating.                    *
-* See CreditRating (255) field for description           *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
   UnderlyingCreditRating = 256,
-/*
-**********************************************************
-* Multileg instrument's individual leg security's        *
-* CreditRating.                                          *
-* See CreditRating (255) field for description           *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
   LegCreditRating = 257,
-/*
-**************************************************************
-* Driver and part of trade in the event that the Security    *
-* Master file was wrong at the point of entry(Note tag # was *
-* reserved in FIX 4.1, added in FIX 4.3)                     *
-**************************************************************
-*/
   TradedFlatSwitch = 258,
-/*
-****************************************************************
-* BasisFeatureDate allows requesting firms within fixed income *
-* the ability to request an alternative yield-to-worst,        *
-* -maturity, -extended or other call. This flows through the   *
-* confirm process.                                             *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3)       *
-* (prior to FIX 4.4 field was of type UTCDate)                 *
-****************************************************************
-*/
   BasisFeatureDate = 259,
-/*
-**********************************************************
-* Price for BasisFeatureDate.                            *
-* See BasisFeatureDate (259)                             *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
   BasisFeaturePrice = 260,
-/*
-*********************************************
-* Unique identifier for Market Data Request *
-*********************************************
-*/
   MDReqID = 262,
-/*
-*****************************
-* Subscription Request Type *
-*****************************
-*/
   SubscriptionRequestType = 263,
-/*
-***********************************************************
-* Depth of market for Book Snapshot / Incremental updates *
-* 0 - full book depth                                     *
-* 1 - top of book                                         *
-* 2 and above - book depth (number of levels)             *
-***********************************************************
-*/
   MarketDepth = 264,
-/*
-*********************************************
-* Specifies the type of Market Data update. *
-*********************************************
-*/
   MDUpdateType = 265,
-/*
-***************************************************************
-* Specifies whether or not book entries should be aggregated. *
-* (Not specified) = broker option                             *
-***************************************************************
-*/
   AggregatedBook = 266,
-/*
-*************************************************
-* Number of MDEntryType (269) fields requested. *
-*************************************************
-*/
   NoMDEntryTypes = 267,
-/*
-*********************************************
-* Number of entries in Market Data message. *
-*********************************************
-*/
   NoMDEntries = 268,
-/*
-***************************
-* Type Market Data entry. *
-***************************
-*/
   MDEntryType = 269,
-/*
-***********************************
-* Price of the Market Data Entry. *
-***********************************
-*/
   MDEntryPx = 270,
-/*
-************************************************************
-* Quantity or volume represented by the Market Data Entry. *
-************************************************************
-*/
   MDEntrySize = 271,
-/*
-************************************************
-* Date of Market Data Entry.                   *
-* (prior to FIX 4.4 field was of type UTCDate) *
-************************************************
-*/
   MDEntryDate = 272,
-/*
-******************************
-* Time of Market Data Entry. *
-******************************
-*/
   MDEntryTime = 273,
-/*
-****************************
-* Direction of the "tick". *
-****************************
-*/
   TickDirection = 274,
-/*
-*********************************
-* Market posting quote / trade. *
-* Valid values:                 *
-* See "Appendix 6-C"            *
-*********************************
-*/
   MDMkt = 275,
-/*
-**********************************************************
-* Space-delimited list of conditions describing a quote. *
-**********************************************************
-*/
   QuoteCondition = 276,
-/*
-*********************************************************
-* Space-delimited list of conditions describing a trade *
-*********************************************************
-*/
   TradeCondition = 277,
-/*
-****************************************
-* Unique Market Data Entry identifier. *
-****************************************
-*/
   MDEntryID = 278,
-/*
-**************************************
-* Type of Market Data update action. *
-**************************************
-*/
   MDUpdateAction = 279,
-/*
-*****************************************
-* Refers to a previous MDEntryID (278). *
-*****************************************
-*/
   MDEntryRefID = 280,
-/*
-******************************************************
-* Reason for the rejection of a Market Data request. *
-******************************************************
-*/
   MDReqRejReason = 281,
-/*
-*************************************
-* Originator of a Market Data Entry *
-*************************************
-*/
   MDEntryOriginator = 282,
-/*
-***********************************************
-* Identification of a Market Maker's location *
-***********************************************
-*/
   LocationID = 283,
-/*
-*******************************************
-* Identification of a Market Maker's desk *
-*******************************************
-*/
   DeskID = 284,
-/*
-************************
-* Reason for deletion. *
-************************
-*/
   DeleteReason = 285,
-/*
-***************************************************************
-* Flag that identifies a market data entry. (Prior to FIX 4.3 *
-* this field was of type char)                                *
-***************************************************************
-*/
   OpenCloseSettlFlag = 286,
-/*
-****************************************************************
-* Specifies the number of days that may elapse before delivery *
-* of the security                                              *
-****************************************************************
-*/
   SellerDays = 287,
-/*
-***************************
-* Buying party in a trade *
-***************************
-*/
   MDEntryBuyer = 288,
-/*
-****************************
-* Selling party in a trade *
-****************************
-*/
   MDEntrySeller = 289,
-/*
-****************************************************************
-* Display position of a bid or offer, numbered from most       *
-* competitive to least competitive, per market side, beginning *
-* with .                                                       *
-****************************************************************
-*/
   MDEntryPositionNo = 290,
-/*
-********************************************************
-* Identifies a firm's or a security's financial status *
-********************************************************
-*/
   FinancialStatus = 291,
-/*
-********************************************
-* Identifies the type of Corporate Action. *
-********************************************
-*/
   CorporateAction = 292,
-/*
-*********************
-* Default Bid Size. *
-*********************
-*/
   DefBidSize = 293,
-/*
-***********************
-* Default Offer Size. *
-***********************
-*/
   DefOfferSize = 294,
-/*
-***********************************************
-* The number of quote entries for a QuoteSet. *
-***********************************************
-*/
   NoQuoteEntries = 295,
-/*
-************************************************
-* The number of sets of quotes in the message. *
-************************************************
-*/
   NoQuoteSets = 296,
-/*
-*******************************************************
-* Identifies the status of the quote acknowledgement. *
-*******************************************************
-*/
   QuoteStatus = 297,
-/*
-****************************************
-* Identifies the type of quote cancel. *
-****************************************
-*/
   QuoteCancelType = 298,
-/*
-**************************************************************
-* Unique identifier for a quote. The QuoteEntryID stays with *
-* the quote as a static identifier even if the quote is      *
-* updated.                                                   *
-**************************************************************
-*/
   QuoteEntryID = 299,
-/*
-******************************
-* Reason Quote was rejected: *
-******************************
-*/
   QuoteRejectReason = 300,
-/*
-****************************************************************
-* Level of Response requested from receiver of quote messages. *
-* A default value should be bilaterally agreed.                *
-****************************************************************
-*/
   QuoteResponseLevel = 301,
-/*
-********************************
-* Unique id for the Quote Set. *
-********************************
-*/
   QuoteSetID = 302,
-/*
-*******************************************************
-* Indicates the type of Quote Request being generated *
-*******************************************************
-*/
   QuoteRequestType = 303,
-/*
-*********************************************
-* Total number of quotes for the quote set. *
-*********************************************
-*/
   TotNoQuoteEntries = 304,
-/*
-*************************************************
-* Underlying security's SecurityIDSource.       *
-* Valid values: see SecurityIDSource (22) field *
-*************************************************
-*/
   UnderlyingSecurityIDSource = 305,
-/*
-*****************************************
-* Underlying security's Issuer.         *
-* See Issuer (06) field for description *
-*****************************************
-*/
   UnderlyingIssuer = 306,
-/*
-*******************************************
-* Description of the Underlying security. *
-* See SecurityDesc(107).                  *
-*******************************************
-*/
   UnderlyingSecurityDesc = 307,
-/*
-**********************************************************
-* Underlying security's SecurityExchange. Can be used to *
-* identify the underlying security.                      *
-* Valid values: see SecurityExchange (207)               *
-**********************************************************
-*/
   UnderlyingSecurityExchange = 308,
-/*
-*********************************************
-* Underlying security's SecurityID.         *
-* See SecurityID (48) field for description *
-*********************************************
-*/
   UnderlyingSecurityID = 309,
-/*
-***************************************************************
-* Underlying security's SecurityType.                         *
-* Valid values: see SecurityType (167) field                  *
-* (see below for details concerning this fields use in        *
-* conjunction with SecurityType=REPO)                         *
-* The following applies when used in conjunction with         *
-* SecurityType=REPO                                           *
-* Represents the general or specific type of security that    *
-* underlies a financing agreement                             *
-* Valid values for SecurityType=REPO:                         *
-* If bonds of a particular issuer or country are wanted in an *
-* Order or are in the basket of an Execution and the          *
-* SecurityType is not granular enough, include the            *
-* UnderlyingIssuer (306), UnderlyingCountryOfIssue (592),     *
-* UnderlyingProgram, UnderlyingRegType and/or <               *
-* UnderlyingStipulations > block e.g.:                        *
-***************************************************************
-*/
   UnderlyingSecurityType = 310,
-/*
-*****************************************
-* Underlying security's Symbol.         *
-* See Symbol (55) field for description *
-*****************************************
-*/
   UnderlyingSymbol = 311,
-/*
-********************************************
-* Underlying security's SymbolSfx.         *
-* See SymbolSfx (65) field for description *
-********************************************
-*/
   UnderlyingSymbolSfx = 312,
-/*
-*************************************************************
-* Underlying security's MaturityMonthYear. Can be used with *
-* standardized derivatives vs. the UnderlyingMaturityDate   *
-* (542) field.                                              *
-* See MaturityMonthYear (200) field for description         *
-*************************************************************
-*/
   UnderlyingMaturityMonthYear = 313,
-/*
-*****************************************************
-* Put or call indicator of the underlying security. *
-* See PutOrCall(201).                               *
-*****************************************************
-*/
   UnderlyingPutOrCall = 315,
-/*
-***********************************************
-* Underlying security's StrikePrice.          *
-* See StrikePrice (202) field for description *
-***********************************************
-*/
   UnderlyingStrikePrice = 316,
-/*
-************************************************
-* Underlying security's OptAttribute.          *
-* See OptAttribute (206) field for description *
-************************************************
-*/
   UnderlyingOptAttribute = 317,
-/*
-***********************************************************
-* Underlying security's Currency.                         *
-* See Currency (5) field for description and valid values *
-***********************************************************
-*/
   UnderlyingCurrency = 318,
-/*
-***********************************************
-* Unique ID of a Security Definition Request. *
-***********************************************
-*/
   SecurityReqID = 320,
-/*
-****************************************
-* Type of Security Definition Request. *
-****************************************
-*/
   SecurityRequestType = 321,
-/*
-***********************************************
-* Unique ID of a Security Definition message. *
-***********************************************
-*/
   SecurityResponseID = 322,
-/*
-*************************************************
-* Type of Security Definition message response. *
-*************************************************
-*/
   SecurityResponseType = 323,
-/*
-***************************************************
-* Unique ID of a Security Status Request message. *
-***************************************************
-*/
   SecurityStatusReqID = 324,
-/*
-**************************************************************
-* Indicates whether or not message is being sent as a result *
-* of a subscription request or not.                          *
-**************************************************************
-*/
   UnsolicitedIndicator = 325,
-/*
-****************************************************************
-* Identifies the trading status applicable to the transaction. *
-****************************************************************
-*/
   SecurityTradingStatus = 326,
-/*
-*************************************************************
-* Denotes the reason for the Opening Delay or Trading Halt. *
-*************************************************************
-*/
-  HaltReason = 327,
-/*
-*************************************************************
-* Indicates whether or not the halt was due to Common Stock *
-* trading being halted.                                     *
-*************************************************************
-*/
+  HaltReasonInt = 327,
   InViewOfCommon = 328,
-/*
-************************************************************
-* Indicates whether or not the halt was due to the Related *
-* Security being halted.                                   *
-************************************************************
-*/
   DueToRelated = 329,
-/*
-********************
-* Quantity bought. *
-********************
-*/
   BuyVolume = 330,
-/*
-******************
-* Quantity sold. *
-******************
-*/
   SellVolume = 331,
-/*
-***************************************************************
-* Represents an indication of the high end of the price range *
-* for a security prior to the open or reopen                  *
-***************************************************************
-*/
   HighPx = 332,
-/*
-**************************************************************
-* Represents an indication of the low end of the price range *
-* for a security prior to the open or reopen                 *
-**************************************************************
-*/
   LowPx = 333,
-/*
-**************************************
-* Identifies the type of adjustment. *
-**************************************
-*/
   Adjustment = 334,
-/*
-**************************************************
-* Unique ID of a Trading Session Status message. *
-**************************************************
-*/
   TradSesReqID = 335,
-/*
-***************************************************************
-* Identifier for Trading Session                              *
-* A trading session spans an extended period of time that can *
-* also be expressed informally in terms of the trading day.   *
-* Usage is determined by market or counterparties.            *
-* To specify good for session where session spans more than   *
-* one calendar day, use TimeInForce = Day in conjunction with *
-* TradingSessionID.                                           *
-* Bilaterally agreed values of data type "String" that start  *
-* with a character can be used for backward compatibility.    *
-***************************************************************
-*/
   TradingSessionID = 336,
-/*
-******************************************************
-* Identifies the trader (e.g. "badge number") of the *
-* ContraBroker.                                      *
-******************************************************
-*/
   ContraTrader = 337,
-/*
-*********************
-* Method of trading *
-*********************
-*/
   TradSesMethod = 338,
-/*
-************************
-* Trading Session Mode *
-************************
-*/
   TradSesMode = 339,
-/*
-*********************************
-* State of the trading session. *
-*********************************
-*/
   TradSesStatus = 340,
-/*
-****************************************
-* Starting time of the trading session *
-****************************************
-*/
   TradSesStartTime = 341,
-/*
-**********************************************
-* Time of the opening of the trading session *
-**********************************************
-*/
   TradSesOpenTime = 342,
-/*
-*************************************************
-* Time of the pre-closed of the trading session *
-*************************************************
-*/
   TradSesPreCloseTime = 343,
-/*
-***************************************
-* Closing time of the trading session *
-***************************************
-*/
   TradSesCloseTime = 344,
-/*
-***********************************
-* End time of the trading session *
-***********************************
-*/
   TradSesEndTime = 345,
-/*
-***********************************
-* Number of orders in the market. *
-***********************************
-*/
   NumberOfOrders = 346,
-/*
-*****************************************************
-* Type of message encoding (non-ASCII (non-English) *
-* characters) used in a message's "Encoded" fields. *
-*****************************************************
-*/
   MessageEncoding = 347,
-/*
-***************************************************************
-* Byte length of encoded (non-ASCII characters) EncodedIssuer *
-* (349) field.                                                *
-***************************************************************
-*/
   EncodedIssuerLen = 348,
-/*
-****************************************************************
-* Encoded (non-ASCII characters) representation of the Issuer  *
-* field in the encoded format specified via the                *
-* MessageEncoding (347) field. If used, the ASCII (English)    *
-* representation should also be specified in the Issuer field. *
-****************************************************************
-*/
   EncodedIssuer = 349,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedSecurityDesc (351) field.              *
-*************************************************
-*/
   EncodedSecurityDescLen = 350,
-/*
-****************************************************************
-* Encoded (non-ASCII characters) representation of the         *
-* SecurityDesc (107) field in the encoded format specified via *
-* the MessageEncoding (347) field. If used, the ASCII          *
-* (English) representation should also be specified in the     *
-* SecurityDesc field.                                          *
-****************************************************************
-*/
   EncodedSecurityDesc = 351,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedListExecInst (353) field.              *
-*************************************************
-*/
   EncodedListExecInstLen = 352,
-/*
-***************************************************************
-* Encoded (non-ASCII characters) representation of the        *
-* ListExecInst (69) field in the encoded format specified via *
-* the MessageEncoding (347) field. If used, the ASCII         *
-* (English) representation should also be specified in the    *
-* ListExecInst field.                                         *
-***************************************************************
-*/
   EncodedListExecInst = 353,
-/*
-*************************************************************
-* Byte length of encoded (non-ASCII characters) EncodedText *
-* (355) field.                                              *
-*************************************************************
-*/
   EncodedTextLen = 354,
-/*
-**************************************************************
-* Encoded (non-ASCII characters) representation of the Text  *
-* (58) field in the encoded format specified via the         *
-* MessageEncoding (347) field. If used, the ASCII (English)  *
-* representation should also be specified in the Text field. *
-**************************************************************
-*/
   EncodedText = 355,
-/*
-****************************************************************
-* Byte length of encoded (non-ASCII characters) EncodedSubject *
-* (357) field.                                                 *
-****************************************************************
-*/
   EncodedSubjectLen = 356,
-/*
-****************************************************************
-* Encoded (non-ASCII characters) representation of the Subject *
-* (147) field in the encoded format specified via the          *
-* MessageEncoding (347) field. If used, the ASCII (English)    *
-* representation should also be specified in the Subject       *
-* field.                                                       *
-****************************************************************
-*/
   EncodedSubject = 357,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedHeadline (359) field.                  *
-*************************************************
-*/
   EncodedHeadlineLen = 358,
-/*
-****************************************************************
-* Encoded (non-ASCII characters) representation of the         *
-* Headline (148) field in the encoded format specified via the *
-* MessageEncoding (347) field. If used, the ASCII (English)    *
-* representation should also be specified in the Headline      *
-* field.                                                       *
-****************************************************************
-*/
   EncodedHeadline = 359,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedAllocText (361) field.                 *
-*************************************************
-*/
   EncodedAllocTextLen = 360,
-/*
-*************************************************************
-* Encoded (non-ASCII characters) representation of the      *
-* AllocText (161) field in the encoded format specified via *
-* the MessageEncoding (347) field. If used, the ASCII       *
-* (English) representation should also be specified in the  *
-* AllocText field.                                          *
-*************************************************************
-*/
   EncodedAllocText = 361,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedUnderlyingIssuer (363) field.          *
-*************************************************
-*/
   EncodedUnderlyingIssuerLen = 362,
-/*
-****************************************************************
-* Encoded (non-ASCII characters) representation of the         *
-* UnderlyingIssuer (306) field in the encoded format specified *
-* via the MessageEncoding (347) field. If used, the ASCII      *
-* (English) representation should also be specified in the     *
-* UnderlyingIssuer field.                                      *
-****************************************************************
-*/
   EncodedUnderlyingIssuer = 363,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedUnderlyingSecurityDesc (365) field.    *
-*************************************************
-*/
   EncodedUnderlyingSecurityDescLen = 364,
-/*
-***************************************************************
-* Encoded (non-ASCII characters) representation of the        *
-* UnderlyingSecurityDesc (307) field in the encoded format    *
-* specified via the MessageEncoding (347) field. If used, the *
-* ASCII (English) representation should also be specified in  *
-* the UnderlyingSecurityeDesc field.                          *
-***************************************************************
-*/
   EncodedUnderlyingSecurityDesc = 365,
-/*
-****************************************************************
-* Executed price for an AllocAccount (79) entry used when      *
-* using "executed price" vs. "average price" allocations (e.g. *
-* Japan).                                                      *
-****************************************************************
-*/
   AllocPrice = 366,
-/*
-**************************************************************
-* Indicates expiration time of this particular QuoteSet      *
-* (always expressed in UTC (Universal Time Coordinated, also *
-* known as "GMT")                                            *
-**************************************************************
-*/
   QuoteSetValidUntilTime = 367,
-/*
-************************************
-* Reason Quote Entry was rejected: *
-************************************
-*/
   QuoteEntryRejectReason = 368,
-/*
-****************************************************************
-* The last MsgSeqNum (34) value received by the FIX engine and *
-* processed by downstream application, such as trading engine  *
-* or order routing system. Can be specified on every message   *
-* sent. Useful for detecting a backlog with a counterparty.    *
-****************************************************************
-*/
   LastMsgSeqNumProcessed = 369,
-/*
-*****************************************************
-* The tag number of the FIX field being referenced. *
-*****************************************************
-*/
   RefTagID = 371,
-/*
-*********************************************************
-* The MsgType (35) of the FIX message being referenced. *
-*********************************************************
-*/
   RefMsgType = 372,
-/*
-***************************************************************
-* Code to identify reason for a session-level Reject message. *
-***************************************************************
-*/
   SessionRejectReason = 373,
-/*
-********************************************
-* Identifies the Bid Request message type. *
-********************************************
-*/
   BidRequestTransType = 374,
-/*
-********************************************************
-* Identifies contra broker. Standard NASD market-maker *
-* mnemonic is preferred.                               *
-********************************************************
-*/
   ContraBroker = 375,
-/*
-********************************************************
-* ID used to represent this transaction for compliance *
-* purposes (e.g. OATS reporting).                      *
-********************************************************
-*/
   ComplianceID = 376,
-/*
-*****************************************************
-* Indicates whether or not the order was solicited. *
-*****************************************************
-*/
   SolicitedFlag = 377,
-/*
-************************************************************
-* Code to identify reason for an ExecutionRpt message sent *
-* with ExecType=Restated or used when communicating an     *
-* unsolicited cancel.                                      *
-************************************************************
-*/
   ExecRestatementReason = 378,
-/*
-*************************************************************
-* The value of the business-level "ID" field on the message *
-* being referenced.                                         *
-*************************************************************
-*/
   BusinessRejectRefID = 379,
-/*
-*********************************************************
-* Code to identify reason for a Business Message Reject *
-* message.                                              *
-*********************************************************
-*/
   BusinessRejectReason = 380,
-/*
-****************************************************************
-* Total amount traded (i.e. quantity * price) expressed in     *
-* units of currency. For FX Futures this is used to express    *
-* the notional value of a fill when quantity fields are        *
-* expressed in terms of contract size (i.e. quantity * price * *
-* contract size).                                              *
-****************************************************************
-*/
   GrossTradeAmt = 381,
-/*
-*********************************************
-* The number of ContraBroker (375) entries. *
-*********************************************
-*/
   NoContraBrokers = 382,
-/*
-***********************************************************
-* Maximum number of bytes supported for a single message. *
-***********************************************************
-*/
   MaxMessageSize = 383,
-/*
-***********************************************
-* Number of MsgTypes (35) in repeating group. *
-***********************************************
-*/
   NoMsgTypes = 384,
-/*
-********************************************
-* Specifies the direction of the messsage. *
-********************************************
-*/
   MsgDirection = 385,
-/*
-*********************************************************
-* Number of TradingSessionIDs (336) in repeating group. *
-*********************************************************
-*/
   NoTradingSessions = 386,
-/*
-***********************************
-* Total volume (quantity) traded. *
-***********************************
-*/
   TotalVolumeTraded = 387,
-/*
-***************************************************************
-* Code to identify the price a DiscretionOffsetValue (389) is *
-* related to and should be mathematically added to.           *
-***************************************************************
-*/
   DiscretionInst = 388,
-/*
-*************************************************************
-* Amount (signed) added to the "related to" price specified *
-* via DiscretionInst (388), in the context of               *
-* DiscretionOffsetType (842)                                *
-* (Prior to FIX 4.4 this field was of type PriceOffset)     *
-*************************************************************
-*/
   DiscretionOffsetValue = 389,
-/*
-***************************************************************
-* Unique identifier for Bid Response as assigned by sell-side *
-* (broker, exchange, ECN). Uniqueness must be guaranteed      *
-* within a single trading day.                                *
-***************************************************************
-*/
   BidID = 390,
-/*
-**************************************************************
-* Unique identifier for a Bid Request as assigned by         *
-* institution. Uniqueness must be guaranteed within a single *
-* trading day.                                               *
-**************************************************************
-*/
   ClientBidID = 391,
-/*
-************************************
-* Descriptive name for list order. *
-************************************
-*/
   ListName = 392,
-/*
-**************************************************************
-* Total number of securities.                                *
-* (Prior to FIX 4.4 this field was named TotalNumSecurities) *
-**************************************************************
-*/
   TotNoRelatedSym = 393,
-/*
-*********************************************
-* Code to identify the type of Bid Request. *
-*********************************************
-*/
   BidType = 394,
-/*
-****************************
-* Total number of tickets. *
-****************************
-*/
   NumTickets = 395,
-/*
-***********************
-* Amounts in currency *
-***********************
-*/
   SideValue1 = 396,
-/*
-***********************
-* Amounts in currency *
-***********************
-*/
   SideValue2 = 397,
-/*
-******************************************
-* Number of BidDescriptor (400) entries. *
-******************************************
-*/
   NoBidDescriptors = 398,
-/*
-*****************************************************
-* Code to identify the type of BidDescriptor (400). *
-*****************************************************
-*/
   BidDescriptorType = 399,
-/*
-************************************************************
-* BidDescriptor value. Usage depends upon BidDescriptorTyp *
-* (399).                                                   *
-* If BidDescriptorType = 1                                 *
-* Industrials etc - Free text                              *
-* If BidDescriptorType = 2                                 *
-* "FR" etc - ISO Country Codes                             *
-* If BidDescriptorType = 3                                 *
-* FT00, FT250, STOX - Free text                            *
-************************************************************
-*/
   BidDescriptor = 400,
-/*
-****************************************************************
-* Code to identify which "SideValue" the value refers to.      *
-* SideValue1 and SideValue2 are used as opposed to Buy or Sell *
-* so that the basket can be quoted either way as Buy or Sell.  *
-****************************************************************
-*/
   SideValueInd = 401,
-/*
-************************************************************
-* Liquidity indicator or lower limit if TotalNumSecurities *
-* (393) > 1. Represented as a percentage.                  *
-************************************************************
-*/
   LiquidityPctLow = 402,
-/*
-**************************************************************
-* Upper liquidity indicator if TotalNumSecurities (393) > 1. *
-* Represented as a percentage.                               *
-**************************************************************
-*/
   LiquidityPctHigh = 403,
-/*
-************************************************************
-* Value between LiquidityPctLow (402) and LiquidityPctHigh *
-* (403) in Currency                                        *
-************************************************************
-*/
   LiquidityValue = 404,
-/*
-************************************************************
-* Eg Used in EFP trades 2% (EFP - Exchange for Physical ). *
-* Represented as a percentage.                             *
-************************************************************
-*/
   EFPTrackingError = 405,
-/*
-**********************
-* Used in EFP trades *
-**********************
-*/
   FairValue = 406,
-/*
-****************************************************
-* Used in EFP trades. Represented as a percentage. *
-****************************************************
-*/
   OutsideIndexPct = 407,
-/*
-**********************
-* Used in EFP trades *
-**********************
-*/
   ValueOfFutures = 408,
-/*
-*****************************************************
-* Code to identify the type of liquidity indicator. *
-*****************************************************
-*/
   LiquidityIndType = 409,
-/*
-**********************************************************
-* Overall weighted average liquidity expressed as a % of *
-* average daily volume. Represented as a percentage.     *
-**********************************************************
-*/
   WtAverageLiquidity = 410,
-/*
-******************************************************
-* Indicates whether or not to exchange for phsyical. *
-******************************************************
-*/
   ExchangeForPhysical = 411,
-/*
-*******************************
-* Value of stocks in Currency *
-*******************************
-*/
   OutMainCntryUIndex = 412,
-/*
-***************************************************************
-* Percentage of program that crosses in Currency. Represented *
-* as a percentage.                                            *
-***************************************************************
-*/
   CrossPercent = 413,
-/*
-***************************************************************
-* Code to identify the desired frequency of progress reports. *
-***************************************************************
-*/
   ProgRptReqs = 414,
-/*
-**********************************************************
-* Time in minutes between each ListStatus report sent by *
-* SellSide. Zero means don't send status.                *
-**********************************************************
-*/
   ProgPeriodInterval = 415,
-/*
-****************************************************************
-* Code to represent whether value is net (inclusive of tax) or *
-* gross.                                                       *
-****************************************************************
-*/
   IncTaxInd = 416,
-/*
-*****************************************************
-* Indicates the total number of bidders on the list *
-*****************************************************
-*/
   NumBidders = 417,
-/*
-*******************************************************
-* Code to represent the type of trade.                *
-* (Prior to FIX 4.4 this field was named "TradeType") *
-*******************************************************
-*/
   BidTradeType = 418,
-/*
-*******************************************
-* Code to represent the basis price type. *
-*******************************************
-*/
   BasisPxType = 419,
-/*
-*****************************************
-* Indicates the number of list entries. *
-*****************************************
-*/
   NoBidComponents = 420,
-/*
-*****************************
-* ISO Country Code in field *
-*****************************
-*/
   Country = 421,
-/*
-***************************************************************
-* Total number of strike price entries across all messages.   *
-* Should be the sum of all NoStrikes (428) in each message    *
-* that has repeating strike price entries related to the same *
-* ListID (66). Used to support fragmentation.                 *
-***************************************************************
-*/
   TotNoStrikes = 422,
-/*
-***************************************************************
-* Code to represent the price type.                           *
-* (For Financing transactions PriceType implies the "repo     *
-* type" - Fixed or Floating - 9 (Yield) or 6 (Spread)         *
-* respectively - and Price (44) gives the corresponding "repo *
-* rate".                                                      *
-* See Volume : "Glossary" for further value definitions)      *
-***************************************************************
-*/
   PriceType = 423,
-/*
-****************************************************************
-* For GT orders, the OrderQty (38) less all quantity (adjusted *
-* for stock splits) that traded on previous days. DayOrderQty  *
-* (424) = OrderQty - (CumQty (14) - DayCumQty (425))           *
-****************************************************************
-*/
   DayOrderQty = 424,
-/*
-*************************************************
-* Quantity on a GT order that has traded today. *
-*************************************************
-*/
   DayCumQty = 425,
-/*
-****************************************************************
-* The average price for quantity on a GT order that has traded *
-* today.                                                       *
-****************************************************************
-*/
   DayAvgPx = 426,
-/*
-********************************************************
-* Code to identify whether to book out executions on a *
-* part-filled GT order on the day of execution or to   *
-* accumulate.                                          *
-********************************************************
-*/
   GTBookingInst = 427,
-/*
-****************************************
-* Number of list strike price entries. *
-****************************************
-*/
   NoStrikes = 428,
-/*
-**************************************
-* Code to represent the status type. *
-**************************************
-*/
   ListStatusType = 429,
-/*
-****************************************************************
-* Code to represent whether value is net (inclusive of tax) or *
-* gross.                                                       *
-****************************************************************
-*/
   NetGrossInd = 430,
-/*
-*************************************************
-* Code to represent the status of a list order. *
-*************************************************
-*/
   ListOrderStatus = 431,
-/*
-****************************************************************
-* Date of order expiration (last day the order can trade),     *
-* always expressed in terms of the local market date. The time *
-* at which the order expires is determined by the local        *
-* market's business practices                                  *
-****************************************************************
-*/
   ExpireDate = 432,
-/*
-*********************************************
-* Identifies the type of ListExecInst (69). *
-*********************************************
-*/
   ListExecInstType = 433,
-/*
-*************************************************************
-* Identifies the type of request that a Cancel Reject is in *
-* response to.                                              *
-*************************************************************
-*/
   CxlRejResponseTo = 434,
-/*
-**********************************************
-* Underlying security's CouponRate.          *
-* See CouponRate (223) field for description *
-**********************************************
-*/
   UnderlyingCouponRate = 435,
-/*
-******************************************************
-* Underlying security's ContractMultiplier.          *
-* See ContractMultiplier (231) field for description *
-******************************************************
-*/
   UnderlyingContractMultiplier = 436,
-/*
-************************************************
-* Quantity traded with the ContraBroker (375). *
-************************************************
-*/
   ContraTradeQty = 437,
-/*
-****************************************************************
-* Identifes the time of the trade with the ContraBroker (375). *
-* (always expressed in UTC (Universal Time Coordinated, also   *
-* known as "GMT")                                              *
-****************************************************************
-*/
   ContraTradeTime = 438,
-/*
-*********************************************************
-* Number of Securites between LiquidityPctLow (402) and *
-* LiquidityPctHigh (403) in Currency.                   *
-*********************************************************
-*/
   LiquidityNumSecurities = 441,
-/*
-**************************************************************
-* Used to indicate what an Execution Report represents (e.g. *
-* used with multi-leg securities, such as option strategies, *
-* spreads, etc.).                                            *
-**************************************************************
-*/
   MultiLegReportingType = 442,
-/*
-*******************************************************
-* The time at which current market prices are used to *
-* determine the value of a basket.                    *
-*******************************************************
-*/
   StrikeTime = 443,
-/*
-***************************************************
-* Free format text string related to List Status. *
-***************************************************
-*/
   ListStatusText = 444,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedListStatusText (446) field.            *
-*************************************************
-*/
   EncodedListStatusTextLen = 445,
-/*
-**************************************************************
-* Encoded (non-ASCII characters) representation of the       *
-* ListStatusText (444) field in the encoded format specified *
-* via the MessageEncoding (347) field. If used, the ASCII    *
-* (English) representation should also be specified in the   *
-* ListStatusText field.                                      *
-**************************************************************
-*/
   EncodedListStatusText = 446,
-/*
-*************************************************************
-* Identifies class or source of the PartyID (448) value.    *
-* Required if PartyID is specified. Note: applicable values *
-* depend upon PartyRole (452) specified.                    *
-* See "Appendix 6-G - Use of <Parties> Component Block"     *
-*************************************************************
-*/
   PartyIDSource = 447,
-/*
-****************************************************************
-* Party identifier/code. See PartyIDSource (447) and PartyRole *
-* (452).                                                       *
-* See "Appendix 6-G - Use of <Parties> Component Block"        *
-****************************************************************
-*/
   PartyID = 448,
-/*
-****************************************************************
-* Net change from previous day's closing price vs. last traded *
-* price.                                                       *
-****************************************************************
-*/
   NetChgPrevDay = 451,
-/*
-***************************************************************
-* Identifies the type or role of the PartyID (448) specified. *
-* See "Appendix 6-G - Use of <Parties> Component Block"       *
-* (see Volume : "Glossary" for value definitions)             *
-***************************************************************
-*/
   PartyRole = 452,
-/*
-***************************************************************
-* Number of PartyID (448), PartyIDSource (447), and PartyRole *
-* (452) entries                                               *
-***************************************************************
-*/
   NoPartyIDs = 453,
-/*
-******************************************
-* Number of SecurityAltID (455) entries. *
-******************************************
-*/
   NoSecurityAltID = 454,
-/*
-************************************************************
-* Alternate Security identifier value for this security of *
-* SecurityAltIDSource (456) type (e.g. CUSIP, SEDOL, ISIN, *
-* etc). Requires SecurityAltIDSource.                      *
-************************************************************
-*/
   SecurityAltID = 455,
-/*
-****************************************************************
-* Identifies class or source of the SecurityAltID (455) value. *
-* Required if SecurityAltID is specified.                      *
-* Valid values:                                                *
-* Same valid values as the SecurityIDSource (22) field         *
-****************************************************************
-*/
   SecurityAltIDSource = 456,
-/*
-****************************************************
-* Number of UnderlyingSecurityAltID (458) entries. *
-****************************************************
-*/
   NoUnderlyingSecurityAltID = 457,
-/*
-**************************************************************
-* Alternate Security identifier value for this underlying    *
-* security of UnderlyingSecurityAltIDSource (459) type (e.g. *
-* CUSIP, SEDOL, ISIN, etc). Requires                         *
-* UnderlyingSecurityAltIDSource.                             *
-**************************************************************
-*/
   UnderlyingSecurityAltID = 458,
-/*
-*************************************************************
-* Identifies class or source of the UnderlyingSecurityAltID *
-* (458) value. Required if UnderlyingSecurityAltID is       *
-* specified.                                                *
-* Valid values:                                             *
-* Same valid values as the SecurityIDSource (22) field      *
-*************************************************************
-*/
   UnderlyingSecurityAltIDSource = 459,
-/*
-************************************************************
-* Indicates the type of product the security is associated *
-* with. See also the CFICode (461) and SecurityType (167)  *
-* fields.                                                  *
-************************************************************
-*/
   Product = 460,
-/*
-***************************************************************
-* Indicates the type of security using ISO 10962 standard,    *
-* Classification of Financial Instruments (CFI code) values.  *
-* ISO 10962 is maintained by ANNA (Association of National    *
-* Numbering Agencies) acting as Registration Authority. See   *
-* "Appendix 6-B FIX Fields Based Upon Other Standards". See   *
-* also the Product (460) and SecurityType (167) fields. It is *
-* recommended that CFICode be used instead of SecurityType    *
-* (167) for non-Fixed Income instruments.                     *
-* A subset of possible values applicable to FIX usage are     *
-* identified in "Appendix 6-D CFICode Usage - ISO 10962       *
-* Classification of Financial Instruments (CFI code)"         *
-***************************************************************
-*/
   CFICode = 461,
-/*
-****************************************
-* Underlying security's Product.       *
-* Valid values: see Product(460) field *
-****************************************
-*/
   UnderlyingProduct = 462,
-/*
-*****************************************
-* Underlying security's CFICode.        *
-* Valid values: see CFICode (461) field *
-*****************************************
-*/
   UnderlyingCFICode = 463,
-/*
-***************************************************************
-* Indicates whether or not this FIX Session is a "test" vs.   *
-* "production" connection. Useful for preventing "accidents". *
-***************************************************************
-*/
   TestMessageIndicator = 464,
-/*
-***********************************************************
-* Common reference passed to a post-trade booking process *
-* (e.g. industry matching utility).                       *
-***********************************************************
-*/
   BookingRefID = 466,
-/*
-************************************************************
-* Unique identifier for a specific NoAllocs (78) repeating *
-* group instance (e.g. for an AllocAccount).               *
-************************************************************
-*/
   IndividualAllocID = 467,
-/*
-****************************************************************
-* Specifies which direction to round For CIV - indicates       *
-* whether or not the quantity of shares/units is to be rounded *
-* and in which direction where CashOrdQty (152) or (for CIV    *
-* only) OrderPercent (516) are specified on an order.          *
-* The default is for rounding to be at the discretion of the   *
-* executing broker or fund manager.                            *
-* e.g. for an order specifying CashOrdQty or OrderPercent if   *
-* the calculated number of shares/units was 325.76 and         *
-* RoundingModulus (469) was 0 - "round down" would give 320    *
-* units, 1 - "round up" would give 330 units and "round to     *
-* nearest" would give 320 units.                               *
-****************************************************************
-*/
   RoundingDirection = 468,
-/*
-****************************************************************
-* For CIV - a float value indicating the value to which        *
-* rounding is required.                                        *
-* i.e. 0 means round to a multiple of 0 units/shares; 0.5      *
-* means round to a multiple of 0.5 units/shares.               *
-* The default, if RoundingDirection (468) is specified without *
-* RoundingModulus, is to round to a whole unit/share.          *
-****************************************************************
-*/
   RoundingModulus = 469,
-/*
-***************************************************************
-* ISO Country code of instrument issue (e.g. the country      *
-* portion typically used in ISIN). Can be used in conjunction *
-* with non-ISIN SecurityID (48) (e.g. CUSIP for Municipal     *
-* Bonds without ISIN) to provide uniqueness.                  *
-***************************************************************
-*/
   CountryOfIssue = 470,
-/*
-***************************************************
-* A two-character state or province abbreviation. *
-***************************************************
-*/
   StateOrProvinceOfIssue = 471,
-/*
-***************************************************************
-* Identifies the locale. For Municipal Security Issuers other *
-* than state or province. Refer to                            *
-* http://www.atmos.albany.edu/cgi/stagrep-cgi                 *
-* Reference the IATA city codes for values.                   *
-* Note IATA (International Air Transport Association)         *
-* maintains the codes at www.iata.org.                        *
-***************************************************************
-*/
   LocaleOfIssue = 472,
-/*
-********************************************************
-* The number of registration details on a Registration *
-* Instructions message                                 *
-********************************************************
-*/
   NoRegistDtls = 473,
-/*
-*************************************************************
-* Set of Correspondence address details, possibly including *
-* phone, fax, etc.                                          *
-*************************************************************
-*/
   MailingDtls = 474,
-/*
-************************************************************
-* The ISO 366 Country code (2 character) identifying which *
-* country the beneficial investor is resident for tax      *
-* purposes.                                                *
-************************************************************
-*/
   InvestorCountryOfResidence = 475,
-/*
-**********************************************************
-* "Settlement Payment Reference" - A free format Payment *
-* reference to assist with reconciliation, e.g. a Client *
-* and/or Order ID number.                                *
-**********************************************************
-*/
   PaymentRef = 476,
-/*
-****************************************************************
-* A code identifying the payment method for a (fractional)     *
-* distribution.                                                *
-* 13 through 998 are reserved for future use                   *
-* Values above 1000 are available for use by private agreement *
-* among counterparties                                         *
-****************************************************************
-*/
   DistribPaymentMethod = 477,
-/*
-************************************************************
-* Specifies currency to be used for Cash Distributions see *
-* "Appendix 6-A Valid Currency Codes".                     *
-************************************************************
-*/
   CashDistribCurr = 478,
-/*
-*************************************************************
-* Specifies currency to be use for Commission (12) if the   *
-* Commission currency is different from the Deal Currency - *
-* see "Appendix 6-A; Valid Currency Codes".                 *
-*************************************************************
-*/
   CommCurrency = 479,
-/*
-******************************************************
-* For CIV - A one character code identifying whether *
-* Cancellation rights/Cooling off period applies.    *
-******************************************************
-*/
   CancellationRights = 480,
-/*
-*************************************************************
-* A one character code identifying Money laundering status. *
-*************************************************************
-*/
   MoneyLaunderingStatus = 481,
-/*
-***************************************************
-* Free format text to specify mailing instruction *
-* requirements, e.g. "no third party mailings".   *
-***************************************************
-*/
   MailingInst = 482,
-/*
-***************************************************************
-* For CIV A date and time stamp to indicate the time a CIV    *
-* order was booked by the fund manager.                       *
-* For derivatives a date and time stamp to indicate when this *
-* order was booked with the agent prior to submission to the  *
-* VMU. Indicates the time at which the order was finalized    *
-* between the buyer and seller prior to submission.           *
-***************************************************************
-*/
   TransBkdTime = 483,
-/*
-****************************************************************
-* For CIV - Identifies how the execution price LastPx (31) was *
-* calculated from the fund unit/share price(s) calculated at   *
-* the fund valuation point.                                    *
-****************************************************************
-*/
   ExecPriceType = 484,
-/*
-****************************************************************
-* For CIV the amount or percentage by which the fund           *
-* unit/share price was adjusted, as indicated by ExecPriceType *
-* (484)                                                        *
-****************************************************************
-*/
   ExecPriceAdjustment = 485,
-/*
-********************************************************
-* The date of birth applicable to the individual, e.g. *
-* required to open some types of tax-exempt account.   *
-********************************************************
-*/
   DateOfBirth = 486,
-/*
-****************************************************
-* Identifies Trade Report message transaction type *
-* (Prior to FIX 4.4 this field was of type char)   *
-****************************************************
-*/
   TradeReportTransType = 487,
-/*
-****************************************************************
-* The name of the payment card holder as specified on the card *
-* being used for payment.                                      *
-****************************************************************
-*/
   CardHolderName = 488,
-/*
-***********************************************************
-* The number of the payment card as specified on the card *
-* being used for payment.                                 *
-***********************************************************
-*/
   CardNumber = 489,
-/*
-****************************************************************
-* The expiry date of the payment card as specified on the card *
-* being used for payment.                                      *
-****************************************************************
-*/
   CardExpDate = 490,
-/*
-************************************************************
-* The issue number of the payment card as specified on the *
-* card being used for payment. This is only applicable to  *
-* certain types of card.                                   *
-************************************************************
-*/
   CardIssNum = 491,
-/*
-****************************************************************
-* A code identifying the Settlement payment method. 16 through *
-* 998 are reserved for future use                              *
-* Values above 1000 are available for use by private agreement *
-* among counterparties                                         *
-****************************************************************
-*/
   PaymentMethod = 492,
-/*
-**************************************************************
-* For CIV - a fund manager-defined code identifying which of *
-* the fund manager's account types is required.              *
-**************************************************************
-*/
   RegistAcctType = 493,
-/*
-****************************************************************
-* Free format text defining the designation to be associated   *
-* with a holding on the register. Used to identify assets of a *
-* specific underlying investor using a common registration,    *
-* e.g. a broker's nominee or street name.                      *
-****************************************************************
-*/
   Designation = 494,
-/*
-****************************************************************
-* For CIV - a code identifying the type of tax exempt account  *
-* in which purchased shares/units are to be held.              *
-* 30 - 998 are reserved for future use by recognized taxation  *
-* authorities                                                  *
-* 999=Other                                                    *
-* values above 1000 are available for use by private agreement *
-* among counterparties                                         *
-****************************************************************
-*/
   TaxAdvantageType = 495,
-/*
-****************************************************************
-* Text indicating reason(s) why a Registration Instruction has *
-* been rejected.                                               *
-****************************************************************
-*/
   RegistRejReasonText = 496,
-/*
-***********************************************************
-* A one character code identifying whether the Fund based *
-* renewal commission is to be waived.                     *
-***********************************************************
-*/
   FundRenewWaiv = 497,
-/*
-******************************************************
-* Name of local agent bank if for cash distributions *
-******************************************************
-*/
   CashDistribAgentName = 498,
-/*
-***************************************************************
-* BIC (Bank Identification Code--Swift managed) code of agent *
-* bank for cash distributions                                 *
-***************************************************************
-*/
   CashDistribAgentCode = 499,
-/*
-***************************************************
-* Account number at agent bank for distributions. *
-***************************************************
-*/
   CashDistribAgentAcctNumber = 500,
-/*
-***************************************************************
-* Free format Payment reference to assist with reconciliation *
-* of distributions.                                           *
-***************************************************************
-*/
   CashDistribPayRef = 501,
-/*
-****************************************************
-* Name of account at agent bank for distributions. *
-****************************************************
-*/
   CashDistribAgentAcctName = 502,
-/*
-*************************************************************
-* The start date of the card as specified on the card being *
-* used for payment.                                         *
-*************************************************************
-*/
   CardStartDate = 503,
-/*
-**********************************************************
-* The date written on a cheque or date payment should be *
-* submitted to the relevant clearing system.             *
-**********************************************************
-*/
   PaymentDate = 504,
-/*
-****************************************************************
-* Identifies sender of a payment, e.g. the payment remitter or *
-* a customer reference number.                                 *
-****************************************************************
-*/
   PaymentRemitterID = 505,
-/*
-**************************************************************
-* Registration status as returned by the broker or (for CIV) *
-* the fund manager:                                          *
-**************************************************************
-*/
   RegistStatus = 506,
-/*
-**************************************************************
-* Reason(s) why Registration Instructions has been rejected. *
-* The reason may be further amplified in the                 *
-* RegistRejReasonCode field.                                 *
-* Possible values of reason code include:                    *
-**************************************************************
-*/
   RegistRejReasonCode = 507,
-/*
-**************************************************************
-* Reference identifier for the RegistID (53) with Cancel and *
-* Replace RegistTransType (54) transaction types.            *
-**************************************************************
-*/
   RegistRefID = 508,
-/*
-**********************************************************
-* Set of Registration name and address details, possibly *
-* including phone, fax etc.                              *
-**********************************************************
-*/
   RegistDtls = 509,
-/*
-*************************************************************
-* The number of Distribution Instructions on a Registration *
-* Instructions message                                      *
-*************************************************************
-*/
   NoDistribInsts = 510,
-/*
-***********************************************************
-* Email address relating to Registration name and address *
-* details                                                 *
-***********************************************************
-*/
   RegistEmail = 511,
-/*
-**************************************************************
-* The amount of each distribution to go to this beneficiary, *
-* expressed as a percentage                                  *
-**************************************************************
-*/
   DistribPercentage = 512,
-/*
-****************************************************************
-* Unique identifier of the registration details as assigned by *
-* institution or intermediary.                                 *
-****************************************************************
-*/
   RegistID = 513,
-/*
-*********************************************************
-* Identifies Registration Instructions transaction type *
-*********************************************************
-*/
   RegistTransType = 514,
-/*
-***************************************************************
-* For CIV - a date and time stamp to indicate the fund        *
-* valuation point with respect to which a order was priced by *
-* the fund manager.                                           *
-***************************************************************
-*/
   ExecValuationPoint = 515,
-/*
-**************************************************************
-* For CIV specifies the approximate order quantity desired.  *
-* For a CIV Sale it specifies percentage of investor's total *
-* holding to be sold. For a CIV switch/exchange it specifies *
-* percentage of investor's cash realised from sales to be    *
-* re-invested. The executing broker, intermediary or fund    *
-* manager is responsible for converting and calculating      *
-* OrderQty (38) in shares/units for subsequent messages.     *
-**************************************************************
-*/
   OrderPercent = 516,
-/*
-**************************************************
-* The relationship between Registration parties. *
-**************************************************
-*/
   OwnershipType = 517,
-/*
-****************************************************************
-* The number of Contract Amount details on an Execution Report *
-* message                                                      *
-****************************************************************
-*/
   NoContAmts = 518,
-/*
-**************************************************************
-* Type of ContAmtValue (520).                                *
-* NOTE That Commission Amount / % in Contract Amounts is the *
-* commission actually charged, rather than the commission    *
-* instructions given in Fields 2/3.                          *
-**************************************************************
-*/
   ContAmtType = 519,
-/*
-********************************************************
-* Value of Contract Amount, e.g. a financial amount or *
-* percentage as indicated by ContAmtType (519).        *
-********************************************************
-*/
   ContAmtValue = 520,
-/*
-****************************************************************
-* Specifies currency for the Contract amount if different from *
-* the Deal Currency - see "Appendix 6-A; Valid Currency        *
-* Codes".                                                      *
-****************************************************************
-*/
   ContAmtCurr = 521,
-/*
-*********************************
-* Identifies the type of owner. *
-*********************************
-*/
   OwnerType = 522,
-/*
-****************************************************************
-* Sub-identifier (e.g. Clearing Account for PartyRole          *
-* (452)=Clearing Firm, Locate ID # for                         *
-* PartyRole=Locate/Lending Firm, etc). Not required when using *
-* PartyID (448), PartyIDSource (447), and PartyRole.           *
-****************************************************************
-*/
   PartySubID = 523,
-/*
-**************************************************
-* PartyID value within a nested repeating group. *
-* Same values as PartyID (448)                   *
-**************************************************
-*/
   NestedPartyID = 524,
-/*
-********************************************************
-* PartyIDSource value within a nested repeating group. *
-* Same values as PartyIDSource (447)                   *
-********************************************************
-*/
   NestedPartyIDSource = 525,
-/*
-************************************************************
-* Assigned by the party which originates the order. Can be *
-* used to provide the ClOrdID (11) used by an exchange or  *
-* executing system.                                        *
-************************************************************
-*/
   SecondaryClOrdID = 526,
-/*
-***************************************************************
-* Assigned by the party which accepts the order. Can be used  *
-* to provide the ExecID (17) used by an exchange or executing *
-* system.                                                     *
-***************************************************************
-*/
   SecondaryExecID = 527,
-/*
-***************************************************************
-* Designates the capacity of the firm placing the order.      *
-* (as of FIX 4.3, this field replaced Rule80A (tag 47) --used *
-* in conjunction with OrderRestrictions (529) field)          *
-* (see Volume : "Glossary" for value definitions)             *
-***************************************************************
-*/
   OrderCapacity = 528,
-/*
-***********************************************************
-* Restrictions associated with an order. If more than one *
-* restriction is applicable to an order, this field can   *
-* contain multiple instructions separated by space.       *
-***********************************************************
-*/
   OrderRestrictions = 529,
-/*
-*************************************************
-* Specifies scope of Order Mass Cancel Request. *
-*************************************************
-*/
   MassCancelRequestType = 530,
-/*
-*************************************************************
-* Specifies the action taken by counterparty order handling *
-* system as a result of the Order Mass Cancel Request       *
-*************************************************************
-*/
   MassCancelResponse = 531,
-/*
-*************************************************
-* Reason Order Mass Cancel Request was rejected *
-*************************************************
-*/
   MassCancelRejectReason = 532,
-/*
-*************************************************
-* Total number of orders affected by either the *
-* OrderMassActionRequest(MsgType=CA) or         *
-* OrderMassCancelRequest(MsgType=Q).            *
-*************************************************
-*/
   TotalAffectedOrders = 533,
-/*
-*************************************************************
-* Number of affected orders in the repeating group of order *
-* ids.                                                      *
-*************************************************************
-*/
   NoAffectedOrders = 534,
-/*
-***************************************************************
-* OrderID (37) of an order affected by a mass cancel request. *
-***************************************************************
-*/
   AffectedOrderID = 535,
-/*
-****************************************************************
-* SecondaryOrderID (198) of an order affected by a mass cancel *
-* request.                                                     *
-****************************************************************
-*/
   AffectedSecondaryOrderID = 536,
-/*
-****************************************************************
-* Identifies the type of quote.                                *
-* An indicative quote is used to inform a counterparty of a    *
-* market. An indicative quote does not result directly in a    *
-* trade.                                                       *
-* A tradeable quote is submitted to a market and will result   *
-* directly in a trade against other orders and quotes in a     *
-* market.                                                      *
-* A restricted tradeable quote is submitted to a market and    *
-* within a certain restriction (possibly based upon price or   *
-* quantity) will automatically trade against orders. Order     *
-* that do not comply with restrictions are sent to the quote   *
-* issuer who can choose to accept or decline the order.        *
-* A counter quote is used in the negotiation model. See Volume *
-* 7 - Product: Fixed Income for example usage.                 *
-****************************************************************
-*/
   QuoteType = 537,
-/*
-****************************************************
-* PartyRole value within a nested repeating group. *
-* Same values as PartyRole (452)                   *
-****************************************************
-*/
   NestedPartyRole = 538,
-/*
-*************************************************************
-* Number of NestedPartyID (524), NestedPartyIDSource (525), *
-* and NestedPartyRole (538) entries                         *
-*************************************************************
-*/
   NoNestedPartyIDs = 539,
-/*
-**************************************************************
-* Total Amount of Accrued Interest for convertible bonds and *
-* fixed income                                               *
-**************************************************************
-*/
   TotalAccruedInterestAmt = 540,
-/*
-*********************
-* Date of maturity. *
-*********************
-*/
   MaturityDate = 541,
-/*
-************************************************
-* Underlying security's maturity date.         *
-* See MaturityDate (541) field for description *
-************************************************
-*/
   UnderlyingMaturityDate = 542,
-/*
-****************************************************************
-* Values may include BIC for the depository or custodian who   *
-* maintain ownership records, the ISO country code for the     *
-* location of the record, or the value "ZZ" to specify         *
-* physical ownership of the security (e.g. stock certificate). *
-****************************************************************
-*/
   InstrRegistry = 543,
-/*
-****************************************************************
-* Identifies whether an order is a margin order or a           *
-* non-margin order. This is primarily used when sending orders *
-* to Japanese exchanges to indicate sell margin or buy to      *
-* cover. The same tag could be assigned also by buy-side to    *
-* indicate the intent to sell or buy margin and the sell-side  *
-* to accept or reject (base on some validation criteria) the   *
-* margin request.                                              *
-****************************************************************
-*/
   CashMargin = 544,
-/*
-*****************************************************
-* PartySubID value within a nested repeating group. *
-* Same values as PartySubID (523)                   *
-*****************************************************
-*/
   NestedPartySubID = 545,
-/*
-**************************************************
-* Specifies the market scope of the market data. *
-**************************************************
-*/
   Scope = 546,
-/*
-************************************************************
-* Defines how a server handles distribution of a truncated *
-* book. Defaults to broker option.                         *
-************************************************************
-*/
   MDImplicitDelete = 547,
-/*
-****************************************************************
-* Identifier for a cross order. Must be unique during a given  *
-* trading day. Recommend that firms use the order date as part *
-* of the CrossID for Good Till Cancel (GT) orders.             *
-****************************************************************
-*/
   CrossID = 548,
-/*
-*********************************************
-* Type of cross being submitted to a market *
-*********************************************
-*/
   CrossType = 549,
-/*
-**************************************************************
-* Indicates if one side or the other of a cross order should *
-* be prioritized.                                            *
-* The definition of prioritization is left to the market. In *
-* some markets prioritization means which side of the cross  *
-* order is applied to the market first. In other markets -   *
-* prioritization may mean that the prioritized side is fully *
-* executed (sometimes referred to as the side being          *
-* protected).                                                *
-**************************************************************
-*/
   CrossPrioritization = 550,
-/*
-***************************************************************
-* CrossID of the previous cross order (NOT the initial cross  *
-* order of the day) as assigned by the institution, used to   *
-* identify the previous cross order in Cross Cancel and Cross *
-* Cancel/Replace Requests.                                    *
-***************************************************************
-*/
   OrigCrossID = 551,
-/*
-*********************************************
-* Number of Side repeating group instances. *
-*********************************************
-*/
   NoSides = 552,
-/*
-***********************
-* Userid or username. *
-***********************
-*/
   Username = 553,
-/*
-***************************
-* Password or passphrase. *
-***************************
-*/
   Password = 554,
-/*
-******************************************************
-* Number of InstrumentLeg repeating group instances. *
-******************************************************
-*/
   NoLegs = 555,
-/*
-********************************************************
-* Currency associated with a particular Leg's quantity *
-********************************************************
-*/
   LegCurrency = 556,
-/*
-****************************************************************
-* Used to support fragmentation. Indicates total number of     *
-* security types when multiple Security Type messages are used *
-* to return results.                                           *
-****************************************************************
-*/
   TotNoSecurityTypes = 557,
-/*
-******************************************************
-* Number of Security Type repeating group instances. *
-******************************************************
-*/
   NoSecurityTypes = 558,
-/*
-*********************************************************
-* Identifies the type/criteria of Security List Request *
-*********************************************************
-*/
   SecurityListRequestType = 559,
-/*
-******************************************************
-* The results returned to a Security Request message *
-******************************************************
-*/
   SecurityRequestResult = 560,
-/*
-**************************************
-* The trading lot size of a security *
-**************************************
-*/
   RoundLot = 561,
-/*
-*********************************************
-* The minimum trading volume for a security *
-*********************************************
-*/
   MinTradeVol = 562,
-/*
-************************************************************
-* Indicates the method of execution reporting requested by *
-* issuer of the order.                                     *
-************************************************************
-*/
   MultiLegRptTypeReq = 563,
-/*
-*************************************************
-* PositionEffect for leg of a multileg          *
-* See PositionEffect (77) field for description *
-*************************************************
-*/
   LegPositionEffect = 564,
-/*
-******************************************************
-* CoveredOrUncovered for leg of a multileg           *
-* See CoveredOrUncovered (203) field for description *
-******************************************************
-*/
   LegCoveredOrUncovered = 565,
-/*
-****************************************
-* Price for leg of a multileg          *
-* See Price (44) field for description *
-****************************************
-*/
   LegPrice = 566,
-/*
-*************************************************************
-* Indicates the reason a Trading Session Status Request was *
-* rejected.                                                 *
-*************************************************************
-*/
   TradSesStatusRejReason = 567,
-/*
-***********************************
-* Trade Capture Report Request ID *
-***********************************
-*/
   TradeRequestID = 568,
-/*
-*********************************
-* Type of Trade Capture Report. *
-*********************************
-*/
   TradeRequestType = 569,
-/*
-********************************************************
-* Indicates if the trade capture report was previously *
-* reported to the counterparty                         *
-********************************************************
-*/
   PreviouslyReported = 570,
-/*
-*********************************************
-* Unique identifier of trade capture report *
-*********************************************
-*/
   TradeReportID = 571,
-/*
-*****************************************************
-* Reference identifier used with CANCEL and REPLACE *
-* transaction types.                                *
-*****************************************************
-*/
   TradeReportRefID = 572,
-/*
-********************************************************
-* The status of this trade with respect to matching or *
-* comparison.                                          *
-********************************************************
-*/
   MatchStatus = 573,
-/*
-*************************************************************
-* The point in the matching process at which this trade was *
-* matched.                                                  *
-*************************************************************
-*/
   MatchType = 574,
-/*
-***********************************************************
-* This trade is to be treated as an odd lot               *
-* If this field is not specified, the default will be "N" *
-***********************************************************
-*/
   OddLot = 575,
-/*
-***********************************
-* Number of clearing instructions *
-***********************************
-*/
   NoClearingInstructions = 576,
-/*
-****************************************************************
-* Eligibility of this trade for clearing and central           *
-* counterparty processing                                      *
-* values above 4000 are reserved for agreement between parties *
-****************************************************************
-*/
   ClearingInstruction = 577,
-/*
-***********************************************************
-* Type of input device or system from which the trade was *
-* entered.                                                *
-***********************************************************
-*/
   TradeInputSource = 578,
-/*
-************************************************************
-* Specific device number, terminal number or station where *
-* trade was entered                                        *
-************************************************************
-*/
   TradeInputDevice = 579,
-/*
-************************************************
-* Number of Date fields provided in date range *
-************************************************
-*/
   NoDates = 580,
-/*
-********************************************
-* Type of account associated with an order *
-********************************************
-*/
   AccountType = 581,
-/*
-***************************************************************
-* Capacity of customer placing the order                      *
-* Primarily used by futures exchanges to indicate the CTICode *
-* (customer type indicator) as required by the US CFTC        *
-* (Commodity Futures Trading Commission).                     *
-***************************************************************
-*/
   CustOrderCapacity = 582,
-/*
-**************************************************************
-* Permits order originators to tie together groups of orders *
-* in which trades resulting from orders are associated for a *
-* specific purpose, for example the calculation of average   *
-* execution price for a customer or to associate lists       *
-* submitted to a broker as waves of a larger program trade.  *
-**************************************************************
-*/
   ClOrdLinkID = 583,
-/*
-***************************************************************
-* Value assigned by issuer of Mass Status Request to uniquely *
-* identify the request                                        *
-***************************************************************
-*/
   MassStatusReqID = 584,
-/*
-****************************
-* Mass Status Request Type *
-****************************
-*/
   MassStatusReqType = 585,
-/*
-****************************************************************
-* The most recent (or current) modification TransactTime (tag  *
-* 60) reported on an Execution Report for the order. The       *
-* OrigOrdModTime is provided as an optional field on Order     *
-* Cancel Request and Order Cancel Replace Requests to identify *
-* that the state of the order has not changed since the        *
-* request was issued. The use of this approach is not          *
-* recommended.                                                 *
-****************************************************************
-*/
   OrigOrdModTime = 586,
-/*
-*************************************
-* Refer to values for SettlType[63] *
-*************************************
-*/
   LegSettlType = 587,
-/*
-******************************************
-* Refer to description for SettlDate[64] *
-******************************************
-*/
   LegSettlDate = 588,
-/*
-*********************************************************
-* Indicates whether or not automatic booking can occur. *
-*********************************************************
-*/
   DayBookingInst = 589,
-/*
-***********************************************
-* Indicates what constitutes a bookable unit. *
-***********************************************
-*/
   BookingUnit = 590,
-/*
-******************************************
-* Indicates the method of preallocation. *
-******************************************
-*/
   PreallocMethod = 591,
-/*
-**************************************************
-* Underlying security's CountryOfIssue.          *
-* See CountryOfIssue (470) field for description *
-**************************************************
-*/
   UnderlyingCountryOfIssue = 592,
-/*
-**********************************************************
-* Underlying security's StateOrProvinceOfIssue.          *
-* See StateOrProvinceOfIssue (471) field for description *
-**********************************************************
-*/
   UnderlyingStateOrProvinceOfIssue = 593,
-/*
-*************************************************
-* Underlying security's LocaleOfIssue.          *
-* See LocaleOfIssue (472) field for description *
-*************************************************
-*/
   UnderlyingLocaleOfIssue = 594,
-/*
-*************************************************
-* Underlying security's InstrRegistry.          *
-* See InstrRegistry (543) field for description *
-*************************************************
-*/
   UnderlyingInstrRegistry = 595,
-/*
-***************************************************
-* Multileg instrument's individual leg security's *
-* CountryOfIssue.                                 *
-* See CountryOfIssue (470) field for description  *
-***************************************************
-*/
   LegCountryOfIssue = 596,
-/*
-**********************************************************
-* Multileg instrument's individual leg security's        *
-* StateOrProvinceOfIssue.                                *
-* See StateOrProvinceOfIssue (471) field for description *
-**********************************************************
-*/
   LegStateOrProvinceOfIssue = 597,
-/*
-***************************************************
-* Multileg instrument's individual leg security's *
-* LocaleOfIssue.                                  *
-* See LocaleOfIssue (472) field for description   *
-***************************************************
-*/
   LegLocaleOfIssue = 598,
-/*
-***************************************************
-* Multileg instrument's individual leg security's *
-* InstrRegistry.                                  *
-* See InstrRegistry (543) field for description   *
-***************************************************
-*/
   LegInstrRegistry = 599,
-/*
-*******************************************************
-* Multileg instrument's individual security's Symbol. *
-* See Symbol (55) field for description               *
-*******************************************************
-*/
   LegSymbol = 600,
-/*
-**********************************************************
-* Multileg instrument's individual security's SymbolSfx. *
-* See SymbolSfx (65) field for description               *
-**********************************************************
-*/
   LegSymbolSfx = 601,
-/*
-***********************************************************
-* Multileg instrument's individual security's SecurityID. *
-* See SecurityID (48) field for description               *
-***********************************************************
-*/
   LegSecurityID = 602,
-/*
-***************************************************
-* Multileg instrument's individual security's     *
-* SecurityIDSource.                               *
-* See SecurityIDSource (22) field for description *
-***************************************************
-*/
   LegSecurityIDSource = 603,
-/*
-****************************************************************
-* Multileg instrument's individual security's NoSecurityAltID. *
-* See NoSecurityAltID (454) field for description              *
-****************************************************************
-*/
   NoLegSecurityAltID = 604,
-/*
-**************************************************************
-* Multileg instrument's individual security's SecurityAltID. *
-* See SecurityAltID (455) field for description              *
-**************************************************************
-*/
   LegSecurityAltID = 605,
-/*
-*******************************************************
-* Multileg instrument's individual security's         *
-* SecurityAltIDSource.                                *
-* See SecurityAltIDSource (456) field for description *
-*******************************************************
-*/
   LegSecurityAltIDSource = 606,
-/*
-********************************************************
-* Multileg instrument's individual security's Product. *
-* See Product (460) field for description              *
-********************************************************
-*/
   LegProduct = 607,
-/*
-********************************************************
-* Multileg instrument's individual security's CFICode. *
-* See CFICode (461) field for description              *
-********************************************************
-*/
   LegCFICode = 608,
-/*
-********************************************
-* Refer to definition of SecurityType(167) *
-********************************************
-*/
   LegSecurityType = 609,
-/*
-*****************************************************
-* Multileg instrument's individual security's       *
-* MaturityMonthYear.                                *
-* See MaturityMonthYear (200) field for description *
-*****************************************************
-*/
   LegMaturityMonthYear = 610,
-/*
-*************************************************************
-* Multileg instrument's individual security's MaturityDate. *
-* See MaturityDate (54) field for description               *
-*************************************************************
-*/
   LegMaturityDate = 611,
-/*
-************************************************************
-* Multileg instrument's individual security's StrikePrice. *
-* See StrikePrice (202) field for description              *
-************************************************************
-*/
   LegStrikePrice = 612,
-/*
-*************************************************************
-* Multileg instrument's individual security's OptAttribute. *
-* See OptAttribute (206) field for description              *
-*************************************************************
-*/
   LegOptAttribute = 613,
-/*
-*****************************************************
-* Multileg instrument's individual security's       *
-* ContractMultiplier.                               *
-* See ContractMultiplier (23) field for description *
-*****************************************************
-*/
   LegContractMultiplier = 614,
-/*
-***********************************************************
-* Multileg instrument's individual security's CouponRate. *
-* See CouponRate (223) field for description              *
-***********************************************************
-*/
   LegCouponRate = 615,
-/*
-****************************************************
-* Multileg instrument's individual security's      *
-* SecurityExchange.                                *
-* See SecurityExchange (207) field for description *
-****************************************************
-*/
   LegSecurityExchange = 616,
-/*
-*******************************************************
-* Multileg instrument's individual security's Issuer. *
-* See Issuer (106) field for description              *
-*******************************************************
-*/
   LegIssuer = 617,
-/*
-****************************************************
-* Multileg instrument's individual security's      *
-* EncodedIssuerLen.                                *
-* See EncodedIssuerLen (348) field for description *
-****************************************************
-*/
   EncodedLegIssuerLen = 618,
-/*
-**************************************************************
-* Multileg instrument's individual security's EncodedIssuer. *
-* See EncodedIssuer (349) field for description              *
-**************************************************************
-*/
   EncodedLegIssuer = 619,
-/*
-**************************************************
-* Description of a leg of a multileg instrument. *
-* See SecurityDesc(107).                         *
-**************************************************
-*/
   LegSecurityDesc = 620,
-/*
-**********************************************************
-* Multileg instrument's individual security's            *
-* EncodedSecurityDescLen.                                *
-* See EncodedSecurityDescLen (350) field for description *
-**********************************************************
-*/
   EncodedLegSecurityDescLen = 621,
-/*
-******************************************************
-* Multileg instrument's individual security's        *
-* EncodedSecurityDesc.                               *
-* See EncodedSecurityDesc (35) field for description *
-******************************************************
-*/
   EncodedLegSecurityDesc = 622,
-/*
-*************************************************************
-* The ratio of quantity for this individual leg relative to *
-* the entire multileg security.                             *
-*************************************************************
-*/
   LegRatioQty = 623,
-/*
-********************************************************
-* The side of this individual leg (multileg security). *
-* See Side (54) field for description and values       *
-********************************************************
-*/
   LegSide = 624,
-/*
-****************************************************************
-* Optional market assigned sub identifier for a trading phase  *
-* within a trading session. Usage is determined by market or   *
-* counterparties. Used by US based futures markets to identify *
-* exchange specific execution time bracket codes as required   *
-* by US market regulations. Bilaterally agreed values of data  *
-* type "String" that start with a character can be used for    *
-* backward compatibility                                       *
-****************************************************************
-*/
   TradingSessionSubID = 625,
-/*
-***************************************************************
-* Describes the specific type or purpose of an Allocation     *
-* message (i.e. "Buyside Calculated")                         *
-* (see Volume : "Glossary" for value definitions)             *
-* *** SOME VALUES HAVE BEEN REPLACED - See "Replaced Features *
-* and Supported Approach" ***                                 *
-***************************************************************
-*/
   AllocType = 626,
-/*
-***************************************************
-* Number of HopCompID entries in repeating group. *
-***************************************************
-*/
   NoHops = 627,
-/*
-****************************************************************
-* Assigned value used to identify the third party firm which   *
-* delivered a specific message either from the firm which      *
-* originated the message or from another third party (if       *
-* multiple "hops" are performed). It is recommended that this  *
-* value be the SenderCompID (49) of the third party.           *
-* Applicable when messages are communicated/re-distributed via *
-* third parties which function as service bureaus or "hubs".   *
-* Only applicable if OnBehalfOfCompID (115) is being used.     *
-****************************************************************
-*/
   HopCompID = 628,
-/*
-****************************************************************
-* Time that HopCompID (628) sent the message. It is            *
-* recommended that this value be the SendingTime (52) of the   *
-* message sent by the third party.                             *
-* Applicable when messages are communicated/re-distributed via *
-* third parties which function as service bureaus or "hubs".   *
-* Only applicable if OnBehalfOfCompID (115) is being used.     *
-****************************************************************
-*/
   HopSendingTime = 629,
-/*
-****************************************************************
-* Reference identifier assigned by HopCompID (628) associated  *
-* with the message sent. It is recommended that this value be  *
-* the MsgSeqNum (34) of the message sent by the third party.   *
-* Applicable when messages are communicated/re-distributed via *
-* third parties which function as service bureaus or "hubs".   *
-* Only applicable if OnBehalfOfCompID (115) is being used.     *
-****************************************************************
-*/
   HopRefID = 630,
-/*
-******************
-* Mid price/rate *
-******************
-*/
   MidPx = 631,
-/*
-*************
-* Bid yield *
-*************
-*/
   BidYield = 632,
-/*
-*************
-* Mid yield *
-*************
-*/
   MidYield = 633,
-/*
-***************
-* Offer yield *
-***************
-*/
   OfferYield = 634,
-/*
-************************************************************
-* Indicates type of fee being assessed of the customer for *
-* trade executions at an exchange. Applicable for futures  *
-* markets only at this time.                               *
-* (Values source CBOT, CME, NYBOT, and NYMEX):             *
-************************************************************
-*/
   ClearingFeeIndicator = 635,
-/*
-****************************************************************
-* Indicates if the order is currently being worked. Applicable *
-* only for OrdStatus = "New". For open outcry markets this     *
-* indicates that the order is being worked in the crowd. For   *
-* electronic markets it indicates that the order has           *
-* transitioned from a contingent order to a market order.      *
-****************************************************************
-*/
   WorkingIndicator = 636,
-/*
-***************************************************************
-* Execution price assigned to a leg of a multileg instrument. *
-* See LastPx (31) field for description and values            *
-***************************************************************
-*/
   LegLastPx = 637,
-/*
-*************************************************************
-* Indicates if a Cancel/Replace has caused an order to lose *
-* book priority.                                            *
-*************************************************************
-*/
   PriorityIndicator = 638,
-/*
-********************************
-* Amount of price improvement. *
-********************************
-*/
   PriceImprovement = 639,
-/*
-*************************************************
-* Price of the future part of a F/X swap order. *
-* See Price (44) for description.               *
-*************************************************
-*/
   Price2 = 640,
-/*
-*************************************************************
-* F/X forward points of the future part of a F/X swap order *
-* added to LastSpotRate (94). May be a negative value.      *
-*************************************************************
-*/
   LastForwardPoints2 = 641,
-/*
-**************************************************************
-* Bid F/X forward points of the future portion of a F/X swap *
-* quote added to spot rate. May be a negative value.         *
-**************************************************************
-*/
   BidForwardPoints2 = 642,
-/*
-****************************************************************
-* Offer F/X forward points of the future portion of a F/X swap *
-* quote added to spot rate. May be a negative value.           *
-****************************************************************
-*/
   OfferForwardPoints2 = 643,
-/*
-*****************************************************
-* RFQ Request ID - used to identify an RFQ Request. *
-*****************************************************
-*/
   RFQReqID = 644,
-/*
-*********************************************
-* Used to indicate the best bid in a market *
-*********************************************
-*/
   MktBidPx = 645,
-/*
-***********************************************
-* Used to indicate the best offer in a market *
-***********************************************
-*/
   MktOfferPx = 646,
-/*
-****************************************************************
-* Used to indicate a minimum quantity for a bid. If this field *
-* is used the BidSize (134) field is interpreted as the        *
-* maximum bid size                                             *
-****************************************************************
-*/
   MinBidSize = 647,
-/*
-*************************************************************
-* Used to indicate a minimum quantity for an offer. If this *
-* field is used the OfferSize (135) field is interpreted as *
-* the maximum offer size.                                   *
-*************************************************************
-*/
   MinOfferSize = 648,
-/*
-***********************************************
-* Unique identifier for Quote Status Request. *
-***********************************************
-*/
   QuoteStatusReqID = 649,
-/*
-************************************************************
-* Indicates that this message is to serve as the final and *
-* legal confirmation.                                      *
-************************************************************
-*/
   LegalConfirm = 650,
-/*
-****************************************************************
-* The calculated or traded price for the underlying instrument *
-* that corresponds to a derivative. Used for transactions that *
-* include the cash instrument and the derivative.              *
-****************************************************************
-*/
   UnderlyingLastPx = 651,
-/*
-*********************************************************
-* The calculated or traded quantity for the underlying  *
-* instrument that corresponds to a derivative. Used for *
-* transactions that include the cash instrument and the *
-* derivative.                                           *
-*********************************************************
-*/
   UnderlyingLastQty = 652,
-/*
-****************************************
-* Unique indicator for a specific leg. *
-****************************************
-*/
   LegRefID = 654,
-/*
-************************************************************
-* Unique indicator for a specific leg for the ContraBroker *
-* (375).                                                   *
-************************************************************
-*/
   ContraLegRefID = 655,
-/*
-****************************************************************
-* Foreign exchange rate used to compute the bid "SettlCurrAmt" *
-* (119) from Currency (15) to SettlCurrency (120)              *
-****************************************************************
-*/
   SettlCurrBidFxRate = 656,
-/*
-************************************************************
-* Foreign exchange rate used to compute the offer          *
-* "SettlCurrAmt" (119) from Currency (15) to SettlCurrency *
-* (120)                                                    *
-************************************************************
-*/
   SettlCurrOfferFxRate = 657,
-/*
-******************************
-* Reason Quote was rejected: *
-******************************
-*/
   QuoteRequestRejectReason = 658,
-/*
-************************************************************
-* ID within repeating group of sides which is used to      *
-* represent this transaction for compliance purposes (e.g. *
-* OATS reporting).                                         *
-************************************************************
-*/
   SideComplianceID = 659,
-/*
-****************************************************************
-* Used to identify the source of the Account (1) code. This is *
-* especially useful if the account is a new account that the   *
-* Respondent may not have setup yet in their system.           *
-****************************************************************
-*/
   AcctIDSource = 660,
-/*
-**************************************************************
-* Used to identify the source of the AllocAccount (79) code. *
-* See AcctIDSource (660) for valid values.                   *
-**************************************************************
-*/
   AllocAcctIDSource = 661,
-/*
-*****************************************
-* Specifies the price of the benchmark. *
-*****************************************
-*/
   BenchmarkPrice = 662,
-/*
-********************************************
-* Identifies type of BenchmarkPrice (662). *
-* See PriceType (423) for valid values.    *
-********************************************
-*/
   BenchmarkPriceType = 663,
-/*
-**************************************
-* Message reference for Confirmation *
-**************************************
-*/
   ConfirmID = 664,
-/*
-**********************************************
-* Identifies the status of the Confirmation. *
-**********************************************
-*/
   ConfirmStatus = 665,
-/*
-*************************************************
-* Identifies the Confirmation transaction type. *
-*************************************************
-*/
   ConfirmTransType = 666,
-/*
-***********************************************************
-* Specifies when the contract (i.e. MBS/TBA) will settle. *
-***********************************************************
-*/
   ContractSettlMonth = 667,
-/*
-************************************
-* Identifies the form of delivery. *
-************************************
-*/
   DeliveryForm = 668,
-/*
-***********************************************************
-* Last price expressed in percent-of-par. Conditionally   *
-* required for Fixed Income trades when LastPx (31) is    *
-* expressed in Yield, Spread, Discount or any other type. *
-* Usage: Execution Report and Allocation Report repeating *
-* executions block (from sellside).                       *
-***********************************************************
-*/
   LastParPx = 669,
-/*
-*************************************
-* Number of Allocations for the leg *
-*************************************
-*/
   NoLegAllocs = 670,
-/*
-***********************************************************
-* Allocation Account for the leg                          *
-* See AllocAccount (79) for description and valid values. *
-***********************************************************
-*/
   LegAllocAccount = 671,
-/*
-*********************************************************
-* Reference for the individual allocation ticket        *
-* See IndividualAllocID (467) for description and valid *
-* values.                                               *
-*********************************************************
-*/
   LegIndividualAllocID = 672,
-/*
-*******************************************************
-* Leg allocation quantity.                            *
-* See AllocQty (80) for description and valid values. *
-*******************************************************
-*/
   LegAllocQty = 673,
-/*
-*********************************************************
-* The source of the LegAllocAccount (671)               *
-* See AllocAcctIDSource (661) for description and valid *
-* values.                                               *
-*********************************************************
-*/
   LegAllocAcctIDSource = 674,
-/*
-***********************************************************
-* Identifies settlement currency for the Leg.             *
-* See SettlCurrency (20) for description and valid values *
-***********************************************************
-*/
   LegSettlCurrency = 675,
-/*
-**************************************************************
-* LegBenchmarkPrice (679) currency                           *
-* See BenchmarkCurveCurrency (220) for description and valid *
-* values.                                                    *
-**************************************************************
-*/
   LegBenchmarkCurveCurrency = 676,
-/*
-*********************************************************
-* Name of the Leg Benchmark Curve.                      *
-* See BenchmarkCurveName (22) for description and valid *
-* values.                                               *
-*********************************************************
-*/
   LegBenchmarkCurveName = 677,
-/*
-***********************************************************
-* Identifies the point on the Leg Benchmark Curve.        *
-* See BenchmarkCurvePoint (222) for description and valid *
-* values.                                                 *
-***********************************************************
-*/
   LegBenchmarkCurvePoint = 678,
-/*
-**************************************************************
-* Used to identify the price of the benchmark security.      *
-* See BenchmarkPrice (662) for description and valid values. *
-**************************************************************
-*/
   LegBenchmarkPrice = 679,
-/*
-**********************************************************
-* The price type of the LegBenchmarkPrice.               *
-* See BenchmarkPriceType (663) for description and valid *
-* values.                                                *
-**********************************************************
-*/
   LegBenchmarkPriceType = 680,
-/*
-****************************************************
-* Bid price of this leg.                           *
-* See BidPx (32) for description and valid values. *
-****************************************************
-*/
   LegBidPx = 681,
-/*
-****************************************************
-* Leg-specific IOI quantity.                       *
-* See IOIQty (27) for description and valid values *
-****************************************************
-*/
   LegIOIQty = 682,
-/*
-*************************************
-* Number of leg stipulation entries *
-*************************************
-*/
   NoLegStipulations = 683,
-/*
-******************************************************
-* Offer price of this leg.                           *
-* See OfferPx (133) for description and valid values *
-******************************************************
-*/
   LegOfferPx = 684,
-/*
-******************************************************
-* Quantity ordered of this leg.                      *
-* See OrderQty (38) for description and valid values *
-******************************************************
-*/
   LegOrderQty = 685,
-/*
-**********************************************************
-* The price type of the LegBidPx (681) and/or LegOfferPx *
-* (684).                                                 *
-* See PriceType (423) for description and valid values   *
-**********************************************************
-*/
   LegPriceType = 686,
-/*
-******************************************************
-* Quantity of this leg, e.g. in Quote dialog.        *
-* See Quantity (53) for description and valid values *
-******************************************************
-*/
   LegQty = 687,
-/*
-**************************************************************
-* For Fixed Income, type of Stipulation for this leg.        *
-* See StipulationType (233) for description and valid values *
-**************************************************************
-*/
   LegStipulationType = 688,
-/*
-***************************************************************
-* For Fixed Income, value of stipulation.                     *
-* See StipulationValue (234) for description and valid values *
-***************************************************************
-*/
   LegStipulationValue = 689,
-/*
-**************************************************************
-* For Fixed Income, used instead of LegQty (687) or          *
-* LegOrderQty (685) to requests the respondent to calculate  *
-* the quantity based on the quantity on the opposite side of *
-* the swap.                                                  *
-**************************************************************
-*/
   LegSwapType = 690,
-/*
-************************************************
-* For Fixed Income, identifies MBS / ABS pool. *
-************************************************
-*/
   Pool = 691,
-/*
-**************************************************************
-* Code to represent price type requested in Quote.           *
-* If the Quote Request is for a Swap values 1-8 apply to all *
-* legs.                                                      *
-**************************************************************
-*/
   QuotePriceType = 692,
-/*
-****************************************
-* Message reference for Quote Response *
-****************************************
-*/
   QuoteRespID = 693,
-/*
-******************************************
-* Identifies the type of Quote Response. *
-******************************************
-*/
   QuoteRespType = 694,
-/*
-************************************************************
-* Code to qualify Quote use                                *
-* See IOIQualifier (104) for description and valid values. *
-************************************************************
-*/
   QuoteQualifier = 695,
-/*
-***************************************************************
-* Date to which the yield has been calculated (i.e. maturity, *
-* par call or current call, pre-refunded date).               *
-***************************************************************
-*/
   YieldRedemptionDate = 696,
-/*
-*************************************************
-* Price to which the yield has been calculated. *
-*************************************************
-*/
   YieldRedemptionPrice = 697,
-/*
-*********************************************************
-* The price type of the YieldRedemptionPrice (697)      *
-* See PriceType (423) for description and valid values. *
-*********************************************************
-*/
   YieldRedemptionPriceType = 698,
-/*
-*************************************************************
-* The identifier of the benchmark security, e.g. Treasury   *
-* against Corporate bond.                                   *
-* See SecurityID (tag 48) for description and valid values. *
-*************************************************************
-*/
   BenchmarkSecurityID = 699,
-/*
-*****************************************************
-* Indicates a trade that reverses a previous trade. *
-*****************************************************
-*/
   ReversalIndicator = 700,
-/*
-****************************************************************
-* Include as needed to clarify yield irregularities associated *
-* with date, e.g. when it falls on a non-business day.         *
-****************************************************************
-*/
   YieldCalcDate = 701,
-/*
-*******************************
-* Number of position entries. *
-*******************************
-*/
   NoPositions = 702,
-/*
-*******************************************************
-* Used to identify the type of quantity that is being *
-* returned.                                           *
-*******************************************************
-*/
   PosType = 703,
-/*
-*****************
-* Long Quantity *
-*****************
-*/
   LongQty = 704,
-/*
-******************
-* Short Quantity *
-******************
-*/
   ShortQty = 705,
-/*
-****************************
-* Status of this position. *
-****************************
-*/
   PosQtyStatus = 706,
-/*
-***************************
-* Type of Position amount *
-***************************
-*/
   PosAmtType = 707,
-/*
-*******************
-* Position amount *
-*******************
-*/
   PosAmt = 708,
-/*
-***********************************************
-* Identifies the type of position transaction *
-***********************************************
-*/
   PosTransType = 709,
-/*
-*************************************************************
-* Unique identifier for the position maintenance request as *
-* assigned by the submitter                                 *
-*************************************************************
-*/
   PosReqID = 710,
-/*
-********************************************************
-* Number of underlying legs that make up the security. *
-********************************************************
-*/
   NoUnderlyings = 711,
-/*
-***************************************
-* Maintenance Action to be performed. *
-***************************************
-*/
   PosMaintAction = 712,
-/*
-*************************************************************
-* Reference to the PosReqID (710) of a previous maintenance *
-* request that is being replaced or canceled.               *
-*************************************************************
-*/
   OrigPosReqRefID = 713,
-/*
-***************************************************************
-* Reference to a PosMaintRptID (721) from a previous Position *
-* Maintenance Report that is being replaced or canceled.      *
-***************************************************************
-*/
   PosMaintRptRefID = 714,
-/*
-****************************************************************
-* The "Clearing Business Date" referred to by this maintenance *
-* request.                                                     *
-****************************************************************
-*/
   ClearingBusinessDate = 715,
-/*
-********************************************
-* Identifies a specific settlement session *
-********************************************
-*/
   SettlSessID = 716,
-/*
-************************************************
-* SubID value associated with SettlSessID(716) *
-************************************************
-*/
   SettlSessSubID = 717,
-/*
-**********************************************************
-* Type of adjustment to be applied, used for PCS and PAJ *
-**********************************************************
-*/
   AdjustmentType = 718,
-/*
-****************************************************************
-* Used to indicate when a contrary instruction for exercise or *
-* abandonment is being submitted                               *
-****************************************************************
-*/
   ContraryInstructionIndicator = 719,
-/*
-************************************************************
-* Indicates if requesting a rollover of prior day's spread *
-* submissions.                                             *
-************************************************************
-*/
   PriorSpreadIndicator = 720,
-/*
-**********************************************
-* Unique identifier for this position report *
-**********************************************
-*/
   PosMaintRptID = 721,
-/*
-******************************************
-* Status of Position Maintenance Request *
-******************************************
-*/
   PosMaintStatus = 722,
-/*
-*************************************************************
-* Result of Position Maintenance Request.                   *
-* 4000+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                       *
-*************************************************************
-*/
   PosMaintResult = 723,
-/*
-************************************************************
-* Used to specify the type of position request being made. *
-************************************************************
-*/
   PosReqType = 724,
-/*
-********************************************************
-* Identifies how the response to the request should be *
-* transmitted.                                         *
-* Details specified via ResponseDestination (726).     *
-********************************************************
-*/
   ResponseTransportType = 725,
-/*
-****************************************************************
-* URI (Uniform Resource Identifier) for details) or other      *
-* pre-arranged value. Used in conjunction with                 *
-* ResponseTransportType (725) value of Out-of-Band to identify *
-* the out-of-band destination.                                 *
-* See "Appendix 6-B FIX Fields Based Upon Other Standards"     *
-****************************************************************
-*/
   ResponseDestination = 726,
-/*
-****************************************************
-* Total number of Position Reports being returned. *
-****************************************************
-*/
   TotalNumPosReports = 727,
-/*
-*************************************************************
-* Result of Request for Position                            *
-* 4000+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                       *
-*************************************************************
-*/
   PosReqResult = 728,
-/*
-***********************************
-* Status of Request for Positions *
-***********************************
-*/
   PosReqStatus = 729,
-/*
-********************
-* Settlement price *
-********************
-*/
   SettlPrice = 730,
-/*
-****************************
-* Type of settlement price *
-****************************
-*/
   SettlPriceType = 731,
-/*
-**********************************************
-* Underlying security's SettlPrice.          *
-* See SettlPrice (730) field for description *
-**********************************************
-*/
   UnderlyingSettlPrice = 732,
-/*
-**************************************************
-* Underlying security's SettlPriceType.          *
-* See SettlPriceType (731) field for description *
-**************************************************
-*/
   UnderlyingSettlPriceType = 733,
-/*
-*****************************
-* Previous settlement price *
-*****************************
-*/
   PriorSettlPrice = 734,
-/*
-********************************************************
-* Number of repeating groups of QuoteQualifiers (695). *
-********************************************************
-*/
   NoQuoteQualifiers = 735,
-/*
-***********************************************************
-* Currency code of settlement denomination for a specific *
-* AllocAccount (79).                                      *
-***********************************************************
-*/
   AllocSettlCurrency = 736,
-/*
-***************************************************************
-* Total amount due expressed in settlement currency (includes *
-* the effect of the forex transaction) for a specific         *
-* AllocAccount (79).                                          *
-***************************************************************
-*/
   AllocSettlCurrAmt = 737,
-/*
-***************************************************
-* Amount of interest (i.e. lump-sum) at maturity. *
-***************************************************
-*/
   InterestAtMaturity = 738,
-/*
-****************************************************************
-* The effective date of a new securities issue determined by   *
-* its underwriters. Often but not always the same as the Issue *
-* Date and the Interest Accrual Date                           *
-****************************************************************
-*/
   LegDatedDate = 739,
-/*
-**************************************************************
-* For Fixed Income, identifies MBS / ABS pool for a specific *
-* leg of a multi-leg instrument.                             *
-* See Pool (691) for description and valid values.           *
-**************************************************************
-*/
   LegPool = 740,
-/*
-*********************************************************
-* Amount of interest (i.e. lump-sum) at maturity at the *
-* account-level.                                        *
-*********************************************************
-*/
   AllocInterestAtMaturity = 741,
-/*
-**************************************************************
-* Amount of Accrued Interest for convertible bonds and fixed *
-* income at the allocation-level.                            *
-**************************************************************
-*/
   AllocAccruedInterestAmt = 742,
-/*
-*********************
-* Date of delivery. *
-*********************
-*/
   DeliveryDate = 743,
-/*
-***************************************************************
-* Method by which short positions are assigned to an exercise *
-* notice during exercise and assignment processing            *
-***************************************************************
-*/
   AssignmentMethod = 744,
-/*
-*****************************************************
-* Quantity Increment used in performing assignment. *
-*****************************************************
-*/
   AssignmentUnit = 745,
-/*
-***************************************************
-* Open interest that was eligible for assignment. *
-***************************************************
-*/
   OpenInterest = 746,
-/*
-*****************************************************
-* Exercise Method used to in performing assignment. *
-*****************************************************
-*/
   ExerciseMethod = 747,
-/*
-*******************************************
-* Total number of trade reports returned. *
-*******************************************
-*/
   TotNumTradeReports = 748,
-/*
-***************************
-* Result of Trade Request *
-***************************
-*/
   TradeRequestResult = 749,
-/*
-****************************
-* Status of Trade Request. *
-****************************
-*/
   TradeRequestStatus = 750,
-/*
-************************************************************
-* Reason Trade Capture Request was rejected.               *
-* 100+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                      *
-************************************************************
-*/
   TradeReportRejectReason = 751,
-/*
-****************************************************************
-* Used to indicate if the side being reported on Trade Capture *
-* Report represents a leg of a multileg instrument or a single *
-* security.                                                    *
-****************************************************************
-*/
   SideMultiLegReportingType = 752,
-/*
-**************************************
-* Number of position amount entries. *
-**************************************
-*/
   NoPosAmt = 753,
-/*
-*************************************************************
-* Identifies whether or not an allocation has been          *
-* automatically accepted on behalf of the Carry Firm by the *
-* Clearing House.                                           *
-*************************************************************
-*/
   AutoAcceptIndicator = 754,
-/*
-****************************************************
-* Unique identifier for Allocation Report message. *
-****************************************************
-*/
   AllocReportID = 755,
-/*
-***************************************************************
-* Number of Nested2PartyID (757), Nested2PartyIDSource (758), *
-* and Nested2PartyRole (759) entries                          *
-***************************************************************
-*/
   NoNested2PartyIDs = 756,
-/*
-*************************************************************
-* PartyID value within a "second instance" Nested repeating *
-* group.                                                    *
-* Same values as PartyID (448)                              *
-*************************************************************
-*/
   Nested2PartyID = 757,
-/*
-*********************************************************
-* PartyIDSource value within a "second instance" Nested *
-* repeating group.                                      *
-* Same values as PartyIDSource (447)                    *
-*********************************************************
-*/
   Nested2PartyIDSource = 758,
-/*
-***************************************************************
-* PartyRole value within a "second instance" Nested repeating *
-* group.                                                      *
-* Same values as PartyRole (452)                              *
-***************************************************************
-*/
   Nested2PartyRole = 759,
-/*
-****************************************************************
-* PartySubID value within a "second instance" Nested repeating *
-* group.                                                       *
-* Same values as PartySubID (523)                              *
-****************************************************************
-*/
   Nested2PartySubID = 760,
-/*
-***************************************************************
-* Identifies class or source of the BenchmarkSecurityID (699) *
-* value. Required if BenchmarkSecurityID is specified.        *
-* Same values as the SecurityIDSource (22) field              *
-***************************************************************
-*/
   BenchmarkSecurityIDSource = 761,
-/*
-***************************************************************
-* Sub-type qualification/identification of the SecurityType.  *
-* As an example for SecurityType(167)="REPO", the             *
-* SecuritySubType="General Collateral" can be used to further *
-* specify the type of REPO.                                   *
-* If SecuritySubType is used then SecurityType is required.   *
-* For SecurityType="MLEG" a name of the option or futures     *
-* strategy name can be specified, such as "Calendar",         *
-* "Vertical", "Butterfly".                                    *
-***************************************************************
-*/
   SecuritySubType = 762,
-/*
-***************************************************
-* Underlying security's SecuritySubType.          *
-* See SecuritySubType (762) field for description *
-***************************************************
-*/
   UnderlyingSecuritySubType = 763,
-/*
-***************************************************
-* SecuritySubType of the leg instrument.          *
-* See SecuritySubType (762) field for description *
-***************************************************
-*/
   LegSecuritySubType = 764,
-/*
-**********************************************************
-* The maximum percentage that execution of one side of a *
-* program trade can exceed execution of the other.       *
-**********************************************************
-*/
   AllowableOneSidednessPct = 765,
-/*
-**************************************************************
-* The maximum amount that execution of one side of a program *
-* trade can exceed execution of the other.                   *
-**************************************************************
-*/
   AllowableOneSidednessValue = 766,
-/*
-*********************************************************
-* The currency that AllowableOneSidednessValue (766) is *
-* expressed in if AllowableOneSidednessValue is used.   *
-*********************************************************
-*/
   AllowableOneSidednessCurr = 767,
-/*
-*******************************************
-* Number of TrdRegTimestamp (769) entries *
-*******************************************
-*/
   NoTrdRegTimestamps = 768,
-/*
-*************************************************************
-* Traded / Regulatory timestamp value. Use to store time    *
-* information required by government regulators or self     *
-* regulatory organizations (such as an exchange or clearing *
-* house).                                                   *
-*************************************************************
-*/
   TrdRegTimestamp = 769,
-/*
-************************************************************
-* Traded / Regulatory timestamp type.                      *
-* Note of Applicability: values are required in US futures *
-* markets by the CFTC to support computerized trade        *
-* reconstruction.                                          *
-* (see Volume : "Glossary" for value definitions)          *
-************************************************************
-*/
   TrdRegTimestampType = 770,
-/*
-****************************************************************
-* Text which identifies the "origin" (i.e. system which was    *
-* used to generate the time stamp) for the Traded / Regulatory *
-* timestamp value.                                             *
-****************************************************************
-*/
   TrdRegTimestampOrigin = 771,
-/*
-***************************************************************
-* Reference identifier to be used with ConfirmTransType (666) *
-* = Replace or Cancel                                         *
-***************************************************************
-*/
   ConfirmRefID = 772,
-/*
-***********************************************************
-* Identifies the type of Confirmation message being sent. *
-***********************************************************
-*/
   ConfirmType = 773,
-/*
-*******************************************************
-* Identifies the reason for rejecting a Confirmation. *
-*******************************************************
-*/
   ConfirmRejReason = 774,
-/*
-**************************************************************
-* Method for booking out this order. Used when notifying a   *
-* broker that an order to be settled by that broker is to be *
-* booked out as an OTC derivative (e.g. CFD or similar).     *
-**************************************************************
-*/
   BookingType = 775,
-/*
-**************************************************************
-* Identified reason for rejecting an individual AllocAccount *
-* (79) detail.                                               *
-* Same values as AllocRejCode (88)                           *
-**************************************************************
-*/
   IndividualAllocRejCode = 776,
-/*
-*********************************************************
-* Unique identifier for Settlement Instruction message. *
-*********************************************************
-*/
   SettlInstMsgID = 777,
-/*
-*************************************************************
-* Number of settlement instructions within repeating group. *
-*************************************************************
-*/
   NoSettlInst = 778,
-/*
-************************************************************
-* Timestamp of last update to data item (or creation if no *
-* updates made since creation).                            *
-************************************************************
-*/
   LastUpdateTime = 779,
-/*
-**************************************************************
-* Used to indicate whether settlement instructions are       *
-* provided on an allocation instruction message, and if not, *
-* how they are to be derived.                                *
-**************************************************************
-*/
   AllocSettlInstType = 780,
-/*
-***************************************************************
-* Number of SettlPartyID (782), SettlPartyIDSource (783), and *
-* SettlPartyRole (784) entries                                *
-***************************************************************
-*/
   NoSettlPartyIDs = 781,
-/*
-***************************************************************
-* PartyID value within a settlement parties component. Nested *
-* repeating group.                                            *
-* Same values as PartyID (448)                                *
-***************************************************************
-*/
   SettlPartyID = 782,
-/*
-**************************************************************
-* PartyIDSource value within a settlement parties component. *
-* Same values as PartyIDSource (447)                         *
-**************************************************************
-*/
   SettlPartyIDSource = 783,
-/*
-**********************************************************
-* PartyRole value within a settlement parties component. *
-* Same values as PartyRole (452)                         *
-**********************************************************
-*/
   SettlPartyRole = 784,
-/*
-***********************************************************
-* PartySubID value within a settlement parties component. *
-* Same values as PartySubID (523)                         *
-***********************************************************
-*/
   SettlPartySubID = 785,
-/*
-****************************************
-* Type of SettlPartySubID (785) value. *
-* Same values as PartySubIDType (803)  *
-****************************************
-*/
   SettlPartySubIDType = 786,
-/*
-***************************************************************
-* Used to indicate whether a delivery instruction is used for *
-* securities or cash settlement.                              *
-***************************************************************
-*/
   DlvyInstType = 787,
-/*
-**********************************
-* Type of financing termination. *
-**********************************
-*/
   TerminationType = 788,
-/*
-*************************************************
-* Next expected MsgSeqNum value to be received. *
-*************************************************
-*/
   NextExpectedMsgSeqNum = 789,
-/*
-************************************************************
-* Can be used to uniquely identify a specific Order Status *
-* Request message.                                         *
-************************************************************
-*/
   OrdStatusReqID = 790,
-/*
-*******************************************************
-* Unique ID of settlement instruction request message *
-*******************************************************
-*/
   SettlInstReqID = 791,
-/*
-****************************************************************
-* Identifies reason for rejection (of a settlement instruction *
-* request message).                                            *
-****************************************************************
-*/
   SettlInstReqRejCode = 792,
-/*
-****************************************************************
-* Secondary allocation identifier. Unlike the AllocID (70),    *
-* this can be shared across a number of allocation instruction *
-* or allocation report messages, thereby making it possible to *
-* pass an identifier for an original allocation message on     *
-* multiple messages (e.g. from one party to a second to a      *
-* third, across cancel and replace messages etc.).             *
-****************************************************************
-*/
   SecondaryAllocID = 793,
-/*
-***********************************************************
-* Describes the specific type or purpose of an Allocation *
-* Report message                                          *
-***********************************************************
-*/
   AllocReportType = 794,
-/*
-*************************************************************
-* Reference identifier to be used with AllocTransType (7) = *
-* Replace or Cancel                                         *
-*************************************************************
-*/
   AllocReportRefID = 795,
-/*
-****************************************************************
-* Reason for cancelling or replacing an Allocation Instruction *
-* or Allocation Report message                                 *
-****************************************************************
-*/
   AllocCancReplaceReason = 796,
-/*
-***********************************************************
-* Indicates whether or not this message is a drop copy of *
-* another message.                                        *
-***********************************************************
-*/
   CopyMsgIndicator = 797,
-/*
-***********************************************************
-* Type of account associated with a confirmation or other *
-* trade-level message                                     *
-***********************************************************
-*/
   AllocAccountType = 798,
-/*
-**************************************
-* Average price for a specific order *
-**************************************
-*/
   OrderAvgPx = 799,
-/*
-****************************************************************
-* Quantity of the order that is being booked out as part of an *
-* Allocation Instruction or Allocation Report message          *
-****************************************************************
-*/
   OrderBookingQty = 800,
-/*
-***********************************************************
-* Number of SettlPartySubID (785) and SettlPartySubIDType *
-* (786) entries                                           *
-***********************************************************
-*/
   NoSettlPartySubIDs = 801,
-/*
-**************************************************************
-* Number of PartySubID (523)and PartySubIDType (803) entries *
-**************************************************************
-*/
   NoPartySubIDs = 802,
-/*
-***************************************************************
-* Type of PartySubID (523) value                              *
-* 4000+ = Reserved and available for bi-laterally agreed upon *
-* user defined values                                         *
-***************************************************************
-*/
   PartySubIDType = 803,
-/*
-*************************************************************
-* Number of NestedPartySubID (545) and NestedPartySubIDType *
-* (805) entries                                             *
-*************************************************************
-*/
   NoNestedPartySubIDs = 804,
-/*
-*****************************************
-* Type of NestedPartySubID (545) value. *
-* Same values as PartySubIDType (803)   *
-*****************************************
-*/
   NestedPartySubIDType = 805,
-/*
-***************************************************************
-* Number of Nested2PartySubID (760) and Nested2PartySubIDType *
-* (807) entries. Second instance of <NestedParties>.          *
-***************************************************************
-*/
   NoNested2PartySubIDs = 806,
-/*
-*************************************************************
-* Type of Nested2PartySubID (760) value. Second instance of *
-* <NestedParties>.                                          *
-* Same values as PartySubIDType (803)                       *
-*************************************************************
-*/
   Nested2PartySubIDType = 807,
-/*
-***************************************************************
-* Response to allocation to be communicated to a counterparty *
-* through an intermediary, i.e. clearing house. Used in       *
-* conjunction with AllocType = "Request to Intermediary" and  *
-* AllocReportType = "Request to Intermediary"                 *
-***************************************************************
-*/
   AllocIntermedReqType = 808,
-/*
-***************************************************************
-* Number of Usernames to which this this response is directed *
-***************************************************************
-*/
   NoUsernames = 809,
-/*
-************************************************************
-* Underlying price associate with a derivative instrument. *
-************************************************************
-*/
   UnderlyingPx = 810,
-/*
-****************************************************************
-* The rate of change in the price of a derivative with respect *
-* to the movement in the price of the underlying instrument(s) *
-* upon which the derivative instrument price is based.         *
-* This value is normally between -1.0 and 1.0.                 *
-****************************************************************
-*/
   PriceDelta = 811,
-/*
-***************************************************************
-* Used to specify the maximum number of application messages  *
-* that can be queued bedore a corrective action needs to take *
-* place to resolve the queuing issue.                         *
-***************************************************************
-*/
   ApplQueueMax = 812,
-/*
-**************************************************************
-* Current number of application messages that were queued at *
-* the time that the message was created by the counterparty. *
-**************************************************************
-*/
   ApplQueueDepth = 813,
-/*
-**************************************************************
-* Resolution taken when ApplQueueDepth (813) exceeds         *
-* ApplQueueMax (812) or system specified maximum queue size. *
-**************************************************************
-*/
   ApplQueueResolution = 814,
-/*
-**********************************************************
-* Action to take to resolve an application message queue *
-* (backlog).                                             *
-**********************************************************
-*/
   ApplQueueAction = 815,
-/*
-*********************************************
-* Number of alternative market data sources *
-*********************************************
-*/
   NoAltMDSource = 816,
-/*
-**********************************************************
-* Session layer source for market data                   *
-* (For the standard FIX session layer, this would be the *
-* TargetCompID (56) where market data can be obtained).  *
-**********************************************************
-*/
   AltMDSourceID = 817,
-/*
-****************************************************************
-* Secondary trade report identifier - can be used to associate *
-* an additional identifier with a trade.                       *
-****************************************************************
-*/
   SecondaryTradeReportID = 818,
-/*
-*****************************
-* Average Pricing Indicator *
-*****************************
-*/
   AvgPxIndicator = 819,
-/*
-***************************************************************
-* Used to link a group of trades together. Useful for linking *
-* a group of trades together for average price calculations.  *
-***************************************************************
-*/
   TradeLinkID = 820,
-/*
-************************************************************
-* Specific device number, terminal number or station where *
-* order was entered                                        *
-************************************************************
-*/
   OrderInputDevice = 821,
-/*
-*************************************************************
-* Trading Session in which the underlying instrument trades *
-*************************************************************
-*/
   UnderlyingTradingSessionID = 822,
-/*
-**********************************************************
-* Trading Session sub identifier in which the underlying *
-* instrument trades                                      *
-**********************************************************
-*/
   UnderlyingTradingSessionSubID = 823,
-/*
-***************************************************************
-* Reference to the leg of a multileg instrument to which this *
-* trade refers                                                *
-***************************************************************
-*/
   TradeLegRefID = 824,
-/*
-****************************************************************
-* Used to report any exchange rules that apply to this trade.  *
-* Primarily intended for US futures markets. Certain trading   *
-* practices are permitted by the CFTC, such as large lot       *
-* trading, block trading, all or none trades. If the rules are *
-* used, the exchanges are required to indicate these rules on  *
-* the trade.                                                   *
-****************************************************************
-*/
   ExchangeRule = 825,
-/*
-***********************************************
-* Identifies how the trade is to be allocated *
-***********************************************
-*/
   TradeAllocIndicator = 826,
-/*
-**************************************************************
-* Part of trading cycle when an instrument expires. Field is *
-* applicable for derivatives.                                *
-**************************************************************
-*/
   ExpirationCycle = 827,
-/*
-******************
-* Type of Trade: *
-******************
-*/
   TrdType = 828,
-/*
-*******************************************
-* Further qualification to the trade type *
-*******************************************
-*/
   TrdSubType = 829,
-/*
-*************************************
-* Reason trade is being transferred *
-*************************************
-*/
   TransferReason = 830,
-/*
-***************************************************************
-* Total Number of Assignment Reports being returned to a firm *
-***************************************************************
-*/
   TotNumAssignmentReports = 832,
-/*
-***********************************************
-* Unique identifier for the Assignment Report *
-***********************************************
-*/
   AsgnRptID = 833,
-/*
-**************************************************************
-* Amount that a position has to be in the money before it is *
-* exercised.                                                 *
-**************************************************************
-*/
   ThresholdAmount = 834,
-/*
-*********************************************
-* Describes whether peg is static or floats *
-*********************************************
-*/
   PegMoveType = 835,
-/*
-****************************
-* Type of Peg Offset value *
-****************************
-*/
   PegOffsetType = 836,
-/*
-*********************
-* Type of Peg Limit *
-*********************
-*/
   PegLimitType = 837,
-/*
-***********************************************************
-* If the calculated peg price is not a valid tick price,  *
-* specifies whether to round the price to be more or less *
-* aggressive                                              *
-***********************************************************
-*/
   PegRoundDirection = 838,
-/*
-**********************************************
-* The price the order is currently pegged at *
-**********************************************
-*/
   PeggedPrice = 839,
-/*
-************************
-* The scope of the peg *
-************************
-*/
   PegScope = 840,
-/*
-************************************************************
-* Describes whether discretionay price is static or floats *
-************************************************************
-*/
   DiscretionMoveType = 841,
-/*
-***********************************
-* Type of Discretion Offset value *
-***********************************
-*/
   DiscretionOffsetType = 842,
-/*
-****************************
-* Type of Discretion Limit *
-****************************
-*/
   DiscretionLimitType = 843,
-/*
-*************************************************************
-* If the calculated discretionary price is not a valid tick *
-* price, specifies whether to round the price to be more or *
-* less aggressive                                           *
-*************************************************************
-*/
   DiscretionRoundDirection = 844,
-/*
-************************************************
-* The current discretionary price of the order *
-************************************************
-*/
   DiscretionPrice = 845,
-/*
-*******************************
-* The scope of the discretion *
-*******************************
-*/
   DiscretionScope = 846,
-/*
-***************************************************************
-* The target strategy of the order                            *
-* 1000+ = Reserved and available for bi-laterally agreed upon *
-* user defined values                                         *
-***************************************************************
-*/
   TargetStrategy = 847,
-/*
-****************************************************************
-* Field to allow further specification of the TargetStrategy - *
-* usage to be agreed between counterparties                    *
-****************************************************************
-*/
   TargetStrategyParameters = 848,
-/*
-***************************************************************
-* For a TargetStrategy=Participate order specifies the target *
-* particpation rate. For other order types this is a volume   *
-* limit (i.e. do not be more than this percent of the market  *
-* volume)                                                     *
-***************************************************************
-*/
   ParticipationRate = 849,
-/*
-****************************************************************
-* For communication of the performance of the order versus the *
-* target strategy                                              *
-****************************************************************
-*/
   TargetStrategyPerformance = 850,
-/*
-**************************************************************
-* Indicator to identify whether this fill was a result of a  *
-* liquidity provider providing or liquidity taker taking the *
-* liquidity. Applicable only for OrdStatus of Partial or     *
-* Filled.                                                    *
-**************************************************************
-*/
   LastLiquidityInd = 851,
-/*
-********************************************************
-* Indicates if a trade should be reported via a market *
-* reporting service.                                   *
-********************************************************
-*/
   PublishTrdIndicator = 852,
-/*
-**************************
-* Reason for short sale. *
-**************************
-*/
   ShortSaleReason = 853,
-/*
-***************************************************
-* Type of quantity specified in a quantity field: *
-***************************************************
-*/
   QtyType = 854,
-/*
-**************************************************************
-* Additional TrdType(828) assigned to a trade by trade match *
-* system.                                                    *
-**************************************************************
-*/
   SecondaryTrdType = 855,
-/*
-************************
-* Type of Trade Report *
-************************
-*/
   TradeReportType = 856,
-/*
-*************************************************************
-* Indicates how the orders being booked and allocated by an *
-* Allocation Instruction or Allocation Report message are   *
-* identified, i.e. by explicit definition in the NoOrders   *
-* group or not.                                             *
-*************************************************************
-*/
   AllocNoOrdersType = 857,
-/*
-***************************************************************
-* Commission to be shared with a third party, e.g. as part of *
-* a directed brokerage commission sharing arrangement.        *
-***************************************************************
-*/
   SharedCommission = 858,
-/*
-********************************************************
-* Unique identifier for a Confirmation Request message *
-********************************************************
-*/
   ConfirmReqID = 859,
-/*
-***************************************************************
-* Used to express average price as percent of par (used where *
-* AvgPx field is expressed in some other way)                 *
-***************************************************************
-*/
   AvgParPx = 860,
-/*
-***************************************************************
-* Reported price (used to differentiate from AvgPx on a       *
-* confirmation of a marked-up or marked-down principal trade) *
-***************************************************************
-*/
   ReportedPx = 861,
-/*
-**********************************************
-* Number of repeating OrderCapacity entries. *
-**********************************************
-*/
   NoCapacities = 862,
-/*
-***************************************************************
-* Quantity executed under a specific OrderCapacity (e.g.      *
-* quantity executed as agent, quantity executed as principal) *
-***************************************************************
-*/
   OrderCapacityQty = 863,
-/*
-******************************************
-* Number of repeating EventType entries. *
-******************************************
-*/
   NoEvents = 864,
-/*
-***************************************
-* Code to represent the type of event *
-***************************************
-*/
   EventType = 865,
-/*
-*****************
-* Date of event *
-*****************
-*/
   EventDate = 866,
-/*
-********************************************************
-* Predetermined price of issue at event, if applicable *
-********************************************************
-*/
   EventPx = 867,
-/*
-**********************************
-* Comments related to the event. *
-**********************************
-*/
   EventText = 868,
-/*
-************************************************
-* Percent at risk due to lowest possible call. *
-************************************************
-*/
   PctAtRisk = 869,
-/*
-************************************************
-* Number of repeating InstrAttribType entries. *
-************************************************
-*/
   NoInstrAttrib = 870,
-/*
-******************************************************
-* Code to represent the type of instrument attribute *
-******************************************************
-*/
   InstrAttribType = 871,
-/*
-***********************************************************
-* Attribute value appropriate to the InstrAttribType (87) *
-* field.                                                  *
-***********************************************************
-*/
   InstrAttribValue = 872,
-/*
-****************************************************************
-* The effective date of a new securities issue determined by   *
-* its underwriters. Often but not always the same as the Issue *
-* Date and the Interest Accrual Date                           *
-****************************************************************
-*/
   DatedDate = 873,
-/*
-****************************************************************
-* The start date used for calculating accrued interest on debt *
-* instruments which are being sold between interest payment    *
-* dates. Often but not always the same as the Issue Date and   *
-* the Dated Date                                               *
-****************************************************************
-*/
   InterestAccrualDate = 874,
-/*
-********************************************************
-* The program under which a commercial paper is issued *
-********************************************************
-*/
   CPProgram = 875,
-/*
-********************************************************
-* The registration type of a commercial paper issuance *
-********************************************************
-*/
   CPRegType = 876,
-/*
-**************************************************************
-* The program under which the underlying commercial paper is *
-* issued                                                     *
-**************************************************************
-*/
   UnderlyingCPProgram = 877,
-/*
-************************************************************
-* The registration type of the underlying commercial paper *
-* issuance                                                 *
-************************************************************
-*/
   UnderlyingCPRegType = 878,
-/*
-********************************************************
-* Unit amount of the underlying security (par, shares, *
-* currency, etc.)                                      *
-********************************************************
-*/
   UnderlyingQty = 879,
-/*
-********************************************************
-* Identifier assigned to a trade by a matching system. *
-********************************************************
-*/
   TrdMatchID = 880,
-/*
-**************************************************************
-* Used to refer to a previous SecondaryTradeReportRefID when *
-* amending the transaction (cancel, replace, release, or     *
-* reversal).                                                 *
-**************************************************************
-*/
   SecondaryTradeReportRefID = 881,
-/*
-*********************************************************
-* Price (percent-of-par or per unit) of the underlying  *
-* security or basket. "Dirty" means it includes accrued *
-* interest                                              *
-*********************************************************
-*/
   UnderlyingDirtyPrice = 882,
-/*
-********************************************************
-* Price (percent-of-par or per unit) of the underlying *
-* security or basket at the end of the agreement.      *
-********************************************************
-*/
   UnderlyingEndPrice = 883,
-/*
-****************************************************************
-* Currency value attributed to this collateral at the start of *
-* the agreement                                                *
-****************************************************************
-*/
   UnderlyingStartValue = 884,
-/*
-**********************************************************
-* Currency value currently attributed to this collateral *
-**********************************************************
-*/
   UnderlyingCurrentValue = 885,
-/*
-**************************************************************
-* Currency value attributed to this collateral at the end of *
-* the agreement                                              *
-**************************************************************
-*/
   UnderlyingEndValue = 886,
-/*
-********************************************
-* Number of underlying stipulation entries *
-********************************************
-*/
   NoUnderlyingStips = 887,
-/*
-****************************************
-* Type of stipulation.                 *
-* Same values as StipulationType (233) *
-****************************************
-*/
   UnderlyingStipType = 888,
-/*
-*****************************************
-* Value of stipulation.                 *
-* Same values as StipulationValue (234) *
-*****************************************
-*/
   UnderlyingStipValue = 889,
-/*
-**************************************************************
-* Net Money at maturity if Zero Coupon and maturity value is *
-* different from par value                                   *
-**************************************************************
-*/
   MaturityNetMoney = 890,
-/*
-*********************************************
-* Defines the unit for a miscellaneous fee. *
-*********************************************
-*/
   MiscFeeBasis = 891,
-/*
-***************************************************************
-* Total number of NoAlloc entries across all messages. Should *
-* be the sum of all NoAllocs in each message that has         *
-* repeating NoAlloc entries related to the same AllocID or    *
-* AllocReportID. Used to support fragmentation.               *
-***************************************************************
-*/
   TotNoAllocs = 892,
-/*
-****************************************************************
-* Indicates whether this message is the last in a sequence of  *
-* messages for those messages that support fragmentation, such *
-* as Allocation Instruction, Mass Quote, Security List,        *
-* Derivative Security List                                     *
-****************************************************************
-*/
   LastFragment = 893,
-/*
-*********************************
-* Collateral Request Identifier *
-*********************************
-*/
   CollReqID = 894,
-/*
-************************************
-* Reason for Collateral Assignment *
-************************************
-*/
   CollAsgnReason = 895,
-/*
-**********************************
-* Collateral inquiry qualifiers: *
-**********************************
-*/
   CollInquiryQualifier = 896,
-/*
-****************************************
-* Number of trades in repeating group. *
-****************************************
-*/
   NoTrades = 897,
-/*
-****************************************************************
-* The fraction of the cash consideration that must be          *
-* collateralized, expressed as a percent. A MarginRatio of 02% *
-* indicates that the value of the collateral (after deducting  *
-* for "haircut") must exceed the cash consideration by 2%.     *
-****************************************************************
-*/
   MarginRatio = 898,
-/*
-*******************************************************
-* Excess margin amount (deficit if value is negative) *
-*******************************************************
-*/
   MarginExcess = 899,
-/*
-**************************************************************
-* TotalNetValue is determined as follows:                    *
-* At the initial collateral assignment TotalNetValue is the  *
-* sum of (UnderlyingStartValue * (1-haircut)).               *
-* In a collateral substitution TotalNetValue is the sum of   *
-* (UnderlyingCurrentValue * (1-haircut)).                    *
-* For listed derivatives clearing margin management, this is *
-* the collateral value which equals (Market value * haircut) *
-**************************************************************
-*/
   TotalNetValue = 900,
-/*
-******************************************
-* Starting consideration less repayments *
-******************************************
-*/
   CashOutstanding = 901,
-/*
-************************************
-* Collateral Assignment Identifier *
-************************************
-*/
   CollAsgnID = 902,
-/*
-******************************************
-* Collateral Assignment Transaction Type *
-******************************************
-*/
   CollAsgnTransType = 903,
-/*
-**********************************
-* Collateral Response Identifier *
-**********************************
-*/
   CollRespID = 904,
-/*
-***************************************
-* Collateral Assignment Response Type *
-***************************************
-*/
   CollAsgnRespType = 905,
-/*
-***************************************
-* Collateral Assignment Reject Reason *
-***************************************
-*/
   CollAsgnRejectReason = 906,
-/*
-***********************************************************
-* Collateral Assignment Identifier to which a transaction *
-* refers                                                  *
-***********************************************************
-*/
   CollAsgnRefID = 907,
-/*
-********************************
-* Collateral Report Identifier *
-********************************
-*/
   CollRptID = 908,
-/*
-*********************************
-* Collateral Inquiry Identifier *
-*********************************
-*/
   CollInquiryID = 909,
-/*
-*********************
-* Collateral Status *
-*********************
-*/
   CollStatus = 910,
-/*
-**************************************************************
-* Total number of reports returned in response to a request. *
-**************************************************************
-*/
   TotNumReports = 911,
-/*
-****************************************************************
-* Indicates whether this message is that last report message   *
-* in response to a request, such as Order Mass Status Request. *
-****************************************************************
-*/
   LastRptRequested = 912,
-/*
-**************************************************************
-* The full name of the base standard agreement, annexes and  *
-* amendments in place between the principals applicable to a *
-* financing transaction.                                     *
-**************************************************************
-*/
   AgreementDesc = 913,
-/*
-***********************************************************
-* A common reference to the applicable standing agreement *
-* between the counterparties to a financing transaction.  *
-***********************************************************
-*/
   AgreementID = 914,
-/*
-**************************************************************
-* A reference to the date the underlying agreement specified *
-* by AgreementID and AgreementDesc was executed.             *
-**************************************************************
-*/
   AgreementDate = 915,
-/*
-****************************************************************
-* Start date of a financing deal, i.e. the date the buyer pays *
-* the seller cash and takes control of the collateral          *
-****************************************************************
-*/
   StartDate = 916,
-/*
-**********************************************************
-* End date of a financing deal, i.e. the date the seller *
-* reimburses the buyer and takes back control of the     *
-* collateral                                             *
-**********************************************************
-*/
   EndDate = 917,
-/*
-***********************************************************
-* Contractual currency forming the basis of a financing   *
-* agreement and associated transactions. Usually, but not *
-* always, the same as the trade currency.                 *
-***********************************************************
-*/
   AgreementCurrency = 918,
-/*
-*********************************
-* Identifies type of settlement *
-*********************************
-*/
   DeliveryType = 919,
-/*
-*****************************************************
-* Accrued Interest Amount applicable to a financing *
-* transaction on the End Date.                      *
-*****************************************************
-*/
   EndAccruedInterestAmt = 920,
-/*
-***************************************************************
-* Starting dirty cash consideration of a financing deal, i.e. *
-* paid to the seller on the Start Date.                       *
-***************************************************************
-*/
   StartCash = 921,
-/*
-*************************************************************
-* Ending dirty cash consideration of a financing deal. i.e. *
-* reimbursed to the buyer on the End Date.                  *
-*************************************************************
-*/
   EndCash = 922,
-/*
-*****************************************
-* Unique identifier for a User Request. *
-*****************************************
-*/
   UserRequestID = 923,
-/*
-***********************************************************
-* Indicates the action required by a User Request Message *
-***********************************************************
-*/
   UserRequestType = 924,
-/*
-******************************
-* New Password or passphrase *
-******************************
-*/
   NewPassword = 925,
-/*
-**********************************
-* Indicates the status of a user *
-**********************************
-*/
   UserStatus = 926,
-/*
-*****************************************************
-* A text description associated with a user status. *
-*****************************************************
-*/
   UserStatusText = 927,
-/*
-************************************************
-* Indicates the status of a network connection *
-************************************************
-*/
   StatusValue = 928,
-/*
-********************************************************
-* A text description associated with a network status. *
-********************************************************
-*/
   StatusText = 929,
-/*
-*******************************************
-* Assigned value used to identify a firm. *
-*******************************************
-*/
   RefCompID = 930,
-/*
-**************************************************************
-* Assigned value used to identify specific elements within a *
-* firm.                                                      *
-**************************************************************
-*/
   RefSubID = 931,
-/*
-*********************************************
-* Unique identifier for a network response. *
-*********************************************
-*/
   NetworkResponseID = 932,
-/*
-*********************************************
-* Unique identifier for a network resquest. *
-*********************************************
-*/
   NetworkRequestID = 933,
-/*
-***************************************************************
-* Identifier of the previous Network Response message sent to *
-* a counterparty, used to allow incremental updates.          *
-***************************************************************
-*/
   LastNetworkResponseID = 934,
-/*
-**********************************************************
-* Indicates the type and level of details required for a *
-* Network Status Request Message                         *
-* Boolean logic applies EG If you want to subscribe for  *
-* changes to certain id's then UserRequestType =0 (8+2), *
-* Snapshot for certain ID's = 9 (8+1)                    *
-**********************************************************
-*/
   NetworkRequestType = 935,
-/*
-**************************************************
-* Number of CompID entries in a repeating group. *
-**************************************************
-*/
   NoCompIDs = 936,
-/*
-***************************************************
-* Indicates the type of Network Response Message. *
-***************************************************
-*/
   NetworkStatusResponseType = 937,
-/*
-****************************************************************
-* Number of CollInquiryQualifier entries in a repeating group. *
-****************************************************************
-*/
   NoCollInquiryQualifier = 938,
-/*
-***********************
-* Trade Report Status *
-***********************
-*/
   TrdRptStatus = 939,
-/*
-*************************************************
-* Identifies the status of the ConfirmationAck. *
-*************************************************
-*/
   AffirmStatus = 940,
-/*
-*******************************************************
-* Currency in which the strike price of an underlying *
-* instrument is denominated                           *
-*******************************************************
-*/
   UnderlyingStrikeCurrency = 941,
-/*
-***************************************************************
-* Currency in which the strike price of a instrument leg of a *
-* multileg instrument is denominated                          *
-***************************************************************
-*/
   LegStrikeCurrency = 942,
-/*
-*************************************************************
-* A code that represents a time interval in which a fill or *
-* trade occurred.                                           *
-* Required for US futures markets.                          *
-*************************************************************
-*/
   TimeBracket = 943,
-/*
-**********************************************************
-* Action proposed for an Underlying Instrument instance. *
-**********************************************************
-*/
   CollAction = 944,
-/*
-********************************
-* Status of Collateral Inquiry *
-********************************
-*/
   CollInquiryStatus = 945,
-/*
-*************************************************************
-* Result returned in response to Collateral Inquiry         *
-* 4000+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                       *
-*************************************************************
-*/
   CollInquiryResult = 946,
-/*
-*****************************************************
-* Currency in which the StrikePrice is denominated. *
-*****************************************************
-*/
   StrikeCurrency = 947,
-/*
-***************************************************************
-* Number of Nested3PartyID (949), Nested3PartyIDSource (950), *
-* and Nested3PartyRole (95) entries                           *
-***************************************************************
-*/
   NoNested3PartyIDs = 948,
-/*
-************************************************************
-* PartyID value within a "third instance" Nested repeating *
-* group.                                                   *
-* Same values as PartyID (448)                             *
-************************************************************
-*/
   Nested3PartyID = 949,
-/*
-********************************************************
-* PartyIDSource value within a "third instance" Nested *
-* repeating group.                                     *
-* Same values as PartyIDSource (447)                   *
-********************************************************
-*/
   Nested3PartyIDSource = 950,
-/*
-**************************************************************
-* PartyRole value within a "third instance" Nested repeating *
-* group.                                                     *
-* Same values as PartyRole (452)                             *
-**************************************************************
-*/
   Nested3PartyRole = 951,
-/*
-**********************************************
-* Number of Nested3PartySubIDs (953) entries *
-**********************************************
-*/
   NoNested3PartySubIDs = 952,
-/*
-***************************************************************
-* PartySubID value within a "third instance" Nested repeating *
-* group.                                                      *
-* Same values as PartySubID (523)                             *
-***************************************************************
-*/
   Nested3PartySubID = 953,
-/*
-*********************************************************
-* PartySubIDType value within a "third instance" Nested *
-* repeating group.                                      *
-* Same values as PartySubIDType (803)                   *
-*********************************************************
-*/
   Nested3PartySubIDType = 954,
-/*
-***********************************************************
-* Specifies when the contract (i.e. MBS/TBA) will settle. *
-***********************************************************
-*/
   LegContractSettlMonth = 955,
-/*
-****************************************************************
-* The start date used for calculating accrued interest on debt *
-* instruments which are being sold between interest payment    *
-* dates. Often but not always the same as the Issue Date and   *
-* the Dated Date                                               *
-****************************************************************
-*/
   LegInterestAccrualDate = 956,
-/*
-*******************************************
-* Indicates number of strategy parameters *
-*******************************************
-*/
   NoStrategyParameters = 957,
-/*
-*********************
-* Name of parameter *
-*********************
-*/
   StrategyParameterName = 958,
-/*
-*****************************
-* Datatype of the parameter *
-*****************************
-*/
   StrategyParameterType = 959,
-/*
-**************************
-* Value of the parameter *
-**************************
-*/
   StrategyParameterValue = 960,
-/*
-****************************************************************
-* Host assigned entity ID that can be used to reference all    *
-* components of a cross; sides + strategy + legs. Used as the  *
-* primary key with which to refer to the Cross Order for       *
-* cancellation and replace. The HostCrossID will also be used  *
-* to link together components of the Cross Order. For example, *
-* each individual Execution Report associated with the order   *
-* will carry HostCrossID in order to tie back to the original  *
-* cross order.                                                 *
-****************************************************************
-*/
   HostCrossID = 961,
-/*
-****************************************************************
-* Indicates how long the order as specified in the side stays  *
-* in effect. SideTimeInForce allows a two-sided cross order to *
-* specify order behavior separately for each side. Absence of  *
-* this field indicates that TimeInForce should be referenced.  *
-* SideTimeInForce will override TimeInForce if both are        *
-* provided.                                                    *
-****************************************************************
-*/
   SideTimeInForce = 962,
-/*
-*************************************************
-* Unique identifier for the Market Data Report. *
-*************************************************
-*/
   MDReportID = 963,
-/*
-***************************************
-* Identifies a Security List message. *
-***************************************
-*/
   SecurityReportID = 964,
-/*
-**********************************************************
-* Used for derivatives. Denotes the current state of the *
-* Instrument.                                            *
-**********************************************************
-*/
   SecurityStatus = 965,
-/*
-**********************************************************
-* Indicator to determine if instrument is settle on open *
-**********************************************************
-*/
   SettleOnOpenFlag = 966,
-/*
-****************************************************************
-* Used for derivatives. Multiplier applied to the strike price *
-* for the purpose of calculating the settlement value.         *
-****************************************************************
-*/
   StrikeMultiplier = 967,
-/*
-************************************************************
-* Used for derivatives. The number of shares/units for the *
-* financial instrument involved in the option trade.       *
-************************************************************
-*/
   StrikeValue = 968,
-/*
-******************************************************
-* Minimum price increase for a given exchange-traded *
-* Instrument                                         *
-******************************************************
-*/
   MinPriceIncrement = 969,
-/*
-*******************************************************
-* Position Limit for a given exchange-traded product. *
-*******************************************************
-*/
   PositionLimit = 970,
-/*
-********************************************************
-* Position Limit in the near-term contract for a given *
-* exchange-traded product.                             *
-********************************************************
-*/
   NTPositionLimit = 971,
-/*
-****************************************************************
-* Percent of the Strike Price that this underlying represents. *
-****************************************************************
-*/
   UnderlyingAllocationPercent = 972,
-/*
-*********************************************************
-* Cash amount associated with the underlying component. *
-*********************************************************
-*/
   UnderlyingCashAmount = 973,
-/*
-***********************************************************
-* Used for derivatives that deliver into cash underlying. *
-***********************************************************
-*/
   UnderlyingCashType = 974,
-/*
-********************************************************
-* Indicates order settlement period for the underlying *
-* instrument.                                          *
-********************************************************
-*/
   UnderlyingSettlementType = 975,
-/*
-**************************************************************
-* Date associated to the quantity that is being reported for *
-* the position.                                              *
-**************************************************************
-*/
   QuantityDate = 976,
-/*
-*******************************************************
-* Unique identifier for the Contrary Intention report *
-*******************************************************
-*/
   ContIntRptID = 977,
-/*
-**************************************************************
-* Indicates if the contrary intention was received after the *
-* exchange imposed cutoff time                               *
-**************************************************************
-*/
   LateIndicator = 978,
-/*
-************************************
-* Source of the contrary intention *
-************************************
-*/
   InputSource = 979,
   SecurityUpdateAction = 980,
-/*
-************************************
-* Number of Expiration Qty entries *
-************************************
-*/
   NoExpiration = 981,
-/*
-****************************
-* Expiration Quantity type *
-****************************
-*/
   ExpirationQtyType = 982,
-/*
-***********************************************************
-* Expiration Quantity associated with the Expiration Type *
-***********************************************************
-*/
   ExpQty = 983,
-/*
-************************************************************
-* Total number of occurrences of Amount to pay in order to *
-* receive the underlying instrument                        *
-************************************************************
-*/
   NoUnderlyingAmounts = 984,
-/*
-***************************************************************
-* Amount to pay in order to receive the underlying instrument *
-***************************************************************
-*/
   UnderlyingPayAmount = 985,
-/*
-********************************************************
-* Amount to collect in order to deliver the underlying *
-* instrument                                           *
-********************************************************
-*/
   UnderlyingCollectAmount = 986,
-/*
-***********************************************************
-* Date the underlying instrument will settle. Used for    *
-* derivatives that deliver into more than one underlying  *
-* instrument. Settlement dates can vary across underlying *
-* instruments.                                            *
-***********************************************************
-*/
   UnderlyingSettlementDate = 987,
-/*
-************************************************************
-* Settlement status of the underlying instrument. Used for *
-* derivatives that deliver into more than one underlying   *
-* instrument. Settlement can be delayed for an underlying  *
-* instrument.                                              *
-************************************************************
-*/
   UnderlyingSettlementStatus = 988,
-/*
-***********************************************************
-* Will allow the intermediary to specify an allocation ID *
-* generated by their system.                              *
-***********************************************************
-*/
   SecondaryIndividualAllocID = 989,
-/*
-**********************************************************
-* Additional attribute to store the Trade ID of the Leg. *
-**********************************************************
-*/
   LegReportID = 990,
-/*
-********************************************************
-* Specifies average price rounded to quoted precision. *
-********************************************************
-*/
   RndPx = 991,
-/*
-***************************************************************
-* Identifies whether the allocation is to be sub-allocated or *
-* allocated to a third party                                  *
-***************************************************************
-*/
   IndividualAllocType = 992,
-/*
-*************************************************
-* Capacity of customer in the allocation block. *
-*************************************************
-*/
   AllocCustomerCapacity = 993,
-/*
-**********************************************************
-* The Tier the trade was matched by the clearing system. *
-**********************************************************
-*/
   TierCode = 994,
-/*
-****************************************************************
-* The unit of measure of the underlying commodity upon which   *
-* the contract is based. Two groups of units of measure        *
-* enumerations are supported.                                  *
-* Fixed Magnitude UOMs are primarily used in energy            *
-* derivatives and specify a magnitude (such as, MM, Kilo, M,   *
-* etc.) and the dimension (such as, watt hours, BTU's) to      *
-* produce standard fixed measures (such as MWh -               *
-* Megawatt-hours, MMBtu - One million BTUs).                   *
-* The second group, Variable Quantity UOMs, specifies the      *
-* dimension as a single unit without a magnitude (or more      *
-* accurately a magnitude of one) and uses the                  *
-* UnitOfMeasureQty(1147) field to define the quantity of units *
-* per contract. Variable Quantity UOMs are used for both       *
-* commodities (such as lbs of lean cattle, bushels of corn,    *
-* ounces of gold) and financial futures.                       *
-* Examples:                                                    *
-* For lean cattle futures contracts, a UnitOfMeasure of 'lbs'  *
-* with a UnitOfMeasureQty(1147) of 40,000, means each lean     *
-* cattle futures contract represents 40,000 lbs of lean        *
-* cattle.                                                      *
-* For Eurodollars futures contracts, a UnitOfMeasure of USD    *
-* with a UnitOfMeasureQty(1147) of 1,000,000, means a          *
-* Eurodollar futures contract represents 1,000,000 USD.        *
-* For gold futures contracts, a UnitOfMeasure is oz_tr (Troy   *
-* ounce) with a UnitOfMeasureQty(1147) of 1,000, means each    *
-* gold futures contract represents 1,000 troy ounces of gold.  *
-****************************************************************
-*/
   UnitOfMeasure = 996,
-/*
-**************************************************************
-* Unit of time associated with the contract.                 *
-* NOTE: Additional values may be used by mutual agreement of *
-* the counterparties                                         *
-**************************************************************
-*/
   TimeUnit = 997,
-/*
-********************************************
-* Refer to defintion of UnitOfMeasure(996) *
-********************************************
-*/
   UnderlyingUnitOfMeasure = 998,
-/*
-********************************************
-* Refer to defintion of UnitOfMeasure(996) *
-********************************************
-*/
   LegUnitOfMeasure = 999,
-/*
-*********************
-* Same as TimeUnit. *
-*********************
-*/
   UnderlyingTimeUnit = 1000,
-/*
-*********************
-* Same as TimeUnit. *
-*********************
-*/
   LegTimeUnit = 1001,
-/*
-*********************************************************
-* Specifies the method under which a trade quantity was *
-* allocated.                                            *
-*********************************************************
-*/
   AllocMethod = 1002,
-/*
-****************************************************************
-* The unique ID assigned to the trade entity once it is        *
-* received or matched by the exchange or central counterparty. *
-****************************************************************
-*/
   TradeID = 1003,
-/*
-*********************************************************
-* Used on a multi-sided trade to designate the ReportID *
-*********************************************************
-*/
   SideTradeReportID = 1005,
-/*
-*******************************************************
-* Used on a multi-sided trade to convey order routing *
-* information                                         *
-*******************************************************
-*/
   SideFillStationCd = 1006,
-/*
-**************************************************************
-* Used on a multi-sided trade to convey reason for execution *
-**************************************************************
-*/
   SideReasonCd = 1007,
-/*
-****************************************************************
-* Used on a multi-sided trade to specify the type of trade for *
-* a given side. Same values as TrdSubType (829).               *
-****************************************************************
-*/
-  SideTrdSubTyp = 1008,
-/*
-***************************************************************
-* Used to indicate the quantity on one of a multi-sided Trade *
-* Capture Report                                              *
-***************************************************************
-*/
+  SideTrdSubType = 1008,
   SideLastQty = 1009,
-/*
-***************************************************************
-* Used to identify the event or source which gave rise to a   *
-* message.                                                    *
-* Valid values will be based on an exchange's implementation. *
-* Example values are:                                         *
-* "MQM" (originated at Firm Back Office)                      *
-* "Clear" (originated in Clearing System)                     *
-* "Reg" (static data generated via Register request)          *
-***************************************************************
-*/
   MessageEventSource = 1011,
-/*
-************************************************************
-* Will be used in a multi-sided message.                   *
-* Traded Regulatory timestamp value Use to store time      *
-* information required by government regulators or self    *
-* regulatory organizations such as an exchange or clearing *
-* house                                                    *
-************************************************************
-*/
   SideTrdRegTimestamp = 1012,
-/*
-*******************************
-* Same as TrdRegTimeStampType *
-*******************************
-*/
   SideTrdRegTimestampType = 1013,
-/*
-***************************************************************
-* Same as TrdRegTimestampOrigin                               *
-* Text which identifies the origin i.e. system which was used *
-* to generate the time stamp for the Traded Regulatory        *
-* timestamp value                                             *
-***************************************************************
-*/
   SideTrdRegTimestampSrc = 1014,
-/*
-****************************************************************
-* Used to indicate that a floor-trade was originally submitted *
-* "as of" a specific trade date which is earlier than its      *
-* clearing date.                                               *
-****************************************************************
-*/
   AsOfIndicator = 1015,
-/*
-*********************************************************
-* Indicates number of SideTimestamps contained in group *
-*********************************************************
-*/
   NoSideTrdRegTS = 1016,
-/*
-************************************************************
-* Expresses the risk of an option leg                      *
-* Value must be between -1 and 1.                          *
-* A Call Option will require a ratio value between 0 and 1 *
-* A Put Option will require a ratio value between -1 and 0 *
-************************************************************
-*/
   LegOptionRatio = 1017,
-/*
-*******************************************************
-* Identifies the number of parties identified with an *
-* instrument                                          *
-*******************************************************
-*/
   NoInstrumentParties = 1018,
-/*
-*************************************************************
-* PartyID value within an instrument party repeating group. *
-* Same values as PartyID (448)                              *
-*************************************************************
-*/
   InstrumentPartyID = 1019,
-/*
-**************************************
-* Used to report volume with a trade *
-**************************************
-*/
   TradeVolume = 1020,
-/*
-**************************************************************
-* Describes the type of book for which the feed is intended. *
-* Used when multiple feeds are provided over the same        *
-* connection                                                 *
-**************************************************************
-*/
   MDBookType = 1021,
-/*
-**************************************************************
-* Describes a class of service for a given data feed, ie     *
-* Regular and Market Maker, Bandwidth Intensive or Bandwidth *
-* Conservative                                               *
-**************************************************************
-*/
   MDFeedType = 1022,
-/*
-***************************************************************
-* Integer to convey the level of a bid or offer at a given    *
-* price level. This is in contrast to MDEntryPositionNo which *
-* is used to convey the position of an order within a Price   *
-* level                                                       *
-***************************************************************
-*/
   MDPriceLevel = 1023,
-/*
-*******************************************************
-* Used to describe the origin of an entry in the book *
-*******************************************************
-*/
   MDOriginType = 1024,
-/*
-******************************************************
-* Indicates the first trade price of the day/session *
-******************************************************
-*/
   FirstPx = 1025,
-/*
-*********************************
-* The spot rate for an FX entry *
-*********************************
-*/
   MDEntrySpotRate = 1026,
-/*
-***************************************************************
-* Used for an F/X entry. The forward points to be added to or *
-* subtracted from the spot rate to get the "all-in" rate in   *
-* MDEntryPx. Expressed in decimal form. For example, 61.99    *
-* points is expressed and sent as 0.006199                    *
-***************************************************************
-*/
   MDEntryForwardPoints = 1027,
-/*
-**************************************************************
-* Indicates if the order was initially received manually (as *
-* opposed to electronically)                                 *
-**************************************************************
-*/
   ManualOrderIndicator = 1028,
-/*
-***************************************************************
-* Indicates if the customer directed this order to a specific *
-* execution venue "Y" or not "N".                             *
-* A default of "N" customer did not direct this order should  *
-* be used in the case where the information is both missing   *
-* and essential.                                              *
-***************************************************************
-*/
   CustDirectedOrder = 1029,
-/*
-*************************************************************
-* Identifies the Broker / Dealer Department that first took *
-* the order.                                                *
-*************************************************************
-*/
   ReceivedDeptID = 1030,
-/*
-***************************************************************
-* Codes that apply special information that the Broker /      *
-* Dealer needs to report, as specified by the customer.       *
-* NOTE: This field and its values have no bearing on the      *
-* ExecInst and TimeInForce fields. These values should not be *
-* used instead of ExecInst or TimeInForce. This field and its *
-* values are intended for compliance reporting only.          *
-* Valid values are grouped by OrderHandlingInstSource(1032).  *
-***************************************************************
-*/
   CustOrderHandlingInst = 1031,
-/*
-*************************************************************
-* Identifies the class or source of the "OrderHandlingInst" *
-* values. Scope of this will apply to both                  *
-* CustOrderHandlingInst and DeskOrderHandlingInst fields.   *
-* Required if CustOrderHandlingInst and/or                  *
-* DeskOrderHandlingInst is specified.                       *
-*************************************************************
-*/
   OrderHandlingInstSource = 1032,
-/*
-******************************************************
-* Type of trading desk.  Valid values are grouped by *
-* DeskTypeSource(1034).                              *
-******************************************************
-*/
   DeskType = 1033,
-/*
-************************************************************
-* Identifies the class or source of DeskType(1033) values. *
-* Required if DeskType(1033) is specified.                 *
-************************************************************
-*/
   DeskTypeSource = 1034,
-/*
-***************************************************************
-* Codes that apply special information that the Broker /      *
-* Dealer needs to report.                                     *
-* NOTE: This field and its values have no bearing on the      *
-* ExecInst and TimeInForce fields. These values should not be *
-* used instead of ExecInst or TimeInForce. This field and its *
-* values are intended for compliance reporting only.          *
-* Valid values are grouped by OrderHandlingInstSource(1032).  *
-***************************************************************
-*/
   DeskOrderHandlingInst = 1035,
-/*
-*********************************************************
-* The status of this execution acknowledgement message. *
-*********************************************************
-*/
   ExecAckStatus = 1036,
-/*
-************************************************************
-* Indicates the underlying position amount to be delivered *
-************************************************************
-*/
   UnderlyingDeliveryAmount = 1037,
-/*
-************************************************************
-* Maximum notional value for a capped financial instrument *
-************************************************************
-*/
   UnderlyingCapValue = 1038,
   UnderlyingSettlMethod = 1039,
-/*
-**************************************************************
-* Used to carry an internal trade entity ID which may or may *
-* not be reported to the firm                                *
-**************************************************************
-*/
   SecondaryTradeID = 1040,
-/*
-***********************************************************
-* The ID assigned to a trade by the Firm to track a trade *
-* within the Firm system. This ID can be assigned either  *
-* before or after submission to the exchange or central   *
-* counterpary                                             *
-***********************************************************
-*/
   FirmTradeID = 1041,
-/*
-***************************************************************
-* Used to carry an internal firm assigned ID which may or may *
-* not be reported to the exchange or central counterpary      *
-***************************************************************
-*/
   SecondaryFirmTradeID = 1042,
-/*
-*********************************************************
-* conveys how the collateral should be/has been applied *
-*********************************************************
-*/
   CollApplType = 1043,
-/*
-****************************************************************
-* Unit amount of the underlying security (shares) adjusted for *
-* pending corporate action not yet allocated.                  *
-****************************************************************
-*/
   UnderlyingAdjustedQuantity = 1044,
-/*
-******************************************************
-* Foreign exchange rate used to compute              *
-* UnderlyingCurrentValue(885) (or market value) from *
-* UnderlyingCurrency(318) to Currency(15).           *
-******************************************************
-*/
   UnderlyingFXRate = 1045,
-/*
-**********************************************************
-* Specifies whether the UnderlyingFxRate(1045) should be *
-* multiplied or divided.                                 *
-**********************************************************
-*/
   UnderlyingFXRateCalc = 1046,
-/*
-***************************************************************
-* Indicates whether the resulting position after a trade      *
-* should be an opening position or closing position. Used for *
-* omnibus accounting - where accounts are held on a gross     *
-* basis instead of being netted together.                     *
-***************************************************************
-*/
   AllocPositionEffect = 1047,
-/*
-************************************************
-* Identifies role of dealer; Agent, Principal, *
-* RisklessPrincipal                            *
-************************************************
-*/
   DealingCapacity = 1048,
-/*
-***********************************************
-* Method under which assignment was conducted *
-***********************************************
-*/
   InstrmtAssignmentMethod = 1049,
-/*
-***********************************************************
-* PartyIDSource value within an instrument partyrepeating *
-* group.                                                  *
-* Same values as PartyIDSource (447)                      *
-***********************************************************
-*/
   InstrumentPartyIDSource = 1050,
-/*
-*************************************************************
-* PartyRole value within an instrument partyepeating group. *
-* Same values as PartyRole (452)                            *
-*************************************************************
-*/
   InstrumentPartyRole = 1051,
-/*
-*********************************************
-* Number of InstrumentPartySubID (1053) and *
-* InstrumentPartySubIDType (1054) entries   *
-*********************************************
-*/
   NoInstrumentPartySubIDs = 1052,
-/*
-****************************************************************
-* PartySubID value within an instrument party repeating group. *
-* Same values as PartySubID (523)                              *
-****************************************************************
-*/
   InstrumentPartySubID = 1053,
-/*
-**********************************************
-* Type of InstrumentPartySubID (1053) value. *
-* Same values as PartySubIDType (803)        *
-**********************************************
-*/
   InstrumentPartySubIDType = 1054,
-/*
-************************************************************
-* The Currency in which the position Amount is denominated *
-************************************************************
-*/
   PositionCurrency = 1055,
-/*
-*************************************************************
-* Used for the calculated quantity of the other side of the *
-* currency trade. Can be derived from LastQty and LastPx.   *
-*************************************************************
-*/
   CalculatedCcyLastQty = 1056,
-/*
-****************************************************************
-* Used to identify whether the order initiator is an aggressor *
-* or not in the trade.                                         *
-****************************************************************
-*/
   AggressorIndicator = 1057,
-/*
-*******************************************************
-* Identifies the number of parties identified with an *
-* underlying instrument                               *
-*******************************************************
-*/
   NoUndlyInstrumentParties = 1058,
-/*
-*******************************************************
-* PartyID value within an underlying instrument party *
-* repeating group.                                    *
-* Same values as PartyID (448)                        *
-*******************************************************
-*/
   UnderlyingInstrumentPartyID = 1059,
-/*
-*******************************************************
-* PartyIDSource value within an underlying instrument *
-* partyrepeating group.                               *
-* Same values as PartyIDSource (447)                  *
-*******************************************************
-*/
   UnderlyingInstrumentPartyIDSource = 1060,
-/*
-***************************************************
-* PartyRole value within an underlying instrument *
-* partyepeating group.                            *
-* Same values as PartyRole (452)                  *
-***************************************************
-*/
   UnderlyingInstrumentPartyRole = 1061,
-/*
-********************************************************
-* Number of Underlying InstrumentPartySubID (1053) and *
-* InstrumentPartySubIDType (1054) entries              *
-********************************************************
-*/
   NoUndlyInstrumentPartySubIDs = 1062,
-/*
-**********************************************************
-* PartySubID value within an underlying instrument party *
-* repeating group.                                       *
-* Same values as PartySubID (523)                        *
-**********************************************************
-*/
   UnderlyingInstrumentPartySubID = 1063,
-/*
-*********************************************************
-* Type of underlying InstrumentPartySubID (1053) value. *
-* Same values as PartySubIDType (803)                   *
-*********************************************************
-*/
   UnderlyingInstrumentPartySubIDType = 1064,
-/*
-*************************************************************
-* The bid FX Swap points for an FX Swap. It is the "far bid *
-* forward points - near offer forward point". Value can be  *
-* negative. Expressed in decimal form. For example, 61.99   *
-* points is expressed and sent as 0.006199                  *
-*************************************************************
-*/
   BidSwapPoints = 1065,
-/*
-**************************************************************
-* The offer FX Swap points for an FX Swap. It is the "far    *
-* offer forward points - near bid forward points". Value can *
-* be negative. Expressed in decimal form. For example, 61.99 *
-* points is expressed and sent as 0.006199                   *
-**************************************************************
-*/
   OfferSwapPoints = 1066,
-/*
-**************************************************************
-* The bid FX forward points for the leg of an FX Swap. Value *
-* can be negative. Expressed in decimal form. For example,   *
-* 61.99 points is expressed and sent as 0.006199             *
-**************************************************************
-*/
   LegBidForwardPoints = 1067,
-/*
-****************************************************************
-* The offer FX forward points for the leg of an FX Swap. Value *
-* can be negative. Expressed in decimal form. For example,     *
-* 61.99 points is expressed and sent as 0.006199               *
-****************************************************************
-*/
   LegOfferForwardPoints = 1068,
-/*
-****************************************************************
-* For FX Swap, this is used to express the differential        *
-* between the far leg's bid/offer and the near leg's           *
-* bid/offer. Value can be negative. Expressed in decimal form. *
-* For example, 61.99 points is expressed and sent as 0.006199  *
-****************************************************************
-*/
   SwapPoints = 1069,
-/*
-**************************************
-* Identifies market data quote type. *
-**************************************
-*/
   MDQuoteType = 1070,
-/*
-****************************************************************
-* For FX Swap, this is used to express the last market event   *
-* for the differential between the far leg's bid/offer and the *
-* near leg's bid/offer in a fill or partial fill. Value can be *
-* negative. Expressed in decimal form. For example, 61.99      *
-* points is expressed and sent as 0.006199                     *
-****************************************************************
-*/
   LastSwapPoints = 1071,
-/*
-***************************************************************
-* The gross trade amount for this side of the trade. See also *
-* GrossTradeAmt (381) for additional definition.              *
-***************************************************************
-*/
   SideGrossTradeAmt = 1072,
-/*
-**************************************************************
-* The forward points for this leg's fill event. Value can be *
-* negative. Expressed in decimal form. For example, 61.99    *
-* points is expressed and sent as 0.006199                   *
-**************************************************************
-*/
   LegLastForwardPoints = 1073,
-/*
-*************************************************************
-* Used for the calculated quantity of the other side of the *
-* currency for this leg. Can be derived from LegQty and     *
-* LegLastPx.                                                *
-*************************************************************
-*/
   LegCalculatedCcyLastQty = 1074,
-/*
-****************************************************************
-* The gross trade amount of the leg. For FX Futures this is    *
-* used to express the notional value of a fill when LegLastQty *
-* and other quantity fields are express in terms of contract   *
-* size.                                                        *
-****************************************************************
-*/
   LegGrossTradeAmt = 1075,
-/*
-************************************************************
-* Time of security's maturity expressed in local time with *
-* offset to UTC specified                                  *
-************************************************************
-*/
   MaturityTime = 1079,
-/*
-****************************************************
-* The ID reference to the order being hit or taken *
-****************************************************
-*/
   RefOrderID = 1080,
-/*
-***************************************************************
-* Used to specify what identifier, provided in order depth    *
-* market data, to use when hitting (taking) a specific order. *
-***************************************************************
-*/
   RefOrderIDSource = 1081,
-/*
-**************************************************************
-* Used for reserve orders when DisplayQty applies to the     *
-* primary execution market (e.g.an ECN) and another quantity *
-* is to be shown at other markets (e.g. the exchange). On    *
-* orders specifies the qty to be displayed, on execution     *
-* reports the currently displayed quantity.                  *
-**************************************************************
-*/
   SecondaryDisplayQty = 1082,
-/*
-************************************************
-* Instructs when to refresh DisplayQty (1138). *
-************************************************
-*/
   DisplayWhen = 1083,
-/*
-**********************************************************
-* Defines what value to use in DisplayQty (1138). If not *
-* specified the default DisplayMethod is "1"             *
-**********************************************************
-*/
   DisplayMethod = 1084,
-/*
-***************************************************************
-* Defines the lower quantity limit to a randomized refresh of *
-* DisplayQty.                                                 *
-***************************************************************
-*/
   DisplayLowQty = 1085,
-/*
-***************************************************************
-* Defines the upper quantity limit to a randomized refresh of *
-* DisplayQty.                                                 *
-***************************************************************
-*/
   DisplayHighQty = 1086,
-/*
-***************************************************************
-* Defines the minimum increment to be used when calculating a *
-* random refresh of DisplayQty. A user specifies this when he *
-* wants a larger increment than the standard provided by the  *
-* market (e.g. the round lot size).                           *
-***************************************************************
-*/
   DisplayMinIncr = 1087,
-/*
-****************************************************
-* Defines the quantity used to refresh DisplayQty. *
-****************************************************
-*/
   RefreshQty = 1088,
-/*
-****************************************************************
-* Allows orders to specify a minimum quantity that applies to  *
-* every execution (one execution could be for multiple         *
-* counter-orders). The order may still fill against smaller    *
-* orders, but the cumulative quantity of the execution must be *
-* in multiples of the MatchIncrement.                          *
-****************************************************************
-*/
   MatchIncrement = 1089,
-/*
-****************************************************************
-* Allows an order to specify a maximum number of price levels  *
-* to trade through. Only valid for aggressive orders and       *
-* during continuous (autoexecution) trading sessions. Property *
-* lost when order is put on book. A partially filled order is  *
-* assigned last trade price as limit price. Non-filled order   *
-* behaves as ordinary Market or Limit.                         *
-****************************************************************
-*/
   MaxPriceLevels = 1090,
-/*
-***************************************************************
-* Allows trader to explicitly request anonymity or disclosure *
-* in pre-trade market data feeds. Anonymity is relevant in    *
-* markets where counterparties are regularly disclosed in     *
-* order depth feeds. Disclosure is relevant when              *
-* counterparties are not normally visible.                    *
-***************************************************************
-*/
   PreTradeAnonymity = 1091,
-/*
-**************************************************************
-* Defines the type of price protection the customer requires *
-* on their order.                                            *
-**************************************************************
-*/
   PriceProtectionScope = 1092,
-/*
-***********************************************
-* Defines the lot type assigned to the order. *
-***********************************************
-*/
   LotType = 1093,
-/*
-****************************
-* Defines the type of peg. *
-****************************
-*/
   PegPriceType = 1094,
-/*
-*************************************************************
-* The value of the reference price that the order is pegged *
-* to. PeggedRefPrice + PegOffsetValue (211) = PeggedPrice   *
-* (839) unless the limit price (44, Price) is breached. The *
-* values may not be exact due to rounding.                  *
-*************************************************************
-*/
   PeggedRefPrice = 1095,
-/*
-*************************************************************
-* Defines the identity of the security off whose prices the *
-* order will peg. Same values as SecurityIDSource (22)      *
-*************************************************************
-*/
   PegSecurityIDSource = 1096,
-/*
-*************************************************************
-* Defines the identity of the security off whose prices the *
-* order will peg.                                           *
-*************************************************************
-*/
   PegSecurityID = 1097,
-/*
-****************************************************************
-* Defines the common, 'human understood' representation of the *
-* security off whose prices the order will Peg.                *
-****************************************************************
-*/
   PegSymbol = 1098,
-/*
-*************************************************************
-* Security description of the security off whose prices the *
-* order will Peg.                                           *
-*************************************************************
-*/
   PegSecurityDesc = 1099,
-/*
-****************************************************************
-* Defines when the trigger will hit, i.e. the action specified *
-* by the trigger instructions will come into effect.           *
-****************************************************************
-*/
   TriggerType = 1100,
-/*
-*************************************************************
-* Defines the type of action to take when the trigger hits. *
-*************************************************************
-*/
   TriggerAction = 1101,
-/*
-**********************************************
-* The price at which the trigger should hit. *
-**********************************************
-*/
   TriggerPrice = 1102,
-/*
-****************************************************************
-* Defines the common, 'human understood' representation of the *
-* security whose prices will be tracked by the trigger logic.  *
-****************************************************************
-*/
   TriggerSymbol = 1103,
-/*
-*************************************************************
-* Defines the identity of the security whose prices will be *
-* tracked by the trigger logic.                             *
-*************************************************************
-*/
   TriggerSecurityID = 1104,
-/*
-*************************************************************
-* Defines the identity of the security whose prices will be *
-* tracked by the trigger logic. Same values as              *
-* SecurityIDSource (22).                                    *
-*************************************************************
-*/
   TriggerSecurityIDSource = 1105,
-/*
-**********************************************************
-* Defines the security description of the security whose *
-* prices will be tracked by the trigger logic.           *
-**********************************************************
-*/
   TriggerSecurityDesc = 1106,
-/*
-******************************************************
-* The type of price that the trigger is compared to. *
-******************************************************
-*/
   TriggerPriceType = 1107,
-/*
-**************************************************************
-* Defines the type of price protection the customer requires *
-* on their order.                                            *
-**************************************************************
-*/
   TriggerPriceTypeScope = 1108,
-/*
-*****************************************************
-* The side from which the trigger price is reached. *
-*****************************************************
-*/
   TriggerPriceDirection = 1109,
-/*
-**************************************************************
-* The Price that the order should have after the trigger has *
-* hit. Could be applicable for any trigger type, but must be *
-* specified for Trigger Type 1.                              *
-**************************************************************
-*/
   TriggerNewPrice = 1110,
-/*
-****************************************************************
-* The OrdType the order should have after the trigger has hit. *
-* Required to express orders that change from Limit to Market. *
-* Other values from OrdType (40) may be used if appropriate    *
-* and bilaterally agreed upon.                                 *
-****************************************************************
-*/
   TriggerOrderType = 1111,
-/*
-************************************************************
-* The Quantity the order should have after the trigger has *
-* hit.                                                     *
-************************************************************
-*/
   TriggerNewQty = 1112,
-/*
-**********************************************************
-* Defines the trading session at which the order will be *
-* activated.                                             *
-**********************************************************
-*/
   TriggerTradingSessionID = 1113,
-/*
-**************************************************************
-* Defines the subordinate trading session at which the order *
-* will be activated.                                         *
-**************************************************************
-*/
   TriggerTradingSessionSubID = 1114,
-/*
-****************************************************************
-* Defines the type of interest behind a trade (fill or partial *
-* fill).                                                       *
-****************************************************************
-*/
   OrderCategory = 1115,
-/*
-***************************************************************
-* Number of RootPartyID (1117), RootPartyIDSource (1118), and *
-* RootPartyRole (1119) entries                                *
-***************************************************************
-*/
   NoRootPartyIDs = 1116,
-/*
-**************************************************************
-* PartyID value within a root parties component. Same values *
-* as PartyID (448)                                           *
-**************************************************************
-*/
   RootPartyID = 1117,
-/*
-*************************************************************
-* PartyIDSource value within a root parties component. Same *
-* values as PartyIDSource (447)                             *
-*************************************************************
-*/
   RootPartyIDSource = 1118,
-/*
-****************************************************************
-* PartyRole value within a root parties component. Same values *
-* as PartyRole (452)                                           *
-****************************************************************
-*/
   RootPartyRole = 1119,
-/*
-**********************************************************
-* Number of RootPartySubID (1121) and RootPartySubIDType *
-* (1122) entries                                         *
-**********************************************************
-*/
   NoRootPartySubIDs = 1120,
-/*
-**********************************************************
-* PartySubID value within a root parties component. Same *
-* values as PartySubID (523)                             *
-**********************************************************
-*/
   RootPartySubID = 1121,
-/*
-*******************************************************
-* Type of RootPartySubID (1121) value. Same values as *
-* PartySubIDType (803)                                *
-*******************************************************
-*/
   RootPartySubIDType = 1122,
-/*
-***************************************************************
-* Specified how the Trade Capture Report should be handled by *
-* the Respondent.                                             *
-***************************************************************
-*/
   TradeHandlingInstr = 1123,
-/*
-***************************************************************
-* Optionally used with TradeHandlingInstr = 0 to relay the    *
-* trade handling instruction used when reporting the trade to *
-* the marketplace. Same values as TradeHandlingInstr (1123)   *
-***************************************************************
-*/
   OrigTradeHandlingInstr = 1124,
-/*
-****************************************************************
-* Used to preserve original trade date when original trade is  *
-* being referenced in a subsequent trade transaction such as a *
-* transfer                                                     *
-****************************************************************
-*/
   OrigTradeDate = 1125,
-/*
-****************************************************************
-* Used to preserve original trade id when original trade is    *
-* being referenced in a subsequent trade transaction such as a *
-* transfer                                                     *
-****************************************************************
-*/
   OrigTradeID = 1126,
-/*
-***************************************************************
-* Used to preserve original secondary trade id when original  *
-* trade is being referenced in a subsequent trade transaction *
-* such as a transfer                                          *
-***************************************************************
-*/
   OrigSecondaryTradeID = 1127,
-/*
-***************************************************************
-* Specifies the service pack release being applied at message *
-* level. Enumerated field with values assigned at time of     *
-* service pack release                                        *
-***************************************************************
-*/
   ApplVerID = 1128,
-/*
-**************************************************************
-* Specifies a custom extension to a message being applied at *
-* the message level. Enumerated field                        *
-**************************************************************
-*/
   CstmApplVerID = 1129,
-/*
-**************************************************************
-* Specifies the service pack release being applied to a      *
-* message at the session level. Enumerated field with values *
-* assigned at time of service pack release. Uses same values *
-* as ApplVerID                                               *
-**************************************************************
-*/
   RefApplVerID = 1130,
-/*
-**************************************************************
-* Specifies a custom extension to a message being applied at *
-* the session level.                                         *
-**************************************************************
-*/
   RefCstmApplVerID = 1131,
-/*
-***************************************************************
-* Transact time in the local date-time stamp with a TZ offset *
-* to UTC identified                                           *
-***************************************************************
-*/
   TZTransactTime = 1132,
-/*
-**********************************
-* The ID source of ExDestination *
-**********************************
-*/
   ExDestinationIDSource = 1133,
-/*
-****************************************************************
-* Indicates that the reported price that is different from the *
-* market price. The price difference should be stated by using *
-* field 828 TrdType and, if required, field 829 TrdSubType     *
-****************************************************************
-*/
   ReportedPxDiff = 1134,
-/*
-***************************************************************
-* Indicates the system or medium on which the report has been *
-* published                                                   *
-***************************************************************
-*/
   RptSys = 1135,
-/*
-***************************************************
-* ClearingFeeIndicator(635) for Allocation, see   *
-* ClearingFeeIndicator(635) for permitted values. *
-***************************************************
-*/
   AllocClearingFeeIndicator = 1136,
-/*
-**************************************************************
-* Specifies the service pack release being applied, by       *
-* default, to message at the session level. Enumerated field *
-* with values assigned at time of service pack release. Uses *
-* same values as ApplVerID                                   *
-**************************************************************
-*/
   DefaultApplVerID = 1137,
-/*
-***************************************************************
-* The quantity to be displayed . Required for reserve orders. *
-* On orders specifies the qty to be displayed, on execution   *
-* reports the currently displayed quantity.                   *
-***************************************************************
-*/
   DisplayQty = 1138,
-/*
-************************************************
-* Free format text string related to exchange. *
-************************************************
-*/
   ExchangeSpecialInstructions = 1139,
-/*
-**********************************************************
-* The maximum order quantity that can be submitted for a *
-* security.                                              *
-**********************************************************
-*/
   MaxTradeVol = 1140,
-/*
-**********************************************************
-* The number of feed types and corresponding book depths *
-* associated with a security                             *
-**********************************************************
-*/
   NoMDFeedTypes = 1141,
-/*
-*************************************************************
-* The types of algorithm used to match orders in a specific *
-* security. Possilbe value types are FIFO, Allocation,      *
-* Pro-rata, Lead Market Maker, Currency Calender.           *
-*************************************************************
-*/
   MatchAlgorithm = 1142,
-/*
-**************************************************************
-* The maximum price variation of an execution from one event *
-* to the next for a given security.                          *
-**************************************************************
-*/
   MaxPriceVariation = 1143,
-/*
-***************************************************************
-* Indicates that an implied market should be created for      *
-* either the legs of a multi-leg instrument (Implied-in) or   *
-* for the multi-leg instrument based on the existence of the  *
-* legs (Implied-out). Determination as to whether implied     *
-* markets should be created is generally done at the level of *
-* the multi-leg instrument. Commonly used in listed           *
-* derivatives.                                                *
-***************************************************************
-*/
   ImpliedMarketIndicator = 1144,
-/*
-**********************************************************
-* Specific time of event. To be used in combination with *
-* EventDate [866]                                        *
-**********************************************************
-*/
   EventTime = 1145,
-/*
-***************************************************************
-* Minimum price increment amount associated with the          *
-* MinPriceIncrement ( tag 969). For listed derivatives, the   *
-* value can be calculated by multiplying MinPriceIncrement by *
-* ContractValueFactor(231).                                   *
-***************************************************************
-*/
   MinPriceIncrementAmount = 1146,
-/*
-*************************************************************
-* Used to indicate the quantity of the underlying commodity *
-* unit of measure on which the contract is based, such as,  *
-* 2500 lbs of lean cattle, 1000 barrels of crude oil, 1000  *
-* bushels of corn, etc. UnitOfMeasureQty is required for    *
-* UnitOfMeasure(996) Variable Quantity UOMs enumerations.   *
-* Refer to the definition of UnitOfMeasure(996) for more    *
-* information on the use of UnitOfMeasureQty.               *
-*************************************************************
-*/
   UnitOfMeasureQty = 1147,
-/*
-***************************************************************
-* Allowable low limit price for the trading day. A key        *
-* parameter in validating order price. Used as the lower band *
-* for validating order prices. Orders submitted with prices   *
-* below the lower limit will be rejected                      *
-***************************************************************
-*/
   LowLimitPrice = 1148,
-/*
-***************************************************************
-* Allowable high limit price for the trading day. A key       *
-* parameter in validating order price. Used as the upper band *
-* for validating order prices. Orders submitted with prices   *
-* above the upper limit will be rejected                      *
-***************************************************************
-*/
   HighLimitPrice = 1149,
-/*
-***************************************************************
-* Reference price for the current trading price range usually *
-* representing the mid price between the HighLimitPrice and   *
-* LowLimitPrice. The value may be the settlement price or     *
-* closing price of the prior trading day.                     *
-***************************************************************
-*/
   TradingReferencePrice = 1150,
-/*
-************************************************************
-* An exchange specific name assigned to a group of related *
-* securities which may be concurrently affected by market  *
-* events and actions.                                      *
-************************************************************
-*/
   SecurityGroup = 1151,
-/*
-**********************************************************
-* Allow sequencing of Legs for a Strategy to be captured *
-**********************************************************
-*/
   LegNumber = 1152,
-/*
-***********************************************************
-* Settlement cycle in which the settlement obligation was *
-* generated                                               *
-***********************************************************
-*/
   SettlementCycleNo = 1153,
-/*
-**************************************************************
-* Used to identify the trading currency on the Trade Capture *
-* Report Side                                                *
-**************************************************************
-*/
   SideCurrency = 1154,
-/*
-*********************************************************
-* Used to identify the settlement currency on the Trade *
-* Capture Report Side                                   *
-*********************************************************
-*/
   SideSettlCurrency = 1155,
-/*
-************************************************************
-* The extension pack number associated with an application *
-* message.                                                 *
-************************************************************
-*/
   ApplExtID = 1156,
-/*
-**************************
-* Net flow of Currency 1 *
-**************************
-*/
   CcyAmt = 1157,
-/*
-***************************************
-* Used to group Each Settlement Party *
-***************************************
-*/
   NoSettlDetails = 1158,
-/*
-*********************************************************
-* Used to identify the reporting mode of the settlement *
-* obligation which is either preliminary or final       *
-*********************************************************
-*/
   SettlObligMode = 1159,
-/*
-*******************************************************
-* Message identifier for Settlement Obligation Report *
-*******************************************************
-*/
   SettlObligMsgID = 1160,
-/*
-**********************************************
-* Unique ID for this settlement instruction. *
-**********************************************
-*/
   SettlObligID = 1161,
-/*
-*************************************************************
-* Transaction Type - required except where SettlInstMode is *
-* 5=Reject SSI request                                      *
-*************************************************************
-*/
   SettlObligTransType = 1162,
-/*
-**********************************************************
-* Required where SettlInstTransType is Cancel or Replace *
-**********************************************************
-*/
   SettlObligRefID = 1163,
-/*
-****************************************************************
-* Used to identify whether these delivery instructions are for *
-* the buyside or the sellside.                                 *
-****************************************************************
-*/
   SettlObligSource = 1164,
-/*
-************************************
-* Number of settlement obligations *
-************************************
-*/
   NoSettlOblig = 1165,
-/*
-******************************************
-* Unique identifier for a quote message. *
-******************************************
-*/
   QuoteMsgID = 1166,
-/*
-**********************************************************
-* Identifies the status of an individual quote. See also *
-* QuoteStatus(297) which is used for single Quotes.      *
-**********************************************************
-*/
   QuoteEntryStatus = 1167,
-/*
-*******************************************
-* Specifies the number of canceled quotes *
-*******************************************
-*/
   TotNoCxldQuotes = 1168,
-/*
-*******************************************
-* Specifies the number of accepted quotes *
-*******************************************
-*/
   TotNoAccQuotes = 1169,
-/*
-*******************************************
-* Specifies the number of rejected quotes *
-*******************************************
-*/
   TotNoRejQuotes = 1170,
-/*
-**************************************************************
-* Specifies whether a quote is public, i.e. available to the *
-* market, or private, i.e. available to a specified          *
-* counterparty only.                                         *
-**************************************************************
-*/
   PrivateQuote = 1171,
-/*
-************************************************
-* Specifies the type of respondents requested. *
-************************************************
-*/
   RespondentType = 1172,
-/*
-****************************************************************
-* Describes a class of sub book, e.g. for the separation of    *
-* various lot types. The Sub Book Type indicates that the      *
-* following Market Data Entries belong to a non-integrated Sub *
-* Book. Whenever provided the Sub Book must be used together   *
-* with MDPriceLevel and MDEntryPositionNo in order to sort the *
-* order properly.                                              *
-* Values are bilaterally agreed.                               *
-****************************************************************
-*/
   MDSubBookType = 1173,
-/*
-****************************************************************
-* Identifies an event related to a SecurityTradingStatus(326). *
-* An event occurs and is gone, it is not a state that applies  *
-* for a period of time.                                        *
-****************************************************************
-*/
   SecurityTradingEvent = 1174,
-/*
-**********************************************************
-* Number of statistics indicator repeating group entries *
-**********************************************************
-*/
   NoStatsIndicators = 1175,
-/*
-**********************
-* Type of statistics *
-**********************
-*/
   StatsType = 1176,
-/*
-*********************************************************
-* The number of secondary sizes specifies in this entry *
-*********************************************************
-*/
   NoOfSecSizes = 1177,
-/*
-*****************************************
-* Specifies the type of secondary size. *
-*****************************************
-*/
   MDSecSizeType = 1178,
-/*
-************************************************************
-* A part of the MDEntrySize(271) that represents secondary *
-* interest as specified by MDSecSizeType(1178).            *
-************************************************************
-*/
   MDSecSize = 1179,
-/*
-*********************************************************
-* Identifies the application with which a message is    *
-* associated. Used only if application sequencing is in *
-* effect.                                               *
-*********************************************************
-*/
   ApplID = 1180,
-/*
-**************************************************************
-* Data sequence number to be used when FIX session is not in *
-* effect                                                     *
-**************************************************************
-*/
   ApplSeqNum = 1181,
-/*
-***************************************************
-* Beginning range of application sequence numbers *
-***************************************************
-*/
   ApplBegSeqNum = 1182,
-/*
-************************************************
-* Ending range of application sequence numbers *
-************************************************
-*/
   ApplEndSeqNum = 1183,
-/*
-*****************************************
-* Lenght of the SecurityXML data block. *
-*****************************************
-*/
   SecurityXMLLen = 1184,
-/*
-****************************************************************
-* Actual XML data stream describing a security, normally FpML. *
-****************************************************************
-*/
   SecurityXML = 1185,
-/*
-***********************************************************
-* The schema used to validate the contents of SecurityXML *
-***********************************************************
-*/
   SecurityXMLSchema = 1186,
-/*
-***********************************************************
-* Set by the sender to tell the receiver to perform an    *
-* immediate refresh of the book due to disruptions in the *
-* accompanying real-time feed                             *
-* 'Y' - Mandatory refresh by all participants             *
-* 'N' - Process as required                               *
-***********************************************************
-*/
   RefreshIndicator = 1187,
-/*
-*******************************************************
-* Annualized volatility for option model calculations *
-*******************************************************
-*/
   Volatility = 1188,
-/*
-****************************************************************
-* Time to expiration in years calculated as the number of days *
-* remaining to expiration divided by 365 days per year.        *
-****************************************************************
-*/
   TimeToExpiration = 1189,
-/*
-********************************************************
-* Interest rate. Usually some form of short term rate. *
-********************************************************
-*/
   RiskFreeRate = 1190,
-/*
-**************************************************************
-* Used to express the UOM of the price if different from the *
-* contract. In futures, this can be different for cross-rate *
-* products in which the price is quoted in units differently *
-* from the contract                                          *
-**************************************************************
-*/
   PriceUnitOfMeasure = 1191,
-/*
-***************************************************************
-* Used to express the UOM Quantity of the price if different  *
-* from the contract. In futures, this can be different for    *
-* physically delivered products in which price is quoted in a *
-* unit size different from the contract, i.e. a Cattle Future *
-* contract has a UOMQty of 40,000 and a PriceUOMQty of 100.   *
-***************************************************************
-*/
   PriceUnitOfMeasureQty = 1192,
-/*
-*******************************************************
-* Settlement method for a contract. Can be used as an *
-* alternative to CFI Code value                       *
-*******************************************************
-*/
   SettlMethod = 1193,
-/*
-**********************************************
-* Type of exercise of a derivatives security *
-**********************************************
-*/
   ExerciseStyle = 1194,
-/*
-***********************************************************
-* Cash amount indicating the pay out associated with an   *
-* option. For binary options this is a fixed amount.      *
-* Conditionally required if OptPayoutType(1482) is set to *
-* binary.                                                 *
-***********************************************************
-*/
   OptPayoutAmount = 1195,
-/*
-******************************
-* Method for price quotation *
-******************************
-*/
   PriceQuoteMethod = 1196,
-/*
-***************************************************
-* Specifies the type of valuation method applied. *
-***************************************************
-*/
   ValuationMethod = 1197,
-/*
-************************************************************
-* Indicates whether instruments are pre-listed only or can *
-* also be defined via user request                         *
-************************************************************
-*/
   ListMethod = 1198,
-/*
-******************************************************
-* Used to express the ceiling price of a capped call *
-******************************************************
-*/
   CapPrice = 1199,
-/*
-***************************************************
-* Used to express the floor price of a capped put *
-***************************************************
-*/
   FloorPrice = 1200,
-/*
-**************************************************************
-* Number of strike rule entries. This block specifies the    *
-* rules for determining how new strikes should be listed     *
-* within the stated price range of the underlying instrument *
-**************************************************************
-*/
   NoStrikeRules = 1201,
-/*
-*************************************************************
-* Starting price for the range to which the StrikeIncrement *
-* applies. Price refers to the price of the underlying      *
-*************************************************************
-*/
   StartStrikePxRange = 1202,
-/*
-**********************************************************
-* Ending price of the range to which the StrikeIncrement *
-* applies. Price refers to the price of the underlying   *
-**********************************************************
-*/
   EndStrikePxRange = 1203,
-/*
-****************************************************************
-* Value by which strike price should be incremented within the *
-* specified price range.                                       *
-****************************************************************
-*/
   StrikeIncrement = 1204,
-/*
-***************************************************************
-* Number of tick rules. This block specifies the rules for    *
-* determining how a security ticks, i.e. the price increments *
-* at which it can be quoted and traded, depending on the      *
-* current price of the security                               *
-***************************************************************
-*/
   NoTickRules = 1205,
-/*
-*****************************************************
-* Starting price range for specified tick increment *
-*****************************************************
-*/
   StartTickPriceRange = 1206,
-/*
-*******************************************************
-* Ending price range for the specified tick increment *
-*******************************************************
-*/
   EndTickPriceRange = 1207,
-/*
-**************************************************************
-* Tick increment for stated price range. Specifies the valid *
-* price increments at which a security can be quoted and     *
-* traded                                                     *
-**************************************************************
-*/
   TickIncrement = 1208,
-/*
-************************************************************
-* Specifies the type of tick rule which is being described *
-************************************************************
-*/
   TickRuleType = 1209,
-/*
-******************************************************
-* Code to represent the type of instrument attribute *
-******************************************************
-*/
   NestedInstrAttribType = 1210,
-/*
-************************************************************
-* Attribute value appropriate to the NestedInstrAttribType *
-* field                                                    *
-************************************************************
-*/
   NestedInstrAttribValue = 1211,
-/*
-************************************************************
-* Time of security's maturity expressed in local time with *
-* offset to UTC specified                                  *
-************************************************************
-*/
   LegMaturityTime = 1212,
-/*
-************************************************************
-* Time of security's maturity expressed in local time with *
-* offset to UTC specified                                  *
-************************************************************
-*/
   UnderlyingMaturityTime = 1213,
-/*
-**************************************
-* Refer to definition for Symbol(55) *
-**************************************
-*/
   DerivativeSymbol = 1214,
-/*
-*****************************************
-* Refer to definition for SymbolSfx(65) *
-*****************************************
-*/
   DerivativeSymbolSfx = 1215,
-/*
-******************************************
-* Refer to definition for SecurityID(48) *
-******************************************
-*/
   DerivativeSecurityID = 1216,
-/*
-************************************************
-* Refer to definition for SecurityIDSoruce(22) *
-************************************************
-*/
   DerivativeSecurityIDSource = 1217,
-/*
-************************************************
-* Refer to definition for NoSecurityAltID(454) *
-************************************************
-*/
   NoDerivativeSecurityAltID = 1218,
-/*
-**********************************************
-* Refer to definition for SecurityAltID(455) *
-**********************************************
-*/
   DerivativeSecurityAltID = 1219,
-/*
-****************************************************
-* Refer to definition for SecurityAltIDSource(456) *
-****************************************************
-*/
   DerivativeSecurityAltIDSource = 1220,
-/*
-**********************************************
-* Refer to definition of LowLimitPrice(1148) *
-**********************************************
-*/
   SecondaryLowLimitPrice = 1221,
-/*
-**************************************************************
-* Allows maturity rule to be referenced via an identifier so *
-* that rules do not need to be explicitly enumerated         *
-**************************************************************
-*/
   MaturityRuleID = 1222,
-/*
-************************************************************
-* Allows strike rule to be referenced via an identifier so *
-* that rules do not need to be explicitly enumerated       *
-************************************************************
-*/
   StrikeRuleID = 1223,
-/*
-*************************************************
-* Refer to definition of UnitOfMeasureQty(1147) *
-*************************************************
-*/
   LegUnitOfMeasureQty = 1224,
-/*
-*********************************************************
-* Cash amount indicating the pay out associated with an *
-* option. For binary options this is a fixed amount     *
-*********************************************************
-*/
   DerivativeOptPayAmount = 1225,
-/*
-**************************************************
-* Ending maturity month year for an option class *
-**************************************************
-*/
   EndMaturityMonthYear = 1226,
-/*
-**************************************************************
-* Identifies an entire suite of products for a given market. *
-* In Futures this may be "interest rates", "agricultural",   *
-* "equity indexes", etc.                                     *
-**************************************************************
-*/
   ProductComplex = 1227,
-/*
-*********************************
-* Refer to ProductComplex(1227) *
-*********************************
-*/
   DerivativeProductComplex = 1228,
-/*
-***************************************************************
-* Increment between successive maturities for an option class *
-***************************************************************
-*/
   MaturityMonthYearIncrement = 1229,
-/*
-***********************************************
-* Refer to definition of HighLimitPrice(1149) *
-***********************************************
-*/
   SecondaryHighLimitPrice = 1230,
-/*
-***********************************************************
-* Minimum lot size allowed based on lot type specified in *
-* LotType(1093)                                           *
-***********************************************************
-*/
   MinLotSize = 1231,
-/*
-************************************
-* Number of execution instructions *
-************************************
-*/
   NoExecInstRules = 1232,
-/*
-****************************
-* Number of Lot Type Rules *
-****************************
-*/
+  CommRate = 1233,
   NoLotTypeRules = 1234,
-/*
-*************************
-* Number of Match Rules *
-*************************
-*/
   NoMatchRules = 1235,
-/*
-*************************************************************
-* Number of maturity rules in MarurityRules component block *
-*************************************************************
-*/
   NoMaturityRules = 1236,
-/*
-*************************
-* Number of order types *
-*************************
-*/
   NoOrdTypeRules = 1237,
-/*
-**************************************
-* Number of time in force techniques *
-**************************************
-*/
+  CommUnitOfMeasure = 1238,
   NoTimeInForceRules = 1239,
-/*
-*******************************************************
-* Refer to definition for TradingReferencePrice(1150) *
-*******************************************************
-*/
   SecondaryTradingReferencePrice = 1240,
-/*
-****************************************************
-* Starting maturity month year for an option class *
-****************************************************
-*/
   StartMaturityMonthYear = 1241,
-/*
-**************************************************************
-* Used to indicate if a product or group of product supports *
-* the creation of flexible securities                        *
-**************************************************************
-*/
   FlexProductEligibilityIndicator = 1242,
-/*
-**************************************************
-* Refer to FlexProductEligibilityIndicator(1242) *
-**************************************************
-*/
   DerivFlexProductEligibilityIndicator = 1243,
-/*
-***************************************************************
-* Used to indicate a derivatives security that can be defined *
-* using flexible terms. The terms commonly permitted to be    *
-* defined by market participants are expiration date and      *
-* strike price. FlexibleIndicator is an alternative           *
-* CFICode(461) Standard/Non-standard attribute.               *
-***************************************************************
-*/
   FlexibleIndicator = 1244,
-/*
-************************************************************
-* Used when the trading currency can differ from the price *
-* currency                                                 *
-************************************************************
-*/
   TradingCurrency = 1245,
   DerivativeProduct = 1246,
   DerivativeSecurityGroup = 1247,
@@ -8801,23 +1232,8 @@ export enum MsgTag {
   DerivativeSecurityDesc = 1279,
   DerivativeEncodedSecurityDescLen = 1280,
   DerivativeEncodedSecurityDesc = 1281,
-/*
-********************************************
-* Refer to definition SecurityXMLLen(1184) *
-********************************************
-*/
   DerivativeSecurityXMLLen = 1282,
-/*
-********************************************
-* Refer to definition of SecurityXML(1185) *
-********************************************
-*/
   DerivativeSecurityXML = 1283,
-/*
-**************************************************
-* Refer to definition of SecurityXMLSchema(1186) *
-**************************************************
-*/
   DerivativeSecurityXMLSchema = 1284,
   DerivativeContractSettlMonth = 1285,
   NoDerivativeEvents = 1286,
@@ -8826,1433 +1242,4789 @@ export enum MsgTag {
   DerivativeEventTime = 1289,
   DerivativeEventPx = 1290,
   DerivativeEventText = 1291,
-/*
-*****************************************
-* Refer to definition of NoParties(453) *
-*****************************************
-*/
   NoDerivativeInstrumentParties = 1292,
-/*
-***************************************
-* Refer to definition of PartyID(448) *
-***************************************
-*/
   DerivativeInstrumentPartyID = 1293,
-/*
-*********************************************
-* Refer to definition of PartyIDSource(447) *
-*********************************************
-*/
   DerivativeInstrumentPartyIDSource = 1294,
-/*
-*****************************************
-* REfer to definition of PartyRole(452) *
-*****************************************
-*/
   DerivativeInstrumentPartyRole = 1295,
-/*
-**********************************************
-* Refer to definition for NoPartySubIDs(802) *
-**********************************************
-*/
   NoDerivativeInstrumentPartySubIDs = 1296,
-/*
-*******************************************
-* Refer to definition for PartySubID(523) *
-*******************************************
-*/
   DerivativeInstrumentPartySubID = 1297,
-/*
-***********************************************
-* Refer to definition for PartySubIDType(803) *
-***********************************************
-*/
   DerivativeInstrumentPartySubIDType = 1298,
-/*
-**********************************************
-* Type of exercise of a derivatives security *
-**********************************************
-*/
   DerivativeExerciseStyle = 1299,
-/*
-*********************************
-* Identifies the market segment *
-*********************************
-*/
   MarketSegmentID = 1300,
-/*
-*************************
-* Identifies the Market *
-*************************
-*/
   MarketID = 1301,
-/*
-*********************************************************
-* Unit of measure for the Maturity Month Year Increment *
-*********************************************************
-*/
   MaturityMonthYearIncrementUnits = 1302,
-/*
-**********************************************************
-* Format used to generate the MaturityMonthYear for each *
-* option                                                 *
-**********************************************************
-*/
   MaturityMonthYearFormat = 1303,
-/*
-*****************************************
-* Expiration Style for an option class: *
-*****************************************
-*/
   StrikeExerciseStyle = 1304,
-/*
-****************************************************
-* Describes the how the price limits are expressed *
-****************************************************
-*/
   SecondaryPriceLimitType = 1305,
-/*
-****************************************************
-* Describes the how the price limits are expressed *
-****************************************************
-*/
   PriceLimitType = 1306,
-/*
-***********************************************************
-* Indicates execution instructions that are valid for the *
-* specified market segment                                *
-***********************************************************
-*/
   ExecInstValue = 1308,
-/*
-***********************************************************
-* Allows trading rules to be expressed by trading session *
-***********************************************************
-*/
   NoTradingSessionRules = 1309,
-/*
-************************************************************
-* Number of Market Segments on which a security may trade. *
-************************************************************
-*/
   NoMarketSegments = 1310,
   NoDerivativeInstrAttrib = 1311,
   NoNestedInstrAttrib = 1312,
-/*
-***********************************************
-* Refer to definition of InstrAttribType(871) *
-***********************************************
-*/
   DerivativeInstrAttribType = 1313,
-/*
-************************************************
-* Refer to definition of InstrAttribValue(872) *
-************************************************
-*/
   DerivativeInstrAttribValue = 1314,
-/*
-****************************************************
-* Refer to definition for PriceUnitOfMeasure(1191) *
-****************************************************
-*/
   DerivativePriceUnitOfMeasure = 1315,
-/*
-******************************************************
-* Refer to definition of PriceUnitOfMeasureQty(1192) *
-******************************************************
-*/
   DerivativePriceUnitOfMeasureQty = 1316,
-/*
-********************************************
-* Refer to definition of SettlMethod(1193) *
-********************************************
-*/
   DerivativeSettlMethod = 1317,
-/*
-*************************************************
-* Refer to definition of PriceQuoteMethod(1196) *
-*************************************************
-*/
   DerivativePriceQuoteMethod = 1318,
-/*
-*************************************************
-* Refer to definition of ValuationMethod(1197). *
-*************************************************
-*/
   DerivativeValuationMethod = 1319,
-/*
-************************************************************
-* Indicates whether instruments are pre-listed only or can *
-* also be defined via user request                         *
-************************************************************
-*/
   DerivativeListMethod = 1320,
-/*
-*****************************************
-* Refer to definition of CapPrice(1199) *
-*****************************************
-*/
   DerivativeCapPrice = 1321,
-/*
-*******************************************
-* Refer to definition of FloorPrice(1200) *
-*******************************************
-*/
   DerivativeFloorPrice = 1322,
-/*
-****************************************************
-* Indicates whether an Option is for a put or call *
-****************************************************
-*/
   DerivativePutOrCall = 1323,
-/*
-**********************************************************
-* If provided, then Instrument occurrence has explicitly *
-* changed                                                *
-**********************************************************
-*/
   ListUpdateAction = 1324,
-/*
-*********************************************
-* Reference to a parent Market Segment. See *
-* MarketSegmentID(1300)                     *
-*********************************************
-*/
   ParentMktSegmID = 1325,
-/*
-*******************************
-* Trading Session description *
-*******************************
-*/
   TradingSessionDesc = 1326,
-/*
-********************************************************
-* Specifies the action taken for the specified trading *
-* sessions.                                            *
-********************************************************
-*/
   TradSesUpdateAction = 1327,
-/*
-****************************************************************
-* Those will be used by Firms to send a reason for rejecting a *
-* trade in an allocate claim model.                            *
-****************************************************************
-*/
   RejectText = 1328,
-/*
-***************************************************************
-* This is a multiplier that Clearing (Fee system) will use to *
-* calculate fees and will be sent to the firms on their       *
-* confirms.                                                   *
-***************************************************************
-*/
   FeeMultiplier = 1329,
-/*
-**************************************
-* Refer to definition for Symbol(55) *
-**************************************
-*/
   UnderlyingLegSymbol = 1330,
-/*
-*****************************************
-* Refer to definition for SymbolSfx(65) *
-*****************************************
-*/
   UnderlyingLegSymbolSfx = 1331,
-/*
-******************************************
-* Refer to definition for SecurityID(48) *
-******************************************
-*/
   UnderlyingLegSecurityID = 1332,
-/*
-************************************************
-* Refer to definition for SecurityIDSource(22) *
-************************************************
-*/
   UnderlyingLegSecurityIDSource = 1333,
-/*
-************************************************
-* Refer to definition for NoSecurityAltID(454) *
-************************************************
-*/
   NoUnderlyingLegSecurityAltID = 1334,
-/*
-**********************************************
-* Refer to definition for SecurityAltID(455) *
-**********************************************
-*/
   UnderlyingLegSecurityAltID = 1335,
-/*
-****************************************************
-* Refer to definition for SecurityAltIDSource(456) *
-****************************************************
-*/
   UnderlyingLegSecurityAltIDSource = 1336,
-/*
-*********************************************
-* Refer to definition for SecurityType(167) *
-*********************************************
-*/
   UnderlyingLegSecurityType = 1337,
-/*
-************************************************
-* Refer to definition for SecuritySubType(762) *
-************************************************
-*/
   UnderlyingLegSecuritySubType = 1338,
-/*
-**************************************************
-* Refer to definition for MaturityMonthYear(200) *
-**************************************************
-*/
   UnderlyingLegMaturityMonthYear = 1339,
-/*
-********************************************
-* Refer to definition for StrikePrice(202) *
-********************************************
-*/
   UnderlyingLegStrikePrice = 1340,
-/*
-*************************************************
-* Refer to definition for SecurityExchange(207) *
-*************************************************
-*/
   UnderlyingLegSecurityExchange = 1341,
-/*
-***************************************************************
-* Number of Underlyings, Identifies the Underlying of the Leg *
-***************************************************************
-*/
   NoOfLegUnderlyings = 1342,
-/*
-******************************************
-* Refer to definition for PutOrCall(201) *
-******************************************
-*/
   UnderlyingLegPutOrCall = 1343,
-/*
-****************************************
-* Refer to definition for CFICode(461) *
-****************************************
-*/
   UnderlyingLegCFICode = 1344,
-/*
-*********************
-* Date of maturity. *
-*********************
-*/
   UnderlyingLegMaturityDate = 1345,
-/*
-*********************************
-* Unique identifier for request *
-*********************************
-*/
   ApplReqID = 1346,
-/*
-***************************************************
-* Type of Application Message Request being made. *
-***************************************************
-*/
   ApplReqType = 1347,
-/*
-************************************************************
-* Used to indicate the type of acknowledgement being sent. *
-************************************************************
-*/
   ApplResponseType = 1348,
-/*
-******************************************************
-* Total number of messages included in transmission. *
-******************************************************
-*/
   ApplTotalMessageCount = 1349,
-/*
-***************************************************************
-* Application sequence number of last message in transmission *
-***************************************************************
-*/
   ApplLastSeqNum = 1350,
-/*
-**************************************************
-* Specifies number of application id occurrences *
-**************************************************
-*/
   NoApplIDs = 1351,
-/*
-****************************************************************
-* Used to indicate that a message is being sent in response to *
-* an Application Message Request. It is possible for both      *
-* ApplResendFlag and PossDupFlag to be set on the same message *
-* if the Sender's cache size is greater than zero and the      *
-* message is being resent due to a session level resend        *
-* request                                                      *
-****************************************************************
-*/
   ApplResendFlag = 1352,
-/*
-*****************************************************
-* Identifier for the Applicaton Message Request Ack *
-*****************************************************
-*/
   ApplResponseID = 1353,
-/*
-**********************************************************
-* Used to return an error code or text associated with a *
-* response to an Application Request.                    *
-**********************************************************
-*/
   ApplResponseError = 1354,
-/*
-*************************************************************
-* Reference to the unique application identifier which      *
-* corresponds to ApplID(1180) from the Application Sequence *
-* Group component                                           *
-*************************************************************
-*/
   RefApplID = 1355,
-/*
-*************************************************
-* Identifier for the Application Sequence Reset *
-*************************************************
-*/
   ApplReportID = 1356,
-/*
-****************************************************************
-* Application sequence number of last message in transmission. *
-****************************************************************
-*/
   RefApplLastSeqNum = 1357,
-/*
-*****************************************
-* Refer to definition of PutOrCall(201) *
-*****************************************
-*/
   LegPutOrCall = 1358,
-/*
-***************************************************************
-* Total number of fill entries across all messages. Should be *
-* the sum of all NoFills(1362) in each message that has       *
-* repeating list of fill entries related to the same          *
-* ExecID(17). Used to support fragmentation.                  *
-***************************************************************
-*/
   TotNoFills = 1361,
   NoFills = 1362,
-/*
-**************************************************************
-* Refer to ExecID(17). Used when multiple partial fills are  *
-* reported in single Execution Report. ExecID and FillExecID *
-* should not overlap,                                        *
-**************************************************************
-*/
   FillExecID = 1363,
-/*
-***************************************
-* Price of Fill. Refer to LastPx(31). *
-***************************************
-*/
   FillPx = 1364,
-/*
-*******************************************
-* Quantity of Fill. Refer to LastQty(32). *
-*******************************************
-*/
   FillQty = 1365,
-/*
-*************************************************************
-* The AllocID(70) of an individual leg of a multileg order. *
-*************************************************************
-*/
   LegAllocID = 1366,
-/*
-****************************************************************
-* Identifies settlement currency for the leg level allocation. *
-****************************************************************
-*/
   LegAllocSettlCurrency = 1367,
-/*
-****************************************************************
-* Identifies an event related to a TradSesStatus(340). An      *
-* event occurs and is gone, it is not a state that applies for *
-* a period of time.                                            *
-****************************************************************
-*/
   TradSesEvent = 1368,
-/*
-***************************************************************
-* Unique identifier of Order Mass Cancel Report or Order Mass *
-* Action Report message as assigned by sell-side (broker,     *
-* exchange, ECN)                                              *
-***************************************************************
-*/
   MassActionReportID = 1369,
-/*
-***********************************************************
-* Number of not affected orders in the repeating group of *
-* order ids.                                              *
-***********************************************************
-*/
   NoNotAffectedOrders = 1370,
-/*
-*********************************************************
-* OrderID(37) of an order not affected by a mass cancel *
-* request.                                              *
-*********************************************************
-*/
   NotAffectedOrderID = 1371,
-/*
-***************************************************************
-* ClOrdID(11) of the previous order (NOT the initial order of *
-* the day) as assigned by the institution, used to identify   *
-* the previous order in cancel and cancel/replace requests.   *
-***************************************************************
-*/
   NotAffOrigClOrdID = 1372,
-/*
-******************************************
-* Specifies the type of action requested *
-******************************************
-*/
   MassActionType = 1373,
-/*
-*************************************************
-* Specifies scope of Order Mass Action Request. *
-*************************************************
-*/
   MassActionScope = 1374,
-/*
-*************************************************************
-* Specifies the action taken by counterparty order handling *
-* system as a result of the action type indicated in        *
-* MassActionType of the Order Mass Action Request.          *
-*************************************************************
-*/
   MassActionResponse = 1375,
-/*
-*************************************************
-* Reason Order Mass Action Request was rejected *
-*************************************************
-*/
   MassActionRejectReason = 1376,
-/*
-*****************************************
-* Specifies the type of multileg order. *
-*****************************************
-*/
   MultilegModel = 1377,
-/*
-***********************************************************
-* Code to represent how the multileg price is to be       *
-* interpreted when applied to the legs.                   *
-* (See Volume : "Glossary" for further value definitions) *
-***********************************************************
-*/
   MultilegPriceMethod = 1378,
-/*
-**************************************************
-* Specifies the volatility of an instrument leg. *
-**************************************************
-*/
   LegVolatility = 1379,
-/*
-****************************************************************
-* The continuously-compounded annualized dividend yield of the *
-* underlying(s) of an option. Used as a parameter to           *
-* theoretical option pricing models.                           *
-****************************************************************
-*/
   DividendYield = 1380,
-/*
-************************************************
-* Refer to definition for DividendYield(1380). *
-************************************************
-*/
   LegDividendYield = 1381,
-/*
-****************************************************************
-* Specifies the currency ratio between the currency used for a *
-* multileg price and the currency used by the outright book    *
-* defined by the leg. Example: Multileg quoted in EUR,         *
-* outright leg in USD and 1 EUR = 0,7 USD then CurrencyRatio = *
-* 0.7                                                          *
-****************************************************************
-*/
   CurrencyRatio = 1382,
-/*
-****************************************************************
-* Specifies the currency ratio between the currency used for a *
-* multileg price and the currency used by the outright book    *
-* defined by the leg. Example: Multileg quoted in EUR,         *
-* outright leg in USD and 1 EUR = 0,7 USD then                 *
-* LegCurrencyRatio = 0.7                                       *
-****************************************************************
-*/
   LegCurrencyRatio = 1383,
-/*
-*******************************
-* Refer to ExecInst(18)       *
-* Same values as ExecInst(18) *
-*******************************
-*/
   LegExecInst = 1384,
-/*
-************************************
-* Defines the type of contingency. *
-************************************
-*/
   ContingencyType = 1385,
-/*
-****************************************************************
-* Identifies the reason for rejection of a New Order List      *
-* message. Note that OrdRejReason(103) is used if the          *
-* rejection is based on properties of an individual order part *
-* of the List.                                                 *
-****************************************************************
-*/
   ListRejectReason = 1386,
-/*
-****************************************
-* Number of trade reporting indicators *
-****************************************
-*/
   NoTrdRepIndicators = 1387,
-/*
-**********************************************************
-* Identifies the type of party for trade reporting. Same *
-* values as PartyRole(452).                              *
-**********************************************************
-*/
   TrdRepPartyRole = 1388,
-/*
-***************************************************************
-* Specifies whether the trade should be reported (or not) to  *
-* parties of the provided TrdRepPartyRole(1388). Used to      *
-* override standard reporting behavior by the receiver of the *
-* trade report and thereby complements the PublTrdIndicator(  *
-* tag1390).                                                   *
-***************************************************************
-*/
   TrdRepIndicator = 1389,
-/*
-**********************************************************
-* Indicates if a trade should be reported via a market   *
-* reporting service. The indicator governs all reporting *
-* services of the recipient. Replaces                    *
-* PublishTrdIndicator(852).                              *
-**********************************************************
-*/
   TradePublishIndicator = 1390,
-/*
-********************************************
-* Refer to definition of OptAttribute(206) *
-********************************************
-*/
   UnderlyingLegOptAttribute = 1391,
-/*
-********************************************
-* Refer to definition of SecurityDesc(107) *
-********************************************
-*/
   UnderlyingLegSecurityDesc = 1392,
-/*
-*****************************************************
-* Unique ID of a Market Definition Request message. *
-*****************************************************
-*/
   MarketReqID = 1393,
-/*
-*****************************************
-* Market Definition message identifier. *
-*****************************************
-*/
   MarketReportID = 1394,
-/*
-***************************************************************
-* Specifies the action taken for the specified MarketID(1301) *
-* + MarketSegmentID(1300).                                    *
-***************************************************************
-*/
   MarketUpdateAction = 1395,
-/*
-*****************************************
-* Description or name of Market Segment *
-*****************************************
-*/
   MarketSegmentDesc = 1396,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedMktSegmDesc(1324) field.               *
-*************************************************
-*/
   EncodedMktSegmDescLen = 1397,
-/*
-**************************************************************
-* Encoded (non-ASCII characters) representation of the       *
-* MarketSegmDesc(1396) field in the encoded format specified *
-* via the MessageEncoding(347) field. If used, the ASCII     *
-* (English) representation should also be specified in the   *
-* MarketSegmDesc field.                                      *
-**************************************************************
-*/
   EncodedMktSegmDesc = 1398,
-/*
-******************************************************
-* Used to specify a new application sequence number. *
-******************************************************
-*/
   ApplNewSeqNum = 1399,
-/*
-****************************************************************
-* Enumeration defining the encryption method used to encrypt   *
-* password fields.                                             *
-* At this time there are no encryption methods defined by FPL. *
-****************************************************************
-*/
   EncryptedPasswordMethod = 1400,
-/*
-***********************************************
-* Length of the EncryptedPassword(1402) field *
-***********************************************
-*/
   EncryptedPasswordLen = 1401,
-/*
-**************************************************************
-* Encrypted password - encrypted via the method specified in *
-* the field EncryptedPasswordMethod(1400)                    *
-**************************************************************
-*/
   EncryptedPassword = 1402,
-/*
-**************************************************
-* Length of the EncryptedNewPassword(1404) field *
-**************************************************
-*/
   EncryptedNewPasswordLen = 1403,
-/*
-***************************************************************
-* Encrypted new password - encrypted via the method specified *
-* in the field EncryptedPasswordMethod(1400)                  *
-***************************************************************
-*/
   EncryptedNewPassword = 1404,
-/*
-************************************************************
-* Time of security's maturity expressed in local time with *
-* offset to UTC specified                                  *
-************************************************************
-*/
   UnderlyingLegMaturityTime = 1405,
-/*
-************************************************************
-* The extension pack number associated with an application *
-* message.                                                 *
-************************************************************
-*/
   RefApplExtID = 1406,
-/*
-***********************************************************
-* The extension pack number that is the default for a FIX *
-* session.                                                *
-***********************************************************
-*/
   DefaultApplExtID = 1407,
-/*
-*********************************************************
-* The default custom application version ID that is the *
-* default for a session.                                *
-*********************************************************
-*/
   DefaultCstmApplVerID = 1408,
-/*
-***************************
-* Status of a FIX session *
-***************************
-*/
   SessionStatus = 1409,
   DefaultVerIndicator = 1410,
-/*
-**********************************************
-* Refer to definition of PartySubIDType(803) *
-**********************************************
-*/
   Nested4PartySubIDType = 1411,
-/*
-******************************************
-* Refer to definition of PartySubID(523) *
-******************************************
-*/
   Nested4PartySubID = 1412,
-/*
-*********************************************
-* Refer to definition of NoPartySubIDs(802) *
-*********************************************
-*/
   NoNested4PartySubIDs = 1413,
-/*
-******************************************
-* Refer to definition of NoPartyIDs(453) *
-******************************************
-*/
   NoNested4PartyIDs = 1414,
-/*
-***************************************
-* Refer to definition of PartyID(448) *
-***************************************
-*/
   Nested4PartyID = 1415,
-/*
-*********************************************
-* Refer to definition of PartyIDSource(447) *
-*********************************************
-*/
   Nested4PartyIDSource = 1416,
-/*
-*****************************************
-* Refer to definition of PartyRole(452) *
-*****************************************
-*/
   Nested4PartyRole = 1417,
-/*
-****************************************
-* Fill quantity for the leg instrument *
-****************************************
-*/
   LegLastQty = 1418,
-/*
-**********************************************
-* Type of exercise of a derivatives security *
-**********************************************
-*/
   UnderlyingExerciseStyle = 1419,
-/*
-**********************************************
-* Type of exercise of a derivatives security *
-**********************************************
-*/
   LegExerciseStyle = 1420,
-/*
-****************************************************
-* Refer to definition for PriceUnitOfMeasure(1191) *
-****************************************************
-*/
   LegPriceUnitOfMeasure = 1421,
-/*
-******************************************************
-* Refer to definition of PriceUnitOfMeasureQty(1192) *
-******************************************************
-*/
   LegPriceUnitOfMeasureQty = 1422,
-/*
-*************************************************
-* Refer to definition of UnitOfMeasureQty(1147) *
-*************************************************
-*/
   UnderlyingUnitOfMeasureQty = 1423,
-/*
-****************************************************
-* Refer to definition for PriceUnitOfMeasure(1191) *
-****************************************************
-*/
   UnderlyingPriceUnitOfMeasure = 1424,
-/*
-******************************************************
-* Refer to definition of PriceUnitOfMeasureQty(1192) *
-******************************************************
-*/
   UnderlyingPriceUnitOfMeasureQty = 1425,
-/*
-******************
-* Type of report *
-******************
-*/
   ApplReportType = 1426,
-/*
-**************************************************************
-* When reporting trades, used to reference the identifier of *
-* the execution (ExecID) being reported if different ExecIDs *
-* were assigned to each side of the trade.                   *
-**************************************************************
-*/
   SideExecID = 1427,
-/*
-***************************************************************
-* Time lapsed from order entry until match, based on the unit *
-* of time specified in OrderDelayUnit.  Default is seconds if *
-* OrderDelayUnit is not specified. Value = 0, indicates the   *
-* aggressor (the initiating side of the trade).               *
-***************************************************************
-*/
   OrderDelay = 1428,
-/*
-********************************************************
-* Time unit in which the OrderDelay(1428) is expressed *
-********************************************************
-*/
   OrderDelayUnit = 1429,
-/*
-***********************************************************
-* Identifies the type of venue where a trade was executed *
-***********************************************************
-*/
   VenueType = 1430,
-/*
-****************************************
-* The reason for updating the RefOrdID *
-****************************************
-*/
   RefOrdIDReason = 1431,
-/*
-***************************************************************
-* The customer capacity for this trade at the time of the     *
-* order/execution.                                            *
-* Primarily used by futures exchanges to indicate the CTICode *
-* (customer type indicator) as required by the US CFTC        *
-* (Commodity Futures Trading Commission).                     *
-***************************************************************
-*/
   OrigCustOrderCapacity = 1432,
-/*
-*************************************************************
-* Used to reference a previously submitted ApplReqID (1346) *
-* from within a subsequent                                  *
-* ApplicationMessageRequest(MsgType=BW)                     *
-*************************************************************
-*/
   RefApplReqID = 1433,
-/*
-******************************
-* Type of pricing model used *
-******************************
-*/
   ModelType = 1434,
-/*
-****************************************************************
-* Indicates the type of multiplier being applied to the        *
-* contract. Can be optionally used to further define what unit *
-* ContractMultiplier(tag 231) is expressed in.                 *
-****************************************************************
-*/
   ContractMultiplierUnit = 1435,
-/*
-****************************************************************
-* "Indicates the type of multiplier being applied to the       *
-* contract. Can be optionally used to further define what unit *
-* LegContractMultiplier(tag 614) is expressed in.              *
-****************************************************************
-*/
   LegContractMultiplierUnit = 1436,
-/*
-****************************************************************
-* Indicates the type of multiplier being applied to the        *
-* contract. Can be optionally used to further define what unit *
-* UndlyContractMultiplier(tag 436) is expressed in.            *
-****************************************************************
-*/
   UnderlyingContractMultiplierUnit = 1437,
-/*
-****************************************************************
-* Indicates the type of multiplier being applied to the        *
-* contract. Can be optionally used to further define what unit *
-* DerivativeContractMultiplier(tag 1266)is expressed in.       *
-****************************************************************
-*/
   DerivativeContractMultiplierUnit = 1438,
-/*
-***************************************************************
-* The industry standard flow schedule by which electricity or *
-* natural gas is traded. Schedules exist by regions and       *
-* on-peak and off-peak status, such as "Western Peak".        *
-***************************************************************
-*/
   FlowScheduleType = 1439,
-/*
-***************************************************************
-* The industry standard flow schedule by which electricity or *
-* natural gas is traded. Schedules exist by regions and       *
-* on-peak and off-peak status, such as "Western Peak".        *
-***************************************************************
-*/
   LegFlowScheduleType = 1440,
-/*
-***************************************************************
-* The industry standard flow schedule by which electricity or *
-* natural gas is traded. Schedules exist by regions and       *
-* on-peak and off-peak status, such as "Western Peak".        *
-***************************************************************
-*/
   UnderlyingFlowScheduleType = 1441,
-/*
-***************************************************************
-* The industry standard flow schedule by which electricity or *
-* natural gas is traded. Schedules exist by regions and       *
-* on-peak and off-peak status, such as "Western Peak".        *
-***************************************************************
-*/
   DerivativeFlowScheduleType = 1442,
-/*
-**************************************************************
-* Indicator to identify whether this fill was a result of a  *
-* liquidity provider providing or liquidity taker taking the *
-* liquidity. Applicable only for OrdStatus of Partial or     *
-* Filled                                                     *
-**************************************************************
-*/
   FillLiquidityInd = 1443,
-/*
-**************************************************************
-* Indicator to identify whether this fill was a result of a  *
-* liquidity provider providing or liquidity taker taking the *
-* liquidity. Applicable only for OrdStatus of Partial or     *
-* Filled.                                                    *
-**************************************************************
-*/
   SideLiquidityInd = 1444,
-/*
-*******************************************
-* Number of rate sources being specified. *
-*******************************************
-*/
   NoRateSources = 1445,
-/*
-***********************************************************
-* Identifies the source of rate information.              *
-* For FX, the reference source to be used for the FX spot *
-* rate.                                                   *
-***********************************************************
-*/
   RateSource = 1446,
-/*
-***************************************************************
-* Indicates whether the rate source specified is a primary or *
-* secondary source.                                           *
-***************************************************************
-*/
   RateSourceType = 1447,
-/*
-**************************************************************
-* Identifies the reference "page" from the rate source.      *
-* For FX, the reference page to the spot rate to be used for *
-* the reference FX spot rate.                                *
-**************************************************************
-*/
   ReferencePage = 1448,
-/*
-**************************************************************
-* A category of CDS credit even in which the underlying bond *
-* experiences a restructuring.                               *
-* Used to define a CDS instrument.                           *
-**************************************************************
-*/
   RestructuringType = 1449,
-/*
-****************************************************************
-* Specifies which issue (underlying bond) will receive payment *
-* priority in the event of a default.                          *
-* Used to define a CDS instrument.                             *
-****************************************************************
-*/
   Seniority = 1450,
-/*
-****************************************************************
-* Indicates the notional percentage of the deal that is still  *
-* outstanding based on the remaining components of the index.  *
-* Used to calculate the true value of a CDS trade or position. *
-****************************************************************
-*/
   NotionalPercentageOutstanding = 1451,
-/*
-***************************************************************
-* Used to reflect the Original value prior to the application *
-* of a credit event. See NotionalPercentageOutstanding(1451). *
-***************************************************************
-*/
   OriginalNotionalPercentageOutstanding = 1452,
-/*
-*******************************
-* See RestructuringType(1449) *
-*******************************
-*/
   UnderlyingRestructuringType = 1453,
-/*
-***********************
-* See Seniority(1450) *
-***********************
-*/
   UnderlyingSeniority = 1454,
-/*
-*******************************************
-* See NotionalPercentageOutstanding(1451) *
-*******************************************
-*/
   UnderlyingNotionalPercentageOutstanding = 1455,
-/*
-***************************************************
-* See OriginalNotionalPercentageOutstanding(1452) *
-***************************************************
-*/
   UnderlyingOriginalNotionalPercentageOutstanding = 1456,
-/*
-***********************************************************
-* Lower bound percentage of the loss that the tranche can *
-* endure.                                                 *
-***********************************************************
-*/
   AttachmentPoint = 1457,
-/*
-**************************************************************
-* Upper bound percentage of the loss the tranche can endure. *
-**************************************************************
-*/
   DetachmentPoint = 1458,
-/*
-******************************
-* See AttachmentPoint(1457). *
-******************************
-*/
   UnderlyingAttachmentPoint = 1459,
-/*
-******************************
-* See DetachmentPoint(1458). *
-******************************
-*/
   UnderlyingDetachmentPoint = 1460,
-/*
-****************************************************************
-* Identifies the number of target parties identified in a mass *
-* action.                                                      *
-****************************************************************
-*/
   NoTargetPartyIDs = 1461,
-/*
-*********************************************************
-* PartyID value within an target party repeating group. *
-*********************************************************
-*/
   TargetPartyID = 1462,
-/*
-***************************************************************
-* PartyIDSource value within an target party repeating group. *
-* Same values as PartyIDSource (447)                          *
-***************************************************************
-*/
   TargetPartyIDSource = 1463,
-/*
-***********************************************************
-* PartyRole value within an target party repeating group. *
-* Same values as PartyRole (452)                          *
-***********************************************************
-*/
   TargetPartyRole = 1464,
-/*
-***********************************************
-* Specifies an identifier for a Security List *
-***********************************************
-*/
   SecurityListID = 1465,
-/*
-************************************************************
-* Specifies a reference from one Security List to another. *
-* Used to support a hierarchy of Security Lists.           *
-************************************************************
-*/
   SecurityListRefID = 1466,
-/*
-*******************************************************
-* Specifies a description or name of a Security List. *
-*******************************************************
-*/
   SecurityListDesc = 1467,
-/*
-*************************************************
-* Byte length of encoded (non-ASCII characters) *
-* EncodedSecurityListDesc (tbd) field.          *
-*************************************************
-*/
   EncodedSecurityListDescLen = 1468,
-/*
-***************************************************************
-* Encoded (non-ASCII characters) representation of the        *
-* SecurityListDesc (1467) field in the encoded format         *
-* specified via the MessageEncoding (347) field. If used, the *
-* ASCII (English) representation should also be specified in  *
-* the SecurityListDesc field.                                 *
-***************************************************************
-*/
   EncodedSecurityListDesc = 1469,
-/*
-**************************************
-* Specifies a type of Security List. *
-**************************************
-*/
   SecurityListType = 1470,
-/*
-****************************************************************
-* Specifies a specific source for a SecurityListType. Relevant *
-* when a certain type can be provided from various sources.    *
-****************************************************************
-*/
   SecurityListTypeSource = 1471,
-/*
-****************************************
-* Unique identifier for a News message *
-****************************************
-*/
   NewsID = 1472,
-/*
-****************************
-* Category of news mesage. *
-****************************
-*/
   NewsCategory = 1473,
-/*
-*************************************************************
-* The national language in which the news item is provided. *
-*************************************************************
-*/
   LanguageCode = 1474,
-/*
-**********************************
-* Number of News reference items *
-**********************************
-*/
   NoNewsRefIDs = 1475,
-/*
-***************************************************
-* Reference to another News message identified by *
-* NewsID(1474).                                   *
-***************************************************
-*/
   NewsRefID = 1476,
-/*
-****************************************************************
-* Type of reference to another News Message item. Defines if   *
-* the referenced news item is a replacement, is in a different *
-* language, or is complimentary.                               *
-****************************************************************
-*/
   NewsRefType = 1477,
-/*
-****************************************************************
-* Specifies how the strike price is determined at the point of *
-* option exercise. The strike may be fixed throughout the life *
-* of the option, set at expiration to the value of the         *
-* underlying, set to the average value of the underlying , or  *
-* set to the optimal value of the underlying.                  *
-* Conditionally, required if value is other than "fixed".      *
-****************************************************************
-*/
   StrikePriceDeterminationMethod = 1478,
-/*
-**************************************************************
-* Specifies the boundary condition to be used for the strike *
-* price relative to the underlying price at the point of     *
-* option exercise.                                           *
-**************************************************************
-*/
   StrikePriceBoundaryMethod = 1479,
-/*
-*************************************************************
-* Used in combination with StrikePriceBoundaryMethod to     *
-* specify the percentage of the strike price in relation to *
-* the  underlying price. The percentage is generally 100 or *
-* greater for puts and 100 or less for calls.               *
-*************************************************************
-*/
   StrikePriceBoundaryPrecision = 1480,
-/*
-****************************************************************
-* Specifies how the underlying price is determined at the      *
-* point of option exercise. The underlying price may be set to *
-* the current settlement price, set to a special reference,    *
-* set to the optimal value of the underlying during the        *
-* defined period ("Look-back") or set to the average value of  *
-* the underlying during the defined period ("Asian option").   *
-****************************************************************
-*/
   UnderlyingPriceDeterminationMethod = 1481,
-/*
-*********************************************************
-* Indicates the type of payout that will result from an *
-* in-the-money option.                                  *
-*********************************************************
-*/
   OptPayoutType = 1482,
-/*
-****************************************
-* Number of complex event occurrences. *
-****************************************
-*/
   NoComplexEvents = 1483,
-/*
-*****************************************
-* Identifies the type of complex event. *
-*****************************************
-*/
   ComplexEventType = 1484,
-/*
-****************************************************************
-* Cash amount indicating the pay out associated with an event. *
-* For binary options this is a fixed amount.                   *
-****************************************************************
-*/
   ComplexOptPayoutAmount = 1485,
-/*
-****************************************************************
-* Specifies the price at which the complex event takes effect. *
-* Impact of the event price is determined by the               *
-* ComplexEventType(1484).                                      *
-****************************************************************
-*/
   ComplexEventPrice = 1486,
-/*
-*************************************************************
-* Specifies the boundary condition to be used for the event *
-* price relative to the underlying price at the point the   *
-* complex event outcome takes effect as determined by the   *
-* ComplexEventPriceTimeType.                                *
-*************************************************************
-*/
   ComplexEventPriceBoundaryMethod = 1487,
-/*
-***************************************************************
-* Used in combination with ComplexEventPriceBoundaryMethod to *
-* specify the percentage of the strike price in relation to   *
-* the  underlying price. The percentage is generally 100 or   *
-* greater for puts and 100 or less for calls.                 *
-***************************************************************
-*/
   ComplexEventPriceBoundaryPrecision = 1488,
-/*
-***************************************************************
-* Specifies when the complex event outcome takes effect. The  *
-* outcome of a complex event is a payout or barrier action as *
-* specified by the ComplexEventType.                          *
-***************************************************************
-*/
   ComplexEventPriceTimeType = 1489,
-/*
-***************************************************************
-* Specifies the condition between complex events when more    *
-* than one event is specified.                                *
-* Multiple barrier events would use an "or" condition since   *
-* only one can be effective at a given time. A set of digital *
-* range events would use an "and" condition since both        *
-* conditions must be in effect for a payout to result.        *
-***************************************************************
-*/
   ComplexEventCondition = 1490,
-/*
-****************************************************************
-* Number of complex event date occurrences for a given complex *
-* event.                                                       *
-****************************************************************
-*/
   NoComplexEventDates = 1491,
-/*
-****************************************************************
-* Specifies the start date of the date range on which a        *
-* complex event is effective. The start date will be set equal *
-* to the end date for single day events such as Bermuda        *
-* options                                                      *
-* ComplexEventStartDate must always be less than or equal to   *
-* ComplexEventEndDate.                                         *
-****************************************************************
-*/
   ComplexEventStartDate = 1492,
-/*
-***************************************************************
-* Specifies the end date of the date range on which a complex *
-* event is effective. The start date will be set equal to the *
-* end date for single day events such as Bermuda options      *
-* ComplexEventEndDate must always be greater than or equal to *
-* ComplexEventStartDate.                                      *
-***************************************************************
-*/
   ComplexEventEndDate = 1493,
-/*
-****************************************************************
-* Number of complex event time occurrences for a given complex *
-* event date                                                   *
-* The default in case of an absence of time fields is          *
-* 00:00:00-23:59:59.                                           *
-****************************************************************
-*/
   NoComplexEventTimes = 1494,
-/*
-**************************************************************
-* Specifies the start time of the time range on which a      *
-* complex event date is effective.                           *
-* ComplexEventStartTime must always be less than or equal to *
-* ComplexEventEndTime.                                       *
-**************************************************************
-*/
   ComplexEventStartTime = 1495,
-/*
-***************************************************************
-* Specifies the end time of the time range on which a complex *
-* event date is effective.                                    *
-* ComplexEventEndTime must always be greater than or equal to *
-* ComplexEventStartTime.                                      *
-***************************************************************
-*/
   ComplexEventEndTime = 1496,
-/*
-****************************************************************
-* Unique identifier for the stream assignment request provided *
-* by the requester.                                            *
-****************************************************************
-*/
   StreamAsgnReqID = 1497,
-/*
-**************************************
-* Type of stream assignment request. *
-**************************************
-*/
   StreamAsgnReqType = 1498,
-/*
-**********************************
-* Number of assignment requests. *
-**********************************
-*/
   NoAsgnReqs = 1499,
-/*
-***********************************************
-* The identifier or name of the price stream. *
-***********************************************
-*/
   MDStreamID = 1500,
-/*
-**************************************************************
-* Unique identifier of the stream assignment report provided *
-* by the respondent.                                         *
-**************************************************************
-*/
   StreamAsgnRptID = 1501,
-/*
-*****************************************************
-* Reason code for stream assignment request reject. *
-*****************************************************
-*/
   StreamAsgnRejReason = 1502,
-/*
-****************************
-* Type of acknowledgement. *
-****************************
-*/
   StreamAsgnAckType = 1503,
-/*
-************************
-* See TransactTime(60) *
-************************
-*/
   RelSymTransactTime = 1504,
-/*
-*******************************************************
-* The type of assignment being affected in the Stream *
-* Assignment Report.                                  *
-*******************************************************
-*/
-  StreamAsgnType = 1617
+  PartyDetailsListRequestID = 1505,
+  SideTradeID = 1506,
+  SideOrigTradeID = 1507,
+  NoRequestedPartyRoles = 1508,
+  RequestedPartyRole = 1509,
+  PartyDetailsListReportID = 1510,
+  RequestResult = 1511,
+  TotNoParties = 1512,
+  DocumentationText = 1513,
+  NoPartyRelationships = 1514,
+  PartyRelationship = 1515,
+  NoPartyDetailAltID = 1516,
+  PartyDetailAltID = 1517,
+  PartyDetailAltIDSource = 1518,
+  NoPartyDetailAltSubIDs = 1519,
+  PartyDetailAltSubID = 1520,
+  PartyDetailAltSubIDType = 1521,
+  DifferentialPrice = 1522,
+  TrdAckStatus = 1523,
+  PriceQuoteCurrency = 1524,
+  EncodedDocumentationTextLen = 1525,
+  UnderlyingPriceQuoteCurrency = 1526,
+  EncodedDocumentationText = 1527,
+  LegPriceQuoteCurrency = 1528,
+  NoRiskLimitTypes = 1529,
+  RiskLimitType = 1530,
+  RiskLimitAmount = 1531,
+  RiskLimitCurrency = 1532,
+  RiskLimitPlatform = 1533,
+  NoRiskInstrumentScopes = 1534,
+  InstrumentScopeOperator = 1535,
+  InstrumentScopeSymbol = 1536,
+  InstrumentScopeSymbolSfx = 1537,
+  InstrumentScopeSecurityID = 1538,
+  InstrumentScopeSecurityIDSource = 1539,
+  NoInstrumentScopeSecurityAltID = 1540,
+  InstrumentScopeSecurityAltID = 1541,
+  InstrumentScopeSecurityAltIDSource = 1542,
+  InstrumentScopeProduct = 1543,
+  InstrumentScopeProductComplex = 1544,
+  InstrumentScopeSecurityGroup = 1545,
+  InstrumentScopeCFICode = 1546,
+  InstrumentScopeSecurityType = 1547,
+  InstrumentScopeSecuritySubType = 1548,
+  InstrumentScopeMaturityMonthYear = 1549,
+  InstrumentScopeMaturityTime = 1550,
+  InstrumentScopeRestructuringType = 1551,
+  InstrumentScopeSeniority = 1552,
+  InstrumentScopePutOrCall = 1553,
+  InstrumentScopeFlexibleIndicator = 1554,
+  InstrumentScopeCouponRate = 1555,
+  InstrumentScopeSecurityDesc = 1556,
+  InstrumentScopeSettlType = 1557,
+  RiskInstrumentMultiplier = 1558,
+  NoRiskWarningLevels = 1559,
+  RiskWarningLevelPercent = 1560,
+  RiskWarningLevelName = 1561,
+  NoRelatedPartyDetailID = 1562,
+  RelatedPartyDetailID = 1563,
+  RelatedPartyDetailIDSource = 1564,
+  RelatedPartyDetailRole = 1565,
+  NoRelatedPartyDetailSubIDs = 1566,
+  RelatedPartyDetailSubID = 1567,
+  RelatedPartyDetailSubIDType = 1568,
+  NoRelatedPartyDetailAltID = 1569,
+  RelatedPartyDetailAltID = 1570,
+  RelatedPartyDetailAltIDSource = 1571,
+  NoRelatedPartyDetailAltSubIDs = 1572,
+  RelatedPartyDetailAltSubID = 1573,
+  RelatedPartyDetailAltSubIDType = 1574,
+  SwapSubClass = 1575,
+  DerivativePriceQuoteCurrency = 1576,
+  SettlRateIndex = 1577,
+  EncodedEventTextLen = 1578,
+  EncodedEventText = 1579,
+  SettlRateIndexLocation = 1580,
+  OptionExpirationDesc = 1581,
+  NoSecurityClassifications = 1582,
+  SecurityClassificationReason = 1583,
+  SecurityClassificationValue = 1584,
+  PosAmtReason = 1585,
+  NoLegPosAmt = 1586,
+  LegPosAmt = 1587,
+  LegPosAmtType = 1588,
+  LegPosCurrency = 1589,
+  LegPosAmtReason = 1590,
+  LegQtyType = 1591,
+  DiscountFactor = 1592,
+  ParentAllocID = 1593,
+  LegSecurityGroup = 1594,
+  PositionContingentPrice = 1595,
+  ClearingTradePrice = 1596,
+  SideClearingTradePrice = 1597,
+  SideClearingTradePriceType = 1598,
+  SidePriceDifferential = 1599,
+  FIXEngineName = 1600,
+  FIXEngineVersion = 1601,
+  FIXEngineVendor = 1602,
+  ApplicationSystemName = 1603,
+  ApplicationSystemVersion = 1604,
+  ApplicationSystemVendor = 1605,
+  NumOfSimpleInstruments = 1606,
+  SecurityRejectReason = 1607,
+  InitialDisplayQty = 1608,
+  ThrottleStatus = 1609,
+  NoThrottles = 1610,
+  ThrottleAction = 1611,
+  ThrottleType = 1612,
+  ThrottleNoMsgs = 1613,
+  ThrottleTimeInterval = 1614,
+  ThrottleTimeUnit = 1615,
+  InstrumentScopeSecurityExchange = 1616,
+  StreamAsgnType = 1617,
+  NoThrottleMsgType = 1618,
+  ThrottleMsgType = 1619,
+  InstrumentScopeEncodedSecurityDescLen = 1620,
+  InstrumentScopeEncodedSecurityDesc = 1621,
+  FillYieldType = 1622,
+  FillYield = 1623,
+  NoMatchInst = 1624,
+  MatchInst = 1625,
+  MatchAttribTagID = 1626,
+  MatchAttribValue = 1627,
+  TriggerScope = 1628,
+  ExposureDuration = 1629,
+  NoLimitAmts = 1630,
+  LimitAmtType = 1631,
+  LastLimitAmt = 1632,
+  LimitAmtRemaining = 1633,
+  LimitAmtCurrency = 1634,
+  MarginReqmtInqID = 1635,
+  NoMarginReqmtInqQualifier = 1636,
+  MarginReqmtInqQualifier = 1637,
+  MarginReqmtRptType = 1638,
+  MarginClass = 1639,
+  MarginReqmtInqStatus = 1640,
+  MarginReqmtInqResult = 1641,
+  MarginReqmtRptID = 1642,
+  NoMarginAmt = 1643,
+  MarginAmtType = 1644,
+  MarginAmt = 1645,
+  MarginAmtCcy = 1646,
+  NoRelatedInstruments = 1647,
+  RelatedInstrumentType = 1648,
+  RelatedSymbol = 1649,
+  RelatedSecurityID = 1650,
+  RelatedSecurityIDSource = 1651,
+  RelatedSecurityType = 1652,
+  RelatedMaturityMonthYear = 1653,
+  CoveredQty = 1654,
+  MarketMakerActivity = 1655,
+  NoInstrumentScopes = 1656,
+  NoRequestingPartyIDs = 1657,
+  RequestingPartyID = 1658,
+  RequestingPartyIDSource = 1659,
+  RequestingPartyRole = 1660,
+  NoRequestingPartySubIDs = 1661,
+  RequestingPartySubID = 1662,
+  RequestingPartySubIDType = 1663,
+  EncodedRejectTextLen = 1664,
+  EncodedRejectText = 1665,
+  RiskLimitRequestID = 1666,
+  RiskLimitReportID = 1667,
+  NoRequestedRiskLimitType = 1668,
+  NoRiskLimits = 1669,
+  RiskLimitID = 1670,
+  NoPartyDetails = 1671,
+  PartyDetailStatus = 1672,
+  MatchInstMarketID = 1673,
+  PartyDetailRoleQualifier = 1674,
+  RelatedPartyDetailRoleQualifier = 1675,
+  NoPartyUpdates = 1676,
+  NoPartyRiskLimits = 1677,
+  EncodedOptionExpirationDescLen = 1678,
+  SecurityMassTradingStatus = 1679,
+  SecurityMassTradingEvent = 1680,
+  MassHaltReason = 1681,
+  MDSecurityTradingStatus = 1682,
+  MDSubFeedType = 1683,
+  MDHaltReason = 1684,
+  ThrottleInst = 1685,
+  ThrottleCountIndicator = 1686,
+  ShortSaleRestriction = 1687,
+  ShortSaleExemptionReason = 1688,
+  LegShortSaleExemptionReason = 1689,
+  SideShortSaleExemptionReason = 1690,
+  PartyDetailID = 1691,
+  PartyDetailIDSource = 1692,
+  PartyDetailRole = 1693,
+  NoPartyDetailSubIDs = 1694,
+  PartyDetailSubID = 1695,
+  PartyDetailSubIDType = 1696,
+  EncodedOptionExpirationDesc = 1697,
+  StrikeUnitOfMeasure = 1698,
+  AccountSummaryReportID = 1699,
+  NoSettlementAmounts = 1700,
+  SettlementAmount = 1701,
+  SettlementAmountCurrency = 1702,
+  NoCollateralAmounts = 1703,
+  CurrentCollateralAmount = 1704,
+  CollateralCurrency = 1705,
+  CollateralType = 1706,
+  NoPayCollects = 1707,
+  PayCollectType = 1708,
+  PayCollectCurrency = 1709,
+  PayAmount = 1710,
+  CollectAmount = 1711,
+  PayCollectMarketSegmentID = 1712,
+  PayCollectMarketID = 1713,
+  MarginAmountMarketSegmentID = 1714,
+  MarginAmountMarketID = 1715,
+  UnitOfMeasureCurrency = 1716,
+  PriceUnitOfMeasureCurrency = 1717,
+  UnderlyingUnitOfMeasureCurrency = 1718,
+  UnderlyingPriceUnitOfMeasureCurrency = 1719,
+  LegUnitOfMeasureCurrency = 1720,
+  LegPriceUnitOfMeasureCurrency = 1721,
+  DerivativeUnitOfMeasureCurrency = 1722,
+  DerivativePriceUnitOfMeasureCurrency = 1723,
+  OrderOrigination = 1724,
+  OriginatingDeptID = 1725,
+  ReceivingDeptID = 1726,
+  InformationBarrierID = 1727,
+  FirmGroupID = 1728,
+  FirmMnemonic = 1729,
+  AllocGroupID = 1730,
+  AvgPxGroupID = 1731,
+  FirmAllocText = 1732,
+  EncodedFirmAllocTextLen = 1733,
+  EncodedFirmAllocText = 1734,
+  AllocationRollupInstruction = 1735,
+  AllocGroupQuantity = 1736,
+  AllocGroupRemainingQuantity = 1737,
+  AllocReversalStatus = 1738,
+  ObligationType = 1739,
+  TradePriceNegotiationMethod = 1740,
+  UpfrontPriceType = 1741,
+  UpfrontPrice = 1742,
+  LastUpfrontPrice = 1743,
+  ApplLevelRecoveryIndicator = 1744,
+  BidMDEntryID = 1745,
+  OfferMDEntryID = 1746,
+  BidQuoteID = 1747,
+  OfferQuoteID = 1748,
+  TotalBidSize = 1749,
+  TotalOfferSize = 1750,
+  SecondaryQuoteID = 1751,
+  CustodialLotID = 1752,
+  VersusPurchaseDate = 1753,
+  VersusPurchasePrice = 1754,
+  CurrentCostBasis = 1755,
+  LegCustodialLotID = 1756,
+  LegVersusPurchaseDate = 1757,
+  LegVersusPurchasePrice = 1758,
+  LegCurrentCostBasis = 1759,
+  RiskLimitRequestType = 1760,
+  RiskLimitRequestResult = 1761,
+  RiskLimitRequestStatus = 1762,
+  RiskLimitStatus = 1763,
+  RiskLimitResult = 1764,
+  RiskLimitUtilizationPercent = 1765,
+  RiskLimitUtilizationAmount = 1766,
+  RiskLimitAction = 1767,
+  RiskWarningLevelAmount = 1768,
+  RiskWarningLevelAction = 1769,
+  EntitlementRequestID = 1770,
+  EntitlementReportID = 1771,
+  NoPartyEntitlements = 1772,
+  NoEntitlements = 1773,
+  EntitlementIndicator = 1774,
+  EntitlementType = 1775,
+  EntitlementID = 1776,
+  NoEntitlementAttrib = 1777,
+  EntitlementAttribType = 1778,
+  EntitlementAttribDatatype = 1779,
+  EntitlementAttribValue = 1780,
+  EntitlementAttribCurrency = 1781,
+  EntitlementStartDate = 1782,
+  EntitlementEndDate = 1783,
+  EntitlementPlatform = 1784,
+  TradSesControl = 1785,
+  TradeVolType = 1786,
+  RefTickTableID = 1787,
+  LegID = 1788,
+  NoTargetMarketSegments = 1789,
+  TargetMarketSegmentID = 1790,
+  NoAffectedMarketSegments = 1791,
+  AffectedMarketSegmentID = 1792,
+  NoNotAffectedMarketSegments = 1793,
+  NotAffectedMarketSegmentID = 1794,
+  NoOrderEvents = 1795,
+  OrderEventType = 1796,
+  OrderEventExecID = 1797,
+  OrderEventReason = 1798,
+  OrderEventPx = 1799,
+  OrderEventQty = 1800,
+  OrderEventLiquidityIndicator = 1801,
+  OrderEventText = 1802,
+  AuctionType = 1803,
+  AuctionAllocationPct = 1804,
+  AuctionInstruction = 1805,
+  RefClOrdID = 1806,
+  LockType = 1807,
+  LockedQty = 1808,
+  SecondaryLockedQty = 1809,
+  ReleaseInstruction = 1810,
+  ReleaseQty = 1811,
+  NoDisclosureInstructions = 1812,
+  DisclosureType = 1813,
+  DisclosureInstruction = 1814,
+  TradingCapacity = 1815,
+  ClearingAccountType = 1816,
+  LegClearingAccountType = 1817,
+  TargetPartyRoleQualifier = 1818,
+  RelatedHighPrice = 1819,
+  RelatedLowPrice = 1820,
+  RelatedPriceSource = 1821,
+  MinQtyMethod = 1822,
+  Triggered = 1823,
+  AffectedOrigClOrdID = 1824,
+  NotAffSecondaryOrderID = 1825,
+  EventTimePeriod = 1826,
+  EventTimeUnit = 1827,
+  LastQtyVariance = 1828,
+  NoCrossLegs = 1829,
+  SettlPriceIncrement = 1830,
+  SettlPriceSecondaryIncrement = 1831,
+  ClearedIndicator = 1832,
+  ContractRefPosType = 1833,
+  PositionCapacity = 1834,
+  PosQtyUnitOfMeasureCurrency = 1835,
+  PosQtyUnitOfMeasure = 1836,
+  UnderlyingContractPriceRefMonth = 1837,
+  NoTradePriceConditions = 1838,
+  TradePriceCondition = 1839,
+  TradeAllocStatus = 1840,
+  NoTradeQtys = 1841,
+  TradeQtyType = 1842,
+  TradeQty = 1843,
+  NoTradeAllocAmts = 1844,
+  TradeAllocAmtType = 1845,
+  TradeAllocAmt = 1846,
+  TradeAllocCurrency = 1847,
+  TradeAllocGroupInstruction = 1848,
+  OffsetInstruction = 1849,
+  TradeAllocAmtReason = 1850,
+  StrategyLinkID = 1851,
+  SideAvgPx = 1852,
+  SideAvgPxIndicator = 1853,
+  SideAvgPxGroupID = 1854,
+  NoRelatedTrades = 1855,
+  RelatedTradeID = 1856,
+  RelatedTradeIDSource = 1857,
+  RelatedTradeDate = 1858,
+  RelatedTradeMarketID = 1859,
+  RelatedTradeQuantity = 1860,
+  NoRelatedPositions = 1861,
+  RelatedPositionID = 1862,
+  RelatedPositionIDSource = 1863,
+  RelatedPositionDate = 1864,
+  QuoteAckStatus = 1865,
+  StrikeIndex = 1866,
+  OfferID = 1867,
+  NoValueChecks = 1868,
+  ValueCheckType = 1869,
+  ValueCheckAction = 1870,
+  LegSecurityXMLLen = 1871,
+  LegSecurityXML = 1872,
+  LegSecurityXMLSchema = 1873,
+  UnderlyingSecurityXMLLen = 1874,
+  UnderlyingSecurityXML = 1875,
+  UnderlyingSecurityXMLSchema = 1876,
+  PartyDetailRequestResult = 1877,
+  PartyDetailRequestStatus = 1878,
+  PartyDetailDefinitionStatus = 1879,
+  PartyDetailDefinitionResult = 1880,
+  EntitlementRequestResult = 1881,
+  EntitlementRequestStatus = 1882,
+  EntitlementStatus = 1883,
+  EntitlementResult = 1884,
+  EntitlementRefID = 1885,
+  SettlPriceUnitOfMeasure = 1886,
+  SettlPriceUnitOfMeasureCurrency = 1887,
+  TradeMatchTimestamp = 1888,
+  NoInstrmtMatchSides = 1889,
+  NoTrdMatchSides = 1890,
+  TrdMatchSubID = 1891,
+  NoLegExecs = 1892,
+  LegExecID = 1893,
+  LegTradeID = 1894,
+  LegTradeReportID = 1895,
+  TradeMatchAckStatus = 1896,
+  TradeMatchRejectReason = 1897,
+  SideMarketSegmentID = 1898,
+  SideVenueType = 1899,
+  SideExecRefID = 1900,
+  LegExecRefID = 1901,
+  HaircutIndicator = 1902,
+  RegulatoryTradeID = 1903,
+  RegulatoryTradeIDEvent = 1904,
+  RegulatoryTradeIDSource = 1905,
+  RegulatoryTradeIDType = 1906,
+  NoRegulatoryTradeIDs = 1907,
+  NoAllocRegulatoryTradeIDs = 1908,
+  AllocRegulatoryTradeID = 1909,
+  AllocRegulatoryTradeIDSource = 1910,
+  AllocRegulatoryTradeIDEvent = 1911,
+  AllocRegulatoryTradeIDType = 1912,
+  NumOfCompetitors = 1913,
+  ResponseTime = 1914,
+  QuoteDisplayTime = 1915,
+  ExposureDurationUnit = 1916,
+  CoverPrice = 1917,
+  NoClearingAccountTypes = 1918,
+  NoPriceMovements = 1919,
+  NoPriceMovementValues = 1920,
+  PriceMovementValue = 1921,
+  PriceMovementPoint = 1922,
+  PriceMovementType = 1923,
+  ClearingIntention = 1924,
+  TradeClearingInstruction = 1925,
+  BackloadedTradeIndicator = 1926,
+  ConfirmationMethod = 1927,
+  MandatoryClearingIndicator = 1928,
+  MixedSwapIndicator = 1929,
+  OffMarketPriceIndicator = 1930,
+  VerificationMethod = 1931,
+  ClearingRequirementException = 1932,
+  IRSDirection = 1933,
+  RegulatoryReportType = 1934,
+  VoluntaryRegulatoryReport = 1935,
+  TradeCollateralization = 1936,
+  TradeContinuation = 1937,
+  AssetClass = 1938,
+  AssetSubClass = 1939,
+  AssetType = 1940,
+  SwapClass = 1941,
+  NthToDefault = 1942,
+  MthToDefault = 1943,
+  SettledEntityMatrixSource = 1944,
+  SettledEntityMatrixPublicationDate = 1945,
+  CouponType = 1946,
+  TotalIssuedAmount = 1947,
+  CouponFrequencyPeriod = 1948,
+  CouponFrequencyUnit = 1949,
+  CouponDayCount = 1950,
+  ConvertibleBondEquityID = 1951,
+  ConvertibleBondEquityIDSource = 1952,
+  ContractPriceRefMonth = 1953,
+  LienSeniority = 1954,
+  LoanFacility = 1955,
+  ReferenceEntityType = 1956,
+  IndexSeries = 1957,
+  IndexAnnexVersion = 1958,
+  IndexAnnexDate = 1959,
+  IndexAnnexSource = 1960,
+  AgreementVersion = 1961,
+  MasterConfirmationDesc = 1962,
+  MasterConfirmationDate = 1963,
+  MasterConfirmationAnnexDesc = 1964,
+  MasterConfirmationAnnexDate = 1965,
+  BrokerConfirmationDesc = 1966,
+  CreditSupportAgreementDesc = 1967,
+  CreditSupportAgreementDate = 1968,
+  CreditSupportAgreementID = 1969,
+  GoverningLaw = 1970,
+  NoSideRegulatoryTradeIDs = 1971,
+  SideRegulatoryTradeID = 1972,
+  SideRegulatoryTradeIDSource = 1973,
+  SideRegulatoryTradeIDEvent = 1974,
+  SideRegulatoryTradeIDType = 1975,
+  NoSecondaryAssetClasses = 1976,
+  SecondaryAssetClass = 1977,
+  SecondaryAssetSubClass = 1978,
+  SecondaryAssetType = 1979,
+  BlockTrdAllocIndicator = 1980,
+  NoUnderlyingEvents = 1981,
+  UnderlyingEventType = 1982,
+  UnderlyingEventDate = 1983,
+  UnderlyingEventTime = 1984,
+  UnderlyingEventTimeUnit = 1985,
+  UnderlyingEventTimePeriod = 1986,
+  UnderlyingEventPx = 1987,
+  UnderlyingConstituentWeight = 1988,
+  UnderlyingCouponType = 1989,
+  UnderlyingTotalIssuedAmount = 1990,
+  UnderlyingCouponFrequencyPeriod = 1991,
+  UnderlyingCouponFrequencyUnit = 1992,
+  UnderlyingCouponDayCount = 1993,
+  UnderlyingObligationID = 1994,
+  UnderlyingObligationIDSource = 1995,
+  UnderlyingEquityID = 1996,
+  UnderlyingEquityIDSource = 1997,
+  UnderlyingLienSeniority = 1998,
+  UnderlyingLoanFacility = 1999,
+  UnderlyingReferenceEntityType = 2000,
+  StrikeIndexSpread = 2001,
+  ValuationSource = 2002,
+  UnderlyingIndexSeries = 2003,
+  UnderlyingIndexAnnexVersion = 2004,
+  UnderlyingIndexAnnexDate = 2005,
+  UnderlyingIndexAnnexSource = 2006,
+  UnderlyingProductComplex = 2007,
+  UnderlyingSecurityGroup = 2008,
+  UnderlyingSettleOnOpenFlag = 2009,
+  UnderlyingAssignmentMethod = 2010,
+  UnderlyingSecurityStatus = 2011,
+  UnderlyingObligationType = 2012,
+  UnderlyingAssetClass = 2013,
+  UnderlyingAssetSubClass = 2014,
+  UnderlyingAssetType = 2015,
+  UnderlyingSwapClass = 2016,
+  UnderlyingNthToDefault = 2017,
+  UnderlyingMthToDefault = 2018,
+  UnderlyingSettledEntityMatrixSource = 2019,
+  UnderlyingSettledEntityMatrixPublicationDate = 2020,
+  UnderlyingStrikeMultiplier = 2021,
+  UnderlyingStrikeValue = 2022,
+  UnderlyingStrikePriceDeterminationMethod = 2023,
+  UnderlyingStrikePriceBoundaryMethod = 2024,
+  UnderlyingStrikePriceBoundaryPrecision = 2025,
+  UnderlyingMinPriceIncrement = 2026,
+  UnderlyingMinPriceIncrementAmount = 2027,
+  UnderlyingOptPayoutType = 2028,
+  UnderlyingOptPayoutAmount = 2029,
+  UnderlyingPriceQuoteMethod = 2030,
+  UnderlyingValuationMethod = 2031,
+  UnderlyingListMethod = 2032,
+  UnderlyingCapPrice = 2033,
+  UnderlyingFloorPrice = 2034,
+  UnderlyingFlexibleIndicator = 2035,
+  UnderlyingFlexProductEligibilityIndicator = 2036,
+  UnderlyingPositionLimit = 2037,
+  UnderlyingNTPositionLimit = 2038,
+  UnderlyingPool = 2039,
+  UnderlyingContractSettlMonth = 2040,
+  UnderlyingDatedDate = 2041,
+  UnderlyingInterestAccrualDate = 2042,
+  UnderlyingShortSaleRestriction = 2043,
+  UnderlyingRefTickTableID = 2044,
+  NoUnderlyingComplexEvents = 2045,
+  UnderlyingComplexEventType = 2046,
+  UnderlyingComplexOptPayoutAmount = 2047,
+  UnderlyingComplexEventPrice = 2048,
+  UnderlyingComplexEventPriceBoundaryMethod = 2049,
+  UnderlyingComplexEventPriceBoundaryPrecision = 2050,
+  UnderlyingComplexEventPriceTimeType = 2051,
+  UnderlyingComplexEventCondition = 2052,
+  NoUnderlyingComplexEventDates = 2053,
+  UnderlyingComplexEventStartDate = 2054,
+  UnderlyingComplexEventEndDate = 2055,
+  NoUnderlyingComplexEventTimes = 2056,
+  UnderlyingComplexEventStartTime = 2057,
+  UnderlyingComplexEventEndTime = 2058,
+  NoLegEvents = 2059,
+  LegEventType = 2060,
+  LegEventDate = 2061,
+  LegEventTime = 2062,
+  LegEventTimeUnit = 2063,
+  LegEventTimePeriod = 2064,
+  LegEventPx = 2065,
+  LegEventText = 2066,
+  LegAssetClass = 2067,
+  LegAssetSubClass = 2068,
+  LegAssetType = 2069,
+  LegSwapClass = 2070,
+  UnderlyingEventText = 2071,
+  EncodedUnderlyingEventTextLen = 2072,
+  EncodedUnderlyingEventText = 2073,
+  EncodedLegEventTextLen = 2074,
+  EncodedLegEventText = 2075,
+  NoLegSecondaryAssetClasses = 2076,
+  LegSecondaryAssetClass = 2077,
+  LegSecondaryAssetSubClass = 2078,
+  LegSecondaryAssetType = 2079,
+  NoUnderlyingSecondaryAssetClasses = 2080,
+  UnderlyingSecondaryAssetClass = 2081,
+  UnderlyingSecondaryAssetSubClass = 2082,
+  UnderlyingSecondaryAssetType = 2083,
+  PreviousClearingBusinessDate = 2084,
+  ValuationDate = 2085,
+  ValuationTime = 2086,
+  ValuationBusinessCenter = 2087,
+  MarginAmtFXRate = 2088,
+  MarginAmtFXRateCalc = 2089,
+  CollateralFXRate = 2090,
+  CollateralFXRateCalc = 2091,
+  CollateralAmountMarketSegmentID = 2092,
+  CollateralAmountMarketID = 2093,
+  PayCollectFXRate = 2094,
+  PayCollectFXRateCalc = 2095,
+  PosAmtStreamDesc = 2096,
+  PositionFXRate = 2097,
+  PositionFXRateCalc = 2098,
+  PosAmtMarketSegmentID = 2099,
+  PosAmtMarketID = 2100,
+  TerminatedIndicator = 2101,
+  ShortMarkingExemptIndicator = 2102,
+  RelatedRegulatoryTradeIDSource = 2103,
+  NoAttachments = 2104,
+  AttachmentName = 2105,
+  AttachmentMediaType = 2106,
+  AttachmentClassification = 2107,
+  AttachmentExternalURL = 2108,
+  AttachmentEncodingType = 2109,
+  UnencodedAttachmentLen = 2110,
+  EncodedAttachmentLen = 2111,
+  EncodedAttachment = 2112,
+  NoAttachmentKeywords = 2113,
+  AttachmentKeyword = 2114,
+  NegotiationMethod = 2115,
+  NextAuctionTime = 2116,
+  ComplexOptPayoutPaySide = 2117,
+  ComplexOptPayoutReceiveSide = 2118,
+  ComplexOptPayoutUnderlier = 2119,
+  ComplexOptPayoutPercentage = 2120,
+  ComplexOptPayoutTime = 2121,
+  ComplexOptPayoutCurrency = 2122,
+  ComplexEventPricePercentage = 2123,
+  ComplexEventCurrencyOne = 2124,
+  ComplexEventCurrencyTwo = 2125,
+  ComplexEventQuoteBasis = 2126,
+  ComplexEventFixedFXRate = 2127,
+  ComplexEventDeterminationMethod = 2128,
+  ComplexEventCalculationAgent = 2129,
+  ComplexEventStrikePrice = 2130,
+  ComplexEventStrikeFactor = 2131,
+  ComplexEventStrikeNumberOfOptions = 2132,
+  ComplexEventCreditEventsXIDRef = 2133,
+  ComplexEventCreditEventNotifyingParty = 2134,
+  ComplexEventCreditEventBusinessCenter = 2135,
+  ComplexEventCreditEventStandardSources = 2136,
+  ComplexEventCreditEventMinimumSources = 2137,
+  ComplexEventXID = 2138,
+  ComplexEventXIDRef = 2139,
+  ValuationReferenceModel = 2140,
+  StrategyType = 2141,
+  CommonPricingIndicator = 2142,
+  SettlDisruptionProvision = 2143,
+  InstrumentRoundingDirection = 2144,
+  InstrumentRoundingPrecision = 2145,
+  LegSettleOnOpenFlag = 2146,
+  LegInstrmtAssignmentMethod = 2147,
+  LegSecurityStatus = 2148,
+  LegRestructuringType = 2149,
+  LegSeniority = 2150,
+  LegNotionalPercentageOutstanding = 2151,
+  LegOriginalNotionalPercentageOutstanding = 2152,
+  LegAttachmentPoint = 2153,
+  LegDetachmentPoint = 2154,
+  LegObligationType = 2155,
+  LegSwapSubClass = 2156,
+  LegNthToDefault = 2157,
+  LegMthToDefault = 2158,
+  LegSettledEntityMatrixSource = 2159,
+  LegSettledEntityMatrixPublicationDate = 2160,
+  LegCouponType = 2161,
+  LegTotalIssuedAmount = 2162,
+  LegCouponFrequencyPeriod = 2163,
+  LegCouponFrequencyUnit = 2164,
+  LegCouponDayCount = 2165,
+  LegConvertibleBondEquityID = 2166,
+  LegConvertibleBondEquityIDSource = 2167,
+  LegContractPriceRefMonth = 2168,
+  LegLienSeniority = 2169,
+  LegLoanFacility = 2170,
+  LegReferenceEntityType = 2171,
+  LegIndexSeries = 2172,
+  LegIndexAnnexVersion = 2173,
+  LegIndexAnnexDate = 2174,
+  LegIndexAnnexSource = 2175,
+  LegSettlRateIndex = 2176,
+  LegSettlRateIndexLocation = 2177,
+  LegOptionExpirationDesc = 2178,
+  EncodedLegOptionExpirationDescLen = 2179,
+  EncodedLegOptionExpirationDesc = 2180,
+  LegStrikeMultiplier = 2181,
+  LegStrikeValue = 2182,
+  LegStrikeUnitOfMeasure = 2183,
+  LegStrikeIndex = 2184,
+  LegStrikeIndexSpread = 2185,
+  LegStrikePriceDeterminationMethod = 2186,
+  LegStrikePriceBoundaryMethod = 2187,
+  LegStrikePriceBoundaryPrecision = 2188,
+  LegUnderlyingPriceDeterminationMethod = 2189,
+  LegMinPriceIncrement = 2190,
+  LegMinPriceIncrementAmount = 2191,
+  LegSettlMethod = 2192,
+  LegOptPayoutType = 2193,
+  LegOptPayoutAmount = 2194,
+  LegPriceQuoteMethod = 2195,
+  LegValuationMethod = 2196,
+  LegValuationSource = 2197,
+  LegValuationReferenceModel = 2198,
+  LegListMethod = 2199,
+  LegCapPrice = 2200,
+  LegFloorPrice = 2201,
+  LegFlexibleIndicator = 2202,
+  LegFlexProductEligibilityIndicator = 2203,
+  LegComplexEventStartTime = 2204,
+  LegPositionLimit = 2205,
+  LegNTPositionLimit = 2206,
+  LegCPProgram = 2207,
+  LegCPRegType = 2208,
+  LegShortSaleRestriction = 2209,
+  AssetGroup = 2210,
+  LegStrategyType = 2211,
+  LegCommonPricingIndicator = 2212,
+  LegSettlDisruptionProvision = 2213,
+  LegInstrumentRoundingDirection = 2214,
+  LegInstrumentRoundingPrecision = 2215,
+  MiscFeeRate = 2216,
+  MiscFeeAmountDue = 2217,
+  NoLegComplexEvents = 2218,
+  LegComplexEventType = 2219,
+  LegComplexOptPayoutPaySide = 2220,
+  LegComplexOptPayoutReceiveSide = 2221,
+  LegComplexOptPayoutUnderlier = 2222,
+  LegComplexOptPayoutAmount = 2223,
+  LegComplexOptPayoutPercentage = 2224,
+  LegComplexOptPayoutTime = 2225,
+  LegComplexOptPayoutCurrency = 2226,
+  LegComplexEventPrice = 2227,
+  LegComplexEventPricePercentage = 2228,
+  LegComplexEventPriceBoundaryMethod = 2229,
+  LegComplexEventPriceBoundaryPrecision = 2230,
+  LegComplexEventPriceTimeType = 2231,
+  LegComplexEventCondition = 2232,
+  LegComplexEventCurrencyOne = 2233,
+  LegComplexEventCurrencyTwo = 2234,
+  LegComplexEventQuoteBasis = 2235,
+  LegComplexEventFixedFXRate = 2236,
+  LegComplexEventDeterminationMethod = 2237,
+  LegComplexEventCalculationAgent = 2238,
+  LegComplexEventStrikePrice = 2239,
+  LegComplexEventStrikeFactor = 2240,
+  LegComplexEventStrikeNumberOfOptions = 2241,
+  LegComplexEventCreditEventsXIDRef = 2242,
+  LegComplexEventCreditEventNotifyingParty = 2243,
+  LegComplexEventCreditEventBusinessCenter = 2244,
+  LegComplexEventCreditEventStandardSources = 2245,
+  LegComplexEventCreditEventMinimumSources = 2246,
+  LegComplexEventEndTime = 2247,
+  LegComplexEventXID = 2248,
+  LegComplexEventXIDRef = 2249,
+  NoLegComplexEventDates = 2250,
+  LegComplexEventStartDate = 2251,
+  LegComplexEventEndDate = 2252,
+  NoLegComplexEventTimes = 2253,
+  NoLegInstrumentParties = 2254,
+  LegInstrumentPartyID = 2255,
+  LegInstrumentPartyIDSource = 2256,
+  LegInstrumentPartyRole = 2257,
+  NoLegInstrumentPartySubIDs = 2258,
+  LegInstrumentPartySubID = 2259,
+  LegInstrumentPartySubIDType = 2260,
+  UnderlyingComplexOptPayoutPaySide = 2261,
+  UnderlyingComplexOptPayoutReceiveSide = 2262,
+  UnderlyingComplexOptPayoutUnderlier = 2263,
+  UnderlyingComplexOptPayoutPercentage = 2264,
+  UnderlyingComplexOptPayoutTime = 2265,
+  UnderlyingComplexOptPayoutCurrency = 2266,
+  UnderlyingComplexEventPricePercentage = 2267,
+  UnderlyingComplexEventCurrencyOne = 2268,
+  UnderlyingComplexEventCurrencyTwo = 2269,
+  UnderlyingComplexEventQuoteBasis = 2270,
+  UnderlyingComplexEventFixedFXRate = 2271,
+  UnderlyingComplexEventDeterminationMethod = 2272,
+  UnderlyingComplexEventCalculationAgent = 2273,
+  UnderlyingComplexEventStrikePrice = 2274,
+  UnderlyingComplexEventStrikeFactor = 2275,
+  UnderlyingComplexEventStrikeNumberOfOptions = 2276,
+  UnderlyingComplexEventCreditEventsXIDRef = 2277,
+  UnderlyingComplexEventCreditEventNotifyingParty = 2278,
+  UnderlyingComplexEventCreditEventBusinessCenter = 2279,
+  UnderlyingComplexEventCreditEventStandardSources = 2280,
+  UnderlyingComplexEventCreditEventMinimumSources = 2281,
+  UnderlyingComplexEventXID = 2282,
+  UnderlyingComplexEventXIDRef = 2283,
+  UnderlyingSettlRateIndex = 2284,
+  UnderlyingSettlRateIndexLocation = 2285,
+  UnderlyingOptionExpirationDesc = 2286,
+  EncodedUnderlyingOptionExpirationDescLen = 2287,
+  EncodedUnderlyingOptionExpirationDesc = 2288,
+  UnderlyingSwapSubClass = 2289,
+  UnderlyingStrikeUnitOfMeasure = 2290,
+  UnderlyingStrikeIndex = 2291,
+  UnderlyingStrikeIndexSpread = 2292,
+  UnderlyingValuationSource = 2293,
+  UnderlyingValuationReferenceModel = 2294,
+  UnderlyingStrategyType = 2295,
+  UnderlyingCommonPricingIndicator = 2296,
+  UnderlyingSettlDisruptionProvision = 2297,
+  UnderlyingInstrumentRoundingDirection = 2298,
+  UnderlyingInstrumentRoundingPrecision = 2299,
+  AllocGrossTradeAmt = 2300,
+  LastQtyChanged = 2301,
+  TradeVersion = 2302,
+  HistoricalReportIndicator = 2303,
+  NoAssetAttributes = 2304,
+  AssetAttributeType = 2305,
+  AssetAttributeValue = 2306,
+  AssetAttributeLimit = 2307,
+  NoLegAssetAttributes = 2308,
+  LegAssetAttributeType = 2309,
+  LegAssetAttributeValue = 2310,
+  LegAssetAttributeLimit = 2311,
+  NoUnderlyingAssetAttributes = 2312,
+  UnderlyingAssetAttributeType = 2313,
+  UnderlyingAssetAttributeValue = 2314,
+  UnderlyingAssetAttributeLimit = 2315,
+  RiskLimitReportStatus = 2316,
+  RiskLimitReportRejectReason = 2317,
+  RiskLimitCheckRequestID = 2318,
+  RiskLimitCheckID = 2319,
+  RiskLimitCheckTransType = 2320,
+  RiskLimitCheckType = 2321,
+  RiskLimitCheckRequestRefID = 2322,
+  RiskLimitCheckRequestType = 2323,
+  RiskLimitCheckAmount = 2324,
+  RiskLimitCheckRequestStatus = 2325,
+  RiskLimitCheckRequestResult = 2326,
+  RiskLimitApprovedAmount = 2327,
+  PartyActionRequestID = 2328,
+  PartyActionType = 2329,
+  ApplTestMessageIndicator = 2330,
+  PartyActionReportID = 2331,
+  PartyActionResponse = 2332,
+  PartyActionRejectReason = 2333,
+  RefRiskLimitCheckID = 2334,
+  RefRiskLimitCheckIDType = 2335,
+  RiskLimitVelocityPeriod = 2336,
+  RiskLimitVelocityUnit = 2337,
+  RequestingPartyRoleQualifier = 2338,
+  RiskLimitCheckModelType = 2339,
+  EventMonthYear = 2340,
+  LegEventMonthYear = 2341,
+  UnderlyingEventMonthYear = 2342,
+  RiskLimitCheckStatus = 2343,
+  SideRiskLimitCheckStatus = 2344,
+  NoEntitlementTypes = 2345,
+  LegMidPx = 2346,
+  RegulatoryTransactionType = 2347,
+  LegAssetGroup = 2348,
+  PricePrecision = 2349,
+  CollateralPortfolioID = 2350,
+  EncodedComplianceTextLen = 2351,
+  EncodedComplianceText = 2352,
+  TradingUnitPeriodMultiplier = 2353,
+  LegTradingUnitPeriodMultiplier = 2354,
+  PartyRiskLimitStatus = 2355,
+  RemunerationIndicator = 2356,
+  LegTotalTradeQty = 2357,
+  LegLastMultipliedQty = 2358,
+  LegTotalGrossTradeAmt = 2359,
+  LegTotalTradeMultipliedQty = 2360,
+  CompressionGroupID = 2361,
+  SelfMatchPreventionID = 2362,
+  UnderlyingTradingUnitPeriodMultiplier = 2363,
+  PosReportAction = 2364,
+  SettlForwardPoints = 2365,
+  SettlPriceFxRateCalc = 2366,
+  TotalTradeQty = 2367,
+  LastMultipliedQty = 2368,
+  TotalGrossTradeAmt = 2369,
+  TotalTradeMultipliedQty = 2370,
+  EncodedTradeContinuationText = 2371,
+  EncodedTradeContinuationTextLen = 2372,
+  IntraFirmTradeIndicator = 2373,
+  TradeContinuationText = 2374,
+  TaxonomyType = 2375,
+  PartyRoleQualifier = 2376,
+  DerivativeInstrumentPartyRoleQualifier = 2377,
+  InstrumentPartyRoleQualifier = 2378,
+  LegInstrumentPartyRoleQualifier = 2379,
+  LegProvisionPartyRoleQualifier = 2380,
+  Nested2PartyRoleQualifier = 2381,
+  Nested3PartyRoleQualifier = 2382,
+  Nested4PartyRoleQualifier = 2383,
+  NestedPartyRoleQualifier = 2384,
+  ProvisionPartyRoleQualifier = 2385,
+  RequestedPartyRoleQualifier = 2386,
+  TradeContingency = 2387,
+  RootPartyRoleQualifier = 2388,
+  SettlPartyRoleQualifier = 2389,
+  TradeConfirmationReferenceID = 2390,
+  UnderlyingInstrumentPartyRoleQualifier = 2391,
+  AllocRefRiskLimitCheckID = 2392,
+  AllocRefRiskLimitCheckIDType = 2393,
+  LimitUtilizationAmt = 2394,
+  LimitAmt = 2395,
+  LimitRole = 2396,
+  RegulatoryTradeIDScope = 2397,
+  SideRegulatoryTradeIDScope = 2398,
+  AllocRegulatoryTradeIDScope = 2399,
+  EffectiveBusinessDate = 2400,
+  ListManualOrderIndicator = 2401,
+  EntitlementSubType = 2402,
+  QuoteModelType = 2403,
+  ComplianceText = 2404,
+  ExecMethod = 2405,
+  AllocRegulatoryLegRefID = 2406,
+  ComplexEventSpotRate = 2407,
+  ComplexEventForwardPoints = 2408,
+  LegComplexEventSpotRate = 2409,
+  LegComplexEventForwardPoints = 2410,
+  RegulatoryLegRefID = 2411,
+  RateSourceReferemcePageHeading = 2412,
+  RelatedToSecurityID = 2413,
+  RelatedToSecurityIDSource = 2414,
+  RelatedToStreamXIDRef = 2415,
+  SideRegulatoryLegRefID = 2416,
+  RelatedToDividendPeriodXIDRef = 2417,
+  FirmTradeEventID = 2418,
+  UnderlyingComplexEventSpotRate = 2419,
+  UnderlyingComplexEventForwardPoints = 2420,
+  FillRefID = 2421,
+  OrderRequestID = 2422,
+  MassOrderRequestID = 2423,
+  MassOrderReportID = 2424,
+  MassOrderRequestStatus = 2425,
+  MassOrderRequestResult = 2426,
+  OrderResponseLevel = 2427,
+  NoOrderEntries = 2428,
+  OrderEntryAction = 2429,
+  OrderEntryID = 2430,
+  ExecTypeReason = 2431,
+  TotNoOrderEntries = 2432,
+  NoTargetPartySubIDs = 2433,
+  TargetPartySubID = 2434,
+  TargetPartySubIDType = 2435,
+  TransferInstructionID = 2436,
+  TransferID = 2437,
+  TransferReportID = 2438,
+  TransferTransType = 2439,
+  TransferType = 2440,
+  TransferScope = 2441,
+  TransferStatus = 2442,
+  TransferRejectReason = 2443,
+  TransferReportType = 2444,
+  AggressorTime = 2445,
+  AggressorSide = 2446,
+  FastMarketIndicator = 2447,
+  LinkageHandlingIndicator = 2448,
+  NumberOfBuyOrders = 2449,
+  NumberOfSellOrders = 2450,
+  SettlPriceDeterminationMethod = 2451,
+  MDStatisticReqID = 2452,
+  MDStatisticRptID = 2453,
+  MDStatisticName = 2454,
+  MDStatisticDesc = 2455,
+  MDStatisticType = 2456,
+  MDStatisticScope = 2457,
+  MDStatisticSubScope = 2458,
+  MDStatisticScopeType = 2459,
+  MDStatisticFrequencyPeriod = 2460,
+  MDStatisticFrequencyUnit = 2461,
+  MDStatisticDelayPeriod = 2462,
+  MDStatisticDelayUnit = 2463,
+  MDStatisticIntervalType = 2464,
+  MDStatisticIntervalTypeUnit = 2465,
+  MDStatisticIntervalPeriod = 2466,
+  MDStatisticIntervalUnit = 2467,
+  MDStatisticStartDate = 2468,
+  MDStatisticEndDate = 2469,
+  MDStatisticStartTime = 2470,
+  MDStatisticEndTime = 2471,
+  MDStatisticRatioType = 2472,
+  MDStatisticRequestResult = 2473,
+  NoMDStatistics = 2474,
+  MDStatisticID = 2475,
+  MDStatisticTime = 2476,
+  MDStatisticStatus = 2477,
+  MDStatisticValue = 2478,
+  MDStatisticValueType = 2479,
+  MDStatisticValueUnit = 2480,
+  EncodedMDStatisticDescLen = 2481,
+  EncodedMDStatisticDesc = 2482,
+  AllocRiskLimitCheckStatus = 2483,
+  FirmTransactionID = 2484,
+  TransactionID = 2485,
+  WireReference = 2486,
+  CollRptRejectReason = 2487,
+  CollRptStatus = 2488,
+  PackageID = 2489,
+  TradeNumber = 2490,
+  UnderlyingAssetGroup = 2491,
+  LegDifferentialPrice = 2492,
+  EncodedLegDocumentationText = 2493,
+  EncodedLegDocumentationTextLen = 2494,
+  LegAgreementCurrency = 2495,
+  LegAgreementDate = 2496,
+  LegAgreementDesc = 2497,
+  LegAgreementID = 2498,
+  LegAgreementVersion = 2499,
+  LegBrokerConfirmationDesc = 2500,
+  LegCreditSupportAgreementDate = 2501,
+  LegCreditSupportAgreementDesc = 2502,
+  LegCreditSupportAgreementID = 2503,
+  LegDeliveryType = 2504,
+  LegDocumentationText = 2505,
+  LegEndDate = 2506,
+  LegGoverningLaw = 2507,
+  LegMarginRatio = 2508,
+  LegMasterConfirmationAnnexDate = 2509,
+  LegMasterConfirmationDate = 2510,
+  LegMasterConfirmationDesc = 2511,
+  LegMasterConfirmationAnnexDesc = 2512,
+  LegStartDate = 2513,
+  LegTerminationType = 2514,
+  AllocCalculatedCcyQty = 2515,
+  CollateralRequestInstruction = 2516,
+  CollateralRequestLinkID = 2517,
+  CollateralRequestNumber = 2518,
+  TotNumCollateralRequests = 2519,
+  WarningText = 2520,
+  EncodedWarningText = 2521,
+  EncodedWarningTextLen = 2522,
+  CrossedIndicator = 2523,
+  TradeReportingIndicator = 2524,
+  AffiliatedFirmsTradeIndicator = 2525,
+  InternationalSwapIndicator = 2526,
+  MultiAssetSwapIndicator = 2527,
+  ClearingSettlPrice = 2528,
+  NoRelativeValues = 2529,
+  RelativeValueType = 2530,
+  RelativeValue = 2531,
+  RelativeValueSide = 2532,
+  BidSpread = 2533,
+  OfferSpread = 2534,
+  MDReportEvent = 2535,
+  MDReportCount = 2536,
+  TotNoMarketSegmentReports = 2537,
+  TotNoInstrumentReports = 2538,
+  TotNoPartyDetailReports = 2539,
+  TotNoEntitlementReports = 2540,
+  TotNoRiskLimitReports = 2541,
+  MarketSegmentStatus = 2542,
+  MarketSegmentType = 2543,
+  MarketSegmentSubType = 2544,
+  NoRelatedMarketSegments = 2545,
+  RelatedMarketSegmentID = 2546,
+  MarketSegmentRelationship = 2547,
+  NoAuctionTypeRules = 2548,
+  AuctionTypeProductComplex = 2549,
+  NoPriceRangeRules = 2550,
+  StartPriceRange = 2551,
+  EndPriceRange = 2552,
+  PriceRangeValue = 2553,
+  PriceRangePercentage = 2554,
+  PriceRangeProductComplex = 2555,
+  PriceRangeRuleID = 2556,
+  FastMarketPercentage = 2557,
+  NoQuoteSizeRules = 2558,
+  QuoteSideIndicator = 2559,
+  NoFlexProductEligibilities = 2560,
+  FlexProductEligibilityComplex = 2561,
+  NumOfComplexInstruments = 2562,
+  MarketDepthTimeInterval = 2563,
+  MarketDepthTimeIntervalUnit = 2564,
+  MDRecoveryTimeInterval = 2565,
+  MDRecoveryTimeIntervalUnit = 2566,
+  PrimaryServiceLocationID = 2567,
+  SecondaryServiceLocationID = 2568,
+  MatchRuleProductComplex = 2569,
+  CustomerPriority = 2570,
+  TickRuleProductComplex = 2571,
+  PreviousAdjustedOpenInterest = 2572,
+  PreviousUnadjustedOpenInterest = 2573,
+  LowExercisePriceOptionIndicator = 2574,
+  BlockTradeEligibilityIndicator = 2575,
+  InstrumentPricePrecision = 2576,
+  StrikePricePrecision = 2577,
+  OrigStrikePrice = 2578,
+  SettlSubMethod = 2579,
+  NoClearingPriceParameters = 2580,
+  BusinessDayType = 2581,
+  ClearingPriceOffset = 2582,
+  VegaMultiplier = 2583,
+  AnnualTradingBusinessDays = 2584,
+  TotalTradingBusinessDays = 2585,
+  TradingBusinessDays = 2586,
+  RealizedVariance = 2587,
+  StandardVariance = 2588,
+  RelatedClosePrice = 2589,
+  OvernightInterestRate = 2590,
+  AccumulatedReturnModifiedVariationMargin = 2591,
+  CalculationMethod = 2592,
+  NoOrderAttributes = 2593,
+  OrderAttributeType = 2594,
+  OrderAttributeValue = 2595,
+  DeltaCrossed = 2596,
+  ComplexEventFuturesPriceValuation = 2597,
+  ComplexEventOptionsPriceValuation = 2598,
+  ComplexEventPVFinalPriceElectionFallback = 2599,
+  StrikeIndexCurvePoint = 2600,
+  StrikeIndexQuote = 2601,
+  ExtraordinaryEventAdjustmentMethod = 2602,
+  ExchangeLookAlike = 2603,
+  LegStrikeIndexCurvePoint = 2604,
+  LegStrikeIndexQuote = 2605,
+  LegExtraordinaryEventAdjustmentMethod = 2606,
+  LegExchangeLookAlike = 2607,
+  LegComplexEventFuturesPriceValuation = 2608,
+  LegComplexEventOptionsPriceValuation = 2609,
+  LegComplexEventPVFinalPriceElectionFallback = 2610,
+  UnderlyingComplexEventFuturesPriceValuation = 2611,
+  UnderlyingComplexEventOptionsPriceValuation = 2612,
+  UnderlyingComplexEventPVFinalPriceElectionFallback = 2613,
+  UnderlyingNotional = 2614,
+  UnderlyingNotionalCurrency = 2615,
+  UnderlyingNotionalDeterminationMethod = 2616,
+  UnderlyingNotionalAdjustments = 2617,
+  PositionID = 2618,
+  UnderlyingNotionalXIDRef = 2619,
+  UnderlyingFutureID = 2620,
+  UnderlyingFutureIDSource = 2621,
+  UnderlyingStrikeIndexCurvePoint = 2622,
+  UnderlyingStrikeIndexQuote = 2623,
+  UnderlyingExtraordinaryEventAdjustmentMethod = 2624,
+  UnderlyingExchangeLookAlike = 2625,
+  UnderlyingAverageVolumeLimitationPercentage = 2626,
+  UnderlyingAverageVolumeLimitationPeriodDays = 2627,
+  UnderlyingDepositoryReceiptIndicator = 2628,
+  UnderlyingOpenUnits = 2629,
+  UnderlyingBasketDivisor = 2630,
+  UnderlyingInstrumentXID = 2631,
+  CollateralAmountType = 2632,
+  NoMiscFeeSubTypes = 2633,
+  MiscFeeSubType = 2634,
+  MiscFeeSubTypeAmt = 2635,
+  MiscFeeSubTypeDesc = 2636,
+  EncodedMiscFeeSubTypeDescLen = 2637,
+  EncodedMiscFeeSubTypeDesc = 2638,
+  NoCommissions = 2639,
+  CommissionAmount = 2640,
+  CommissionAmountType = 2641,
+  CommissionBasis = 2642,
+  CommissionCurrency = 2643,
+  CommissionUnitOfMeasure = 2644,
+  CommissionUnitOfMeasureCurrency = 2645,
+  CommissionRate = 2646,
+  CommissionSharedIndicator = 2647,
+  CommissionAmountShared = 2648,
+  CommissionLegRefID = 2649,
+  CommissionDesc = 2650,
+  EncodedCommissionDescLen = 2651,
+  EncodedCommissionDesc = 2652,
+  NoAllocCommissions = 2653,
+  AllocCommissionAmount = 2654,
+  AllocCommissionAmountType = 2655,
+  AllocCommissionBasis = 2656,
+  AllocCommissionCurrency = 2657,
+  AllocCommissionUnitOfMeasure = 2658,
+  AllocCommissionUnitOfMeasureCurrency = 2659,
+  AllocCommissionRate = 2660,
+  AllocCommissionSharedIndicator = 2661,
+  AllocCommissionAmountShared = 2662,
+  AllocCommissionLegRefID = 2663,
+  AllocCommissionDesc = 2664,
+  EncodedAllocCommissionDescLen = 2665,
+  EncodedAllocCommissionDesc = 2666,
+  AlgorithmicTradeIndicator = 2667,
+  NoTrdRegPublications = 2668,
+  TrdRegPublicationType = 2669,
+  TrdRegPublicationReason = 2670,
+  SideTradeReportingIndicator = 2671,
+  CrossRequestID = 2672,
+  FillMatchID = 2673,
+  FillMatchSubID = 2674,
+  MassActionReason = 2675,
+  MaximumPriceDeviation = 2676,
+  NotAffectedReason = 2677,
+  TotalNotAffectedOrders = 2678,
+  OrderOwnershipIndicator = 2679,
+  LegAccount = 2680,
+  InTheMoneyCondition = 2681,
+  LegInTheMoneyCondition = 2682,
+  UnderlyingInTheMoneyCondition = 2683,
+  DerivativeInTheMoneyCondition = 2684,
+  ContraryInstructionEligibilityIndicator = 2685,
+  LegContraryInstructionEligibilityIndicator = 2686,
+  UnderlyingContraryInstructionEligibilityIndicator = 2687,
+  DerivativeContraryInstructionEligibilityIndicator = 2688,
+  CollateralMarketPrice = 2689,
+  CollateralPercentOverage = 2690,
+  NoSideCollateralAmounts = 2691,
+  SideCollateralAmountMarketID = 2692,
+  SideCollateralAmountMarketSegmentID = 2693,
+  SideCollateralAmountType = 2694,
+  SideCollateralCurrency = 2695,
+  SideCollateralFXRate = 2696,
+  SideCollateralFXRateCalc = 2697,
+  SideCollateralMarketPrice = 2698,
+  SideCollateralPercentOverage = 2699,
+  SideCollateralPortfolioID = 2700,
+  SideCollateralType = 2701,
+  SideCurrentCollateralAmount = 2702,
+  SideHaircutIndicator = 2703,
+  ExDestinationType = 2704,
+  MarketCondition = 2705,
+  NoQuoteAttributes = 2706,
+  QuoteAttributeType = 2707,
+  QuoteAttributeValue = 2708,
+  NoPriceQualifiers = 2709,
+  PriceQualifier = 2710,
+  MDValueTier = 2711,
+  MiscFeeQualifier = 2712,
+  MiscFeeDesc = 2713,
+  FinancialInstrumentFullName = 2714,
+  EncodedFinancialInstrumentFullNameLen = 2715,
+  EncodedFinancialInstrumentFullName = 2716,
+  LegFinancialInstrumentFullName = 2717,
+  EncodedLegFinancialInstrumentFullNameLen = 2718,
+  EncodedLegFinancialInstrumentFullName = 2719,
+  UnderlyingFinancialInstrumentFullName = 2720,
+  EncodedUnderlyingFinancialInstrumentFullNameLen = 2721,
+  EncodedUnderlyingFinancialInstrumentFullName = 2722,
+  UnderlyingIndexCurveUnit = 2723,
+  UnderlyingIndexCurvePeriod = 2724,
+  CommissionAmountSubType = 2725,
+  AllocCommissionAmountSubType = 2726,
+  AllocLegRefID = 2727,
+  FloatingRateIndexCurvePeriod = 2728,
+  FloatingRateIndexCurveSpread = 2729,
+  FloatingRateIndexCurveUnit = 2730,
+  FloatingRateIndexID = 2731,
+  FloatingRateIndexIDSource = 2732,
+  IndexRollMonth = 2733,
+  NoIndexRollMonths = 2734,
+  AssetSubType = 2735,
+  CommodityFinalPriceType = 2736,
+  FinancialInstrumentShortName = 2737,
+  NextIndexRollDate = 2738,
+  LegAssetSubType = 2739,
+  LegFinancialInstrumentShortName = 2740,
+  SecondaryAssetSubType = 2741,
+  UnderlyingFinancialInstrumentShortName = 2742,
+  LegSecondaryAssetSubType = 2743,
+  UnderlyingAssetSubType = 2744,
+  UnderlyingSecondaryAssetSubType = 2745,
+  NoReferenceDataDates = 2746,
+  ReferenceDataDate = 2747,
+  ReferenceDataDateType = 2748,
+  ExecutionTimestamp = 2749,
+  ReportingPx = 2750,
+  ReportingQty = 2751,
+  DeliveryRouteOrCharter = 2752,
+  ReturnTrigger = 2753,
+  LegDeliveryRouteOrCharter = 2754,
+  LegReturnTrigger = 2755,
+  UnderlyingDeliveryRouteOrCharter = 2756,
+  UnderlyingReturnTrigger = 2757,
+  AllocRequestID = 2758,
+  GroupAmount = 2759,
+  GroupRemainingAmount = 2760,
+  AllocGroupAmount = 2761,
+  PriceMarkup = 2762,
+  AveragePriceType = 2763,
+  AveragePriceStartTime = 2764,
+  AveragePriceEndTime = 2765,
+  OrderPercentOfTotalVolume = 2766,
+  AllocGroupStatus = 2767,
+  AllocRequestStatus = 2768,
+  AllocAvgPxIndicator = 2769,
+  AllocAvgPxGroupID = 2770,
+  PreviousAllocGroupID = 2771,
+  NoMatchExceptions = 2772,
+  MatchExceptionType = 2773,
+  MatchExceptionElementType = 2774,
+  MatchExceptionElementName = 2775,
+  MatchExceptionAllocValue = 2776,
+  MatchExceptionConfirmValue = 2777,
+  MatchExceptionToleranceValue = 2778,
+  MatchExceptionToleranceValueType = 2779,
+  MatchExceptionText = 2780,
+  NoMatchingDataPoints = 2781,
+  MatchingDataPointIndicator = 2782,
+  MatchingDataPointValue = 2783,
+  MatchingDataPointType = 2784,
+  MatchingDataPointName = 2785,
+  TradeAggregationRequestID = 2786,
+  TradeAggregationRequestRefID = 2787,
+  TradeAggregationTransType = 2788,
+  AggregatedQty = 2789,
+  TradeAggregationRequestStatus = 2790,
+  TradeAggregationRejectReason = 2791,
+  TradeAggregationReportID = 2792,
+  AvgSpotRate = 2793,
+  AvgForwardPoints = 2794,
+  OffshoreIndicator = 2795,
+  FXBenchmarkRateFix = 2796,
+  EncodedMatchExceptionTextLen = 2797,
+  EncodedMatchExceptionText = 2798,
+  PayReportID = 2799,
+  PayDisputeReason = 2800,
+  EncodedReplaceText = 2801,
+  EncodedReplaceTextLen = 2802,
+  PayReportRefID = 2803,
+  PayReportTransType = 2804,
+  ReplaceText = 2805,
+  PayReportStatus = 2806,
+  CancelText = 2807,
+  EncodedCancelText = 2808,
+  EncodedCancelTextLen = 2809,
+  PayRequestRefID = 2810,
+  PayRequestTransType = 2811,
+  PayRequestID = 2812,
+  PayRequestStatus = 2813,
+  EncodedPostTradePaymentDesc = 2814,
+  EncodedPostTradePaymentDescLen = 2815,
+  PostTradePaymentAccount = 2816,
+  PostTradePaymentAmount = 2817,
+  PostTradePaymentCurrency = 2818,
+  PostTradePaymentDebitOrCredit = 2819,
+  PostTradePaymentDesc = 2820,
+  PostTradePaymentID = 2821,
+  PostTradePaymentLinkID = 2822,
+  PostTradePaymentStatus = 2823,
+  PostTradePaymentType = 2824,
+  PostTradePaymentCalculationDate = 2825,
+  PostTradePaymentValueDate = 2826,
+  PostTradePaymentFinalValueDate = 2827,
+  CurrentDisplayPrice = 2828,
+  DuplicateClOrdIDIndicator = 2829,
+  EventInitiatorType = 2830,
+  NBBOEntryType = 2831,
+  NBBOPrice = 2832,
+  NBBOQty = 2833,
+  NBBOSource = 2834,
+  OrderOriginationFirmID = 2835,
+  RelatedOrderTime = 2836,
+  SingleQuoteIndicator = 2837,
+  CurrentWorkingPrice = 2838,
+  TrdRegTimestampManualIndicator = 2839,
+  CollateralReinvestmentRate = 2840,
+  UnderlyingRefID = 2841,
+  CollateralReinvestmentAmount = 2842,
+  CollateralReinvestmentCurrency = 2843,
+  CollateralReinvestmentType = 2844,
+  NoCollateralReinvestments = 2845,
+  FundingSource = 2846,
+  FundingSourceCurrency = 2847,
+  FundingSourceMarketValue = 2848,
+  NoFundingSources = 2849,
+  MarginDirection = 2851,
+  SideCollateralReinvestmentRate = 2862,
+  SideUnderlyingRefID = 2863,
+  NoSideCollateralReinvestments = 2864,
+  SideCollateralReinvestmentAmount = 2865,
+  SideCollateralReinvestmentCurrency = 2866,
+  SideCollateralReinvestmentType = 2867,
+  CollateralizationValueDate = 2868,
+  RegulatoryReportTypeBusinessDate = 2869,
+  ClearingPortfolioID = 2870,
+  NoTransactionAttributes = 2871,
+  TransactionAttributeType = 2872,
+  TransactionAttributeValue = 2873,
+  UnderlyingID = 2874,
+  PosAmtPrice = 2876,
+  PosAmtPriceType = 2877,
+  TerminationDate = 2878,
+  CouponOtherDayCount = 2879,
+  LegCouponOtherDayCount = 2880,
+  UnderlyingCouponOtherDayCount = 2881,
+  ContraOrderOrigination = 2882,
+  RoutingArrangmentIndicator = 2883,
+  ContraRoutingArrangmentIndicator = 2884,
+  UnderlyingAccruedInterestAmt = 2885,
+  UnderlyingNumDaysInterest = 2886,
+  RelatedOrderID = 2887,
+  RelatedOrderIDSource = 2888,
+  RelatedOrderQty = 2889,
+  OrderRelationship = 2890,
+  UPICode = 2891,
+  DerivativeUPICode = 2892,
+  LegUPICode = 2893,
+  UnderlyingUPICode = 2894,
+  InstrumentScopeUPICode = 2895,
+  TertiaryTrdType = 2896,
+  CurrencyCodeSource = 2897,
+  LegCurrencyCodeSource = 2898,
+  SettlCurrencyCodeSource = 2899,
+  LegSettlCurrencyCodeSource = 2900,
+  SideCurrencyCodeSource = 2901,
+  SideSettlCurrencyCodeSource = 2902,
+  SettlementAmountCurrencyCodeSource = 2903,
+  StrikeCurrencyCodeSource = 2904,
+  UnitOfMeasureCurrencyCodeSource = 2905,
+  PriceUnitOfMeasureCurrencyCodeSource = 2906,
+  PriceQuoteCurrencyCodeSource = 2907,
+  LegStrikeCurrencyCodeSource = 2908,
+  LegUnitOfMeasureCurrencyCodeSource = 2909,
+  LegPriceUnitOfMeasureCurrencyCodeSource = 2910,
+  LegPriceQuoteCurrencyCodeSource = 2911,
+  DerivativeStrikeCurrencyCodeSource = 2912,
+  DerivativeUnitOfMeasureCurrencyCodeSource = 2913,
+  DerivativePriceUnitOfMeasureCurrencyCodeSource = 2914,
+  DerivativePriceQuoteCurrencyCodeSource = 2915,
+  UnderlyingCurrencyCodeSource = 2916,
+  UnderlyingStrikeCurrencyCodeSource = 2917,
+  UnderlyingUnitOfMeasureCurrencyCodeSource = 2918,
+  UnderlyingPriceUnitOfMeasureCurrencyCodeSource = 2919,
+  UnderlyingPriceQuoteCurrencyCodeSource = 2920,
+  UnderlyingNotionalCurrencyCodeSource = 2921,
+  CommCurrencyCodeSource = 2922,
+  CommissionCurrencyCodeSource = 2923,
+  CommissionUnitOfMeasureCurrencyCodeSource = 2924,
+  AllocCommissionCurrencyCodeSource = 2925,
+  AllocCommissionUnitOfMeasureCurrencyCodeSource = 2926,
+  AllocSettlCurrencyCodeSource = 2927,
+  LegAllocSettlCurrencyCodeSource = 2928,
+  CollateralCurrencyCodeSource = 2929,
+  SideCollateralCurrencyCodeSource = 2930,
+  CollateralReinvestmentCurrencyCodeSource = 2931,
+  SideCollateralReinvestmentCurrencyCodeSource = 2932,
+  TradeAllocCurrencyCodeSource = 2933,
+  TradingCurrencyCodeSource = 2934,
+  LimitAmtCurrencyCodeSource = 2935,
+  PosQtyUnitOfMeasureCurrencyCodeSource = 2936,
+  PositionCurrencyCodeSource = 2937,
+  LegPosCurrencyCodeSource = 2938,
+  RiskLimitCurrencyCodeSource = 2939,
+  EntitlementAttribCurrencyCodeSource = 2940,
+  ComplexOptPayoutCurrencyCodeSource = 2941,
+  ComplexEventCurrencyOneCodeSource = 2942,
+  ComplexEventCurrencyTwoCodeSource = 2943,
+  LegComplexOptPayoutCurrencyCodeSource = 2944,
+  LegComplexEventCurrencyOneCodeSource = 2945,
+  LegComplexEventCurrencyTwoCodeSource = 2946,
+  UnderlyingComplexOptPayoutCurrencyCodeSource = 2947,
+  UnderlyingComplexEventCurrencyOneCodeSource = 2948,
+  UnderlyingComplexEventCurrencyTwoCodeSource = 2949,
+  BenchmarkCurveCurrencyCodeSource = 2950,
+  LegBenchmarkCurveCurrencyCodeSource = 2951,
+  AgreementCurrencyCodeSource = 2952,
+  LegAgreementCurrencyCodeSource = 2953,
+  FundingSourceCurrencyCodeSource = 2954,
+  PayCollectCurrencyCodeSource = 2955,
+  PostTradePaymentCurrencyCodeSource = 2956,
+  SymbolPositionNumber = 2957,
+  LegSymbolPositionNumber = 2958,
+  UnderlyingSymbolPositionNumber = 2959,
+  SettlPriceUnitOfMeasureCurrencyCodeSource = 2960,
+  AnonymousTradeIndicator = 2961,
+  SecurityReferenceDataSupplement = 2962,
+  MultiJurisdictionReportingIndicator = 2963,
+  SelfMatchPreventionInstruction = 2964,
+  NoAdditionalTermBondRefs = 40000,
+  AdditionalTermBondSecurityID = 40001,
+  AdditionalTermBondSecurityIDSource = 40002,
+  AdditionalTermBondDesc = 40003,
+  EncodedAdditionalTermBondDescLen = 40004,
+  EncodedAdditionalTermBondDesc = 40005,
+  AdditionalTermBondCurrency = 40006,
+  AdditionalTermBondIssuer = 40007,
+  EncodedAdditionalTermBondIssuerLen = 40008,
+  EncodedAdditionalTermBondIssuer = 40009,
+  AdditionalTermBondSeniority = 40010,
+  AdditionalTermBondCouponType = 40011,
+  AdditionalTermBondCouponRate = 40012,
+  AdditionalTermBondMaturityDate = 40013,
+  AdditionalTermBondParValue = 40014,
+  AdditionalTermBondCurrentTotalIssuedAmount = 40015,
+  AdditionalTermBondCouponFrequencyPeriod = 40016,
+  AdditionalTermBondCouponFrequencyUnit = 40017,
+  AdditionalTermBondDayCount = 40018,
+  NoAdditionalTerms = 40019,
+  AdditionalTermConditionPrecedentBondIndicator = 40020,
+  AdditionalTermDiscrepancyClauseIndicator = 40021,
+  NoCashSettlTerms = 40022,
+  CashSettlCurrency = 40023,
+  CashSettlValuationFirstBusinessDayOffset = 40024,
+  CashSettlValuationTime = 40025,
+  CashSettlBusinessCenter = 40026,
+  CashSettlQuoteMethod = 40027,
+  CashSettlQuoteAmount = 40028,
+  CashSettlQuoteCurrency = 40029,
+  CashSettlMinimumQuoteAmount = 40030,
+  CashSettlMinimumQuoteCurrency = 40031,
+  CashSettlDealer = 40032,
+  CashSettlBusinessDays = 40033,
+  CashSettlAmount = 40034,
+  CashSettlRecoveryFactor = 40035,
+  CashSettlFixedTermIndicator = 40036,
+  CashSettlAccruedInterestIndicator = 40037,
+  CashSettlValuationMethod = 40038,
+  CashSettlTermXID = 40039,
+  NoContractualDefinitions = 40040,
+  ContractualDefinition = 40041,
+  NoContractualMatrices = 40042,
+  ContractualMatrixSource = 40043,
+  ContractualMatrixDate = 40044,
+  ContractualMatrixTerm = 40045,
+  NoFinancingTermSupplements = 40046,
+  FinancingTermSupplementDesc = 40047,
+  FinancingTermSupplementDate = 40048,
+  NoStreams = 40049,
+  StreamType = 40050,
+  StreamDesc = 40051,
+  StreamPaySide = 40052,
+  StreamReceiveSide = 40053,
+  StreamNotional = 40054,
+  StreamCurrency = 40055,
+  StreamText = 40056,
+  UnderlyingStreamEffectiveDateUnadjusted = 40057,
+  UnderlyingStreamEffectiveDateBusinessDayConvention = 40058,
+  UnderlyingStreamEffectiveDateBusinessCenter = 40059,
+  UnderlyingStreamEffectiveDateRelativeTo = 40060,
+  UnderlyingStreamEffectiveDateOffsetPeriod = 40061,
+  UnderlyingStreamEffectiveDateOffsetUnit = 40062,
+  UnderlyingStreamEffectiveDateOffsetDayType = 40063,
+  UnderlyingStreamEffectiveDateAdjusted = 40064,
+  StreamTerminationDateUnadjusted = 40065,
+  StreamTerminationDateBusinessDayConvention = 40066,
+  StreamTerminationDateBusinessCenter = 40067,
+  StreamTerminationDateRelativeTo = 40068,
+  StreamTerminationDateOffsetPeriod = 40069,
+  StreamTerminationDateOffsetUnit = 40070,
+  StreamTerminationDateOffsetDayType = 40071,
+  StreamTerminationDateAdjusted = 40072,
+  StreamCalculationPeriodBusinessDayConvention = 40073,
+  StreamCalculationPeriodBusinessCenter = 40074,
+  StreamFirstPeriodStartDateUnadjusted = 40075,
+  StreamFirstPeriodStartDateBusinessDayConvention = 40076,
+  StreamFirstPeriodStartDateBusinessCenter = 40077,
+  StreamFirstPeriodStartDateAdjusted = 40078,
+  StreamFirstRegularPeriodStartDateUnadjusted = 40079,
+  StreamFirstCompoundingPeriodEndDateUnadjusted = 40080,
+  StreamLastRegularPeriodEndDateUnadjusted = 40081,
+  StreamCalculationFrequencyPeriod = 40082,
+  StreamCalculationFrequencyUnit = 40083,
+  StreamCalculationRollConvention = 40084,
+  NoSettlRateFallbacks = 40085,
+  SettlRatePostponementMaximumDays = 40086,
+  LegPaymentStreamNonDeliverableSettlRateSource = 40087,
+  SettlRatePostponementSurvey = 40088,
+  SettlRatePostponementCalculationAgent = 40089,
+  NoProvisions = 40090,
+  ProvisionType = 40091,
+  ProvisionDateUnadjusted = 40092,
+  ProvisionDateBusinessDayConvention = 40093,
+  ProvisionDateBusinessCenter = 40094,
+  ProvisionDateAdjusted = 40095,
+  ProvisionDateTenorPeriod = 40096,
+  ProvisionDateTenorUnit = 40097,
+  ProvisionCalculationAgent = 40098,
+  ProvisionOptionSinglePartyBuyerSide = 40099,
+  ProvisionOptionSinglePartySellerSide = 40100,
+  ProvisionOptionExerciseStyle = 40101,
+  ProvisionOptionExerciseMultipleNotional = 40102,
+  ProvisionOptionExerciseMinimumNotional = 40103,
+  ProvisionOptionExerciseMaximumNotional = 40104,
+  ProvisionOptionMinimumNumber = 40105,
+  ProvisionOptionMaximumNumber = 40106,
+  ProvisionOptionExerciseConfirmation = 40107,
+  ProvisionCashSettlMethod = 40108,
+  ProvisionCashSettlCurrency = 40109,
+  ProvisionCashSettlCurrency2 = 40110,
+  ProvisionCashSettlQuoteType = 40111,
+  ProvisionCashSettlQuoteSource = 40112,
+  ProvisionText = 40113,
+  ProvisionCashSettlValueTime = 40114,
+  ProvisionCashSettlValueTimeBusinessCenter = 40115,
+  ProvisionCashSettlValueDateBusinessDayConvention = 40116,
+  ProvisionCashSettlValueDateBusinessCenter = 40117,
+  ProvisionCashSettlValueDateRelativeTo = 40118,
+  ProvisionCashSettlValueDateOffsetPeriod = 40119,
+  ProvisionCashSettlValueDateOffsetUnit = 40120,
+  ProvisionCashSettlValueDateOffsetDayType = 40121,
+  ProvisionCashSettlValueDateAdjusted = 40122,
+  ProvisionOptionExerciseBusinessDayConvention = 40123,
+  ProvisionOptionExerciseBusinessCenter = 40124,
+  ProvisionOptionExerciseEarliestDateOffsetPeriod = 40125,
+  ProvisionOptionExerciseEarliestDateOffsetUnit = 40126,
+  ProvisionOptionExerciseFrequencyPeriod = 40127,
+  ProvisionOptionExerciseFrequencyUnit = 40128,
+  ProvisionOptionExerciseStartDateUnadjusted = 40129,
+  ProvisionOptionExerciseStartDateRelativeTo = 40130,
+  ProvisionOptionExerciseStartDateOffsetPeriod = 40131,
+  ProvisionOptionExerciseStartDateOffsetUnit = 40132,
+  ProvisionOptionExerciseStartDateOffsetDayType = 40133,
+  ProvisionOptionExerciseStartDateAdjusted = 40134,
+  ProvisionOptionExercisePeriodSkip = 40135,
+  ProvisionOptionExerciseBoundsFirstDateUnadjusted = 40136,
+  ProvisionOptionExerciseBoundsLastDateUnadjusted = 40137,
+  ProvisionOptionExerciseEarliestTime = 40138,
+  ProvisionOptionExerciseEarliestTimeBusinessCenter = 40139,
+  ProvisionOptionExerciseLatestTime = 40140,
+  ProvisionOptionExerciseLatestTimeBusinessCenter = 40141,
+  NoProvisionOptionExerciseFixedDates = 40142,
+  ProvisionOptionExerciseFixedDate = 40143,
+  ProvisionOptionExerciseFixedDateType = 40144,
+  ProvisionOptionExpirationDateUnadjusted = 40145,
+  ProvisionOptionExpirationDateBusinessDayConvention = 40146,
+  ProvisionOptionExpirationDateBusinessCenter = 40147,
+  ProvisionOptionExpirationDateRelativeTo = 40148,
+  ProvisionOptionExpirationDateOffsetPeriod = 40149,
+  ProvisionOptionExpirationDateOffsetUnit = 40150,
+  ProvisionOptionExpirationDateOffsetDayType = 40151,
+  ProvisionOptionExpirationDateAdjusted = 40152,
+  ProvisionOptionExpirationTime = 40153,
+  ProvisionOptionExpirationTimeBusinessCenter = 40154,
+  ProvisionOptionRelevantUnderlyingDateUnadjusted = 40155,
+  ProvisionOptionRelevantUnderlyingDateBusinessDayConvention = 40156,
+  ProvisionOptionRelevantUnderlyingDateBusinessCenter = 40157,
+  ProvisionOptionRelevantUnderlyingDateRelativeTo = 40158,
+  ProvisionOptionRelevantUnderlyingDateOffsetPeriod = 40159,
+  ProvisionOptionRelevantUnderlyingDateOffsetUnit = 40160,
+  ProvisionOptionRelevantUnderlyingDateOffsetDayType = 40161,
+  ProvisionOptionRelevantUnderlyingDateAdjusted = 40162,
+  ProvisionCashSettlPaymentDateBusinessDayConvention = 40163,
+  ProvisionCashSettlPaymentDateBusinessCenter = 40164,
+  ProvisionCashSettlPaymentDateRelativeTo = 40165,
+  ProvisionCashSettlPaymentDateOffsetPeriod = 40166,
+  ProvisionCashSettlPaymentDateOffsetUnit = 40167,
+  ProvisionCashSettlPaymentDateOffsetDayType = 40168,
+  ProvisionCashSettlPaymentDateRangeFirst = 40169,
+  ProvisionCashSettlPaymentDateRangeLast = 40170,
+  NoProvisionCashSettlPaymentDates = 40171,
+  ProvisionCashSettlPaymentDate = 40172,
+  ProvisionCashSettlPaymentDateType = 40173,
+  NoProvisionPartyIDs = 40174,
+  ProvisionPartyID = 40175,
+  ProvisionPartyIDSource = 40176,
+  ProvisionPartyRole = 40177,
+  NoProvisionPartySubIDs = 40178,
+  ProvisionPartySubID = 40179,
+  ProvisionPartySubIDType = 40180,
+  NoProtectionTerms = 40181,
+  ProtectionTermNotional = 40182,
+  ProtectionTermCurrency = 40183,
+  ProtectionTermSellerNotifies = 40184,
+  ProtectionTermBuyerNotifies = 40185,
+  ProtectionTermEventBusinessCenter = 40186,
+  ProtectionTermStandardSources = 40187,
+  ProtectionTermEventMinimumSources = 40188,
+  ProtectionTermEventNewsSource = 40189,
+  ProtectionTermXID = 40190,
+  NoProtectionTermEvents = 40191,
+  ProtectionTermEventType = 40192,
+  ProtectionTermEventValue = 40193,
+  ProtectionTermEventCurrency = 40194,
+  ProtectionTermEventPeriod = 40195,
+  ProtectionTermEventUnit = 40196,
+  ProtectionTermEventDayType = 40197,
+  ProtectionTermEventRateSource = 40198,
+  NoProtectionTermEventQualifiers = 40199,
+  ProtectionTermEventQualifier = 40200,
+  NoProtectionTermObligations = 40201,
+  ProtectionTermObligationType = 40202,
+  ProtectionTermObligationValue = 40203,
+  NoPhysicalSettlTerms = 40204,
+  PhysicalSettlCurrency = 40205,
+  PhysicalSettlBusinessDays = 40206,
+  PhysicalSettlMaximumBusinessDays = 40207,
+  PhysicalSettlTermXID = 40208,
+  NoPhysicalSettlDeliverableObligations = 40209,
+  PhysicalSettlDeliverableObligationType = 40210,
+  PhysicalSettlDeliverableObligationValue = 40211,
+  NoPayments = 40212,
+  PaymentType = 40213,
+  PaymentPaySide = 40214,
+  PaymentReceiveSide = 40215,
+  PaymentCurrency = 40216,
+  PaymentAmount = 40217,
+  PaymentPrice = 40218,
+  PaymentDateUnadjusted = 40219,
+  PaymentBusinessDayConvention = 40220,
+  PaymentBusinessCenter = 40221,
+  PaymentDateAdjusted = 40222,
+  LegMarketDisruptionValue = 40223,
+  PaymentDiscountFactor = 40224,
+  PaymentPresentValueAmount = 40225,
+  PaymentPresentValueCurrency = 40226,
+  PaymentSettlStyle = 40227,
+  LegPaymentStreamNonDeliverableSettlReferencePage = 40228,
+  PaymentText = 40229,
+  NoPaymentSettls = 40230,
+  PaymentSettlAmount = 40231,
+  PaymentSettlCurrency = 40232,
+  NoPaymentSettlPartyIDs = 40233,
+  PaymentSettlPartyID = 40234,
+  PaymentSettlPartyIDSource = 40235,
+  PaymentSettlPartyRole = 40236,
+  PaymentSettlPartyRoleQualifier = 40237,
+  NoPaymentSettlPartySubIDs = 40238,
+  PaymentSettlPartySubID = 40239,
+  PaymentSettlPartySubIDType = 40240,
+  NoLegStreams = 40241,
+  LegStreamType = 40242,
+  LegStreamDesc = 40243,
+  LegStreamPaySide = 40244,
+  LegStreamReceiveSide = 40245,
+  LegStreamNotional = 40246,
+  LegStreamCurrency = 40247,
+  LegStreamText = 40248,
+  LegStreamEffectiveDateUnadjusted = 40249,
+  LegStreamEffectiveDateBusinessDayConvention = 40250,
+  LegStreamEffectiveDateBusinessCenter = 40251,
+  LegStreamEffectiveDateRelativeTo = 40252,
+  LegStreamEffectiveDateOffsetPeriod = 40253,
+  LegStreamEffectiveDateOffsetUnit = 40254,
+  LegStreamEffectiveDateOffsetDayType = 40255,
+  LegStreamEffectiveDateAdjusted = 40256,
+  LegStreamTerminationDateUnadjusted = 40257,
+  LegStreamTerminationDateBusinessDayConvention = 40258,
+  LegStreamTerminationDateBusinessCenter = 40259,
+  LegStreamTerminationDateRelativeTo = 40260,
+  LegStreamTerminationDateOffsetPeriod = 40261,
+  LegStreamTerminationDateOffsetUnit = 40262,
+  LegStreamTerminationDateOffsetDayType = 40263,
+  LegStreamTerminationDateAdjusted = 40264,
+  LegStreamCalculationPeriodBusinessDayConvention = 40265,
+  LegStreamCalculationPeriodBusinessCenter = 40266,
+  LegStreamFirstPeriodStartDateUnadjusted = 40267,
+  LegStreamFirstPeriodStartDateBusinessDayConvention = 40268,
+  LegStreamFirstPeriodStartDateBusinessCenter = 40269,
+  LegStreamFirstPeriodStartDateAdjusted = 40270,
+  LegStreamFirstRegularPeriodStartDateUnadjusted = 40271,
+  LegStreamFirstCompoundingPeriodEndDateUnadjusted = 40272,
+  LegStreamLastRegularPeriodEndDateUnadjusted = 40273,
+  LegStreamCalculationFrequencyPeriod = 40274,
+  LegStreamCalculationFrequencyUnit = 40275,
+  LegStreamCalculationRollConvention = 40276,
+  NoCashSettlDealers = 40277,
+  NoBusinessCenters = 40278,
+  LegPaymentStreamType = 40279,
+  LegPaymentStreamMarketRate = 40280,
+  LegPaymentStreamDelayIndicator = 40281,
+  LegPaymentStreamSettlCurrency = 40282,
+  LegPaymentStreamDayCount = 40283,
+  LegPaymentStreamAccrualDays = 40284,
+  LegPaymentStreamDiscountType = 40285,
+  LegPaymentStreamDiscountRate = 40286,
+  LegPaymentStreamDiscountRateDayCount = 40287,
+  LegPaymentStreamCompoundingMethod = 40288,
+  LegPaymentStreamInitialPrincipalExchangeIndicator = 40289,
+  LegPaymentStreamInterimPrincipalExchangeIndicator = 40290,
+  LegPaymentStreamFinalPrincipalExchangeIndicator = 40291,
+  LegPaymentStreamPaymentDateBusinessDayConvention = 40292,
+  LegPaymentStreamPaymentDateBusinessCenter = 40293,
+  LegPaymentStreamPaymentFrequencyPeriod = 40294,
+  LegPaymentStreamPaymentFrequencyUnit = 40295,
+  LegPaymentStreamPaymentRollConvention = 40296,
+  LegPaymentStreamFirstPaymentDateUnadjusted = 40297,
+  LegPaymentStreamLastRegularPaymentDateUnadjusted = 40298,
+  LegPaymentStreamPaymentDateRelativeTo = 40299,
+  LegPaymentStreamPaymentDateOffsetPeriod = 40300,
+  LegPaymentStreamPaymentDateOffsetUnit = 40301,
+  LegPaymentStreamPaymentDateOffsetDayType = 40302,
+  LegPaymentStreamResetDateRelativeTo = 40303,
+  LegPaymentStreamResetDateBusinessDayConvention = 40304,
+  LegPaymentStreamResetDateBusinessCenter = 40305,
+  LegPaymentStreamResetFrequencyPeriod = 40306,
+  LegPaymentStreamResetFrequencyUnit = 40307,
+  LegPaymentStreamResetWeeklyRollConvention = 40308,
+  LegPaymentStreamInitialFixingDateRelativeTo = 40309,
+  LegPaymentStreamInitialFixingDateBusinessDayConvention = 40310,
+  LegPaymentStreamInitialFixingDateBusinessCenter = 40311,
+  LegPaymentStreamInitialFixingDateOffsetPeriod = 40312,
+  LegPaymentStreamInitialFixingDateOffsetUnit = 40313,
+  LegPaymentStreamInitialFixingDateOffsetDayType = 40314,
+  LegPaymentStreamInitialFixingDateAdjusted = 40315,
+  LegPaymentStreamFixingDateRelativeTo = 40316,
+  LegPaymentStreamFixingDateBusinessDayConvention = 40317,
+  LegPaymentStreamFixingDateBusinessCenter = 40318,
+  LegPaymentStreamFixingDateOffsetPeriod = 40319,
+  LegPaymentStreamFixingDateOffsetUnit = 40320,
+  LegPaymentStreamFixingDateOffsetDayType = 40321,
+  LegPaymentStreamFixingDateAdjusted = 40322,
+  LegPaymentStreamRateCutoffDateOffsetPeriod = 40323,
+  LegPaymentStreamRateCutoffDateOffsetUnit = 40324,
+  LegPaymentStreamRateCutoffDateOffsetDayType = 40325,
+  LegPaymentStreamRate = 40326,
+  LegPaymentStreamFixedAmount = 40327,
+  LegPaymentStreamRateOrAmountCurrency = 40328,
+  LegPaymentStreamFutureValueNotional = 40329,
+  LegPaymentStreamFutureValueDateAdjusted = 40330,
+  LegPaymentStreamRateIndex = 40331,
+  LegPaymentStreamRateIndexSource = 40332,
+  LegPaymentStreamRateIndexCurveUnit = 40333,
+  LegPaymentStreamRateIndexCurvePeriod = 40334,
+  LegPaymentStreamRateMultiplier = 40335,
+  LegPaymentStreamRateSpread = 40336,
+  LegPaymentStreamRateSpreadPositionType = 40337,
+  LegPaymentStreamRateTreatment = 40338,
+  LegPaymentStreamCapRate = 40339,
+  LegPaymentStreamCapRateBuySide = 40340,
+  LegPaymentStreamCapRateSellSide = 40341,
+  LegPaymentStreamFloorRate = 40342,
+  LegPaymentStreamFloorRateBuySide = 40343,
+  LegPaymentStreamFloorRateSellSide = 40344,
+  LegPaymentStreamInitialRate = 40345,
+  LegPaymentStreamFinalRateRoundingDirection = 40346,
+  LegPaymentStreamFinalRatePrecision = 40347,
+  LegPaymentStreamAveragingMethod = 40348,
+  LegPaymentStreamNegativeRateTreatment = 40349,
+  LegPaymentStreamInflationLagPeriod = 40350,
+  LegPaymentStreamInflationLagUnit = 40351,
+  LegPaymentStreamInflationLagDayType = 40352,
+  LegPaymentStreamInflationInterpolationMethod = 40353,
+  LegPaymentStreamInflationIndexSource = 40354,
+  LegPaymentStreamInflationPublicationSource = 40355,
+  LegPaymentStreamInflationInitialIndexLevel = 40356,
+  LegPaymentStreamInflationFallbackBondApplicable = 40357,
+  LegPaymentStreamFRADiscounting = 40358,
+  LegPaymentStreamNonDeliverableRefCurrency = 40359,
+  LegPaymentStreamNonDeliverableFixingDatesBusinessDayConvention = 40360,
+  LegPaymentStreamNonDeliverableFixingDatesBusinessCenter = 40361,
+  LegPaymentStreamNonDeliverableFixingDatesRelativeTo = 40362,
+  LegPaymentStreamNonDeliverableFixingDatesOffsetPeriod = 40363,
+  LegPaymentStreamNonDeliverableFixingDatesOffsetUnit = 40364,
+  LegPaymentStreamNonDeliverableFixingDatesOffsetDayType = 40365,
+  LegSettlRateFallbackRateSource = 40366,
+  NoLegNonDeliverableFixingDates = 40367,
+  LegNonDeliverableFixingDate = 40368,
+  LegNonDeliverableFixingDateType = 40369,
+  LegSettlRateFallbackReferencePage = 40370,
+  PaymentStreamNonDeliverableSettlRateSource = 40371,
+  PaymentStreamNonDeliverableSettlReferencePage = 40372,
+  SettlRateFallbackRateSource = 40373,
+  NoLegPaymentSchedules = 40374,
+  LegPaymentScheduleType = 40375,
+  LegPaymentScheduleStubType = 40376,
+  LegPaymentScheduleStartDateUnadjusted = 40377,
+  LegPaymentScheduleEndDateUnadjusted = 40378,
+  LegPaymentSchedulePaySide = 40379,
+  LegPaymentScheduleReceiveSide = 40380,
+  LegPaymentScheduleNotional = 40381,
+  LegPaymentScheduleCurrency = 40382,
+  LegPaymentScheduleRate = 40383,
+  LegPaymentScheduleRateMultiplier = 40384,
+  LegPaymentScheduleRateSpread = 40385,
+  LegPaymentScheduleRateSpreadPositionType = 40386,
+  LegPaymentScheduleRateTreatment = 40387,
+  LegPaymentScheduleFixedAmount = 40388,
+  LegPaymentScheduleFixedCurrency = 40389,
+  LegPaymentScheduleStepFrequencyPeriod = 40390,
+  LegPaymentScheduleStepFrequencyUnit = 40391,
+  LegPaymentScheduleStepOffsetValue = 40392,
+  LegPaymentScheduleStepRate = 40393,
+  LegPaymentScheduleStepOffsetRate = 40394,
+  LegPaymentScheduleStepRelativeTo = 40395,
+  LegPaymentScheduleFixingDateUnadjusted = 40396,
+  LegPaymentScheduleWeight = 40397,
+  LegPaymentScheduleFixingDateRelativeTo = 40398,
+  LegPaymentScheduleFixingDateBusinessDayConvention = 40399,
+  LegPaymentScheduleFixingDateBusinessCenter = 40400,
+  LegPaymentScheduleFixingDateOffsetPeriod = 40401,
+  LegPaymentScheduleFixingDateOffsetUnit = 40402,
+  LegPaymentScheduleFixingDateOffsetDayType = 40403,
+  LegPaymentScheduleFixingDateAdjusted = 40404,
+  LegPaymentScheduleFixingTime = 40405,
+  LegPaymentScheduleFixingTimeBusinessCenter = 40406,
+  LegPaymentScheduleInterimExchangePaymentDateRelativeTo = 40407,
+  LegPaymentScheduleInterimExchangeDatesBusinessDayConvention = 40408,
+  LegPaymentScheduleInterimExchangeDatesBusinessCenter = 40409,
+  LegPaymentScheduleInterimExchangeDatesOffsetPeriod = 40410,
+  LegPaymentScheduleInterimExchangeDatesOffsetUnit = 40411,
+  LegPaymentScheduleInterimExchangeDatesOffsetDayType = 40412,
+  LegPaymentScheduleInterimExchangeDateAdjusted = 40413,
+  NoLegPaymentScheduleRateSources = 40414,
+  LegPaymentScheduleRateSource = 40415,
+  LegPaymentScheduleRateSourceType = 40416,
+  LegPaymentScheduleReferencePage = 40417,
+  NoLegPaymentStubs = 40418,
+  LegPaymentStubType = 40419,
+  LegPaymentStubLength = 40420,
+  LegPaymentStubRate = 40421,
+  LegPaymentStubFixedAmount = 40422,
+  LegPaymentStubFixedCurrency = 40423,
+  LegPaymentStubIndex = 40424,
+  LegPaymentStubIndexSource = 40425,
+  LegPaymentStubIndexCurvePeriod = 40426,
+  LegPaymentStubIndexCurveUnit = 40427,
+  LegPaymentStubIndexRateMultiplier = 40428,
+  LegPaymentStubIndexRateSpread = 40429,
+  LegPaymentStubIndexRateSpreadPositionType = 40430,
+  LegPaymentStubIndexRateTreatment = 40431,
+  LegPaymentStubIndexCapRate = 40432,
+  LegPaymentStubIndexCapRateBuySide = 40433,
+  LegPaymentStubIndexCapRateSellSide = 40434,
+  LegPaymentStubIndexFloorRate = 40435,
+  LegPaymentStubIndexFloorRateBuySide = 40436,
+  LegPaymentStubIndexFloorRateSellSide = 40437,
+  LegPaymentStubIndex2 = 40438,
+  LegPaymentStubIndex2Source = 40439,
+  LegPaymentStubIndex2CurvePeriod = 40440,
+  LegPaymentStubIndex2CurveUnit = 40441,
+  LegPaymentStubIndex2RateMultiplier = 40442,
+  LegPaymentStubIndex2RateSpread = 40443,
+  LegPaymentStubIndex2RateSpreadPositionType = 40444,
+  LegPaymentStubIndex2RateTreatment = 40445,
+  LegPaymentStubIndex2CapRate = 40446,
+  LegPaymentStubIndex2FloorRate = 40447,
+  NoLegProvisions = 40448,
+  LegProvisionType = 40449,
+  LegProvisionDateUnadjusted = 40450,
+  LegProvisionDateBusinessDayConvention = 40451,
+  LegProvisionDateBusinessCenter = 40452,
+  LegProvisionDateAdjusted = 40453,
+  LegProvisionDateTenorPeriod = 40454,
+  LegProvisionDateTenorUnit = 40455,
+  LegProvisionCalculationAgent = 40456,
+  LegProvisionOptionSinglePartyBuyerSide = 40457,
+  LegProvisionOptionSinglePartySellerSide = 40458,
+  LegProvisionOptionExerciseStyle = 40459,
+  LegProvisionOptionExerciseMultipleNotional = 40460,
+  LegProvisionOptionExerciseMinimumNotional = 40461,
+  LegProvisionOptionExerciseMaximumNotional = 40462,
+  LegProvisionOptionMinimumNumber = 40463,
+  LegProvisionOptionMaximumNumber = 40464,
+  LegProvisionOptionExerciseConfirmation = 40465,
+  LegProvisionCashSettlMethod = 40466,
+  LegProvisionCashSettlCurrency = 40467,
+  LegProvisionCashSettlCurrency2 = 40468,
+  LegProvisionCashSettlQuoteType = 40469,
+  LegProvisionCashSettlQuoteSource = 40470,
+  BusinessCenter = 40471,
+  LegProvisionText = 40472,
+  NoLegProvisionCashSettlPaymentDates = 40473,
+  LegProvisionCashSettlPaymentDate = 40474,
+  LegProvisionCashSettlPaymentDateType = 40475,
+  LegProvisionOptionExerciseBusinessDayConvention = 40476,
+  LegProvisionOptionExerciseBusinessCenter = 40477,
+  LegProvisionOptionExerciseEarliestDateOffsetPeriod = 40478,
+  LegProvisionOptionExerciseEarliestDateOffsetUnit = 40479,
+  LegProvisionOptionExerciseFrequencyPeriod = 40480,
+  LegProvisionOptionExerciseFrequencyUnit = 40481,
+  LegProvisionOptionExerciseStartDateUnadjusted = 40482,
+  LegProvisionOptionExerciseStartDateRelativeTo = 40483,
+  LegProvisionOptionExerciseStartDateOffsetPeriod = 40484,
+  LegProvisionOptionExerciseStartDateOffsetUnit = 40485,
+  LegProvisionOptionExerciseStartDateOffsetDayType = 40486,
+  LegProvisionOptionExerciseStartDateAdjusted = 40487,
+  LegProvisionOptionExercisePeriodSkip = 40488,
+  LegProvisionOptionExerciseBoundsFirstDateUnadjusted = 40489,
+  LegProvisionOptionExerciseBoundsLastDateUnadjusted = 40490,
+  LegProvisionOptionExerciseEarliestTime = 40491,
+  LegProvisionOptionExerciseEarliestTimeBusinessCenter = 40492,
+  LegProvisionOptionExerciseLatestTime = 40493,
+  LegProvisionOptionExerciseLatestTimeBusinessCenter = 40494,
+  NoLegProvisionOptionExerciseFixedDates = 40495,
+  LegProvisionOptionExerciseFixedDate = 40496,
+  LegProvisionOptionExerciseFixedDateType = 40497,
+  LegProvisionOptionExpirationDateUnadjusted = 40498,
+  LegProvisionOptionExpirationDateBusinessDayConvention = 40499,
+  LegProvisionOptionExpirationDateBusinessCenter = 40500,
+  LegProvisionOptionExpirationDateRelativeTo = 40501,
+  LegProvisionOptionExpirationDateOffsetPeriod = 40502,
+  LegProvisionOptionExpirationDateOffsetUnit = 40503,
+  LegProvisionOptionExpirationDateOffsetDayType = 40504,
+  LegProvisionOptionExpirationDateAdjusted = 40505,
+  LegProvisionOptionExpirationTime = 40506,
+  LegProvisionOptionExpirationTimeBusinessCenter = 40507,
+  LegProvisionOptionRelevantUnderlyingDateUnadjusted = 40508,
+  LegProvisionOptionRelevantUnderlyingDateBusinessDayConvention = 40509,
+  LegProvisionOptionRelevantUnderlyingDateBusinessCenter = 40510,
+  LegProvisionOptionRelevantUnderlyingDateRelativeTo = 40511,
+  LegProvisionOptionRelevantUnderlyingDateOffsetPeriod = 40512,
+  LegProvisionOptionRelevantUnderlyingDateOffsetUnit = 40513,
+  LegProvisionOptionRelevantUnderlyingDateOffsetDayType = 40514,
+  LegProvisionOptionRelevantUnderlyingDateAdjusted = 40515,
+  LegProvisionCashSettlPaymentDateBusinessDayConvention = 40516,
+  LegProvisionCashSettlPaymentDateBusinessCenter = 40517,
+  LegProvisionCashSettlPaymentDateRelativeTo = 40518,
+  LegProvisionCashSettlPaymentDateOffsetPeriod = 40519,
+  LegProvisionCashSettlPaymentDateOffsetUnit = 40520,
+  LegProvisionCashSettlPaymentDateOffsetDayType = 40521,
+  LegProvisionCashSettlPaymentDateRangeFirst = 40522,
+  LegProvisionCashSettlPaymentDateRangeLast = 40523,
+  LegProvisionCashSettlValueTime = 40524,
+  LegProvisionCashSettlValueTimeBusinessCenter = 40525,
+  LegProvisionCashSettlValueDateBusinessDayConvention = 40526,
+  LegProvisionCashSettlValueDateBusinessCenter = 40527,
+  LegProvisionCashSettlValueDateRelativeTo = 40528,
+  LegProvisionCashSettlValueDateOffsetPeriod = 40529,
+  LegProvisionCashSettlValueDateOffsetUnit = 40530,
+  LegProvisionCashSettlValueDateOffsetDayType = 40531,
+  LegProvisionCashSettlValueDateAdjusted = 40532,
+  NoLegProvisionPartyIDs = 40533,
+  LegProvisionPartyID = 40534,
+  LegProvisionPartyIDSource = 40535,
+  LegProvisionPartyRole = 40536,
+  NoLegProvisionPartySubIDs = 40537,
+  LegProvisionPartySubID = 40538,
+  LegProvisionPartySubIDType = 40539,
+  NoUnderlyingStreams = 40540,
+  UnderlyingStreamType = 40541,
+  UnderlyingStreamDesc = 40542,
+  UnderlyingStreamPaySide = 40543,
+  UnderlyingStreamReceiveSide = 40544,
+  UnderlyingStreamNotional = 40545,
+  UnderlyingStreamCurrency = 40546,
+  UnderlyingStreamText = 40547,
+  UnderlyingStreamTerminationDateUnadjusted = 40548,
+  UnderlyingStreamTerminationDateBusinessDayConvention = 40549,
+  UnderlyingStreamTerminationDateBusinessCenter = 40550,
+  UnderlyingStreamTerminationDateRelativeTo = 40551,
+  UnderlyingStreamTerminationDateOffsetPeriod = 40552,
+  UnderlyingStreamTerminationDateOffsetUnit = 40553,
+  UnderlyingStreamTerminationDateOffsetDayType = 40554,
+  UnderlyingStreamTerminationDateAdjusted = 40555,
+  UnderlyingStreamCalculationPeriodBusinessDayConvention = 40556,
+  UnderlyingStreamCalculationPeriodBusinessCenter = 40557,
+  UnderlyingStreamFirstPeriodStartDateUnadjusted = 40558,
+  UnderlyingStreamFirstPeriodStartDateBusinessDayConvention = 40559,
+  UnderlyingStreamFirstPeriodStartDateBusinessCenter = 40560,
+  UnderlyingStreamFirstPeriodStartDateAdjusted = 40561,
+  UnderlyingStreamFirstRegularPeriodStartDateUnadjusted = 40562,
+  UnderlyingStreamFirstCompoundingPeriodEndDateUnadjusted = 40563,
+  UnderlyingStreamLastRegularPeriodEndDateUnadjusted = 40564,
+  UnderlyingStreamCalculationFrequencyPeriod = 40565,
+  UnderlyingStreamCalculationFrequencyUnit = 40566,
+  UnderlyingStreamCalculationRollConvention = 40567,
+  UnderlyingPaymentStreamType = 40568,
+  UnderlyingPaymentStreamMarketRate = 40569,
+  UnderlyingPaymentStreamDelayIndicator = 40570,
+  UnderlyingPaymentStreamSettlCurrency = 40571,
+  UnderlyingPaymentStreamDayCount = 40572,
+  UnderlyingPaymentStreamAccrualDays = 40573,
+  UnderlyingPaymentStreamDiscountType = 40574,
+  UnderlyingPaymentStreamDiscountRate = 40575,
+  UnderlyingPaymentStreamDiscountRateDayCount = 40576,
+  UnderlyingPaymentStreamCompoundingMethod = 40577,
+  UnderlyingPaymentStreamInitialPrincipalExchangeIndicator = 40578,
+  UnderlyingPaymentStreamInterimPrincipalExchangeIndicator = 40579,
+  UnderlyingPaymentStreamFinalPrincipalExchangeIndicator = 40580,
+  UnderlyingPaymentStreamPaymentDateBusinessDayConvention = 40581,
+  UnderlyingPaymentStreamPaymentDateBusinessCenter = 40582,
+  UnderlyingPaymentStreamPaymentFrequencyPeriod = 40583,
+  UnderlyingPaymentStreamPaymentFrequencyUnit = 40584,
+  UnderlyingPaymentStreamPaymentRollConvention = 40585,
+  UnderlyingPaymentStreamFirstPaymentDateUnadjusted = 40586,
+  UnderlyingPaymentStreamLastRegularPaymentDateUnadjusted = 40587,
+  UnderlyingPaymentStreamPaymentDateRelativeTo = 40588,
+  UnderlyingPaymentStreamPaymentDateOffsetPeriod = 40589,
+  UnderlyingPaymentStreamPaymentDateOffsetUnit = 40590,
+  UnderlyingPaymentStreamPaymentDateOffsetDayType = 40591,
+  UnderlyingPaymentStreamResetDateRelativeTo = 40592,
+  UnderlyingPaymentStreamResetDateBusinessDayConvention = 40593,
+  UnderlyingPaymentStreamResetDateBusinessCenter = 40594,
+  UnderlyingPaymentStreamResetFrequencyPeriod = 40595,
+  UnderlyingPaymentStreamResetFrequencyUnit = 40596,
+  UnderlyingPaymentStreamResetWeeklyRollConvention = 40597,
+  UnderlyingPaymentStreamInitialFixingDateRelativeTo = 40598,
+  UnderlyingPaymentStreamInitialFixingDateBusinessDayConvention = 40599,
+  UnderlyingPaymentStreamInitialFixingDateBusinessCenter = 40600,
+  UnderlyingPaymentStreamInitialFixingDateOffsetPeriod = 40601,
+  UnderlyingPaymentStreamInitialFixingDateOffsetUnit = 40602,
+  UnderlyingPaymentStreamInitialFixingDateOffsetDayType = 40603,
+  UnderlyingPaymentStreamInitialFixingDateAdjusted = 40604,
+  UnderlyingPaymentStreamFixingDateRelativeTo = 40605,
+  UnderlyingPaymentStreamFixingDateBusinessDayConvention = 40606,
+  UnderlyingPaymentStreamFixingDateBusinessCenter = 40607,
+  UnderlyingPaymentStreamFixingDateOffsetPeriod = 40608,
+  UnderlyingPaymentStreamFixingDateOffsetUnit = 40609,
+  UnderlyingPaymentStreamFixingDateOffsetDayType = 40610,
+  UnderlyingPaymentStreamFixingDateAdjusted = 40611,
+  UnderlyingPaymentStreamRateCutoffDateOffsetPeriod = 40612,
+  UnderlyingPaymentStreamRateCutoffDateOffsetUnit = 40613,
+  UnderlyingPaymentStreamRateCutoffDateOffsetDayType = 40614,
+  UnderlyingPaymentStreamRate = 40615,
+  UnderlyingPaymentStreamFixedAmount = 40616,
+  UnderlyingPaymentStreamRateOrAmountCurrency = 40617,
+  UnderlyingPaymentStreamFutureValueNotional = 40618,
+  UnderlyingPaymentStreamFutureValueDateAdjusted = 40619,
+  UnderlyingPaymentStreamRateIndex = 40620,
+  UnderlyingPaymentStreamRateIndexSource = 40621,
+  UnderlyingPaymentStreamRateIndexCurveUnit = 40622,
+  UnderlyingPaymentStreamRateIndexCurvePeriod = 40623,
+  UnderlyingPaymentStreamRateMultiplier = 40624,
+  UnderlyingPaymentStreamRateSpread = 40625,
+  UnderlyingPaymentStreamRateSpreadPositionType = 40626,
+  UnderlyingPaymentStreamRateTreatment = 40627,
+  UnderlyingPaymentStreamCapRate = 40628,
+  UnderlyingPaymentStreamCapRateBuySide = 40629,
+  UnderlyingPaymentStreamCapRateSellSide = 40630,
+  UnderlyingPaymentStreamFloorRate = 40631,
+  UnderlyingPaymentStreamFloorRateBuySide = 40632,
+  UnderlyingPaymentStreamFloorRateSellSide = 40633,
+  UnderlyingPaymentStreamInitialRate = 40634,
+  UnderlyingPaymentStreamFinalRateRoundingDirection = 40635,
+  UnderlyingPaymentStreamFinalRatePrecision = 40636,
+  UnderlyingPaymentStreamAveragingMethod = 40637,
+  UnderlyingPaymentStreamNegativeRateTreatment = 40638,
+  UnderlyingPaymentStreamInflationLagPeriod = 40639,
+  UnderlyingPaymentStreamInflationLagUnit = 40640,
+  UnderlyingPaymentStreamInflationLagDayType = 40641,
+  UnderlyingPaymentStreamInflationInterpolationMethod = 40642,
+  UnderlyingPaymentStreamInflationIndexSource = 40643,
+  UnderlyingPaymentStreamInflationPublicationSource = 40644,
+  UnderlyingPaymentStreamInflationInitialIndexLevel = 40645,
+  UnderlyingPaymentStreamInflationFallbackBondApplicable = 40646,
+  UnderlyingPaymentStreamFRADiscounting = 40647,
+  UnderlyingPaymentStreamNonDeliverableRefCurrency = 40648,
+  UnderlyingPaymentStreamNonDeliverableFixingDatesBizDayConvention = 40649,
+  UnderlyingPaymentStreamNonDeliverableFixingDatesBusinessCenter = 40650,
+  UnderlyingPaymentStreamNonDeliverableFixingDatesRelativeTo = 40651,
+  UnderlyingPaymentStreamNonDeliverableFixingDatesOffsetPeriod = 40652,
+  UnderlyingPaymentStreamNonDeliverableFixingDatesOffsetUnit = 40653,
+  UnderlyingPaymentStreamNonDeliverableFixingDatesOffsetDayType = 40654,
+  SettlRateFallbackReferencePage = 40655,
+  NoUnderlyingNonDeliverableFixingDates = 40656,
+  UnderlyingNonDeliverableFixingDate = 40657,
+  UnderlyingNonDeliverableFixingDateType = 40658,
+  NoUnderlyingSettlRateFallbacks = 40659,
+  UnderlyingSettlRatePostponementMaximumDays = 40660,
+  UnderlyingPaymentStreamNonDeliverableSettlRateSource = 40661,
+  UnderlyingSettlRatePostponementSurvey = 40662,
+  UnderlyingSettlRatePostponementCalculationAgent = 40663,
+  NoUnderlyingPaymentSchedules = 40664,
+  UnderlyingPaymentScheduleType = 40665,
+  UnderlyingPaymentScheduleStubType = 40666,
+  UnderlyingPaymentScheduleStartDateUnadjusted = 40667,
+  UnderlyingPaymentScheduleEndDateUnadjusted = 40668,
+  UnderlyingPaymentSchedulePaySide = 40669,
+  UnderlyingPaymentScheduleReceiveSide = 40670,
+  UnderlyingPaymentScheduleNotional = 40671,
+  UnderlyingPaymentScheduleCurrency = 40672,
+  UnderlyingPaymentScheduleRate = 40673,
+  UnderlyingPaymentScheduleRateMultiplier = 40674,
+  UnderlyingPaymentScheduleRateSpread = 40675,
+  UnderlyingPaymentScheduleRateSpreadPositionType = 40676,
+  UnderlyingPaymentScheduleRateTreatment = 40677,
+  UnderlyingPaymentScheduleFixedAmount = 40678,
+  UnderlyingPaymentScheduleFixedCurrency = 40679,
+  UnderlyingPaymentScheduleStepFrequencyPeriod = 40680,
+  UnderlyingPaymentScheduleStepFrequencyUnit = 40681,
+  UnderlyingPaymentScheduleStepOffsetValue = 40682,
+  UnderlyingPaymentScheduleStepRate = 40683,
+  UnderlyingPaymentScheduleStepOffsetRate = 40684,
+  UnderlyingPaymentScheduleStepRelativeTo = 40685,
+  UnderlyingPaymentScheduleFixingDateUnadjusted = 40686,
+  UnderlyingPaymentScheduleWeight = 40687,
+  UnderlyingPaymentScheduleFixingDateRelativeTo = 40688,
+  UnderlyingPaymentScheduleFixingDateBusinessDayCnvtn = 40689,
+  UnderlyingPaymentScheduleFixingDateBusinessCenter = 40690,
+  UnderlyingPaymentScheduleFixingDateOffsetPeriod = 40691,
+  UnderlyingPaymentScheduleFixingDateOffsetUnit = 40692,
+  UnderlyingPaymentScheduleFixingDateOffsetDayType = 40693,
+  UnderlyingPaymentScheduleFixingDateAdjusted = 40694,
+  UnderlyingPaymentScheduleFixingTime = 40695,
+  UnderlyingPaymentScheduleFixingTimeBusinessCenter = 40696,
+  UnderlyingPaymentScheduleInterimExchangePaymentDateRelativeTo = 40697,
+  UnderlyingPaymentScheduleInterimExchangeDatesBizDayConvention = 40698,
+  UnderlyingPaymentScheduleInterimExchangeDatesBusinessCenter = 40699,
+  UnderlyingPaymentScheduleInterimExchangeDatesOffsetPeriod = 40700,
+  UnderlyingPaymentScheduleInterimExchangeDatesOffsetUnit = 40701,
+  UnderlyingPaymentScheduleInterimExchangeDatesOffsetDayType = 40702,
+  UnderlyingPaymentScheduleInterimExchangeDateAdjusted = 40703,
+  NoUnderlyingPaymentScheduleRateSources = 40704,
+  UnderlyingPaymentScheduleRateSource = 40705,
+  UnderlyingPaymentScheduleRateSourceType = 40706,
+  UnderlyingPaymentScheduleReferencePage = 40707,
+  NoUnderlyingPaymentStubs = 40708,
+  UnderlyingPaymentStubType = 40709,
+  UnderlyingPaymentStubLength = 40710,
+  UnderlyingPaymentStubRate = 40711,
+  UnderlyingPaymentStubFixedAmount = 40712,
+  UnderlyingPaymentStubFixedCurrency = 40713,
+  UnderlyingPaymentStubIndex = 40714,
+  UnderlyingPaymentStubIndexSource = 40715,
+  UnderlyingPaymentStubIndexCurvePeriod = 40716,
+  UnderlyingPaymentStubIndexCurveUnit = 40717,
+  UnderlyingPaymentStubIndexRateMultiplier = 40718,
+  UnderlyingPaymentStubIndexRateSpread = 40719,
+  UnderlyingPaymentStubIndexRateSpreadPositionType = 40720,
+  UnderlyingPaymentStubIndexRateTreatment = 40721,
+  UnderlyingPaymentStubIndexCapRate = 40722,
+  UnderlyingPaymentStubIndexCapRateBuySide = 40723,
+  UnderlyingPaymentStubIndexCapRateSellSide = 40724,
+  UnderlyingPaymentStubIndexFloorRate = 40725,
+  UnderlyingPaymentStubIndexFloorRateBuySide = 40726,
+  UnderlyingPaymentStubIndexFloorRateSellSide = 40727,
+  UnderlyingPaymentStubIndex2 = 40728,
+  UnderlyingPaymentStubIndex2Source = 40729,
+  UnderlyingPaymentStubIndex2CurvePeriod = 40730,
+  UnderlyingPaymentStubIndex2CurveUnit = 40731,
+  UnderlyingPaymentStubIndex2RateMultiplier = 40732,
+  UnderlyingPaymentStubIndex2RateSpread = 40733,
+  UnderlyingPaymentStubIndex2RateSpreadPositionType = 40734,
+  UnderlyingPaymentStubIndex2RateTreatment = 40735,
+  UnderlyingPaymentStubIndex2CapRate = 40736,
+  UnderlyingPaymentStubIndex2FloorRate = 40737,
+  PaymentStreamType = 40738,
+  PaymentStreamMarketRate = 40739,
+  PaymentStreamDelayIndicator = 40740,
+  PaymentStreamSettlCurrency = 40741,
+  PaymentStreamDayCount = 40742,
+  PaymentStreamAccrualDays = 40743,
+  PaymentStreamDiscountType = 40744,
+  PaymentStreamDiscountRate = 40745,
+  PaymentStreamDiscountRateDayCount = 40746,
+  PaymentStreamCompoundingMethod = 40747,
+  PaymentStreamInitialPrincipalExchangeIndicator = 40748,
+  PaymentStreamInterimPrincipalExchangeIndicator = 40749,
+  PaymentStreamFinalPrincipalExchangeIndicator = 40750,
+  PaymentStreamPaymentDateBusinessDayConvention = 40751,
+  PaymentStreamPaymentDateBusinessCenter = 40752,
+  PaymentStreamPaymentFrequencyPeriod = 40753,
+  PaymentStreamPaymentFrequencyUnit = 40754,
+  PaymentStreamPaymentRollConvention = 40755,
+  PaymentStreamFirstPaymentDateUnadjusted = 40756,
+  PaymentStreamLastRegularPaymentDateUnadjusted = 40757,
+  PaymentStreamPaymentDateRelativeTo = 40758,
+  PaymentStreamPaymentDateOffsetPeriod = 40759,
+  PaymentStreamPaymentDateOffsetUnit = 40760,
+  PaymentStreamResetDateRelativeTo = 40761,
+  PaymentStreamResetDateBusinessDayConvention = 40762,
+  PaymentStreamResetDateBusinessCenter = 40763,
+  PaymentStreamResetFrequencyPeriod = 40764,
+  PaymentStreamResetFrequencyUnit = 40765,
+  PaymentStreamResetWeeklyRollConvention = 40766,
+  PaymentStreamInitialFixingDateRelativeTo = 40767,
+  PaymentStreamInitialFixingDateBusinessDayConvention = 40768,
+  PaymentStreamInitialFixingDateBusinessCenter = 40769,
+  PaymentStreamInitialFixingDateOffsetPeriod = 40770,
+  PaymentStreamInitialFixingDateOffsetUnit = 40771,
+  PaymentStreamInitialFixingDateOffsetDayType = 40772,
+  PaymentStreamInitialFixingDateAdjusted = 40773,
+  PaymentStreamFixingDateRelativeTo = 40774,
+  PaymentStreamFixingDateBusinessDayConvention = 40775,
+  PaymentStreamFixingDateBusinessCenter = 40776,
+  PaymentStreamFixingDateOffsetPeriod = 40777,
+  PaymentStreamFixingDateOffsetUnit = 40778,
+  PaymentStreamFixingDateOffsetDayType = 40779,
+  PaymentStreamFixingDateAdjusted = 40780,
+  PaymentStreamRateCutoffDateOffsetPeriod = 40781,
+  PaymentStreamRateCutoffDateOffsetUnit = 40782,
+  PaymentStreamRateCutoffDateOffsetDayType = 40783,
+  PaymentStreamRate = 40784,
+  PaymentStreamFixedAmount = 40785,
+  PaymentStreamRateOrAmountCurrency = 40786,
+  PaymentStreamFutureValueNotional = 40787,
+  PaymentStreamFutureValueDateAdjusted = 40788,
+  PaymentStreamRateIndex = 40789,
+  PaymentStreamRateIndexSource = 40790,
+  PaymentStreamRateIndexCurveUnit = 40791,
+  PaymentStreamRateIndexCurvePeriod = 40792,
+  PaymentStreamRateMultiplier = 40793,
+  PaymentStreamRateSpread = 40794,
+  PaymentStreamRateSpreadPositionType = 40795,
+  PaymentStreamRateTreatment = 40796,
+  PaymentStreamCapRate = 40797,
+  PaymentStreamCapRateBuySide = 40798,
+  PaymentStreamCapRateSellSide = 40799,
+  PaymentStreamFloorRate = 40800,
+  PaymentStreamFloorRateBuySide = 40801,
+  PaymentStreamFloorRateSellSide = 40802,
+  PaymentStreamInitialRate = 40803,
+  PaymentStreamFinalRateRoundingDirection = 40804,
+  PaymentStreamFinalRatePrecision = 40805,
+  PaymentStreamAveragingMethod = 40806,
+  PaymentStreamNegativeRateTreatment = 40807,
+  PaymentStreamInflationLagPeriod = 40808,
+  PaymentStreamInflationLagUnit = 40809,
+  PaymentStreamInflationLagDayType = 40810,
+  PaymentStreamInflationInterpolationMethod = 40811,
+  PaymentStreamInflationIndexSource = 40812,
+  PaymentStreamInflationPublicationSource = 40813,
+  PaymentStreamInflationInitialIndexLevel = 40814,
+  PaymentStreamInflationFallbackBondApplicable = 40815,
+  PaymentStreamFRADiscounting = 40816,
+  PaymentStreamNonDeliverableRefCurrency = 40817,
+  PaymentStreamNonDeliverableFixingDatesBusinessDayConvention = 40818,
+  PaymentStreamNonDeliverableFixingDatesBusinessCenter = 40819,
+  PaymentStreamNonDeliverableFixingDatesRelativeTo = 40820,
+  PaymentStreamNonDeliverableFixingDatesOffsetPeriod = 40821,
+  PaymentStreamNonDeliverableFixingDatesOffsetUnit = 40822,
+  PaymentStreamNonDeliverableFixingDatesOffsetDayType = 40823,
+  UnderlyingPaymentStreamNonDeliverableSettlReferencePage = 40824,
+  NoNonDeliverableFixingDates = 40825,
+  NonDeliverableFixingDate = 40826,
+  NonDeliverableFixingDateType = 40827,
+  NoPaymentSchedules = 40828,
+  PaymentScheduleType = 40829,
+  PaymentScheduleStubType = 40830,
+  PaymentScheduleStartDateUnadjusted = 40831,
+  PaymentScheduleEndDateUnadjusted = 40832,
+  PaymentSchedulePaySide = 40833,
+  PaymentScheduleReceiveSide = 40834,
+  PaymentScheduleNotional = 40835,
+  PaymentScheduleCurrency = 40836,
+  PaymentScheduleRate = 40837,
+  PaymentScheduleRateMultiplier = 40838,
+  PaymentScheduleRateSpread = 40839,
+  PaymentScheduleRateSpreadPositionType = 40840,
+  PaymentScheduleRateTreatment = 40841,
+  PaymentScheduleFixedAmount = 40842,
+  PaymentScheduleFixedCurrency = 40843,
+  PaymentScheduleStepFrequencyPeriod = 40844,
+  PaymentScheduleStepFrequencyUnit = 40845,
+  PaymentScheduleStepOffsetValue = 40846,
+  PaymentScheduleStepRate = 40847,
+  PaymentScheduleStepOffsetRate = 40848,
+  PaymentScheduleStepRelativeTo = 40849,
+  PaymentScheduleFixingDateUnadjusted = 40850,
+  PaymentScheduleWeight = 40851,
+  PaymentScheduleFixingDateRelativeTo = 40852,
+  PaymentScheduleFixingDateBusinessDayConvention = 40853,
+  PaymentScheduleFixingDateBusinessCenter = 40854,
+  PaymentScheduleFixingDateOffsetPeriod = 40855,
+  PaymentScheduleFixingDateOffsetUnit = 40856,
+  PaymentScheduleFixingDateOffsetDayType = 40857,
+  PaymentScheduleFixingDateAdjusted = 40858,
+  PaymentScheduleFixingTime = 40859,
+  PaymentScheduleFixingTimeBusinessCenter = 40860,
+  PaymentScheduleInterimExchangePaymentDateRelativeTo = 40861,
+  PaymentScheduleInterimExchangeDatesBusinessDayConvention = 40862,
+  PaymentScheduleInterimExchangeDatesBusinessCenter = 40863,
+  PaymentScheduleInterimExchangeDatesOffsetPeriod = 40864,
+  PaymentScheduleInterimExchangeDatesOffsetUnit = 40865,
+  PaymentScheduleInterimExchangeDatesOffsetDayType = 40866,
+  PaymentScheduleInterimExchangeDateAdjusted = 40867,
+  NoPaymentScheduleRateSources = 40868,
+  PaymentScheduleRateSource = 40869,
+  PaymentScheduleRateSourceType = 40870,
+  PaymentScheduleReferencePage = 40871,
+  NoPaymentStubs = 40872,
+  PaymentStubType = 40873,
+  PaymentStubLength = 40874,
+  PaymentStubRate = 40875,
+  PaymentStubFixedAmount = 40876,
+  PaymentStubFixedCurrency = 40877,
+  PaymentStubIndex = 40878,
+  PaymentStubIndexSource = 40879,
+  PaymentStubIndexCurvePeriod = 40880,
+  PaymentStubIndexCurveUnit = 40881,
+  PaymentStubIndexRateMultiplier = 40882,
+  PaymentStubIndexRateSpread = 40883,
+  PaymentStubIndexRateSpreadPositionType = 40884,
+  PaymentStubIndexRateTreatment = 40885,
+  PaymentStubIndexCapRate = 40886,
+  PaymentStubIndexCapRateBuySide = 40887,
+  PaymentStubIndexCapRateSellSide = 40888,
+  PaymentStubIndexFloorRate = 40889,
+  PaymentStubIndexFloorRateBuySide = 40890,
+  PaymentStubIndexFloorRateSellSide = 40891,
+  PaymentStubIndex2 = 40892,
+  PaymentStubIndex2Source = 40893,
+  PaymentStubIndex2CurvePeriod = 40894,
+  PaymentStubIndex2CurveUnit = 40895,
+  PaymentStubIndex2RateMultiplier = 40896,
+  PaymentStubIndex2RateSpread = 40897,
+  PaymentStubIndex2RateSpreadPositionType = 40898,
+  PaymentStubIndex2RateTreatment = 40899,
+  PaymentStubIndex2CapRate = 40900,
+  PaymentStubIndex2FloorRate = 40901,
+  NoLegSettlRateFallbacks = 40902,
+  LegSettlRatePostponementMaximumDays = 40903,
+  UnderlyingSettlRateFallbackRateSource = 40904,
+  LegSettlRatePostponementSurvey = 40905,
+  LegSettlRatePostponementCalculationAgent = 40906,
+  StreamEffectiveDateUnadjusted = 40907,
+  StreamEffectiveDateBusinessDayConvention = 40908,
+  StreamEffectiveDateBusinessCenter = 40909,
+  StreamEffectiveDateRelativeTo = 40910,
+  StreamEffectiveDateOffsetPeriod = 40911,
+  StreamEffectiveDateOffsetUnit = 40912,
+  StreamEffectiveDateOffsetDayType = 40913,
+  StreamEffectiveDateAdjusted = 40914,
+  UnderlyingSettlRateFallbackReferencePage = 40915,
+  CashSettlValuationSubsequentBusinessDaysOffset = 40916,
+  CashSettlNumOfValuationDates = 40917,
+  UnderlyingProvisionPartyRoleQualifier = 40918,
+  PaymentPriceType = 40919,
+  PaymentStreamPaymentDateOffsetDayType = 40920,
+  BusinessDayConvention = 40921,
+  DateRollConvention = 40922,
+  NoLegBusinessCenters = 40923,
+  LegBusinessCenter = 40924,
+  LegBusinessDayConvention = 40925,
+  LegDateRollConvention = 40926,
+  NoLegPaymentScheduleFixingDateBusinessCenters = 40927,
+  NoLegPaymentScheduleInterimExchangeDateBusinessCenters = 40928,
+  NoLegPaymentStreamNonDeliverableFixingDateBusinessCenters = 40929,
+  NoLegPaymentStreamPaymentDateBusinessCenters = 40930,
+  NoLegPaymentStreamResetDateBusinessCenters = 40931,
+  NoLegPaymentStreamInitialFixingDateBusinessCenters = 40932,
+  NoLegPaymentStreamFixingDateBusinessCenters = 40933,
+  NoLegProvisionCashSettlPaymentDateBusinessCenters = 40934,
+  NoLegProvisionCashSettlValueDateBusinessCenters = 40935,
+  NoLegProvisionOptionExerciseBusinessCenters = 40936,
+  NoLegProvisionOptionExpirationDateBusinessCenters = 40937,
+  NoLegProvisionOptionRelevantUnderlyingDateBusinessCenters = 40938,
+  NoLegProvisionDateBusinessCenters = 40939,
+  NoLegStreamCalculationPeriodBusinessCenters = 40940,
+  NoLegStreamFirstPeriodStartDateBusinessCenters = 40941,
+  NoLegStreamEffectiveDateBusinessCenters = 40942,
+  NoLegStreamTerminationDateBusinessCenters = 40943,
+  NoPaymentBusinessCenters = 40944,
+  NoPaymentScheduleInterimExchangeDateBusinessCenters = 40945,
+  NoPaymentStreamNonDeliverableFixingDatesBusinessCenters = 40946,
+  NoPaymentStreamPaymentDateBusinessCenters = 40947,
+  NoPaymentStreamResetDateBusinessCenters = 40948,
+  NoPaymentStreamInitialFixingDateBusinessCenters = 40949,
+  NoPaymentStreamFixingDateBusinessCenters = 40950,
+  NoProtectionTermEventNewsSources = 40951,
+  NoProvisionCashSettlPaymentDateBusinessCenters = 40952,
+  NoProvisionCashSettlValueDateBusinessCenters = 40953,
+  NoProvisionOptionExerciseBusinessCenters = 40954,
+  NoProvisionOptionExpirationDateBusinessCenters = 40955,
+  NoProvisionOptionRelevantUnderlyingDateBusinessCenters = 40956,
+  NoProvisionDateBusinessCenters = 40957,
+  NoStreamCalculationPeriodBusinessCenters = 40958,
+  NoStreamFirstPeriodStartDateBusinessCenters = 40959,
+  NoStreamEffectiveDateBusinessCenters = 40960,
+  NoStreamTerminationDateBusinessCenters = 40961,
+  NoUnderlyingBusinessCenters = 40962,
+  UnderlyingBusinessCenter = 40963,
+  UnderlyingBusinessDayConvention = 40964,
+  UnderlyingDateRollConvention = 40965,
+  NoUnderlyingPaymentScheduleFixingDateBusinessCenters = 40966,
+  NoUnderlyingPaymentScheduleInterimExchangeDateBusinessCenters = 40967,
+  NoUnderlyingPaymentStreamNonDeliverableFixingDatesBizCenters = 40968,
+  NoUnderlyingPaymentStreamPaymentDateBusinessCenters = 40969,
+  NoUnderlyingPaymentStreamResetDateBusinessCenters = 40970,
+  NoUnderlyingPaymentStreamInitialFixingDateBusinessCenters = 40971,
+  NoUnderlyingPaymentStreamFixingDateBusinessCenters = 40972,
+  NoUnderlyingStreamCalculationPeriodBusinessCenters = 40973,
+  NoUnderlyingStreamFirstPeriodStartDateBusinessCenters = 40974,
+  NoUnderlyingStreamEffectiveDateBusinessCenters = 40975,
+  NoUnderlyingStreamTerminationDateBusinessCenters = 40976,
+  NoPaymentScheduleFixingDateBusinessCenters = 40977,
+  EncodedLegStreamTextLen = 40978,
+  EncodedLegStreamText = 40979,
+  EncodedLegProvisionTextLen = 40980,
+  EncodedLegProvisionText = 40981,
+  EncodedStreamTextLen = 40982,
+  EncodedStreamText = 40983,
+  EncodedPaymentTextLen = 40984,
+  EncodedPaymentText = 40985,
+  EncodedProvisionTextLen = 40986,
+  EncodedProvisionText = 40987,
+  EncodedUnderlyingStreamTextLen = 40988,
+  EncodedUnderlyingStreamText = 40989,
+  LegMarketDisruptionFallbackValue = 40990,
+  MarketDisruptionValue = 40991,
+  MarketDisruptionFallbackValue = 40992,
+  PaymentSubType = 40993,
+  NoComplexEventAveragingObservations = 40994,
+  ComplexEventAveragingObservationNumber = 40995,
+  ComplexEventAveragingWeight = 40996,
+  NoComplexEventCreditEvents = 40997,
+  ComplexEventCreditEventType = 40998,
+  ComplexEventCreditEventValue = 40999,
+  ComplexEventCreditEventCurrency = 41000,
+  ComplexEventCreditEventPeriod = 41001,
+  ComplexEventCreditEventUnit = 41002,
+  ComplexEventCreditEventDayType = 41003,
+  ComplexEventCreditEventRateSource = 41004,
+  NoComplexEventCreditEventQualifiers = 41005,
+  ComplexEventCreditEventQualifier = 41006,
+  NoComplexEventPeriodDateTimes = 41007,
+  ComplexEventPeriodDate = 41008,
+  ComplexEventPeriodTime = 41009,
+  NoComplexEventPeriods = 41010,
+  ComplexEventPeriodType = 41011,
+  ComplexEventBusinessCenter = 41012,
+  NoComplexEventRateSources = 41013,
+  ComplexEventRateSource = 41014,
+  ComplexEventRateSourceType = 41015,
+  ComplexEventReferencePage = 41016,
+  ComplexEventReferencePageHeading = 41017,
+  NoComplexEventDateBusinessCenters = 41018,
+  ComplexEventDateBusinessCenter = 41019,
+  ComplexEventDateUnadjusted = 41020,
+  ComplexEventDateRelativeTo = 41021,
+  ComplexEventDateOffsetPeriod = 41022,
+  ComplexEventDateOffsetUnit = 41023,
+  ComplexEventDateOffsetDayType = 41024,
+  ComplexEventDateBusinessDayConvention = 41025,
+  ComplexEventDateAdjusted = 41026,
+  ComplexEventFixingTime = 41027,
+  ComplexEventFixingTimeBusinessCenter = 41028,
+  NoComplexEventCreditEventSources = 41029,
+  ComplexEventCreditEventSource = 41030,
+  NoComplexEventSchedules = 41031,
+  ComplexEventScheduleStartDate = 41032,
+  ComplexEventScheduleEndDate = 41033,
+  ComplexEventScheduleFrequencyPeriod = 41034,
+  ComplexEventScheduleFrequencyUnit = 41035,
+  ComplexEventScheduleRollConvention = 41036,
+  NoDeliverySchedules = 41037,
+  DeliveryScheduleType = 41038,
+  DeliveryScheduleXID = 41039,
+  DeliveryScheduleNotional = 41040,
+  DeliveryScheduleNotionalUnitOfMeasure = 41041,
+  DeliveryScheduleNotionalCommodityFrequency = 41042,
+  DeliveryScheduleNegativeTolerance = 41043,
+  DeliverySchedulePositiveTolerance = 41044,
+  DeliveryScheduleToleranceUnitOfMeasure = 41045,
+  DeliveryScheduleToleranceType = 41046,
+  DeliveryScheduleSettlCountry = 41047,
+  DeliveryScheduleSettlTimeZone = 41048,
+  DeliveryScheduleSettlFlowType = 41049,
+  DeliveryScheduleSettlHolidaysProcessingInstruction = 41050,
+  NoDeliveryScheduleSettlDays = 41051,
+  DeliveryScheduleSettlDay = 41052,
+  DeliveryScheduleSettlTotalHours = 41053,
+  NoDeliveryScheduleSettlTimes = 41054,
+  DeliveryScheduleSettlStart = 41055,
+  DeliveryScheduleSettlEnd = 41056,
+  DeliveryScheduleSettlTimeType = 41057,
+  DeliveryStreamType = 41058,
+  DeliveryStreamPipeline = 41059,
+  DeliveryStreamEntryPoint = 41060,
+  DeliveryStreamWithdrawalPoint = 41061,
+  DeliveryStreamDeliveryPoint = 41062,
+  DeliveryStreamDeliveryRestriction = 41063,
+  DeliveryStreamDeliveryContingency = 41064,
+  DeliveryStreamDeliveryContingentPartySide = 41065,
+  DeliveryStreamDeliverAtSourceIndicator = 41066,
+  DeliveryStreamRiskApportionment = 41067,
+  DeliveryStreamTitleTransferLocation = 41068,
+  DeliveryStreamTitleTransferCondition = 41069,
+  DeliveryStreamImporterOfRecord = 41070,
+  DeliveryStreamNegativeTolerance = 41071,
+  DeliveryStreamPositiveTolerance = 41072,
+  DeliveryStreamToleranceUnitOfMeasure = 41073,
+  DeliveryStreamToleranceType = 41074,
+  DeliveryStreamToleranceOptionSide = 41075,
+  DeliveryStreamTotalPositiveTolerance = 41076,
+  DeliveryStreamTotalNegativeTolerance = 41077,
+  DeliveryStreamNotionalConversionFactor = 41078,
+  DeliveryStreamTransportEquipment = 41079,
+  DeliveryStreamElectingPartySide = 41080,
+  NoDeliveryStreamCycles = 41081,
+  DeliveryStreamCycleDesc = 41082,
+  EncodedDeliveryStreamCycleDescLen = 41083,
+  EncodedDeliveryStreamCycleDesc = 41084,
+  NoDeliveryStreamCommoditySources = 41085,
+  DeliveryStreamCommoditySource = 41086,
+  MarketDisruptionProvision = 41087,
+  MarketDisruptionFallbackProvision = 41088,
+  MarketDisruptionMaximumDays = 41089,
+  MarketDisruptionMaterialityPercentage = 41090,
+  MarketDisruptionMinimumFuturesContracts = 41091,
+  NoMarketDisruptionEvents = 41092,
+  MarketDisruptionEvent = 41093,
+  NoMarketDisruptionFallbacks = 41094,
+  MarketDisruptionFallbackType = 41095,
+  NoMarketDisruptionFallbackReferencePrices = 41096,
+  MarketDisruptionFallbackUnderlierType = 41097,
+  MarketDisruptionFallbackUnderlierSecurityID = 41098,
+  MarketDisruptionFallbackUnderlierSecurityIDSource = 41099,
+  MarketDisruptionFallbackUnderlierSecurityDesc = 41100,
+  EncodedMarketDisruptionFallbackUnderlierSecurityDescLen = 41101,
+  EncodedMarketDisruptionFallbackUnderlierSecurityDesc = 41102,
+  MarketDisruptionFallbackOpenUnits = 41103,
+  MarketDisruptionFallbackBasketCurrency = 41104,
+  MarketDisruptionFallbackBasketDivisor = 41105,
+  ExerciseDesc = 41106,
+  EncodedExerciseDescLen = 41107,
+  EncodedExerciseDesc = 41108,
+  AutomaticExerciseIndicator = 41109,
+  AutomaticExerciseThresholdRate = 41110,
+  ExerciseConfirmationMethod = 41111,
+  ManualNoticeBusinessCenter = 41112,
+  FallbackExerciseIndicator = 41113,
+  LimitedRightToConfirmIndicator = 41114,
+  ExerciseSplitTicketIndicator = 41115,
+  NoOptionExerciseBusinessCenters = 41116,
+  OptionExerciseBusinessCenter = 41117,
+  OptionExerciseBusinessDayConvention = 41118,
+  OptionExerciseEarliestDateOffsetDayType = 41119,
+  OptionExerciseEarliestDateOffsetPeriod = 41120,
+  OptionExerciseEarliestDateOffsetUnit = 41121,
+  OptionExerciseFrequencyPeriod = 41122,
+  OptionExerciseFrequencyUnit = 41123,
+  OptionExerciseStartDateUnadjusted = 41124,
+  OptionExerciseStartDateRelativeTo = 41125,
+  OptionExerciseStartDateOffsetPeriod = 41126,
+  OptionExerciseStartDateOffsetUnit = 41127,
+  OptionExerciseStartDateOffsetDayType = 41128,
+  OptionExerciseStartDateAdjusted = 41129,
+  OptionExerciseSkip = 41130,
+  OptionExerciseNominationDeadline = 41131,
+  OptionExerciseFirstDateUnadjusted = 41132,
+  OptionExerciseLastDateUnadjusted = 41133,
+  OptionExerciseEarliestTime = 41134,
+  OptionExerciseLatestTime = 41135,
+  OptionExerciseTimeBusinessCenter = 41136,
+  NoOptionExerciseDates = 41137,
+  OptionExerciseDate = 41138,
+  OptionExerciseDateType = 41139,
+  NoOptionExerciseExpirationDateBusinessCenters = 41140,
+  OptionExerciseExpirationDateBusinessCenter = 41141,
+  OptionExerciseExpirationDateBusinessDayConvention = 41142,
+  OptionExerciseExpirationDateRelativeTo = 41143,
+  OptionExerciseExpirationDateOffsetPeriod = 41144,
+  OptionExerciseExpirationDateOffsetUnit = 41145,
+  OptionExerciseExpirationFrequencyPeriod = 41146,
+  OptionExerciseExpirationFrequencyUnit = 41147,
+  OptionExerciseExpirationRollConvention = 41148,
+  OptionExerciseExpirationDateOffsetDayType = 41149,
+  OptionExerciseExpirationTime = 41150,
+  OptionExerciseExpirationTimeBusinessCenter = 41151,
+  NoOptionExerciseExpirationDates = 41152,
+  OptionExerciseExpirationDate = 41153,
+  OptionExerciseExpirationDateType = 41154,
+  PaymentUnitOfMeasure = 41155,
+  PaymentDateRelativeTo = 41156,
+  PaymentDateOffsetPeriod = 41157,
+  PaymentDateOffsetUnit = 41158,
+  PaymentDateOffsetDayType = 41159,
+  PaymentForwardStartType = 41160,
+  NoPaymentScheduleFixingDays = 41161,
+  PaymentScheduleFixingDayOfWeek = 41162,
+  PaymentScheduleFixingDayNumber = 41163,
+  PaymentScheduleXID = 41164,
+  PaymentScheduleXIDRef = 41165,
+  PaymentScheduleRateCurrency = 41166,
+  PaymentScheduleRateUnitOfMeasure = 41167,
+  PaymentScheduleRateConversionFactor = 41168,
+  PaymentScheduleRateSpreadType = 41169,
+  PaymentScheduleSettlPeriodPrice = 41170,
+  PaymentScheduleSettlPeriodPriceCurrency = 41171,
+  PaymentScheduleSettlPeriodPriceUnitOfMeasure = 41172,
+  PaymentScheduleStepUnitOfMeasure = 41173,
+  PaymentScheduleFixingDayDistribution = 41174,
+  PaymentScheduleFixingDayCount = 41175,
+  PaymentScheduleFixingLagPeriod = 41176,
+  PaymentScheduleFixingLagUnit = 41177,
+  PaymentScheduleFixingFirstObservationDateOffsetPeriod = 41178,
+  PaymentScheduleFixingFirstObservationDateOffsetUnit = 41179,
+  PaymentStreamFlatRateIndicator = 41180,
+  PaymentStreamFlatRateAmount = 41181,
+  PaymentStreamFlatRateCurrency = 41182,
+  PaymentStreamMaximumPaymentAmount = 41183,
+  PaymentStreamMaximumPaymentCurrency = 41184,
+  PaymentStreamMaximumTransactionAmount = 41185,
+  PaymentStreamMaximumTransactionCurrency = 41186,
+  PaymentStreamFixedAmountUnitOfMeasure = 41187,
+  PaymentStreamTotalFixedAmount = 41188,
+  PaymentStreamWorldScaleRate = 41189,
+  PaymentStreamContractPrice = 41190,
+  PaymentStreamContractPriceCurrency = 41191,
+  NoPaymentStreamPricingBusinessCenters = 41192,
+  PaymentStreamPricingBusinessCenter = 41193,
+  PaymentStreamRateIndex2CurvePeriod = 41194,
+  PaymentStreamRateIndex2CurveUnit = 41195,
+  PaymentStreamRateIndexLocation = 41196,
+  PaymentStreamRateIndexLevel = 41197,
+  PaymentStreamRateIndexUnitOfMeasure = 41198,
+  PaymentStreamSettlLevel = 41199,
+  PaymentStreamReferenceLevel = 41200,
+  PaymentStreamReferenceLevelUnitOfMeasure = 41201,
+  PaymentStreamReferenceLevelEqualsZeroIndicator = 41202,
+  PaymentStreamRateSpreadCurrency = 41203,
+  PaymentStreamRateSpreadUnitOfMeasure = 41204,
+  PaymentStreamRateConversionFactor = 41205,
+  PaymentStreamRateSpreadType = 41206,
+  PaymentStreamLastResetRate = 41207,
+  PaymentStreamFinalRate = 41208,
+  PaymentStreamCalculationLagPeriod = 41209,
+  PaymentStreamCalculationLagUnit = 41210,
+  PaymentStreamFirstObservationDateOffsetPeriod = 41211,
+  PaymentStreamFirstObservationDateOffsetUnit = 41212,
+  PaymentStreamPricingDayType = 41213,
+  PaymentStreamPricingDayDistribution = 41214,
+  PaymentStreamPricingDayCount = 41215,
+  PaymentStreamPricingBusinessCalendar = 41216,
+  PaymentStreamPricingBusinessDayConvention = 41217,
+  DeliveryStreamRiskApportionmentSource = 41218,
+  LegDeliveryStreamRiskApportionmentSource = 41219,
+  NoPaymentStreamPaymentDates = 41220,
+  PaymentStreamPaymentDate = 41221,
+  PaymentStreamPaymentDateType = 41222,
+  PaymentStreamMasterAgreementPaymentDatesIndicator = 41223,
+  NoPaymentStreamPricingDates = 41224,
+  PaymentStreamPricingDate = 41225,
+  PaymentStreamPricingDateType = 41226,
+  NoPaymentStreamPricingDays = 41227,
+  PaymentStreamPricingDayOfWeek = 41228,
+  PaymentStreamPricingDayNumber = 41229,
+  NoPricingDateBusinessCenters = 41230,
+  PricingDateBusinessCenter = 41231,
+  PricingDateUnadjusted = 41232,
+  PricingDateBusinessDayConvention = 41233,
+  PricingDateAdjusted = 41234,
+  PricingTime = 41235,
+  PricingTimeBusinessCenter = 41236,
+  NoStreamAssetAttributes = 41237,
+  StreamAssetAttributeType = 41238,
+  StreamAssetAttributeValue = 41239,
+  StreamAssetAttributeLimit = 41240,
+  NoStreamCalculationPeriodDates = 41241,
+  StreamCalculationPeriodDate = 41242,
+  StreamCalculationPeriodDateType = 41243,
+  StreamCalculationPeriodDatesXID = 41244,
+  StreamCalculationPeriodDatesXIDRef = 41245,
+  StreamCalculationBalanceOfFirstPeriod = 41246,
+  StreamCalculationCorrectionPeriod = 41247,
+  StreamCalculationCorrectionUnit = 41248,
+  NoStreamCommoditySettlBusinessCenters = 41249,
+  StreamCommoditySettlBusinessCenter = 41250,
+  StreamCommodityBase = 41251,
+  StreamCommodityType = 41252,
+  StreamCommoditySecurityID = 41253,
+  StreamCommoditySecurityIDSource = 41254,
+  StreamCommodityDesc = 41255,
+  EncodedStreamCommodityDescLen = 41256,
+  EncodedStreamCommodityDesc = 41257,
+  StreamCommodityUnitOfMeasure = 41258,
+  StreamCommodityCurrency = 41259,
+  StreamCommodityExchange = 41260,
+  StreamCommodityRateSource = 41261,
+  StreamCommodityRateReferencePage = 41262,
+  StreamCommodityRateReferencePageHeading = 41263,
+  StreamDataProvider = 41264,
+  StreamCommodityPricingType = 41265,
+  StreamCommodityNearbySettlDayPeriod = 41266,
+  StreamCommodityNearbySettlDayUnit = 41267,
+  StreamCommoditySettlDateUnadjusted = 41268,
+  StreamCommoditySettlDateBusinessDayConvention = 41269,
+  StreamCommoditySettlDateAdjusted = 41270,
+  StreamCommoditySettlMonth = 41271,
+  StreamCommoditySettlDateRollPeriod = 41272,
+  StreamCommoditySettlDateRollUnit = 41273,
+  StreamCommoditySettlDayType = 41274,
+  StreamCommodityXID = 41275,
+  StreamCommodityXIDRef = 41276,
+  NoStreamCommodityAltIDs = 41277,
+  StreamCommodityAltID = 41278,
+  StreamCommodityAltIDSource = 41279,
+  NoStreamCommodityDataSources = 41280,
+  StreamCommodityDataSourceID = 41281,
+  StreamCommodityDataSourceIDType = 41282,
+  NoStreamCommoditySettlDays = 41283,
+  StreamCommoditySettlDay = 41284,
+  StreamCommoditySettlTotalHours = 41285,
+  NoStreamCommoditySettlTimes = 41286,
+  StreamCommoditySettlStart = 41287,
+  StreamCommoditySettlEnd = 41288,
+  NoStreamCommoditySettlPeriods = 41289,
+  StreamCommoditySettlCountry = 41290,
+  StreamCommoditySettlTimeZone = 41291,
+  StreamCommoditySettlFlowType = 41292,
+  StreamCommoditySettlPeriodNotional = 41293,
+  StreamCommoditySettlPeriodNotionalUnitOfMeasure = 41294,
+  StreamCommoditySettlPeriodFrequencyPeriod = 41295,
+  StreamCommoditySettlPeriodFrequencyUnit = 41296,
+  StreamCommoditySettlPeriodPrice = 41297,
+  StreamCommoditySettlPeriodPriceUnitOfMeasure = 41298,
+  StreamCommoditySettlPeriodPriceCurrency = 41299,
+  StreamCommoditySettlHolidaysProcessingInstruction = 41300,
+  StreamCommoditySettlPeriodXID = 41301,
+  StreamCommoditySettlPeriodXIDRef = 41302,
+  StreamXID = 41303,
+  PaymentLegRefID = 41304,
+  StreamNotionalXIDRef = 41305,
+  StreamNotionalFrequencyPeriod = 41306,
+  StreamNotionalFrequencyUnit = 41307,
+  StreamNotionalCommodityFrequency = 41308,
+  StreamNotionalUnitOfMeasure = 41309,
+  StreamTotalNotional = 41310,
+  StreamTotalNotionalUnitOfMeasure = 41311,
+  NoMandatoryClearingJurisdictions = 41312,
+  MandatoryClearingJurisdiction = 41313,
+  UnderlyingProtectionTermXIDRef = 41314,
+  UnderlyingSettlTermXIDRef = 41315,
+  NoLegAdditionalTermBondRefs = 41316,
+  LegAdditionalTermBondSecurityID = 41317,
+  LegAdditionalTermBondSecurityIDSource = 41318,
+  LegAdditionalTermBondDesc = 41319,
+  EncodedLegAdditionalTermBondDescLen = 41320,
+  EncodedLegAdditionalTermBondDesc = 41321,
+  LegAdditionalTermBondCurrency = 41322,
+  LegAdditionalTermBondIssuer = 41323,
+  EncodedLegAdditionalTermBondIssuerLen = 41324,
+  EncodedLegAdditionalTermBondIssuer = 41325,
+  LegAdditionalTermBondSeniority = 41326,
+  LegAdditionalTermBondCouponType = 41327,
+  LegAdditionalTermBondCouponRate = 41328,
+  LegAdditionalTermBondMaturityDate = 41329,
+  LegAdditionalTermBondParValue = 41330,
+  LegAdditionalTermBondCurrentTotalIssuedAmount = 41331,
+  LegAdditionalTermBondCouponFrequencyPeriod = 41332,
+  LegAdditionalTermBondCouponFrequencyUnit = 41333,
+  LegAdditionalTermBondDayCount = 41334,
+  NoLegAdditionalTerms = 41335,
+  LegAdditionalTermConditionPrecedentBondIndicator = 41336,
+  LegAdditionalTermDiscrepancyClauseIndicator = 41337,
+  UnderlyingMarketDisruptionValue = 41338,
+  UnderlyingMarketDisruptionFallbackValue = 41339,
+  NoUnderlyingAdditionalTermBondRefs = 41340,
+  UnderlyingAdditionalTermBondSecurityID = 41341,
+  NoLegCashSettlDealers = 41342,
+  LegCashSettlDealer = 41343,
+  NoLegCashSettlTerms = 41344,
+  LegCashSettlCurrency = 41345,
+  LegCasSettlValuationFirstBusinessDayOffset = 41346,
+  LegCashSettlValuationSubsequentBusinessDaysOffset = 41347,
+  LegCashSettlNumOfValuationDates = 41348,
+  LegCashSettlValuationTime = 41349,
+  LegCashSettlBusinessCenter = 41350,
+  LegCashSettlQuoteMethod = 41351,
+  LegCashSettlQuoteAmount = 41352,
+  LegCashSettlQuoteCurrency = 41353,
+  LegCashSettlMinimumQuoteAmount = 41354,
+  LegCashSettlMinimumQuoteCurrency = 41355,
+  LegCashSettlBusinessDays = 41356,
+  LegCashSettlAmount = 41357,
+  LegCashSettlRecoveryFactor = 41358,
+  LegCashSettlFixedTermIndicator = 41359,
+  LegCashSettlAccruedInterestIndicator = 41360,
+  LegCashSettlValuationMethod = 41361,
+  LegCashSettlTermXID = 41362,
+  NoLegComplexEventAveragingObservations = 41363,
+  LegComplexEventAveragingObservationNumber = 41364,
+  LegComplexEventAveragingWeight = 41365,
+  NoLegComplexEventCreditEvents = 41366,
+  LegComplexEventCreditEventType = 41367,
+  LegComplexEventCreditEventValue = 41368,
+  LegComplexEventCreditEventCurrency = 41369,
+  LegComplexEventCreditEventPeriod = 41370,
+  LegComplexEventCreditEventUnit = 41371,
+  LegComplexEventCreditEventDayType = 41372,
+  LegComplexEventCreditEventRateSource = 41373,
+  NoLegComplexEventCreditEventQualifiers = 41374,
+  LegComplexEventCreditEventQualifier = 41375,
+  NoLegComplexEventPeriodDateTimes = 41376,
+  LegComplexEventPeriodDate = 41377,
+  LegComplexEventPeriodTime = 41378,
+  NoLegComplexEventPeriods = 41379,
+  LegComplexEventPeriodType = 41380,
+  LegComplexEventBusinessCenter = 41381,
+  NoLegComplexEventRateSources = 41382,
+  LegComplexEventRateSource = 41383,
+  LegComplexEventRateSourceType = 41384,
+  LegComplexEventReferencePage = 41385,
+  LegComplexEvenReferencePageHeading = 41386,
+  NoLegComplexEventDateBusinessCenters = 41387,
+  LegComplexEventDateBusinessCenter = 41388,
+  LegComplexEventDateUnadjusted = 41389,
+  LegComplexEventDateRelativeTo = 41390,
+  LegComplexEventDateOffsetPeriod = 41391,
+  LegComplexEventDateOffsetUnit = 41392,
+  LegComplexEventDateOffsetDayType = 41393,
+  LegComplexEventDateBusinessDayConvention = 41394,
+  LegComplexEventDateAdjusted = 41395,
+  LegComplexEventFixingTime = 41396,
+  LegComplexEventFixingTimeBusinessCenter = 41397,
+  NoLegComplexEventCreditEventSources = 41398,
+  LegComplexEventCreditEventSource = 41399,
+  NoLegComplexEventSchedules = 41400,
+  LegComplexEventScheduleStartDate = 41401,
+  LegComplexEventScheduleEndDate = 41402,
+  LegComplexEventScheduleFrequencyPeriod = 41403,
+  LegComplexEventScheduleFrequencyUnit = 41404,
+  LegComplexEventScheduleRollConvention = 41405,
+  ProvisionCashSettlQuoteReferencePage = 41406,
+  LegProvisionCashSettlQuoteReferencePage = 41407,
+  NoLegDeliverySchedules = 41408,
+  LegDeliveryScheduleType = 41409,
+  LegDeliveryScheduleXID = 41410,
+  LegDeliveryScheduleNotional = 41411,
+  LegDeliveryScheduleNotionalUnitOfMeasure = 41412,
+  LegDeliveryScheduleNotionalCommodityFrequency = 41413,
+  LegDeliveryScheduleNegativeTolerance = 41414,
+  LegDeliverySchedulePositiveTolerance = 41415,
+  LegDeliveryScheduleToleranceUnitOfMeasure = 41416,
+  LegDeliveryScheduleToleranceType = 41417,
+  LegDeliveryScheduleSettlCountry = 41418,
+  LegDeliveryScheduleSettlTimeZone = 41419,
+  LegDeliveryScheduleSettlFlowType = 41420,
+  LegDeliveryScheduleSettlHolidaysProcessingInstruction = 41421,
+  NoLegDeliveryScheduleSettlDays = 41422,
+  LegDeliveryScheduleSettlDay = 41423,
+  LegDeliveryScheduleSettlTotalHours = 41424,
+  NoLegDeliveryScheduleSettlTimes = 41425,
+  LegDeliveryScheduleSettlStart = 41426,
+  LegDeliveryScheduleSettlEnd = 41427,
+  LegDeliveryScheduleSettlTimeType = 41428,
+  LegDeliveryStreamType = 41429,
+  LegDeliveryStreamPipeline = 41430,
+  LegDeliveryStreamEntryPoint = 41431,
+  LegDeliveryStreamWithdrawalPoint = 41432,
+  LegDeliveryStreamDeliveryPoint = 41433,
+  LegDeliveryStreamDeliveryRestriction = 41434,
+  LegDeliveryStreamDeliveryContingency = 41435,
+  LegDeliveryStreamDeliveryContingentPartySide = 41436,
+  LegDeliveryStreamDeliverAtSourceIndicator = 41437,
+  LegDeliveryStreamRiskApportionment = 41438,
+  LegDeliveryStreamTitleTransferLocation = 41439,
+  LegDeliveryStreamTitleTransferCondition = 41440,
+  LegDeliveryStreamImporterOfRecord = 41441,
+  LegDeliveryStreamNegativeTolerance = 41442,
+  LegDeliveryStreamPositiveTolerance = 41443,
+  LegDeliveryStreamToleranceUnitOfMeasure = 41444,
+  LegDeliveryStreamToleranceType = 41445,
+  LegDeliveryStreamToleranceOptionSide = 41446,
+  LegDeliveryStreamTotalPositiveTolerance = 41447,
+  LegDeliveryStreamTotalNegativeTolerance = 41448,
+  LegDeliveryStreamNotionalConversionFactor = 41449,
+  LegDeliveryStreamTransportEquipment = 41450,
+  LegDeliveryStreamElectingPartySide = 41451,
+  NoLegStreamAssetAttributes = 41452,
+  LegStreamAssetAttributeType = 41453,
+  LegStreamAssetAttributeValue = 41454,
+  LegStreamAssetAttributeLimit = 41455,
+  NoLegDeliveryStreamCycles = 41456,
+  LegDeliveryStreamCycleDesc = 41457,
+  EncodedLegDeliveryStreamCycleDescLen = 41458,
+  EncodedLegDeliveryStreamCycleDesc = 41459,
+  NoLegDeliveryStreamCommoditySources = 41460,
+  LegDeliveryStreamCommoditySource = 41461,
+  LegMarketDisruptionProvision = 41462,
+  LegMarketDisruptionFallbackProvision = 41463,
+  LegMarketDisruptionMaximumDays = 41464,
+  LegMarketDisruptionMaterialityPercentage = 41465,
+  LegMarketDisruptionMinimumFuturesContracts = 41466,
+  NoLegMarketDisruptionEvents = 41467,
+  LegMarketDisruptionEvent = 41468,
+  NoLegMarketDisruptionFallbacks = 41469,
+  LegMarketDisruptionFallbackType = 41470,
+  NoLegMarketDisruptionFallbackReferencePrices = 41471,
+  LegMarketDisruptionFallbackUnderlierType = 41472,
+  LegMarketDisruptionFallbackUnderlierSecurityID = 41473,
+  LegMarketDisruptionFallbackUnderlierSecurityIDSource = 41474,
+  LegMarketDisruptionFallbackUnderlierSecurityDesc = 41475,
+  EncodedLegMarketDisruptionFallbackUnderlierSecurityDescLen = 41476,
+  EncodedLegMarketDisruptionFallbackUnderlierSecurityDesc = 41477,
+  LegMarketDisruptionFallbackOpenUnits = 41478,
+  LegMarketDisruptionFallbackBasketCurrency = 41479,
+  LegMarketDisruptionFallbackBasketDivisor = 41480,
+  LegExerciseDesc = 41481,
+  EncodedLegExerciseDescLen = 41482,
+  EncodedLegExerciseDesc = 41483,
+  LegAutomaticExerciseIndicator = 41484,
+  LegAutomaticExerciseThresholdRate = 41485,
+  LegExerciseConfirmationMethod = 41486,
+  LegManualNoticeBusinessCenter = 41487,
+  LegFallbackExerciseIndicator = 41488,
+  LegLimitRightToConfirmIndicator = 41489,
+  LegExerciseSplitTicketIndicator = 41490,
+  NoLegOptionExerciseBusinessCenters = 41491,
+  LegOptionExerciseBusinessCenter = 41492,
+  LegOptionExerciseBusinessDayConvention = 41493,
+  LegOptionExerciseEarliestDateOffsetDayType = 41494,
+  LegOptionExerciseEarliestDateOffsetPeriod = 41495,
+  LegOptionExerciseEarliestDateOffsetUnit = 41496,
+  LegOptionExerciseFrequencyPeriod = 41497,
+  LegOptionExerciseFrequencyUnit = 41498,
+  LegOptionExerciseStartDateUnadjusted = 41499,
+  LegOptionExerciseStartDateRelativeTo = 41500,
+  LegOptionExerciseStartDateOffsetPeriod = 41501,
+  LegOptionExerciseStartDateOffsetUnit = 41502,
+  LegOptionExerciseStartDateOffsetDayType = 41503,
+  LegOptionExerciseStartDateAdjusted = 41504,
+  LegOptionExerciseSkip = 41505,
+  LegOptionExerciseNominationDeadline = 41506,
+  LegOptionExerciseFirstDateUnadjusted = 41507,
+  LegOptionExerciseLastDateUnadjusted = 41508,
+  LegOptionExerciseEarliestTime = 41509,
+  LegOptionExerciseLatestTime = 41510,
+  LegOptionExerciseTimeBusinessCenter = 41511,
+  NoLegOptionExerciseDates = 41512,
+  LegOptionExerciseDate = 41513,
+  LegOptionExerciseDateType = 41514,
+  NoLegOptionExerciseExpirationDateBusinessCenters = 41515,
+  LegOptionExerciseExpirationDateBusinessCenter = 41516,
+  LegOptionExerciseExpirationDateBusinessDayConvention = 41517,
+  LegOptionExerciseExpirationDateRelativeTo = 41518,
+  LegOptionExerciseExpirationDateOffsetPeriod = 41519,
+  LegOptionExerciseExpirationDateOffsetUnit = 41520,
+  LegOptionExerciseExpirationFrequencyPeriod = 41521,
+  LegOptionExerciseExpirationFrequencyUnit = 41522,
+  LegOptionExerciseExpirationRollConvention = 41523,
+  LegOptionExerciseExpirationDateOffsetDayType = 41524,
+  LegOptionExerciseExpirationTime = 41525,
+  LegOptionExerciseExpirationTimeBusinessCenter = 41526,
+  NoLegOptionExerciseExpirationDates = 41527,
+  LegOptionExerciseExpirationDate = 41528,
+  LegOptionExerciseExpirationDateType = 41529,
+  NoLegPaymentScheduleFixingDays = 41530,
+  LegPaymentScheduleFixingDayOfWeek = 41531,
+  LegPaymentScheduleFixingDayNumber = 41532,
+  LegPaymentScheduleXID = 41533,
+  LegPaymentScheduleXIDRef = 41534,
+  LegPaymentScheduleRateCurrency = 41535,
+  LegPaymentScheduleRateUnitOfMeasure = 41536,
+  LegPaymentScheduleRateConversionFactor = 41537,
+  LegPaymentScheduleRateSpreadType = 41538,
+  LegPaymentScheduleSettlPeriodPrice = 41539,
+  LegPaymentScheduleSettlPeriodPriceCurrency = 41540,
+  LegPaymentScheduleSettlPeriodPriceUnitOfMeasure = 41541,
+  LegPaymentScheduleStepUnitOfMeasure = 41542,
+  LegPaymentScheduleFixingDayDistribution = 41543,
+  LegPaymentScheduleFixingDayCount = 41544,
+  LegPaymentScheduleFixingLagPeriod = 41545,
+  LegPaymentScheduleFixingLagUnit = 41546,
+  LegPaymentScheduleFixingFirstObservationDateOffsetPeriod = 41547,
+  LegPaymentScheduleFixingFirstObservationDateOffsetUnit = 41548,
+  LegPaymentStreamFlatRateIndicator = 41549,
+  LegPaymentStreamFlatRateAmount = 41550,
+  LegPaymentStreamFlatRateCurrency = 41551,
+  LegStreamMaximumPaymentAmount = 41552,
+  LegStreamMaximumPaymentCurrency = 41553,
+  LegStreamMaximumTransactionAmount = 41554,
+  LegStreamMaximumTransactionCurrency = 41555,
+  LegPaymentStreamFixedAmountUnitOfMeasure = 41556,
+  LegPaymentStreamTotalFixedAmount = 41557,
+  LegPaymentStreamWorldScaleRate = 41558,
+  LegPaymentStreamContractPrice = 41559,
+  LegPaymentStreamContractPriceCurrency = 41560,
+  NoLegPaymentStreamPricingBusinessCenters = 41561,
+  LegPaymentStreamPricingBusinessCenter = 41562,
+  LegPaymentStreamRateIndex2CurveUnit = 41563,
+  LegPaymentStreamRateIndex2CurvePeriod = 41564,
+  LegPaymentStreamRateIndexLocation = 41565,
+  LegPaymentStreamRateIndexLevel = 41566,
+  LegPaymentStreamRateIndexUnitOfMeasure = 41567,
+  LegPaymentStreamSettlLevel = 41568,
+  LegPaymentStreamReferenceLevel = 41569,
+  LegPaymentStreamReferenceLevelUnitOfMeasure = 41570,
+  LegPaymentStreamReferenceLevelEqualsZeroIndicator = 41571,
+  LegPaymentStreamRateSpreadCurrency = 41572,
+  LegPaymentStreamRateSpreadUnitOfMeasure = 41573,
+  LegPaymentStreamRateConversionFactor = 41574,
+  LegPaymentStreamRateSpreadType = 41575,
+  LegPaymentStreamLastResetRate = 41576,
+  LegPaymentStreamFinalRate = 41577,
+  LegPaymentStreamCalculationLagPeriod = 41578,
+  LegPaymentStreamCalculationLagUnit = 41579,
+  LegPaymentStreamFirstObservationDateOffsetPeriod = 41580,
+  LegPaymentStreamFirstObservationDateOffsetUnit = 41581,
+  LegPaymentStreamPricingDayType = 41582,
+  LegPaymentStreamPricingDayDistribution = 41583,
+  LegPaymentStreamPricingDayCount = 41584,
+  LegPaymentStreamPricingBusinessCalendar = 41585,
+  LegPaymentStreamPricingBusinessDayConvention = 41586,
+  UnderlyingDeliveryStreamRiskApportionmentSource = 41587,
+  StreamCommoditySettlTimeType = 41588,
+  NoLegPaymentStreamPaymentDates = 41589,
+  LegPaymentStreamPaymentDate = 41590,
+  LegPaymentStreamPaymentDateType = 41591,
+  LegPaymentStreamMasterAgreementPaymentDatesIndicator = 41592,
+  NoLegPaymentStreamPricingDates = 41593,
+  LegPaymentStreamPricingDate = 41594,
+  LegPaymentStreamPricingDateType = 41595,
+  NoLegPaymentStreamPricingDays = 41596,
+  LegPaymentStreamPricingDayOfWeek = 41597,
+  LegPaymentStreamPricingDayNumber = 41598,
+  NoLegPhysicalSettlTerms = 41599,
+  LegPhysicalSettlTermXID = 41600,
+  LegPhysicalSettlCurency = 41601,
+  LegPhysicalSettlBusinessDays = 41602,
+  LegPhysicalSettlMaximumBusinessDays = 41603,
+  NoLegPhysicalSettlDeliverableObligations = 41604,
+  LegPhysicalSettlDeliverableObligationType = 41605,
+  LegPhysicalSettlDeliverableObligationValue = 41606,
+  NoLegPricingDateBusinessCenters = 41607,
+  LegPricingDateBusinessCenter = 41608,
+  LegPricingDateUnadjusted = 41609,
+  LegPricingDateBusinessDayConvention = 41610,
+  LegPricingDateAdjusted = 41611,
+  LegPricingTime = 41612,
+  LegPricingTimeBusinessCenter = 41613,
+  NoLegProtectionTermEventNewsSources = 41614,
+  LegProtectionTermEventNewsSource = 41615,
+  NoLegProtectionTerms = 41616,
+  LegProtectionTermXID = 41617,
+  LegProtectionTermNotional = 41618,
+  LegProtectionTermCurrency = 41619,
+  LegProtectionTermSellerNotifies = 41620,
+  LegProtectionTermBuyerNotifies = 41621,
+  LegProtectionTermEventBusinessCenter = 41622,
+  LegProtectionTermStandardSources = 41623,
+  LegProtectionTermEventMinimumSources = 41624,
+  NoLegProtectionTermEvents = 41625,
+  LegProtectionTermEventType = 41626,
+  LegProtectionTermEventValue = 41627,
+  LegProtectionTermEventCurrency = 41628,
+  LegProtectionTermEventPeriod = 41629,
+  LegProtectionTermEventUnit = 41630,
+  LegProtectionTermEventDayType = 41631,
+  LegProtectionTermEventRateSource = 41632,
+  NoLegProtectionTermEventQualifiers = 41633,
+  LegProtectionTermEventQualifier = 41634,
+  NoLegProtectionTermObligations = 41635,
+  LegProtectionTermObligationType = 41636,
+  LegProtectionTermObligationValue = 41637,
+  NoLegStreamCalculationPeriodDates = 41638,
+  LegStreamCalculationPeriodDate = 41639,
+  LegStreamCalculationPeriodDateType = 41640,
+  LegStreamCalculationPeriodDatesXID = 41641,
+  LegStreamCalculationPeriodDatesXIDRef = 41642,
+  LegStreamCalculationBalanceOfFirstPeriod = 41643,
+  LegStreamCalculationCorrectionPeriod = 41644,
+  LegStreamCalculationCorrectionUnit = 41645,
+  NoLegStreamCommoditySettlBusinessCenters = 41646,
+  LegStreamCommoditySettlBusinessCenter = 41647,
+  LegStreamCommodityBase = 41648,
+  LegStreamCommodityType = 41649,
+  LegStreamCommoditySecurityID = 41650,
+  LegStreamCommoditySecurityIDSource = 41651,
+  LegStreamCommodityDesc = 41652,
+  EncodedLegStreamCommodityDescLen = 41653,
+  EncodedLegStreamCommodityDesc = 41654,
+  LegStreamCommodityUnitOfMeasure = 41655,
+  LegStreamCommodityCurrency = 41656,
+  LegStreamCommodityExchange = 41657,
+  LegStreamCommodityRateSource = 41658,
+  LegStreamCommodityRateReferencePage = 41659,
+  LegStreamCommodityRateReferencePageHeading = 41660,
+  LegStreamDataProvider = 41661,
+  LegStreamCommodityPricingType = 41662,
+  LegStreamCommodityNearbySettlDayPeriod = 41663,
+  LegStreamCommodityNearbySettlDayUnit = 41664,
+  LegStreamCommoditySettlDateUnadjusted = 41665,
+  LegStreamCommoditySettlDateBusinessDayConvention = 41666,
+  LegStreamCommoditySettlDateAdjusted = 41667,
+  LegStreamCommoditySettlMonth = 41668,
+  LegStreamCommoditySettlDateRollPeriod = 41669,
+  LegStreamCommoditySettlDateRollUnit = 41670,
+  LegStreamCommoditySettlDayType = 41671,
+  LegStreamCommodityXID = 41672,
+  LegStreamCommodityXIDRef = 41673,
+  NoLegStreamCommodityAltIDs = 41674,
+  LegStreamCommodityAltID = 41675,
+  LegStreamCommodityAltIDSource = 41676,
+  NoLegStreamCommodityDataSources = 41677,
+  LegStreamCommodityDataSourceID = 41678,
+  LegStreamCommodityDataSourceIDType = 41679,
+  NoLegStreamCommoditySettlDays = 41680,
+  LegStreamCommoditySettlDay = 41681,
+  LegStreamCommoditySettlTotalHours = 41682,
+  NoLegStreamCommoditySettlTimes = 41683,
+  LegStreamCommoditySettlStart = 41684,
+  LegStreamCommoditySettlEnd = 41685,
+  NoLegStreamCommoditySettlPeriods = 41686,
+  LegStreamCommoditySettlCountry = 41687,
+  LegStreamCommoditySettlTimeZone = 41688,
+  LegStreamCommoditySettlFlowType = 41689,
+  LegStreamCommoditySettlPeriodNotional = 41690,
+  LegStreamCommoditySettlPeriodNotionalUnitOfMeasure = 41691,
+  LegStreamCommoditySettlPeriodFrequencyPeriod = 41692,
+  LegStreamCommoditySettlPeriodFrequencyUnit = 41693,
+  LegStreamCommoditySettlPeriodPrice = 41694,
+  LegStreamCommoditySettlPeriodPriceUnitOfMeasure = 41695,
+  LegStreamCommoditySettlPeriodPriceCurrency = 41696,
+  LegStreamCommoditySettlHolidaysProcessingInstruction = 41697,
+  LegStreamCommoditySettlPeriodXID = 41698,
+  LegStreamCommoditySettlPeriodXIDRef = 41699,
+  LegStreamXID = 41700,
+  UnderlyingAdditionalTermBondSecurityIDSource = 41701,
+  LegStreamNotionalXIDRef = 41702,
+  LegStreamNotionalFrequencyPeriod = 41703,
+  LegStreamNotionalFrequencyUnit = 41704,
+  LegStreamNotionalCommodityFrequency = 41705,
+  LegStreamNotionalUnitOfMeasure = 41706,
+  LegStreamTotalNotional = 41707,
+  LegStreamTotalNotionalUnitOfMeasure = 41708,
+  UnderlyingAdditionalTermBondDesc = 41709,
+  EncodedUnderlyingAdditionalTermBondDescLen = 41710,
+  EncodedUnderlyingAdditionalTermBondDesc = 41711,
+  UnderlyingAdditionalTermBondCurrency = 41712,
+  NoUnderlyingComplexEventAveragingObservations = 41713,
+  UnderlyingComplexEventAveragingObservationNumber = 41714,
+  UnderlyingComplexEventAveragingWeight = 41715,
+  NoUnderlyingComplexEventCreditEvents = 41716,
+  UnderlyingComplexEventCreditEventType = 41717,
+  UnderlyingComplexEventCreditEventValue = 41718,
+  UnderlyingComplexEventCreditEventCurrency = 41719,
+  UnderlyingComplexEventCreditEventPeriod = 41720,
+  UnderlyingComplexEventCreditEventUnit = 41721,
+  UnderlyingComplexEventCreditEventDayType = 41722,
+  UnderlyingComplexEventCreditEventRateSource = 41723,
+  NoUnderlyingComplexEventCreditEventQualifiers = 41724,
+  UnderlyingComplexEventCreditEventQualifier = 41725,
+  NoUnderlyingComplexEventPeriodDateTimes = 41726,
+  UnderlyingComplexEventPeriodDate = 41727,
+  UnderlyingComplexEventPeriodTime = 41728,
+  NoUnderlyingComplexEventPeriods = 41729,
+  UnderlyingComplexEventPeriodType = 41730,
+  UnderlyingComplexEventBusinessCenter = 41731,
+  NoUnderlyingComplexEventRateSources = 41732,
+  UnderlyingComplexEventRateSource = 41733,
+  UnderlyingComplexEventRateSourceType = 41734,
+  UnderlyingComplexEventReferencePage = 41735,
+  UnderlyingComplexEventReferencePageHeading = 41736,
+  NoUnderlyingComplexEventDateBusinessCenters = 41737,
+  UnderlyingComplexEventDateBusinessCenter = 41738,
+  UnderlyingComplexEventDateUnadjusted = 41739,
+  UnderlyingComplexEventDateRelativeTo = 41740,
+  UnderlyingComplexEventDateOffsetPeriod = 41741,
+  UnderlyingComplexEventDateOffsetUnit = 41742,
+  UnderlyingComplexEventDateOffsetDayType = 41743,
+  UnderlyingComplexEventDateBusinessDayConvention = 41744,
+  UnderlyingComplexEventDateAdjusted = 41745,
+  UnderlyingComplexEventFixingTime = 41746,
+  UnderlyingComplexEventFixingTimeBusinessCenter = 41747,
+  NoUnderlyingComplexEventCreditEventSources = 41748,
+  UnderlyingComplexEventCreditEventSource = 41749,
+  NoUnderlyingComplexEventSchedules = 41750,
+  UnderlyingComplexEventScheduleStartDate = 41751,
+  UnderlyingComplexEventScheduleEndDate = 41752,
+  UnderlyingComplexEventScheduleFrequencyPeriod = 41753,
+  UnderlyingComplexEventScheduleFrequencyUnit = 41754,
+  UnderlyingComplexEventScheduleRollConvention = 41755,
+  NoUnderlyingDeliverySchedules = 41756,
+  UnderlyingDeliveryScheduleType = 41757,
+  UnderlyingDeliveryScheduleXID = 41758,
+  UnderlyingDeliveryScheduleNotional = 41759,
+  UnderlyingDeliveryScheduleNotionalUnitOfMeasure = 41760,
+  UnderlyingDeliveryScheduleNotionalCommodityFrequency = 41761,
+  UnderlyingDeliveryScheduleNegativeTolerance = 41762,
+  UnderlyingDeliverySchedulePositiveTolerance = 41763,
+  UnderlyingDeliveryScheduleToleranceUnitOfMeasure = 41764,
+  UnderlyingDeliveryScheduleToleranceType = 41765,
+  UnderlyingDeliveryScheduleSettlCountry = 41766,
+  UnderlyingDeliveryScheduleSettlTimeZone = 41767,
+  UnderlyingDeliveryScheduleSettlFlowType = 41768,
+  UnderlyingDeliveryScheduleSettlHolidaysProcessingInstruction = 41769,
+  NoUnderlyingDeliveryScheduleSettlDays = 41770,
+  UnderlyingDeliveryScheduleSettlDay = 41771,
+  UnderlyingDeliveryScheduleSettlTotalHours = 41772,
+  NoUnderlyingDeliveryScheduleSettlTimes = 41773,
+  UnderlyingDeliveryScheduleSettlStart = 41774,
+  UnderlyingDeliveryScheduleSettlEnd = 41775,
+  UnderlyingDeliveryScheduleSettlTimeType = 41776,
+  UnderlyingDeliveryStreamType = 41777,
+  UnderlyingDeliveryStreamPipeline = 41778,
+  UnderlyingDeliveryStreamEntryPoint = 41779,
+  UnderlyingDeliveryStreamWithdrawalPoint = 41780,
+  UnderlyingDeliveryStreamDeliveryPoint = 41781,
+  UnderlyingDeliveryStreamDeliveryRestriction = 41782,
+  UnderlyingDeliveryStreamDeliveryContingency = 41783,
+  UnderlyingDeliveryStreamDeliveryContingentPartySide = 41784,
+  UnderlyingDeliveryStreamDeliverAtSourceIndicator = 41785,
+  UnderlyingDeliveryStreamRiskApportionment = 41786,
+  UnderlyingDeliveryStreamTitleTransferLocation = 41787,
+  UnderlyingDeliveryStreamTitleTransferCondition = 41788,
+  UnderlyingDeliveryStreamImporterOfRecord = 41789,
+  UnderlyingDeliveryStreamNegativeTolerance = 41790,
+  UnderlyingDeliveryStreamPositiveTolerance = 41791,
+  UnderlyingDeliveryStreamToleranceUnitOfMeasure = 41792,
+  UnderlyingDeliveryStreamToleranceType = 41793,
+  UnderlyingDeliveryStreamToleranceOptionSide = 41794,
+  UnderlyingDeliveryStreamTotalPositiveTolerance = 41795,
+  UnderlyingDeliveryStreamTotalNegativeTolerance = 41796,
+  UnderlyingDeliveryStreamNotionalConversionFactor = 41797,
+  UnderlyingDeliveryStreamTransportEquipment = 41798,
+  UnderlyingDeliveryStreamElectingPartySide = 41799,
+  NoUnderlyingStreamAssetAttributes = 41800,
+  UnderlyingStreamAssetAttributeType = 41801,
+  UnderlyingStreamAssetAttributeValue = 41802,
+  UnderlyingStreamAssetAttributeLimit = 41803,
+  NoUnderlyingDeliveryStreamCycles = 41804,
+  UnderlyingDeliveryStreamCycleDesc = 41805,
+  EncodedUnderlyingDeliveryStreamCycleDescLen = 41806,
+  EncodedUnderlyingDeliveryStreamCycleDesc = 41807,
+  NoUnderlyingDeliveryStreamCommoditySources = 41808,
+  UnderlyingDeliveryStreamCommoditySource = 41809,
+  UnderlyingExerciseDesc = 41810,
+  EncodedUnderlyingExerciseDescLen = 41811,
+  EncodedUnderlyingExerciseDesc = 41812,
+  UnderlyingAutomaticExerciseIndicator = 41813,
+  UnderlyingAutomaticExerciseThresholdRate = 41814,
+  UnderlyingExerciseConfirmationMethod = 41815,
+  UnderlyingManualNoticeBusinessCenter = 41816,
+  UnderlyingFallbackExerciseIndicator = 41817,
+  UnderlyingLimitedRightToConfirmIndicator = 41818,
+  UnderlyingExerciseSplitTicketIndicator = 41819,
+  NoUnderlyingOptionExerciseBusinessCenters = 41820,
+  UnderlyingOptionExerciseBusinessCenter = 41821,
+  UnderlyingOptionExerciseBusinessDayConvention = 41822,
+  UnderlyingOptionExerciseEarliestDateOffsetDayType = 41823,
+  UnderlyingOptionExerciseEarliestDateOffsetPeriod = 41824,
+  UnderlyingOptionExerciseEarliestDateOffsetUnit = 41825,
+  UnderlyingOptionExerciseFrequencyPeriod = 41826,
+  UnderlyingOptionExerciseFrequencyUnit = 41827,
+  UnderlyingOptionExerciseStartDateUnadjusted = 41828,
+  UnderlyingOptionExerciseStartDateRelativeTo = 41829,
+  UnderlyingOptionExerciseStartDateOffsetPeriod = 41830,
+  UnderlyingOptionExerciseStartDateOffsetUnit = 41831,
+  UnderlyingOptionExerciseStartDateOffsetDayType = 41832,
+  UnderlyingOptionExerciseStartDateAdjusted = 41833,
+  UnderlyingOptionExerciseSkip = 41834,
+  UnderlyingOptionExerciseNominationDeadline = 41835,
+  UnderlyingOptionExerciseFirstDateUnadjusted = 41836,
+  UnderlyingOptionExerciseLastDateUnadjusted = 41837,
+  UnderlyingOptionExerciseEarliestTime = 41838,
+  UnderlyingOptionExerciseLatestTime = 41839,
+  UnderlyingOptionExerciseTimeBusinessCenter = 41840,
+  NoUnderlyingOptionExerciseDates = 41841,
+  UnderlyingOptionExerciseDate = 41842,
+  UnderlyingOptionExerciseDateType = 41843,
+  NoUnderlyingOptionExerciseExpirationDateBusinessCenters = 41844,
+  UnderlyingOptionExerciseExpirationDateBusinessCenter = 41845,
+  UnderlyingOptionExerciseExpirationDateBusinessDayConvention = 41846,
+  UnderlyingOptionExerciseExpirationDateRelativeTo = 41847,
+  UnderlyingOptionExerciseExpirationDateOffsetPeriod = 41848,
+  UnderlyingOptionExerciseExpirationDateOffsetUnit = 41849,
+  UnderlyingOptionExerciseExpirationFrequencyPeriod = 41850,
+  UnderlyingOptionExerciseExpirationFrequencyUnit = 41851,
+  UnderlyingOptionExerciseExpirationRollConvention = 41852,
+  UnderlyingOptionExerciseExpirationDateOffsetDayType = 41853,
+  UnderlyingOptionExerciseExpirationTime = 41854,
+  UnderlyingOptionExerciseExpirationTimeBusinessCenter = 41855,
+  NoUnderlyingOptionExerciseExpirationDates = 41856,
+  UnderlyingOptionExerciseExpirationDate = 41857,
+  UnderlyingOptionExerciseExpirationDateType = 41858,
+  UnderlyingMarketDisruptionProvision = 41859,
+  UnderlyingMarketDisruptionFallbackProvision = 41860,
+  UnderlyingMarketDisruptionMaximumDays = 41861,
+  UnderlyingMarketDisruptionMaterialityPercentage = 41862,
+  UnderlyingMarketDisruptionMinimumFuturesContracts = 41863,
+  NoUnderlyingMarketDisruptionEvents = 41864,
+  UnderlyingMarketDisruptionEvent = 41865,
+  NoUnderlyingMarketDisruptionFallbacks = 41866,
+  UnderlyingMarketDisruptionFallbackType = 41867,
+  NoUnderlyingMarketDisruptionFallbackReferencePrices = 41868,
+  UnderlyingMarketDisruptionFallbackUnderlierType = 41869,
+  UnderlyingMarketDisruptionFallbackUnderlierSecurityID = 41870,
+  UnderlyingMarketDisruptionFallbackUnderlierSecurityIDSource = 41871,
+  UnderlyingMarketDisruptionFallbackUnderlierSecurityDesc = 41872,
+  EncodedUnderlyingMarketDisruptionFallbackUnderlierSecDescLen = 41873,
+  EncodedUnderlyingMarketDisruptionFallbackUnderlierSecurityDesc = 41874,
+  UnderlyingMarketDisruptionFallbackOpenUnits = 41875,
+  UnderlyingMarketDisruptionFallbackBasketCurrency = 41876,
+  UnderlyingMarketDisruptionFallbackBasketDivisor = 41877,
+  NoUnderlyingPaymentScheduleFixingDays = 41878,
+  UnderlyingPaymentScheduleFixingDayOfWeek = 41879,
+  UnderlyingPaymentScheduleFixingDayNumber = 41880,
+  UnderlyingPaymentScheduleXID = 41881,
+  UnderlyingPaymentScheduleXIDRef = 41882,
+  UnderlyingPaymentScheduleRateCurrency = 41883,
+  UnderlyingPaymentScheduleRateUnitOfMeasure = 41884,
+  UnderlyingPaymentScheduleRateConversionFactor = 41885,
+  UnderlyingPaymentScheduleRateSpreadType = 41886,
+  UnderlyingPaymentScheduleSettlPeriodPrice = 41887,
+  UnderlyingPaymentScheduleSettlPeriodPriceCurrency = 41888,
+  UnderlyingPaymentScheduleSettlPeriodPriceUnitOfMeasure = 41889,
+  UnderlyingPaymentScheduleStepUnitOfMeasure = 41890,
+  UnderlyingPaymentScheduleFixingDayDistribution = 41891,
+  UnderlyingPaymentScheduleFixingDayCount = 41892,
+  UnderlyingPaymentScheduleFixingLagPeriod = 41893,
+  UnderlyingPaymentScheduleFixingLagUnit = 41894,
+  UnderlyingPaymentScheduleFixingFirstObservationDateOffsetPeriod = 41895,
+  UnderlyingPaymentScheduleFixingFirstObservationDateOffsetUnit = 41896,
+  UnderlyingPaymentStreamFlatRateIndicator = 41897,
+  UnderlyingPaymentStreamFlatRateAmount = 41898,
+  UnderlyingPaymentStreamFlatRateCurrency = 41899,
+  UnderlyingPaymentStreamMaximumPaymentAmount = 41900,
+  UnderlyingPaymentStreamMaximumPaymentCurrency = 41901,
+  UnderlyingPaymentStreamMaximumTransactionAmount = 41902,
+  UnderlyingPaymentStreamMaximumTransactionCurrency = 41903,
+  UnderlyingPaymentStreamFixedAmountUnitOfMeasure = 41904,
+  UnderlyingPaymentStreamTotalFixedAmount = 41905,
+  UnderlyingPaymentStreamWorldScaleRate = 41906,
+  UnderlyingPaymentStreamContractPrice = 41907,
+  UnderlyingPaymentStreamContractPriceCurrency = 41908,
+  NoUnderlyingPaymentStreamPricingBusinessCenters = 41909,
+  UnderlyingPaymentStreamPricingBusinessCenter = 41910,
+  UnderlyingPaymentStreamRateIndex2CurveUnit = 41911,
+  UnderlyingPaymentStreamRateIndex2CurvePeriod = 41912,
+  UnderlyingPaymentStreamRateIndexLocation = 41913,
+  UnderlyingPaymentStreamRateIndexLevel = 41914,
+  UnderlyingPaymentStreamRateIndexUnitOfMeasure = 41915,
+  UnderlyingPaymentStreamSettlLevel = 41916,
+  UnderlyingPaymentStreamReferenceLevel = 41917,
+  UnderlyingPaymentStreamReferenceLevelUnitOfMeasure = 41918,
+  UnderlyingPaymentStreamReferenceLevelEqualsZeroIndicator = 41919,
+  UnderlyingPaymentStreamRateSpreadCurrency = 41920,
+  UnderlyingPaymentStreamRateSpreadUnitOfMeasure = 41921,
+  UnderlyingPaymentStreamRateConversionFactor = 41922,
+  UnderlyingPaymentStreamRateSpreadType = 41923,
+  UnderlyingPaymentStreamLastResetRate = 41924,
+  UnderlyingPaymentStreamFinalRate = 41925,
+  UnderlyingPaymentStreamCalculationLagPeriod = 41926,
+  UnderlyingPaymentStreamCalculationLagUnit = 41927,
+  UnderlyingPaymentStreamFirstObservationDateOffsetPeriod = 41928,
+  UnderlyingPaymentStreamFirstObservationDateOffsetUnit = 41929,
+  UnderlyingPaymentStreamPricingDayType = 41930,
+  UnderlyingPaymentStreamPricingDayDistribution = 41931,
+  UnderlyingPaymentStreamPricingDayCount = 41932,
+  UnderlyingPaymentStreamPricingBusinessCalendar = 41933,
+  UnderlyingPaymentStreamPricingBusinessDayConvention = 41934,
+  LegStreamCommoditySettlTimeType = 41935,
+  UnderlyingStreamCommoditySettlTimeType = 41936,
+  NoUnderlyingPaymentStreamPaymentDates = 41937,
+  UnderlyingPaymentStreamPaymentDate = 41938,
+  UnderlyingPaymentStreamPaymentDateType = 41939,
+  UnderlyingPaymentStreamMasterAgreementPaymentDatesIndicator = 41940,
+  NoUnderlyingPaymentStreamPricingDates = 41941,
+  UnderlyingPaymentStreamPricingDate = 41942,
+  UnderlyingPaymentStreamPricingDateType = 41943,
+  NoUnderlyingPaymentStreamPricingDays = 41944,
+  UnderlyingPaymentStreamPricingDayOfWeek = 41945,
+  UnderlyingPaymentStreamPricingDayNumber = 41946,
+  NoUnderlyingPricingDateBusinessCenters = 41947,
+  UnderlyingPricingDateBusinessCenter = 41948,
+  UnderlyingPricingDateUnadjusted = 41949,
+  UnderlyingPricingDateBusinessDayConvention = 41950,
+  UnderlyingPricingDateAdjusted = 41951,
+  UnderlyingPricingTime = 41952,
+  UnderlyingPricingTimeBusinessCenter = 41953,
+  NoUnderlyingStreamCalculationPeriodDates = 41954,
+  UnderlyingStreamCalculationPeriodDate = 41955,
+  UnderlyingStreamCalculationPeriodDateType = 41956,
+  UnderlyingStreamCalculationPeriodDatesXID = 41957,
+  UnderlyingStreamCalculationPeriodDatesXIDRef = 41958,
+  UnderlyingStreamCalculationBalanceOfFirstPeriod = 41959,
+  UnderlyingStreamCalculationCorrectionPeriod = 41960,
+  UnderlyingStreamCalculationCorrectionUnit = 41961,
+  NoUnderlyingStreamCommoditySettlBusinessCenters = 41962,
+  UnderlyingStreamCommoditySettlBusinessCenter = 41963,
+  UnderlyingStreamCommodityBase = 41964,
+  UnderlyingStreamCommodityType = 41965,
+  UnderlyingStreamCommoditySecurityID = 41966,
+  UnderlyingStreamCommoditySecurityIDSource = 41967,
+  UnderlyingStreamCommodityDesc = 41968,
+  EncodedUnderlyingStreamCommodityDescLen = 41969,
+  EncodedUnderlyingStreamCommodityDesc = 41970,
+  UnderlyingStreamCommodityUnitOfMeasure = 41971,
+  UnderlyingStreamCommodityCurrency = 41972,
+  UnderlyingStreamCommodityExchange = 41973,
+  UnderlyingStreamCommodityRateSource = 41974,
+  UnderlyingStreamCommodityRateReferencePage = 41975,
+  UnderlyingStreamCommodityRateReferencePageHeading = 41976,
+  UnderlyingStreamDataProvider = 41977,
+  UnderlyingStreamCommodityPricingType = 41978,
+  UnderlyingStreamCommodityNearbySettlDayPeriod = 41979,
+  UnderlyingStreamCommodityNearbySettlDayUnit = 41980,
+  UnderlyingStreamCommoditySettlDateUnadjusted = 41981,
+  UnderlyingStreamCommoditySettlDateBusinessDayConvention = 41982,
+  UnderlyingStreamCommoditySettlDateAdjusted = 41983,
+  UnderlyingStreamCommoditySettlMonth = 41984,
+  UnderlyingStreamCommoditySettlDateRollPeriod = 41985,
+  UnderlyingStreamCommoditySettlDateRollUnit = 41986,
+  UnderlyingStreamCommoditySettlDayType = 41987,
+  UnderlyingStreamCommodityXID = 41988,
+  UnderlyingStreamCommodityXIDRef = 41989,
+  NoUnderlyingStreamCommodityAltIDs = 41990,
+  UnderlyingStreamCommodityAltID = 41991,
+  UnderlyingStreamCommodityAltIDSource = 41992,
+  NoUnderlyingStreamCommodityDataSources = 41993,
+  UnderlyingStreamCommodityDataSourceID = 41994,
+  UnderlyingStreamCommodityDataSourceIDType = 41995,
+  NoUnderlyingStreamCommoditySettlDays = 41996,
+  UnderlyingStreamCommoditySettlDay = 41997,
+  UnderlyingStreamCommoditySettlTotalHours = 41998,
+  NoUnderlyingStreamCommoditySettlTimes = 41999,
+  UnderlyingStreamCommoditySettlStart = 42000,
+  UnderlyingStreamCommoditySettlEnd = 42001,
+  NoUnderlyingStreamCommoditySettlPeriods = 42002,
+  UnderlyingStreamCommoditySettlCountry = 42003,
+  UnderlyingStreamCommoditySettlTimeZone = 42004,
+  UnderlyingStreamCommoditySettlFlowType = 42005,
+  UnderlyingStreamCommoditySettlPeriodNotional = 42006,
+  UnderlyingStreamCommoditySettlPeriodNotionalUnitOfMeasure = 42007,
+  UnderlyingStreamCommoditySettlPeriodFrequencyPeriod = 42008,
+  UnderlyingStreamCommoditySettlPeriodFrequencyUnit = 42009,
+  UnderlyingStreamCommoditySettlPeriodPrice = 42010,
+  UnderlyingStreamCommoditySettlPeriodPriceUnitOfMeasure = 42011,
+  UnderlyingStreamCommoditySettlPeriodPriceCurrency = 42012,
+  UnderlyingStreamCommoditySettlHolidaysProcessingInstruction = 42013,
+  UnderlyingStreamCommoditySettlPeriodXID = 42014,
+  UnderlyingStreamCommoditySettlPeriodXIDRef = 42015,
+  UnderlyingStreamXID = 42016,
+  UnderlyingAdditionalTermBondIssuer = 42017,
+  UnderlyingStreamNotionalXIDRef = 42018,
+  UnderlyingStreamNotionalFrequencyPeriod = 42019,
+  UnderlyingStreamNotionalFrequencyUnit = 42020,
+  UnderlyingStreamNotionalCommodityFrequency = 42021,
+  UnderlyingStreamNotionalUnitOfMeasure = 42022,
+  UnderlyingStreamTotalNotional = 42023,
+  UnderlyingStreamTotalNotionalUnitOfMeasure = 42024,
+  EncodedUnderlyingAdditionalTermBondIssuerLen = 42025,
+  EncodedUnderlyingAdditionalTermBondIssuer = 42026,
+  UnderlyingAdditionalTermBondSeniority = 42027,
+  UnderlyingAdditionalTermBondCouponType = 42028,
+  UnderlyingAdditionalTermBondCouponRate = 42029,
+  UnderlyingAdditionalTermBondMaturityDate = 42030,
+  UnderlyingAdditionalTermBondParValue = 42031,
+  UnderlyingAdditionalTermBondCurrentTotalIssuedAmount = 42032,
+  UnderlyingAdditionalTermBondCouponFrequencyPeriod = 42033,
+  UnderlyingAdditionalTermBondCouponFrequencyUnit = 42034,
+  UnderlyingAdditionalTermBondDayCount = 42035,
+  NoUnderlyingAdditionalTerms = 42036,
+  UnderlyingAdditionalTermConditionPrecedentBondIndicator = 42037,
+  UnderlyingAdditionalTermDiscrepancyClauseIndicator = 42038,
+  NoUnderlyingCashSettlDealers = 42039,
+  UnderlyingCashSettlDealer = 42040,
+  NoUnderlyingCashSettlTerms = 42041,
+  UnderlyingCashSettlCurrency = 42042,
+  UnderlyingCashSettlValuationFirstBusinessDayOffset = 42043,
+  UnderlyingCashSettlValuationSubsequentBusinessDaysOffset = 42044,
+  UnderlyingCashSettlNumOfValuationDates = 42045,
+  UnderlyingCashSettlValuationTime = 42046,
+  UnderlyingCashSettlBusinessCenter = 42047,
+  UnderlyingCashSettlQuoteMethod = 42048,
+  UnderlyingCashSettlQuoteAmount = 42049,
+  UnderlyingCashSettlQuoteCurrency = 42050,
+  UnderlyingCashSettlMinimumQuoteAmount = 42051,
+  UnderlyingCashSettlMinimumQuoteCurrency = 42052,
+  UnderlyingCashSettlBusinessDays = 42053,
+  UnderlyingCashSettlAmount = 42054,
+  UnderlyingCashSettlRecoveryFactor = 42055,
+  UnderlyingCashSettlFixedTermIndicator = 42056,
+  UnderlyingCashSettlAccruedInterestIndicator = 42057,
+  UnderlyingCashSettlValuationMethod = 42058,
+  UnderlyingCashSettlTermXID = 42059,
+  NoUnderlyingPhysicalSettlTerms = 42060,
+  UnderlyingPhysicalSettlCurrency = 42061,
+  UnderlyingPhysicalSettlBusinessDays = 42062,
+  UnderlyingPhysicalSettlMaximumBusinessDays = 42063,
+  UnderlyingPhysicalSettlTermXID = 42064,
+  NoUnderlyingPhysicalSettlDeliverableObligations = 42065,
+  UnderlyingPhysicalSettlDeliverableObligationType = 42066,
+  UnderlyingPhysicalSettlDeliverableObligationValue = 42067,
+  NoUnderlyingProtectionTerms = 42068,
+  UnderlyingProtectionTermNotional = 42069,
+  UnderlyingProtectionTermCurrency = 42070,
+  UnderlyingProtectionTermSellerNotifies = 42071,
+  UnderlyingProtectionTermBuyerNotifies = 42072,
+  UnderlyingProtectionTermEventBusinessCenter = 42073,
+  UnderlyingProtectionTermStandardSources = 42074,
+  UnderlyingProtectionTermEventMinimumSources = 42075,
+  UnderlyingProtectionTermXID = 42076,
+  NoUnderlyingProtectionTermEvents = 42077,
+  UnderlyingProtectionTermEventType = 42078,
+  UnderlyingProtectionTermEventValue = 42079,
+  UnderlyingProtectionTermEventCurrency = 42080,
+  UnderlyingProtectionTermEventPeriod = 42081,
+  UnderlyingProtectionTermEventUnit = 42082,
+  UnderlyingProtectionTermEventDayType = 42083,
+  UnderlyingProtectionTermEventRateSource = 42084,
+  NoUnderlyingProtectionTermEventQualifiers = 42085,
+  UnderlyingProtectionTermEventQualifier = 42086,
+  NoUnderlyingProtectionTermObligations = 42087,
+  UnderlyingProtectionTermObligationType = 42088,
+  UnderlyingProtectionTermObligationValue = 42089,
+  NoUnderlyingProtectionTermEventNewsSources = 42090,
+  UnderlyingProtectionTermEventNewsSource = 42091,
+  UnderlyingProvisionCashSettlPaymentDateBusinessDayConvention = 42092,
+  UnderlyingProvisionCashSettlPaymentDateRelativeTo = 42093,
+  UnderlyingProvisionCashSettlPaymentDateOffsetPeriod = 42094,
+  UnderlyingProvisionCashSettlPaymentDateOffsetUnit = 42095,
+  UnderlyingProvisionCashSettlPaymentDateOffsetDayType = 42096,
+  UnderlyingProvisionCashSettlPaymentDateRangeFirst = 42097,
+  UnderlyingProvisionCashSettlPaymentDateRangeLast = 42098,
+  NoUnderlyingProvisionCashSettlPaymentDates = 42099,
+  UnderlyingProvisionCashSettlPaymentDate = 42100,
+  UnderlyingProvisionCashSettlPaymentDateType = 42101,
+  UnderlyingProvisionCashSettlQuoteSource = 42102,
+  UnderlyingProvisionCashSettlQuoteReferencePage = 42103,
+  UnderlyingProvisionCashSettlValueTime = 42104,
+  UnderlyingProvisionCashSettlValueTimeBusinessCenter = 42105,
+  UnderlyingProvisionCashSettlValueDateBusinessDayConvention = 42106,
+  UnderlyingProvisionCashSettlValueDateRelativeTo = 42107,
+  UnderlyingProvisionCashSettlValueDateOffsetPeriod = 42108,
+  UnderlyingProvisionCashSettlValueDateOffsetUnit = 42109,
+  UnderlyingProvisionCashSettlValueDateOffsetDayType = 42110,
+  UnderlyingProvisionCashSettlValueDateAdjusted = 42111,
+  NoUnderlyingProvisionOptionExerciseFixedDates = 42112,
+  UnderlyingProvisionOptionExerciseFixedDate = 42113,
+  UnderlyingProvisionOptionExerciseFixedDateType = 42114,
+  UnderlyingProvisionOptionExerciseBusinessDayConvention = 42115,
+  UnderlyingProvisionOptionExerciseEarliestDateOffsetPeriod = 42116,
+  UnderlyingProvisionOptionExerciseEarliestDateOffsetUnit = 42117,
+  UnderlyingProvisionOptionExerciseFrequencyPeriod = 42118,
+  UnderlyingProvisionOptionExerciseFrequencyUnit = 42119,
+  UnderlyingProvisionOptionExerciseStartDateUnadjusted = 42120,
+  UnderlyingProvisionOptionExerciseStartDateRelativeTo = 42121,
+  UnderlyingProvisionOptionExerciseStartDateOffsetPeriod = 42122,
+  UnderlyingProvisionOptionExerciseStartDateOffsetUnit = 42123,
+  UnderlyingProvisionOptionExerciseStartDateOffsetDayType = 42124,
+  UnderlyingProvisionOptionExerciseStartDateAdjusted = 42125,
+  UnderlyingProvisionOptionExercisePeriodSkip = 42126,
+  UnderlyingProvisionOptionExerciseBoundsFirstDateUnadjusted = 42127,
+  UnderlyingProvisionOptionExerciseBoundsLastDateUnadjusted = 42128,
+  UnderlyingProvisionOptionExerciseEarliestTime = 42129,
+  UnderlyingProvisionOptionExerciseEarliestTimeBusinessCenter = 42130,
+  UnderlyingProvisionOptionExerciseLatestTime = 42131,
+  UnderlyingProvisionOptionExerciseLatestTimeBusinessCenter = 42132,
+  UnderlyingProvisionOptionExpirationDateUnadjusted = 42133,
+  UnderlyingProvisionOptionExpirationDateBusinessDayConvention = 42134,
+  UnderlyingProvisionOptionExpirationDateRelativeTo = 42135,
+  UnderlyingProvisionOptionExpirationDateOffsetPeriod = 42136,
+  UnderlyingProvisionOptionExpirationDateOffsetUnit = 42137,
+  UnderlyingProvisionOptionExpirationDateOffsetDayType = 42138,
+  UnderlyingProvisionOptionExpirationDateAdjusted = 42139,
+  UnderlyingProvisionOptionExpirationTime = 42140,
+  UnderlyingProvisionOptionExpirationTimeBusinessCenter = 42141,
+  UnderlyingProvisionOptionRelevantUnderlyingDateUnadjusted = 42142,
+  UnderlyingProvisionOptionRelevantUnderlyingDateBizDayConvention = 42143,
+  UnderlyingProvisionOptionRelevantUnderlyingDateRelativeTo = 42144,
+  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetPeriod = 42145,
+  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetUnit = 42146,
+  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetDayType = 42147,
+  UnderlyingProvisionOptionRelevantUnderlyingDateAdjusted = 42148,
+  NoUnderlyingProvisions = 42149,
+  UnderlyingProvisionType = 42150,
+  UnderlyingProvisionDateUnadjusted = 42151,
+  UnderlyingProvisionDateBusinessDayConvention = 42152,
+  UnderlyingProvisionDateAdjusted = 42153,
+  UnderlyingProvisionDateTenorPeriod = 42154,
+  UnderlyingProvisionDateTenorUnit = 42155,
+  UnderlyingProvisionCalculationAgent = 42156,
+  UnderlyingProvisionOptionSinglePartyBuyerSide = 42157,
+  UnderlyingProvisionOptionSinglePartySellerSide = 42158,
+  UnderlyingProvisionOptionExerciseStyle = 42159,
+  UnderlyingProvisionOptionExerciseMultipleNotional = 42160,
+  UnderlyingProvisionOptionExerciseMinimumNotional = 42161,
+  UnderlyingProvisionOptionExerciseMaximumNotional = 42162,
+  UnderlyingProvisionOptionMinimumNumber = 42163,
+  UnderlyingProvisionOptionMaximumNumber = 42164,
+  UnderlyingProvisionOptionExerciseConfirmation = 42165,
+  UnderlyingProvisionCashSettlMethod = 42166,
+  UnderlyingProvisionCashSettlCurrency = 42167,
+  UnderlyingProvisionCashSettlCurrency2 = 42168,
+  UnderlyingProvisionCashSettlQuoteType = 42169,
+  UnderlyingProvisionText = 42170,
+  EncodedUnderlyingProvisionTextLen = 42171,
+  EncodedUnderlyingProvisionText = 42172,
+  NoUnderlyingProvisionPartyIDs = 42173,
+  UnderlyingProvisionPartyID = 42174,
+  UnderlyingProvisionPartyIDSource = 42175,
+  UnderlyingProvisionPartyRole = 42176,
+  NoUnderlyingProvisionPartySubIDs = 42177,
+  UnderlyingProvisionPartySubID = 42178,
+  UnderlyingProvisionPartySubIDType = 42179,
+  NoUnderlyingProvisionCashSettlPaymentDateBusinessCenters = 42180,
+  UnderlyingProvisionCashSettlPaymentDateBusinessCenter = 42181,
+  NoUnderlyingProvisionCashSettlValueDateBusinessCenters = 42182,
+  UnderlyingProvisionCashSettlValueDateBusinessCenter = 42183,
+  NoUnderlyingProvisionOptionExerciseBusinessCenters = 42184,
+  UnderlyingProvisionOptionExerciseBusinessCenter = 42185,
+  NoUnderlyingProvisionOptionExpirationDateBusinessCenters = 42186,
+  UnderlyingProvisionOptionExpirationDateBusinessCenter = 42187,
+  NoUnderlyingProvisionOptionRelevantUnderlyingDateBusinessCenters = 42188,
+  UnderlyingProvisionOptionRelevantUnderlyingDateBusinessCenter = 42189,
+  NoUnderlyingProvisionDateBusinessCenters = 42190,
+  UnderlyingProvisionDateBusinessCenter = 42191,
+  DeliveryStreamDeliveryPointSource = 42192,
+  DeliveryStreamDeliveryPointDesc = 42193,
+  LegDeliveryStreamDeliveryPointSource = 42194,
+  LegDeliveryStreamDeliveryPointDesc = 42195,
+  UnderlyingDeliveryStreamDeliveryPointSource = 42196,
+  UnderlyingDeliveryStreamDeliveryPointDesc = 42197,
+  NoLegContractualDefinitions = 42198,
+  LegContractualDefinition = 42199,
+  NoLegFinancingTermSupplements = 42200,
+  LegFinancingTermSupplementDesc = 42201,
+  LegFinancingTermSupplementDate = 42202,
+  NoLegContractualMatrices = 42203,
+  LegContractualMatrixSource = 42204,
+  LegContractualMatrixDate = 42205,
+  LegContractualMatrixTerm = 42206,
+  CashSettlDateUnadjusted = 42207,
+  CashSettlDateBusinessDayConvention = 42208,
+  CashSettlDateRelativeTo = 42209,
+  CashSettlDateOffsetPeriod = 42210,
+  CashSettlDateOffsetUnit = 42211,
+  CashSettlDateOffsetDayType = 42212,
+  CashSettlDateAdjusted = 42213,
+  NoCashSettlDateBusinessCenters = 42214,
+  CashSettlDateBusinessCenter = 42215,
+  CashSettlPriceSource = 42216,
+  CashSettlPriceDefault = 42217,
+  DividendFloatingRateIndex = 42218,
+  DividendFloatingRateIndexCurvePeriod = 42219,
+  DividendFloatingRateIndexCurveUnit = 42220,
+  DividendFloatingRateMultiplier = 42221,
+  DividendFloatingRateSpread = 42222,
+  DividendFloatingRateSpreadPositionType = 42223,
+  DividendFloatingRateTreatment = 42224,
+  DividendCapRate = 42225,
+  DividendCapRateBuySide = 42226,
+  DividendCapRateSellSide = 42227,
+  DividendFloorRate = 42228,
+  DividendFloorRateBuySide = 42229,
+  DividendFloorRateSellSide = 42230,
+  DividendInitialRate = 42231,
+  DividendFinalRateRoundingDirection = 42232,
+  DividendFinalRatePrecision = 42233,
+  DividendAveragingMethod = 42234,
+  DividendNegativeRateTreatment = 42235,
+  NoDividendAccrualPaymentDateBusinessCenters = 42236,
+  DividendAccrualPaymentDateBusinessCenter = 42237,
+  DividendAccrualPaymentDateRelativeTo = 42238,
+  DividendAccrualPaymentDateOffsetPeriod = 42239,
+  DividendAccrualPaymentDateOffsetUnit = 42240,
+  DividendAccrualPaymentDateOffsetDayType = 42241,
+  DividendAccrualPaymentDateUnadjusted = 42242,
+  DividendAccrualPaymeentDateBusinessDayConvention = 42243,
+  DividendAccrualPaymentDateAdjusted = 42244,
+  DividendReinvestmentIndicator = 42245,
+  DividendEntitlementEvent = 42246,
+  DividendAmountType = 42247,
+  DividendUnderlierRefID = 42248,
+  ExtraordinaryDividendPartySide = 42249,
+  ExtraordinaryDividendAmountType = 42250,
+  ExtraordinaryDividendCurrency = 42251,
+  ExtraordinaryDividendDeterminationMethod = 42252,
+  DividendAccrualFixedRate = 42253,
+  DividendCompoundingMethod = 42254,
+  DividendNumOfIndexUnits = 42255,
+  DividendCashPercentage = 42256,
+  DividendCashEquivalentPercentage = 42257,
+  NonCashDividendTreatment = 42258,
+  DividendComposition = 42259,
+  SpecialDividendsIndicator = 42260,
+  MaterialDividendsIndicator = 42261,
+  OptionsExchangeDividendsIndicator = 42262,
+  AdditionalDividendsIndicator = 42263,
+  AllDividendsIndicator = 42264,
+  DividendFXTriggerDateRelativeTo = 42265,
+  DividendFXTriggerDateOffsetPeriod = 42266,
+  DividendFXTriggerDateOffsetUnit = 42267,
+  DividendFXTriggerDateOffsetDayType = 42268,
+  DividendFXTriggerDateUnadjusted = 42269,
+  DividendFXTriggerDateBusinessDayConvention = 42270,
+  DividendFXTriggerDateAdjusted = 42271,
+  NoDividendFXTriggerDateBusinessCenters = 42272,
+  DividendFXTriggerDateBusinessCenter = 42273,
+  NoDividendPeriods = 42274,
+  DividendPeriodSequence = 42275,
+  DividendPeriodStartDateUnadjusted = 42276,
+  DividendPeriodEndDateUnadjusted = 42277,
+  DividendPeriodUnderlierRefID = 42278,
+  DividendPeriodStrikePrice = 42279,
+  DividendPeriodBusinessDayConvention = 42280,
+  DividendPeriodValuationDateUnadjusted = 42281,
+  DividendPeriodValuationDateRelativeTo = 42282,
+  DividendPeriodValuationDateOffsetPeriod = 42283,
+  DividendPeriodValuationDateOffsetUnit = 42284,
+  DividendPeriodValuationDateOffsetDayType = 42285,
+  DividendPeriodValuationDateAdjusted = 42286,
+  DividendPeriodPaymentDateUnadjusted = 42287,
+  DividendPeriodPaymentDateRelativeTo = 42288,
+  DividendPeriodPaymentDateOffsetPeriod = 42289,
+  DividendPeriodPaymentDateOffsetUnit = 42290,
+  DividendPeriodPaymentDateOffsetDayType = 42291,
+  DividendPeriodPaymentDateAdjusted = 42292,
+  DividendPeriodXID = 42293,
+  NoDividendPeriodBusinessCenters = 42294,
+  DividendPeriodBusinessCenter = 42295,
+  NoExtraordinaryEvents = 42296,
+  ExtraordinaryEventType = 42297,
+  ExtraordinaryEventValue = 42298,
+  LegCashSettlDateUnadjusted = 42299,
+  LegCashSettlDateBusinessDayConvention = 42300,
+  LegCashSettlDateRelativeTo = 42301,
+  LegCashSettlDateOffsetPeriod = 42302,
+  LegCashSettlDateOffsetUnit = 42303,
+  LegCashSettlDateOffsetDayType = 42304,
+  LegCashSettlDateAdjusted = 42305,
+  NoLegCashSettlDateBusinessCenters = 42306,
+  LegCashSettlDateBusinessCenter = 42307,
+  LegCashSettlPriceSource = 42308,
+  LegCashSettlPriceDefault = 42309,
+  NoLegDividendAccrualPaymentDateBusinessCenters = 42310,
+  LegDividendAccrualPaymentDateBusinessCenter = 42311,
+  LegDividendFloatingRateIndex = 42312,
+  LegDividendFloatingRateIndexCurvePeriod = 42313,
+  LegDividendFloatingRateIndexCurveUnit = 42314,
+  LegDividendFloatingRateMultiplier = 42315,
+  LegDividendFloatingRateSpread = 42316,
+  LegDividendFloatingRateSpreadPositionType = 42317,
+  LegDividendFloatingRateTreatment = 42318,
+  LegDividendCapRate = 42319,
+  LegDividendCapRateBuySide = 42320,
+  LegDividendCapRateSellSide = 42321,
+  LegDividendFloorRate = 42322,
+  LegDividendFloorRateBuySide = 42323,
+  LegDividendFloorRateSellSide = 42324,
+  LegDividendInitialRate = 42325,
+  LegDividendFinalRateRoundingDirection = 42326,
+  LegDividendFinalRatePrecision = 42327,
+  LegDividendAveragingMethod = 42328,
+  LegDividendNegativeRateTreatment = 42329,
+  LegDividendAccrualPaymentDateRelativeTo = 42330,
+  LegDividendAccrualPaymentDateOffsetPeriod = 42331,
+  LegDividendAccrualPaymentDateOffsetUnit = 42332,
+  LegDividendAccrualPaymentDateOffsetDayType = 42333,
+  LegDividendAccrualPaymentDateUnadjusted = 42334,
+  LegDividendAccrualPaymentDateBusinessDayConvention = 42335,
+  LegDividendAccrualPaymentDateAdjusted = 42336,
+  LegDividendReinvestmentIndicator = 42337,
+  LegDividendEntitlementEvent = 42338,
+  LegDividendAmountType = 42339,
+  LegDividendUnderlierRefID = 42340,
+  LegExtraordinaryDividendPartySide = 42341,
+  LegExtraordinaryDividendAmountType = 42342,
+  LegExtraordinaryDividendCurrency = 42343,
+  LegExtraordinaryDividendDeterminationMethod = 42344,
+  LegDividendAccrualFixedRate = 42345,
+  LegDividendCompoundingMethod = 42346,
+  LegDividendNumOfIndexUnits = 42347,
+  LegDividendCashPercentage = 42348,
+  LegDividendCashEquivalentPercentage = 42349,
+  LegNonCashDividendTreatment = 42350,
+  LegDividendComposition = 42351,
+  LegSpecialDividendsIndicator = 42352,
+  LegMaterialDividendsIndicator = 42353,
+  LegOptionsExchangeDividendsIndicator = 42354,
+  LegAdditionalDividendsIndicator = 42355,
+  LegAllDividendsIndicator = 42356,
+  LegDividendFXTriggerDateRelativeTo = 42357,
+  LegDividendFXTriggerDateOffsetPeriod = 42358,
+  LegDividendFXTriggerDateOffsetUnit = 42359,
+  LegDividendFXTriggerDateOffsetDayType = 42360,
+  LegDividendFXTriggerDateUnadjusted = 42361,
+  LegDividendFXTriggerDateBusinessDayConvention = 42362,
+  LegDividendFXTriggerDateAdjusted = 42363,
+  NoLegDividendFXTriggerDateBusinessCenters = 42364,
+  LegDividendFXTriggerDateBusinessCenter = 42365,
+  NoLegDividendPeriods = 42366,
+  LegDividendPeriodSequence = 42367,
+  LegDividendPeriodStartDateUnadjusted = 42368,
+  LegDividendPeriodEndDateUnadjusted = 42369,
+  LegDividendPeriodUnderlierRefID = 42370,
+  LegDividendPeriodStrikePrice = 42371,
+  LegDividendPeriodBusinessDayConvention = 42372,
+  LegDividendPeriodValuationDateUnadjusted = 42373,
+  LegDividendPeriodValuationDateRelativeTo = 42374,
+  LegDividendPeriodValuationDateOffsetPeriod = 42375,
+  LegDividendPeriodValuationDateOffsetUnit = 42376,
+  LegDividendPeriodValuationDateOffsetDayType = 42377,
+  LegDividendPeriodValuationDateAdjusted = 42378,
+  LegDividendPeriodPaymentDateUnadjusted = 42379,
+  LegDividendPeriodPaymentDateRelativeTo = 42380,
+  LegDividendPeriodPaymentDateOffsetPeriod = 42381,
+  LegDividendPeriodPaymentDateOffsetUnit = 42382,
+  LegDividendPeriodPaymentDateOffsetDayType = 42383,
+  LegDividendPeriodPaymentDateAdjusted = 42384,
+  LegDividendPeriodXID = 42385,
+  NoLegDividendPeriodBusinessCenters = 42386,
+  LegDividendPeriodBusinessCenter = 42387,
+  NoLegExtraordinaryEvents = 42388,
+  LegExtraordinaryEventType = 42389,
+  LegExtraordinaryEventValue = 42390,
+  LegSettlMethodElectingPartySide = 42391,
+  LegMakeWholeDate = 42392,
+  LegMakeWholeAmount = 42393,
+  LegMakeWholeBenchmarkCurveName = 42394,
+  LegMakeWholeBenchmarkCurvePoint = 42395,
+  LegMakeWholeRecallSpread = 42396,
+  LegMakeWholeBenchmarkQuote = 42397,
+  LegMakeWholeInterpolationMethod = 42398,
+  LegPaymentStreamCashSettlIndicator = 42399,
+  LegPaymentStreamCompoundingXIDRef = 42400,
+  LegPaymentStreamCompoundingSpread = 42401,
+  LegPaymentStreamInterpolationMethod = 42402,
+  LegPaymentStreamInterpolationPeriod = 42403,
+  LegPaymentStreamCompoundingFixedRate = 42404,
+  NoLegPaymentStreamCompoundingDates = 42405,
+  LegPaymentStreamCompoundingDate = 42406,
+  LegPaymentStreamCompoundingDateType = 42407,
+  LegPaymentStreamCompoundingDatesBusinessDayConvention = 42408,
+  LegPaymentStreamCompoundingDatesRelativeTo = 42409,
+  LegPaymentStreamCompoundingDatesOffsetPeriod = 42410,
+  LegPaymentStreamCompoundingDatesOffsetUnit = 42411,
+  LegPaymentStreamCompoundingDatesOffsetDayType = 42412,
+  LegPaymentStreamCompoundingPeriodSkip = 42413,
+  LegPaymentStreamCompoundingFrequencyPeriod = 42414,
+  LegPaymentStreamCompoundingFrequencyUnit = 42415,
+  LegPaymentStreamCompoundingRollConvention = 42416,
+  LegPaymentStreamBoundsFirstDateUnadjusted = 42417,
+  LegPaymentStreamBoundsLastDateUnadjusted = 42418,
+  NoLegPaymentStreamCompoundingDatesBusinessCenters = 42419,
+  LegPaymentStreamCompoundingDatesBusinessCenter = 42420,
+  LegPaymentStreamCompoundingEndDateUnadjusted = 42421,
+  LegPaymentStreamCompoundingEndDateRelativeTo = 42422,
+  LegPaymentStreamCompoundingEndDateOffsetPeriod = 42423,
+  LegPaymentStreamCompoundingEndDateOffsetUnit = 42424,
+  LegPaymentStreamCompoundingEndDateOffsetDayType = 42425,
+  LegPaymentStreamCompoundingEndDateAdjusted = 42426,
+  LegPaymentStreamCompoundingRateIndex = 42427,
+  LegPaymentStreamCompoundingRateIndexCurvePeriod = 42428,
+  LegPaymentStreamCompoundingRateIndexCurveUnit = 42429,
+  LegPaymentStreamCompoundingRateMultiplier = 42430,
+  LegPaymentStreamCompoundingRateSpread = 42431,
+  LegPaymentStreamCompoundingRateSpreadPositionType = 42432,
+  LegPaymentStreamCompoundingRateTreatment = 42433,
+  LegPaymentStreamCompoundingCapRate = 42434,
+  LegPaymentStreamCompoundingCapRateBuySide = 42435,
+  LegPaymentStreamCompoundingCapRateSellSide = 42436,
+  LegPaymentStreamCompoundingFloorRate = 42437,
+  LegPaymentStreamCompoundingFloorRateBuySide = 42438,
+  LegPaymentStreamCompoundingFloorRateSellSide = 42439,
+  LegPaymentStreamCompoundingInitialRate = 42440,
+  LegPaymentStreamCompoundingFinalRateRoundingDirection = 42441,
+  LegPaymentStreamCompoundingFinalRatePrecision = 42442,
+  LegPaymentStreamCompoundingAveragingMethod = 42443,
+  LegPaymentStreamCompoundingNegativeRateTreatment = 42444,
+  LegPaymentStreamCompoundingStartDateUnadjusted = 42445,
+  LegPaymentStreamCompoundingStartDateRelativeTo = 42446,
+  LegPaymentStreamCompoundingStartDateOffsetPeriod = 42447,
+  LegPaymentStreamCompoundingStartDateOffsetUnit = 42448,
+  LegPaymentStreamCompoundingStartDateOffsetDayType = 42449,
+  LegPaymentStreamCompoundingStartDateAdjusted = 42450,
+  LegPaymentStreamFormulaImageLength = 42451,
+  LegPaymentStreamFormulaImage = 42452,
+  LegPaymentStreamFinalPricePaymentDateUnadjusted = 42453,
+  LegPaymentStreamFinalPricePaymentDateRelativeTo = 42454,
+  LegPaymentStreamFinalPricePaymentDateOffsetPeriod = 42455,
+  LegPaymentStreamFinalPricePaymentDateOffsetUnit = 42456,
+  LegPaymentStreamFinalPricePaymentDateOffsetDayType = 42457,
+  LegPaymentStreamFinalPricePaymentDateAdjusted = 42458,
+  NoLegPaymentStreamFixingDates = 42459,
+  LegPaymentStreamFixingDate = 42460,
+  LegPaymentStreamFixingDateType = 42461,
+  LegPaymentStreamFirstObservationDateUnadjusted = 42462,
+  LegPaymentStreamFirstObservationDateRelativeTo = 42463,
+  LegPaymentStreamFirstObservationDateOffsetDayType = 42464,
+  LegPaymentStreamFirstObservationDateAdjusted = 42465,
+  LegPaymentStreamUnderlierRefID = 42466,
+  LegReturnRateNotionalReset = 42467,
+  LegPaymentStreamLinkInitialLevel = 42468,
+  LegPaymentStreamLinkClosingLevelIndicator = 42469,
+  LegPaymentStreamLinkExpiringLevelIndicator = 42470,
+  LegPaymentStreamLinkEstimatedTradingDays = 42471,
+  LegPaymentStreamLinkStrikePrice = 42472,
+  LegPaymentStreamLinkStrikePriceType = 42473,
+  LegPaymentStreamLinkMaximumBoundary = 42474,
+  LegPaymentStreamLinkMinimumBoundary = 42475,
+  LegPaymentStreamLinkNumberOfDataSeries = 42476,
+  LegPaymentStreamVarianceUnadjustedCap = 42477,
+  LegPaymentStreamRealizedVarianceMethod = 42478,
+  LegPaymentStreamDaysAdjustmentIndicator = 42479,
+  LegPaymentStreamNearestExchangeContractRefID = 42480,
+  LegPaymentStreamVegaNotionalAmount = 42481,
+  LegPaymentStreamFormulaCurrency = 42482,
+  LegPaymentStreamFormulaCurrencyDeterminationMethod = 42483,
+  LegPaymentStreamFormulaReferenceAmount = 42484,
+  NoLegPaymentStreamFormulas = 42485,
+  LegPaymentStreamFormula = 42486,
+  LegPaymentStreamFormulaDesc = 42487,
+  LegPaymentStubEndDateUnadjusted = 42488,
+  LegPaymentStubEndDateBusinessDayConvention = 42489,
+  LegPaymentStubEndDateRelativeTo = 42490,
+  LegPaymentStubEndDateOffsetPeriod = 42491,
+  LegPaymentStubEndDateOffsetUnit = 42492,
+  LegPaymentStubEndDateOffsetDayType = 42493,
+  LegPaymentStubEndDateAdjusted = 42494,
+  NoLegPaymentStubEndDateBusinessCenters = 42495,
+  LegPaymentStubEndDateBusinessCenter = 42496,
+  LegPaymentStubStartDateUnadjusted = 42497,
+  LegPaymentStubStartDateBusinessDayConvention = 42498,
+  LegPaymentStubStartDateRelativeTo = 42499,
+  LegPaymentStubStartDateOffsetPeriod = 42500,
+  LegPaymentStubStartDateOffsetUnit = 42501,
+  LegPaymentStubStartDateOffsetDayType = 42502,
+  LegPaymentStubStartDateAdjusted = 42503,
+  NoLegPaymentStubStartDateBusinessCenters = 42504,
+  LegPaymentStubStartDateBusinessCenter = 42505,
+  LegProvisionBreakFeeElection = 42506,
+  LegProvisionBreakFeeRate = 42507,
+  NoLegReturnRateDates = 42508,
+  LegReturnRateDateMode = 42509,
+  LegReturnRateValuationDateRelativeTo = 42510,
+  LegReturnRateValuationDateOffsetPeriod = 42511,
+  LegReturnRateValuationDateOffsetUnit = 42512,
+  LegReturnRateValuationDateOffsetDayType = 42513,
+  LegReturnRateValuationStartDateUnadjusted = 42514,
+  LegReturnRateValuationStartDateRelativeTo = 42515,
+  LegReturnRateValuationStartDateOffsetPeriod = 42516,
+  LegReturnRateValuationStartDateOffsetUnit = 42517,
+  LegReturnRateValuationStartDateOffsetDayType = 42518,
+  LegReturnRateValuationStartDateAdjusted = 42519,
+  LegReturnRateValuationEndDateUnadjusted = 42520,
+  LegReturnRateValuationEndDateRelativeTo = 42521,
+  LegReturnRateValuationEndDateOffsetPeriod = 42522,
+  LegReturnRateValuationEndDateOffsetUnit = 42523,
+  LegReturnRateValuationEndDateOffsetDayType = 42524,
+  LegReturnRateValuationEndDateAdjusted = 42525,
+  LegReturnRateValuationFrequencyPeriod = 42526,
+  LegReturnRateValuationFrequencyUnit = 42527,
+  LegReturnRateValuationFrequencyRollConvention = 42528,
+  LegReturnRateValuationDateBusinessDayConvention = 42529,
+  NoLegReturnRateFXConversions = 42530,
+  LegReturnRateFXCurrencySymbol = 42531,
+  LegReturnRateFXRate = 42532,
+  LegReturnRateFXRateCalc = 42533,
+  NoLegReturnRates = 42534,
+  LegReturnRatePriceSequence = 42535,
+  LegReturnRateCommissionBasis = 42536,
+  LegReturnRateCommissionAmount = 42537,
+  LegReturnRateCommissionCurrency = 42538,
+  LegReturnRateTotalCommissionPerTrade = 42539,
+  LegReturnRateDeterminationMethod = 42540,
+  LegReturnRateAmountRelativeTo = 42541,
+  LegReturnRateQuoteMeasureType = 42542,
+  LegReturnRateQuoteUnits = 42543,
+  LegReturnRateQuoteMethod = 42544,
+  LegReturnRateQuoteCurrency = 42545,
+  LegReturnRateQuoteCurrencyType = 42546,
+  LegReturnRateQuoteTimeType = 42547,
+  LegReturnRateQuoteTime = 42548,
+  LegReturnRateQuoteDate = 42549,
+  LegReturnRateQuoteExpirationTime = 42550,
+  LegReturnRateQuoteBusinessCenter = 42551,
+  LegReturnRateQuoteExchange = 42552,
+  LegReturnRateQuotePricingModel = 42553,
+  LegReturnRateCashFlowType = 42554,
+  LegReturnRateValuationTimeType = 42555,
+  LegReturnRateValuationTime = 42556,
+  LegReturnRateValuationTimeBusinessCenter = 42557,
+  LegReturnRateValuationPriceOption = 42558,
+  LegReturnRateFinalPriceFallback = 42559,
+  NoLegReturnRateInformationSources = 42560,
+  LegReturnRateInformationSource = 42561,
+  LegReturnRateReferencePage = 42562,
+  LegReturnRateReferencePageHeading = 42563,
+  NoLegReturnRatePrices = 42564,
+  LegReturnRatePriceBasis = 42565,
+  LegReturnRatePrice = 42566,
+  LegReturnRatePriceCurrency = 42567,
+  LegReturnRatePriceType = 42568,
+  NoLegReturnRateValuationDateBusinessCenters = 42569,
+  LegReturnRateValuationDateBusinessCenter = 42570,
+  NoLegReturnRateValuationDates = 42571,
+  LegReturnRateValuationDate = 42572,
+  LegReturnRateValuationDateType = 42573,
+  LegSettlMethodElectionDateUnadjusted = 42574,
+  LegSettlMethodElectionDateBusinessDayConvention = 42575,
+  LegSettlMethodElectionDateRelativeTo = 42576,
+  LegSettlMethodElectionDateOffsetPeriod = 42577,
+  LegSettlMethodElectionDateOffsetUnit = 42578,
+  LegSettlMethodElectionDateOffsetDayType = 42579,
+  LegSettlMethodElectionDateAdjusted = 42580,
+  NoLegSettlMethodElectionDateBusinessCenters = 42581,
+  LegSettlMethodElectionDateBusinessCenter = 42582,
+  LegStreamVersion = 42583,
+  LegStreamVersionEffectiveDate = 42584,
+  LegStreamNotionalDeterminationMethod = 42585,
+  LegStreamNotionalAdjustments = 42586,
+  StreamCommodityDeliveryPricingRegion = 42587,
+  LegStreamCommodityDeliveryPricingRegion = 42588,
+  UnderlyingStreamCommodityDeliveryPricingRegion = 42589,
+  SettlMethodElectingPartySide = 42590,
+  MakeWholeDate = 42591,
+  MakeWholeAmount = 42592,
+  MakeWholeBenchmarkCurveName = 42593,
+  MakeWholeBenchmarkCurvePoint = 42594,
+  MakeWholeRecallSpread = 42595,
+  MakeWholeBenchmarkQuote = 42596,
+  MakeWholeInterpolationMethod = 42597,
+  PaymentAmountRelativeTo = 42598,
+  PaymentAmountDeterminationMethod = 42599,
+  PaymentStreamCashSettlIndicator = 42600,
+  PaymentStreamCompoundingXIDRef = 42601,
+  PaymentStreamCompoundingSpread = 42602,
+  PaymentStreamInterpolationMethod = 42603,
+  PaymentStreamInterpolationPeriod = 42604,
+  PaymentStreamCompoundingFixedRate = 42605,
+  NoPaymentStreamCompoundingDates = 42606,
+  PaymentStreamCompoundingDate = 42607,
+  PaymentStreamCompoundingDateType = 42608,
+  PaymentStreamCompoundingDatesBusinessDayConvention = 42609,
+  PaymentStreamCompoundingDatesRelativeTo = 42610,
+  PaymentStreamCompoundingDatesOffsetPeriod = 42611,
+  PaymentStreamCompoundingDatesOffsetUnit = 42612,
+  PaymentStreamCompoundingDatesOffsetDayType = 42613,
+  PaymentStreamCompoundingPeriodSkip = 42614,
+  PaymentStreamCompoundingFrequencyPeriod = 42615,
+  PaymentStreamCompoundingFrequencyUnit = 42616,
+  PaymentStreamCompoundingRollConvention = 42617,
+  PaymentStreamBoundsFirstDateUnadjusted = 42618,
+  PaymentStreamBoundsLastDateUnadjusted = 42619,
+  NoPaymentStreamCompoundingDatesBusinessCenters = 42620,
+  PaymentStreamCompoundingDatesBusinessCenter = 42621,
+  PaymentStreamCompoundingEndDateUnadjusted = 42622,
+  PaymentStreamCompoundingEndDateRelativeTo = 42623,
+  PaymentStreamCompoundingEndDateOffsetPeriod = 42624,
+  PaymentStreamCompoundingEndDateOffsetUnit = 42625,
+  PaymentStreamCompoundingEndDateOffsetDayType = 42626,
+  PaymentStreamCompoundingEndDateAdjusted = 42627,
+  PaymentStreamCompoundingRateIndex = 42628,
+  PaymentStreamCompoundingRateIndexCurvePeriod = 42629,
+  PaymentStreamCompoundingRateIndexCurveUnit = 42630,
+  PaymentStreamCompoundingRateMultiplier = 42631,
+  PaymentStreamCompoundingRateSpread = 42632,
+  PaymentStreamCompoundingRateSpreadPositionType = 42633,
+  PaymentStreamCompoundingRateTreatment = 42634,
+  PaymentStreamCompoundingCapRate = 42635,
+  PaymentStreamCompoundingCapRateBuySide = 42636,
+  PaymentStreamCompoundingCapRateSellSide = 42637,
+  PaymentStreamCompoundingFloorRate = 42638,
+  PaymentStreamCompoundingFloorRateBuySide = 42639,
+  PaymentStreamCompoundingFloorRateSellSide = 42640,
+  PaymentStreamCompoundingInitialRate = 42641,
+  PaymentStreamCompoundingFinalRateRoundingDirection = 42642,
+  PaymentStreamCompoundingFinalRatePrecision = 42643,
+  PaymentStreamCompoundingAveragingMethod = 42644,
+  PaymentStreamCompoundingNegativeRateTreatment = 42645,
+  PaymentStreamCompoundingStartDateUnadjusted = 42646,
+  PaymentStreamCompoundingStartDateRelativeTo = 42647,
+  PaymentStreamCompoundingStartDateOffsetPeriod = 42648,
+  PaymentStreamCompoundingStartDateOffsetUnit = 42649,
+  PaymentStreamCompoundingStartDateOffsetDayType = 42650,
+  PaymentStreamCompoundingStartDateAdjusted = 42651,
+  PaymentStreamFormulaImageLength = 42652,
+  PaymentStreamFormulaImage = 42653,
+  PaymentStreamFinalPricePaymentDateUnadjusted = 42654,
+  PaymentStreamFinalPricePaymentDateRelativeTo = 42655,
+  PaymentStreamFinalPricePaymentDateOffsetfPeriod = 42656,
+  PaymentStreamFinalPricePaymentDateOffsetUnit = 42657,
+  PaymentStreamFinalPricePaymentDateOffsetDayType = 42658,
+  PaymentStreamFinalPricePaymentDateAdjusted = 42659,
+  NoPaymentStreamFixingDates = 42660,
+  PaymentStreamFixingDate = 42661,
+  PaymentStreamFixingDateType = 42662,
+  PaymentStreamFirstObservationDateUnadjusted = 42663,
+  PaymentStreamFirstObservationDateRelativeTo = 42664,
+  PaymentStreamFirstObservationDateOffsetDayType = 42665,
+  PaymentStreamFirstObservationDateAdjusted = 42666,
+  PaymentStreamUnderlierRefID = 42667,
+  ReturnRateNotionalReset = 42668,
+  PaymentStreamLinkInitialLevel = 42669,
+  PaymentStreamLinkClosingLevelIndicator = 42670,
+  PaymentStreamLinkExpiringLevelIndicator = 42671,
+  PaymentStreamLinkEstimatedTradingDays = 42672,
+  PaymentStreamLinkStrikePrice = 42673,
+  PaymentStreamLinkStrikePriceType = 42674,
+  PaymentStreamLinkMaximumBoundary = 42675,
+  PaymentStreamLinkMinimumBoundary = 42676,
+  PaymentStreamLinkNumberOfDataSeries = 42677,
+  PaymentStreamVarianceUnadjustedCap = 42678,
+  PaymentStreamRealizedVarianceMethod = 42679,
+  PaymentStreamDaysAdjustmentIndicator = 42680,
+  PaymentStreamNearestExchangeContractRefID = 42681,
+  PaymentStreamVegaNotionalAmount = 42682,
+  NoPaymentStreamFormulas = 42683,
+  PaymentStreamFormula = 42684,
+  PaymentStreamFormulaDesc = 42685,
+  PaymentStreamFormulaCurrency = 42686,
+  PaymentStreamFormulaCurrencyDeterminationMethod = 42687,
+  PaymentStreamFormulaReferenceAmount = 42688,
+  PaymentStubEndDateUnadjusted = 42689,
+  PaymentStubEndDateBusinessDayConvention = 42690,
+  PaymentStubEndDateRelativeTo = 42691,
+  PaymentStubEndDateOffsetPeriod = 42692,
+  PaymentStubEndDateOffsetUnit = 42693,
+  PaymentStubEndDateOffsetDayType = 42694,
+  PaymentStubEndDateAdjusted = 42695,
+  NoPaymentStubEndDateBusinessCenters = 42696,
+  PaymentStubEndDateBusinessCenter = 42697,
+  PaymentStubStartDateUnadjusted = 42698,
+  PaymentStubStartDateBusinessDayConvention = 42699,
+  PaymentStubStartDateRelativeTo = 42700,
+  PaymentStubStartDateOffsetPeriod = 42701,
+  PaymentStubStartDateOffsetUnit = 42702,
+  PaymentStubStartDateOffsetDayType = 42703,
+  PaymentStubStartDateAdjusted = 42704,
+  NoPaymentStubStartDateBusinessCenters = 42705,
+  PaymentStubStartDateBusinessCenter = 42706,
+  ProvisionBreakFeeElection = 42707,
+  ProvisionBreakFeeRate = 42708,
+  NoReturnRateDates = 42709,
+  ReturnRateDateMode = 42710,
+  ReturnRateValuationDateRelativeTo = 42711,
+  ReturnRateValuationDateOffsetPeriod = 42712,
+  ReturnRateValuationDateOffsetUnit = 42713,
+  ReturnRateValuationDateOffsetDayType = 42714,
+  ReturnRateValuationStartDateUnadjusted = 42715,
+  ReturnRateValuationStartDateRelativeTo = 42716,
+  ReturnRateValuationStartDateOffsetPeriod = 42717,
+  ReturnRateValuationStartDateOffsetUnit = 42718,
+  ReturnRateValuationStartDateOffsetDayType = 42719,
+  ReturnRateValuationStartDateAdjusted = 42720,
+  ReturnRateValuationEndDateUnadjusted = 42721,
+  ReturnRateValuationEndDateRelativeTo = 42722,
+  ReturnRateValuationEndDateOffsetPeriod = 42723,
+  ReturnRateValuationEndDateOffsetUnit = 42724,
+  ReturnRateValuationEndDateOffsetDayType = 42725,
+  ReturnRateValuationEndDateAdjusted = 42726,
+  ReturnRateValuationFrequencyPeriod = 42727,
+  ReturnRateValuationFrequencyUnit = 42728,
+  ReturnRateValuationFrequencyRollConvention = 42729,
+  ReturnRateValuationDateBusinessDayConvention = 42730,
+  NoReturnRateFXConversions = 42731,
+  ReturnRateFXCurrencySymbol = 42732,
+  ReturnRateFXRate = 42733,
+  ReturnRateFXRateCalc = 42734,
+  NoReturnRates = 42735,
+  ReturnRatePriceSequence = 42736,
+  ReturnRateCommissionBasis = 42737,
+  ReturnRateCommissionAmount = 42738,
+  ReturnRateCommissionCurrency = 42739,
+  ReturnRateTotalCommissionPerTrade = 42740,
+  ReturnRateDeterminationMethod = 42741,
+  ReturnRateAmountRelativeTo = 42742,
+  ReturnRateQuoteMeasureType = 42743,
+  ReturnRateQuoteUnits = 42744,
+  ReturnRateQuoteMethod = 42745,
+  ReturnRateQuoteCurrency = 42746,
+  ReturnRateQuoteCurrencyType = 42747,
+  ReturnRateQuoteTimeType = 42748,
+  ReturnRateQuoteTime = 42749,
+  ReturnRateQuoteDate = 42750,
+  ReturnRateQuoteExpirationTime = 42751,
+  ReturnRateQuoteBusinessCenter = 42752,
+  ReturnRateQuoteExchange = 42753,
+  ReturnRateQuotePricingModel = 42754,
+  ReturnRateCashFlowType = 42755,
+  ReturnRateValuationTimeType = 42756,
+  ReturnRateValuationTime = 42757,
+  ReturnRateValuationTimeBusinessCenter = 42758,
+  ReturnRateValuationPriceOption = 42759,
+  ReturnRateFinalPriceFallback = 42760,
+  NoReturnRateInformationSources = 42761,
+  ReturnRateInformationSource = 42762,
+  ReturnRateReferencePage = 42763,
+  ReturnRateReferencePageHeading = 42764,
+  NoReturnRatePrices = 42765,
+  ReturnRatePriceBasis = 42766,
+  ReturnRatePrice = 42767,
+  ReturnRatePriceCurrency = 42768,
+  ReturnRatePriceType = 42769,
+  NoReturnRateValuationDateBusinessCenters = 42770,
+  ReturnRateValuationDateBusinessCenter = 42771,
+  NoReturnRateValuationDates = 42772,
+  ReturnRateValuationDate = 42773,
+  ReturnRateValuationDateType = 42774,
+  NoSettlMethodElectionDateBusinessCenters = 42775,
+  SettlMethodElectionDateBusinessCenter = 42776,
+  SettlMethodElectionDateUnadjusted = 42777,
+  SettlMethodElectionDateBusinessDayConvention = 42778,
+  SettlMethodElectionDateRelativeTo = 42779,
+  SettlMethodElectionDateOffsetPeriod = 42780,
+  SettlMethodElectionDateOffsetUnit = 42781,
+  SettlMethodElectionDateOffsetDayType = 42782,
+  SettlMethodElectionDateAdjusted = 42783,
+  StreamVersion = 42784,
+  StreamVersionEffectiveDate = 42785,
+  StreamNotionalDeterminationMethod = 42786,
+  StreamNotionalAdjustments = 42787,
+  NoUnderlyingCashSettlDateBusinessCenters = 42788,
+  UnderlyingCashSettlDateBusinessCenter = 42789,
+  UnderlyingCashSettlDateUnadjusted = 42790,
+  UnderlyingCashSettlDateBusinessDayConvention = 42791,
+  UnderlyingCashSettlDateRelativeTo = 42792,
+  UnderlyingCashSettlDateOffsetPeriod = 42793,
+  UnderlyingCashSettlDateOffsetUnit = 42794,
+  UnderlyingCashSettlDateOffsetDayType = 42795,
+  UnderlyingCashSettlDateAdjusted = 42796,
+  UnderlyingCashSettlPriceSource = 42797,
+  UnderlyingCashSettlPriceDefault = 42798,
+  NoUnderlyingDividendAccrualPaymentDateBusinessCenters = 42799,
+  UnderlyingDividendAccrualPaymentDateBusinessCenter = 42800,
+  UnderlyingDividendFloatingRateIndex = 42801,
+  UnderlyingDividendFloatingRateIndexCurvePeriod = 42802,
+  UnderlyingDividendFloatingRateIndexCurveUnit = 42803,
+  UnderlyingDividendFloatingRateMultiplier = 42804,
+  UnderlyingDividendFloatingRateSpread = 42805,
+  UnderlyingDividendFloatingRateSpreadPositionType = 42806,
+  UnderlyingDividendFloatingRateTreatment = 42807,
+  UnderlyingDividendCapRate = 42808,
+  UnderlyingDividendCapRateBuySide = 42809,
+  UnderlyingDividendCapRateSellSide = 42810,
+  UnderlyingDividendFloorRate = 42811,
+  UnderlyingDividendFloorRateBuySide = 42812,
+  UnderlyingDividendFloorRateSellSide = 42813,
+  UnderlyingDividendInitialRate = 42814,
+  UnderlyingDividendFinalRateRoundingDirection = 42815,
+  UnderlyingDividendFinalRatePrecision = 42816,
+  UnderlyingDividendAveragingMethod = 42817,
+  UnderlyingDividendNegativeRateTreatment = 42818,
+  UnderlyingDividendAccrualPaymentDateRelativeTo = 42819,
+  UnderlyingDividendAccrualPaymentDateOffsetPeriod = 42820,
+  UnderlyingDividendAccrualPaymentDateOffsetUnit = 42821,
+  UnderlyingDividendAccrualPaymentDateOffsetDayType = 42822,
+  UnderlyingDividendAccrualPaymentDateUnadjusted = 42823,
+  UnderlyingDividendAccrualPaymentDateBusinessDayConvention = 42824,
+  UnderlyingDividendAccrualPaymentDateAdjusted = 42825,
+  UnderlyingDividendReinvestmentIndicator = 42826,
+  UnderlyingDividendEntitlementEvent = 42827,
+  UnderlyingDividendAmountType = 42828,
+  UnderlyingDividendUnderlierRefID = 42829,
+  UnderlyingExtraordinaryDividendPartySide = 42830,
+  UnderlyingExtraordinaryDividendAmountType = 42831,
+  UnderlyingExtraordinaryDividendCurrency = 42832,
+  UnderlyingExtraordinaryDividendDeterminationMethod = 42833,
+  UnderlyingDividendAccrualFixedRate = 42834,
+  UnderlyingDividendCompoundingMethod = 42835,
+  UnderlyingDividendNumOfIndexUnits = 42836,
+  UnderlyingDividendCashPercentage = 42837,
+  UnderlyingDividendCashEquivalentPercentage = 42838,
+  UnderlyingNonCashDividendTreatment = 42839,
+  UnderlyingDividendComposition = 42840,
+  UnderlyingSpecialDividendsIndicator = 42841,
+  UnderlyingMaterialDividendsIndicator = 42842,
+  UnderlyingOptionsExchangeDividendsIndicator = 42843,
+  UnderlyingAdditionalDividendsIndicator = 42844,
+  UnderlyingAllDividendsIndicator = 42845,
+  UnderlyingDividendFXTriggerDateRelativeTo = 42846,
+  UnderlyingDividendFXTriggerDateOffsetPeriod = 42847,
+  UnderlyingDividendFXTriggerDateOffsetUnit = 42848,
+  UnderlyingDividendFXTriggerDateOffsetDayType = 42849,
+  UnderlyingDividendFXTriggerDateUnadjusted = 42850,
+  UnderlyingDividendFXTriggerDateBusinessDayConvention = 42851,
+  UnderlyingDividendFXTriggerDateAdjusted = 42852,
+  NoUnderlyingDividendFXTriggerDateBusinessCenters = 42853,
+  UnderlyingDividendFXTriggerDateBusinessCenter = 42854,
+  NoUnderlyingDividendPayments = 42855,
+  UnderlyingDividendPaymentDate = 42856,
+  UnderlyingDividendPaymentAmount = 42857,
+  UnderlyingDividendPaymentCurrency = 42858,
+  UnderlyingDividendAccruedInterest = 42859,
+  UnderlyingDividendPayoutRatio = 42860,
+  UnderlyingDividendPayoutConditions = 42861,
+  NoUnderlyingDividendPeriods = 42862,
+  UnderlyingDividendPeriodSequence = 42863,
+  UnderlyingDividendPeriodStartDateUnadjusted = 42864,
+  UnderlyingDividendPeriodEndDateUnadjusted = 42865,
+  UnderlyingDividendPeriodUnderlierRefID = 42866,
+  UnderlyingDividendPeriodStrikePrice = 42867,
+  UnderlyingDividendPeriodBusinessDayConvention = 42868,
+  UnderlyingDividendPeriodValuationDateUnadjusted = 42869,
+  UnderlyingDividendPeriodValuationDateRelativeTo = 42870,
+  UnderlyingDividendPeriodValuationDateOffsetPeriod = 42871,
+  UnderlyingDividendPeriodValuationDateOffsetUnit = 42872,
+  UnderlyingDividendPeriodValuationDateOffsetDayType = 42873,
+  UnderlyingDividendPeriodValuationDateAdjusted = 42874,
+  UnderlyingDividendPeriodPaymentDateUnadjusted = 42875,
+  UnderlyingDividendPeriodPaymentDateRelativeTo = 42876,
+  UnderlyingDividendPeriodPaymentDateOffsetPeriod = 42877,
+  UnderlyingDividendPeriodPaymentDateOffsetUnit = 42878,
+  UnderlyingDividendPeriodPaymentDateOffsetDayType = 42879,
+  UnderlyingDividendPeriodPaymentDateAdjusted = 42880,
+  UnderlyingDividendPeriodXID = 42881,
+  NoUnderlyingDividendPeriodBusinessCenters = 42882,
+  UnderlyingDividendPeriodBusinessCenter = 42883,
+  NoUnderlyingExtraordinaryEvents = 42884,
+  UnderlyingExtraordinaryEventType = 42885,
+  UnderlyingExtraordinaryEventValue = 42886,
+  UnderlyingSettlMethodElectingPartySide = 42887,
+  UnderlyingMakeWholeDate = 42888,
+  UnderlyingMakeWholeAmount = 42889,
+  UnderlyingMakeWholeBenchmarkCurveName = 42890,
+  UnderlyingMakeWholeBenchmarkCurvePoint = 42891,
+  UnderlyingMakeWholeRecallSpread = 42892,
+  UnderlyingMakeWholeBenchmarkQuote = 42893,
+  UnderlyingMakeWholeInterpolationMethod = 42894,
+  UnderlyingPaymentStreamCashSettlIndicator = 42895,
+  UnderlyingPaymentStreamCompoundingXIDRef = 42896,
+  UnderlyingPaymentStreamCompoundingSpread = 42897,
+  UnderlyingPaymentStreamInterpolationMethod = 42898,
+  UnderlyingPaymentStreamInterpolationPeriod = 42899,
+  UnderlyingPaymentStreamCompoundingFixedRate = 42900,
+  NoUnderlyingPaymentStreamCompoundingDates = 42901,
+  UnderlyingPaymentStreamCompoundingDate = 42902,
+  UnderlyingPaymentStreamCompoundingDateType = 42903,
+  UnderlyingPaymentStreamCompoundingDatesBusinessDayConvention = 42904,
+  UnderlyingPaymentStreamCompoundingDatesRelativeTo = 42905,
+  UnderlyingPaymentStreamCompoundingDatesOffsetPeriod = 42906,
+  UnderlyingPaymentStreamCompoundingDatesOffsetUnit = 42907,
+  UnderlyingPaymentStreamCompoundingDatesOffsetDayType = 42908,
+  UnderlyingPaymentStreamCompoundingPeriodSkip = 42909,
+  UnderlyingPaymentStreamCompoundingFrequencyPeriod = 42910,
+  UnderlyingPaymentStreamCompoundingFrequencyUnit = 42911,
+  UnderlyingPaymentStreamCompoundingRollConvention = 42912,
+  UnderlyingPaymentStreamBoundsFirstDateUnadjusted = 42913,
+  UnderlyingPaymentStreamBoundsLastDateUnadjusted = 42914,
+  NoUnderlyingPaymentStreamCompoundingDatesBusinessCenters = 42915,
+  UnderlyingPaymentStreamCompoundingDatesBusinessCenter = 42916,
+  UnderlyingPaymentStreamCompoundingEndDateUnadjusted = 42917,
+  UnderlyingPaymentStreamCompoundingEndDateRelativeTo = 42918,
+  UnderlyingPaymentStreamCompoundingEndDateOffsetPeriod = 42919,
+  UnderlyingPaymentStreamCompoundingEndDateOffsetUnit = 42920,
+  UnderlyingPaymentStreamCompoundingEndDateOffsetDayType = 42921,
+  UnderlyingPaymentStreamCompoundingEndDateAdjusted = 42922,
+  UnderlyingPaymentStreamCompoundingRateIndex = 42923,
+  UnderlyingPaymentStreamCompoundingRateIndexCurvePeriod = 42924,
+  UnderlyingPaymentStreamCompoundingRateIndexCurveUnit = 42925,
+  UnderlyingPaymentStreamCompoundingRateMultiplier = 42926,
+  UnderlyingPaymentStreamCompoundingRateSpread = 42927,
+  UnderlyingPaymentStreamCompoundingRateSpreadPositionType = 42928,
+  UnderlyingPaymentStreamCompoundingRateTreatment = 42929,
+  UnderlyingPaymentStreamCompoundingCapRate = 42930,
+  UnderlyingPaymentStreamCompoundingCapRateBuySide = 42931,
+  UnderlyingPaymentStreamCompoundingCapRateSellSide = 42932,
+  UnderlyingPaymentStreamCompoundingFloorRate = 42933,
+  UnderlyingPaymentStreamCompoundingFloorRateBuySide = 42934,
+  UnderlyingPaymentStreamCompoundingFloorRateSellSide = 42935,
+  UnderlyingPaymentStreamCompoundingInitialRate = 42936,
+  UnderlyingPaymentStreamCompoundingFinalRateRoundingDirection = 42937,
+  UnderlyingPaymentStreamCompoundingFinalRatePrecision = 42938,
+  UnderlyingPaymentStreamCompoundingAveragingMethod = 42939,
+  UnderlyingPaymentStreamCompoundingNegativeRateTreatment = 42940,
+  UnderlyingPaymentStreamCompoundingStartDateUnadjusted = 42941,
+  UnderlyingPaymentStreamCompoundingStartDateRelativeTo = 42942,
+  UnderlyingPaymentStreamCompoundingStartDateOffsetPeriod = 42943,
+  UnderlyingPaymentStreamCompoundingStartDateOffsetUnit = 42944,
+  UnderlyingPaymentStreamCompoundingStartDateOffsetDayType = 42945,
+  UnderlyingPaymentStreamCompoundingStartDateAdjusted = 42946,
+  UnderlyingPaymentStreamFormulaImageLength = 42947,
+  UnderlyingPaymentStreamFormulaImage = 42948,
+  UnderlyingPaymentStreamFinalPricePaymentDateUnadjusted = 42949,
+  UnderlyingPaymentStreamFinalPricePaymentDateRelativeTo = 42950,
+  UnderlyingPaymentStreamFinalPricePaymentDateOffsetPeriod = 42951,
+  UnderlyingPaymentStreamFinalPricePaymentDateOffsetUnit = 42952,
+  UnderlyingPaymentStreamFinalPricePaymentDateOffsetDayType = 42953,
+  UnderlyingPaymentStreamFinalPricePaymentDateAdjusted = 42954,
+  NoUnderlyingPaymentStreamFixingDates = 42955,
+  UnderlyingPaymentStreamFixingDate = 42956,
+  UnderlyingPaymentStreamFixingDateType = 42957,
+  UnderlyingPaymentStreamFirstObservationDateUnadjusted = 42958,
+  UnderlyingPaymentStreamFirstObservationDateRelativeTo = 42959,
+  UnderlyingPaymentStreamFirstObservationDateOffsetDayType = 42960,
+  UnderlyingPaymentStreamFirstObservationDateAdjusted = 42961,
+  UnderlyingPaymentStreamUnderlierRefID = 42962,
+  UnderlyingReturnRateNotionalReset = 42963,
+  UnderlyingPaymentStreamLinkInitialLevel = 42964,
+  UnderlyingPaymentStreamLinkClosingLevelIndicator = 42965,
+  UnderlyingPaymentStreamLinkExpiringLevelIndicator = 42966,
+  UnderlyingPaymentStreamLinkEstimatedTradingDays = 42967,
+  UnderlyingPaymentStreamLinkStrikePrice = 42968,
+  UnderlyingPaymentStreamLinkStrikePriceType = 42969,
+  UnderlyingPaymentStreamLinkMaximumBoundary = 42970,
+  UnderlyingPaymentStreamLinkMinimumBoundary = 42971,
+  UnderlyingPaymentStreamLinkNumberOfDataSeries = 42972,
+  UnderlyingPaymentStreamVarianceUnadjustedCap = 42973,
+  UnderlyingPaymentStreamRealizedVarianceMethod = 42974,
+  UnderlyingPaymentStreamDaysAdjustmentIndicator = 42975,
+  UnderlyingPaymentStreamNearestExchangeContractRefID = 42976,
+  UnderlyingPaymentStreamVegaNotionalAmount = 42977,
+  UnderlyingPaymentStreamFormulaCurrency = 42978,
+  UnderlyingPaymentStreamFormulaCurrencyDeterminationMethod = 42979,
+  UnderlyingPaymentStreamFormulaReferenceAmount = 42980,
+  NoUnderlyingPaymentStreamFormulas = 42981,
+  UnderlyingPaymentStreamFormula = 42982,
+  UnderlyingPaymentStreamFormulaDesc = 42983,
+  UnderlyingPaymentStubEndDateUnadjusted = 42984,
+  UnderlyingPaymentStubEndDateBusinessDayConvention = 42985,
+  UnderlyingPaymentStubEndDateRelativeTo = 42986,
+  UnderlyingPaymentStubEndDateOffsetPeriod = 42987,
+  UnderlyingPaymentStubEndDateOffsetUnit = 42988,
+  UnderlyingPaymentStubEndDateOffsetDayType = 42989,
+  UnderlyingPaymentStubEndDateAdjusted = 42990,
+  NoUnderlyingPaymentStubEndDateBusinessCenters = 42991,
+  UnderlyingPaymentStubEndDateBusinessCenter = 42992,
+  UnderlyingPaymentStubStartDateUnadjusted = 42993,
+  UnderlyingPaymentStubStartDateBusinessDayConvention = 42994,
+  UnderlyingPaymentStubStartDateRelativeTo = 42995,
+  UnderlyingPaymentStubStartDateOffsetPeriod = 42996,
+  UnderlyingPaymentStubStartDateOffsetUnit = 42997,
+  UnderlyingPaymentStubStartDateOffsetDayType = 42998,
+  UnderlyingPaymentStubStartDateAdjusted = 42999,
+  NoUnderlyingPaymentStubStartDateBusinessCenters = 43000,
+  UnderlyingPaymentStubStartDateBusinessCenter = 43001,
+  UnderlyingProvisionBreakFeeElection = 43002,
+  UnderlyingProvisionBreakFeeRate = 43003,
+  UnderlyingRateSpreadInitialValue = 43004,
+  NoUnderlyingRateSpreadSteps = 43005,
+  UnderlyingRateSpreadStepDate = 43006,
+  UnderlyingRateSpreadStepValue = 43007,
+  NoUnderlyingReturnRateDates = 43008,
+  UnderlyingReturnRateDateMode = 43009,
+  UnderlyingReturnRateValuationDateRelativeTo = 43010,
+  UnderlyingReturnRateValuationDateOffsetPeriod = 43011,
+  UnderlyingReturnRateValuationDateOffsetUnit = 43012,
+  UnderlyingReturnRateValuationDateOffsetDayType = 43013,
+  UnderlyingReturnRateValuationStartDateUnadjusted = 43014,
+  UnderlyingReturnRateValuationStartDateRelativeTo = 43015,
+  UnderlyingReturnRateValuationStartDateOffsetPeriod = 43016,
+  UnderlyingReturnRateValuationStartDateOffsetUnit = 43017,
+  UnderlyingReturnRateValuationStartDateOffsetDayType = 43018,
+  UnderlyingReturnRateValuationStartDateAdjusted = 43019,
+  UnderlyingReturnRateValuationEndDateUnadjusted = 43020,
+  UnderlyingReturnRateValuationEndDateRelativeTo = 43021,
+  UnderlyingReturnRateValuationEndDateOffsetPeriod = 43022,
+  UnderlyingReturnRateValuationEndDateOffsetUnit = 43023,
+  UnderlyingReturnRateValuationEndDateOffsetDayType = 43024,
+  UnderlyingReturnRateValuationEndDateAdjusted = 43025,
+  UnderlyingReturnRateValuationFrequencyPeriod = 43026,
+  UnderlyingReturnRateValuationFrequencyUnit = 43027,
+  UnderlyingReturnRateValuationFrequencyRollConvention = 43028,
+  UnderlyingReturnRateValuationDateBusinessDayConvention = 43029,
+  NoUnderlyingReturnRateFXConversions = 43030,
+  UnderlyingReturnRateFXCurrencySymbol = 43031,
+  UnderlyingReturnRateFXRate = 43032,
+  UnderlyingReturnRateFXRateCalc = 43033,
+  NoUnderlyingReturnRates = 43034,
+  UnderlyingReturnRatePriceSequence = 43035,
+  UnderlyingReturnRateCommissionBasis = 43036,
+  UnderlyingReturnRateCommissionAmount = 43037,
+  UnderlyingReturnRateCommissionCurrency = 43038,
+  UnderlyingReturnRateTotalCommissionPerTrade = 43039,
+  UnderlyingReturnRateDeterminationMethod = 43040,
+  UnderlyingReturnRateAmountRelativeTo = 43041,
+  UnderlyingReturnRateQuoteMeasureType = 43042,
+  UnderlyingReturnRateQuoteUnits = 43043,
+  UnderlyingReturnRateQuoteMethod = 43044,
+  UnderlyingReturnRateQuoteCurrency = 43045,
+  UnderlyingReturnRateQuoteCurrencyType = 43046,
+  UnderlyingReturnRateQuoteTimeType = 43047,
+  UnderlyingReturnRateQuoteTime = 43048,
+  UnderlyingReturnRateQuoteDate = 43049,
+  UnderlyingReturnRateQuoteExpirationTime = 43050,
+  UnderlyingReturnRateQuoteBusinessCenter = 43051,
+  UnderlyingReturnRateQuoteExchange = 43052,
+  UnderlyingReturnRateQuotePricingModel = 43053,
+  UnderlyingReturnRateCashFlowType = 43054,
+  UnderlyingReturnRateValuationTimeType = 43055,
+  UnderlyingReturnRateValuationTime = 43056,
+  UnderlyingReturnRateValuationTimeBusinessCenter = 43057,
+  UnderlyingReturnRateValuationPriceOption = 43058,
+  UnderlyingReturnRateFinalPriceFallback = 43059,
+  NoUnderlyingReturnRateInformationSources = 43060,
+  UnderlyingReturnRateInformationSource = 43061,
+  UnderlyingReturnRateReferencePage = 43062,
+  UnderlyingReturnRateReferencePageHeading = 43063,
+  NoUnderlyingReturnRatePrices = 43064,
+  UnderlyingReturnRatePriceBasis = 43065,
+  UnderlyingReturnRatePrice = 43066,
+  UnderlyingReturnRatePriceCurrency = 43067,
+  UnderlyingReturnRatePriceType = 43068,
+  NoUnderlyingReturnRateValuationDateBusinessCenters = 43069,
+  UnderlyingReturnRateValuationDateBusinessCenter = 43070,
+  NoUnderlyingReturnRateValuationDates = 43071,
+  UnderlyingReturnRateValuationDate = 43072,
+  UnderlyingReturnRateValuationDateType = 43073,
+  NoUnderlyingSettlMethodElectionDateBusinessCenters = 43074,
+  UnderlyingSettlMethodElectionDateBusinessCenter = 43075,
+  UnderlyingSettlMethodElectionDateUnadjusted = 43076,
+  UnderlyingSettlMethodElectionDateBusinessDayConvention = 43077,
+  UnderlyingSettlMethodElectionDateRelativeTo = 43078,
+  UnderlyingSettlMethodElectionDateOffsetPeriod = 43079,
+  UnderlyingSettlMethodElectionDateOffsetUnit = 43080,
+  UnderlyingSettlMethodElectionDateOffsetDayType = 43081,
+  UnderlyingSettlMethodElectionDateAdjusted = 43082,
+  UnderlyingStreamVersion = 43083,
+  UnderlyingStreamVersionEffectiveDate = 43084,
+  UnderlyingStreamNotionalDeterminationMethod = 43085,
+  UnderlyingStreamNotionalAdjustments = 43086,
+  PaymentDesc = 43087,
+  LegPaymentStreamRateIndexID = 43088,
+  LegPaymentStreamRateIndexIDSource = 43089,
+  PaymentStreamRateIndexID = 43090,
+  PaymentStreamRateIndexIDSource = 43091,
+  UnderlyingPaymentStreamRateIndexID = 43092,
+  UnderlyingPaymentStreamRateIndexIDSource = 43093,
+  DeliveryStreamRouteOrCharter = 43094,
+  LegDeliveryStreamRouteOrCharter = 43095,
+  UnderlyingDeliveryStreamRouteOrCharter = 43096,
+  PaymentFixedRate = 43097,
+  PaymentFloatingRateIndex = 43098,
+  PaymentFloatingRateIndexCurvePeriod = 43099,
+  PaymentFloatingRateIndexCurveUnit = 43100,
+  PaymentFloatingRateSpread = 43101,
+  PaymentFrequencyPeriod = 43102,
+  PaymentFrequencyUnit = 43103,
+  PaymentRateResetFrequencyPeriod = 43104,
+  PaymentRateResetFrequencyUnit = 43105,
+  PaymentStreamOtherDayCount = 43106,
+  UnderlyingPaymentStreamOtherDayCount = 43107,
+  LegPaymentStreamOtherDayCount = 43108,
+  PaymentStreamFormulaLength = 43109,
+  LegPaymentStreamFormulaLength = 43110,
+  UnderlyingPaymentStreamFormulaLength = 43111,
+  PaymentStreamRateIndex2 = 43112,
+  PaymentStreamRateIndex2Source = 43113,
+  PaymentStreamRateIndex2ID = 43114,
+  PaymentStreamRateIndex2IDSource = 43115,
+  LegPaymentStreamRateIndex2 = 43116,
+  LegPaymentStreamRateIndex2Source = 43117,
+  LegPaymentStreamRateIndex2ID = 43118,
+  LegPaymentStreamRateIndex2IDSource = 43119,
+  UnderlyingPaymentStreamRateIndex2 = 43120,
+  UnderlyingPaymentStreamRateIndex2Source = 43121,
+  UnderlyingPaymentStreamRateIndex2ID = 43122,
+  UnderlyingPaymentStreamRateIndex2IDSource = 43123,
+  BatchID = 50000,
+  BatchTotalMessages = 50001,
+  BatchProcessMode = 50002
 }

@@ -1,5 +1,5 @@
-import { IInstrument } from './instrument'
+import { IInstrmtGrpNoRelatedSym } from './instrmt_grp_no_related_sym'
 
 export interface IInstrmtGrp {
-  Instrument?: IInstrument// [1] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
+  NoRelatedSym?: IInstrmtGrpNoRelatedSym[]// [1] Symbol.55, SymbolSfx.65 .. RelatedToDividendPeriodXIDRef.2417
 }

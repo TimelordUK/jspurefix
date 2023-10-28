@@ -1,0 +1,5 @@
+import { IUnderlyingExtraordinaryEventGrpNoUnderlyingExtraordinaryEvents } from './underlying_extraordinary_event_grp_no_underlying_extraordinary_events'
+
+export interface IUnderlyingExtraordinaryEventGrp {
+  NoUnderlyingExtraordinaryEvents?: IUnderlyingExtraordinaryEventGrpNoUnderlyingExtraordinaryEvents[]// [1] UnderlyingExtraordinaryEventType.42885, UnderlyingExtraordinaryEventValue.42886
+}

@@ -1,0 +1,5 @@
+import { ILegStreamCommodityDataSourceGrpNoLegStreamCommodityDataSources } from './leg_stream_commodity_data_source_grp_no_leg_stream_commodity_data_sources'
+
+export interface ILegStreamCommodityDataSourceGrp {
+  NoLegStreamCommodityDataSources?: ILegStreamCommodityDataSourceGrpNoLegStreamCommodityDataSources[]// [1] LegStreamCommodityDataSourceID.41678, LegStreamCommodityDataSourceIDType.41679
+}

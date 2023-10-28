@@ -1,0 +1,5 @@
+import { IUnderlyingDeliveryStreamCommoditySourceGrpNoUnderlyingDeliveryStreamCommoditySources } from './underlying_delivery_stream_commodity_source_grp_no_underlying_delivery_stream_commodity_sources'
+
+export interface IUnderlyingDeliveryStreamCommoditySourceGrp {
+  NoUnderlyingDeliveryStreamCommoditySources?: IUnderlyingDeliveryStreamCommoditySourceGrpNoUnderlyingDeliveryStreamCommoditySources[]// [1] UnderlyingDeliveryStreamCommoditySource.41809
+}

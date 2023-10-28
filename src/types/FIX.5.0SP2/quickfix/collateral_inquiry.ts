@@ -13,56 +13,52 @@ import { IStipulations } from './set/stipulations'
 import { ISettlInstructionsData } from './set/settl_instructions_data'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-******************************************
-* Used to inquire for collateral status. *
-******************************************
-*/
 export interface ICollateralInquiry {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   CollInquiryID: string// [2] 909 (String)
-  CollInqQualGrp?: ICollInqQualGrp[]// [3] CollInquiryQualifier.896
+  CollInqQualGrp?: ICollInqQualGrp// [3] NoCollInquiryQualifier.938, CollInquiryQualifier.896
   SubscriptionRequestType?: string// [4] 263 (String)
   ResponseTransportType?: number// [5] 725 (Int)
   ResponseDestination?: string// [6] 726 (String)
-  Parties?: IParties[]// [7] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
+  Parties?: IParties// [7] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
   Account?: string// [8] 1 (String)
   AccountType?: number// [9] 581 (Int)
   ClOrdID?: string// [10] 11 (String)
   OrderID?: string// [11] 37 (String)
   SecondaryOrderID?: string// [12] 198 (String)
   SecondaryClOrdID?: string// [13] 526 (String)
-  ExecCollGrp?: IExecCollGrp[]// [14] ExecID.17
-  TrdCollGrp?: ITrdCollGrp[]// [15] TradeReportID.571, SecondaryTradeReportID.818
-  Instrument?: IInstrument// [16] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
+  ExecCollGrp?: IExecCollGrp// [14] NoExecs.124, ExecID.17
+  TrdCollGrp?: ITrdCollGrp// [15] NoTrades.897, TradeReportID.571, SecondaryTradeReportID.818
+  Instrument?: IInstrument// [16] Symbol.55, SymbolSfx.65 .. ExchangeLookAlike.2603
   FinancingDetails?: IFinancingDetails// [17] AgreementDesc.913, AgreementID.914 .. MarginRatio.898
   SettlDate?: Date// [18] 64 (LocalDate)
   Quantity?: number// [19] 53 (Float)
   QtyType?: number// [20] 854 (Int)
   Currency?: string// [21] 15 (String)
-  InstrmtLegGrp?: IInstrmtLegGrp// [22] NoLegs.555, LegSymbol.600 .. LegFlowScheduleType.1440
-  UndInstrmtGrp?: IUndInstrmtGrp// [23] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingDetachmentPoint.1460
-  MarginExcess?: number// [24] 899 (Float)
-  TotalNetValue?: number// [25] 900 (Float)
-  CashOutstanding?: number// [26] 901 (Float)
-  TrdRegTimestamps?: ITrdRegTimestamps[]// [27] TrdRegTimestamp.769, TrdRegTimestampType.770 .. DeskOrderHandlingInst.1035
-  Side?: string// [28] 54 (String)
-  Price?: number// [29] 44 (Float)
-  PriceType?: number// [30] 423 (Int)
-  AccruedInterestAmt?: number// [31] 159 (Float)
-  EndAccruedInterestAmt?: number// [32] 920 (Float)
-  StartCash?: number// [33] 921 (Float)
-  EndCash?: number// [34] 922 (Float)
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [35] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
-  Stipulations?: IStipulations[]// [36] StipulationType.233, StipulationValue.234
-  SettlInstructionsData?: ISettlInstructionsData// [37] SettlDeliveryType.172, StandInstDbType.169 .. SettlPartySubIDType.786
-  TradingSessionID?: string// [38] 336 (String)
-  TradingSessionSubID?: string// [39] 625 (String)
-  SettlSessID?: string// [40] 716 (String)
-  SettlSessSubID?: string// [41] 717 (String)
-  ClearingBusinessDate?: Date// [42] 715 (LocalDate)
-  Text?: string// [43] 58 (String)
-  EncodedTextLen?: number// [44] 354 (Int)
-  EncodedText?: Buffer// [45] 355 (RawData)
-  StandardTrailer: IStandardTrailer// [46] SignatureLength.93, Signature.89, CheckSum.10
+  CurrencyCodeSource?: string// [22] 2897 (String)
+  InstrmtLegGrp?: IInstrmtLegGrp// [23] NoLegs.555, LegSymbol.600 .. LegMarginRatio.2508
+  UndInstrmtGrp?: IUndInstrmtGrp// [24] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingInstrumentXID.2631
+  MarginExcess?: number// [25] 899 (Float)
+  TotalNetValue?: number// [26] 900 (Float)
+  CashOutstanding?: number// [27] 901 (Float)
+  TrdRegTimestamps?: ITrdRegTimestamps// [28] NoTrdRegTimestamps.768, TrdRegTimestamp.769 .. NBBOSource.2834
+  Side?: string// [29] 54 (String)
+  Price?: number// [30] 44 (Float)
+  PriceType?: number// [31] 423 (Int)
+  AccruedInterestAmt?: number// [32] 159 (Float)
+  EndAccruedInterestAmt?: number// [33] 920 (Float)
+  StartCash?: number// [34] 921 (Float)
+  EndCash?: number// [35] 922 (Float)
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [36] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  Stipulations?: IStipulations// [37] NoStipulations.232, StipulationType.233, StipulationValue.234
+  SettlInstructionsData?: ISettlInstructionsData// [38] SettlDeliveryType.172, StandInstDbType.169 .. SettlPartySubIDType.786
+  TradingSessionID?: string// [39] 336 (String)
+  TradingSessionSubID?: string// [40] 625 (String)
+  SettlSessID?: string// [41] 716 (String)
+  SettlSessSubID?: string// [42] 717 (String)
+  ClearingBusinessDate?: Date// [43] 715 (LocalDate)
+  Text?: string// [44] 58 (String)
+  EncodedTextLen?: number// [45] 354 (Length)
+  EncodedText?: Buffer// [46] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [47] SignatureLength.93, Signature.89, CheckSum.10
 }

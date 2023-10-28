@@ -1,0 +1,5 @@
+import { IComplexEventCreditEventSourceGrpNoComplexEventCreditEventSources } from './complex_event_credit_event_source_grp_no_complex_event_credit_event_sources'
+
+export interface IComplexEventCreditEventSourceGrp {
+  NoComplexEventCreditEventSources?: IComplexEventCreditEventSourceGrpNoComplexEventCreditEventSources[]// [1] ComplexEventCreditEventSource.41030
+}

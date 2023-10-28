@@ -1,0 +1,5 @@
+import { ILegStreamCalculationPeriodBusinessCenterGrpNoLegStreamCalculationPeriodBusinessCenters } from './leg_stream_calculation_period_business_center_grp_no_leg_stream_calculation_period_business_centers'
+
+export interface ILegStreamCalculationPeriodBusinessCenterGrp {
+  NoLegStreamCalculationPeriodBusinessCenters?: ILegStreamCalculationPeriodBusinessCenterGrpNoLegStreamCalculationPeriodBusinessCenters[]// [1] LegStreamCalculationPeriodBusinessCenter.40266
+}

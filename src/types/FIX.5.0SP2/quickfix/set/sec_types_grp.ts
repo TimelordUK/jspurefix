@@ -1,7 +1,5 @@
+import { ISecTypesGrpNoSecurityTypes } from './sec_types_grp_no_security_types'
+
 export interface ISecTypesGrp {
-  SecurityType?: string// [1] 167 (String)
-  SecuritySubType?: string// [2] 762 (String)
-  Product?: number// [3] 460 (Int)
-  CFICode?: string// [4] 461 (String)
-  TransactTime?: Date// [5] 60 (UtcTimestamp)
+  NoSecurityTypes?: ISecTypesGrpNoSecurityTypes[]// [1] SecurityType.167, SecuritySubType.762 .. TransactTime.60
 }

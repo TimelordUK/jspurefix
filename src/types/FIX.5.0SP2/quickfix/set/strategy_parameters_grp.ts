@@ -1,5 +1,5 @@
+import { IStrategyParametersGrpNoStrategyParameters } from './strategy_parameters_grp_no_strategy_parameters'
+
 export interface IStrategyParametersGrp {
-  StrategyParameterName?: string// [1] 958 (String)
-  StrategyParameterType?: number// [2] 959 (Int)
-  StrategyParameterValue?: string// [3] 960 (String)
+  NoStrategyParameters?: IStrategyParametersGrpNoStrategyParameters[]// [1] StrategyParameterName.958, StrategyParameterType.959, StrategyParameterValue.960
 }

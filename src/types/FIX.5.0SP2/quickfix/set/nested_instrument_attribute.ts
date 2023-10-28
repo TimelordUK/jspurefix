@@ -1,4 +1,5 @@
+import { INestedInstrumentAttributeNoNestedInstrAttrib } from './nested_instrument_attribute_no_nested_instr_attrib'
+
 export interface INestedInstrumentAttribute {
-  NestedInstrAttribType?: number// [1] 1210 (Int)
-  NestedInstrAttribValue?: string// [2] 1211 (String)
+  NoNestedInstrAttrib?: INestedInstrumentAttributeNoNestedInstrAttrib[]// [1] NestedInstrAttribType.1210, NestedInstrAttribValue.1211
 }

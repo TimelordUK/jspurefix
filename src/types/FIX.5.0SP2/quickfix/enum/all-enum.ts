@@ -1,8 +1,3 @@
-/*
-*************************************
-* Broker's side of advertised trade *
-*************************************
-*/
 export enum AdvSide {
   Buy = 'B',
   Sell = 'S',
@@ -10,41 +5,29 @@ export enum AdvSide {
   Cross = 'X'
 }
 
-/*
-*****************************************************
-* Identifies advertisement message transaction type *
-*****************************************************
-*/
 export enum AdvTransType {
   New = 'N',
   Cancel = 'C',
   Replace = 'R'
 }
 
-/*
-*******************
-* Commission type *
-*******************
-*/
+export enum BeginString {
+  Fix42 = 'FIX.4.2',
+  Fix44 = 'FIX.4.4',
+  Fixt11 = 'FIXT.1.1'
+}
+
 export enum CommType {
   PerUnit = '1',
   Percent = '2',
   Absolute = '3',
   PercentageWaivedCashDiscount = '4',
   PercentageWaivedEnhancedUnits = '5',
-  PointsPerBondOrContract = '6'
+  PointsPerBondOrContract = '6',
+  BasisPoints = '7',
+  AmountPerContract = '8'
 }
 
-/*
-****************************************************************
-* Instructions for order handling on exchange trading floor.   *
-* If more than one instruction is applicable to an order, this *
-* field can contain multiple instructions separated by space.  *
-* *** SOME VALUES HAVE BEEN REPLACED - See "Replaced Features  *
-* and Supported Approach" *** (see Volume : "Glossary" for     *
-* value definitions)                                           *
-****************************************************************
-*/
 export enum ExecInst {
   StayOnOfferSide = '0',
   NotHeld = '1',
@@ -98,30 +81,24 @@ export enum ExecInst {
   ReinstateOnConnectionLoss = 'n',
   CancelOnConnectionLoss = 'o',
   SuspendOnConnectionLoss = 'p',
-  ReleaseFromSuspension = 'q',
+  Release = 'q',
   ExecuteAsDeltaNeutral = 'r',
   ExecuteAsDurationNeutral = 's',
-  ExecuteAsFxNeutral = 't'
+  ExecuteAsFxNeutral = 't',
+  MinGuaranteedFillEligible = 'u',
+  BypassNonDisplayLiquidity = 'v',
+  Lock = 'w',
+  IgnoreNotionalValueChecks = 'x',
+  TrdAtRefPx = 'y',
+  AllowFacilitation = 'z'
 }
 
-/*
-***********************************************************
-* Instructions for order handling on Broker trading floor *
-***********************************************************
-*/
 export enum HandlInst {
   AutomatedExecutionNoIntervention = '1',
   AutomatedExecutionInterventionOk = '2',
   ManualOrder = '3'
 }
 
-/*
-************************************************************
-* Identifies class or source of the SecurityID (48) value. *
-* Required if SecurityID is specified.                     *
-* 100+ are reserved for private security identifications   *
-************************************************************
-*/
 export enum SecurityIDSource {
   Cusip = '1',
   Sedol = '2',
@@ -144,26 +121,26 @@ export enum SecurityIDSource {
   OptionPriceReportingAuthority = 'J',
   IsdaFpMlurl = 'K',
   LetterOfCredit = 'L',
-  MarketplaceAssignedIdentifier = 'M'
+  MarketplaceAssignedIdentifier = 'M',
+  MarkitRedEntityClip = 'N',
+  MarkitRedPairClip = 'P',
+  CftcCommodityCode = 'Q',
+  IsdaCommodityReferencePrice = 'R',
+  FinancialInstrumentGlobalIdentifier = 'S',
+  LegalEntityIdentifier = 'T',
+  Synthetic = 'U',
+  FidessaInstrumentMnemonic = 'V',
+  IndexName = 'W',
+  UniformSymbol = 'X',
+  DigitalTokenIdentifier = 'Y'
 }
 
-/*
-**********************************
-* Relative quality of indication *
-**********************************
-*/
 export enum IOIQltyInd {
   High = 'H',
   Low = 'L',
   Medium = 'M'
 }
 
-/*
-****************************************************************
-* Quantity (e.g. number of shares) in numeric form or relative *
-* size.                                                        *
-****************************************************************
-*/
 export enum IOIQty {
   Small = 'S',
   Medium = 'M',
@@ -171,39 +148,20 @@ export enum IOIQty {
   UndisclosedQuantity = 'U'
 }
 
-/*
-*******************************************
-* Identifies IOI message transaction type *
-*******************************************
-*/
 export enum IOITransType {
   New = 'N',
   Cancel = 'C',
   Replace = 'R'
 }
 
-/*
-**************************************
-* Broker capacity in order execution *
-**************************************
-*/
 export enum LastCapacity {
   Agent = '1',
   CrossAsAgent = '2',
   CrossAsPrincipal = '3',
-  Principal = '4'
+  Principal = '4',
+  RisklessPrincipal = '5'
 }
 
-/*
-***************************************************************
-* Defines message type ALWAYS THIRD FIELD IN MESSAGE. (Always *
-* unencrypted)                                                *
-* Note: A "U" as the first character in the MsgType field     *
-* (i.e. U, U2, etc) indicates that the message format is      *
-* privately defined between the sender and receiver.          *
-* *** Note the use of lower case letters ***                  *
-***************************************************************
-*/
 export enum MsgType {
   Heartbeat = '0',
   TestRequest = '1',
@@ -216,6 +174,54 @@ export enum MsgType {
   ExecutionReport = '8',
   OrderCancelReject = '9',
   Logon = 'A',
+  News = 'B',
+  Email = 'C',
+  NewOrderSingle = 'D',
+  NewOrderList = 'E',
+  OrderCancelRequest = 'F',
+  OrderCancelReplaceRequest = 'G',
+  OrderStatusRequest = 'H',
+  AllocationInstruction = 'J',
+  ListCancelRequest = 'K',
+  ListExecute = 'L',
+  ListStatusRequest = 'M',
+  ListStatus = 'N',
+  AllocationInstructionAck = 'P',
+  DontKnowTrade = 'Q',
+  QuoteRequest = 'R',
+  Quote = 'S',
+  SettlementInstructions = 'T',
+  MarketDataRequest = 'V',
+  MarketDataSnapshotFullRefresh = 'W',
+  MarketDataIncrementalRefresh = 'X',
+  MarketDataRequestReject = 'Y',
+  QuoteCancel = 'Z',
+  QuoteStatusRequest = 'a',
+  MassQuoteAck = 'b',
+  SecurityDefinitionRequest = 'c',
+  SecurityDefinition = 'd',
+  SecurityStatusRequest = 'e',
+  SecurityStatus = 'f',
+  TradingSessionStatusRequest = 'g',
+  TradingSessionStatus = 'h',
+  MassQuote = 'i',
+  BusinessMessageReject = 'j',
+  BidRequest = 'k',
+  BidResponse = 'l',
+  ListStrikePrice = 'm',
+  XmLnonFix = 'n',
+  RegistrationInstructions = 'o',
+  RegistrationInstructionsResponse = 'p',
+  OrderMassCancelRequest = 'q',
+  OrderMassCancelReport = 'r',
+  NewOrderCross = 's',
+  CrossOrderCancelReplaceRequest = 't',
+  CrossOrderCancelRequest = 'u',
+  SecurityTypeRequest = 'v',
+  SecurityTypes = 'w',
+  SecurityListRequest = 'x',
+  SecurityList = 'y',
+  DerivativeSecurityListRequest = 'z',
   DerivativeSecurityList = 'AA',
   NewOrderMultileg = 'AB',
   MultilegOrderCancelReplace = 'AC',
@@ -242,7 +248,6 @@ export enum MsgType {
   CollateralRequest = 'AX',
   CollateralAssignment = 'AY',
   CollateralResponse = 'AZ',
-  News = 'B',
   CollateralReport = 'BA',
   CollateralInquiry = 'BB',
   NetworkCounterpartySystemStatusRequest = 'BC',
@@ -251,14 +256,14 @@ export enum MsgType {
   UserResponse = 'BF',
   CollateralInquiryAck = 'BG',
   ConfirmationRequest = 'BH',
-  TradingSessionListRequest = 'BI',
-  TradingSessionList = 'BJ',
+  ContraryIntentionReport = 'BO',
+  SecurityDefinitionUpdateReport = 'BP',
   SecurityListUpdateReport = 'BK',
   AdjustedPositionReport = 'BL',
   AllocationInstructionAlert = 'BM',
-  ExecutionAcknowledgement = 'BN',
-  ContraryIntentionReport = 'BO',
-  SecurityDefinitionUpdateReport = 'BP',
+  ExecutionAck = 'BN',
+  TradingSessionList = 'BJ',
+  TradingSessionListRequest = 'BI',
   SettlementObligationReport = 'BQ',
   DerivativeSecurityListUpdateReport = 'BR',
   TradingSessionListUpdateReport = 'BS',
@@ -269,68 +274,61 @@ export enum MsgType {
   ApplicationMessageRequestAck = 'BX',
   ApplicationMessageReport = 'BY',
   OrderMassActionReport = 'BZ',
-  Email = 'C',
   OrderMassActionRequest = 'CA',
   UserNotification = 'CB',
   StreamAssignmentRequest = 'CC',
   StreamAssignmentReport = 'CD',
   StreamAssignmentReportAck = 'CE',
-  NewOrderSingle = 'D',
-  NewOrderList = 'E',
-  OrderCancelRequest = 'F',
-  OrderCancelReplaceRequest = 'G',
-  OrderStatusRequest = 'H',
-  AllocationInstruction = 'J',
-  ListCancelRequest = 'K',
-  ListExecute = 'L',
-  ListStatusRequest = 'M',
-  ListStatus = 'N',
-  AllocationInstructionAck = 'P',
-  DontKnowTrade = 'Q',
-  QuoteRequest = 'R',
-  Quote = 'S',
-  SettlementInstructions = 'T',
-  MarketDataRequest = 'V',
-  MarketDataSnapshotFullRefresh = 'W',
-  MarketDataIncrementalRefresh = 'X',
-  MarketDataRequestReject = 'Y',
-  QuoteCancel = 'Z',
-  QuoteStatusRequest = 'a',
-  MassQuoteAcknowledgement = 'b',
-  SecurityDefinitionRequest = 'c',
-  SecurityDefinition = 'd',
-  SecurityStatusRequest = 'e',
-  SecurityStatus = 'f',
-  TradingSessionStatusRequest = 'g',
-  TradingSessionStatus = 'h',
-  MassQuote = 'i',
-  BusinessMessageReject = 'j',
-  BidRequest = 'k',
-  BidResponse = 'l',
-  ListStrikePrice = 'm',
-  XmLnonFix = 'n',
-  RegistrationInstructions = 'o',
-  RegistrationInstructionsResponse = 'p',
-  OrderMassCancelRequest = 'q',
-  OrderMassCancelReport = 'r',
-  NewOrderCross = 's',
-  CrossOrderCancelReplaceRequest = 't',
-  CrossOrderCancelRequest = 'u',
-  SecurityTypeRequest = 'v',
-  SecurityTypes = 'w',
-  SecurityListRequest = 'x',
-  SecurityList = 'y',
-  DerivativeSecurityListRequest = 'z'
+  PartyDetailsListRequest = 'CF',
+  PartyDetailsListReport = 'CG',
+  MarginRequirementInquiry = 'CH',
+  MarginRequirementInquiryAck = 'CI',
+  MarginRequirementReport = 'CJ',
+  PartyDetailsListUpdateReport = 'CK',
+  PartyRiskLimitsRequest = 'CL',
+  PartyRiskLimitsReport = 'CM',
+  SecurityMassStatusRequest = 'CN',
+  SecurityMassStatus = 'CO',
+  AccountSummaryReport = 'CQ',
+  PartyRiskLimitsUpdateReport = 'CR',
+  PartyRiskLimitsDefinitionRequest = 'CS',
+  PartyRiskLimitsDefinitionRequestAck = 'CT',
+  PartyEntitlementsRequest = 'CU',
+  PartyEntitlementsReport = 'CV',
+  QuoteAck = 'CW',
+  PartyDetailsDefinitionRequest = 'CX',
+  PartyDetailsDefinitionRequestAck = 'CY',
+  PartyEntitlementsUpdateReport = 'CZ',
+  PartyEntitlementsDefinitionRequest = 'DA',
+  PartyEntitlementsDefinitionRequestAck = 'DB',
+  TradeMatchReport = 'DC',
+  TradeMatchReportAck = 'DD',
+  PartyRiskLimitsReportAck = 'DE',
+  PartyRiskLimitCheckRequest = 'DF',
+  PartyRiskLimitCheckRequestAck = 'DG',
+  PartyActionRequest = 'DH',
+  PartyActionReport = 'DI',
+  MassOrder = 'DJ',
+  MassOrderAck = 'DK',
+  PositionTransferInstruction = 'DL',
+  PositionTransferInstructionAck = 'DM',
+  PositionTransferReport = 'DN',
+  MarketDataStatisticsRequest = 'DO',
+  MarketDataStatisticsReport = 'DP',
+  CollateralReportAck = 'DQ',
+  MarketDataReport = 'DR',
+  CrossRequest = 'DS',
+  CrossRequestAck = 'DT',
+  AllocationInstructionAlertRequest = 'DU',
+  AllocationInstructionAlertRequestAck = 'DV',
+  TradeAggregationRequest = 'DW',
+  TradeAggregationReport = 'DX',
+  PayManagementReport = 'EA',
+  PayManagementReportAck = 'EB',
+  PayManagementRequest = 'DY',
+  PayManagementRequestAck = 'DZ'
 }
 
-/*
-************************************************************
-* Identifies current status of order. *** SOME VALUES HAVE *
-* BEEN REPLACED - See "Replaced Features and Supported     *
-* Approach" *** (see Volume : "Glossary" for value         *
-* definitions)                                             *
-************************************************************
-*/
 export enum OrdStatus {
   New = '0',
   PartiallyFilled = '1',
@@ -349,13 +347,6 @@ export enum OrdStatus {
   PendingReplace = 'E'
 }
 
-/*
-*************************************************************
-* Order type. *** SOME VALUES ARE NO LONGER USED - See      *
-* "Deprecated (Phased-out) Features and Supported Approach" *
-* *** (see Volume : "Glossary" for value definitions)       *
-*************************************************************
-*/
 export enum OrdType {
   Market = '1',
   Limit = '2',
@@ -380,26 +371,16 @@ export enum OrdType {
   PreviousFundValuationPoint = 'L',
   NextFundValuationPoint = 'M',
   Pegged = 'P',
-  CounterOrderSelection = 'Q'
+  CounterOrderSelection = 'Q',
+  StopOnBidOrOffer = 'R',
+  StopLimitOnBidOrOffer = 'S'
 }
 
-/*
-**********************************************************
-* Indicates possible retransmission of message with this *
-* sequence number                                        *
-**********************************************************
-*/
 export enum PossDupFlag {
-  OriginalTransmission = 'N',
-  PossibleDuplicate = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-****************************************************
-* Side of order (see Volume : "Glossary" for value *
-* definitions)                                     *
-****************************************************
-*/
 export enum Side {
   Buy = '1',
   Sell = '2',
@@ -416,16 +397,10 @@ export enum Side {
   Subscribe = 'D',
   Redeem = 'E',
   Lend = 'F',
-  Borrow = 'G'
+  Borrow = 'G',
+  SellUndisclosed = 'H'
 }
 
-/*
-****************************************************************
-* Specifies how long the order remains in effect. Absence of   *
-* this field is interpreted as DAY. NOTE not applicable to CIV *
-* Orders. (see Volume : "Glossary" for value definitions)      *
-****************************************************************
-*/
 export enum TimeInForce {
   Day = '0',
   GoodTillCancel = '1',
@@ -436,50 +411,18 @@ export enum TimeInForce {
   GoodTillDate = '6',
   AtTheClose = '7',
   GoodThroughCrossing = '8',
-  AtCrossing = '9'
+  AtCrossing = '9',
+  GoodForTime = 'A',
+  GoodForAuction = 'B',
+  GoodForMonth = 'C'
 }
 
-/*
-****************
-* Urgency flag *
-****************
-*/
 export enum Urgency {
   Normal = '0',
   Flash = '1',
   Background = '2'
 }
 
-/*
-****************************************************************
-* Indicates order settlement period. If present, SettlDate     *
-* (64) overrides this field. If both SettlType (63) and        *
-* SettDate (64) are omitted, the default for SettlType (63) is *
-* 0 (Regular)                                                  *
-* Regular is defined as the default settlement period for the  *
-* particular security on the exchange of execution.            *
-* In Fixed Income the contents of this field may influence the *
-* instrument definition if the SecurityID (48) is ambiguous.   *
-* In the US an active Treasury offering may be re-opened, and  *
-* for a time one CUSIP will apply to both the current and      *
-* "when-issued" securities. Supplying a value of "7" clarifies *
-* the instrument description; any other value or the absence   *
-* of this field should cause the respondent to default to the  *
-* active issue.                                                *
-* Additionally the following patterns may be uses as well as   *
-* enum values                                                  *
-* Dx = FX tenor expression for "days", e.g. "D5", where "x" is *
-* any integer > 0                                              *
-* Mx = FX tenor expression for "months", e.g. "M3", where "x"  *
-* is any integer > 0                                           *
-* Wx = FX tenor expression for "weeks", e.g. "W13", where "x"  *
-* is any integer > 0                                           *
-* Yx = FX tenor expression for "years", e.g. "Y1", where "x"   *
-* is any integer > 0                                           *
-* Noted that for FX the tenors expressed using Dx, Mx, Wx, and *
-* Yx values do not denote business days, but calendar days.    *
-****************************************************************
-*/
 export enum SettlType {
   Regular = '0',
   Cash = '1',
@@ -495,26 +438,11 @@ export enum SettlType {
   FxSpotNextSettlement = 'C'
 }
 
-/*
-**************************************************************
-* Additional information about the security (e.g. preferred, *
-* warrants, etc.). Note also see SecurityType (167).         *
-* As defined in the NYSE Stock and bond Symbol Directory and *
-* in the AMEX Fitch Directory.                               *
-**************************************************************
-*/
 export enum SymbolSfx {
   EucpWithLumpSumInterest = 'CD',
   WhenIssued = 'WI'
 }
 
-/*
-***************************************************************
-* Identifies allocation transaction type *** SOME VALUES HAVE *
-* BEEN REPLACED - See "Replaced Features and Supported        *
-* Approach" ***                                               *
-***************************************************************
-*/
 export enum AllocTransType {
   New = '0',
   Replace = '1',
@@ -525,14 +453,6 @@ export enum AllocTransType {
   Reversal = '6'
 }
 
-/*
-***************************************************************
-* Indicates whether the resulting position after a trade      *
-* should be an opening position or closing position. Used for *
-* omnibus accounting - where accounts are held on a gross     *
-* basis instead of being netted together.                     *
-***************************************************************
-*/
 export enum PositionEffect {
   Close = 'C',
   Fifo = 'F',
@@ -542,13 +462,6 @@ export enum PositionEffect {
   Default = 'D'
 }
 
-/*
-*************************************************************
-* Processing code for sub-account. Absence of this field in *
-* AllocAccount (79) / AllocPrice (366) /AllocQty (80) /     *
-* ProcessCode instance indicates regular trade.             *
-*************************************************************
-*/
 export enum ProcessCode {
   Regular = '0',
   SoftDollar = '1',
@@ -559,11 +472,6 @@ export enum ProcessCode {
   PlanSponsor = '6'
 }
 
-/*
-************************************
-* Identifies status of allocation. *
-************************************
-*/
 export enum AllocStatus {
   Accepted = 0,
   BlockLevelReject = 1,
@@ -572,18 +480,20 @@ export enum AllocStatus {
   Incomplete = 4,
   RejectedByIntermediary = 5,
   AllocationPending = 6,
-  Reversed = 7
+  Reversed = 7,
+  CancelledByIntermediary = 8,
+  Claimed = 9,
+  Refused = 10,
+  PendingGiveUpApproval = 11,
+  Cancelled = 12,
+  PendingTakeUpApproval = 13,
+  ReversalPending = 14
 }
 
-/*
-************************************
-* Identifies reason for rejection. *
-************************************
-*/
 export enum AllocRejCode {
   UnknownAccount = 0,
   IncorrectQuantity = 1,
-  IncorrectAveragegPrice = 2,
+  IncorrectAveragePrice = 2,
   UnknownExecutingBrokerMnemonic = 3,
   CommissionDifference = 4,
   UnknownOrderId = 5,
@@ -595,36 +505,35 @@ export enum AllocRejCode {
   MismatchedData = 11,
   UnknownClOrdId = 12,
   WarehouseRequestRejected = 13,
+  DuplicateOrMissingIndividualAllocId = 14,
+  TradeNotRecognized = 15,
+  DuplicateTrade = 16,
+  IncorrectOrMissingInstrument = 17,
+  IncorrectOrMissingSettlDate = 18,
+  IncorrectOrMissingFundIdOrFundName = 19,
+  IncorrectOrMissingSettlInstructions = 20,
+  IncorrectOrMissingFees = 21,
+  IncorrectOrMissingTax = 22,
+  UnknownOrMissingParty = 23,
+  IncorrectOrMissingSide = 24,
+  IncorrectOrMissingNetMoney = 25,
+  IncorrectOrMissingTradeDate = 26,
+  IncorrectOrMissingSettlCcyInstructions = 27,
+  IncorrectOrMissingProcessCode = 28,
   Other = 99
 }
 
-/*
-***********************
-* Email message type. *
-***********************
-*/
 export enum EmailType {
   New = '0',
   Reply = '1',
   AdminReply = '2'
 }
 
-/*
-****************************************************************
-* Indicates that message may contain information that has been *
-* sent under another sequence number.                          *
-****************************************************************
-*/
 export enum PossResend {
-  OriginalTransmission = 'N',
-  PossibleResend = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-*************************
-* Method of encryption. *
-*************************
-*/
 export enum EncryptMethod {
   None = 0,
   Pkcs = 1,
@@ -635,11 +544,6 @@ export enum EncryptMethod {
   Pem = 6
 }
 
-/*
-*************************************************
-* Code to identify reason for cancel rejection. *
-*************************************************
-*/
 export enum CxlRejReason {
   TooLateToCancel = 0,
   UnknownOrder = 1,
@@ -654,13 +558,6 @@ export enum CxlRejReason {
   Other = 99
 }
 
-/*
-****************************************************************
-* Code to identify reason for order rejection. Note: Values 3, *
-* 4, and 5 will be used when rejecting an order due to         *
-* pre-allocation information errors.                           *
-****************************************************************
-*/
 export enum OrdRejReason {
   BrokerCredit = 0,
   UnknownSymbol = 1,
@@ -674,92 +571,84 @@ export enum OrdRejReason {
   TradeAlongRequired = 9,
   InvalidInvestorId = 10,
   UnsupportedOrderCharacteristic = 11,
-  SurveillenceOption = 12,
+  SurveillanceOption = 12,
   IncorrectQuantity = 13,
   IncorrectAllocatedQuantity = 14,
   UnknownAccount = 15,
   PriceExceedsCurrentPriceBand = 16,
   InvalidPriceIncrement = 18,
+  ReferencePriceNotAvailable = 19,
+  NotionalValueExceedsThreshold = 20,
+  AlgorithmRiskThresholdBreached = 21,
+  ShortSellNotPermitted = 22,
+  ShortSellSecurityPreBorrowRestriction = 23,
+  ShortSellAccountPreBorrowRestriction = 24,
+  InsufficientCreditLimit = 25,
+  ExceededClipSizeLimit = 26,
+  ExceededMaxNotionalOrderAmt = 27,
+  ExceededDv01Pv01Limit = 28,
+  ExceededCs01Limit = 29,
   Other = 99
 }
 
-/*
-***************************************************************
-* Code to qualify IOI use. (see Volume : "Glossary" for value *
-* definitions)                                                *
-***************************************************************
-*/
 export enum IOIQualifier {
+  QuantityNegotiable = '1',
+  AllowLateBids = '2',
+  ImmediateOrCounter = '3',
+  AutoTrade = '4',
   AllOrNone = 'A',
   MarketOnClose = 'B',
   AtTheClose = 'C',
   Vwap = 'D',
+  Axe = 'E',
+  AxeOnBid = 'F',
+  AxeOnOffer = 'G',
+  ClientNaturalWorking = 'H',
   InTouchWith = 'I',
+  PositionWanted = 'J',
+  MarketMaking = 'K',
   Limit = 'L',
   MoreBehind = 'M',
+  ClientNaturalBlock = 'N',
   AtTheOpen = 'O',
   TakingAPosition = 'P',
   AtTheMarket = 'Q',
   ReadyToTrade = 'R',
   PortfolioShown = 'S',
   ThroughTheDay = 'T',
+  Unwind = 'U',
   Versus = 'V',
   Indication = 'W',
   CrossingOpportunity = 'X',
   AtTheMidpoint = 'Y',
-  PreOpen = 'Z'
+  PreOpen = 'Z',
+  AutomaticSpot = 'a',
+  PlatformCalculatedSpot = 'b',
+  OutsideSpread = 'c',
+  DeferredSpot = 'd',
+  NegotiatedSpot = 'n'
 }
 
-/*
-******************************************************
-* Identifies party of trade responsible for exchange *
-* reporting.                                         *
-******************************************************
-*/
 export enum ReportToExch {
-  SenderReports = 'N',
-  ReceiverReports = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-**********************************************************
-* Indicates whether the broker is to locate the stock in *
-* conjunction with a short sell order.                   *
-**********************************************************
-*/
 export enum LocateReqd {
   No = 'N',
   Yes = 'Y'
 }
 
-/*
-*********************************************************
-* Indicates request for forex accommodation trade to be *
-* executed along with security transaction.             *
-*********************************************************
-*/
 export enum ForexReq {
-  DoNotExecuteForexAfterSecurityTrade = 'N',
-  ExecuteForexAfterSecurityTrade = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-************************************************************
-* Indicates that the Sequence Reset message is replacing   *
-* administrative or application messages which will not be *
-* resent.                                                  *
-************************************************************
-*/
 export enum GapFillFlag {
-  SequenceReset = 'N',
-  GapFillMessage = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-***********************************
-* Reason for execution rejection. *
-***********************************
-*/
 export enum DKReason {
   UnknownSymbol = 'A',
   WrongSide = 'B',
@@ -767,26 +656,15 @@ export enum DKReason {
   NoMatchingOrder = 'D',
   PriceExceedsLimit = 'E',
   CalculationDifference = 'F',
+  NoMatchingExecutionReport = 'G',
   Other = 'Z'
 }
 
-/*
-****************************************************************
-* Indicates that IOI is the result of an existing agency order *
-* or a facilitation position resulting from an agency order,   *
-* not from principal trading or order solicitation activity.   *
-****************************************************************
-*/
 export enum IOINaturalFlag {
-  NotNatural = 'N',
-  Natural = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-****************************************
-* Indicates type of miscellaneous fee. *
-****************************************
-*/
 export enum MiscFeeType {
   Regulatory = '1',
   Tax = '2',
@@ -801,29 +679,36 @@ export enum MiscFeeType {
   Conversion = '11',
   Agent = '12',
   TransferFee = '13',
-  SecurityLending = '14'
+  SecurityLending = '14',
+  TradeReporting = '15',
+  TaxOnPrincipalAmount = '16',
+  TaxOnAccruedInterestAmount = '17',
+  NewIssuanceFee = '18',
+  ServiceFee = '19',
+  OddLotFee = '20',
+  AuctionFee = '21',
+  ValueAddedTax = '22',
+  SalesTax = '23',
+  ExecutionFee = '24',
+  OrderEntryFee = '25',
+  OrderModificationFee = '26',
+  OrdersCancellationFee = '27',
+  MarketDataAccessFee = '28',
+  MarketDataTerminalFee = '29',
+  MarketDataVolumeFee = '30',
+  ClearingFee = '31',
+  SettlementFee = '32',
+  Rebates = '33',
+  Discounts = '34',
+  Payments = '35',
+  NonMonetaryPayments = '36'
 }
 
-/*
-***********************************************************
-* Indicates that the both sides of the FIX session should *
-* reset sequence numbers.                                 *
-***********************************************************
-*/
 export enum ResetSeqNumFlag {
   No = 'N',
   Yes = 'Y'
 }
 
-/*
-***************************************************************
-* Describes the specific ExecutionRpt (i.e. Pending Cancel)   *
-* while OrdStatus (39) will always identify the current order *
-* status (i.e. Partially Filled) *** SOME VALUES HAVE BEEN    *
-* REPLACED - See "Replaced Features and Supported Approach"   *
-* ***                                                         *
-***************************************************************
-*/
 export enum ExecType {
   New = '0',
   DoneForDay = '3',
@@ -844,27 +729,16 @@ export enum ExecType {
   OrderStatus = 'I',
   TradeInAClearingHold = 'J',
   TradeHasBeenReleasedToClearing = 'K',
-  TriggeredOrActivatedBySystem = 'L'
+  TriggeredOrActivatedBySystem = 'L',
+  Locked = 'M',
+  Released = 'N'
 }
 
-/*
-***********************************************************
-* Specifies whether or not SettlCurrFxRate (55) should be *
-* multiplied or divided.                                  *
-***********************************************************
-*/
 export enum SettlCurrFxRateCalc {
   Multiply = 'M',
   Divide = 'D'
 }
 
-/*
-****************************************************************
-* Indicates mode used for Settlement Instructions message. *** *
-* SOME VALUES HAVE BEEN REPLACED - See "Replaced Features and  *
-* Supported Approach" ***                                      *
-****************************************************************
-*/
 export enum SettlInstMode {
   Default = '0',
   StandingInstructionsProvided = '1',
@@ -874,11 +748,6 @@ export enum SettlInstMode {
   RequestReject = '5'
 }
 
-/*
-****************************************************
-* Settlement Instructions message transaction type *
-****************************************************
-*/
 export enum SettlInstTransType {
   New = 'N',
   Cancel = 'C',
@@ -886,24 +755,12 @@ export enum SettlInstTransType {
   Restate = 'T'
 }
 
-/*
-***********************************************
-* Indicates source of Settlement Instructions *
-***********************************************
-*/
 export enum SettlInstSource {
   BrokerCredit = '1',
   Institution = '2',
   Investor = '3'
 }
 
-/*
-****************************************************************
-* Indicates type of security. Security type enumerations are   *
-* grouped by Product(460) field value. NOTE: Additional values *
-* may be used by mutual agreement of the counterparties.       *
-****************************************************************
-*/
 export enum SecurityType {
   UsTreasuryNoteOld = 'UST',
   UsTreasuryBillOld = 'USTB',
@@ -922,21 +779,62 @@ export enum SecurityType {
   IndexedLinked = 'XLINKD',
   StructuredNotes = 'STRUCT',
   YankeeCorporateBond = 'YANK',
+  OffshoreIssuedChineseYuanCorporateBond = 'DIMSUMCORP',
+  PreferredCorporateBond = 'PRCORP',
   ForeignExchangeContract = 'FOR',
+  NonDeliverableForward = 'FXNDF',
+  FxSpot = 'FXSPOT',
+  FxForward = 'FXFWD',
+  FxSwap = 'FXSWAP',
+  NonDeliverableSwap = 'FXNDS',
+  FxBankNote = 'FXBN',
+  ForeignCurrencyDiscountNote = 'FXDN',
+  Cap = 'CAP',
   CreditDefaultSwap = 'CDS',
+  Collar = 'CLLR',
+  CommoditySwap = 'CMDTYSWAP',
+  Exotic = 'EXOTIC',
+  OptionsOnCombo = 'OOC',
+  Floor = 'FLR',
+  Fra = 'FRA',
   Future = 'FUT',
-  Option = 'OPT',
+  DerivativeForward = 'FWD',
+  InterestRateSwap = 'IRS',
+  TotalReturnSwap = 'TRS',
+  LoanLease = 'LOANLEASE',
   OptionsOnFutures = 'OOF',
   OptionsOnPhysical = 'OOP',
-  InterestRateSwap = 'IRS',
-  OptionsOnCombo = 'OOC',
+  Option = 'OPT',
+  SpotForward = 'SPOTFWD',
+  SwapOption = 'SWAPTION',
+  Transmission = 'XMISSION',
+  Index = 'INDEX',
+  BondBasket = 'BDBSKT',
+  ContractForDifference = 'CFD',
+  CorrelationSwap = 'CRLTNSWAP',
+  DiviendSwap = 'DVDNDSWAP',
+  EquityBasket = 'EQBSKT',
+  EquityForward = 'EQFWD',
+  ReturnSwap = 'RTRNSWAP',
+  VarianceSwap = 'VARSWAP',
+  PortfolioSwaps = 'PRTFLIOSWAP',
+  FuturesOnASwap = 'FUTSWAP',
+  ForwardsOnASwap = 'FWDSWAP',
+  ForwardFreightAgreement = 'FWDFRTAGMT',
+  SpreadBetting = 'SPREADBET',
+  ExchangeTradedCommodity = 'ETC',
   CommonStock = 'CS',
   PreferredStock = 'PS',
+  DepositoryReceipts = 'DR',
   Repurchase = 'REPO',
   Forward = 'FORWARD',
   BuySellback = 'BUYSELL',
   SecuritiesLoan = 'SECLOAN',
   SecuritiesPledge = 'SECPLEDGE',
+  DeliveryVersusPledge = 'DVPLDG',
+  CollateralBasket = 'COLLBSKT',
+  StructuredFinanceProduct = 'SFP',
+  MarginLoan = 'MRGNLOAN',
   BradyBond = 'BRADY',
   CanadianTreasuryNotes = 'CAN',
   CanadianTreasuryBills = 'CTB',
@@ -950,6 +848,9 @@ export enum SecurityType {
   PrincipalStripOfACallableBondOrNote = 'TCAL',
   PrincipalStripFromANonCallableBondOrNote = 'TPRN',
   UsTreasuryNote = 'TNOTE',
+  OffshoreIssuedChineseYuanSovereignBond = 'DIMSUMSOV',
+  SovereignBond = 'SOV',
+  UsTreasuryFloatingRateNote = 'TFRN',
   TermLoan = 'TERM',
   RevolverLoan = 'RVLV',
   Revolver = 'RVLVTRM',
@@ -985,6 +886,22 @@ export enum SecurityType {
   TermLiquidityNote = 'TLQN',
   ExtendedCommNote = 'XCN',
   YankeeCertificateOfDeposit = 'YCD',
+  BankAcceptedBill = 'BAB',
+  ShortTermBankNote = 'BNST',
+  CallableCommercialPaper = 'CLCP',
+  CommercialNote = 'CN',
+  InterestBearingCommercialPaper = 'CPIB',
+  EuroMediumTermNote = 'EUMTN',
+  EuroNegotiableCommercialPaper = 'EUNCP',
+  EuroStructuredLiquidityNote = 'EUSTLQN',
+  EuroTimeDeposit = 'EUTD',
+  JumboCertificateOfDeposit = 'JCD',
+  MoneyMarketFund = 'MMF',
+  MasterNote = 'MN',
+  NegotiableCertificateOfDeposit = 'NCD',
+  NegotiableCommercialPaper = 'NCP',
+  RetailCertificateOfDeposit = 'RCD',
+  TermDepositReceipt = 'TDR',
   AssetBackedSecurities = 'ABS',
   CanadianMortgageBonds = 'CMB',
   Corp = 'CMBS',
@@ -995,7 +912,7 @@ export enum SecurityType {
   MortgagePrincipalOnly = 'MPO',
   MortgagePrivatePlacement = 'MPP',
   MiscellaneousPassThrough = 'MPT',
-  Pfandbriefe = 'PFAND',
+  Pfandbrief = 'PFAND',
   ToBeAnnounced = 'TBA',
   OtherAnticipationNotes = 'AN',
   CertificateOfObligation = 'COFO',
@@ -1014,22 +931,21 @@ export enum SecurityType {
   TaxRevenueAnticipationNote = 'TRAN',
   VariableRateDemandNote = 'VRDN',
   Warrant = 'WAR',
+  MunicipalInterestBearingCommercialPaper = 'MCPIB',
+  TaxableMunicipalBond = 'TMB',
+  VariableRateDemandObligation = 'VRDO',
   MutualFund = 'MF',
   MultilegInstrument = 'MLEG',
   NoSecurityType = 'NONE',
   Wildcard = '?',
   Cash = 'CASH',
-  NonDeliverableForward = 'FXNDF',
-  FxSpot = 'FXSPOT',
-  FxForward = 'FXFWD',
-  FxSwap = 'FXSWAP'
+  Other = 'Other',
+  ExchangeTradedNote = 'ETN',
+  SecuritizedDerivative = 'SECDERIV',
+  ExchangeTradedFund = 'ETF',
+  DigitalAsset = 'DIGITAL'
 }
 
-/*
-*****************************************************
-* Identifies the Standing Instruction database used *
-*****************************************************
-*/
 export enum StandInstDbType {
   Other = 0,
   Dtcsid = 1,
@@ -1038,11 +954,6 @@ export enum StandInstDbType {
   AccountNet = 4
 }
 
-/*
-*********************************
-* Identifies type of settlement *
-*********************************
-*/
 export enum SettlDeliveryType {
   Versus = 0,
   Free = 1,
@@ -1050,78 +961,44 @@ export enum SettlDeliveryType {
   HoldInCustody = 3
 }
 
-/*
-**************************************************************
-* Identifies the type of Allocation linkage when AllocLinkID *
-* (96) is used.                                              *
-**************************************************************
-*/
 export enum AllocLinkType {
   FxNetting = 0,
   FxSwap = 1
 }
 
-/*
-*********************************************************
-* Indicates whether an option contract is a put or call *
-*********************************************************
-*/
 export enum PutOrCall {
   Put = 0,
-  Call = 1
+  Call = 1,
+  Other = 2,
+  Chooser = 3
 }
 
-/*
-*************************************************
-* Used for derivative products, such as options *
-*************************************************
-*/
 export enum CoveredOrUncovered {
   Covered = 0,
   Uncovered = 1
 }
 
-/*
-**************************************************************
-* Indicates whether or not details should be communicated to *
-* BrokerOfCredit (i.e. step-in broker).                      *
-**************************************************************
-*/
 export enum NotifyBrokerOfCredit {
-  DetailsShouldNotBeCommunicated = 'N',
-  DetailsShouldBeCommunicated = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-***************************************************************
-* Indicates how the receiver (i.e. third party) of Allocation *
-* message should handle/process the account details.          *
-***************************************************************
-*/
 export enum AllocHandlInst {
   Match = 1,
   Forward = 2,
-  ForwardAndMatch = 3
+  ForwardAndMatch = 3,
+  AutoClaimGiveUp = 4
 }
 
-/*
-****************************************************
-* Indicates the type of RoutingID (217) specified. *
-****************************************************
-*/
 export enum RoutingType {
   TargetFirm = 1,
   TargetList = 2,
   BlockFirm = 3,
-  BlockList = 4
+  BlockList = 4,
+  TargetPerson = 5,
+  BlockPerson = 6
 }
 
-/*
-**********************************************************
-* Name of benchmark curve.                               *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
 export enum BenchmarkCurveName {
   Eonia = 'EONIA',
   Eurepo = 'EUREPO',
@@ -1134,18 +1011,53 @@ export enum BenchmarkCurveName {
   Pfandbriefe = 'Pfandbriefe',
   Sonia = 'SONIA',
   Swap = 'SWAP',
-  Treasury = 'Treasury'
+  Treasury = 'Treasury',
+  FedFundRateEffective = 'FEDEFF',
+  FedOpen = 'FEDOPEN',
+  Euribor2 = 'EURIBOR',
+  Aubsw = 'AUBSW',
+  Bubor = 'BUBOR',
+  Cdor = 'CDOR',
+  Cibor = 'CIBOR',
+  Eoniaswap = 'EONIASWAP',
+  Estr = 'ESTR',
+  Eurodollar = 'EURODOLLAR',
+  Euroswiss = 'EUROSWISS',
+  Gcfrepo = 'GCFREPO',
+  Isdafix = 'ISDAFIX',
+  Jibar = 'JIBAR',
+  Mosprim = 'MOSPRIM',
+  Nibor = 'NIBOR',
+  Pribor = 'PRIBOR',
+  Sofr = 'SOFR',
+  Stibor = 'STIBOR',
+  Telbor = 'TELBOR',
+  Tibor = 'TIBOR',
+  Wibor = 'WIBOR',
+  Aonia = 'AONIA',
+  Aoniar = 'AONIA-R',
+  Bkbm = 'BKBM',
+  Cd19D = 'CD91D',
+  Corra = 'CORRA',
+  Dirrtn = 'DIRR-TN',
+  Eibor = 'EIBOR',
+  FixingRepoRate = 'FixingRepoRate',
+  Hibor = 'HIBOR',
+  Ibr = 'IBR',
+  Klibor = 'KLIBOR',
+  Mibor = 'MIBOR',
+  Nzonia = 'NZONIA',
+  Phiref = 'PHIREF',
+  Reibor = 'REIBOR',
+  Saibor = 'SAIBOR',
+  Saron = 'SARON',
+  Sora = 'SORA',
+  Tlref = 'TLREF',
+  Tiie = 'TIIE',
+  Thbfix = 'THBFIX',
+  Tonar = 'TONAR'
 }
 
-/*
-**********************************************************
-* For Fixed Income.                                      *
-* Type of Stipulation.                                   *
-* Other types may be used by mutual agreement of the     *
-* counterparties.                                        *
-* (Note tag # was reserved in FIX 4.1, added in FIX 4.3) *
-**********************************************************
-*/
 export enum StipulationType {
   AlternativeMinimumTax = 'AMT',
   AutoReinvestment = 'AUTOREINV',
@@ -1197,6 +1109,24 @@ export enum StipulationType {
   WeightedAverageMaturity = 'WAM',
   WholePool = 'WHOLE',
   YieldRange = 'YIELD',
+  OriginalAmount = 'ORIGAMT',
+  PoolEffectiveDate = 'POOLEFFDT',
+  PoolInitialFactor = 'POOLINITFCTR',
+  Tranche = 'TRANCHE',
+  Substitution = 'SUBSTITUTION',
+  Multexchfllbck = 'MULTEXCHFLLBCK',
+  Compsecfllbck = 'COMPSECFLLBCK',
+  Locljrsdctn = 'LOCLJRSDCTN',
+  Relvjrsdctn = 'RELVJRSDCTN',
+  IncurredRecovery = 'INCURRCVY',
+  AdditionalTerm = 'ADDTRM',
+  ModifiedEquityDelivery = 'MODEQTYDLVY',
+  NoReferenceOblication = 'NOREFOBLIG',
+  UnknownReferenceObligation = 'UNKREFOBLIG',
+  AllGuarantees = 'ALLGUARANTEES',
+  ReferencePrice = 'REFPX',
+  ReferencePolicy = 'REFPOLICY',
+  SecuredList = 'SECRDLIST',
   AverageFicoScore = 'AVFICO',
   AverageLoanSize = 'AVSIZE',
   MaximumLoanBalance = 'MAXBAL',
@@ -1217,6 +1147,7 @@ export enum StipulationType {
   TraderCredit = 'TRADERCREDIT',
   DiscountRate = 'DISCOUNT',
   YieldToMaturity = 'YTM',
+  InterestPayoffOfRollingOrAmendingTrade = 'PAYOFF',
   AbsolutePrepaymentSpeed = 'ABS',
   ConstantPrepaymentPenalty = 'CPP',
   ConstantPrepaymentRate = 'CPR',
@@ -1229,12 +1160,6 @@ export enum StipulationType {
   SingleMonthlyMortality = 'SMM'
 }
 
-/*
-****************************************************************
-* Type of yield. (Note tag # was reserved in FIX 4.1, added in *
-* FIX 4.3)                                                     *
-****************************************************************
-*/
 export enum YieldType {
   AfterTaxYield = 'AFTERTAX',
   AnnualYield = 'ANNUAL',
@@ -1272,55 +1197,27 @@ export enum YieldType {
   YieldToWorst = 'WORST'
 }
 
-/*
-**************************************************************
-* Driver and part of trade in the event that the Security    *
-* Master file was wrong at the point of entry(Note tag # was *
-* reserved in FIX 4.1, added in FIX 4.3)                     *
-**************************************************************
-*/
 export enum TradedFlatSwitch {
-  NotTradedFlat = 'N',
-  TradedFlat = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-*****************************
-* Subscription Request Type *
-*****************************
-*/
 export enum SubscriptionRequestType {
   Snapshot = '0',
   SnapshotAndUpdates = '1',
   DisablePreviousSnapshot = '2'
 }
 
-/*
-*********************************************
-* Specifies the type of Market Data update. *
-*********************************************
-*/
 export enum MDUpdateType {
   FullRefresh = 0,
   IncrementalRefresh = 1
 }
 
-/*
-***************************************************************
-* Specifies whether or not book entries should be aggregated. *
-* (Not specified) = broker option                             *
-***************************************************************
-*/
 export enum AggregatedBook {
-  BookEntriesToBeAggregated = 'Y',
-  BookEntriesShouldNotBeAggregated = 'N'
+  Yes = 'Y',
+  No = 'N'
 }
 
-/*
-***************************
-* Type Market Data entry. *
-***************************
-*/
 export enum MDEntryType {
   Bid = '0',
   Offer = '1',
@@ -1331,7 +1228,7 @@ export enum MDEntryType {
   SettlementPrice = '6',
   TradingSessionHighPrice = '7',
   TradingSessionLowPrice = '8',
-  TradingSessionVwapPrice = '9',
+  Vwap = '9',
   Imbalance = 'A',
   TradeVolume = 'B',
   OpenInterest = 'C',
@@ -1353,18 +1250,21 @@ export enum MDEntryType {
   CumulativeValueAdjustmentForLongPositions = 'T',
   DailyValueAdjustmentForShortPositions = 'U',
   CumulativeValueAdjustmentForShortPositions = 'V',
+  FixingPrice = 'W',
+  CashRate = 'X',
   RecoveryRate = 'Y',
   RecoveryRateForLong = 'Z',
   RecoveryRateForShort = 'a',
-  FixingPrice = 'W',
-  CashRate = 'X'
+  MarketBid = 'b',
+  MarketOffer = 'c',
+  ShortSaleMinPrice = 'd',
+  PreviousClosingPrice = 'e',
+  ThresholdLimitPriceBanding = 'g',
+  DailyFinancingValue = 'h',
+  AccruedFinancingValue = 'i',
+  Twap = 't'
 }
 
-/*
-****************************
-* Direction of the "tick". *
-****************************
-*/
 export enum TickDirection {
   PlusTick = '0',
   ZeroPlusTick = '1',
@@ -1372,11 +1272,6 @@ export enum TickDirection {
   ZeroMinusTick = '3'
 }
 
-/*
-**********************************************************
-* Space-delimited list of conditions describing a quote. *
-**********************************************************
-*/
 export enum QuoteCondition {
   ReservedSam = '0',
   NoActiveSam = '1',
@@ -1440,17 +1335,14 @@ export enum QuoteCondition {
   SuspendedSam = 'z'
 }
 
-/*
-*********************************************************
-* Space-delimited list of conditions describing a trade *
-*********************************************************
-*/
 export enum TradeCondition {
   Cancel = '0',
   ImpliedTrade = '1',
   MarketplaceEnteredTrade = '2',
-  MultAssetClassMultilegTrade = '3',
+  MultiAssetClassMultilegTrade = '3',
   MultilegToMultilegTrade = '4',
+  ShortSaleMinPrice = '5',
+  Benchmark = '6',
   Cash = 'A',
   AveragePriceTrade = 'B',
   CashTrade = 'C',
@@ -1515,21 +1407,26 @@ export enum TradeCondition {
   PriorReferencePrice = 'AK',
   StoppedSoldLast = 'AL',
   StoppedOutOfSequence = 'AM',
-  OfficalClosingPrice = 'AN',
+  OfficialClosingPriceDup = 'AN',
   CrossedOld = 'AO',
   FastMarket = 'AP',
   AutomaticExecution = 'AQ',
   FormT = 'AR',
   BasketIndex = 'AS',
   BurstBasket = 'AT',
-  OutsideSpread = 'AV'
+  TradeThroughExempt = 'AU',
+  QuoteSpread = 'AV',
+  LastAuctionPrice = 'AW',
+  HighPrice = 'AX',
+  LowPrice = 'AY',
+  SystematicInternaliser = 'AZ',
+  AwayMarket = 'BA',
+  MidpointPrice = 'BB',
+  TradedBeforeIssueDate = 'BC',
+  PreviousClosingPrice = 'BD',
+  NationalBestBidOffer = 'BE'
 }
 
-/*
-**************************************
-* Type of Market Data update action. *
-**************************************
-*/
 export enum MDUpdateAction {
   New = '0',
   Change = '1',
@@ -1539,11 +1436,6 @@ export enum MDUpdateAction {
   Overlay = '5'
 }
 
-/*
-******************************************************
-* Reason for the rejection of a Market Data request. *
-******************************************************
-*/
 export enum MDReqRejReason {
   UnknownSymbol = '0',
   DuplicateMdReqId = '1',
@@ -1561,22 +1453,11 @@ export enum MDReqRejReason {
   InsufficientCredit = 'D'
 }
 
-/*
-************************
-* Reason for deletion. *
-************************
-*/
 export enum DeleteReason {
   Cancellation = '0',
   Error = '1'
 }
 
-/*
-***************************************************************
-* Flag that identifies a market data entry. (Prior to FIX 4.3 *
-* this field was of type char)                                *
-***************************************************************
-*/
 export enum OpenCloseSettlFlag {
   DailyOpen = '0',
   SessionOpen = '1',
@@ -1586,22 +1467,12 @@ export enum OpenCloseSettlFlag {
   TheoreticalPriceValue = '5'
 }
 
-/*
-********************************************************
-* Identifies a firm's or a security's financial status *
-********************************************************
-*/
 export enum FinancialStatus {
   Bankrupt = '1',
   PendingDelisting = '2',
   Restricted = '3'
 }
 
-/*
-********************************************
-* Identifies the type of Corporate Action. *
-********************************************
-*/
 export enum CorporateAction {
   ExDividend = 'A',
   ExDistribution = 'B',
@@ -1628,11 +1499,6 @@ export enum CorporateAction {
   SuccessionEvent = 'W'
 }
 
-/*
-*******************************************************
-* Identifies the status of the quote acknowledgement. *
-*******************************************************
-*/
 export enum QuoteStatus {
   Accepted = 0,
   CancelForSymbol = 1,
@@ -1654,30 +1520,23 @@ export enum QuoteStatus {
   Canceled = 17,
   UnsolicitedQuoteReplenishment = 18,
   PendingEndTrade = 19,
-  TooLateToEnd = 20
+  TooLateToEnd = 20,
+  Traded = 21,
+  TradedAndRemoved = 22,
+  ContractTerminates = 23
 }
 
-/*
-****************************************
-* Identifies the type of quote cancel. *
-****************************************
-*/
 export enum QuoteCancelType {
   CancelForOneOrMoreSecurities = 1,
   CancelForSecurityType = 2,
   CancelForUnderlyingSecurity = 3,
   CancelAllQuotes = 4,
-  CancelQuoteSpecifiedInQuoteId = 5,
-  CancelByQuoteType = 6,
+  CancelSpecifiedSingleQuote = 5,
+  CancelByTypeOfQuote = 6,
   CancelForSecurityIssuer = 7,
   CancelForIssuerOfUnderlyingSecurity = 8
 }
 
-/*
-******************************
-* Reason Quote was rejected: *
-******************************
-*/
 export enum QuoteRejectReason {
   UnknownSymbol = 1,
   Exchange = 2,
@@ -1692,15 +1551,17 @@ export enum QuoteRejectReason {
   QuoteLocked = 11,
   InvalidOrUnknownSecurityIssuer = 12,
   InvalidOrUnknownIssuerOfUnderlyingSecurity = 13,
+  NotionalValueExceedsThreshold = 14,
+  PriceExceedsCurrentPriceBandDepr = 15,
+  ReferencePriceNotAvailable = 16,
+  InsufficientCreditLimit = 17,
+  ExceededClipSizeLimit = 18,
+  ExceededMaxNotionalOrderAmt = 19,
+  ExceededDv01Pv01Limit = 20,
+  ExceededCs01Limit = 21,
   Other = 99
 }
 
-/*
-****************************************************************
-* Level of Response requested from receiver of quote messages. *
-* A default value should be bilaterally agreed.                *
-****************************************************************
-*/
 export enum QuoteResponseLevel {
   NoAcknowledgement = 0,
   AcknowledgeOnlyNegativeOrErroneousQuotes = 1,
@@ -1708,21 +1569,12 @@ export enum QuoteResponseLevel {
   SummaryAcknowledgement = 3
 }
 
-/*
-*******************************************************
-* Indicates the type of Quote Request being generated *
-*******************************************************
-*/
 export enum QuoteRequestType {
   Manual = 1,
-  Automatic = 2
+  Automatic = 2,
+  ConfirmQuote = 3
 }
 
-/*
-****************************************
-* Type of Security Definition Request. *
-****************************************
-*/
 export enum SecurityRequestType {
   RequestSecurityIdentityAndSpecifications = 0,
   RequestSecurityIdentityForSpecifications = 1,
@@ -1736,11 +1588,6 @@ export enum SecurityRequestType {
   MarketIdOrMarketId = 9
 }
 
-/*
-*************************************************
-* Type of Security Definition message response. *
-*************************************************
-*/
 export enum SecurityResponseType {
   AcceptAsIs = 1,
   AcceptWithRevisions = 2,
@@ -1750,22 +1597,11 @@ export enum SecurityResponseType {
   CannotMatchSelectionCriteria = 6
 }
 
-/*
-**************************************************************
-* Indicates whether or not message is being sent as a result *
-* of a subscription request or not.                          *
-**************************************************************
-*/
 export enum UnsolicitedIndicator {
-  MessageIsBeingSentAsAResultOfAPriorRequest = 'N',
-  MessageIsBeingSentUnsolicited = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-****************************************************************
-* Identifies the trading status applicable to the transaction. *
-****************************************************************
-*/
 export enum SecurityTradingStatus {
   OpeningDelay = 1,
   TradingHalt = 2,
@@ -1791,15 +1627,11 @@ export enum SecurityTradingStatus {
   FastMarket = 23,
   PreCross = 24,
   Cross = 25,
-  PostClose = 26
+  PostClose = 26,
+  NoCancel = 27
 }
 
-/*
-*************************************************************
-* Denotes the reason for the Opening Delay or Trading Halt. *
-*************************************************************
-*/
-export enum HaltReason {
+export enum HaltReasonInt {
   NewsDissemination = 0,
   OrderInflux = 1,
   OrderImbalance = 2,
@@ -1808,88 +1640,45 @@ export enum HaltReason {
   EquipmentChangeover = 5
 }
 
-/*
-*************************************************************
-* Indicates whether or not the halt was due to Common Stock *
-* trading being halted.                                     *
-*************************************************************
-*/
 export enum InViewOfCommon {
-  HaltWasNotRelatedToAHaltOfTheCommonStock = 'N',
-  HaltWasDueToCommonStockBeingHalted = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-************************************************************
-* Indicates whether or not the halt was due to the Related *
-* Security being halted.                                   *
-************************************************************
-*/
 export enum DueToRelated {
-  NotRelatedToSecurityHalt = 'N',
-  RelatedToSecurityHalt = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-**************************************
-* Identifies the type of adjustment. *
-**************************************
-*/
 export enum Adjustment {
   Cancel = 1,
   Error = 2,
   Correction = 3
 }
 
-/*
-***************************************************************
-* Identifier for Trading Session                              *
-* A trading session spans an extended period of time that can *
-* also be expressed informally in terms of the trading day.   *
-* Usage is determined by market or counterparties.            *
-* To specify good for session where session spans more than   *
-* one calendar day, use TimeInForce = Day in conjunction with *
-* TradingSessionID.                                           *
-* Bilaterally agreed values of data type "String" that start  *
-* with a character can be used for backward compatibility.    *
-***************************************************************
-*/
 export enum TradingSessionID {
   Day = '1',
   HalfDay = '2',
   Morning = '3',
   Afternoon = '4',
   Evening = '5',
-  AfterHours = '6'
+  AfterHours = '6',
+  Holiday = '7'
 }
 
-/*
-*********************
-* Method of trading *
-*********************
-*/
 export enum TradSesMethod {
   Electronic = 1,
   OpenOutcry = 2,
-  TwoParty = 3
+  TwoParty = 3,
+  Voice = 4
 }
 
-/*
-************************
-* Trading Session Mode *
-************************
-*/
 export enum TradSesMode {
   Testing = 1,
   Simulated = 2,
   Production = 3
 }
 
-/*
-*********************************
-* State of the trading session. *
-*********************************
-*/
 export enum TradSesStatus {
   Unknown = 0,
   Halted = 1,
@@ -1900,11 +1689,6 @@ export enum TradSesStatus {
   RequestRejected = 6
 }
 
-/*
-***************************************************************
-* Code to identify reason for a session-level Reject message. *
-***************************************************************
-*/
 export enum SessionRejectReason {
   InvalidTagNumber = 0,
   RequiredTagMissing = 1,
@@ -1923,38 +1707,21 @@ export enum SessionRejectReason {
   TagSpecifiedOutOfRequiredOrder = 14,
   RepeatingGroupFieldsOutOfOrder = 15,
   IncorrectNumInGroupCountForRepeatingGroup = 16,
-  Non = 17,
-  Invalid = 18,
+  NonDataValueIncludesFieldDelimiter = 17,
+  InvalidUnsupportedApplVer = 18,
   Other = 99
 }
 
-/*
-********************************************
-* Identifies the Bid Request message type. *
-********************************************
-*/
 export enum BidRequestTransType {
   Cancel = 'C',
   New = 'N'
 }
 
-/*
-*****************************************************
-* Indicates whether or not the order was solicited. *
-*****************************************************
-*/
 export enum SolicitedFlag {
-  WasNotSolicited = 'N',
-  WasSolicited = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-************************************************************
-* Code to identify reason for an ExecutionRpt message sent *
-* with ExecType=Restated or used when communicating an     *
-* unsolicited cancel.                                      *
-************************************************************
-*/
 export enum ExecRestatementReason {
   GtCorporateAction = 0,
   GtRenewal = 1,
@@ -1968,15 +1735,18 @@ export enum ExecRestatementReason {
   Canceled = 9,
   WarehouseRecap = 10,
   PegRefresh = 11,
+  CancelOnConnectionLoss = 12,
+  CancelOnLogout = 13,
+  AssignTimePriority = 14,
+  CancelledForTradePriceViolation = 15,
+  CancelledForCrossImbalance = 16,
+  CxldSmp = 17,
+  CxldSmpAggressive = 18,
+  CxldSmpPassive = 19,
+  CxldSmpAggressivePassive = 20,
   Other = 99
 }
 
-/*
-*********************************************************
-* Code to identify reason for a Business Message Reject *
-* message.                                              *
-*********************************************************
-*/
 export enum BusinessRejectReason {
   Other = 0,
   UnknownId = 1,
@@ -1986,25 +1756,17 @@ export enum BusinessRejectReason {
   ConditionallyRequiredFieldMissing = 5,
   NotAuthorized = 6,
   DeliverToFirmNotAvailableAtThisTime = 7,
+  ThrottleLimitExceeded = 8,
+  ThrottleLimitExceededSessionDisconnected = 9,
+  ThrottledMessagesRejectedOnRequest = 10,
   InvalidPriceIncrement = 18
 }
 
-/*
-********************************************
-* Specifies the direction of the messsage. *
-********************************************
-*/
 export enum MsgDirection {
   Receive = 'R',
   Send = 'S'
 }
 
-/*
-***************************************************************
-* Code to identify the price a DiscretionOffsetValue (389) is *
-* related to and should be mathematically added to.           *
-***************************************************************
-*/
 export enum DiscretionInst {
   RelatedToDisplayedPrice = '0',
   RelatedToMarketPrice = '1',
@@ -2016,45 +1778,23 @@ export enum DiscretionInst {
   AveragePriceGuarantee = '7'
 }
 
-/*
-*********************************************
-* Code to identify the type of Bid Request. *
-*********************************************
-*/
 export enum BidType {
   NonDisclosed = 1,
   Disclosed = 2,
   NoBiddingProcess = 3
 }
 
-/*
-*****************************************************
-* Code to identify the type of BidDescriptor (400). *
-*****************************************************
-*/
 export enum BidDescriptorType {
   Sector = 1,
   Country = 2,
   Index = 3
 }
 
-/*
-****************************************************************
-* Code to identify which "SideValue" the value refers to.      *
-* SideValue1 and SideValue2 are used as opposed to Buy or Sell *
-* so that the basket can be quoted either way as Buy or Sell.  *
-****************************************************************
-*/
 export enum SideValueInd {
   SideValue1 = 1,
   SideValue2 = 2
 }
 
-/*
-*****************************************************
-* Code to identify the type of liquidity indicator. *
-*****************************************************
-*/
 export enum LiquidityIndType {
   FiveDayMovingAverage = 1,
   TwentyDayMovingAverage = 2,
@@ -2062,44 +1802,22 @@ export enum LiquidityIndType {
   Other = 4
 }
 
-/*
-******************************************************
-* Indicates whether or not to exchange for phsyical. *
-******************************************************
-*/
 export enum ExchangeForPhysical {
-  False = 'N',
-  True = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-***************************************************************
-* Code to identify the desired frequency of progress reports. *
-***************************************************************
-*/
 export enum ProgRptReqs {
   BuySideRequests = 1,
   SellSideSends = 2,
   RealTimeExecutionReports = 3
 }
 
-/*
-****************************************************************
-* Code to represent whether value is net (inclusive of tax) or *
-* gross.                                                       *
-****************************************************************
-*/
 export enum IncTaxInd {
   Net = 1,
   Gross = 2
 }
 
-/*
-*******************************************************
-* Code to represent the type of trade.                *
-* (Prior to FIX 4.4 this field was named "TradeType") *
-*******************************************************
-*/
 export enum BidTradeType {
   Agency = 'A',
   VwapGuarantee = 'G',
@@ -2107,11 +1825,6 @@ export enum BidTradeType {
   RiskTrade = 'R'
 }
 
-/*
-*******************************************
-* Code to represent the basis price type. *
-*******************************************
-*/
 export enum BasisPxType {
   ClosingPriceAtMorningSession = '2',
   ClosingPrice = '3',
@@ -2128,16 +1841,6 @@ export enum BasisPxType {
   Others = 'Z'
 }
 
-/*
-***************************************************************
-* Code to represent the price type.                           *
-* (For Financing transactions PriceType implies the "repo     *
-* type" - Fixed or Floating - 9 (Yield) or 6 (Spread)         *
-* respectively - and Price (44) gives the corresponding "repo *
-* rate".                                                      *
-* See Volume : "Glossary" for further value definitions)      *
-***************************************************************
-*/
 export enum PriceType {
   Percentage = 1,
   PerUnit = 2,
@@ -2150,33 +1853,28 @@ export enum PriceType {
   Yield = 9,
   FixedCabinetTradePrice = 10,
   VariableCabinetTradePrice = 11,
-  ProductTicksInHalfs = 13,
+  PriceSpread = 12,
+  ProductTicksInHalves = 13,
   ProductTicksInFourths = 14,
-  ProductTicksInEights = 15,
+  ProductTicksInEighths = 15,
   ProductTicksInSixteenths = 16,
   ProductTicksInThirtySeconds = 17,
-  ProductTicksInSixtyForths = 18,
-  ProductTicksInOneTwentyEights = 19
+  ProductTicksInSixtyFourths = 18,
+  ProductTicksInOneTwentyEighths = 19,
+  NormalRateRepresentation = 20,
+  InverseRateRepresentation = 21,
+  BasisPoints = 22,
+  UpfrontPoints = 23,
+  InterestRate = 24,
+  PercentageNotional = 25
 }
 
-/*
-********************************************************
-* Code to identify whether to book out executions on a *
-* part-filled GT order on the day of execution or to   *
-* accumulate.                                          *
-********************************************************
-*/
 export enum GTBookingInst {
   BookOutAllTradesOnDayOfExecution = 0,
   AccumulateUntilFilledOrExpired = 1,
   AccumulateUntilVerballyNotifiedOtherwise = 2
 }
 
-/*
-**************************************
-* Code to represent the status type. *
-**************************************
-*/
 export enum ListStatusType {
   Ack = 1,
   Response = 2,
@@ -2186,22 +1884,11 @@ export enum ListStatusType {
   Alert = 6
 }
 
-/*
-****************************************************************
-* Code to represent whether value is net (inclusive of tax) or *
-* gross.                                                       *
-****************************************************************
-*/
 export enum NetGrossInd {
   Net = 1,
   Gross = 2
 }
 
-/*
-*************************************************
-* Code to represent the status of a list order. *
-*************************************************
-*/
 export enum ListOrderStatus {
   InBiddingProcess = 1,
   ReceivedForExecution = 2,
@@ -2212,11 +1899,6 @@ export enum ListOrderStatus {
   Reject = 7
 }
 
-/*
-*********************************************
-* Identifies the type of ListExecInst (69). *
-*********************************************
-*/
 export enum ListExecInstType {
   Immediate = '1',
   WaitForInstruction = '2',
@@ -2225,38 +1907,17 @@ export enum ListExecInstType {
   BuyDrivenCashWithdraw = '5'
 }
 
-/*
-*************************************************************
-* Identifies the type of request that a Cancel Reject is in *
-* response to.                                              *
-*************************************************************
-*/
 export enum CxlRejResponseTo {
   OrderCancelRequest = '1',
-  OrderCancel = '2'
+  OrderCancelReplaceRequest = '2'
 }
 
-/*
-**************************************************************
-* Used to indicate what an Execution Report represents (e.g. *
-* used with multi-leg securities, such as option strategies, *
-* spreads, etc.).                                            *
-**************************************************************
-*/
 export enum MultiLegReportingType {
   SingleSecurity = '1',
   IndividualLegOfAMultiLegSecurity = '2',
   MultiLegSecurity = '3'
 }
 
-/*
-*************************************************************
-* Identifies class or source of the PartyID (448) value.    *
-* Required if PartyID is specified. Note: applicable values *
-* depend upon PartyRole (452) specified.                    *
-* See "Appendix 6-G - Use of <Parties> Component Block"     *
-*************************************************************
-*/
 export enum PartyIDSource {
   KoreanInvestorId = '1',
   TaiwaneseForeignInvestorId = '2',
@@ -2268,6 +1929,7 @@ export enum PartyIDSource {
   UsEmployerOrTaxIdNumber = '8',
   AustralianBusinessNumber = '9',
   AustralianTaxFileNumber = 'A',
+  TaxId = 'J',
   IsitcAcronym = 'I',
   Bic = 'B',
   GeneralIdentifier = 'C',
@@ -2275,16 +1937,20 @@ export enum PartyIDSource {
   IsoCountryCode = 'E',
   SettlementEntityLocation = 'F',
   Mic = 'G',
-  CsdParticipant = 'H'
+  CsdParticipant = 'H',
+  AustralianCompanyNumber = 'K',
+  AustralianRegisteredBodyNumber = 'L',
+  CftcReportingFirmIdentifier = 'M',
+  LegalEntityIdentifier = 'N',
+  InterimIdentifier = 'O',
+  ShortCodeIdentifier = 'P',
+  NationalIdNaturalPerson = 'Q',
+  IndiaPermanentAccountNumber = 'R',
+  Fdid = 'S',
+  Spsaid = 'T',
+  MasterSpsaid = 'U'
 }
 
-/*
-***************************************************************
-* Identifies the type or role of the PartyID (448) specified. *
-* See "Appendix 6-G - Use of <Parties> Component Block"       *
-* (see Volume : "Glossary" for value definitions)             *
-***************************************************************
-*/
 export enum PartyRole {
   ExecutingFirm = 1,
   BrokerOfCredit = 2,
@@ -2299,7 +1965,7 @@ export enum PartyRole {
   OrderOriginationTrader = 11,
   ExecutingTrader = 12,
   OrderOriginationFirm = 13,
-  GiveupClearingFirm = 14,
+  GiveupClearingFirmDepr = 14,
   CorrespondantClearingFirm = 15,
   ExecutingSystem = 16,
   ContraFirm = 17,
@@ -2369,16 +2035,50 @@ export enum PartyRole {
   CentralRegistrationDepository = 82,
   ClearingAccount = 83,
   AcceptableSettlingCounterparty = 84,
-  UnacceptableSettlingCounterparty = 85
+  UnacceptableSettlingCounterparty = 85,
+  ClsMemberBank = 86,
+  InConcertGroup = 87,
+  InConcertControllingEntity = 88,
+  LargePositionsReportingAccount = 89,
+  SettlementFirm = 90,
+  SettlementAccount = 91,
+  ReportingMarketCenter = 92,
+  RelatedReportingMarketCenter = 93,
+  AwayMarket = 94,
+  GiveupTradingFirm = 95,
+  TakeupTradingFirm = 96,
+  GiveupClearingFirm = 97,
+  TakeupClearingFirm = 98,
+  OriginatingMarket = 99,
+  MarginAccount = 100,
+  CollateralAssetAccount = 101,
+  DataRepository = 102,
+  CalculationAgent = 103,
+  ExerciseNoticeSender = 104,
+  ExerciseNoticeReceiver = 105,
+  RateReferenceBank = 106,
+  Correspondent = 107,
+  BeneficiaryBank = 109,
+  Borrower = 110,
+  PrimaryObligator = 111,
+  Guarantor = 112,
+  ExcludedReferenceEntity = 113,
+  DeterminingParty = 114,
+  HedgingParty = 115,
+  ReportingEntity = 116,
+  SalesPerson = 117,
+  Operator = 118,
+  Csd = 119,
+  Icsd = 120,
+  TradingSubAccount = 121,
+  InvestmentDecisionMaker = 122,
+  PublishingIntermediary = 123,
+  CsdParticipant = 124,
+  Issuer = 125,
+  ContraCustomerAccount = 126,
+  ContraInvestmentDecisionMaker = 127
 }
 
-/*
-************************************************************
-* Indicates the type of product the security is associated *
-* with. See also the CFICode (461) and SecurityType (167)  *
-* fields.                                                  *
-************************************************************
-*/
 export enum Product {
   Agency = 1,
   Commodity = 2,
@@ -2395,47 +2095,17 @@ export enum Product {
   Financing = 13
 }
 
-/*
-***************************************************************
-* Indicates whether or not this FIX Session is a "test" vs.   *
-* "production" connection. Useful for preventing "accidents". *
-***************************************************************
-*/
 export enum TestMessageIndicator {
-  Fales = 'N',
-  True = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-****************************************************************
-* Specifies which direction to round For CIV - indicates       *
-* whether or not the quantity of shares/units is to be rounded *
-* and in which direction where CashOrdQty (152) or (for CIV    *
-* only) OrderPercent (516) are specified on an order.          *
-* The default is for rounding to be at the discretion of the   *
-* executing broker or fund manager.                            *
-* e.g. for an order specifying CashOrdQty or OrderPercent if   *
-* the calculated number of shares/units was 325.76 and         *
-* RoundingModulus (469) was 0 - "round down" would give 320    *
-* units, 1 - "round up" would give 330 units and "round to     *
-* nearest" would give 320 units.                               *
-****************************************************************
-*/
 export enum RoundingDirection {
   RoundToNearest = '0',
   RoundDown = '1',
   RoundUp = '2'
 }
 
-/*
-****************************************************************
-* A code identifying the payment method for a (fractional)     *
-* distribution.                                                *
-* 13 through 998 are reserved for future use                   *
-* Values above 1000 are available for use by private agreement *
-* among counterparties                                         *
-****************************************************************
-*/
 export enum DistribPaymentMethod {
   Crest = 1,
   Nscc = 2,
@@ -2448,15 +2118,10 @@ export enum DistribPaymentMethod {
   AchCredit = 9,
   Bpay = 10,
   HighValueClearingSystemHvacs = 11,
-  ReinvestInFund = 12
+  ReinvestInFund = 12,
+  Other = 999
 }
 
-/*
-******************************************************
-* For CIV - A one character code identifying whether *
-* Cancellation rights/Cooling off period applies.    *
-******************************************************
-*/
 export enum CancellationRights {
   Yes = 'Y',
   NoExecutionOnly = 'N',
@@ -2464,11 +2129,6 @@ export enum CancellationRights {
   NoInstitutional = 'O'
 }
 
-/*
-*************************************************************
-* A one character code identifying Money laundering status. *
-*************************************************************
-*/
 export enum MoneyLaunderingStatus {
   ExemptBelowLimit = '1',
   ExemptMoneyType = '2',
@@ -2477,13 +2137,6 @@ export enum MoneyLaunderingStatus {
   NotChecked = 'N'
 }
 
-/*
-****************************************************************
-* For CIV - Identifies how the execution price LastPx (31) was *
-* calculated from the fund unit/share price(s) calculated at   *
-* the fund valuation point.                                    *
-****************************************************************
-*/
 export enum ExecPriceType {
   BidPrice = 'B',
   CreationPrice = 'C',
@@ -2495,12 +2148,6 @@ export enum ExecPriceType {
   SinglePrice = 'S'
 }
 
-/*
-****************************************************
-* Identifies Trade Report message transaction type *
-* (Prior to FIX 4.4 this field was of type char)   *
-****************************************************
-*/
 export enum TradeReportTransType {
   New = 0,
   Cancel = 1,
@@ -2510,14 +2157,6 @@ export enum TradeReportTransType {
   CancelDueToBackOutOfTrade = 5
 }
 
-/*
-****************************************************************
-* A code identifying the Settlement payment method. 16 through *
-* 998 are reserved for future use                              *
-* Values above 1000 are available for use by private agreement *
-* among counterparties                                         *
-****************************************************************
-*/
 export enum PaymentMethod {
   Crest = 1,
   Nscc = 2,
@@ -2533,20 +2172,15 @@ export enum PaymentMethod {
   AchDebit = 12,
   AchCredit = 13,
   Bpay = 14,
-  HighValueClearingSystem = 15
+  HighValueClearingSystem = 15,
+  Chips = 16,
+  Swift = 17,
+  Chaps = 18,
+  Sic = 19,
+  EuroSic = 20,
+  Other = 999
 }
 
-/*
-****************************************************************
-* For CIV - a code identifying the type of tax exempt account  *
-* in which purchased shares/units are to be held.              *
-* 30 - 998 are reserved for future use by recognized taxation  *
-* authorities                                                  *
-* 999=Other                                                    *
-* values above 1000 are available for use by private agreement *
-* among counterparties                                         *
-****************************************************************
-*/
 export enum TaxAdvantageType {
   None = 0,
   MaxiIsa = 1,
@@ -2581,23 +2215,11 @@ export enum TaxAdvantageType {
   Other = 999
 }
 
-/*
-***********************************************************
-* A one character code identifying whether the Fund based *
-* renewal commission is to be waived.                     *
-***********************************************************
-*/
 export enum FundRenewWaiv {
   No = 'N',
   Yes = 'Y'
 }
 
-/*
-**************************************************************
-* Registration status as returned by the broker or (for CIV) *
-* the fund manager:                                          *
-**************************************************************
-*/
 export enum RegistStatus {
   Accepted = 'A',
   Rejected = 'R',
@@ -2605,14 +2227,6 @@ export enum RegistStatus {
   Reminder = 'N'
 }
 
-/*
-**************************************************************
-* Reason(s) why Registration Instructions has been rejected. *
-* The reason may be further amplified in the                 *
-* RegistRejReasonCode field.                                 *
-* Possible values of reason code include:                    *
-**************************************************************
-*/
 export enum RegistRejReasonCode {
   InvalidAccountType = 1,
   InvalidTaxExemptType = 2,
@@ -2635,36 +2249,18 @@ export enum RegistRejReasonCode {
   Other = 99
 }
 
-/*
-*********************************************************
-* Identifies Registration Instructions transaction type *
-*********************************************************
-*/
 export enum RegistTransType {
   New = '0',
   Replace = '1',
   Cancel = '2'
 }
 
-/*
-**************************************************
-* The relationship between Registration parties. *
-**************************************************
-*/
 export enum OwnershipType {
   JointTrustees = '2',
   JointInvestors = 'J',
   TenantsInCommon = 'T'
 }
 
-/*
-**************************************************************
-* Type of ContAmtValue (520).                                *
-* NOTE That Commission Amount / % in Contract Amounts is the *
-* commission actually charged, rather than the commission    *
-* instructions given in Fields 2/3.                          *
-**************************************************************
-*/
 export enum ContAmtType {
   CommissionAmount = 1,
   CommissionPercent = 2,
@@ -2683,11 +2279,6 @@ export enum ContAmtType {
   NetSettlementAmount = 15
 }
 
-/*
-*********************************
-* Identifies the type of owner. *
-*********************************
-*/
 export enum OwnerType {
   IndividualInvestor = 1,
   PublicCompany = 2,
@@ -2701,33 +2292,28 @@ export enum OwnerType {
   NetworkingSubAccount = 10,
   NonProfitOrganization = 11,
   CorporateBody = 12,
-  Nominee = 13
+  Nominee = 13,
+  InstitutionalCustomer = 14,
+  Combined = 15,
+  MemberFirmEmployee = 16,
+  MarketMakingAccount = 17,
+  ProprietaryAccount = 18,
+  NonbrokerDealer = 19,
+  UnknownBeneficialOwnerType = 20,
+  FirmsErrorAccount = 21,
+  FirmAgencyAveragePriceAccount = 22
 }
 
-/*
-***************************************************************
-* Designates the capacity of the firm placing the order.      *
-* (as of FIX 4.3, this field replaced Rule80A (tag 47) --used *
-* in conjunction with OrderRestrictions (529) field)          *
-* (see Volume : "Glossary" for value definitions)             *
-***************************************************************
-*/
 export enum OrderCapacity {
   Agency = 'A',
   Proprietary = 'G',
   Individual = 'I',
   Principal = 'P',
   RisklessPrincipal = 'R',
-  AgentForOtherMember = 'W'
+  AgentForOtherMember = 'W',
+  MixedCapacity = 'M'
 }
 
-/*
-***********************************************************
-* Restrictions associated with an order. If more than one *
-* restriction is applicable to an order, this field can   *
-* contain multiple instructions separated by space.       *
-***********************************************************
-*/
 export enum OrderRestrictions {
   ProgramTrade = '1',
   IndexArbitrage = '2',
@@ -2743,14 +2329,12 @@ export enum OrderRestrictions {
   IssuePriceStabilization = 'C',
   NonAlgorithmic = 'D',
   Algorithmic = 'E',
-  Cross = 'F'
+  Cross = 'F',
+  InsiderAccount = 'G',
+  SignificantShareholder = 'H',
+  NormalCourseIssuerBid = 'I'
 }
 
-/*
-*************************************************
-* Specifies scope of Order Mass Cancel Request. *
-*************************************************
-*/
 export enum MassCancelRequestType {
   CancelOrdersForASecurity = '1',
   CancelOrdersForAnUnderlyingSecurity = '2',
@@ -2766,12 +2350,6 @@ export enum MassCancelRequestType {
   CancelForIssuerOfUnderlyingSecurity = 'C'
 }
 
-/*
-*************************************************************
-* Specifies the action taken by counterparty order handling *
-* system as a result of the Order Mass Cancel Request       *
-*************************************************************
-*/
 export enum MassCancelResponse {
   CancelRequestRejected = '0',
   CancelOrdersForASecurity = '1',
@@ -2788,15 +2366,10 @@ export enum MassCancelResponse {
   CancelOrdersForIssuerOfUnderlyingSecurity = 'C'
 }
 
-/*
-*************************************************
-* Reason Order Mass Cancel Request was rejected *
-*************************************************
-*/
 export enum MassCancelRejectReason {
   MassCancelNotSupported = 0,
   InvalidOrUnknownSecurity = 1,
-  InvalidOrUnkownUnderlyingSecurity = 2,
+  InvalidOrUnknownUnderlyingSecurity = 2,
   InvalidOrUnknownProduct = 3,
   InvalidOrUnknownCfiCode = 4,
   InvalidOrUnknownSecurityType = 5,
@@ -2809,115 +2382,54 @@ export enum MassCancelRejectReason {
   Other = 99
 }
 
-/*
-****************************************************************
-* Identifies the type of quote.                                *
-* An indicative quote is used to inform a counterparty of a    *
-* market. An indicative quote does not result directly in a    *
-* trade.                                                       *
-* A tradeable quote is submitted to a market and will result   *
-* directly in a trade against other orders and quotes in a     *
-* market.                                                      *
-* A restricted tradeable quote is submitted to a market and    *
-* within a certain restriction (possibly based upon price or   *
-* quantity) will automatically trade against orders. Order     *
-* that do not comply with restrictions are sent to the quote   *
-* issuer who can choose to accept or decline the order.        *
-* A counter quote is used in the negotiation model. See Volume *
-* 7 - Product: Fixed Income for example usage.                 *
-****************************************************************
-*/
 export enum QuoteType {
   Indicative = 0,
   Tradeable = 1,
   RestrictedTradeable = 2,
-  Counter = 3
+  Counter = 3,
+  InitiallyTradeable = 4
 }
 
-/*
-****************************************************************
-* Identifies whether an order is a margin order or a           *
-* non-margin order. This is primarily used when sending orders *
-* to Japanese exchanges to indicate sell margin or buy to      *
-* cover. The same tag could be assigned also by buy-side to    *
-* indicate the intent to sell or buy margin and the sell-side  *
-* to accept or reject (base on some validation criteria) the   *
-* margin request.                                              *
-****************************************************************
-*/
 export enum CashMargin {
   Cash = '1',
   MarginOpen = '2',
   MarginClose = '3'
 }
 
-/*
-**************************************************
-* Specifies the market scope of the market data. *
-**************************************************
-*/
 export enum Scope {
   LocalMarket = '1',
   National = '2',
   Global = '3'
 }
 
-/*
-************************************************************
-* Defines how a server handles distribution of a truncated *
-* book. Defaults to broker option.                         *
-************************************************************
-*/
 export enum MDImplicitDelete {
   No = 'N',
   Yes = 'Y'
 }
 
-/*
-*********************************************
-* Type of cross being submitted to a market *
-*********************************************
-*/
 export enum CrossType {
   CrossAon = 1,
   CrossIoc = 2,
   CrossOneSide = 3,
-  CrossSamePrice = 4
+  CrossSamePrice = 4,
+  BasisCross = 5,
+  ContingentCross = 6,
+  VwapCross = 7,
+  StsCross = 8,
+  CustomerToCustomer = 9
 }
 
-/*
-**************************************************************
-* Indicates if one side or the other of a cross order should *
-* be prioritized.                                            *
-* The definition of prioritization is left to the market. In *
-* some markets prioritization means which side of the cross  *
-* order is applied to the market first. In other markets -   *
-* prioritization may mean that the prioritized side is fully *
-* executed (sometimes referred to as the side being          *
-* protected).                                                *
-**************************************************************
-*/
 export enum CrossPrioritization {
   None = 0,
   BuySideIsPrioritized = 1,
   SellSideIsPrioritized = 2
 }
 
-/*
-*********************************************
-* Number of Side repeating group instances. *
-*********************************************
-*/
 export enum NoSides {
   OneSide = 1,
   BothSides = 2
 }
 
-/*
-*********************************************************
-* Identifies the type/criteria of Security List Request *
-*********************************************************
-*/
 export enum SecurityListRequestType {
   Symbol = 0,
   SecurityTypeAnd = 1,
@@ -2927,11 +2439,6 @@ export enum SecurityListRequestType {
   MarketIdOrMarketId = 5
 }
 
-/*
-******************************************************
-* The results returned to a Security Request message *
-******************************************************
-*/
 export enum SecurityRequestResult {
   ValidRequest = 0,
   InvalidOrUnsupportedRequest = 1,
@@ -2941,34 +2448,17 @@ export enum SecurityRequestResult {
   RequestForInstrumentDataNotSupported = 5
 }
 
-/*
-************************************************************
-* Indicates the method of execution reporting requested by *
-* issuer of the order.                                     *
-************************************************************
-*/
 export enum MultiLegRptTypeReq {
   ReportByMulitlegSecurityOnly = 0,
   ReportByMultilegSecurityAndInstrumentLegs = 1,
   ReportByInstrumentLegsOnly = 2
 }
 
-/*
-*************************************************************
-* Indicates the reason a Trading Session Status Request was *
-* rejected.                                                 *
-*************************************************************
-*/
 export enum TradSesStatusRejReason {
   UnknownOrInvalidTradingSessionId = 1,
   Other = 99
 }
 
-/*
-*********************************
-* Type of Trade Capture Report. *
-*********************************
-*/
 export enum TradeRequestType {
   AllTrades = 0,
   MatchedTradesMatchingCriteria = 1,
@@ -2977,35 +2467,18 @@ export enum TradeRequestType {
   AdvisoriesThatMatchCriteria = 4
 }
 
-/*
-********************************************************
-* Indicates if the trade capture report was previously *
-* reported to the counterparty                         *
-********************************************************
-*/
 export enum PreviouslyReported {
-  NotReportedToCounterparty = 'N',
-  PerviouslyReportedToCounterparty = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-********************************************************
-* The status of this trade with respect to matching or *
-* comparison.                                          *
-********************************************************
-*/
 export enum MatchStatus {
   Compared = '0',
   Uncompared = '1',
-  AdvisoryOrAlert = '2'
+  AdvisoryOrAlert = '2',
+  Mismatched = '3'
 }
 
-/*
-*************************************************************
-* The point in the matching process at which this trade was *
-* matched.                                                  *
-*************************************************************
-*/
 export enum MatchType {
   OnePartyTradeReport = '1',
   TwoPartyTradeReport = '2',
@@ -3015,6 +2488,9 @@ export enum MatchType {
   CounterOrderSelection = '6',
   CallAuction = '7',
   Issuing = '8',
+  SystematicInternaliser = '9',
+  AutoMatchLastLook = '10',
+  CrossAuctionLastLook = '11',
   ActAcceptedTrade = 'M3',
   ActDefaultTrade = 'M4',
   ActDefaultAfterM2 = 'M5',
@@ -3035,24 +2511,11 @@ export enum MatchType {
   OcsLockedIn = 'MT'
 }
 
-/*
-***********************************************************
-* This trade is to be treated as an odd lot               *
-* If this field is not specified, the default will be "N" *
-***********************************************************
-*/
 export enum OddLot {
-  TreatAsRoundLot = 'N',
-  TreatAsOddLot = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-****************************************************************
-* Eligibility of this trade for clearing and central           *
-* counterparty processing                                      *
-* values above 4000 are reserved for agreement between parties *
-****************************************************************
-*/
 export enum ClearingInstruction {
   ProcessNormally = 0,
   ExcludeFromAllNetting = 1,
@@ -3067,14 +2530,10 @@ export enum ClearingInstruction {
   AutomaticGiveUpMode = 10,
   QualifiedServiceRepresentativeQsr = 11,
   CustomerTrade = 12,
-  SelfClearing = 13
+  SelfClearing = 13,
+  BuyIn = 14
 }
 
-/*
-********************************************
-* Type of account associated with an order *
-********************************************
-*/
 export enum AccountType {
   CarriedCustomerSide = 1,
   CarriedNonCustomerSide = 2,
@@ -3082,29 +2541,22 @@ export enum AccountType {
   FloorTrader = 4,
   CarriedNonCustomerSideCrossMargined = 6,
   HouseTraderCrossMargined = 7,
-  JointBackOfficeAccount = 8
+  JointBackOfficeAccount = 8,
+  EquitiesSpecialist = 9,
+  OptionsMarketMaker = 10,
+  OptionsFirmAccount = 11,
+  AccountCustomerNonCustomerOrders = 12,
+  AccountOrdersMultipleCustomers = 13
 }
 
-/*
-***************************************************************
-* Capacity of customer placing the order                      *
-* Primarily used by futures exchanges to indicate the CTICode *
-* (customer type indicator) as required by the US CFTC        *
-* (Commodity Futures Trading Commission).                     *
-***************************************************************
-*/
 export enum CustOrderCapacity {
   MemberTradingForTheirOwnAccount = 1,
   ClearingFirmTradingForItsProprietaryAccount = 2,
   MemberTradingForAnotherMember = 3,
-  AllOther = 4
+  AllOther = 4,
+  RetailCustomer = 5
 }
 
-/*
-****************************
-* Mass Status Request Type *
-****************************
-*/
 export enum MassStatusReqType {
   StatusForOrdersForASecurity = 1,
   StatusForOrdersForAnUnderlyingSecurity = 2,
@@ -3118,68 +2570,39 @@ export enum MassStatusReqType {
   StatusForIssuerOfUnderlyingSecurity = 10
 }
 
-/*
-*********************************************************
-* Indicates whether or not automatic booking can occur. *
-*********************************************************
-*/
 export enum DayBookingInst {
   Auto = '0',
   SpeakWithOrderInitiatorBeforeBooking = '1',
   Accumulate = '2'
 }
 
-/*
-***********************************************
-* Indicates what constitutes a bookable unit. *
-***********************************************
-*/
 export enum BookingUnit {
   EachPartialExecutionIsABookableUnit = '0',
   AggregatePartialExecutionsOnThisOrder = '1',
   AggregateExecutionsForThisSymbol = '2'
 }
 
-/*
-******************************************
-* Indicates the method of preallocation. *
-******************************************
-*/
 export enum PreallocMethod {
   ProRata = '0',
   DoNotProRata = '1'
 }
 
-/*
-****************************************************************
-* Optional market assigned sub identifier for a trading phase  *
-* within a trading session. Usage is determined by market or   *
-* counterparties. Used by US based futures markets to identify *
-* exchange specific execution time bracket codes as required   *
-* by US market regulations. Bilaterally agreed values of data  *
-* type "String" that start with a character can be used for    *
-* backward compatibility                                       *
-****************************************************************
-*/
 export enum TradingSessionSubID {
   PreTrading = '1',
   OpeningOrOpeningAuction = '2',
   Continuous = '3',
   ClosingOrClosingAuction = '4',
   PostTrading = '5',
-  IntradayAuction = '6',
-  Quiescent = '7'
+  ScheduledIntradayAuction = '6',
+  Quiescent = '7',
+  AnyAuction = '8',
+  UnscheduledIntradayAuction = '9',
+  OutOfMainSessionTrading = '10',
+  PrivateAuction = '11',
+  PublicAuction = '12',
+  GroupAuction = '13'
 }
 
-/*
-***************************************************************
-* Describes the specific type or purpose of an Allocation     *
-* message (i.e. "Buyside Calculated")                         *
-* (see Volume : "Glossary" for value definitions)             *
-* *** SOME VALUES HAVE BEEN REPLACED - See "Replaced Features *
-* and Supported Approach" ***                                 *
-***************************************************************
-*/
 export enum AllocType {
   Calculated = 1,
   Preliminary = 2,
@@ -3194,17 +2617,21 @@ export enum AllocType {
   AcceptPending = 11,
   IncompleteGroup = 12,
   CompleteGroup = 13,
-  ReversalPending = 14
+  ReversalPending = 14,
+  ReopenGroup = 15,
+  CancelGroup = 16,
+  Giveup = 17,
+  Takeup = 18,
+  RefuseTakeup = 19,
+  InitiateReversal = 20,
+  Reverse = 21,
+  RefuseReversal = 22,
+  SubAllocationGiveup = 23,
+  ApproveGiveup = 24,
+  ApproveTakeup = 25,
+  NotionalValueAveragePxGroupAlloc = 26
 }
 
-/*
-************************************************************
-* Indicates type of fee being assessed of the customer for *
-* trade executions at an exchange. Applicable for futures  *
-* markets only at this time.                               *
-* (Values source CBOT, CME, NYBOT, and NYMEX):             *
-************************************************************
-*/
 export enum ClearingFeeIndicator {
   FirstYearDelegate = '1',
   SecondYearDelegate = '2',
@@ -3222,47 +2649,21 @@ export enum ClearingFeeIndicator {
   AllOtherOwnershipTypes = 'M'
 }
 
-/*
-****************************************************************
-* Indicates if the order is currently being worked. Applicable *
-* only for OrdStatus = "New". For open outcry markets this     *
-* indicates that the order is being worked in the crowd. For   *
-* electronic markets it indicates that the order has           *
-* transitioned from a contingent order to a market order.      *
-****************************************************************
-*/
 export enum WorkingIndicator {
-  NotWorking = 'N',
-  Working = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-*************************************************************
-* Indicates if a Cancel/Replace has caused an order to lose *
-* book priority.                                            *
-*************************************************************
-*/
 export enum PriorityIndicator {
   PriorityUnchanged = 0,
   LostPriorityAsResultOfOrderChange = 1
 }
 
-/*
-************************************************************
-* Indicates that this message is to serve as the final and *
-* legal confirmation.                                      *
-************************************************************
-*/
 export enum LegalConfirm {
-  DoesNotConsituteALegalConfirm = 'N',
-  LegalConfirm = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-******************************
-* Reason Quote was rejected: *
-******************************
-*/
 export enum QuoteRequestRejectReason {
   UnknownSymbol = 1,
   Exchange = 2,
@@ -3275,30 +2676,23 @@ export enum QuoteRequestRejectReason {
   NoInventory = 9,
   Pass = 10,
   InsufficientCredit = 11,
+  ExceededClipSizeLimit = 12,
+  ExceededMaxNotionalOrderAmt = 13,
+  ExceededDv01Pv01Limit = 14,
+  ExceededCs01Limit = 15,
   Other = 99
 }
 
-/*
-****************************************************************
-* Used to identify the source of the Account (1) code. This is *
-* especially useful if the account is a new account that the   *
-* Respondent may not have setup yet in their system.           *
-****************************************************************
-*/
 export enum AcctIDSource {
   Bic = 1,
   SidCode = 2,
   Tfm = 3,
   Omgeo = 4,
   DtccCode = 5,
+  Spsaid = 6,
   Other = 99
 }
 
-/*
-**********************************************
-* Identifies the status of the Confirmation. *
-**********************************************
-*/
 export enum ConfirmStatus {
   Received = 1,
   MismatchedAccount = 2,
@@ -3307,35 +2701,17 @@ export enum ConfirmStatus {
   RequestRejected = 5
 }
 
-/*
-*************************************************
-* Identifies the Confirmation transaction type. *
-*************************************************
-*/
 export enum ConfirmTransType {
   New = 0,
   Replace = 1,
   Cancel = 2
 }
 
-/*
-************************************
-* Identifies the form of delivery. *
-************************************
-*/
 export enum DeliveryForm {
   BookEntry = 1,
   Bearer = 2
 }
 
-/*
-**************************************************************
-* For Fixed Income, used instead of LegQty (687) or          *
-* LegOrderQty (685) to requests the respondent to calculate  *
-* the quantity based on the quantity on the opposite side of *
-* the swap.                                                  *
-**************************************************************
-*/
 export enum LegSwapType {
   ParForPar = 1,
   ModifiedDuration = 2,
@@ -3343,13 +2719,6 @@ export enum LegSwapType {
   Proceeds = 5
 }
 
-/*
-**************************************************************
-* Code to represent price type requested in Quote.           *
-* If the Quote Request is for a Swap values 1-8 apply to all *
-* legs.                                                      *
-**************************************************************
-*/
 export enum QuotePriceType {
   Percent = 1,
   PerShare = 2,
@@ -3360,14 +2729,23 @@ export enum QuotePriceType {
   TedPrice = 7,
   TedYield = 8,
   YieldSpread = 9,
-  Yield = 10
+  Yield = 10,
+  PriceSpread = 12,
+  ProductTicksInHalves = 13,
+  ProductTicksInFourths = 14,
+  ProductTicksInEighths = 15,
+  ProductTicksInSixteenths = 16,
+  ProductTicksInThirtySeconds = 17,
+  ProductTicksInSixtyFourths = 18,
+  ProductTicksInOneTwentyEighths = 19,
+  NormalRateRepresentation = 20,
+  InverseRateRepresentation = 21,
+  BasisPoints = 22,
+  UpFrontPoints = 23,
+  InterestRate = 24,
+  PercentageOfNotional = 25
 }
 
-/*
-******************************************
-* Identifies the type of Quote Response. *
-******************************************
-*/
 export enum QuoteRespType {
   Hit = 1,
   Counter = 2,
@@ -3376,15 +2754,13 @@ export enum QuoteRespType {
   DoneAway = 5,
   Pass = 6,
   EndTrade = 7,
-  TimedOut = 8
+  TimedOut = 8,
+  Tied = 9,
+  TiedCover = 10,
+  Accept = 11,
+  TerminateContract = 12
 }
 
-/*
-*******************************************************
-* Used to identify the type of quantity that is being *
-* returned.                                           *
-*******************************************************
-*/
 export enum PosType {
   AllocationTradeQty = 'ALC',
   OptionAssignment = 'AS',
@@ -3412,25 +2788,25 @@ export enum PosType {
   PrivatelyNegotiatedTradeQty = 'PNTN',
   NetDeltaQty = 'DLT',
   CreditEventAdjustment = 'CEA',
-  SuccessionEventAdjustment = 'SEA'
+  SuccessionEventAdjustment = 'SEA',
+  NetQty = 'NET',
+  GrossQty = 'GRS',
+  IntradayQty = 'ITD',
+  GrossLongNonDeltaAdjustedSwaptionPosition = 'NDAS',
+  LongDeltaAdjustedPairedSwaptionPosition = 'DAS',
+  ExpiringQuantity = 'EXP',
+  QuantityNotExercised = 'UNEX',
+  RequestedExerciseQuantity = 'REQ',
+  CashFuturesEquivalentQuantity = 'CFE',
+  LoanOrBorrowedQuantity = 'SECLN'
 }
 
-/*
-****************************
-* Status of this position. *
-****************************
-*/
 export enum PosQtyStatus {
   Submitted = 0,
   Accepted = 1,
   Rejected = 2
 }
 
-/*
-***************************
-* Type of Position amount *
-***************************
-*/
 export enum PosAmtType {
   CashAmount = 'CASH',
   CashResidualAmount = 'CRES',
@@ -3449,28 +2825,45 @@ export enum PosAmtType {
   IncrementalCollateralizedMarkToMarket = 'ICMTM',
   CompensationAmount = 'DLV',
   TotalBankedAmount = 'BANK',
-  TotalCollateralizedAmount = 'COLAT'
+  TotalCollateralizedAmount = 'COLAT',
+  LongPairedSwapNotionalValue = 'LSNV',
+  ShortPairedSwapNotionalValue = 'SSNV',
+  StartOfDayAccruedCoupon = 'SACPN',
+  NetPresentValue = 'NPV',
+  StartOfDayNetPresentValue = 'SNPV',
+  NetCashFlow = 'NCF',
+  PresentValueOfFees = 'PVFEES',
+  PresentValueOneBasisPoints = 'PV01',
+  FiveYearEquivalentNotional = '5YREN',
+  UndiscountedMarkToMarket = 'UMTM',
+  MarkToModel = 'MTD',
+  MarkToMarketVariance = 'VMTM',
+  MarkToModelVariance = 'VMTD',
+  UpfrontPayment = 'UPFRNT',
+  EndVale = 'ENDV',
+  OutstandingMarginLoan = 'MGNLN',
+  LoanValue = 'LNVL'
 }
 
-/*
-***********************************************
-* Identifies the type of position transaction *
-***********************************************
-*/
 export enum PosTransType {
   Exercise = 1,
   DoNotExercise = 2,
   PositionAdjustment = 3,
   PositionChangeSubmission = 4,
   Pledge = 5,
-  LargeTraderSubmission = 6
+  LargeTraderSubmission = 6,
+  LargePositionsReportingSubmission = 7,
+  LongHoldings = 8,
+  InternalTransfer = 9,
+  TransferOfFirm = 10,
+  ExternalTransfer = 11,
+  CorporateAction = 12,
+  Notification = 13,
+  PositionCreation = 14,
+  Closeout = 15,
+  Reopen = 16
 }
 
-/*
-***************************************
-* Maintenance Action to be performed. *
-***************************************
-*/
 export enum PosMaintAction {
   New = 1,
   Replace = 2,
@@ -3478,11 +2871,6 @@ export enum PosMaintAction {
   Reverse = 4
 }
 
-/*
-********************************************
-* Identifies a specific settlement session *
-********************************************
-*/
 export enum SettlSessID {
   Intraday = 'ITD',
   RegularTradingHours = 'RTH',
@@ -3490,23 +2878,14 @@ export enum SettlSessID {
   EndOfDay = 'EOD'
 }
 
-/*
-**********************************************************
-* Type of adjustment to be applied, used for PCS and PAJ *
-**********************************************************
-*/
 export enum AdjustmentType {
   ProcessRequestAsMarginDisposition = 0,
   DeltaPlus = 1,
   DeltaMinus = 2,
-  Final = 3
+  Final = 3,
+  CustomerSpecificPosition = 4
 }
 
-/*
-******************************************
-* Status of Position Maintenance Request *
-******************************************
-*/
 export enum PosMaintStatus {
   Accepted = 0,
   AcceptedWithWarnings = 1,
@@ -3515,24 +2894,12 @@ export enum PosMaintStatus {
   CompletedWithWarnings = 4
 }
 
-/*
-*************************************************************
-* Result of Position Maintenance Request.                   *
-* 4000+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                       *
-*************************************************************
-*/
 export enum PosMaintResult {
   SuccessfulCompletion = 0,
   Rejected = 1,
   Other = 99
 }
 
-/*
-************************************************************
-* Used to specify the type of position request being made. *
-************************************************************
-*/
 export enum PosReqType {
   Positions = 0,
   Trades = 1,
@@ -3540,28 +2907,18 @@ export enum PosReqType {
   Assignments = 3,
   SettlementActivity = 4,
   BackoutMessage = 5,
-  DeltaPositions = 6
+  DeltaPositions = 6,
+  NetPosition = 7,
+  LargePositionsReporting = 8,
+  ExercisePositionReportingSubmission = 9,
+  PositionLimitReportingSubmissing = 10
 }
 
-/*
-********************************************************
-* Identifies how the response to the request should be *
-* transmitted.                                         *
-* Details specified via ResponseDestination (726).     *
-********************************************************
-*/
 export enum ResponseTransportType {
   Inband = 0,
   OutOfBand = 1
 }
 
-/*
-*************************************************************
-* Result of Request for Position                            *
-* 4000+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                       *
-*************************************************************
-*/
 export enum PosReqResult {
   ValidRequest = 0,
   InvalidOrUnsupportedRequest = 1,
@@ -3571,53 +2928,27 @@ export enum PosReqResult {
   Other = 99
 }
 
-/*
-***********************************
-* Status of Request for Positions *
-***********************************
-*/
 export enum PosReqStatus {
   Completed = 0,
   CompletedWithWarnings = 1,
   Rejected = 2
 }
 
-/*
-****************************
-* Type of settlement price *
-****************************
-*/
 export enum SettlPriceType {
   Final = 1,
   Theoretical = 2
 }
 
-/*
-***************************************************************
-* Method by which short positions are assigned to an exercise *
-* notice during exercise and assignment processing            *
-***************************************************************
-*/
 export enum AssignmentMethod {
   ProRata = 'P',
   Random = 'R'
 }
 
-/*
-*****************************************************
-* Exercise Method used to in performing assignment. *
-*****************************************************
-*/
 export enum ExerciseMethod {
   Automatic = 'A',
   Manual = 'M'
 }
 
-/*
-***************************
-* Result of Trade Request *
-***************************
-*/
 export enum TradeRequestResult {
   Successful = 0,
   InvalidOrUnknownInstrument = 1,
@@ -3630,55 +2961,30 @@ export enum TradeRequestResult {
   Other = 99
 }
 
-/*
-****************************
-* Status of Trade Request. *
-****************************
-*/
 export enum TradeRequestStatus {
   Accepted = 0,
   Completed = 1,
   Rejected = 2
 }
 
-/*
-************************************************************
-* Reason Trade Capture Request was rejected.               *
-* 100+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                      *
-************************************************************
-*/
 export enum TradeReportRejectReason {
   Successful = 0,
-  InvalidPartyOnformation = 1,
+  InvalidPartyInformation = 1,
   UnknownInstrument = 2,
   UnauthorizedToReportTrades = 3,
   InvalidTradeType = 4,
+  PriceExceedsCurrentPriceBand = 5,
+  ReferencePriceNotAvailable = 6,
+  NotionalValueExceedsThreshold = 7,
   Other = 99
 }
 
-/*
-****************************************************************
-* Used to indicate if the side being reported on Trade Capture *
-* Report represents a leg of a multileg instrument or a single *
-* security.                                                    *
-****************************************************************
-*/
 export enum SideMultiLegReportingType {
   SingleSecurity = 1,
   IndividualLegOfAMultilegSecurity = 2,
   MultilegSecurity = 3
 }
 
-/*
-************************************************************
-* Traded / Regulatory timestamp type.                      *
-* Note of Applicability: values are required in US futures *
-* markets by the CFTC to support computerized trade        *
-* reconstruction.                                          *
-* (see Volume : "Glossary" for value definitions)          *
-************************************************************
-*/
 export enum TrdRegTimestampType {
   ExecutionTime = 1,
   TimeIn = 2,
@@ -3686,51 +2992,71 @@ export enum TrdRegTimestampType {
   BrokerReceipt = 4,
   BrokerExecution = 5,
   DeskReceipt = 6,
-  SubmissionToClearing = 7
+  SubmissionToClearing = 7,
+  TimePriority = 8,
+  OrderbookEntryTime = 9,
+  OrderSubmissionTime = 10,
+  PubliclyReported = 11,
+  PublicReportUpdated = 12,
+  NonPubliclyReported = 13,
+  NonPublicReportUpdated = 14,
+  SubmittedForConfirmation = 15,
+  UpdatedForConfirmation = 16,
+  Confirmed = 17,
+  UpdatedForClearing = 18,
+  Cleared = 19,
+  AllocationsSubmitted = 20,
+  AllocationsUpdated = 21,
+  AllocationsCompleted = 22,
+  SubmittedToRepository = 23,
+  PostTrdContntnEvnt = 24,
+  PostTradeValuation = 25,
+  PreviousTimePriority = 26,
+  IdentifierAssigned = 27,
+  PreviousIdentifierAssigned = 28,
+  OrderCancellationTime = 29,
+  OrderModificationTime = 30,
+  OrderRoutingTime = 31,
+  TradeCancellationTime = 32,
+  TradeModificationTime = 33,
+  ReferenceTimeForNbbo = 34
 }
 
-/*
-***********************************************************
-* Identifies the type of Confirmation message being sent. *
-***********************************************************
-*/
 export enum ConfirmType {
   Status = 1,
   Confirmation = 2,
   ConfirmationRequestRejected = 3
 }
 
-/*
-*******************************************************
-* Identifies the reason for rejecting a Confirmation. *
-*******************************************************
-*/
 export enum ConfirmRejReason {
   MismatchedAccount = 1,
   MissingSettlementInstructions = 2,
+  UnknownOrMissingIndividualAllocId = 3,
+  TransactionNotRecognized = 4,
+  DuplicateTransaction = 5,
+  IncorrectOrMissingInstrument = 6,
+  IncorrectOrMissingPrice = 7,
+  IncorrectOrMissingCommission = 8,
+  IncorrectOrMissingSettlDate = 9,
+  IncorrectOrMissingFundIdOrFundName = 10,
+  IncorrectOrMissingQuantity = 11,
+  IncorrectOrMissingFees = 12,
+  IncorrectOrMissingTax = 13,
+  IncorrectOrMissingParty = 14,
+  IncorrectOrMissingSide = 15,
+  IncorrectOrMissingNetMoney = 16,
+  IncorrectOrMissingTradeDate = 17,
+  IncorrectOrMissingSettlCcyInstructions = 18,
+  IncorrectOrMissingCapacity = 19,
   Other = 99
 }
 
-/*
-**************************************************************
-* Method for booking out this order. Used when notifying a   *
-* broker that an order to be settled by that broker is to be *
-* booked out as an OTC derivative (e.g. CFD or similar).     *
-**************************************************************
-*/
 export enum BookingType {
   RegularBooking = 0,
   Cfd = 1,
   TotalReturnSwap = 2
 }
 
-/*
-**************************************************************
-* Used to indicate whether settlement instructions are       *
-* provided on an allocation instruction message, and if not, *
-* how they are to be derived.                                *
-**************************************************************
-*/
 export enum AllocSettlInstType {
   UseDefaultInstructions = 0,
   DeriveFromParametersProvided = 1,
@@ -3739,22 +3065,11 @@ export enum AllocSettlInstType {
   PhoneForInstructions = 4
 }
 
-/*
-***************************************************************
-* Used to indicate whether a delivery instruction is used for *
-* securities or cash settlement.                              *
-***************************************************************
-*/
 export enum DlvyInstType {
   Cash = 'C',
   Securities = 'S'
 }
 
-/*
-**********************************
-* Type of financing termination. *
-**********************************
-*/
 export enum TerminationType {
   Overnight = 1,
   Term = 2,
@@ -3762,12 +3077,6 @@ export enum TerminationType {
   Open = 4
 }
 
-/*
-****************************************************************
-* Identifies reason for rejection (of a settlement instruction *
-* request message).                                            *
-****************************************************************
-*/
 export enum SettlInstReqRejCode {
   UnableToProcessRequest = 0,
   UnknownAccount = 1,
@@ -3775,12 +3084,6 @@ export enum SettlInstReqRejCode {
   Other = 99
 }
 
-/*
-***********************************************************
-* Describes the specific type or purpose of an Allocation *
-* Report message                                          *
-***********************************************************
-*/
 export enum AllocReportType {
   PreliminaryRequestToIntermediary = 2,
   SellsideCalculatedUsingPreliminary = 3,
@@ -3791,27 +3094,21 @@ export enum AllocReportType {
   Reject = 10,
   AcceptPending = 11,
   Complete = 12,
-  ReversePending = 14
+  ReversePending = 14,
+  Giveup = 15,
+  Takeup = 16,
+  Reversal = 17,
+  Alleged = 18,
+  SubAllocationGiveup = 19
 }
 
-/*
-****************************************************************
-* Reason for cancelling or replacing an Allocation Instruction *
-* or Allocation Report message                                 *
-****************************************************************
-*/
 export enum AllocCancReplaceReason {
   OriginalDetailsIncomplete = 1,
   ChangeInUnderlyingOrderDetails = 2,
+  CancelledByGiveupFirm = 3,
   Other = 99
 }
 
-/*
-***********************************************************
-* Type of account associated with a confirmation or other *
-* trade-level message                                     *
-***********************************************************
-*/
 export enum AllocAccountType {
   CarriedCustomerSide = 1,
   CarriedNonCustomerSide = 2,
@@ -3822,13 +3119,6 @@ export enum AllocAccountType {
   JointBackOfficeAccount = 8
 }
 
-/*
-***************************************************************
-* Type of PartySubID (523) value                              *
-* 4000+ = Reserved and available for bi-laterally agreed upon *
-* user defined values                                         *
-***************************************************************
-*/
 export enum PartySubIDType {
   Firm = 1,
   Person = 2,
@@ -3862,17 +3152,63 @@ export enum PartySubIDType {
   ProfessionalClient = 30,
   Location = 31,
   ExecutionVenue = 32,
-  CurrencyDeliveryIdentifier = 33
+  CurrencyDeliveryIdentifier = 33,
+  AddressCity = 34,
+  AddressStateOrProvince = 35,
+  AddressPostalCode = 36,
+  AddressStreet = 37,
+  AddressIsoCountryCode = 38,
+  IsoCountryCode = 39,
+  MarketSegment = 40,
+  CustomerAccountType = 41,
+  OmnibusAccount = 42,
+  FundsSegregationType = 43,
+  GuaranteeFund = 44,
+  SwapDealer = 45,
+  MajorParticipant = 46,
+  FinancialEntity = 47,
+  UsPerson = 48,
+  ReportingEntityIndicator = 49,
+  ElectedClearingRequirementException = 50,
+  BusinessCenter = 51,
+  ReferenceText = 52,
+  ShortMarkingExemptAccount = 53,
+  ParentFirmIdentifier = 54,
+  ParentFirmName = 55,
+  DealIdentifier = 56,
+  SystemTradeId = 57,
+  SystemTradeSubId = 58,
+  FcmCode = 59,
+  DlvryTrmlCode = 60,
+  VolntyRptEntity = 61,
+  RptObligJursdctn = 62,
+  VolntyRptJursdctn = 63,
+  CompanyActivities = 64,
+  EeAreaDomiciled = 65,
+  ContractLinked = 66,
+  ContractAbove = 67,
+  VolntyRptPty = 68,
+  EndUser = 69,
+  LocationOrJurisdiction = 70,
+  DerivativesDealer = 71,
+  Domicile = 72,
+  ExemptFromRecognition = 73,
+  Payer = 74,
+  Receiver = 75,
+  SystematicInternaliser = 76,
+  PublishingEntityIndicator = 77,
+  FirstName = 78,
+  Surname = 79,
+  DateOfBirth = 80,
+  OrderTransmittingFirm = 81,
+  OrderTransmittingFirmBuyer = 82,
+  OrderTransmitterSeller = 83,
+  LegalEntityIdentifier = 84,
+  SubSectorClassification = 85,
+  PartySide = 86,
+  LegalRegistrationCountry = 87
 }
 
-/*
-***************************************************************
-* Response to allocation to be communicated to a counterparty *
-* through an intermediary, i.e. clearing house. Used in       *
-* conjunction with AllocType = "Request to Intermediary" and  *
-* AllocReportType = "Request to Intermediary"                 *
-***************************************************************
-*/
 export enum AllocIntermedReqType {
   PendingAccept = 1,
   PendingRelease = 2,
@@ -3882,12 +3218,6 @@ export enum AllocIntermedReqType {
   AccountLevelReject = 6
 }
 
-/*
-**************************************************************
-* Resolution taken when ApplQueueDepth (813) exceeds         *
-* ApplQueueMax (812) or system specified maximum queue size. *
-**************************************************************
-*/
 export enum ApplQueueResolution {
   NoActionTaken = 0,
   QueueFlushed = 1,
@@ -3895,12 +3225,6 @@ export enum ApplQueueResolution {
   EndSession = 3
 }
 
-/*
-**********************************************************
-* Action to take to resolve an application message queue *
-* (backlog).                                             *
-**********************************************************
-*/
 export enum ApplQueueAction {
   NoActionTaken = 0,
   QueueFlushed = 1,
@@ -3908,48 +3232,30 @@ export enum ApplQueueAction {
   EndSession = 3
 }
 
-/*
-*****************************
-* Average Pricing Indicator *
-*****************************
-*/
 export enum AvgPxIndicator {
   NoAveragePricing = 0,
   Trade = 1,
-  LastTrade = 2
+  LastTrade = 2,
+  NotionalValueAveragePxGroupTrade = 3,
+  AveragePricedTrade = 4
 }
 
-/*
-***********************************************
-* Identifies how the trade is to be allocated *
-***********************************************
-*/
 export enum TradeAllocIndicator {
   AllocationNotRequired = 0,
   AllocationRequired = 1,
   UseAllocationProvidedWithTheTrade = 2,
   AllocationGiveUpExecutor = 3,
   AllocationFromExecutor = 4,
-  AllocationToClaimAccount = 5
+  AllocationToClaimAccount = 5,
+  TradeSplit = 6
 }
 
-/*
-**************************************************************
-* Part of trading cycle when an instrument expires. Field is *
-* applicable for derivatives.                                *
-**************************************************************
-*/
 export enum ExpirationCycle {
   ExpireOnTradingSessionClose = 0,
   ExpireOnTradingSessionOpen = 1,
   SpecifiedExpiration = 2
 }
 
-/*
-******************
-* Type of Trade: *
-******************
-*/
 export enum TrdType {
   RegularTrade = 0,
   BlockTrade = 1,
@@ -4005,14 +3311,20 @@ export enum TrdType {
   ExchangeGrantedTrade = 52,
   RepurchaseAgreement = 53,
   Otc = 54,
-  ExchangeBasisFacility = 55
+  ExchangeBasisFacility = 55,
+  OpeningTrade = 56,
+  NettedTrade = 57,
+  BlockSwapTrade = 58,
+  CreditEventTrade = 59,
+  SuccessionEventTrade = 60,
+  GiveUpGiveInTrade = 61,
+  DarkTrade = 62,
+  TechnicalTrade = 63,
+  Benchmark = 64,
+  PackageTrade = 65,
+  RollTrade = 66
 }
 
-/*
-*******************************************
-* Further qualification to the trade type *
-*******************************************
-*/
 export enum TrdSubType {
   Cmta = 0,
   InternalTransferOrAdjustment = 1,
@@ -4051,59 +3363,47 @@ export enum TrdSubType {
   ConvertedSwap = 36,
   CrossedTrade = 37,
   InterimProtectedTrade = 38,
-  LargeInScale = 39
+  LargeInScale = 39,
+  WashTrade = 40,
+  TradeAtSettlement = 41,
+  AuctionTrade = 42,
+  TradeAtMarker = 43,
+  CreditDefault = 44,
+  CreditRestructuring = 45,
+  Merger = 46,
+  SpinOff = 47,
+  MultilateralCompression = 48,
+  Balancing = 50,
+  BasisTradeIndexClose = 51,
+  TradeAtCashOpen = 52,
+  TrdSubmitVenueClrSettl = 53,
+  BilateralCompression = 54
 }
 
-/*
-*********************************************
-* Describes whether peg is static or floats *
-*********************************************
-*/
 export enum PegMoveType {
   Floating = 0,
   Fixed = 1
 }
 
-/*
-****************************
-* Type of Peg Offset value *
-****************************
-*/
 export enum PegOffsetType {
   Price = 0,
   BasisPoints = 1,
   Ticks = 2,
-  PriceTier = 3
+  PriceTier = 3,
+  Percentage = 4
 }
 
-/*
-*********************
-* Type of Peg Limit *
-*********************
-*/
 export enum PegLimitType {
   OrBetter = 0,
   Strict = 1,
   OrWorse = 2
 }
 
-/*
-***********************************************************
-* If the calculated peg price is not a valid tick price,  *
-* specifies whether to round the price to be more or less *
-* aggressive                                              *
-***********************************************************
-*/
 export enum PegRoundDirection {
   MoreAggressive = 1,
   MorePassive = 2
 }
 
-/*
-************************
-* The scope of the peg *
-************************
-*/
 export enum PegScope {
   Local = 1,
   National = 2,
@@ -4111,21 +3411,11 @@ export enum PegScope {
   NationalExcludingLocal = 4
 }
 
-/*
-************************************************************
-* Describes whether discretionay price is static or floats *
-************************************************************
-*/
 export enum DiscretionMoveType {
   Floating = 0,
   Fixed = 1
 }
 
-/*
-***********************************
-* Type of Discretion Offset value *
-***********************************
-*/
 export enum DiscretionOffsetType {
   Price = 0,
   BasisPoints = 1,
@@ -4133,34 +3423,17 @@ export enum DiscretionOffsetType {
   PriceTier = 3
 }
 
-/*
-****************************
-* Type of Discretion Limit *
-****************************
-*/
 export enum DiscretionLimitType {
   OrBetter = 0,
   Strict = 1,
   OrWorse = 2
 }
 
-/*
-*************************************************************
-* If the calculated discretionary price is not a valid tick *
-* price, specifies whether to round the price to be more or *
-* less aggressive                                           *
-*************************************************************
-*/
 export enum DiscretionRoundDirection {
   MoreAggressive = 1,
   MorePassive = 2
 }
 
-/*
-*******************************
-* The scope of the discretion *
-*******************************
-*/
 export enum DiscretionScope {
   Local = 1,
   National = 2,
@@ -4168,50 +3441,32 @@ export enum DiscretionScope {
   NationalExcludingLocal = 4
 }
 
-/*
-***************************************************************
-* The target strategy of the order                            *
-* 1000+ = Reserved and available for bi-laterally agreed upon *
-* user defined values                                         *
-***************************************************************
-*/
 export enum TargetStrategy {
   Vwap = 1,
   Participate = 2,
   MininizeMarketImpact = 3
 }
 
-/*
-**************************************************************
-* Indicator to identify whether this fill was a result of a  *
-* liquidity provider providing or liquidity taker taking the *
-* liquidity. Applicable only for OrdStatus of Partial or     *
-* Filled.                                                    *
-**************************************************************
-*/
 export enum LastLiquidityInd {
+  NeitherAddedNorRemovedLiquidity = 0,
   AddedLiquidity = 1,
   RemovedLiquidity = 2,
   LiquidityRoutedOut = 3,
-  Auction = 4
+  Auction = 4,
+  TriggeredStopOrder = 5,
+  TriggeredContingencyOrder = 6,
+  TriggeredMarketOrder = 7,
+  RemovedLiquidityAfterFirmOrderCommitment = 8,
+  AuctionExecutionAfterFirmOrderCommitment = 9,
+  Unknown = 10,
+  Other = 11
 }
 
-/*
-********************************************************
-* Indicates if a trade should be reported via a market *
-* reporting service.                                   *
-********************************************************
-*/
 export enum PublishTrdIndicator {
-  DoNotReportTrade = 'N',
-  ReportTrade = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-**************************
-* Reason for short sale. *
-**************************
-*/
 export enum ShortSaleReason {
   DealerSoldShort = 0,
   DealerSoldShortExempt = 1,
@@ -4221,22 +3476,12 @@ export enum ShortSaleReason {
   QsrOrAguContraSideSoldShortExempt = 5
 }
 
-/*
-***************************************************
-* Type of quantity specified in a quantity field: *
-***************************************************
-*/
 export enum QtyType {
   Units = 0,
   Contracts = 1,
   UnitsOfMeasurePerTimeUnit = 2
 }
 
-/*
-************************
-* Type of Trade Report *
-************************
-*/
 export enum TradeReportType {
   Submit = 0,
   Alleged = 1,
@@ -4253,27 +3498,17 @@ export enum TradeReportType {
   AllegedAddendum = 12,
   AllegedNo = 13,
   AllegedTradeReportCancel = 14,
-  AllegedTradeBreak = 15
+  AllegedTradeBreak = 15,
+  Verify = 16,
+  Dispute = 17,
+  NonMaterialUpdate = 18
 }
 
-/*
-*************************************************************
-* Indicates how the orders being booked and allocated by an *
-* Allocation Instruction or Allocation Report message are   *
-* identified, i.e. by explicit definition in the NoOrders   *
-* group or not.                                             *
-*************************************************************
-*/
 export enum AllocNoOrdersType {
   NotSpecified = 0,
   ExplicitListProvided = 1
 }
 
-/*
-***************************************
-* Code to represent the type of event *
-***************************************
-*/
 export enum EventType {
   Put = 1,
   Call = 2,
@@ -4294,14 +3529,17 @@ export enum EventType {
   FirstIntentDate = 17,
   LastIntentDate = 18,
   PositionRemovalDate = 19,
+  MinimumNotice = 20,
+  DeliveryStartTime = 21,
+  DeliveryEndTime = 22,
+  FirstNoticeDate = 23,
+  LastNoticeDate = 24,
+  FirstExerciseDate = 25,
+  RedemptionDate = 26,
+  TrdCntntnEfctvDt = 27,
   Other = 99
 }
 
-/*
-******************************************************
-* Code to represent the type of instrument attribute *
-******************************************************
-*/
 export enum InstrAttribType {
   Flat = 1,
   ZeroCoupon = 2,
@@ -4332,49 +3570,44 @@ export enum InstrAttribType {
   InstrumentPricePrecision = 27,
   InstrumentStrikePrice = 28,
   TradeableIndicator = 29,
+  InstrumentEligibleAnonOrders = 30,
+  MinGuaranteedFillVolume = 31,
+  MinGuaranteedFillStatus = 32,
+  TradeAtSettlementEligibility = 33,
+  TestInstrument = 34,
+  DummyInstrument = 35,
+  NegativeSettlementPriceEligibility = 36,
+  NegativeStrikePriceEligibility = 37,
+  UsStdContractInd = 38,
+  AdmittedToTradingOnTradingVenue = 39,
+  AverageDailyNotionalAmount = 40,
+  AverageDailyNumberTrades = 41,
   Text = 99
 }
 
-/*
-********************************************************
-* The program under which a commercial paper is issued *
-********************************************************
-*/
 export enum CPProgram {
   Program3A3 = 1,
   Program42 = 2,
+  Program3A2 = 3,
+  Program3A3And3C7 = 4,
+  Program3A4 = 5,
+  Program3A5 = 6,
+  Program3A7 = 7,
+  Program3C7 = 8,
   Other = 99
 }
 
-/*
-*********************************************
-* Defines the unit for a miscellaneous fee. *
-*********************************************
-*/
 export enum MiscFeeBasis {
   Absolute = 0,
   PerUnit = 1,
   Percentage = 2
 }
 
-/*
-****************************************************************
-* Indicates whether this message is the last in a sequence of  *
-* messages for those messages that support fragmentation, such *
-* as Allocation Instruction, Mass Quote, Security List,        *
-* Derivative Security List                                     *
-****************************************************************
-*/
 export enum LastFragment {
-  NotLastMessage = 'N',
-  LastMessage = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-************************************
-* Reason for Collateral Assignment *
-************************************
-*/
 export enum CollAsgnReason {
   Initial = 0,
   Scheduled = 1,
@@ -4383,14 +3616,12 @@ export enum CollAsgnReason {
   MarginExcess = 4,
   ForwardCollateralDemand = 5,
   EventOfDefault = 6,
-  AdverseTaxEvent = 7
+  AdverseTaxEvent = 7,
+  TransferDeposit = 8,
+  TransferWithdrawal = 9,
+  Pledge = 10
 }
 
-/*
-**********************************
-* Collateral inquiry qualifiers: *
-**********************************
-*/
 export enum CollInquiryQualifier {
   TradeDate = 0,
   GcInstrument = 1,
@@ -4402,11 +3633,6 @@ export enum CollInquiryQualifier {
   OutstandingTrades = 7
 }
 
-/*
-******************************************
-* Collateral Assignment Transaction Type *
-******************************************
-*/
 export enum CollAsgnTransType {
   New = 0,
   Replace = 1,
@@ -4415,23 +3641,15 @@ export enum CollAsgnTransType {
   Reverse = 4
 }
 
-/*
-***************************************
-* Collateral Assignment Response Type *
-***************************************
-*/
 export enum CollAsgnRespType {
   Received = 0,
   Accepted = 1,
   Declined = 2,
-  Rejected = 3
+  Rejected = 3,
+  TransactionPending = 4,
+  TransactionCompletedWithWarning = 5
 }
 
-/*
-***************************************
-* Collateral Assignment Reject Reason *
-***************************************
-*/
 export enum CollAsgnRejectReason {
   UnknownDeal = 0,
   UnknownOrInvalidInstrument = 1,
@@ -4442,59 +3660,36 @@ export enum CollAsgnRejectReason {
   Other = 99
 }
 
-/*
-*********************
-* Collateral Status *
-*********************
-*/
 export enum CollStatus {
   Unassigned = 0,
   PartiallyAssigned = 1,
   AssignmentProposed = 2,
   Assigned = 3,
-  Challenged = 4
+  Challenged = 4,
+  Reused = 5
 }
 
-/*
-****************************************************************
-* Indicates whether this message is that last report message   *
-* in response to a request, such as Order Mass Status Request. *
-****************************************************************
-*/
 export enum LastRptRequested {
-  NotLastMessage = 'N',
-  LastMessage = 'Y'
+  No = 'N',
+  Yes = 'Y'
 }
 
-/*
-*********************************
-* Identifies type of settlement *
-*********************************
-*/
 export enum DeliveryType {
   VersusPayment = 0,
   Free = 1,
   TriParty = 2,
-  HoldInCustody = 3
+  HoldInCustody = 3,
+  DeliverByValue = 4
 }
 
-/*
-***********************************************************
-* Indicates the action required by a User Request Message *
-***********************************************************
-*/
 export enum UserRequestType {
   LogOnUser = 1,
   LogOffUser = 2,
   ChangePasswordForUser = 3,
-  RequestIndividualUserStatus = 4
+  RequestIndividualUserStatus = 4,
+  RequestThrottleLimit = 5
 }
 
-/*
-**********************************
-* Indicates the status of a user *
-**********************************
-*/
 export enum UserStatus {
   LoggedIn = 1,
   NotLoggedIn = 2,
@@ -4503,14 +3698,10 @@ export enum UserStatus {
   PasswordChanged = 5,
   Other = 6,
   ForcedUserLogoutByExchange = 7,
-  SessionShutdownWarning = 8
+  SessionShutdownWarning = 8,
+  ThrottleParametersChanged = 9
 }
 
-/*
-************************************************
-* Indicates the status of a network connection *
-************************************************
-*/
 export enum StatusValue {
   Connected = 1,
   NotConnectedUnexpected = 2,
@@ -4518,15 +3709,6 @@ export enum StatusValue {
   InProcess = 4
 }
 
-/*
-**********************************************************
-* Indicates the type and level of details required for a *
-* Network Status Request Message                         *
-* Boolean logic applies EG If you want to subscribe for  *
-* changes to certain id's then UserRequestType =0 (8+2), *
-* Snapshot for certain ID's = 9 (8+1)                    *
-**********************************************************
-*/
 export enum NetworkRequestType {
   Snapshot = 1,
   Subscribe = 2,
@@ -4534,54 +3716,38 @@ export enum NetworkRequestType {
   LevelOfDetail = 8
 }
 
-/*
-***************************************************
-* Indicates the type of Network Response Message. *
-***************************************************
-*/
 export enum NetworkStatusResponseType {
   Full = 1,
   IncrementalUpdate = 2
 }
 
-/*
-***********************
-* Trade Report Status *
-***********************
-*/
 export enum TrdRptStatus {
   Accepted = 0,
   Rejected = 1,
-  AcceptedWithErrors = 3
+  Cancelled = 2,
+  AcceptedWithErrors = 3,
+  PendingNew = 4,
+  PendingCancel = 5,
+  PendingReplace = 6,
+  Terminated = 7,
+  PendingVerification = 8,
+  DeemedVerified = 9,
+  Verified = 10,
+  Disputed = 11
 }
 
-/*
-*************************************************
-* Identifies the status of the ConfirmationAck. *
-*************************************************
-*/
 export enum AffirmStatus {
   Received = 1,
   ConfirmRejected = 2,
   Affirmed = 3
 }
 
-/*
-**********************************************************
-* Action proposed for an Underlying Instrument instance. *
-**********************************************************
-*/
 export enum CollAction {
   Retain = 0,
   Add = 1,
   Remove = 2
 }
 
-/*
-********************************
-* Status of Collateral Inquiry *
-********************************
-*/
 export enum CollInquiryStatus {
   Accepted = 0,
   AcceptedWithWarnings = 1,
@@ -4590,13 +3756,6 @@ export enum CollInquiryStatus {
   Rejected = 4
 }
 
-/*
-*************************************************************
-* Result returned in response to Collateral Inquiry         *
-* 4000+ Reserved and available for bi-laterally agreed upon *
-* user-defined values                                       *
-*************************************************************
-*/
 export enum CollInquiryResult {
   Successful = 0,
   InvalidOrUnknownInstrument = 1,
@@ -4611,11 +3770,6 @@ export enum CollInquiryResult {
   Other = 99
 }
 
-/*
-*****************************
-* Datatype of the parameter *
-*****************************
-*/
 export enum StrategyParameterType {
   Int = 1,
   Length = 2,
@@ -4648,33 +3802,25 @@ export enum StrategyParameterType {
   Tenor = 29
 }
 
-/*
-**********************************************************
-* Used for derivatives. Denotes the current state of the *
-* Instrument.                                            *
-**********************************************************
-*/
 export enum SecurityStatus {
   Active = '1',
-  Inactive = '2'
+  Inactive = '2',
+  ActiveClosingOrdersOnly = '3',
+  Expired = '4',
+  Delisted = '5',
+  KnockedOut = '6',
+  KnockOutRevoked = '7',
+  PendingExpiry = '8',
+  Suspended = '9',
+  Published = '10',
+  PendingDeletion = '11'
 }
 
-/*
-***********************************************************
-* Used for derivatives that deliver into cash underlying. *
-***********************************************************
-*/
 export enum UnderlyingCashType {
   Fixed = 'FIXED',
   Diff = 'DIFF'
 }
 
-/*
-********************************************************
-* Indicates order settlement period for the underlying *
-* instrument.                                          *
-********************************************************
-*/
 export enum UnderlyingSettlementType {
   TPlus1 = 2,
   TPlus3 = 4,
@@ -4687,11 +3833,6 @@ export enum SecurityUpdateAction {
   Modify = 'M'
 }
 
-/*
-****************************
-* Expiration Quantity type *
-****************************
-*/
 export enum ExpirationQtyType {
   AutoExercise = 1,
   NonAutoExercise = 2,
@@ -4700,70 +3841,94 @@ export enum ExpirationQtyType {
   Difference = 5
 }
 
-/*
-***************************************************************
-* Identifies whether the allocation is to be sub-allocated or *
-* allocated to a third party                                  *
-***************************************************************
-*/
 export enum IndividualAllocType {
   SubAllocate = 1,
   ThirdPartyAllocation = 2
 }
 
-/*
-****************************************************************
-* The unit of measure of the underlying commodity upon which   *
-* the contract is based. Two groups of units of measure        *
-* enumerations are supported.                                  *
-* Fixed Magnitude UOMs are primarily used in energy            *
-* derivatives and specify a magnitude (such as, MM, Kilo, M,   *
-* etc.) and the dimension (such as, watt hours, BTU's) to      *
-* produce standard fixed measures (such as MWh -               *
-* Megawatt-hours, MMBtu - One million BTUs).                   *
-* The second group, Variable Quantity UOMs, specifies the      *
-* dimension as a single unit without a magnitude (or more      *
-* accurately a magnitude of one) and uses the                  *
-* UnitOfMeasureQty(1147) field to define the quantity of units *
-* per contract. Variable Quantity UOMs are used for both       *
-* commodities (such as lbs of lean cattle, bushels of corn,    *
-* ounces of gold) and financial futures.                       *
-* Examples:                                                    *
-* For lean cattle futures contracts, a UnitOfMeasure of 'lbs'  *
-* with a UnitOfMeasureQty(1147) of 40,000, means each lean     *
-* cattle futures contract represents 40,000 lbs of lean        *
-* cattle.                                                      *
-* For Eurodollars futures contracts, a UnitOfMeasure of USD    *
-* with a UnitOfMeasureQty(1147) of 1,000,000, means a          *
-* Eurodollar futures contract represents 1,000,000 USD.        *
-* For gold futures contracts, a UnitOfMeasure is oz_tr (Troy   *
-* ounce) with a UnitOfMeasureQty(1147) of 1,000, means each    *
-* gold futures contract represents 1,000 troy ounces of gold.  *
-****************************************************************
-*/
 export enum UnitOfMeasure {
   BillionCubicFeet = 'Bcf',
-  MillionBarrels = 'MMbbl',
+  CubicMeters = 'CBM',
+  Gigajoules = 'GJ',
+  HeatRate = 'kHR',
+  KilowattHours = 'kWh',
+  MegaHeatRate = 'MHR',
   OneMillionBtu = 'MMBtu',
   MegawattHours = 'MWh',
+  Therms = 'thm',
+  TonsOfCarbonDioxide = 'tnCO2',
+  MillionBarrels = 'MMbbl',
+  Allowances = 'Alw',
   Barrels = 'Bbl',
+  BoardFeet = 'BDFT',
   Bushels = 'Bu',
-  Pounds = 'lbs',
+  Currency = 'Ccy',
+  CoolingDegreeDay = 'CDD',
+  CertifiedEmissionsReduction = 'CER',
+  CriticalPrecipDay = 'CPD',
+  ClimateReserveTonnes = 'CRT',
+  Hundredweight = 'cwt',
+  Day = 'day',
+  DryMetricTons = 'dt',
+  EnvAllwncCert = 'EnvAllwnc',
+  EnvironmentalCredit = 'EnvCrd',
+  EnvironmentalOffset = 'EnvOfst',
+  Grams = 'g',
   Gallons = 'Gal',
+  GrossTons = 'GT',
+  HeatingDegreeDay = 'HDD',
+  IndexPoint = 'IPNT',
+  Kilograms = 'kg',
+  Kiloliters = 'kL',
+  KilowattYear = 'kW-a',
+  KilowattDay = 'kW-d',
+  KilowattHour = 'kW-h',
+  KilowattMonth = 'kW-M',
+  KilowattMinute = 'kW-min',
+  Liters = 'L',
+  Pounds = 'lbs',
+  MegawattYear = 'MW-a',
+  MegawattDay = 'MW-d',
+  MegawattHour = 'MW-h',
+  MegawattMonth = 'MW-M',
+  MegawattMinute = 'MW-min',
   TroyOunces = 'oz_tr',
+  PrincipalWithRelationToDebtInstrument = 'PRINC',
   MetricTons = 't',
   Tons = 'tn',
-  UsDollars = 'USD',
-  Allowances = 'Alw'
+  Are = 'a',
+  Acre = 'ac',
+  Centiliter = 'cL',
+  Centimeter = 'cM',
+  DieselGallonEquivalent = 'DGE',
+  Foot = 'ft',
+  GbGallon = 'Gal_gb',
+  GasolineGallonEquivalent = 'GGE',
+  Hectare = 'ha',
+  Inch = 'in',
+  Kilometer = 'kM',
+  Meter = 'M',
+  Mile = 'mi',
+  Milliliter = 'mL',
+  Millimeter = 'mM',
+  UsOunce = 'oz',
+  Piece = 'pc',
+  UsPint = 'pt',
+  GbPint = 'pt_gb',
+  UsQuart = 'qt',
+  GbQuart = 'qt_gb',
+  SquareCentimeter = 'SqcM',
+  SquareFoot = 'Sqft',
+  SquareInch = 'Sqin',
+  SquareKilometer = 'SqkM',
+  SquareMeter = 'SqM',
+  SquareMile = 'Sqmi',
+  SquareMillimeter = 'SqmM',
+  SquareYard = 'Sqyd',
+  Yard = 'yd',
+  UsDollars = 'USD'
 }
 
-/*
-**************************************************************
-* Unit of time associated with the contract.                 *
-* NOTE: Additional values may be used by mutual agreement of *
-* the counterparties                                         *
-**************************************************************
-*/
 export enum TimeUnit {
   Hour = 'H',
   Minute = 'Min',
@@ -4771,118 +3936,134 @@ export enum TimeUnit {
   Day = 'D',
   Week = 'Wk',
   Month = 'Mo',
-  Year = 'Yr'
+  Year = 'Yr',
+  Quarter = 'Q'
 }
 
-/*
-*********************************************************
-* Specifies the method under which a trade quantity was *
-* allocated.                                            *
-*********************************************************
-*/
 export enum AllocMethod {
   Automatic = 1,
   Guarantor = 2,
-  Manual = 3
+  Manual = 3,
+  BrokerAssigned = 4
 }
 
-/*
-****************************************************************
-* Used to indicate that a floor-trade was originally submitted *
-* "as of" a specific trade date which is earlier than its      *
-* clearing date.                                               *
-****************************************************************
-*/
 export enum AsOfIndicator {
   False = '0',
   True = '1'
 }
 
-/*
-**************************************************************
-* Describes the type of book for which the feed is intended. *
-* Used when multiple feeds are provided over the same        *
-* connection                                                 *
-**************************************************************
-*/
 export enum MDBookType {
   TopOfBook = 1,
   PriceDepth = 2,
   OrderDepth = 3
 }
 
-/*
-*******************************************************
-* Used to describe the origin of an entry in the book *
-*******************************************************
-*/
 export enum MDOriginType {
   Book = 0,
   OffBook = 1,
-  Cross = 2
+  Cross = 2,
+  QuoteDrivenMarket = 3,
+  DarkOrderBook = 4,
+  AuctionDrivenMarket = 5,
+  QuoteNegotiation = 6,
+  VoiceNegotiation = 7,
+  HybridMarket = 8
 }
 
-/*
-***************************************************************
-* Codes that apply special information that the Broker /      *
-* Dealer needs to report, as specified by the customer.       *
-* NOTE: This field and its values have no bearing on the      *
-* ExecInst and TimeInForce fields. These values should not be *
-* used instead of ExecInst or TimeInForce. This field and its *
-* values are intended for compliance reporting only.          *
-* Valid values are grouped by OrderHandlingInstSource(1032).  *
-***************************************************************
-*/
 export enum CustOrderHandlingInst {
+  PhoneSimple = 'A',
+  PhoneComplex = 'B',
+  FcmProvidedScreen = 'C',
+  OtherProvidedScreen = 'D',
+  ClientProvidedPlatformControlledByFcm = 'E',
+  ClientProvidedPlatformDirectToExchange = 'F',
+  AlgoEngine = 'H',
+  PriceAtExecution = 'J',
+  DeskElectronic = 'W',
+  DeskPit = 'X',
+  ClientElectronic = 'Y',
+  ClientPit = 'Z',
   AddOnOrder = 'ADD',
   AllOrNone = 'AON',
+  ConditionalOrder = 'CND',
   CashNotHeld = 'CNH',
+  DeliveryInstructionsCash = 'CSH',
   DirectedOrder = 'DIR',
+  DiscretionaryLimitOrder = 'DLO',
   ExchangeForPhysicalTransaction = 'E.W',
   FillOrKill = 'FOK',
+  IntraDayCross = 'IDX',
   ImbalanceOnly = 'IO',
   ImmediateOrCancel = 'IOC',
+  IntermarketSweepOrder = 'ISO',
   LimitOnOpen = 'LOO',
   LimitOnClose = 'LOC',
   MarketAtOpen = 'MAO',
   MarketAtClose = 'MAC',
   MarketOnOpen = 'MOO',
   MarketOnClose = 'MOC',
+  MergerRelatedTransferPosition = 'MPT',
   MinimumQuantity = 'MQT',
+  MarketToLimit = 'MTL',
+  DeliveryInstructionsNextDay = 'ND',
   NotHeld = 'NH',
+  OptionsRelatedTransaction = 'OPT',
   OverTheDay = 'OVD',
   Pegged = 'PEG',
   ReserveSizeOrder = 'RSV',
   StopStockTransaction = 'S.W',
   Scale = 'SCL',
+  DeliveryInstructionsSellersOption = 'SLR',
   TimeOrder = 'TMO',
   TrailingStop = 'TS',
-  Work = 'WRK'
+  Work = 'WRK',
+  StayOnOfferside = 'F0',
+  GoAlong = 'F3',
+  ParticipateDoNotInitiate = 'F6',
+  StrictScale = 'F7',
+  TryToScale = 'F8',
+  StayOnBidside = 'F9',
+  NoCross = 'FA',
+  OkToCross = 'FB',
+  CallFirst = 'FC',
+  PercentOfVolume = 'FD',
+  ReinstateOnSystemFailure = 'FH',
+  InstitutionOnly = 'FI',
+  ReinstateOnTradingHalt = 'FJ',
+  CancelOnTradingHalf = 'FK',
+  LastPeg = 'FL',
+  MidPricePeg = 'FM',
+  NonNegotiable = 'FN',
+  OpeningPeg = 'FO',
+  MarketPeg = 'FP',
+  CancelOnSystemFailure = 'FQ',
+  PrimaryPeg = 'FR',
+  Suspend = 'FS',
+  FixedPegToLocalBbo = 'FT',
+  PegToVwap = 'FW',
+  TradeAlong = 'FX',
+  TryToStop = 'FY',
+  CancelIfNotBest = 'FZ',
+  StrictLimit = 'Fb',
+  IgnorePriceValidityChecks = 'Fc',
+  PegToLimitPrice = 'Fd',
+  WorkToTargetStrategy = 'Fe',
+  GOrderAndFcmapIorFix = 'G'
 }
 
-/*
-*************************************************************
-* Identifies the class or source of the "OrderHandlingInst" *
-* values. Scope of this will apply to both                  *
-* CustOrderHandlingInst and DeskOrderHandlingInst fields.   *
-* Required if CustOrderHandlingInst and/or                  *
-* DeskOrderHandlingInst is specified.                       *
-*************************************************************
-*/
 export enum OrderHandlingInstSource {
-  Nasdoats = 1
+  Finraoats = 1,
+  FiaExecutionSourceCode = 2
 }
 
-/*
-******************************************************
-* Type of trading desk.  Valid values are grouped by *
-* DeskTypeSource(1034).                              *
-******************************************************
-*/
 export enum DeskType {
   Agency = 'A',
   Arbitrage = 'AR',
+  BlockTrading = 'B',
+  ConvertibleDesk = 'C',
+  CentralRiskBooks = 'CR',
   Derivatives = 'D',
+  EquityCapitalMarkets = 'EC',
   International = 'IN',
   Institutional = 'IS',
   Other = 'O',
@@ -4890,97 +4071,32 @@ export enum DeskType {
   Proprietary = 'PR',
   ProgramTrading = 'PT',
   Sales = 'S',
-  Trading = 'T'
+  Swaps = 'SW',
+  TradingDeskSystem = 'T',
+  Treasury = 'TR',
+  FloorBroker = 'FB'
 }
 
-/*
-************************************************************
-* Identifies the class or source of DeskType(1033) values. *
-* Required if DeskType(1033) is specified.                 *
-************************************************************
-*/
 export enum DeskTypeSource {
-  Nasdoats = 1
+  Finraoats = 1
 }
 
-/*
-***************************************************************
-* Codes that apply special information that the Broker /      *
-* Dealer needs to report.                                     *
-* NOTE: This field and its values have no bearing on the      *
-* ExecInst and TimeInForce fields. These values should not be *
-* used instead of ExecInst or TimeInForce. This field and its *
-* values are intended for compliance reporting only.          *
-* Valid values are grouped by OrderHandlingInstSource(1032).  *
-***************************************************************
-*/
-export enum DeskOrderHandlingInst {
-  AddOnOrder = 'ADD',
-  AllOrNone = 'AON',
-  CashNotHeld = 'CNH',
-  DirectedOrder = 'DIR',
-  ExchangeForPhysicalTransaction = 'E.W',
-  FillOrKill = 'FOK',
-  ImbalanceOnly = 'IO',
-  ImmediateOrCancel = 'IOC',
-  LimitOnOpen = 'LOO',
-  LimitOnClose = 'LOC',
-  MarketAtOpen = 'MAO',
-  MarketAtClose = 'MAC',
-  MarketOnOpen = 'MOO',
-  MarketOnClose = 'MOC',
-  MinimumQuantity = 'MQT',
-  NotHeld = 'NH',
-  OverTheDay = 'OVD',
-  Pegged = 'PEG',
-  ReserveSizeOrder = 'RSV',
-  StopStockTransaction = 'S.W',
-  Scale = 'SCL',
-  TimeOrder = 'TMO',
-  TrailingStop = 'TS',
-  Work = 'WRK'
-}
-
-/*
-*********************************************************
-* The status of this execution acknowledgement message. *
-*********************************************************
-*/
 export enum ExecAckStatus {
   Received = '0',
   Accepted = '1',
-  Don = '2'
+  DontKnow = '2'
 }
 
-/*
-*********************************************************
-* conveys how the collateral should be/has been applied *
-*********************************************************
-*/
 export enum CollApplType {
   SpecificDeposit = 0,
   General = 1
 }
 
-/*
-**********************************************************
-* Specifies whether the UnderlyingFxRate(1045) should be *
-* multiplied or divided.                                 *
-**********************************************************
-*/
 export enum UnderlyingFXRateCalc {
   Divide = 'D',
   Multiply = 'M'
 }
 
-/*
-***************************************************************
-* Indicates whether the resulting position after a trade      *
-* should be an opening position or closing position. Used for *
-* omnibus accounting - where accounts are held on a gross     *
-* basis instead of being netted together.                     *
-***************************************************************
-*/
 export enum AllocPositionEffect {
   Open = 'O',
   Close = 'C',
@@ -4988,44 +4104,22 @@ export enum AllocPositionEffect {
   Fifo = 'F'
 }
 
-/*
-************************************************
-* Identifies role of dealer; Agent, Principal, *
-* RisklessPrincipal                            *
-************************************************
-*/
 export enum DealingCapacity {
   Agent = 'A',
   Principal = 'P',
   RisklessPrincipal = 'R'
 }
 
-/*
-***********************************************
-* Method under which assignment was conducted *
-***********************************************
-*/
 export enum InstrmtAssignmentMethod {
   ProRata = 'P',
   Random = 'R'
 }
 
-/*
-****************************************************************
-* Used to identify whether the order initiator is an aggressor *
-* or not in the trade.                                         *
-****************************************************************
-*/
 export enum AggressorIndicator {
-  OrderInitiatorIsAggressor = 'Y',
-  OrderInitiatorIsPassive = 'N'
+  Yes = 'Y',
+  No = 'N'
 }
 
-/*
-**************************************
-* Identifies market data quote type. *
-**************************************
-*/
 export enum MDQuoteType {
   Indicative = 0,
   Tradeable = 1,
@@ -5034,36 +4128,25 @@ export enum MDQuoteType {
   IndicativeAndTradeable = 4
 }
 
-/*
-***************************************************************
-* Used to specify what identifier, provided in order depth    *
-* market data, to use when hitting (taking) a specific order. *
-***************************************************************
-*/
 export enum RefOrderIDSource {
   SecondaryOrderId = '0',
   OrderId = '1',
   MdEntryId = '2',
   QuoteEntryId = '3',
-  OriginalOrderId = '4'
+  OriginalOrderId = '4',
+  QuoteId = '5',
+  QuoteReqId = '6',
+  PreviousOrderIdentifier = '7',
+  PreviousQuoteIdentifier = '8',
+  ParentOrderIdentifier = '9',
+  ManualOrderIdentifier = 'A'
 }
 
-/*
-************************************************
-* Instructs when to refresh DisplayQty (1138). *
-************************************************
-*/
 export enum DisplayWhen {
   Immediate = '1',
   Exhaust = '2'
 }
 
-/*
-**********************************************************
-* Defines what value to use in DisplayQty (1138). If not *
-* specified the default DisplayMethod is "1"             *
-**********************************************************
-*/
 export enum DisplayMethod {
   Initial = '1',
   New = '2',
@@ -5071,12 +4154,6 @@ export enum DisplayMethod {
   Undisclosed = '4'
 }
 
-/*
-**************************************************************
-* Defines the type of price protection the customer requires *
-* on their order.                                            *
-**************************************************************
-*/
 export enum PriceProtectionScope {
   None = '0',
   Local = '1',
@@ -5084,11 +4161,6 @@ export enum PriceProtectionScope {
   Global = '3'
 }
 
-/*
-***********************************************
-* Defines the lot type assigned to the order. *
-***********************************************
-*/
 export enum LotType {
   OddLot = '1',
   RoundLot = '2',
@@ -5096,11 +4168,6 @@ export enum LotType {
   RoundLotBasedUpon = '4'
 }
 
-/*
-****************************
-* Defines the type of peg. *
-****************************
-*/
 export enum PegPriceType {
   LastPeg = 1,
   MidPricePeg = 2,
@@ -5109,38 +4176,24 @@ export enum PegPriceType {
   PrimaryPeg = 5,
   PegToVwap = 7,
   TrailingStopPeg = 8,
-  PegToLimitPrice = 9
+  PegToLimitPrice = 9,
+  ShortSaleMinPricePeg = 10
 }
 
-/*
-****************************************************************
-* Defines when the trigger will hit, i.e. the action specified *
-* by the trigger instructions will come into effect.           *
-****************************************************************
-*/
 export enum TriggerType {
   PartialExecution = '1',
   SpecifiedTradingSession = '2',
   NextAuction = '3',
-  PriceMovement = '4'
+  PriceMovement = '4',
+  OnOrderEntryOrModification = '5'
 }
 
-/*
-*************************************************************
-* Defines the type of action to take when the trigger hits. *
-*************************************************************
-*/
 export enum TriggerAction {
   Activate = '1',
   Modify = '2',
   Cancel = '3'
 }
 
-/*
-******************************************************
-* The type of price that the trigger is compared to. *
-******************************************************
-*/
 export enum TriggerPriceType {
   BestOffer = '1',
   LastTrade = '2',
@@ -5150,12 +4203,6 @@ export enum TriggerPriceType {
   BestMid = '6'
 }
 
-/*
-**************************************************************
-* Defines the type of price protection the customer requires *
-* on their order.                                            *
-**************************************************************
-*/
 export enum TriggerPriceTypeScope {
   None = '0',
   Local = '1',
@@ -5163,35 +4210,16 @@ export enum TriggerPriceTypeScope {
   Global = '3'
 }
 
-/*
-*****************************************************
-* The side from which the trigger price is reached. *
-*****************************************************
-*/
 export enum TriggerPriceDirection {
   Up = 'U',
   Down = 'D'
 }
 
-/*
-****************************************************************
-* The OrdType the order should have after the trigger has hit. *
-* Required to express orders that change from Limit to Market. *
-* Other values from OrdType (40) may be used if appropriate    *
-* and bilaterally agreed upon.                                 *
-****************************************************************
-*/
 export enum TriggerOrderType {
   Market = '1',
   Limit = '2'
 }
 
-/*
-****************************************************************
-* Defines the type of interest behind a trade (fill or partial *
-* fill).                                                       *
-****************************************************************
-*/
 export enum OrderCategory {
   Order = '1',
   Quote = '2',
@@ -5201,31 +4229,22 @@ export enum OrderCategory {
   QuoteRequest = '6',
   ImpliedOrder = '7',
   CrossOrder = '8',
-  StreamingPrice = '9'
+  StreamingPrice = '9',
+  InternalCrossOrder = 'A'
 }
 
-/*
-***************************************************************
-* Specified how the Trade Capture Report should be handled by *
-* the Respondent.                                             *
-***************************************************************
-*/
 export enum TradeHandlingInstr {
   TradeConfirmation = '0',
   TwoPartyReport = '1',
   OnePartyReportForMatching = '2',
   OnePartyReportForPassThrough = '3',
   AutomatedFloorOrderRouting = '4',
-  TwoPartyReportForClaim = '5'
+  TwoPartyReportForClaim = '5',
+  OnePartyReport = '6',
+  ThirdPtyRptForPassThrough = '7',
+  OnePartyReportAutoMatch = '8'
 }
 
-/*
-***************************************************************
-* Specifies the service pack release being applied at message *
-* level. Enumerated field with values assigned at time of     *
-* service pack release                                        *
-***************************************************************
-*/
 export enum ApplVerID {
   Fix27 = '0',
   Fix30 = '1',
@@ -5236,14 +4255,10 @@ export enum ApplVerID {
   Fix44 = '6',
   Fix50 = '7',
   Fix50Sp1 = '8',
-  Fix50Sp2 = '9'
+  Fix50Sp2 = '9',
+  FixLatest = '10'
 }
 
-/*
-**********************************
-* The ID source of ExDestination *
-**********************************
-*/
 export enum ExDestinationIDSource {
   Bic = 'B',
   GeneralIdentifier = 'C',
@@ -5252,17 +4267,6 @@ export enum ExDestinationIDSource {
   Mic = 'G'
 }
 
-/*
-***************************************************************
-* Indicates that an implied market should be created for      *
-* either the legs of a multi-leg instrument (Implied-in) or   *
-* for the multi-leg instrument based on the existence of the  *
-* legs (Implied-out). Determination as to whether implied     *
-* markets should be created is generally done at the level of *
-* the multi-leg instrument. Commonly used in listed           *
-* derivatives.                                                *
-***************************************************************
-*/
 export enum ImpliedMarketIndicator {
   NotImplied = 0,
   ImpliedIn = 1,
@@ -5270,23 +4274,11 @@ export enum ImpliedMarketIndicator {
   BothImpliedInAndImpliedOut = 3
 }
 
-/*
-*********************************************************
-* Used to identify the reporting mode of the settlement *
-* obligation which is either preliminary or final       *
-*********************************************************
-*/
 export enum SettlObligMode {
   Preliminary = 1,
   Final = 2
 }
 
-/*
-*************************************************************
-* Transaction Type - required except where SettlInstMode is *
-* 5=Reject SSI request                                      *
-*************************************************************
-*/
 export enum SettlObligTransType {
   Cancel = 'C',
   New = 'N',
@@ -5294,24 +4286,14 @@ export enum SettlObligTransType {
   Restate = 'T'
 }
 
-/*
-****************************************************************
-* Used to identify whether these delivery instructions are for *
-* the buyside or the sellside.                                 *
-****************************************************************
-*/
 export enum SettlObligSource {
   InstructionsOfBroker = '1',
   InstructionsForInstitution = '2',
-  Investor = '3'
+  Investor = '3',
+  BuyersSettlementInstructions = '4',
+  SellersSettlementInstructions = '5'
 }
 
-/*
-**********************************************************
-* Identifies the status of an individual quote. See also *
-* QuoteStatus(297) which is used for single Quotes.      *
-**********************************************************
-*/
 export enum QuoteEntryStatus {
   Accepted = 0,
   Rejected = 5,
@@ -5324,23 +4306,11 @@ export enum QuoteEntryStatus {
   Active = 16
 }
 
-/*
-**************************************************************
-* Specifies whether a quote is public, i.e. available to the *
-* market, or private, i.e. available to a specified          *
-* counterparty only.                                         *
-**************************************************************
-*/
 export enum PrivateQuote {
-  PrivateQuote = 'Y',
-  PublicQuote = 'N'
+  Yes = 'Y',
+  No = 'N'
 }
 
-/*
-************************************************
-* Specifies the type of respondents requested. *
-************************************************
-*/
 export enum RespondentType {
   AllMarketParticipants = 1,
   SpecifiedMarketParticipants = 2,
@@ -5348,13 +4318,6 @@ export enum RespondentType {
   PrimaryMarketMaker = 4
 }
 
-/*
-****************************************************************
-* Identifies an event related to a SecurityTradingStatus(326). *
-* An event occurs and is gone, it is not a state that applies  *
-* for a period of time.                                        *
-****************************************************************
-*/
 export enum SecurityTradingEvent {
   OrderImbalance = 1,
   TradingResumes = 2,
@@ -5363,14 +4326,10 @@ export enum SecurityTradingEvent {
   ChangeOfTradingSubsession = 5,
   ChangeOfSecurityTradingStatus = 6,
   ChangeOfBookType = 7,
-  ChangeOfMarketDepth = 8
+  ChangeOfMarketDepth = 8,
+  CorporateAction = 9
 }
 
-/*
-**********************
-* Type of statistics *
-**********************
-*/
 export enum StatsType {
   ExchangeLast = 1,
   High = 2,
@@ -5378,42 +4337,25 @@ export enum StatsType {
   Turnover = 4
 }
 
-/*
-*****************************************
-* Specifies the type of secondary size. *
-*****************************************
-*/
 export enum MDSecSizeType {
-  Customer = 1
+  Customer = 1,
+  CustomerProfessional = 2,
+  DoNotTradeThrough = 3
 }
 
-/*
-*******************************************************
-* Settlement method for a contract. Can be used as an *
-* alternative to CFI Code value                       *
-*******************************************************
-*/
 export enum SettlMethod {
   CashSettlementRequired = 'C',
-  PhysicalSettlementRequired = 'P'
+  PhysicalSettlementRequired = 'P',
+  Election = 'E'
 }
 
-/*
-**********************************************
-* Type of exercise of a derivatives security *
-**********************************************
-*/
 export enum ExerciseStyle {
   European = 0,
   American = 1,
-  Bermuda = 2
+  Bermuda = 2,
+  Other = 99
 }
 
-/*
-******************************
-* Method for price quotation *
-******************************
-*/
 export enum PriceQuoteMethod {
   Standard = 'STD',
   Index = 'INX',
@@ -5421,11 +4363,6 @@ export enum PriceQuoteMethod {
   PercentOfPar = 'PCTPAR'
 }
 
-/*
-***************************************************
-* Specifies the type of valuation method applied. *
-***************************************************
-*/
 export enum ValuationMethod {
   PremiumStyle = 'EQTY',
   FuturesStyleMarkToMarket = 'FUT',
@@ -5434,35 +4371,20 @@ export enum ValuationMethod {
   CdsInDeliveryUseRecoveryRateToCalculate = 'CDSD'
 }
 
-/*
-************************************************************
-* Indicates whether instruments are pre-listed only or can *
-* also be defined via user request                         *
-************************************************************
-*/
 export enum ListMethod {
   PreListedOnly = 0,
   UserRequested = 1
 }
 
-/*
-************************************************************
-* Specifies the type of tick rule which is being described *
-************************************************************
-*/
 export enum TickRuleType {
-  Regular = 0,
-  Variable = 1,
-  Fixed = 2,
+  RegularTrading = 0,
+  VariableCabinet = 1,
+  FixedCabinet = 2,
   TradedAsASpreadLeg = 3,
-  SettledAsASpreadLeg = 4
+  SettledAsASpreadLeg = 4,
+  TradedAsSpread = 5
 }
 
-/*
-*********************************************************
-* Unit of measure for the Maturity Month Year Increment *
-*********************************************************
-*/
 export enum MaturityMonthYearIncrementUnits {
   Months = 0,
   Days = 1,
@@ -5470,34 +4392,25 @@ export enum MaturityMonthYearIncrementUnits {
   Years = 3
 }
 
-/*
-**********************************************************
-* Format used to generate the MaturityMonthYear for each *
-* option                                                 *
-**********************************************************
-*/
 export enum MaturityMonthYearFormat {
   YearMonthOnly = 0,
   YearMonthDay = 1,
   YearMonthWeek = 2
 }
 
-/*
-****************************************************
-* Describes the how the price limits are expressed *
-****************************************************
-*/
 export enum PriceLimitType {
   Price = 0,
   Ticks = 1,
   Percentage = 2
 }
 
-/*
-***************************************************
-* Type of Application Message Request being made. *
-***************************************************
-*/
+export enum ListUpdateAction {
+  Add = 'A',
+  Delete = 'D',
+  Modify = 'M',
+  Snapshot = 'S'
+}
+
 export enum ApplReqType {
   Retransmission = 0,
   Subscription = 1,
@@ -5508,36 +4421,18 @@ export enum ApplReqType {
   CancelRetransmissionUnsubscribe = 6
 }
 
-/*
-************************************************************
-* Used to indicate the type of acknowledgement being sent. *
-************************************************************
-*/
 export enum ApplResponseType {
   RequestSuccessfullyProcessed = 0,
   ApplicationDoesNotExist = 1,
   MessagesNotAvailable = 2
 }
 
-/*
-**********************************************************
-* Used to return an error code or text associated with a *
-* response to an Application Request.                    *
-**********************************************************
-*/
 export enum ApplResponseError {
   ApplicationDoesNotExist = 0,
   MessagesRequestedAreNotAvailable = 1,
   UserNotAuthorizedForApplication = 2
 }
 
-/*
-****************************************************************
-* Identifies an event related to a TradSesStatus(340). An      *
-* event occurs and is gone, it is not a state that applies for *
-* a period of time.                                            *
-****************************************************************
-*/
 export enum TradSesEvent {
   TradingResumes = 0,
   ChangeOfTradingSession = 1,
@@ -5545,22 +4440,12 @@ export enum TradSesEvent {
   ChangeOfTradingStatus = 3
 }
 
-/*
-******************************************
-* Specifies the type of action requested *
-******************************************
-*/
 export enum MassActionType {
   SuspendOrders = 1,
   ReleaseOrdersFromSuspension = 2,
   CancelOrders = 3
 }
 
-/*
-*************************************************
-* Specifies scope of Order Mass Action Request. *
-*************************************************
-*/
 export enum MassActionScope {
   AllOrdersForASecurity = 1,
   AllOrdersForAnUnderlyingSecurity = 2,
@@ -5576,23 +4461,12 @@ export enum MassActionScope {
   CancelForIssuerOfUnderlyingSecurity = 12
 }
 
-/*
-*************************************************************
-* Specifies the action taken by counterparty order handling *
-* system as a result of the action type indicated in        *
-* MassActionType of the Order Mass Action Request.          *
-*************************************************************
-*/
 export enum MassActionResponse {
   Rejected = 0,
-  Accepted = 1
+  Accepted = 1,
+  Completed = 2
 }
 
-/*
-*************************************************
-* Reason Order Mass Action Request was rejected *
-*************************************************
-*/
 export enum MassActionRejectReason {
   MassActionNotSupported = 0,
   InvalidOrUnknownSecurity = 1,
@@ -5609,24 +4483,12 @@ export enum MassActionRejectReason {
   Other = 99
 }
 
-/*
-*****************************************
-* Specifies the type of multileg order. *
-*****************************************
-*/
 export enum MultilegModel {
   PredefinedMultilegSecurity = 0,
   UserDefinedMultilegSecurity = 1,
   UserDefined = 2
 }
 
-/*
-***********************************************************
-* Code to represent how the multileg price is to be       *
-* interpreted when applied to the legs.                   *
-* (See Volume : "Glossary" for further value definitions) *
-***********************************************************
-*/
 export enum MultilegPriceMethod {
   NetPrice = 0,
   ReversedNetPrice = 1,
@@ -5636,26 +4498,15 @@ export enum MultilegPriceMethod {
   MultipliedPrice = 5
 }
 
-/*
-************************************
-* Defines the type of contingency. *
-************************************
-*/
 export enum ContingencyType {
   OneCancelsTheOther = 1,
   OneTriggersTheOther = 2,
   OneUpdatesTheOtherAbsolute = 3,
-  OneUpdatesTheOtherProportional = 4
+  OneUpdatesTheOtherProportional = 4,
+  BidAndOffer = 5,
+  BidAndOfferOco = 6
 }
 
-/*
-****************************************************************
-* Identifies the reason for rejection of a New Order List      *
-* message. Note that OrdRejReason(103) is used if the          *
-* rejection is based on properties of an individual order part *
-* of the List.                                                 *
-****************************************************************
-*/
 export enum ListRejectReason {
   BrokerCredit = 0,
   ExchangeClosed = 2,
@@ -5666,37 +4517,13 @@ export enum ListRejectReason {
   Other = 99
 }
 
-/*
-**********************************************************
-* Indicates if a trade should be reported via a market   *
-* reporting service. The indicator governs all reporting *
-* services of the recipient. Replaces                    *
-* PublishTrdIndicator(852).                              *
-**********************************************************
-*/
 export enum TradePublishIndicator {
   DoNotPublishTrade = 0,
   PublishTrade = 1,
-  DeferredPublication = 2
+  DeferredPublication = 2,
+  Published = 3
 }
 
-/*
-***************************************************************
-* Specifies the action taken for the specified MarketID(1301) *
-* + MarketSegmentID(1300).                                    *
-***************************************************************
-*/
-export enum MarketUpdateAction {
-  Add = 'A',
-  Delete = 'D',
-  Modify = 'M'
-}
-
-/*
-***************************
-* Status of a FIX session *
-***************************
-*/
 export enum SessionStatus {
   SessionActive = 0,
   SessionPasswordChanged = 1,
@@ -5706,14 +4533,11 @@ export enum SessionStatus {
   InvalidUsernameOrPassword = 5,
   AccountLocked = 6,
   LogonsAreNotAllowedAtThisTime = 7,
-  PasswordExpired = 8
+  PasswordExpired = 8,
+  ReceivedMsgSeqNumTooLow = 9,
+  ReceivedNextExpectedMsgSeqNumTooHigh = 10
 }
 
-/*
-******************
-* Type of report *
-******************
-*/
 export enum ApplReportType {
   ApplSeqNumReset = 0,
   LastMessageSent = 1,
@@ -5721,11 +4545,6 @@ export enum ApplReportType {
   ResendComplete = 3
 }
 
-/*
-********************************************************
-* Time unit in which the OrderDelay(1428) is expressed *
-********************************************************
-*/
 export enum OrderDelayUnit {
   Seconds = 0,
   TenthsOfASecond = 1,
@@ -5741,37 +4560,29 @@ export enum OrderDelayUnit {
   Years = 15
 }
 
-/*
-***********************************************************
-* Identifies the type of venue where a trade was executed *
-***********************************************************
-*/
 export enum VenueType {
   Electronic = 'E',
   Pit = 'P',
-  ExPit = 'X'
+  ExPit = 'X',
+  ClearingHouse = 'C',
+  RegisteredMarket = 'R',
+  OffMarket = 'O',
+  CentralLimitOrderBook = 'B',
+  QuoteDrivenMarket = 'Q',
+  DarkOrderBook = 'D',
+  AuctionDrivenMarket = 'A',
+  QuoteNegotiation = 'N',
+  VoiceNegotiation = 'V',
+  HybridMarket = 'H',
+  OtherMarket = 'z'
 }
 
-/*
-****************************************
-* The reason for updating the RefOrdID *
-****************************************
-*/
 export enum RefOrdIDReason {
   GtcFromPreviousDay = 0,
   PartialFillRemaining = 1,
   OrderChanged = 2
 }
 
-/*
-***************************************************************
-* The customer capacity for this trade at the time of the     *
-* order/execution.                                            *
-* Primarily used by futures exchanges to indicate the CTICode *
-* (customer type indicator) as required by the US CFTC        *
-* (Commodity Futures Trading Commission).                     *
-***************************************************************
-*/
 export enum OrigCustOrderCapacity {
   MemberTradingForTheirOwnAccount = 1,
   ClearingFirmTradingForItsProprietaryAccount = 2,
@@ -5779,76 +4590,44 @@ export enum OrigCustOrderCapacity {
   AllOther = 4
 }
 
-/*
-******************************
-* Type of pricing model used *
-******************************
-*/
 export enum ModelType {
   UtilityProvidedStandardModel = 0,
   ProprietaryModel = 1
 }
 
-/*
-****************************************************************
-* Indicates the type of multiplier being applied to the        *
-* contract. Can be optionally used to further define what unit *
-* ContractMultiplier(tag 231) is expressed in.                 *
-****************************************************************
-*/
 export enum ContractMultiplierUnit {
   Shares = 0,
   Hours = 1,
   Days = 2
 }
 
-/*
-***************************************************************
-* The industry standard flow schedule by which electricity or *
-* natural gas is traded. Schedules exist by regions and       *
-* on-peak and off-peak status, such as "Western Peak".        *
-***************************************************************
-*/
 export enum FlowScheduleType {
   NercEasternOffPeak = 0,
   NercWesternOffPeak = 1,
   NercCalendarAllDaysInMonth = 2,
   NercEasternPeak = 3,
-  NercWesternPeak = 4
+  NercWesternPeak = 4,
+  AllTimes = 5,
+  OnPeak = 6,
+  OffPeak = 7,
+  Base = 8,
+  Block = 9,
+  Other = 99
 }
 
-/*
-***********************************************************
-* Identifies the source of rate information.              *
-* For FX, the reference source to be used for the FX spot *
-* rate.                                                   *
-***********************************************************
-*/
 export enum RateSource {
   Bloomberg = 0,
   Reuters = 1,
   Telerate = 2,
+  IsdaRateOption = 3,
   Other = 99
 }
 
-/*
-***************************************************************
-* Indicates whether the rate source specified is a primary or *
-* secondary source.                                           *
-***************************************************************
-*/
 export enum RateSourceType {
   Primary = 0,
   Secondary = 1
 }
 
-/*
-**************************************************************
-* A category of CDS credit even in which the underlying bond *
-* experiences a restructuring.                               *
-* Used to define a CDS instrument.                           *
-**************************************************************
-*/
 export enum RestructuringType {
   FullRestructuring = 'FR',
   ModifiedRestructuring = 'MR',
@@ -5856,24 +4635,15 @@ export enum RestructuringType {
   NoRestructuringSpecified = 'XR'
 }
 
-/*
-****************************************************************
-* Specifies which issue (underlying bond) will receive payment *
-* priority in the event of a default.                          *
-* Used to define a CDS instrument.                             *
-****************************************************************
-*/
 export enum Seniority {
   SeniorSecured = 'SD',
   Senior = 'SR',
-  Subordinated = 'SB'
+  Subordinated = 'SB',
+  Junior = 'JR',
+  Mezzanine = 'MZ',
+  SeniorNonPreferred = 'SN'
 }
 
-/*
-**************************************
-* Specifies a type of Security List. *
-**************************************
-*/
 export enum SecurityListType {
   IndustryClassification = 1,
   TradingList = 2,
@@ -5881,23 +4651,12 @@ export enum SecurityListType {
   NewspaperList = 4
 }
 
-/*
-****************************************************************
-* Specifies a specific source for a SecurityListType. Relevant *
-* when a certain type can be provided from various sources.    *
-****************************************************************
-*/
 export enum SecurityListTypeSource {
   Icb = 1,
   Naics = 2,
   Gics = 3
 }
 
-/*
-****************************
-* Category of news mesage. *
-****************************
-*/
 export enum NewsCategory {
   CompanyNews = 0,
   MarketplaceNews = 1,
@@ -5906,29 +4665,13 @@ export enum NewsCategory {
   OtherNews = 99
 }
 
-/*
-****************************************************************
-* Type of reference to another News Message item. Defines if   *
-* the referenced news item is a replacement, is in a different *
-* language, or is complimentary.                               *
-****************************************************************
-*/
 export enum NewsRefType {
   Replacement = 0,
   OtherLanguage = 1,
-  Complimentary = 2
+  Complimentary = 2,
+  Withdrawal = 3
 }
 
-/*
-****************************************************************
-* Specifies how the strike price is determined at the point of *
-* option exercise. The strike may be fixed throughout the life *
-* of the option, set at expiration to the value of the         *
-* underlying, set to the average value of the underlying , or  *
-* set to the optimal value of the underlying.                  *
-* Conditionally, required if value is other than "fixed".      *
-****************************************************************
-*/
 export enum StrikePriceDeterminationMethod {
   FixedStrike = 1,
   StrikeSetAtExpiration = 2,
@@ -5936,13 +4679,6 @@ export enum StrikePriceDeterminationMethod {
   StrikeSetToOptimalValue = 4
 }
 
-/*
-**************************************************************
-* Specifies the boundary condition to be used for the strike *
-* price relative to the underlying price at the point of     *
-* option exercise.                                           *
-**************************************************************
-*/
 export enum StrikePriceBoundaryMethod {
   LessThan = 1,
   LessThanOrEqual = 2,
@@ -5951,16 +4687,6 @@ export enum StrikePriceBoundaryMethod {
   GreaterThan = 5
 }
 
-/*
-****************************************************************
-* Specifies how the underlying price is determined at the      *
-* point of option exercise. The underlying price may be set to *
-* the current settlement price, set to a special reference,    *
-* set to the optimal value of the underlying during the        *
-* defined period ("Look-back") or set to the average value of  *
-* the underlying during the defined period ("Asian option").   *
-****************************************************************
-*/
 export enum UnderlyingPriceDeterminationMethod {
   Regular = 1,
   SpecialReference = 2,
@@ -5968,43 +4694,44 @@ export enum UnderlyingPriceDeterminationMethod {
   AverageValue = 4
 }
 
-/*
-*********************************************************
-* Indicates the type of payout that will result from an *
-* in-the-money option.                                  *
-*********************************************************
-*/
 export enum OptPayoutType {
   Vanilla = 1,
   Capped = 2,
-  Binary = 3
+  Binary = 3,
+  Asian = 4,
+  Barrier = 5,
+  DigitalBarrier = 6,
+  Lookback = 7,
+  OtherPathDependent = 8,
+  Other = 99
 }
 
-/*
-*****************************************
-* Identifies the type of complex event. *
-*****************************************
-*/
 export enum ComplexEventType {
   Capped = 1,
   Trigger = 2,
   KnockInUp = 3,
-  KockInDown = 4,
+  KnockInDown = 4,
   KnockOutUp = 5,
   KnockOutDown = 6,
   Underlying = 7,
   ResetBarrier = 8,
-  RollingBarrier = 9
+  RollingBarrier = 9,
+  OneTouch = 10,
+  NoTouch = 11,
+  DblOneTouch = 12,
+  DblNoTouch = 13,
+  FxComposite = 14,
+  FxQuanto = 15,
+  FxCrssCcy = 16,
+  StrkSpread = 17,
+  ClndrSpread = 18,
+  PxObsvtn = 19,
+  PassThrough = 20,
+  StrkSched = 21,
+  EquityValuation = 22,
+  DividendValuation = 23
 }
 
-/*
-*************************************************************
-* Specifies the boundary condition to be used for the event *
-* price relative to the underlying price at the point the   *
-* complex event outcome takes effect as determined by the   *
-* ComplexEventPriceTimeType.                                *
-*************************************************************
-*/
 export enum ComplexEventPriceBoundaryMethod {
   LessThanComplexEventPrice = 1,
   LessThanOrEqualToComplexEventPrice = 2,
@@ -6013,49 +4740,27 @@ export enum ComplexEventPriceBoundaryMethod {
   GreaterThanComplexEventPrice = 5
 }
 
-/*
-***************************************************************
-* Specifies when the complex event outcome takes effect. The  *
-* outcome of a complex event is a payout or barrier action as *
-* specified by the ComplexEventType.                          *
-***************************************************************
-*/
 export enum ComplexEventPriceTimeType {
   Expiration = 1,
   Immediate = 2,
-  SpecifiedDate = 3
+  SpecifiedDate = 3,
+  Close = 4,
+  Open = 5,
+  OfficialSettlPrice = 6,
+  DerivativesClose = 7,
+  AsSpecifiedMasterConfirmation = 8
 }
 
-/*
-***************************************************************
-* Specifies the condition between complex events when more    *
-* than one event is specified.                                *
-* Multiple barrier events would use an "or" condition since   *
-* only one can be effective at a given time. A set of digital *
-* range events would use an "and" condition since both        *
-* conditions must be in effect for a payout to result.        *
-***************************************************************
-*/
 export enum ComplexEventCondition {
   And = 1,
   Or = 2
 }
 
-/*
-**************************************
-* Type of stream assignment request. *
-**************************************
-*/
 export enum StreamAsgnReqType {
   StreamAssignmentForNewCustomer = 1,
   StreamAssignmentForExistingCustomer = 2
 }
 
-/*
-*****************************************************
-* Reason code for stream assignment request reject. *
-*****************************************************
-*/
 export enum StreamAsgnRejReason {
   UnknownClient = 0,
   ExceedsMaximumSize = 1,
@@ -6064,25 +4769,2801 @@ export enum StreamAsgnRejReason {
   Other = 99
 }
 
-/*
-****************************
-* Type of acknowledgement. *
-****************************
-*/
 export enum StreamAsgnAckType {
   AssignmentAccepted = 0,
   AssignmentRejected = 1
 }
 
-/*
-*******************************************************
-* The type of assignment being affected in the Stream *
-* Assignment Report.                                  *
-*******************************************************
-*/
+export enum RequestResult {
+  ValidRequest = 0,
+  InvalidOrUnsupportedRequest = 1,
+  NoDataFound = 2,
+  NotAuthorized = 3,
+  DataTemporarilyUnavailable = 4,
+  RequestForDataNotSupported = 5,
+  Other = 99
+}
+
+export enum PartyRelationship {
+  IsAlso = 0,
+  ClearsFor = 1,
+  ClearsThrough = 2,
+  TradesFor = 3,
+  TradesThrough = 4,
+  Sponsors = 5,
+  SponsoredThrough = 6,
+  ProvidesGuaranteeFor = 7,
+  IsGuaranteedBy = 8,
+  MemberOf = 9,
+  HasMembers = 10,
+  ProvidesMarketplaceFor = 11,
+  ParticipantOfMarketplace = 12,
+  CarriesPositionsFor = 13,
+  PostsTradesTo = 14,
+  EntersTradesFor = 15,
+  EntersTradesThrough = 16,
+  ProvidesQuotesTo = 17,
+  RequestsQuotesFrom = 18,
+  InvestsFor = 19,
+  InvestsThrough = 20,
+  BrokersTradesFor = 21,
+  BrokersTradesThrough = 22,
+  ProvidesTradingServicesFor = 23,
+  UsesTradingServicesOf = 24,
+  ApprovesOf = 25,
+  ApprovedBy = 26,
+  ParentFirmFor = 27,
+  SubsidiaryOf = 28,
+  RegulatoryOwnerOf = 29,
+  OwnedByRegulatory = 30,
+  Controls = 31,
+  IsControlledBy = 32,
+  LegalOwnerOf = 33,
+  OwnedByLegal = 34,
+  BeneficialOwnerOf = 35,
+  OwnedByBeneficial = 36,
+  SettlesFor = 37,
+  SettlesThrough = 38
+}
+
+export enum TrdAckStatus {
+  Accepted = 0,
+  Rejected = 1,
+  Received = 2
+}
+
+export enum RiskLimitType {
+  CreditLimit = 0,
+  GrossLimit = 1,
+  NetLimit = 2,
+  Exposure = 3,
+  LongLimit = 4,
+  ShortLimit = 5,
+  CashMargin = 6,
+  AdditionalMargin = 7,
+  TotalMargin = 8,
+  LimitConsumed = 9,
+  ClipSize = 10,
+  MaxNotionalOrderSize = 11,
+  Dv01Pv01Limit = 12,
+  Cs01Limit = 13,
+  VolumeLimitPerTimePeriod = 14,
+  VolFilledPctOrdVolTmPeriod = 15,
+  NotlFilledPctNotlTmPeriod = 16,
+  TransactionExecutionLimitPerTimePeriod = 17
+}
+
+export enum InstrumentScopeOperator {
+  Include = 1,
+  Exclude = 2
+}
+
+export enum SwapSubClass {
+  Amortizing = 'AMTZ',
+  Compounding = 'COMP',
+  ConstantNotionalSchedule = 'CNST',
+  AccretingNotionalSchedule = 'ACRT',
+  CustomNotionalSchedule = 'CUST'
+}
+
+export enum SecurityClassificationReason {
+  Fee = 0,
+  CreditControls = 1,
+  Margin = 2,
+  EntitlementOrEligibility = 3,
+  MarketData = 4,
+  AccountSelection = 5,
+  DeliveryProcess = 6,
+  Sector = 7
+}
+
+export enum PosAmtReason {
+  OptionsSettlement = 0,
+  PendingErosionAdjustment = 1,
+  FinalErosionAdjustment = 2,
+  TearUpCouponAmount = 3,
+  PriceAlignmentInterest = 4,
+  DeliveryInvoiceCharges = 5,
+  DeliveryStorageCharges = 6
+}
+
+export enum SideClearingTradePriceType {
+  TradeClearingAtExecutionPrice = 0,
+  TradeClearingAtAlternateClearingPrice = 1
+}
+
+export enum SecurityRejectReason {
+  InvalidInstrumentRequested = 1,
+  InstrumentAlreadyExists = 2,
+  RequestTypeNotSupported = 3,
+  SystemUnavailableForInstrumentCreation = 4,
+  IneligibleInstrumentGroup = 5,
+  InstrumentIdUnavailable = 6,
+  InvalidOrMissingDataOnOptionLeg = 7,
+  InvalidOrMissingDataOnFutureLeg = 8,
+  InvalidOrMissingDataOnFxLeg = 10,
+  InvalidLegPriceSpecified = 11,
+  InvalidInstrumentStructureSpecified = 12
+}
+
+export enum ThrottleStatus {
+  ThrottleLimitNotExceededNotQueued = 0,
+  QueuedDueToThrottleLimitExceeded = 1
+}
+
+export enum ThrottleAction {
+  QueueInbound = 0,
+  QueueOutbound = 1,
+  Reject = 2,
+  Disconnect = 3,
+  Warning = 4
+}
+
+export enum ThrottleType {
+  InboundRate = 0,
+  OutstandingRequests = 1
+}
+
 export enum StreamAsgnType {
   Assignment = 1,
   Rejected = 2,
   Terminate = 3
+}
+
+export enum MatchInst {
+  Match = 1,
+  DoNotMatch = 2
+}
+
+export enum TriggerScope {
+  ThisOrder = 0,
+  OtherOrder = 1,
+  AllOtherOrdersForGivenSecurity = 2,
+  AllOtherOrdersForGivenSecurityAndPrice = 3,
+  AllOtherOrdersForGivenSecurityAndSide = 4,
+  AllOtherOrdersForGivenSecurityPriceAndSide = 5
+}
+
+export enum LimitAmtType {
+  CreditLimit = 0,
+  GrossPositionLimit = 1,
+  NetPositionLimit = 2,
+  RiskExposureLimit = 3,
+  LongPositionLimit = 4,
+  ShortPositionLimit = 5
+}
+
+export enum MarginReqmtInqQualifier {
+  Summary = 0,
+  Detail = 1,
+  ExcessDeficit = 2,
+  NetPosition = 3
+}
+
+export enum MarginReqmtRptType {
+  Summary = 0,
+  Detail = 1,
+  ExcessDeficit = 2
+}
+
+export enum MarginReqmtInqResult {
+  Successful = 0,
+  InvalidOrUnknownInstrument = 1,
+  InvalidOrUnknownMarginClass = 2,
+  InvalidParties = 3,
+  InvalidTransportTypeReq = 4,
+  InvalidDestinationReq = 5,
+  NoMarginReqFound = 6,
+  MarginReqInquiryQualifierNotSupported = 7,
+  UnauthorizedForMarginReqInquiry = 8,
+  Other = 99
+}
+
+export enum MarginAmtType {
+  AdditionalMargin = 1,
+  AdjustedMargin = 2,
+  UnadjustedMargin = 3,
+  BinaryAddOnAmount = 4,
+  CashBalanceAmount = 5,
+  ConcentrationMargin = 6,
+  CoreMargin = 7,
+  DeliveryMargin = 8,
+  DiscretionaryMargin = 9,
+  FuturesSpreadMargin = 10,
+  InitialMargin = 11,
+  LiquidatingMargin = 12,
+  MarginCallAmount = 13,
+  MarginDeficitAmount = 14,
+  MarginExcessAmount = 15,
+  OptionPremiumAmount = 16,
+  PremiumMargin = 17,
+  ReserveMargin = 18,
+  SecurityCollateralAmount = 19,
+  StressTestAddOnAmount = 20,
+  SuperMargin = 21,
+  TotalMargin = 22,
+  VariationMargin = 23,
+  SecondaryVariationMargin = 24,
+  RolledUpMarginDeficit = 25,
+  SpreadResponseMargin = 26,
+  SystemicRiskMargin = 27,
+  CurveRiskMargin = 28,
+  IndexSpreadRiskMargin = 29,
+  SectorRiskMargin = 30,
+  JumpToDefaultRiskMargin = 31,
+  BasisRiskMargin = 32,
+  InterestRateRiskMargin = 33,
+  JumpToHealthRiskMargin = 34,
+  OtherRiskMargin = 35
+}
+
+export enum RelatedInstrumentType {
+  HedgesForInstrument = 1,
+  Underlier = 2,
+  EquityEquivalent = 3,
+  NearestExchangeTradedContract = 4,
+  RetailEquivalent = 5,
+  Leg = 6
+}
+
+export enum MarketMakerActivity {
+  NoParticipation = 0,
+  BuyParticipation = 1,
+  SellParticipation = 2,
+  BothBuyAndSellParticipation = 3
+}
+
+export enum PartyDetailStatus {
+  Active = 0,
+  Suspended = 1,
+  Halted = 2
+}
+
+export enum PartyDetailRoleQualifier {
+  Agency = 0,
+  Principal = 1,
+  RisklessPrincipal = 2,
+  GeneralClearingMember = 3,
+  IndividualClearingMember = 4,
+  PreferredMarketMaker = 5,
+  DirectedMarketMaker = 6,
+  Bank = 7,
+  Hub = 8,
+  PrimaryTrdRepository = 9,
+  OrigTrdRepository = 10,
+  AddtnlIntlTrdRepository = 11,
+  AddtnlDomesticTrdRepository = 12,
+  RelatedExchange = 13,
+  OptionsExchange = 14,
+  SpecifiedExchange = 15,
+  ConstituentExchange = 16,
+  ExemptFromTradeReporting = 17,
+  Current = 18,
+  New = 19,
+  DesignatedSponsor = 20,
+  Specialist = 21,
+  Algorithm = 22,
+  FirmOrLegalEntity = 23,
+  NaturalPerson = 24,
+  RegularTrader = 25,
+  HeadTrader = 26,
+  Supervisor = 27,
+  TriParty = 28,
+  Lender = 29,
+  ExchangeOrderSubmitter = 30
+}
+
+export enum ThrottleInst {
+  RejectIfThrottleLimitExceeded = 0,
+  QueueIfThrottleLimitExceeded = 1
+}
+
+export enum ThrottleCountIndicator {
+  OutstandingRequestsUnchanged = 0,
+  OutstandingRequestsDecreased = 1
+}
+
+export enum ShortSaleRestriction {
+  NoRestrictions = 0,
+  SecurityNotShortable = 1,
+  SecurityNotShortableAtOrBelowBestBid = 2,
+  SecurityNotShortableWithoutPreBorrow = 3
+}
+
+export enum ShortSaleExemptionReason {
+  ExemptionReasonUnknown = 0,
+  IncomingSse = 1,
+  AboveNationalBestBid = 2,
+  DelayedDelivery = 3,
+  OddLot = 4,
+  DomesticArbitrage = 5,
+  InternationalArbitrage = 6,
+  UnderwriterOrSyndicateDistribution = 7,
+  RisklessPrincipal = 8,
+  Vwap = 9
+}
+
+export enum OrderOrigination {
+  OrderReceivedFromCustomer = 1,
+  OrderReceivedFromWithinFirm = 2,
+  OrderReceivedFromAnotherBrokerDealer = 3,
+  OrderReceivedFromCustomerOrWithFirm = 4,
+  OrderReceivedFromDirectAccessCustomer = 5,
+  OrderReceivedFromForeignDealerEquivalent = 6,
+  OrderReceivedFromExecutionOnlyService = 7
+}
+
+export enum AllocationRollupInstruction {
+  Rollup = 0,
+  DoNotRollUp = 1
+}
+
+export enum AllocReversalStatus {
+  Completed = 0,
+  Refused = 1,
+  Cancelled = 2
+}
+
+export enum ObligationType {
+  Bond = '0',
+  ConvertBond = '1',
+  Mortgage = '2',
+  Loan = '3'
+}
+
+export enum TradePriceNegotiationMethod {
+  PercentPar = 0,
+  DealSpread = 1,
+  UpfrontPnts = 2,
+  UpfrontAmt = 3,
+  ParUpfrontAmt = 4,
+  SpreadUpfrontAmt = 5,
+  UpfrontPntsAmt = 6
+}
+
+export enum UpfrontPriceType {
+  Percentage = 1,
+  FixedAmount = 3
+}
+
+export enum ApplLevelRecoveryIndicator {
+  NoApplRecoveryNeeded = 0,
+  ApplRecoveryNeeded = 1
+}
+
+export enum RiskLimitRequestType {
+  Definitions = 1,
+  Utilization = 2,
+  DefinitionsAndUtilizations = 3
+}
+
+export enum RiskLimitRequestResult {
+  Successful = 0,
+  InvalidParty = 1,
+  InvalidRelatedParty = 2,
+  InvalidRiskLimitType = 3,
+  InvalidRiskLimitId = 4,
+  InvalidRiskLimitAmount = 5,
+  InvalidRiskWarningLevelAction = 6,
+  InvalidRiskInstrumentScope = 7,
+  RiskLimitActionsNotSupported = 8,
+  WarningLevelsNotSupported = 9,
+  WarningLevelActionsNotSupported = 10,
+  RiskInstrumentScopeNotSupported = 11,
+  RiskLimitNotApprovedForParty = 12,
+  RiskLimitAlreadyDefinedForParty = 13,
+  InstrumentNotApprovedForParty = 14,
+  NotAuthorized = 98,
+  Other = 99
+}
+
+export enum RiskLimitAction {
+  QueueInbound = 0,
+  QueueOutbound = 1,
+  Reject = 2,
+  Disconnect = 3,
+  Warning = 4,
+  PingCreditCheckWithRevalidation = 5,
+  PingCreditCheckNoRevalidation = 6,
+  PushCreditCheckWithRevalidation = 7,
+  PushCreditCheckNoRevalidation = 8,
+  Suspend = 9,
+  HaltTrading = 10
+}
+
+export enum EntitlementType {
+  Trade = 0,
+  MakeMarkets = 1,
+  HoldPositions = 2,
+  PerformGiveUps = 3,
+  SubmitIoIs = 4,
+  SubscribeMarketData = 5,
+  ShortWithPreBorrow = 6,
+  SubmitQuoteRequests = 7,
+  RespondToQuoteRequests = 8
+}
+
+export enum EntitlementAttribDatatype {
+  Int = 1,
+  Length = 2,
+  NumInGroup = 3,
+  SeqNum = 4,
+  TagNum = 5,
+  Float = 6,
+  Qty = 7,
+  Price = 8,
+  PriceOffset = 9,
+  Amt = 10,
+  Percentage = 11,
+  Char = 12,
+  Boolean = 13,
+  String = 14,
+  MultipleCharValue = 15,
+  Currency = 16,
+  Exchange = 17,
+  MonthYear = 18,
+  UtcTimestamp = 19,
+  UtcTimeOnly = 20,
+  LocalMktDate = 21,
+  UtcDateOnly = 22,
+  Data = 23,
+  MultipleStringValue = 24,
+  Country = 25,
+  Language = 26,
+  TzTimeOnly = 27,
+  TzTimestamp = 28,
+  Tenor = 29,
+  DayOfMonth = 30,
+  XmlData = 31,
+  Pattern = 32,
+  Reserved100Plus = 33,
+  Reserved1000Plus = 34,
+  Reserved4000Plus = 35
+}
+
+export enum TradSesControl {
+  Automatic = 0,
+  Manual = 1
+}
+
+export enum TradeVolType {
+  NumberOfUnits = 0,
+  NumberOfRoundLots = 1
+}
+
+export enum OrderEventType {
+  Added = 1,
+  Modified = 2,
+  Deleted = 3,
+  PartiallyFilled = 4,
+  Filled = 5,
+  Suspended = 6,
+  Released = 7,
+  Restated = 8,
+  Locked = 9,
+  Triggered = 10,
+  Activated = 11
+}
+
+export enum OrderEventReason {
+  AddOrderRequest = 1,
+  ModifyOrderRequest = 2,
+  DeleteOrderRequest = 3,
+  OrderEnteredOob = 4,
+  OrderModifiedOob = 5,
+  OrderDeletedOob = 6,
+  OrderActivatedOrTriggered = 7,
+  OrderExpired = 8,
+  ReserveOrderRefreshed = 9,
+  AwayMarketBetter = 10,
+  CorporateAction = 11,
+  StartOfDay = 12,
+  EndOfDay = 13
+}
+
+export enum AuctionType {
+  None = 0,
+  BlockOrderAuction = 1,
+  DirectedOrderAuction = 2,
+  ExposureOrderAuction = 3,
+  FlashOrderAuction = 4,
+  FacilitationOrderAuction = 5,
+  SolicitationOrderAuction = 6,
+  PriceImprovementMechanism = 7,
+  DirectedOrderPriceImprovementMechanism = 8
+}
+
+export enum AuctionInstruction {
+  AutomatedAuctionPermitted = 0,
+  AutomatedAuctionNotPermitted = 1
+}
+
+export enum LockType {
+  NotLocked = 0,
+  AwayMarketNetter = 1,
+  ThreeTickLocked = 2,
+  LockedByMarketMaker = 3,
+  DirectedOrderLock = 4,
+  MultilegLock = 5,
+  MarketOrderLock = 6,
+  PreAssignmentLock = 7
+}
+
+export enum ReleaseInstruction {
+  Iso = 1,
+  NoAwayMarketBetterCheck = 2
+}
+
+export enum DisclosureType {
+  Volume = 1,
+  Price = 2,
+  Side = 3,
+  Aon = 4,
+  General = 5,
+  ClearingAccount = 6,
+  CmtaAccount = 7
+}
+
+export enum DisclosureInstruction {
+  No = 0,
+  Yes = 1,
+  UseDefaultSetting = 2
+}
+
+export enum TradingCapacity {
+  Customer = 1,
+  CustomerProfessional = 2,
+  BrokerDealer = 3,
+  CustomerBrokerDealer = 4,
+  Principal = 5,
+  MarketMaker = 6,
+  AwayMarketMaker = 7,
+  SystematicInternaliser = 8
+}
+
+export enum ClearingAccountType {
+  Customer = 1,
+  Firm = 2,
+  MarketMaker = 3
+}
+
+export enum RelatedPriceSource {
+  NbBid = 1,
+  NbOffer = 2
+}
+
+export enum MinQtyMethod {
+  Once = 1,
+  Multiple = 2
+}
+
+export enum Triggered {
+  NotTriggered = 0,
+  Triggered = 1,
+  StopOrderTriggered = 2,
+  OcoOrderTriggered = 3,
+  OtoOrderTriggered = 4,
+  OuoOrderTriggered = 5
+}
+
+export enum EventTimeUnit {
+  Hour = 'H',
+  Minute = 'Min',
+  Second = 'S',
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr'
+}
+
+export enum ClearedIndicator {
+  NotCleared = 0,
+  Cleared = 1,
+  Submitted = 2,
+  Rejected = 3
+}
+
+export enum ContractRefPosType {
+  TwoComponentIntercommoditySpread = 0,
+  IndexOrBasket = 1,
+  TwoComponentLocationBasis = 2,
+  Other = 99
+}
+
+export enum PositionCapacity {
+  Principal = 0,
+  Agent = 1,
+  Customer = 2,
+  Counterparty = 3
+}
+
+export enum TradePriceCondition {
+  SpecialCumDividend = 0,
+  SpecialCumRights = 1,
+  SpecialExDividend = 2,
+  SpecialExRights = 3,
+  SpecialCumCoupon = 4,
+  SpecialCumCapitalRepayments = 5,
+  SpecialExCoupon = 6,
+  SpecialExCapitalRepayments = 7,
+  CashSettlement = 8,
+  SpecialCumBonus = 9,
+  SpecialPrice = 10,
+  SpecialExBonus = 11,
+  GuaranteedDelivery = 12,
+  SpecialDividend = 13,
+  PriceImprovement = 14,
+  NonPriceFormingTrade = 15,
+  TradeExemptedFromTradingObligation = 16,
+  PricePending = 17,
+  PriceNotApplicable = 18
+}
+
+export enum TradeAllocStatus {
+  PendingClear = 0,
+  Claimed = 1,
+  Cleared = 2,
+  Rejected = 3
+}
+
+export enum TradeQtyType {
+  ClearedQuantity = 0,
+  LongSideClaimedQuantity = 1,
+  ShortSideClaimedQuantity = 2,
+  LongSideRejectedQuantity = 3,
+  ShortSideRejectedQuantity = 4,
+  PendingQuantity = 5,
+  TransactionQuantity = 6,
+  RemainingQuantity = 7,
+  PreviousRemainingQuantity = 8
+}
+
+export enum TradeAllocGroupInstruction {
+  Add = 0,
+  DoNotAdd = 1
+}
+
+export enum OffsetInstruction {
+  Offset = 0,
+  Onset = 1
+}
+
+export enum SideAvgPxIndicator {
+  NoAvgPricing = 0,
+  TradeIsPartAvgPriceGrp = 1,
+  LastTradeIsPartAvgPriceGrp = 2
+}
+
+export enum RelatedTradeIDSource {
+  NonFixSource = 0,
+  TradeId = 1,
+  SecondaryTradeId = 2,
+  TradeReportId = 3,
+  FirmTradeId = 4,
+  SecondaryFirmTradeId = 5,
+  RegulatoryTradeId = 6
+}
+
+export enum RelatedPositionIDSource {
+  PosMaintRptId = 1,
+  TransferId = 2,
+  PositionEntityId = 3
+}
+
+export enum QuoteAckStatus {
+  ReceivedNotYetProcessed = 0,
+  Accepted = 1,
+  Rejected = 2
+}
+
+export enum ValueCheckType {
+  PriceCheck = 1,
+  NotionalValueCheck = 2,
+  QuantityCheck = 3
+}
+
+export enum ValueCheckAction {
+  DoNotCheck = 0,
+  Check = 1,
+  BestEffort = 2
+}
+
+export enum PartyDetailRequestResult {
+  Successful = 0,
+  InvalidParty = 1,
+  InvalidRelatedParty = 2,
+  InvalidPartyStatus = 3,
+  NotAuthorized = 98,
+  Other = 99
+}
+
+export enum PartyDetailRequestStatus {
+  Accepted = 0,
+  AcceptedWithChanges = 1,
+  Rejected = 2,
+  AcceptancePending = 3
+}
+
+export enum PartyDetailDefinitionStatus {
+  Accepted = 0,
+  AcceptedWithChanges = 1,
+  Rejected = 2
+}
+
+export enum EntitlementRequestResult {
+  Successful = 0,
+  InvalidParty = 1,
+  InvalidRelatedParty = 2,
+  InvalidEntitlementType = 3,
+  InvalidEntitlementId = 4,
+  InvalidEntitlementAttribute = 5,
+  InvalidInstrumentScope = 6,
+  InvalidMarketSegmentScope = 7,
+  InvalidStartDate = 8,
+  InvalidEndDate = 9,
+  InstrumentScopeNotSupported = 10,
+  MarketSegmentScopeNotSupported = 11,
+  EntitlementNotApprovedForParty = 12,
+  EntitlementAlreadyDefinedForParty = 13,
+  InstrumentNotApprovedForParty = 14,
+  NotAuthorized = 98,
+  Other = 99
+}
+
+export enum EntitlementStatus {
+  Accepted = 0,
+  AcceptedWithChanges = 1,
+  Rejected = 2,
+  Pending = 3,
+  Requested = 4,
+  Deferred = 5
+}
+
+export enum TradeMatchAckStatus {
+  ReceivedNotProcessed = 0,
+  Accepted = 1,
+  Rejected = 2
+}
+
+export enum TradeMatchRejectReason {
+  Successful = 0,
+  InvalidPartyInformation = 1,
+  UnknownInstrument = 2,
+  Unauthorized = 3,
+  InvalidTradeType = 4,
+  Other = 99
+}
+
+export enum RegulatoryTradeIDEvent {
+  InitialBlockTrade = 0,
+  Allocation = 1,
+  Clearing = 2,
+  Compression = 3,
+  Novation = 4,
+  Termination = 5,
+  PostTrdVal = 6
+}
+
+export enum RegulatoryTradeIDSource {
+  UniqueTransactionIdentifier = '1'
+}
+
+export enum RegulatoryTradeIDType {
+  Current = 0,
+  Previous = 1,
+  Block = 2,
+  Related = 3,
+  ClearedBlockTrade = 4,
+  TradingVenueTransactionIdentifier = 5
+}
+
+export enum PriceMovementType {
+  Amount = 0,
+  Percentage = 1
+}
+
+export enum ClearingIntention {
+  DoNotIntendToClear = 0,
+  IntendToClear = 1
+}
+
+export enum ConfirmationMethod {
+  NonElectronic = 0,
+  Electronic = 1,
+  Unconfirmed = 2
+}
+
+export enum VerificationMethod {
+  NonElectronic = 0,
+  Electronic = 1
+}
+
+export enum ClearingRequirementException {
+  NoException = 0,
+  Exception = 1,
+  EndUserException = 2,
+  InterAffiliateException = 3,
+  TreasuryAffiliateException = 4,
+  CooperativeException = 5
+}
+
+export enum IRSDirection {
+  Pay = 'PAY',
+  Rcv = 'RCV',
+  Na = 'NA'
+}
+
+export enum RegulatoryReportType {
+  Rt = 0,
+  Pet = 1,
+  Snapshot = 2,
+  Confirmation = 3,
+  Rtpet = 4,
+  PetConfirmation = 5,
+  RtpetConfirmation = 6,
+  PostTrade = 7,
+  Verification = 8,
+  PstTrdEvnt = 9,
+  PstTrdEvntRtReportable = 10,
+  Lmtf = 11,
+  Datf = 12,
+  Volo = 13,
+  Fwaf = 14,
+  Idaf = 15,
+  Volw = 16,
+  Fulf = 17,
+  Fula = 18,
+  Fulv = 19,
+  Fulj = 20,
+  Coaf = 21,
+  Order = 22,
+  ChildOrder = 23,
+  OrderRoute = 24,
+  Trade = 25,
+  Quote = 26,
+  Supplement = 27,
+  NewTransaction = 28,
+  TransactionCorrection = 29,
+  TransactionModification = 30,
+  CollateralUpdate = 31,
+  MarginUpdate = 32,
+  TransactionReportedInError = 33,
+  TerminationEarlyTermination = 34
+}
+
+export enum TradeCollateralization {
+  Uncollateralized = 0,
+  PartiallyCollateralized = 1,
+  OneWayCollaterallization = 2,
+  FullyCollateralized = 3,
+  NetExposure = 4
+}
+
+export enum TradeContinuation {
+  Novation = 0,
+  PartialNovation = 1,
+  TradeUnwind = 2,
+  PartialTradeUnwind = 3,
+  Exercise = 4,
+  Netting = 5,
+  FullNetting = 6,
+  PartialNetting = 7,
+  Amendment = 8,
+  Increase = 9,
+  CreditEvent = 10,
+  StrategicRestructuring = 11,
+  SuccessionEventReorganization = 12,
+  SuccessionEventRenaming = 13,
+  Porting = 14,
+  Withdrawl = 15,
+  Void = 16,
+  AccountTransfer = 17,
+  GiveUp = 18,
+  TakeUp = 19,
+  AveragePricing = 20,
+  Reversal = 21,
+  AllocTrdPosting = 22,
+  Cascade = 23,
+  Delivery = 24,
+  OptionAsgn = 25,
+  Expiration = 26,
+  Maturity = 27,
+  EqualPosAdj = 28,
+  UnequalPosAdj = 29,
+  Correction = 30,
+  EarlyTermination = 31,
+  Rerate = 32,
+  Other = 99
+}
+
+export enum AssetClass {
+  InterestRate = 1,
+  Currency = 2,
+  Credit = 3,
+  Equity = 4,
+  Commodity = 5,
+  Other = 6,
+  Cash = 7,
+  Debt = 8,
+  Fund = 9,
+  LoanFacility = 10,
+  Index = 11
+}
+
+export enum AssetSubClass {
+  SingleCurrency = 1,
+  CrossCurrency = 2,
+  Basket = 3,
+  SingleName = 4,
+  CreditIndex = 5,
+  IndexTranche = 6,
+  CreditBasket = 7,
+  Exotic = 8,
+  Common = 9,
+  Preferred = 10,
+  EquityIndex = 11,
+  EquityBasket = 12,
+  Metals = 13,
+  Bullion = 14,
+  Energy = 15,
+  CommodityIndex = 16,
+  Agricultural = 17,
+  Environmental = 18,
+  Freight = 19,
+  Government = 20,
+  Agency = 21,
+  Corporate = 22,
+  Financing = 23,
+  MoneyMarket = 24,
+  Mortgage = 25,
+  Municipal = 26,
+  MutualFund = 27,
+  CollectiveInvestmentVehicle = 28,
+  InvestmentProgram = 29,
+  SpecializedAccountProgram = 30,
+  TermLoan = 31,
+  BridgeLoan = 32,
+  LetterOfCredit = 33,
+  DividendIndex = 34,
+  StockDividend = 35,
+  ExchangeTradedFund = 36,
+  VolatilityIndex = 37,
+  FxCrossRates = 38,
+  FxEmergingMarkets = 39,
+  FxMajors = 40,
+  Fertilizer = 41,
+  IndustrialProduct = 42,
+  Inflation = 43,
+  Paper = 44,
+  Polypropylene = 45,
+  OfficialEconomicStatistics = 46,
+  OtherC10 = 47,
+  Other = 48
+}
+
+export enum SwapClass {
+  BasisSwap = 'BS',
+  IndexSwap = 'IX',
+  BroadBasedSecuritySwap = 'BB',
+  BasketSwap = 'SK'
+}
+
+export enum CouponType {
+  Zero = 0,
+  FixedRate = 1,
+  FloatingRate = 2,
+  Structured = 3
+}
+
+export enum CouponFrequencyUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr',
+  Hour = 'H',
+  Minute = 'Min',
+  Second = 'S',
+  Term = 'T'
+}
+
+export enum CouponDayCount {
+  OneOne = 0,
+  ThirtyThreeSixtyUs = 1,
+  ThirtyThreeSixtySia = 2,
+  ThirtyThreeSixtyM = 3,
+  ThirtyEThreeSixty = 4,
+  ThirtyEThreeSixtyIsda = 5,
+  ActThreeSixty = 6,
+  ActThreeSixtyFiveFixed = 7,
+  ActActAfb = 8,
+  ActActIcma = 9,
+  ActActIsmaUltimo = 10,
+  ActActIsda = 11,
+  BusTwoFiftyTwo = 12,
+  ThirtyEPlusThreeSixty = 13,
+  ActThreeSixtyFiveL = 14,
+  NlThreeSixtyFive = 15,
+  NlThreeSixty = 16,
+  Act364 = 17,
+  ThirtyThreeSixtyFive = 18,
+  ThirtyActual = 19,
+  ThirtyThreeSixtyIcma = 20,
+  ThirtyETwoThreeSixty = 21,
+  ThirtyEThreeThreeSixty = 22,
+  Other = 99
+}
+
+export enum LienSeniority {
+  Unknown = 0,
+  FirstLien = 1,
+  SecondLien = 2,
+  ThirdLien = 3
+}
+
+export enum LoanFacility {
+  BridgeLoan = 0,
+  LetterOfCredit = 1,
+  RevolvingLoan = 2,
+  SwinglineFunding = 3,
+  TermLoan = 4,
+  TradeClaim = 5
+}
+
+export enum ReferenceEntityType {
+  Asian = 1,
+  AustralianNewZealand = 2,
+  EuropeanEmergingMarkets = 3,
+  Japanese = 4,
+  NorthAmericanHighYield = 5,
+  NorthAmericanInsurance = 6,
+  NorthAmericanInvestmentGrade = 7,
+  Singaporean = 8,
+  WesternEuropean = 9,
+  WesternEuropeanInsurance = 10
+}
+
+export enum BlockTrdAllocIndicator {
+  BlockToBeAllocated = 0,
+  BlockNotToBeAllocated = 1,
+  AllocatedTrade = 2
+}
+
+export enum UnderlyingObligationType {
+  Bond = '0',
+  ConvertibleBond = '1',
+  Mortgage = '2',
+  Loan = '3'
+}
+
+export enum AttachmentEncodingType {
+  Base64 = 0,
+  RawBinary = 1
+}
+
+export enum NegotiationMethod {
+  AutoSpot = 0,
+  NegotiatedSpot = 1,
+  PhoneSpot = 2
+}
+
+export enum ComplexOptPayoutTime {
+  Close = 0,
+  Open = 1,
+  OfficialSettl = 2,
+  ValuationTime = 3,
+  ExcahgneSettlTime = 4,
+  DerivativesClose = 5,
+  AsSpecified = 6
+}
+
+export enum ComplexEventQuoteBasis {
+  Currency1PerCurrency2 = 0,
+  Currency2PerCurrency1 = 1
+}
+
+export enum ComplexEventCreditEventNotifyingParty {
+  SellerNotifies = 0,
+  BuyerNotifies = 1,
+  SellerOrBuyerNotifies = 2
+}
+
+export enum StrategyType {
+  Straddle = 'STD',
+  Strangle = 'STG',
+  Butterfly = 'BF',
+  Condor = 'CNDR',
+  CallableInversibleSnowball = 'CISN',
+  Other = 'OTHER'
+}
+
+export enum SettlDisruptionProvision {
+  Negotiation = 1,
+  Cancellation = 2
+}
+
+export enum AssetGroup {
+  Financials = 1,
+  Commodities = 2,
+  AlternativeInvestments = 3
+}
+
+export enum RiskLimitReportStatus {
+  Accepted = 0,
+  Rejected = 1
+}
+
+export enum RiskLimitReportRejectReason {
+  UnkRiskLmtRprtId = 0,
+  UnkPty = 1,
+  Other = 99
+}
+
+export enum RiskLimitCheckTransType {
+  New = 0,
+  Cancel = 1,
+  Replace = 2
+}
+
+export enum RiskLimitCheckType {
+  Submit = 0,
+  LimitConsumed = 1
+}
+
+export enum RiskLimitCheckRequestType {
+  AllOrNone = 0,
+  Partial = 1
+}
+
+export enum RiskLimitCheckRequestStatus {
+  Approved = 0,
+  PartiallyApproved = 1,
+  Rejected = 2,
+  ApprovalPending = 3,
+  Cancelled = 4
+}
+
+export enum RiskLimitCheckRequestResult {
+  Successful = 0,
+  InvalidParty = 1,
+  ReqExceedsCreditLimit = 2,
+  ReqExceedsClipSizeLimit = 3,
+  ReqExceedsMaxNotional = 4,
+  Other = 99
+}
+
+export enum PartyActionType {
+  Suspend = 0,
+  HaltTrading = 1,
+  Reinstate = 2
+}
+
+export enum PartyActionResponse {
+  Accepted = 0,
+  Completed = 1,
+  Rejected = 2
+}
+
+export enum PartyActionRejectReason {
+  InvalidParty = 0,
+  UnkReqParty = 1,
+  NotAuthorized = 98,
+  Other = 99
+}
+
+export enum RefRiskLimitCheckIDType {
+  RiskLimitRequestId = 0,
+  RiskLimitCheckId = 1,
+  OutOfBandId = 3
+}
+
+export enum RiskLimitCheckModelType {
+  None = 0,
+  PlusOneModel = 1,
+  PingModel = 2,
+  PushModel = 3
+}
+
+export enum RiskLimitCheckStatus {
+  Accepted = 0,
+  Rejected = 1,
+  ClaimRequired = 2,
+  PreDefinedLimitCheckSucceeded = 3,
+  PreDefinedLimitCheckFailed = 4,
+  PreDefinedAutoAcceptRuleInvoked = 5,
+  PreDefinedAutoRejectRuleInvoked = 6,
+  AcceptedByClearingFirm = 7,
+  RejectedByClearingFirm = 8,
+  Pending = 9,
+  AcceptedByCreditHub = 10,
+  RejectedByCreditHub = 11,
+  PendingCreditHubCheck = 12,
+  AcceptedByExecVenue = 13,
+  RejectedByExecVenue = 14
+}
+
+export enum RegulatoryTransactionType {
+  None = 0,
+  SefRequiredTransaction = 1,
+  SefPermittedTransaction = 2
+}
+
+export enum PartyRiskLimitStatus {
+  Disabled = 0,
+  Enabled = 1
+}
+
+export enum RemunerationIndicator {
+  NoRemunerationPaid = 0,
+  RemunerationPaid = 1
+}
+
+export enum TaxonomyType {
+  IsinOrAltInstrmtId = 'I',
+  InterimTaxonomy = 'E'
+}
+
+export enum TradeContingency {
+  DoesNotApply = 0,
+  ContingentTrade = 1,
+  NonContingentTrade = 2
+}
+
+export enum RegulatoryTradeIDScope {
+  ClearingMember = 1,
+  Client = 2
+}
+
+export enum EntitlementSubType {
+  OrderEntry = 1,
+  HItLift = 2,
+  ViewIndicativePx = 3,
+  ViewExecutablePx = 4,
+  SingleQuote = 5,
+  StreamingQuotes = 6,
+  SingleBroker = 7,
+  MultiBrokers = 8
+}
+
+export enum QuoteModelType {
+  QuoteEntry = 1,
+  QuoteModification = 2
+}
+
+export enum ExecMethod {
+  Unspecified = 0,
+  Manual = 1,
+  Automated = 2,
+  VoiceBrokered = 3
+}
+
+export enum MassOrderRequestStatus {
+  Accepted = 1,
+  AcceptedWithAdditionalEvents = 2,
+  Rejected = 3
+}
+
+export enum MassOrderRequestResult {
+  Successful = 0,
+  ResponseLevelNotSupported = 1,
+  InvalidMarket = 2,
+  InvalidMarketSegment = 3,
+  Other = 99
+}
+
+export enum OrderResponseLevel {
+  NoAck = 0,
+  MinimumAck = 1,
+  AckEach = 2,
+  SummaryAck = 3
+}
+
+export enum OrderEntryAction {
+  Add = '1',
+  Modify = '2',
+  Delete = '3',
+  Suspend = '4',
+  Release = '5'
+}
+
+export enum ExecTypeReason {
+  OrdAddedOnRequest = 1,
+  OrdReplacedOnRequest = 2,
+  OrdCxldOnRequest = 3,
+  UnsolicitedOrdCxl = 4,
+  NonRestingOrdAddedOnRequest = 5,
+  OrdReplacedWithNonRestingOrdOnRequest = 6,
+  TriggerOrdReplacedOnRequest = 7,
+  SuspendedOrdReplacedOnRequest = 8,
+  SuspendedOrdCxldOnRequest = 9,
+  OrdCxlPending = 10,
+  PendingCxlExecuted = 11,
+  RestingOrdTriggered = 12,
+  SuspendedOrdActivated = 13,
+  ActiveOrdSuspended = 14,
+  OrdExpired = 15
+}
+
+export enum TransferTransType {
+  New = 0,
+  Replace = 1,
+  Cancel = 2
+}
+
+export enum TransferType {
+  RequestTransfer = 0,
+  AcceptTransfer = 1,
+  DeclineTransfer = 2
+}
+
+export enum TransferScope {
+  InterFirmTransfer = 0,
+  IntraFirmTransfer = 1,
+  Cmta = 2
+}
+
+export enum TransferStatus {
+  Received = 0,
+  RejectedByIntermediary = 1,
+  AcceptPending = 2,
+  Accepted = 3,
+  Declined = 4,
+  Cancelled = 5
+}
+
+export enum TransferRejectReason {
+  Success = 0,
+  InvalidParty = 1,
+  UnknownInstrument = 2,
+  UnauthorizedToSubmitXfer = 3,
+  UnknownPosition = 4,
+  Other = 99
+}
+
+export enum TransferReportType {
+  Submit = 0,
+  Alleged = 1
+}
+
+export enum MDStatisticType {
+  Count = 1,
+  AverageVolume = 2,
+  TotalVolume = 3,
+  Distribution = 4,
+  Ratio = 5,
+  Liquidity = 6,
+  Vwap = 7,
+  Volatility = 8,
+  Duration = 9,
+  Tick = 10,
+  AverageValue = 11,
+  TotalValue = 12,
+  High = 13,
+  Low = 14,
+  Midpoint = 15,
+  First = 16,
+  Last = 17,
+  Final = 18,
+  ExchangeBest = 19,
+  ExchangeBestWithVolume = 20,
+  ConsolidatedBest = 21,
+  ConsolidatedBestWithVolume = 22,
+  Twap = 23,
+  AverageDuration = 24,
+  AveragePrice = 25,
+  TotalFees = 26,
+  TotalBenefits = 27,
+  MedianValue = 28,
+  AverageLiquidity = 29,
+  MedianDuration = 30
+}
+
+export enum MDStatisticScope {
+  BidPrices = 1,
+  OfferPrices = 2,
+  BidDepth = 3,
+  OfferDepth = 4,
+  Orders = 5,
+  Quotes = 6,
+  OrdersAndQuotes = 7,
+  Trades = 8,
+  TradePrices = 9,
+  AuctionPrices = 10,
+  OpeningPrices = 11,
+  ClosingPrices = 12,
+  SettlementPrices = 13,
+  UnderlyingPrices = 14,
+  OpenInterest = 15,
+  IndexValues = 16,
+  MarginRates = 17,
+  Outages = 18,
+  ScheduledAuctions = 19,
+  ReferencePrices = 20,
+  TradeValue = 21,
+  MarketDataFeeItems = 22,
+  Rebates = 23,
+  Discounts = 24,
+  Payments = 25,
+  Taxes = 26,
+  Levies = 27,
+  Benefits = 28,
+  Fees = 29,
+  OrdersRfQs = 30,
+  MarketMakers = 31,
+  TradingInterruptions = 32,
+  TradingSuspensions = 33,
+  NoQuotes = 34,
+  RequestForQuotes = 35,
+  TradeVolume = 36
+}
+
+export enum MDStatisticSubScope {
+  Visible = 1,
+  Hidden = 2,
+  Indicative = 3,
+  Tradeable = 4,
+  Passive = 5,
+  MarketConsensus = 6,
+  Power = 7,
+  HardwareError = 8,
+  SoftwareError = 9,
+  NetworkError = 10,
+  Failed = 11,
+  Executed = 12,
+  Entered = 13,
+  Modified = 14,
+  Cancelled = 15,
+  MarketDataAccess = 16,
+  TerminalAccess = 17,
+  Volume = 18,
+  Cleared = 19,
+  Settled = 20,
+  Other = 21,
+  Monetary = 22,
+  NonMonetary = 23,
+  Gross = 24,
+  LargeInScale = 25,
+  NeitherHiddenNorLargeInScale = 26,
+  CorporateAction = 27,
+  VenueDecision = 28,
+  MinimumTimePeriod = 29,
+  Open = 30,
+  NotExecuted = 31,
+  Aggressive = 32,
+  Directed = 33
+}
+
+export enum MDStatisticScopeType {
+  EntryRate = 1,
+  ModificationRate = 2,
+  CancelRate = 3,
+  DownwardMove = 4,
+  UpwardMove = 5
+}
+
+export enum MDStatisticIntervalType {
+  SlidingWindow = 1,
+  SlidingWindowPeak = 2,
+  FixedDateRange = 3,
+  FixedTimeRange = 4,
+  CurrentTimeUnit = 5,
+  PreviousTimeUnit = 6,
+  MaximumRange = 7,
+  MaximumRangeUpToPreviousTimeUnit = 8
+}
+
+export enum MDStatisticRatioType {
+  BuyersToSellers = 1,
+  UpticksToDownticks = 2,
+  MarketMakerToNonMarketMaker = 3,
+  AutomatedToNonAutomated = 4,
+  OrdersToTrades = 5,
+  QuotesToTrades = 6,
+  OrdersAndQuotesToTrades = 7,
+  FailedToTotalTradedValue = 8,
+  BenefitsToTotalTradedValue = 9,
+  FeesToTotalTradedValue = 10,
+  TradeVolumeToTotalTradedVolume = 11,
+  OrdersToTotalNumberOrders = 12
+}
+
+export enum MDStatisticRequestResult {
+  Successful = 0,
+  InvalidOrUnknownMarket = 1,
+  InvalidOrUnknownMarketSegment = 2,
+  InvalidOrUnknownSecurityList = 3,
+  InvalidOrUnknownInstruments = 4,
+  InvalidParties = 5,
+  TradeDateOutOfSupportedRange = 6,
+  UnsupportedStatisticType = 7,
+  UnsupportedScopeOrSubScope = 8,
+  UnsupportedScopeType = 9,
+  MarketDepthNotSupported = 10,
+  FrequencyNotSupported = 11,
+  UnsupportedStatisticInterval = 12,
+  UnsupportedStatisticDateRange = 13,
+  UnsupportedStatisticTimeRange = 14,
+  UnsupportedRatioType = 15,
+  InvalidOrUnknownTradeInputSource = 16,
+  InvalidOrUnknownTradingSession = 17,
+  UnauthorizedForStatisticRequest = 18,
+  Other = 99
+}
+
+export enum MDStatisticStatus {
+  Active = 1,
+  Inactive = 2
+}
+
+export enum MDStatisticValueType {
+  Absolute = 1,
+  Percentage = 2
+}
+
+export enum CollRptRejectReason {
+  UnknownTrade = 0,
+  UnknownInstrument = 1,
+  UnknownCounterparty = 2,
+  UnknownPosition = 3,
+  UnacceptableCollateral = 4,
+  Other = 99
+}
+
+export enum CollRptStatus {
+  Accepted = 0,
+  Received = 1,
+  Rejected = 2
+}
+
+export enum CrossedIndicator {
+  NoCross = 0,
+  CrossRejected = 1,
+  CrossAccepted = 2
+}
+
+export enum TradeReportingIndicator {
+  NotReported = 0,
+  OnBook = 1,
+  SiSeller = 2,
+  SiBuyer = 3,
+  NonSiSeller = 4,
+  SubDelegationByFirm = 5,
+  Reportable = 6,
+  NonSiBuyer = 7,
+  OffBook = 8,
+  NotReportable = 9
+}
+
+export enum RelativeValueType {
+  AswSpread = 1,
+  Ois = 2,
+  ZSpread = 3,
+  DiscountMargin = 4,
+  ISpread = 5,
+  Oas = 6,
+  GSpread = 7,
+  CdsBasis = 8,
+  CdsInterpolatedBasis = 9,
+  Dv01 = 10,
+  Pv01 = 11,
+  Cs01 = 12
+}
+
+export enum RelativeValueSide {
+  Bid = 1,
+  Mid = 2,
+  Offer = 3
+}
+
+export enum MDReportEvent {
+  StartInstrumentRefData = 1,
+  EndInstrumentRefData = 2,
+  StartOffMarketTrades = 3,
+  EndOffMarketTrades = 4,
+  StartOrderBookTrades = 5,
+  EndOrderBookTrades = 6,
+  StartOpenInterest = 7,
+  EndOpenInterest = 8,
+  StartSettlementPrices = 9,
+  EndSettlementPrices = 10,
+  StartStatsRefData = 11,
+  EndStatsRefData = 12,
+  StartStatistics = 13,
+  EndStatistics = 14
+}
+
+export enum MarketSegmentStatus {
+  Active = 1,
+  Inactive = 2,
+  Published = 3
+}
+
+export enum MarketSegmentType {
+  Pool = 1,
+  Retail = 2,
+  Wholesale = 3
+}
+
+export enum MarketSegmentSubType {
+  InterProductSpread = 1
+}
+
+export enum MarketSegmentRelationship {
+  MarketSegmentPoolMember = 1,
+  RetailSegment = 2,
+  WholesaleSegment = 3
+}
+
+export enum QuoteSideIndicator {
+  No = 'N',
+  Yes = 'Y'
+}
+
+export enum CustomerPriority {
+  NoPriority = 0,
+  UnconditionalPriority = 1
+}
+
+export enum SettlSubMethod {
+  Shares = 1,
+  Derivatives = 2,
+  PaymentVsPayment = 3,
+  Notional = 4,
+  Cascade = 5,
+  Repurchase = 6,
+  Other = 99
+}
+
+export enum CalculationMethod {
+  Automatic = 0,
+  Manual = 1
+}
+
+export enum OrderAttributeType {
+  AggregatedOrder = 0,
+  PendingAllocation = 1,
+  LiquidityProvisionActivityOrder = 2,
+  RiskReductionOrder = 3,
+  AlgorithmicOrder = 4,
+  SystematicInternaliserOrder = 5,
+  AllExecutionsSubmittedToApa = 6,
+  OrderExecutionInstructedByClient = 7,
+  LargeInScale = 8,
+  Hidden = 9,
+  SubjectToEusto = 10,
+  SubjectToUksto = 11,
+  RepresentativeOrder = 12,
+  LinkageType = 13,
+  ExemptFromSto = 14
+}
+
+export enum ComplexEventPVFinalPriceElectionFallback {
+  Close = 0,
+  HedgeElection = 1
+}
+
+export enum StrikeIndexQuote {
+  Bid = 0,
+  Mid = 1,
+  Offer = 2
+}
+
+export enum ExtraordinaryEventAdjustmentMethod {
+  CalculationAgent = 0,
+  OptionsExchange = 1
+}
+
+export enum UnderlyingNotionalAdjustments {
+  Execution = 0,
+  PortfolioRebalancing = 1,
+  Standard = 2
+}
+
+export enum CollateralAmountType {
+  MarketValuation = 0,
+  PortfolioValue = 1,
+  ValueConfirmed = 2,
+  CollateralCreditValue = 3,
+  AdditionalCollateralValue = 4,
+  EstimatedMarketValuation = 5
+}
+
+export enum CommissionAmountType {
+  Unspecified = 0,
+  Acceptance = 1,
+  Broker = 2,
+  ClearingBroker = 3,
+  Retail = 4,
+  SalesCommission = 5,
+  LocalCommission = 6,
+  ResearchPayment = 7
+}
+
+export enum AlgorithmicTradeIndicator {
+  NonAlgorithmicTrade = 0,
+  AlgorithmicTrade = 1
+}
+
+export enum TrdRegPublicationType {
+  PreTradeTransparencyWaiver = 0,
+  PostTradeDeferral = 1,
+  ExemptFromPublication = 2,
+  OrderLevelPublicationToSubscribers = 3,
+  PriceLevelPublicationToSubscribers = 4,
+  OrderLevelPublicationToThePublic = 5,
+  PublicationInternalToExecutionVenue = 6
+}
+
+export enum TrdRegPublicationReason {
+  NoBookOrderDueToAverageSpreadPrice = 0,
+  NoBookOrderDueToRefPrice = 1,
+  NoBookOrderDueToOtherConditions = 2,
+  NoPublicPriceDueToRefPrice = 3,
+  NoPublicPriceDueToIlliquid = 4,
+  NoPublicPriceDueToOrderSize = 5,
+  DeferralDueToLargeInScale = 6,
+  DeferralDueToIlliquid = 7,
+  DeferralDueToSizeSpecific = 8,
+  NoPublicPriceDueToLargeInScale = 9,
+  NoPublicPriceSizeDueToOrderHidden = 10,
+  ExemptedDueToSecuritiesFinancingTransaction = 11,
+  ExemptedDueToEscbPolicyTransaction = 12,
+  ExceptionDueToReportByPaper = 13,
+  ExceptionDueToTradeExecutedWithNonReportingParty = 14,
+  ExceptionDueToIntraFirmOrder = 15,
+  ReportedOutsideReportingHours = 16
+}
+
+export enum MassActionReason {
+  None = 0,
+  TradingRiskControl = 1,
+  ClearingRiskControl = 2,
+  MarketMakerProtection = 3,
+  StopTrading = 4,
+  EmergencyAction = 5,
+  SessionLossLogout = 6,
+  DuplicateLogin = 7,
+  ProductNotTraded = 8,
+  InstrumentNotTraded = 9,
+  CompleInstrumentDeleted = 10,
+  CircuitBreakerActivated = 11,
+  Other = 99
+}
+
+export enum NotAffectedReason {
+  OrderSuspended = 0,
+  InstrumentSuspended = 1
+}
+
+export enum OrderOwnershipIndicator {
+  NoChange = 0,
+  ExecutingPartyChange = 1,
+  EnteringPartyChange = 2,
+  SpecifiedPartyChange = 3
+}
+
+export enum InTheMoneyCondition {
+  StandardItm = 0,
+  Atmitm = 1,
+  AtmCallItm = 2,
+  AtmPutItm = 3
+}
+
+export enum ExDestinationType {
+  NoRestriction = 0,
+  TradedOnlyOnTradingVenue = 1,
+  TradedOnlyOnSi = 2,
+  TradedOnTradingVenueOrSi = 3
+}
+
+export enum MarketCondition {
+  Normal = 0,
+  Stressed = 1,
+  Exceptional = 2
+}
+
+export enum QuoteAttributeType {
+  QuoteAboveStandardMarketSize = 0,
+  QuoteAboveSpecificInstrumentSize = 1,
+  QuoteApplicableForLiquidtyProvisionActivity = 2,
+  QuoteIssuerStatus = 3,
+  BidOrAskRequest = 4
+}
+
+export enum PriceQualifier {
+  AccruedInterestIsFactored = 0,
+  TaxIsFactored = 1,
+  BondAmortizationIsFactored = 2
+}
+
+export enum MDValueTier {
+  Range1 = 1,
+  Range2 = 2,
+  Range3 = 3
+}
+
+export enum MiscFeeQualifier {
+  Contributes = 0,
+  DoesNotContribute = 1
+}
+
+export enum CommissionAmountSubType {
+  ResearchPaymentAccount = 0,
+  CommissionSharingAgreement = 1,
+  OtherTypeResearchPayment = 2
+}
+
+export enum CommodityFinalPriceType {
+  ArgusMcCloskey = 0,
+  Baltic = 1,
+  Exchange = 2,
+  GlobalCoal = 3,
+  IhsMcCloskey = 4,
+  Platts = 5,
+  Other = 99
+}
+
+export enum ReferenceDataDateType {
+  AdmitToTradeRequestDate = 0,
+  AdmitToTradeApprovalDate = 1,
+  AdmitToTradeOrFirstTradeDate = 2,
+  TerminationDate = 3
+}
+
+export enum ReturnTrigger {
+  Dividend = 1,
+  Variance = 2,
+  Volatility = 3,
+  TotalReturn = 4,
+  ContractForDifference = 5,
+  CreditDefault = 6,
+  SpreadBet = 7,
+  Price = 8,
+  ForwardPriceUnderlyingInstrument = 9,
+  Other = 99
+}
+
+export enum AveragePriceType {
+  TimeWeightedAveragePrice = 0,
+  VolumeWeightedAveragePrice = 1,
+  PercentOfVolumeAveragePrice = 2,
+  LimitOrderAveragePrice = 3
+}
+
+export enum AllocGroupStatus {
+  Added = 0,
+  Canceled = 1,
+  Replaced = 2,
+  Changed = 3,
+  Pending = 4
+}
+
+export enum AllocRequestStatus {
+  Accepted = 0,
+  Rejected = 1
+}
+
+export enum MatchExceptionType {
+  NoMatchingConfirmation = 0,
+  NoMatchingAllocation = 1,
+  AllocationDataElementMissing = 2,
+  ConfirmationDataElementMissing = 3,
+  DataDifferenceNotWithinTolerance = 4,
+  MatchWithinTolerance = 5,
+  Other = 99
+}
+
+export enum MatchExceptionElementType {
+  AccruedInterest = 1,
+  DealPrice = 2,
+  TradeDate = 3,
+  SettlementDate = 4,
+  SideIndicator = 5,
+  TradedCurrency = 6,
+  AccountId = 7,
+  ExecutingBrokerId = 8,
+  SettlementCurrencyAndAmount = 9,
+  InvestmentManagerId = 10,
+  NetAmount = 11,
+  PlaceOfSettlement = 12,
+  Commissions = 13,
+  SecurityIdentifier = 14,
+  QualityAllocated = 15,
+  Principal = 16,
+  Fees = 17,
+  Tax = 18
+}
+
+export enum MatchExceptionToleranceValueType {
+  FixedAmount = 1,
+  Percentage = 2
+}
+
+export enum MatchingDataPointIndicator {
+  Mandatory = 1,
+  Optional = 2
+}
+
+export enum TradeAggregationTransType {
+  New = 0,
+  Cancel = 1,
+  Replace = 2
+}
+
+export enum TradeAggregationRequestStatus {
+  Accepted = 0,
+  Rejected = 1
+}
+
+export enum TradeAggregationRejectReason {
+  UnknownOrders = 0,
+  UnknownExecutionFills = 1,
+  Other = 99
+}
+
+export enum OffshoreIndicator {
+  Regular = 0,
+  Offshore = 1,
+  Onshore = 2
+}
+
+export enum PayReportTransType {
+  New = 0,
+  Replace = 1,
+  Status = 2
+}
+
+export enum PayReportStatus {
+  Received = 0,
+  Accepted = 1,
+  Rejected = 2,
+  Disputed = 3
+}
+
+export enum PayRequestTransType {
+  New = 0,
+  Cancel = 1
+}
+
+export enum PayRequestStatus {
+  Received = 0,
+  Accepted = 1,
+  Rejected = 2,
+  Disputed = 3
+}
+
+export enum PostTradePaymentDebitOrCredit {
+  DebitPay = 0,
+  CreditReceive = 1
+}
+
+export enum PostTradePaymentStatus {
+  New = 0,
+  Initiated = 1,
+  Pending = 2,
+  Confirmed = 3,
+  Rejected = 4
+}
+
+export enum DuplicateClOrdIDIndicator {
+  No = 'N',
+  Yes = 'Y'
+}
+
+export enum EventInitiatorType {
+  CustomerOrClient = 'C',
+  ExchangeOrExecutionVenue = 'E',
+  FirmOrBroker = 'F'
+}
+
+export enum NBBOEntryType {
+  Bid = 0,
+  Offer = 1,
+  MidPrice = 2
+}
+
+export enum NBBOSource {
+  NotApplicable = 0,
+  Direct = 1,
+  Sip = 2,
+  Hybrid = 3
+}
+
+export enum SingleQuoteIndicator {
+  No = 'N',
+  Yes = 'Y'
+}
+
+export enum TrdRegTimestampManualIndicator {
+  No = 'N',
+  Yes = 'Y'
+}
+
+export enum CollateralReinvestmentType {
+  MoneyMarketFund = 0,
+  OtherComingledPool = 1,
+  RepoMarket = 2,
+  DirectPurchaseOfSecurities = 3,
+  OtherInvestments = 4
+}
+
+export enum FundingSource {
+  Repo = 0,
+  Cash = 1,
+  FreeCedits = 2,
+  CustomerShortSales = 3,
+  BrokerShortSales = 4,
+  UnsecuredBorrowing = 5,
+  Other = 99
+}
+
+export enum MarginDirection {
+  Posted = 0,
+  Received = 1
+}
+
+export enum TransactionAttributeType {
+  ExclusiveArrangement = 0,
+  CollateralReuse = 1,
+  CollateralArrangmentType = 2
+}
+
+export enum RoutingArrangmentIndicator {
+  NoRoutingArrangmentInPlace = 0,
+  RoutingArrangementInPlace = 1
+}
+
+export enum RelatedOrderIDSource {
+  NonFixSource = 0,
+  SystemOrderIdentifier = 1,
+  ClientOrderIdentifier = 2,
+  SecondaryOrderIdentifier = 3,
+  SecondaryClientOrderIdentifier = 4
+}
+
+export enum OrderRelationship {
+  NotSpecified = 0,
+  OrderAggregation = 1,
+  OrderSplit = 2
+}
+
+export enum CurrencyCodeSource {
+  Cusip = '1',
+  Sedol = '2',
+  IsinNumber = '4',
+  IsoCurrencyCode = '6',
+  FinancialInstrumentGlobalIdentifier = 'S',
+  DigitalTokenIdentifier = 'Y'
+}
+
+export enum MultiJurisdictionReportingIndicator {
+  NotMultiJrsdctnEligible = 0,
+  MultiJrsdctnEligible = 1
+}
+
+export enum SelfMatchPreventionInstruction {
+  CancelAggressive = 1,
+  CancelPassive = 2,
+  CancelAggressivePassive = 3
+}
+
+export enum CashSettlQuoteMethod {
+  Bid = 0,
+  Mid = 1,
+  Offer = 2
+}
+
+export enum CashSettlValuationMethod {
+  Market = 0,
+  Highest = 1,
+  AverageMarket = 2,
+  AverageHighest = 3,
+  BlendedMarket = 4,
+  BlendedHighest = 5,
+  AverageBlendedMarket = 6,
+  AverageBlendedHighest = 7
+}
+
+export enum StreamType {
+  PaymentCashSettlement = 0,
+  PhysicalDelivery = 1
+}
+
+export enum ProvisionType {
+  MandatoryEarlyTermination = 0,
+  OptionalEarlyTermination = 1,
+  Cancelable = 2,
+  Extendable = 3,
+  MutualEarlyTermination = 4,
+  Evergreen = 5,
+  Callable = 6,
+  Puttable = 7
+}
+
+export enum ProvisionDateTenorUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr'
+}
+
+export enum ProvisionCalculationAgent {
+  ExercisingParty = 0,
+  NonExercisingParty = 1,
+  MasterAgreeent = 2,
+  Supplement = 3
+}
+
+export enum ProvisionOptionSinglePartyBuyerSide {
+  Buy = 1,
+  Sell = 2
+}
+
+export enum ProvisionCashSettlMethod {
+  CashPrice = 0,
+  CashPriceAlternate = 1,
+  ParYieldCurveAdjusted = 2,
+  ZeroCouponYieldCurveAdjusted = 3,
+  ParYieldCurveUnadjusted = 4,
+  CrossCurrency = 5,
+  CollateralizedPrice = 6
+}
+
+export enum ProvisionCashSettlQuoteType {
+  Bid = 0,
+  Mid = 1,
+  Offer = 2,
+  ExercisingPartyPays = 3
+}
+
+export enum ProvisionOptionExerciseEarliestDateOffsetUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr'
+}
+
+export enum ProvisionOptionExerciseFixedDateType {
+  Unadjusted = 0,
+  Adjusted = 1
+}
+
+export enum ProvisionCashSettlPaymentDateType {
+  Unadjusted = 0,
+  Adjusted = 1
+}
+
+export enum ProtectionTermEventUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr'
+}
+
+export enum ProtectionTermEventDayType {
+  Business = 0,
+  Calendar = 1,
+  CommodityBusiness = 2,
+  CurrencyBusiness = 3,
+  ExchangeBusiness = 4,
+  ScheduledTradingDay = 5
+}
+
+export enum ProtectionTermEventQualifier {
+  RestructuringMultipleHoldingObligations = 'H',
+  RestructuringMultipleCreditEventNotices = 'E',
+  FloatingRateInterestShortfall = 'C'
+}
+
+export enum PaymentType {
+  Brokerage = 0,
+  UpfrontFee = 1,
+  IndependentAmountCollateral = 2,
+  PrincipalExchange = 3,
+  NovationTermination = 4,
+  EarlyTerminationProvision = 5,
+  CancelableProvision = 6,
+  ExtendibleProvision = 7,
+  CapRateProvision = 8,
+  FloorRateProvision = 9,
+  OptionPremium = 10,
+  SettlementPayment = 11,
+  CashSettl = 12,
+  SecurityLending = 13,
+  Rebate = 14,
+  Other = 99
+}
+
+export enum PaymentPaySide {
+  Buy = 1,
+  Sell = 2
+}
+
+export enum PaymentSettlStyle {
+  Standard = 0,
+  Net = 1,
+  StandardfNet = 2
+}
+
+export enum PaymentStreamType {
+  Periodic = 0,
+  Initial = 1,
+  Single = 2,
+  Dividend = 3,
+  Interest = 4,
+  DividendReturn = 5,
+  PriceReturn = 6,
+  TotalReturn = 7,
+  Variance = 8,
+  Correlation = 9
+}
+
+export enum PaymentStreamDiscountType {
+  Standard = 0,
+  Fra = 1
+}
+
+export enum PaymentStreamCompoundingMethod {
+  None = 0,
+  Flat = 1,
+  Straight = 2,
+  SpreadExclusive = 3
+}
+
+export enum PaymentStreamPaymentFrequencyUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr',
+  Term = 'T'
+}
+
+export enum PaymentStreamPaymentDateOffsetUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr'
+}
+
+export enum PaymentStreamResetWeeklyRollConvention {
+  Monday = 'MON',
+  Tuesday = 'TUE',
+  Wednesday = 'WED',
+  Thursday = 'THU',
+  Friday = 'FRI',
+  Saturday = 'SAT',
+  Sunday = 'SUN'
+}
+
+export enum PaymentStreamRateIndexSource {
+  Bloomberg = 0,
+  Reuters = 1,
+  Telerate = 2,
+  Other = 99
+}
+
+export enum PaymentStreamRateIndexCurveUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr'
+}
+
+export enum PaymentStreamRateSpreadPositionType {
+  Short = 0,
+  Long = 1
+}
+
+export enum PaymentStreamRateTreatment {
+  BondEquivalentYield = 0,
+  MoneyMarketYield = 1
+}
+
+export enum PaymentStreamCapRateBuySide {
+  Buyer = 1,
+  Seller = 2
+}
+
+export enum PaymentStreamFloorRateBuySide {
+  Buyer = 1,
+  Seller = 2
+}
+
+export enum PaymentStreamAveragingMethod {
+  Unweighted = 0,
+  Weighted = 1
+}
+
+export enum PaymentStreamNegativeRateTreatment {
+  ZeroInterestRateMethod = 0,
+  NegativeInterestRateMethod = 1
+}
+
+export enum PaymentStreamInflationLagUnit {
+  Day = 'D',
+  Week = 'Wk',
+  Month = 'Mo',
+  Year = 'Yr'
+}
+
+export enum PaymentStreamInflationLagDayType {
+  Business = 0,
+  Calendar = 1,
+  CommodityBusiness = 2,
+  CurrencyBusiness = 3,
+  ExchangeBusiness = 4,
+  ScheduledTradingDay = 5
+}
+
+export enum PaymentStreamInflationInterpolationMethod {
+  None = 0,
+  LinearZeroYield = 1
+}
+
+export enum PaymentStreamFRADiscounting {
+  None = 0,
+  Isda = 1,
+  Afma = 2
+}
+
+export enum NonDeliverableFixingDateType {
+  Unadjusted = 0,
+  Adjusted = 1
+}
+
+export enum PaymentScheduleType {
+  Notional = 0,
+  CashFlow = 1,
+  FxLinkedNotional = 2,
+  FixedRate = 3,
+  FutureValueNotional = 4,
+  KnownAmount = 5,
+  FloatingRateMultiplier = 6,
+  Spread = 7,
+  CapRate = 8,
+  FloorRate = 9,
+  NonDeliverableSettlPaymentDates = 10,
+  NonDeliverableSettlCalculationDates = 11,
+  NonDeliverableFxFixingDates = 12,
+  SettlPeriodNotnl = 13,
+  SettlPeriodPx = 14,
+  CalcPeriod = 15,
+  DividendAccrualRateMultiplier = 16,
+  DividendAccrualRateSpread = 17,
+  DividendAccrualCapRate = 18,
+  DividendAccrualFloorRate = 19,
+  CompoundingRateMultiplier = 20,
+  CompoundingRateSpread = 21,
+  CompoundingCapRate = 22,
+  CompoundingFloorRate = 23
+}
+
+export enum PaymentScheduleStepRelativeTo {
+  Initial = 0,
+  Previous = 1
+}
+
+export enum PaymentStubType {
+  Initial = 0,
+  Final = 1,
+  CompoundingInitial = 2,
+  CompoundingFinal = 3
+}
+
+export enum PaymentStubLength {
+  Short = 0,
+  Long = 1
+}
+
+export enum PaymentStreamPaymentDateOffsetDayType {
+  Business = 0,
+  Calendar = 1,
+  CommodityBusiness = 2,
+  CurrencyBusiness = 3,
+  ExchangeBusiness = 4,
+  ScheduledTradingDay = 5
+}
+
+export enum BusinessDayConvention {
+  NotApplicable = 0,
+  None = 1,
+  FollowingDay = 2,
+  FloatingRateNote = 3,
+  ModifiedFollowingDay = 4,
+  PrecedingDay = 5,
+  ModifiedPrecedingDay = 6,
+  NearestDay = 7
+}
+
+export enum DateRollConvention {
+  FirstDay = '1',
+  SecondDay = '2',
+  ThirdDay = '3',
+  FourthDay = '4',
+  FifthDay = '5',
+  SixthDay = '6',
+  SeventhDay = '7',
+  EighthDay = '8',
+  NinthDay = '9',
+  TenthDay = '10',
+  EleventhDay = '11',
+  TwelvthDay = '12',
+  ThirteenthDay = '13',
+  ForteenthDay = '14',
+  FifteenthDay = '15',
+  SixteenthDay = '16',
+  SeventeenthDay = '17',
+  EighteenthDay = '18',
+  NineteenthDay = '19',
+  TwentiethDay = '20',
+  TwentyFirstDay = '21',
+  TwentySecondDay = '22',
+  TwentyThirdDay = '23',
+  TwentyFourthDay = '24',
+  TwentyFifthDay = '25',
+  TwentySixthDay = '26',
+  TwentySeventhDay = '27',
+  TwentyEigthDa28Y = '28',
+  TwentyNinthDay = '29',
+  ThirtiethDay = '30',
+  Eom = 'EOM',
+  Frn = 'FRN',
+  Imm = 'IMM',
+  Immcad = 'IMMCAD',
+  Immaud = 'IMMAUD',
+  Immnzd = 'IMMNZD',
+  Sfe = 'SFE',
+  None = 'NONE',
+  Tbill = 'TBILL',
+  Mon = 'MON',
+  Tue = 'TUE',
+  Wed = 'WED',
+  Thu = 'THU',
+  Fri = 'FRI',
+  Sat = 'SAT',
+  Sun = 'SUN'
+}
+
+export enum PaymentSubType {
+  Initial = 0,
+  Intermediate = 1,
+  Final = 2,
+  Prepaid = 3,
+  Postpaid = 4,
+  Variable = 5,
+  Fixed = 6,
+  Swap = 7,
+  Conditional = 8,
+  FixedRate = 9,
+  FloatingRate = 10
+}
+
+export enum ComplexEventPeriodType {
+  AsianOut = 0,
+  AsianIn = 1,
+  BarrierCap = 2,
+  BarrierFloor = 3,
+  KnockOut = 4,
+  KnockIn = 5
+}
+
+export enum ComplexEventDateOffsetDayType {
+  Business = 0,
+  Calendar = 1,
+  CommodityBusiness = 2,
+  CurrencyBusiness = 3,
+  ExchangeBusiness = 4,
+  ScheduledTradingDay = 5
+}
+
+export enum DeliveryScheduleType {
+  Notional = 0,
+  Delivery = 1,
+  PhysicalSettlPeriods = 2
+}
+
+export enum DeliveryScheduleToleranceType {
+  Absolute = 0,
+  Percentage = 1
+}
+
+export enum DeliveryScheduleSettlFlowType {
+  AllTimes = 0,
+  OnPeak = 1,
+  OffPeak = 2,
+  Base = 3,
+  BlockHours = 4,
+  Other = 5
+}
+
+export enum DeliveryScheduleSettlHolidaysProcessingInstruction {
+  DoNotIncludeHolidays = 0,
+  IncludeHolidays = 1
+}
+
+export enum DeliveryScheduleSettlDay {
+  Monday = 1,
+  Tuesday = 2,
+  Wednesday = 3,
+  Thursday = 4,
+  Friday = 5,
+  Saturday = 6,
+  Sunday = 7,
+  AllWeekdays = 8,
+  AllDays = 9,
+  AllWeekends = 10
+}
+
+export enum DeliveryScheduleSettlTimeType {
+  Hour = 0,
+  Timestamp = 1
+}
+
+export enum DeliveryStreamType {
+  Periodic = 0,
+  Initial = 1,
+  Single = 2
+}
+
+export enum DeliveryStreamDeliveryRestriction {
+  Firm = 1,
+  NonFirm = 2,
+  ForceMajeure = 3,
+  SystemFirm = 4,
+  UnitFirm = 5
+}
+
+export enum DeliveryStreamTitleTransferCondition {
+  Transfers = 0,
+  DoesNotTransfer = 1
+}
+
+export enum DeliveryStreamToleranceOptionSide {
+  Buyer = 1,
+  Seller = 2
+}
+
+export enum DeliveryStreamElectingPartySide {
+  Buyer = 0,
+  Seller = 1
+}
+
+export enum MarketDisruptionProvision {
+  NotApplicable = 0,
+  Applicable = 1,
+  AsInMasterAgreement = 2,
+  AsInConfirmation = 3
+}
+
+export enum MarketDisruptionFallbackProvision {
+  MasterAgreement = 0,
+  Confirmation = 1
+}
+
+export enum MarketDisruptionFallbackUnderlierType {
+  Basket = 0,
+  Bond = 1,
+  Cash = 2,
+  Commodity = 3,
+  ConvertibleBond = 4,
+  Equity = 5,
+  ExchangeTradedFund = 6,
+  Future = 7,
+  Index = 8,
+  Loan = 9,
+  Mortgage = 10,
+  MutualFund = 11
+}
+
+export enum ExerciseConfirmationMethod {
+  NotRequired = 0,
+  NonElectronic = 1,
+  Electronic = 2,
+  Unknown = 3
+}
+
+export enum OptionExerciseDateType {
+  Unadjusted = 0,
+  Adjusted = 1
+}
+
+export enum PaymentDateOffsetDayType {
+  Business = 0,
+  Calendar = 1,
+  Commodity = 2,
+  Currency = 3,
+  Exchange = 4,
+  Scheduled = 5
+}
+
+export enum PaymentForwardStartType {
+  Prepaid = 0,
+  Postpaid = 1,
+  Variable = 2,
+  Fixed = 3
+}
+
+export enum PaymentStreamSettlLevel {
+  Average = 0,
+  Maximum = 1,
+  Minimum = 2,
+  Cumulative = 3
+}
+
+export enum PaymentStreamRateSpreadType {
+  Absolute = 0,
+  Percentage = 1
+}
+
+export enum PaymentStreamPricingDayDistribution {
+  All = 0,
+  First = 1,
+  Last = 2,
+  Penultimate = 3
+}
+
+export enum PaymentStreamPricingDayOfWeek {
+  EveryDay = 0,
+  Monday = 1,
+  Tuesday = 2,
+  Wednesday = 3,
+  Thursday = 4,
+  Friday = 5,
+  Saturday = 6,
+  Sunday = 7
+}
+
+export enum StreamCommodityNearbySettlDayUnit {
+  Week = 'Wk',
+  Month = 'Mo'
+}
+
+export enum StreamCommoditySettlDateRollUnit {
+  Day = 'D'
+}
+
+export enum StreamCommodityDataSourceIDType {
+  City = 0,
+  Airport = 1,
+  WeatherStation = 2,
+  WeatherIndex = 3
+}
+
+export enum StreamNotionalCommodityFrequency {
+  Term = 0,
+  PerBusinessDay = 1,
+  PerCalculationPeriod = 2,
+  PerSettlPeriod = 3,
+  PerCalendarDay = 4,
+  PerHour = 5,
+  PerMonth = 6
+}
+
+export enum DeliveryStreamDeliveryPointSource {
+  Proprietary = 0,
+  Eic = 1
+}
+
+export enum CashSettlPriceDefault {
+  Close = 0,
+  Hedge = 1
+}
+
+export enum DividendEntitlementEvent {
+  ExDate = 0,
+  RecordDate = 1
+}
+
+export enum DividendAmountType {
+  RecordAmount = 0,
+  ExAmount = 1,
+  PaidAmount = 2,
+  PerMasterConfirm = 3
+}
+
+export enum NonCashDividendTreatment {
+  PotentialAdjustment = 0,
+  CashEquivalent = 1
+}
+
+export enum DividendComposition {
+  EquityAmountReceiver = 0,
+  CalculationAgent = 1
+}
+
+export enum PaymentStreamInterpolationPeriod {
+  Initial = 0,
+  InitialAndFinal = 1,
+  Final = 2,
+  AnyPeriod = 3
+}
+
+export enum PaymentStreamLinkStrikePriceType {
+  Volatility = 0,
+  Variance = 1
+}
+
+export enum PaymentStreamRealizedVarianceMethod {
+  Previous = 0,
+  Last = 1,
+  Both = 2
+}
+
+export enum ProvisionBreakFeeElection {
+  FlatFee = 0,
+  AmortizedFee = 1,
+  FundingFee = 2,
+  FlatAndFundingFee = 3,
+  AmortizedAndFundingFee = 4
+}
+
+export enum ReturnRateDateMode {
+  PriceValuation = 0,
+  DividendValuation = 1
+}
+
+export enum ReturnRatePriceSequence {
+  Initial = 0,
+  Interim = 1,
+  Final = 2
+}
+
+export enum ReturnRateQuoteTimeType {
+  Open = 0,
+  OfficialSettlPx = 1,
+  Xetra = 2,
+  Close = 3,
+  DerivativesClose = 4,
+  High = 5,
+  Low = 6,
+  AsSpecifiedInMasterConfirmation = 7
+}
+
+export enum ReturnRateValuationPriceOption {
+  None = 0,
+  FuturesPrice = 1,
+  OptionsPrice = 2
+}
+
+export enum ReturnRatePriceBasis {
+  Gross = 0,
+  Net = 1,
+  Accrued = 2,
+  CleanNet = 3
+}
+
+export enum ReturnRatePriceType {
+  AbsoluteTerms = 0,
+  PercentageOfNotional = 1
+}
+
+export enum StreamNotionalAdjustments {
+  Execution = 0,
+  PortfolioRebalancing = 1,
+  Standard = 2
+}
+
+export enum BatchProcessMode {
+  Update = 0,
+  Snapshot = 1
 }
 

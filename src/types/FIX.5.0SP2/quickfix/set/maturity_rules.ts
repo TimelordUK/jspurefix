@@ -1,8 +1,5 @@
+import { IMaturityRulesNoMaturityRules } from './maturity_rules_no_maturity_rules'
+
 export interface IMaturityRules {
-  MaturityRuleID?: string// [1] 1222 (String)
-  MaturityMonthYearFormat?: number// [2] 1303 (Int)
-  MaturityMonthYearIncrementUnits?: number// [3] 1302 (Int)
-  StartMaturityMonthYear?: string// [4] 1241 (String)
-  EndMaturityMonthYear?: string// [5] 1226 (String)
-  MaturityMonthYearIncrement?: number// [6] 1229 (Int)
+  NoMaturityRules?: IMaturityRulesNoMaturityRules[]// [1] MaturityRuleID.1222, MaturityMonthYearFormat.1303 .. MaturityMonthYearIncrement.1229
 }

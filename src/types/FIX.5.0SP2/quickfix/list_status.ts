@@ -2,16 +2,6 @@ import { IStandardHeader } from './set/standard_header'
 import { IOrdListStatGrp } from './set/ord_list_stat_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-****************************************************************
-* The list status message is issued as the response to a List  *
-* Status Request message sent in an unsolicited fashion by the *
-* sell-side. It indicates the current state of the orders      *
-* within the list as they exist at the broker's site. This     *
-* message may also be used to respond to the List Cancel       *
-* Request.                                                     *
-****************************************************************
-*/
 export interface IListStatus {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   ListID: string// [2] 66 (String)
@@ -22,11 +12,11 @@ export interface IListStatus {
   ListRejectReason?: number// [7] 1386 (Int)
   RptSeq: number// [8] 83 (Int)
   ListStatusText?: string// [9] 444 (String)
-  EncodedListStatusTextLen?: number// [10] 445 (Int)
+  EncodedListStatusTextLen?: number// [10] 445 (Length)
   EncodedListStatusText?: Buffer// [11] 446 (RawData)
   TransactTime?: Date// [12] 60 (UtcTimestamp)
   TotNoOrders: number// [13] 68 (Int)
   LastFragment?: boolean// [14] 893 (Boolean)
-  OrdListStatGrp: IOrdListStatGrp[]// [15] ClOrdID.11, OrderID.37 .. EncodedText.355
+  OrdListStatGrp?: IOrdListStatGrp// [15] NoOrders.73, ClOrdID.11 .. EncodedText.355
   StandardTrailer: IStandardTrailer// [16] SignatureLength.93, Signature.89, CheckSum.10
 }

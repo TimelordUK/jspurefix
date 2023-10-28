@@ -1,16 +1,8 @@
 import { IStandardHeader } from './set/standard_header'
 import { IApplIDRequestAckGrp } from './set/appl_id_request_ack_grp'
-import { IStandardTrailer } from './set/standard_trailer'
 import { IParties } from './set/parties'
+import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-****************************************************************
-* This message is used to acknowledge an Application Message   *
-* Request providing a status on the request (i.e. whether      *
-* successful or not). This message does not provide the actual *
-* content of the messages to be resent.                        *
-****************************************************************
-*/
 export interface IApplicationMessageRequestAck {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   ApplResponseID: string// [2] 1353 (String)
@@ -18,10 +10,10 @@ export interface IApplicationMessageRequestAck {
   ApplReqType?: number// [4] 1347 (Int)
   ApplResponseType?: number// [5] 1348 (Int)
   ApplTotalMessageCount?: number// [6] 1349 (Int)
-  ApplIDRequestAckGrp?: IApplIDRequestAckGrp[]// [7] RefApplID.1355, ApplBegSeqNum.1182 .. RefApplReqID.1433
-  Text?: string// [8] 58 (String)
-  EncodedTextLen?: number// [9] 354 (Int)
-  EncodedText?: Buffer// [10] 355 (RawData)
-  StandardTrailer: IStandardTrailer// [11] SignatureLength.93, Signature.89, CheckSum.10
-  Parties?: IParties[]// [12] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
+  ApplIDRequestAckGrp?: IApplIDRequestAckGrp// [7] NoApplIDs.1351, RefApplID.1355 .. NestedPartySubIDType.805
+  Parties?: IParties// [8] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Text?: string// [9] 58 (String)
+  EncodedTextLen?: number// [10] 354 (Length)
+  EncodedText?: Buffer// [11] 355 (RawData)
+  StandardTrailer: IStandardTrailer// [12] SignatureLength.93, Signature.89, CheckSum.10
 }

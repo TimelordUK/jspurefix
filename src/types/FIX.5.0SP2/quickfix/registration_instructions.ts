@@ -4,27 +4,20 @@ import { IRgstDtlsGrp } from './set/rgst_dtls_grp'
 import { IRgstDistInstGrp } from './set/rgst_dist_inst_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-****************************************************************
-* The Registration Instructions message type may be used by    *
-* institutions or retail intermediaries wishing to             *
-* electronically submit registration information to a broker   *
-* or fund manager (for CIV) for an order or for an allocation. *
-****************************************************************
-*/
 export interface IRegistrationInstructions {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   RegistID: string// [2] 513 (String)
-  RegistTransType: string// [3] 514 (String)
-  RegistRefID: string// [4] 508 (String)
-  ClOrdID?: string// [5] 11 (String)
-  Parties?: IParties[]// [6] PartyID.448, PartyIDSource.447 .. PartySubIDType.803
-  Account?: string// [7] 1 (String)
-  AcctIDSource?: number// [8] 660 (Int)
-  RegistAcctType?: string// [9] 493 (String)
-  TaxAdvantageType?: number// [10] 495 (Int)
-  OwnershipType?: string// [11] 517 (String)
-  RgstDtlsGrp?: IRgstDtlsGrp[]// [12] RegistDtls.509, RegistEmail.511 .. InvestorCountryOfResidence.475
-  RgstDistInstGrp?: IRgstDistInstGrp[]// [13] DistribPaymentMethod.477, DistribPercentage.512 .. CashDistribAgentAcctName.502
-  StandardTrailer: IStandardTrailer// [14] SignatureLength.93, Signature.89, CheckSum.10
+  ClearingBusinessDate?: Date// [3] 715 (LocalDate)
+  RegistTransType: string// [4] 514 (String)
+  RegistRefID: string// [5] 508 (String)
+  ClOrdID?: string// [6] 11 (String)
+  Parties?: IParties// [7] NoPartyIDs.453, PartyID.448 .. PartySubIDType.803
+  Account?: string// [8] 1 (String)
+  AcctIDSource?: number// [9] 660 (Int)
+  RegistAcctType?: string// [10] 493 (String)
+  TaxAdvantageType?: number// [11] 495 (Int)
+  OwnershipType?: string// [12] 517 (String)
+  RgstDtlsGrp?: IRgstDtlsGrp// [13] NoRegistDtls.473, RegistDtls.509 .. InvestorCountryOfResidence.475
+  RgstDistInstGrp?: IRgstDistInstGrp// [14] NoDistribInsts.510, DistribPaymentMethod.477 .. CashDistribAgentAcctName.502
+  StandardTrailer: IStandardTrailer// [15] SignatureLength.93, Signature.89, CheckSum.10
 }

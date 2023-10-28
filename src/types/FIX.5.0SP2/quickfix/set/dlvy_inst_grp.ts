@@ -1,7 +1,5 @@
-import { ISettlParties } from './settl_parties'
+import { IDlvyInstGrpNoDlvyInst } from './dlvy_inst_grp_no_dlvy_inst'
 
 export interface IDlvyInstGrp {
-  SettlInstSource?: string// [1] 165 (String)
-  DlvyInstType?: string// [2] 787 (String)
-  SettlParties?: ISettlParties[]// [3] SettlPartyID.782, SettlPartyIDSource.783 .. SettlPartySubIDType.786
+  NoDlvyInst?: IDlvyInstGrpNoDlvyInst[]// [1] SettlInstSource.165, DlvyInstType.787 .. SettlPartySubIDType.786
 }

@@ -1,6 +1,5 @@
-import { ISettlParties } from './settl_parties'
+import { ISettlDetailsNoSettlDetails } from './settl_details_no_settl_details'
 
 export interface ISettlDetails {
-  SettlObligSource?: string// [1] 1164 (String)
-  SettlParties?: ISettlParties[]// [2] SettlPartyID.782, SettlPartyIDSource.783 .. SettlPartySubIDType.786
+  NoSettlDetails?: ISettlDetailsNoSettlDetails[]// [1] SettlObligSource.1164, StandInstDbType.169 .. SettlPartySubIDType.786
 }

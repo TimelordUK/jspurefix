@@ -1,4 +1,5 @@
+import { IAttrbGrpNoInstrAttrib } from './attrb_grp_no_instr_attrib'
+
 export interface IAttrbGrp {
-  InstrAttribType?: number// [1] 871 (Int)
-  InstrAttribValue?: string// [2] 872 (String)
+  NoInstrAttrib?: IAttrbGrpNoInstrAttrib[]// [1] InstrAttribType.871, InstrAttribValue.872
 }

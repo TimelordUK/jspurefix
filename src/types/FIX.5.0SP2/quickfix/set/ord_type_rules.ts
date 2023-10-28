@@ -1,3 +1,5 @@
+import { IOrdTypeRulesNoOrdTypeRules } from './ord_type_rules_no_ord_type_rules'
+
 export interface IOrdTypeRules {
-  OrdType?: string// [1] 40 (String)
+  NoOrdTypeRules?: IOrdTypeRulesNoOrdTypeRules[]// [1] OrdType.40
 }

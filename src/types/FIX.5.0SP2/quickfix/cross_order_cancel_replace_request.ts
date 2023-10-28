@@ -15,71 +15,72 @@ import { IDiscretionInstructions } from './set/discretion_instructions'
 import { IStrategyParametersGrp } from './set/strategy_parameters_grp'
 import { IStandardTrailer } from './set/standard_trailer'
 
-/*
-***************************************************************
-* Used to modify a cross order previously submitted using the *
-* New Order - Cross message. See Order Cancel Replace Request *
-* for details concerning message usage.                       *
-***************************************************************
-*/
 export interface ICrossOrderCancelReplaceRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
   OrderID?: string// [2] 37 (String)
-  CrossID: string// [3] 548 (String)
-  OrigCrossID: string// [4] 551 (String)
-  HostCrossID?: string// [5] 961 (String)
-  CrossType: number// [6] 549 (Int)
-  CrossPrioritization: number// [7] 550 (Int)
-  RootParties?: IRootParties[]// [8] RootPartyID.1117, RootPartyIDSource.1118 .. RootPartySubIDType.1122
-  SideCrossOrdModGrp: ISideCrossOrdModGrp[]// [9] Side.54, OrigClOrdID.41 .. SideTimeInForce.962
-  Instrument: IInstrument// [10] Symbol.55, SymbolSfx.65 .. ComplexEventEndTime.1496
-  UndInstrmtGrp?: IUndInstrmtGrp// [11] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingDetachmentPoint.1460
-  InstrmtLegGrp?: IInstrmtLegGrp// [12] NoLegs.555, LegSymbol.600 .. LegFlowScheduleType.1440
-  SettlType?: string// [13] 63 (String)
-  SettlDate?: Date// [14] 64 (LocalDate)
-  HandlInst?: string// [15] 21 (String)
-  ExecInst?: string// [16] 18 (String)
-  MinQty?: number// [17] 110 (Float)
-  MatchIncrement?: number// [18] 1089 (Float)
-  MaxPriceLevels?: number// [19] 1090 (Int)
-  DisplayInstruction?: IDisplayInstruction// [20] DisplayQty.1138, SecondaryDisplayQty.1082 .. RefreshQty.1088
-  MaxFloor?: number// [21] 111 (Float)
-  ExDestination?: string// [22] 100 (String)
-  ExDestinationIDSource?: string// [23] 1133 (String)
-  TrdgSesGrp?: ITrdgSesGrp[]// [24] TradingSessionID.336, TradingSessionSubID.625
-  ProcessCode?: string// [25] 81 (String)
-  PrevClosePx?: number// [26] 140 (Float)
-  LocateReqd?: boolean// [27] 114 (Boolean)
-  TransactTime: Date// [28] 60 (UtcTimestamp)
-  TransBkdTime?: Date// [29] 483 (UtcTimestamp)
-  Stipulations?: IStipulations[]// [30] StipulationType.233, StipulationValue.234
-  OrdType: string// [31] 40 (String)
-  PriceType?: number// [32] 423 (Int)
-  Price?: number// [33] 44 (Float)
-  PriceProtectionScope?: string// [34] 1092 (String)
-  StopPx?: number// [35] 99 (Float)
-  TriggeringInstruction?: ITriggeringInstruction// [36] TriggerType.1100, TriggerAction.1101 .. TriggerTradingSessionSubID.1114
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [37] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
-  YieldData?: IYieldData// [38] YieldType.235, Yield.236 .. YieldRedemptionPriceType.698
-  Currency?: string// [39] 15 (String)
-  ComplianceID?: string// [40] 376 (String)
-  IOIID?: string// [41] 23 (String)
-  QuoteID?: string// [42] 117 (String)
-  TimeInForce?: string// [43] 59 (String)
-  EffectiveTime?: Date// [44] 168 (UtcTimestamp)
-  ExpireDate?: Date// [45] 432 (LocalDate)
-  ExpireTime?: Date// [46] 126 (UtcTimestamp)
-  GTBookingInst?: number// [47] 427 (Int)
-  MaxShow?: number// [48] 210 (Float)
-  PegInstructions?: IPegInstructions// [49] PegOffsetValue.211, PegPriceType.1094 .. PegSecurityDesc.1099
-  DiscretionInstructions?: IDiscretionInstructions// [50] DiscretionInst.388, DiscretionOffsetValue.389 .. DiscretionScope.846
-  TargetStrategy?: number// [51] 847 (Int)
-  StrategyParametersGrp?: IStrategyParametersGrp[]// [52] StrategyParameterName.958, StrategyParameterType.959, StrategyParameterValue.960
-  TargetStrategyParameters?: string// [53] 848 (String)
-  ParticipationRate?: number// [54] 849 (Float)
-  CancellationRights?: string// [55] 480 (String)
-  MoneyLaunderingStatus?: string// [56] 481 (String)
-  RegistID?: string// [57] 513 (String)
-  Designation?: string// [58] 494 (String)
-  StandardTrailer: IStandardTrailer// [59] SignatureLength.93, Signature.89, CheckSum.10
+  OrderRequestID?: number// [3] 2422 (Int)
+  CrossID: string// [4] 548 (String)
+  OrigCrossID: string// [5] 551 (String)
+  HostCrossID?: string// [6] 961 (String)
+  CrossType: number// [7] 549 (Int)
+  CrossPrioritization: number// [8] 550 (Int)
+  RootParties?: IRootParties// [9] NoRootPartyIDs.1116, RootPartyID.1117 .. RootPartySubIDType.1122
+  SideCrossOrdModGrp?: ISideCrossOrdModGrp// [10] NoSides.552, Side.54 .. SideTimeInForce.962
+  Instrument?: IInstrument// [11] Symbol.55, SymbolSfx.65 .. ExchangeLookAlike.2603
+  UndInstrmtGrp?: IUndInstrmtGrp// [12] NoUnderlyings.711, UnderlyingSymbol.311 .. UnderlyingInstrumentXID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp// [13] NoLegs.555, LegSymbol.600 .. LegMarginRatio.2508
+  SettlType?: string// [14] 63 (String)
+  SettlDate?: Date// [15] 64 (LocalDate)
+  HandlInst?: string// [16] 21 (String)
+  ExecInst?: string// [17] 18 (String)
+  MinQty?: number// [18] 110 (Float)
+  MinQtyMethod?: number// [19] 1822 (Int)
+  MatchIncrement?: number// [20] 1089 (Float)
+  MaxPriceLevels?: number// [21] 1090 (Int)
+  DisplayInstruction?: IDisplayInstruction// [22] DisplayQty.1138, SecondaryDisplayQty.1082 .. RefreshQty.1088
+  MaxFloor?: number// [23] 111 (Float)
+  MarketSegmentID?: string// [24] 1300 (String)
+  ExDestination?: string// [25] 100 (String)
+  ExDestinationIDSource?: string// [26] 1133 (String)
+  TrdgSesGrp?: ITrdgSesGrp// [27] NoTradingSessions.386, TradingSessionID.336, TradingSessionSubID.625
+  ProcessCode?: string// [28] 81 (String)
+  PrevClosePx?: number// [29] 140 (Float)
+  LocateReqd?: boolean// [30] 114 (Boolean)
+  TransactTime: Date// [31] 60 (UtcTimestamp)
+  TransBkdTime?: Date// [32] 483 (UtcTimestamp)
+  Stipulations?: IStipulations// [33] NoStipulations.232, StipulationType.233, StipulationValue.234
+  OrdType: string// [34] 40 (String)
+  PriceType?: number// [35] 423 (Int)
+  Price?: number// [36] 44 (Float)
+  PriceProtectionScope?: string// [37] 1092 (String)
+  StopPx?: number// [38] 99 (Float)
+  TriggeringInstruction?: ITriggeringInstruction// [39] TriggerType.1100, TriggerAction.1101 .. TriggerTradingSessionSubID.1114
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [40] Spread.218, BenchmarkCurveCurrency.220 .. BenchmarkSecurityIDSource.761
+  YieldData?: IYieldData// [41] YieldType.235, Yield.236 .. YieldRedemptionPriceType.698
+  Currency?: string// [42] 15 (String)
+  CurrencyCodeSource?: string// [43] 2897 (String)
+  ComplianceID?: string// [44] 376 (String)
+  IOIID?: string// [45] 23 (String)
+  QuoteID?: string// [46] 117 (String)
+  TimeInForce?: string// [47] 59 (String)
+  EffectiveTime?: Date// [48] 168 (UtcTimestamp)
+  ExpireDate?: Date// [49] 432 (LocalDate)
+  ExpireTime?: Date// [50] 126 (UtcTimestamp)
+  GTBookingInst?: number// [51] 427 (Int)
+  ExposureDuration?: number// [52] 1629 (Int)
+  ExposureDurationUnit?: number// [53] 1916 (Int)
+  TradingCapacity?: number// [54] 1815 (Int)
+  MaxShow?: number// [55] 210 (Float)
+  PegInstructions?: IPegInstructions// [56] PegOffsetValue.211, PegPriceType.1094 .. PegSecurityDesc.1099
+  DiscretionInstructions?: IDiscretionInstructions// [57] DiscretionInst.388, DiscretionOffsetValue.389 .. DiscretionScope.846
+  TargetStrategy?: number// [58] 847 (Int)
+  StrategyParametersGrp?: IStrategyParametersGrp// [59] NoStrategyParameters.957, StrategyParameterName.958 .. StrategyParameterValue.960
+  TargetStrategyParameters?: string// [60] 848 (String)
+  ParticipationRate?: number// [61] 849 (Float)
+  CancellationRights?: string// [62] 480 (String)
+  MoneyLaunderingStatus?: string// [63] 481 (String)
+  RegistID?: string// [64] 513 (String)
+  Designation?: string// [65] 494 (String)
+  ThrottleInst?: number// [66] 1685 (Int)
+  StandardTrailer: IStandardTrailer// [67] SignatureLength.93, Signature.89, CheckSum.10
 }

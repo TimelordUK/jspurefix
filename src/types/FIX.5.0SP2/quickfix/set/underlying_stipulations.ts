@@ -1,11 +1,5 @@
-/*
-***********************************************************
-* The UnderlyingStipulations component block has the same *
-* usage as the Stipulations component block, but for an   *
-* underlying security.                                    *
-***********************************************************
-*/
+import { IUnderlyingStipulationsNoUnderlyingStips } from './underlying_stipulations_no_underlying_stips'
+
 export interface IUnderlyingStipulations {
-  UnderlyingStipType?: string// [1] 888 (String)
-  UnderlyingStipValue?: string// [2] 889 (String)
+  NoUnderlyingStips?: IUnderlyingStipulationsNoUnderlyingStips[]// [1] UnderlyingStipType.888, UnderlyingStipValue.889
 }

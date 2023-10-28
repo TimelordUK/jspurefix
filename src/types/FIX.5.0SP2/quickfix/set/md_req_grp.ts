@@ -1,3 +1,5 @@
+import { IMDReqGrpNoMDEntryTypes } from './md_req_grp_no_md_entry_types'
+
 export interface IMDReqGrp {
-  MDEntryType: string// [1] 269 (String)
+  NoMDEntryTypes?: IMDReqGrpNoMDEntryTypes[]// [1] MDEntryType.269
 }

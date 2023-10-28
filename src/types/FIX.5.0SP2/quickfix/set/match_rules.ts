@@ -1,4 +1,5 @@
+import { IMatchRulesNoMatchRules } from './match_rules_no_match_rules'
+
 export interface IMatchRules {
-  MatchAlgorithm?: string// [1] 1142 (String)
-  MatchType?: string// [2] 574 (String)
+  NoMatchRules?: IMatchRulesNoMatchRules[]// [1] MatchAlgorithm.1142, MatchType.574 .. CustomerPriority.2570
 }

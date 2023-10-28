@@ -1,4 +1,5 @@
+import { ISecAltIDGrpNoSecurityAltID } from './sec_alt_id_grp_no_security_alt_id'
+
 export interface ISecAltIDGrp {
-  SecurityAltID?: string// [1] 455 (String)
-  SecurityAltIDSource?: string// [2] 456 (String)
+  NoSecurityAltID?: ISecAltIDGrpNoSecurityAltID[]// [1] SecurityAltID.455, SecurityAltIDSource.456, SymbolPositionNumber.2957
 }

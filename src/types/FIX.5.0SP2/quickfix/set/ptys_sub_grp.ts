@@ -1,4 +1,5 @@
+import { IPtysSubGrpNoPartySubIDs } from './ptys_sub_grp_no_party_sub_i_ds'
+
 export interface IPtysSubGrp {
-  PartySubID?: string// [1] 523 (String)
-  PartySubIDType?: number// [2] 803 (Int)
+  NoPartySubIDs?: IPtysSubGrpNoPartySubIDs[]// [1] PartySubID.523, PartySubIDType.803
 }
