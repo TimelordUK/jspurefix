@@ -168,7 +168,7 @@ export class QuickFixXmlFileParser extends FixParser {
   public async parse (): Promise<FixDefinitions> {
     return await new Promise<FixDefinitions>(async (resolve, reject) => {
       try {
-        while (this.state.numberPasses < this.state.maxIterations) {
+        while (this.state.parseState !== ParseState.End) {
           await this.onePass()
         }
         this.encloseMessages()

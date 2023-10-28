@@ -29,6 +29,10 @@ export class ParseProgress {
         }
         break
       }
+      case ParseState.Messages: {
+        this.parseState = ParseState.End
+        break
+      }
     }
   }
 }
