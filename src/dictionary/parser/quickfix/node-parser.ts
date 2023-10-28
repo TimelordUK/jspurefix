@@ -1,12 +1,13 @@
 import { ContainedGroupField, ContainedSimpleField, ContainedComponentField } from '../../contained'
-import { FixDefinitions, GroupFieldDefinition, SimpleFieldDefinition, ComponentFieldDefinition } from '../../definition'
+import { GroupFieldDefinition, SimpleFieldDefinition, ComponentFieldDefinition } from '../../definition'
 import { ParseContext } from './parse-context'
 import { ISaxNode } from '../../sax-node'
+import { ParseProgress } from './parse-progress'
 
 export abstract class NodeParser {
   protected readonly parseContexts: ParseContext[] = []
 
-  protected constructor (public readonly definitions: FixDefinitions, public passes: number) {
+  protected constructor (protected readonly progress: ParseProgress) {
   }
 
   public abstract open (line: number, node: ISaxNode): void
@@ -20,7 +21,7 @@ export abstract class NodeParser {
         throw new Error(`simple field ${node.name} has no parent on which to add.`)
       }
       const fieldName: string = node.attributes.name
-      const fieldDefinition: SimpleFieldDefinition | null = this.definitions.simple.get(fieldName)
+      const fieldDefinition: SimpleFieldDefinition | null = this.progress.definitions.simple.get(fieldName)
       if (fieldDefinition == null) {
         throw new Error(`simple field ${fieldName} has no declaration in dictionary.`)
       }
@@ -35,14 +36,16 @@ export abstract class NodeParser {
     if (parent == null) {
       throw new Error(`component ${node.name} has no parent on which to add.`)
     }
-    const fieldDef: ComponentFieldDefinition | null = this.definitions.component.get(componentName)
+    const fieldDef: ComponentFieldDefinition | null = this.progress.definitions.component.get(componentName)
     if (fieldDef != null) {
       const containedField: ContainedComponentField =
                 new ContainedComponentField(fieldDef, parent?.set?.fields?.length ?? 0, parent.required)
       parent?.set?.add(containedField)
     } else {
-      if (this.passes >= 4) {
+      if (this.progress.numberPasses >= this.progress.maxIterations) {
         throw new Error(`field ${node.name} includes unknown component ${componentName}.`)
+      } else {
+        this.progress.cacheMisses++
       }
     }
   }
@@ -69,7 +72,7 @@ export abstract class NodeParser {
     if (!node.isSelfClosing) {
       // a group should have a field that matches its name
       const groupName: string = node.attributes.name
-      const noOfField: SimpleFieldDefinition | null = this.definitions.simple.get(groupName) ?? null
+      const noOfField: SimpleFieldDefinition | null = this.progress.definitions.simple.get(groupName) ?? null
       if (noOfField == null) {
         const msg: string = `group ${groupName} has no field defined.`
         throw new Error(msg)

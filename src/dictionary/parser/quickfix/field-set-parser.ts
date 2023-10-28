@@ -2,10 +2,11 @@ import { ComponentFieldDefinition, FixDefinitions } from '../../definition'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
 import { ISaxNode } from '../../sax-node'
+import { ParseProgress } from './parse-progress'
 
 export class FieldSetParser extends NodeParser {
-  constructor (definitions: FixDefinitions, public passes: number) {
-    super(definitions, passes)
+  constructor (protected readonly progress: ParseProgress) {
+    super(progress)
   }
 
   public open (line: number, node: ISaxNode): void {
@@ -64,7 +65,7 @@ export class FieldSetParser extends NodeParser {
         }
         const asComponent: ComponentFieldDefinition | null = latest.asComponent() ?? null
         if (asComponent != null) {
-          this.definitions.addComponentFieldDef(asComponent)
+          this.progress.definitions.addComponentFieldDef(asComponent)
         } else {
           throw new Error(`latest not instance of component field ${latest.name} `)
         }

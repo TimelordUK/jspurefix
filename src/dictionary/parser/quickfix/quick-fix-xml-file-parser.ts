@@ -14,38 +14,19 @@ import { ISaxNode } from '../../sax-node'
 import { FixDefinitionSource } from '../../fix-definition-source'
 import { VersionUtil } from '../../version-util'
 import { ParseState } from './parse-state'
+import { ParseProgress } from './parse-progress'
 
 export class QuickFixXmlFileParser extends FixParser {
-  public parseState: ParseState = ParseState.Begin
-  public numberPasses: number = 0
-  public definitions: FixDefinitions
   private readonly singlePass = promisify(QuickFixXmlFileParser.subscribe)
+  private readonly state: ParseProgress = new ParseProgress()
 
   constructor (public readonly xmlPath: string, public getLogger: GetJsFixLogger) {
     super()
   }
 
-  private static subscribe (instance: QuickFixXmlFileParser, saxStream: SAXStream, done: IDictDoneCb): void {
+  private static subscribe (progress: ParseProgress, saxStream: SAXStream, done: IDictDoneCb): void {
     let parser: NodeParser | null
-
-    instance.numberPasses++
-    switch (instance.parseState) {
-      case ParseState.Begin: {
-        instance.parseState = ParseState.FieldDefinitions
-        break
-      }
-      case ParseState.FieldDefinitions: {
-        instance.parseState = ParseState.Components
-        break
-      }
-      case ParseState.Components: {
-        if (instance.numberPasses > 4) {
-          instance.parseState = ParseState.Messages
-        }
-        break
-      }
-    }
-
+    progress.next()
     const saxParser: SAXParser = saxStream._parser
 
     saxStream.on('error', (e: Error) => {
@@ -73,12 +54,12 @@ export class QuickFixXmlFileParser extends FixParser {
 
       switch (saxNode.name) {
         case 'fix': {
-          switch (instance.parseState) {
+          switch (progress.parseState) {
             case ParseState.FieldDefinitions: {
               const major = saxNode.attributes.major
               const minor = saxNode.attributes.major
               const description: string = `FIX.${major}.${minor}`
-              instance.definitions = new FixDefinitions(FixDefinitionSource.QuickFix, VersionUtil.resolve(description))
+              progress.definitions = new FixDefinitions(FixDefinitionSource.QuickFix, VersionUtil.resolve(description))
               break
             }
           }
@@ -86,9 +67,9 @@ export class QuickFixXmlFileParser extends FixParser {
         }
 
         case 'fields': {
-          switch (instance.parseState) {
+          switch (progress.parseState) {
             case ParseState.FieldDefinitions: {
-              parser = new FieldDefinitionParser(instance.definitions, instance.numberPasses)
+              parser = new FieldDefinitionParser(progress)
               break
             }
             default: {
@@ -99,9 +80,9 @@ export class QuickFixXmlFileParser extends FixParser {
         }
 
         case 'messages': {
-          switch (instance.parseState) {
+          switch (progress.parseState) {
             case ParseState.Messages: {
-              parser = new MessageParser(instance.definitions, instance.numberPasses)
+              parser = new MessageParser(progress)
               break
             }
 
@@ -115,9 +96,9 @@ export class QuickFixXmlFileParser extends FixParser {
           // can have a group containing components which contain themselves components of groups
           // each step will build forward references to a deeper level to ensure final messages
           // have all dependencies correctly defined.
-          switch (instance.parseState) {
+          switch (progress.parseState) {
             case ParseState.Components:
-              parser = new FieldSetParser(instance.definitions, instance.numberPasses)
+              parser = new FieldSetParser(progress)
               break
           }
           break
@@ -134,7 +115,7 @@ export class QuickFixXmlFileParser extends FixParser {
         }
 
         case 'message': {
-          switch (instance.parseState) {
+          switch (progress.parseState) {
             case ParseState.Messages: {
               if (parser != null) {
                 parser.open(saxParser.line, saxNode)
@@ -150,9 +131,9 @@ export class QuickFixXmlFileParser extends FixParser {
 
         case 'header':
         case 'trailer': {
-          switch (instance.parseState) {
+          switch (progress.parseState) {
             case ParseState.Messages: {
-              parser = new FieldSetParser(instance.definitions, instance.numberPasses)
+              parser = new FieldSetParser(progress)
               parser.open(saxParser.line, node)
               break
             }
@@ -165,18 +146,18 @@ export class QuickFixXmlFileParser extends FixParser {
     saxStream.on('ready', () => {
       if (done) {
         parser = null
-        done(undefined, instance.definitions)
+        done(undefined, progress.definitions)
       }
     })
   }
 
   private encloseMessages (): void {
-    const messages = this.definitions.message
+    const messages = this.state.definitions.message
     const keys = messages.keys()
     const trailerName = 'StandardTrailer'
     keys.forEach(k => {
       const message = messages.get(k)
-      const trailer = this.definitions.component.get(trailerName)
+      const trailer = this.state.definitions.component.get(trailerName)
       if (trailer && !message?.components.containsKey(trailerName)) {
         const contained = new ContainedComponentField(trailer, message?.fields?.length ?? 0, true)
         message?.add(contained)
@@ -187,13 +168,11 @@ export class QuickFixXmlFileParser extends FixParser {
   public async parse (): Promise<FixDefinitions> {
     return await new Promise<FixDefinitions>(async (resolve, reject) => {
       try {
-        await this.onePass() // first fetch all field definitions
-        await this.onePass() // first pass of components, will not know about forward components.
-        await this.onePass() // second pass of components top level with forward references replace
-        await this.onePass() // third pass of components all fully resolved i.e. pick up versions from pass above
-        await this.onePass() // lastly messages with all dependencies
+        while (this.state.numberPasses < this.state.maxIterations) {
+          await this.onePass()
+        }
         this.encloseMessages()
-        resolve(this.definitions)
+        resolve(this.state.definitions)
       } catch (e) {
         reject(e)
       }
@@ -204,6 +183,6 @@ export class QuickFixXmlFileParser extends FixParser {
     const pass: fs.ReadStream = fs.createReadStream(this.xmlPath)
     const saxStream: SAXStream = require('sax').createStream(true, {})
     pass.pipe(saxStream)
-    return await this.singlePass(this, saxStream)
+    return await this.singlePass(this.state, saxStream)
   }
 }
