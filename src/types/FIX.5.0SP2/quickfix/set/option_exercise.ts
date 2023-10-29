@@ -16,7 +16,7 @@ export interface IOptionExercise {
   ExerciseSplitTicketIndicator?: boolean// [10] 41115 (Boolean)
   SettlMethodElectingPartySide?: number// [11] 42590 (Int)
   SettlMethodElectionDate?: ISettlMethodElectionDate// [12] SettlMethodElectionDateUnadjusted.42777, SettlMethodElectionDateBusinessDayConvention.42778 .. SettlMethodElectionDateAdjusted.42783
-  OptionExerciseDates?: IOptionExerciseDates// [13] OptionExerciseBusinessDayConvention.41118, OptionExerciseEarliestDateOffsetDayType.41119 .. OptionExerciseTimeBusinessCenter.41136
-  OptionExerciseExpiration?: IOptionExerciseExpiration// [14] OptionExerciseExpirationDateBusinessDayConvention.41142, OptionExerciseExpirationDateRelativeTo.41143 .. OptionExerciseExpirationTimeBusinessCenter.41151
+  OptionExerciseDates?: IOptionExerciseDates// [13] OptionExerciseBusinessDayConvention.41118, OptionExerciseBusinessCenterGrp.41116 .. OptionExerciseTimeBusinessCenter.41136
+  OptionExerciseExpiration?: IOptionExerciseExpiration// [14] OptionExerciseExpirationDateBusinessDayConvention.41142, OptionExerciseExpirationDateBusinessCenterGrp.41140 .. OptionExerciseExpirationTimeBusinessCenter.41151
   OptionExerciseMakeWholeProvision?: IOptionExerciseMakeWholeProvision// [15] MakeWholeDate.42591, MakeWholeAmount.42592 .. MakeWholeInterpolationMethod.42597
 }

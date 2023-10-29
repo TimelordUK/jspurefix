@@ -1,0 +1,5 @@
+import { IUnderlyingProvisionPtysSubGrpNoUnderlyingProvisionPartySubIDs } from './underlying_provision_ptys_sub_grp_no_underlying_provision_party_sub_i_ds'
+
+export interface IUnderlyingProvisionPtysSubGrp {
+  NoUnderlyingProvisionPartySubIDs?: IUnderlyingProvisionPtysSubGrpNoUnderlyingProvisionPartySubIDs[]// [1] UnderlyingProvisionPartySubID.42178, UnderlyingProvisionPartySubIDType.42179
+}

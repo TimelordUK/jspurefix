@@ -40,5 +40,5 @@ export interface ILegProvisionGrpNoLegProvisions {
   LegProvisionText?: string// [30] 40472 (String)
   EncodedLegProvisionTextLen?: number// [31] 40980 (Length)
   EncodedLegProvisionText?: Buffer// [32] 40981 (RawData)
-  LegProvisionParties?: ILegProvisionParties// [33] NoLegProvisionPartyIDs.40533, LegProvisionPartyID.40534 .. LegProvisionPartyRoleQualifier.2380
+  LegProvisionParties?: ILegProvisionParties// [33] NoLegProvisionPartyIDs.40533, LegProvisionPartyID.40534 .. LegProvisionPartySubIDType.40539
 }

@@ -16,7 +16,7 @@ export interface ILegOptionExercise {
   LegExerciseSplitTicketIndicator?: boolean// [10] 41490 (Boolean)
   LegSettlMethodElectingPartySide?: number// [11] 42391 (Int)
   LegSettlMethodElectionDate?: ILegSettlMethodElectionDate// [12] LegSettlMethodElectionDateUnadjusted.42574, LegSettlMethodElectionDateBusinessDayConvention.42575 .. LegSettlMethodElectionDateAdjusted.42580
-  LegOptionExerciseDates?: ILegOptionExerciseDates// [13] LegOptionExerciseBusinessDayConvention.41493, LegOptionExerciseEarliestDateOffsetDayType.41494 .. LegOptionExerciseTimeBusinessCenter.41511
-  LegOptionExerciseExpiration?: ILegOptionExerciseExpiration// [14] LegOptionExerciseExpirationDateBusinessDayConvention.41517, LegOptionExerciseExpirationDateRelativeTo.41518 .. LegOptionExerciseExpirationTimeBusinessCenter.41526
+  LegOptionExerciseDates?: ILegOptionExerciseDates// [13] LegOptionExerciseBusinessDayConvention.41493, LegOptionExerciseBusinessCenterGrp.41491 .. LegOptionExerciseTimeBusinessCenter.41511
+  LegOptionExerciseExpiration?: ILegOptionExerciseExpiration// [14] LegOptionExerciseExpirationDateBusinessDayConvention.41517, LegOptionExerciseExpirationDateBusinessCenterGrp.41515 .. LegOptionExerciseExpirationTimeBusinessCenter.41526
   LegOptionExerciseMakeWholeProvision?: ILegOptionExerciseMakeWholeProvision// [15] LegMakeWholeDate.42392, LegMakeWholeAmount.42393 .. LegMakeWholeInterpolationMethod.42398
 }

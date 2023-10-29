@@ -16,7 +16,7 @@ export interface IUnderlyingOptionExercise {
   UnderlyingExerciseSplitTicketIndicator?: boolean// [10] 41819 (Boolean)
   UnderlyingSettlMethodElectingPartySide?: number// [11] 42887 (Int)
   UnderlyingSettlMethodElectionDate?: IUnderlyingSettlMethodElectionDate// [12] UnderlyingSettlMethodElectionDateUnadjusted.43076, UnderlyingSettlMethodElectionDateBusinessDayConvention.43077 .. UnderlyingSettlMethodElectionDateAdjusted.43082
-  UnderlyingOptionExerciseDates?: IUnderlyingOptionExerciseDates// [13] UnderlyingOptionExerciseBusinessDayConvention.41822, UnderlyingOptionExerciseEarliestDateOffsetDayType.41823 .. UnderlyingOptionExerciseTimeBusinessCenter.41840
-  UnderlyingOptionExerciseExpiration?: IUnderlyingOptionExerciseExpiration// [14] UnderlyingOptionExerciseExpirationDateBusinessDayConvention.41846, UnderlyingOptionExerciseExpirationDateRelativeTo.41847 .. UnderlyingOptionExerciseExpirationTimeBusinessCenter.41855
+  UnderlyingOptionExerciseDates?: IUnderlyingOptionExerciseDates// [13] UnderlyingOptionExerciseBusinessDayConvention.41822, UnderlyingOptionExerciseBusinessCenterGrp.41820 .. UnderlyingOptionExerciseTimeBusinessCenter.41840
+  UnderlyingOptionExerciseExpiration?: IUnderlyingOptionExerciseExpiration// [14] UnderlyingOptionExerciseExpirationDateBusinessDayConvention.41846, UnderlyingOptionExerciseExpirationDateBusinessCenterGrp.41844 .. UnderlyingOptionExerciseExpirationTimeBusinessCenter.41855
   UnderlyingOptionExerciseMakeWholeProvision?: IUnderlyingOptionExerciseMakeWholeProvision// [15] UnderlyingMakeWholeDate.42888, UnderlyingMakeWholeAmount.42889 .. UnderlyingMakeWholeInterpolationMethod.42894
 }

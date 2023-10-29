@@ -26,7 +26,6 @@ export class QuickFixXmlFileParser extends FixParser {
 
   private static subscribe (progress: ParseProgress, saxStream: SAXStream, done: IDictDoneCb): void {
     let parser: NodeParser | null
-    progress.next()
     const saxParser: SAXParser = saxStream._parser
 
     saxStream.on('error', (e: Error) => {
@@ -160,6 +159,7 @@ export class QuickFixXmlFileParser extends FixParser {
       const trailer = this.state.definitions.component.get(trailerName)
       if (trailer && !message?.components.containsKey(trailerName)) {
         const contained = new ContainedComponentField(trailer, message?.fields?.length ?? 0, true)
+        this.state.newAdds++
         message?.add(contained)
       }
     })
@@ -169,7 +169,10 @@ export class QuickFixXmlFileParser extends FixParser {
     return await new Promise<FixDefinitions>(async (resolve, reject) => {
       try {
         while (this.state.parseState !== ParseState.End) {
+          this.state.reset()
           await this.onePass()
+          this.state.next()
+          //console.log(`${this.state.toString()}`)
         }
         this.encloseMessages()
         resolve(this.state.definitions)

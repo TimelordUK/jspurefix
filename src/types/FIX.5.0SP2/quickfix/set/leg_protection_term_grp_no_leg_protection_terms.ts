@@ -11,7 +11,7 @@ export interface ILegProtectionTermGrpNoLegProtectionTerms {
   LegProtectionTermStandardSources?: boolean// [6] 41623 (Boolean)
   LegProtectionTermEventMinimumSources?: number// [7] 41624 (Int)
   LegProtectionTermEventNewsSourceGrp?: ILegProtectionTermEventNewsSourceGrp// [8] NoLegProtectionTermEventNewsSources.41614, LegProtectionTermEventNewsSource.41615
-  LegProtectionTermEventGrp?: ILegProtectionTermEventGrp// [9] NoLegProtectionTermEvents.41625, LegProtectionTermEventType.41626 .. LegProtectionTermEventRateSource.41632
+  LegProtectionTermEventGrp?: ILegProtectionTermEventGrp// [9] NoLegProtectionTermEvents.41625, LegProtectionTermEventType.41626 .. LegProtectionTermEventQualifier.41634
   LegProtectionTermObligationGrp?: ILegProtectionTermObligationGrp// [10] NoLegProtectionTermObligations.41635, LegProtectionTermObligationType.41636, LegProtectionTermObligationValue.41637
   LegProtectionTermXID?: string// [11] 41617 (String)
 }

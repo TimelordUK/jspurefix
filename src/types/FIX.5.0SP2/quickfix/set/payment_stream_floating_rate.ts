@@ -1,3 +1,10 @@
+import { IPaymentStreamPricingBusinessCenterGrp } from './payment_stream_pricing_business_center_grp'
+import { IPaymentStreamPricingDayGrp } from './payment_stream_pricing_day_grp'
+import { IPaymentStreamPricingDateGrp } from './payment_stream_pricing_date_grp'
+import { IPaymentStreamFormula } from './payment_stream_formula'
+import { IDividendConditions } from './dividend_conditions'
+import { IReturnRateGrp } from './return_rate_grp'
+
 export interface IPaymentStreamFloatingRate {
   PaymentStreamRateIndex?: string// [1] 40789 (String)
   PaymentStreamRateIndexSource?: number// [2] 40790 (Int)
@@ -52,29 +59,35 @@ export interface IPaymentStreamFloatingRate {
   PaymentStreamPricingDayCount?: number// [51] 41215 (Int)
   PaymentStreamPricingBusinessCalendar?: string// [52] 41216 (String)
   PaymentStreamPricingBusinessDayConvention?: number// [53] 41217 (Int)
-  PaymentStreamInflationLagPeriod?: number// [54] 40808 (Int)
-  PaymentStreamInflationLagUnit?: string// [55] 40809 (String)
-  PaymentStreamInflationLagDayType?: number// [56] 40810 (Int)
-  PaymentStreamInflationInterpolationMethod?: number// [57] 40811 (Int)
-  PaymentStreamInflationIndexSource?: number// [58] 40812 (Int)
-  PaymentStreamInflationPublicationSource?: string// [59] 40813 (String)
-  PaymentStreamInflationInitialIndexLevel?: number// [60] 40814 (Float)
-  PaymentStreamInflationFallbackBondApplicable?: boolean// [61] 40815 (Boolean)
-  PaymentStreamFRADiscounting?: number// [62] 40816 (Int)
-  PaymentStreamUnderlierRefID?: string// [63] 42667 (String)
-  ReturnRateNotionalReset?: boolean// [64] 42668 (Boolean)
-  PaymentStreamLinkInitialLevel?: number// [65] 42669 (Float)
-  PaymentStreamLinkClosingLevelIndicator?: boolean// [66] 42670 (Boolean)
-  PaymentStreamLinkExpiringLevelIndicator?: boolean// [67] 42671 (Boolean)
-  PaymentStreamLinkEstimatedTradingDays?: number// [68] 42672 (Int)
-  PaymentStreamLinkStrikePrice?: number// [69] 42673 (Float)
-  PaymentStreamLinkStrikePriceType?: number// [70] 42674 (Int)
-  PaymentStreamLinkMaximumBoundary?: number// [71] 42675 (Float)
-  PaymentStreamLinkMinimumBoundary?: number// [72] 42676 (Float)
-  PaymentStreamLinkNumberOfDataSeries?: number// [73] 42677 (Int)
-  PaymentStreamVarianceUnadjustedCap?: number// [74] 42678 (Float)
-  PaymentStreamRealizedVarianceMethod?: number// [75] 42679 (Int)
-  PaymentStreamDaysAdjustmentIndicator?: boolean// [76] 42680 (Boolean)
-  PaymentStreamNearestExchangeContractRefID?: string// [77] 42681 (String)
-  PaymentStreamVegaNotionalAmount?: number// [78] 42682 (Float)
+  PaymentStreamPricingBusinessCenterGrp?: IPaymentStreamPricingBusinessCenterGrp// [54] NoPaymentStreamPricingBusinessCenters.41192, PaymentStreamPricingBusinessCenter.41193
+  PaymentStreamPricingDayGrp?: IPaymentStreamPricingDayGrp// [55] NoPaymentStreamPricingDays.41227, PaymentStreamPricingDayOfWeek.41228, PaymentStreamPricingDayNumber.41229
+  PaymentStreamPricingDateGrp?: IPaymentStreamPricingDateGrp// [56] NoPaymentStreamPricingDates.41224, PaymentStreamPricingDate.41225, PaymentStreamPricingDateType.41226
+  PaymentStreamInflationLagPeriod?: number// [57] 40808 (Int)
+  PaymentStreamInflationLagUnit?: string// [58] 40809 (String)
+  PaymentStreamInflationLagDayType?: number// [59] 40810 (Int)
+  PaymentStreamInflationInterpolationMethod?: number// [60] 40811 (Int)
+  PaymentStreamInflationIndexSource?: number// [61] 40812 (Int)
+  PaymentStreamInflationPublicationSource?: string// [62] 40813 (String)
+  PaymentStreamInflationInitialIndexLevel?: number// [63] 40814 (Float)
+  PaymentStreamInflationFallbackBondApplicable?: boolean// [64] 40815 (Boolean)
+  PaymentStreamFRADiscounting?: number// [65] 40816 (Int)
+  PaymentStreamUnderlierRefID?: string// [66] 42667 (String)
+  PaymentStreamFormula?: IPaymentStreamFormula// [67] PaymentStreamFormulaCurrency.42686, PaymentStreamFormulaCurrencyDeterminationMethod.42687 .. PaymentStreamFormulaImage.42653
+  DividendConditions?: IDividendConditions// [68] DividendReinvestmentIndicator.42245, DividendEntitlementEvent.42246 .. AllDividendsIndicator.42264
+  ReturnRateNotionalReset?: boolean// [69] 42668 (Boolean)
+  ReturnRateGrp?: IReturnRateGrp// [70] NoReturnRates.42735, ReturnRatePriceSequence.42736 .. ReturnRateFinalPriceFallback.42760
+  PaymentStreamLinkInitialLevel?: number// [71] 42669 (Float)
+  PaymentStreamLinkClosingLevelIndicator?: boolean// [72] 42670 (Boolean)
+  PaymentStreamLinkExpiringLevelIndicator?: boolean// [73] 42671 (Boolean)
+  PaymentStreamLinkEstimatedTradingDays?: number// [74] 42672 (Int)
+  PaymentStreamLinkStrikePrice?: number// [75] 42673 (Float)
+  PaymentStreamLinkStrikePriceType?: number// [76] 42674 (Int)
+  PaymentStreamLinkMaximumBoundary?: number// [77] 42675 (Float)
+  PaymentStreamLinkMinimumBoundary?: number// [78] 42676 (Float)
+  PaymentStreamLinkNumberOfDataSeries?: number// [79] 42677 (Int)
+  PaymentStreamVarianceUnadjustedCap?: number// [80] 42678 (Float)
+  PaymentStreamRealizedVarianceMethod?: number// [81] 42679 (Int)
+  PaymentStreamDaysAdjustmentIndicator?: boolean// [82] 42680 (Boolean)
+  PaymentStreamNearestExchangeContractRefID?: string// [83] 42681 (String)
+  PaymentStreamVegaNotionalAmount?: number// [84] 42682 (Float)
 }

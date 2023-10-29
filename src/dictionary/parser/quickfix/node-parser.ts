@@ -27,6 +27,7 @@ export abstract class NodeParser {
       }
       const containedField: ContainedSimpleField = new ContainedSimpleField(fieldDefinition,
         parent?.set?.fields?.length ?? 0, node.attributes.required === 'Y', false)
+      this.progress.newAdds++
       parent?.set?.add(containedField)
     }
   }
@@ -40,6 +41,7 @@ export abstract class NodeParser {
     if (fieldDef != null) {
       const containedField: ContainedComponentField =
                 new ContainedComponentField(fieldDef, parent?.set?.fields?.length ?? 0, parent.required)
+      this.progress.newAdds++
       parent?.set?.add(containedField)
     } else {
       if (this.progress.numberPasses >= this.progress.maxIterations) {
@@ -61,6 +63,7 @@ export abstract class NodeParser {
       if (asGroup) {
         const containedField: ContainedGroupField =
           new ContainedGroupField(asGroup, parent?.set?.fields?.length ?? 0, group.required)
+        this.progress.newAdds++
         parent?.set?.add(containedField)
       }
     } else {
@@ -80,6 +83,7 @@ export abstract class NodeParser {
       const set: GroupFieldDefinition = new GroupFieldDefinition(groupName, groupName, null, noOfField, null)
       const context: ParseContext = new ParseContext(node.attributes.name, true, set)
       context.required = node.attributes.required === 'Y'
+      this.progress.newContexts++
       this.parseContexts.push(context)
     }
   }

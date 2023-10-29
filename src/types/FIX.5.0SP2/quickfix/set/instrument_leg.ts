@@ -180,7 +180,7 @@ export interface IInstrumentLeg {
   LegMarketDisruption?: ILegMarketDisruption// [160] LegMarketDisruptionProvision.41462, LegMarketDisruptionEventGrp.41467 .. LegMarketDisruptionMinimumFuturesContracts.41466
   LegOptionExercise?: ILegOptionExercise// [161] LegExerciseDesc.41481, EncodedLegExerciseDescLen.41482 .. LegMakeWholeInterpolationMethod.42398
   LegStreamGrp?: ILegStreamGrp// [162] NoLegStreams.40241, LegStreamType.40242 .. EncodedLegStreamText.40979
-  LegProvisionGrp?: ILegProvisionGrp// [163] NoLegProvisions.40448, LegProvisionType.40449 .. LegProvisionPartyRoleQualifier.2380
+  LegProvisionGrp?: ILegProvisionGrp// [163] NoLegProvisions.40448, LegProvisionType.40449 .. LegProvisionPartySubIDType.40539
   LegAdditionalTermGrp?: ILegAdditionalTermGrp// [164] NoLegAdditionalTerms.41335, LegAdditionalTermConditionPrecedentBondIndicator.41336 .. LegAdditionalTermBondDayCount.41334
   LegProtectionTermGrp?: ILegProtectionTermGrp// [165] NoLegProtectionTerms.41616, LegProtectionTermNotional.41618 .. LegProtectionTermXID.41617
   LegCashSettlTermGrp?: ILegCashSettlTermGrp// [166] NoLegCashSettlTerms.41344, LegCashSettlCurrency.41345 .. LegCashSettlTermXID.41362

@@ -37,7 +37,7 @@ export interface IPaymentGrpNoPayments {
   PaymentPresentValueCurrency?: string// [33] 40226 (String)
   PaymentSettlStyle?: number// [34] 40227 (Int)
   PaymentMethod?: number// [35] 492 (Int)
-  PaymentSettlGrp?: IPaymentSettlGrp// [36] NoPaymentSettls.40230, PaymentSettlAmount.40231 .. PaymentSettlPartyRoleQualifier.40237
+  PaymentSettlGrp?: IPaymentSettlGrp// [36] NoPaymentSettls.40230, PaymentSettlAmount.40231 .. PaymentSettlPartySubIDType.40240
   PaymentLegRefID?: string// [37] 41304 (String)
   PaymentText?: string// [38] 40229 (String)
   EncodedPaymentTextLen?: number// [39] 40984 (Length)

@@ -1,0 +1,5 @@
+import { IUnderlyingComplexEventScheduleGrpNoUnderlyingComplexEventSchedules } from './underlying_complex_event_schedule_grp_no_underlying_complex_event_schedules'
+
+export interface IUnderlyingComplexEventScheduleGrp {
+  NoUnderlyingComplexEventSchedules?: IUnderlyingComplexEventScheduleGrpNoUnderlyingComplexEventSchedules[]// [1] UnderlyingComplexEventScheduleStartDate.41751, UnderlyingComplexEventScheduleEndDate.41752 .. UnderlyingComplexEventScheduleRollConvention.41755
+}

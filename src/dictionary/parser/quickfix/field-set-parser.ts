@@ -1,4 +1,4 @@
-import { ComponentFieldDefinition, FixDefinitions } from '../../definition'
+import { ComponentFieldDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
 import { ISaxNode } from '../../sax-node'
@@ -25,10 +25,12 @@ export class FieldSetParser extends NodeParser {
         if (!node.isSelfClosing) {
           const set: ComponentFieldDefinition = new ComponentFieldDefinition(fullName, componentName, null, null)
           const context: ParseContext = new ParseContext(fullName, true, set)
+          this.progress.newContexts++
           this.parseContexts.push(context)
         } else {
           this.addComponentField(fullName, node)
           const context: ParseContext = new ParseContext(fullName, false, null)
+          this.progress.newContexts++
           this.parseContexts.push(context)
         }
         break
@@ -65,6 +67,7 @@ export class FieldSetParser extends NodeParser {
         }
         const asComponent: ComponentFieldDefinition | null = latest.asComponent() ?? null
         if (asComponent != null) {
+          this.progress.newDefines++
           this.progress.definitions.addComponentFieldDef(asComponent)
         } else {
           throw new Error(`latest not instance of component field ${latest.name} `)

@@ -21,7 +21,7 @@ export interface ILegComplexEventsNoLegComplexEvents {
   LegComplexEventPriceBoundaryPrecision?: number// [13] 2230 (Float)
   LegComplexEventPriceTimeType?: number// [14] 2231 (Int)
   LegComplexEventCondition?: number// [15] 2232 (Int)
-  LegComplexEventDates?: ILegComplexEventDates// [16] NoLegComplexEventDates.2250, LegComplexEventStartDate.2251, LegComplexEventEndDate.2252
+  LegComplexEventDates?: ILegComplexEventDates// [16] NoLegComplexEventDates.2250, LegComplexEventStartDate.2251 .. LegComplexEventEndTime.2247
   LegComplexEventCurrencyOne?: string// [17] 2233 (String)
   LegComplexEventCurrencyOneCodeSource?: string// [18] 2945 (String)
   LegComplexEventCurrencyTwo?: string// [19] 2234 (String)

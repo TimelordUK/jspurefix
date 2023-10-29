@@ -1,0 +1,5 @@
+import { IPaymentStreamCompoundingDateGrpNoPaymentStreamCompoundingDates } from './payment_stream_compounding_date_grp_no_payment_stream_compounding_dates'
+
+export interface IPaymentStreamCompoundingDateGrp {
+  NoPaymentStreamCompoundingDates?: IPaymentStreamCompoundingDateGrpNoPaymentStreamCompoundingDates[]// [1] PaymentStreamCompoundingDate.42607, PaymentStreamCompoundingDateType.42608
+}

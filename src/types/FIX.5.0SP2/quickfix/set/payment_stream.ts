@@ -33,12 +33,12 @@ export interface IPaymentStream {
   PaymentStreamMaximumPaymentCurrency?: string// [24] 41184 (String)
   PaymentStreamMaximumTransactionAmount?: number// [25] 41185 (Float)
   PaymentStreamMaximumTransactionCurrency?: string// [26] 41186 (String)
-  PaymentStreamPaymentDates?: IPaymentStreamPaymentDates// [27] PaymentStreamPaymentDateBusinessDayConvention.40751, PaymentStreamPaymentFrequencyPeriod.40753 .. PaymentStreamMasterAgreementPaymentDatesIndicator.41223
-  PaymentStreamResetDates?: IPaymentStreamResetDates// [28] PaymentStreamResetDateRelativeTo.40761, PaymentStreamResetDateBusinessDayConvention.40762 .. PaymentStreamRateCutoffDateOffsetDayType.40783
+  PaymentStreamPaymentDates?: IPaymentStreamPaymentDates// [27] PaymentStreamPaymentDateBusinessDayConvention.40751, PaymentStreamPaymentDateBusinessCenterGrp.40947 .. PaymentStreamFinalPricePaymentDateAdjusted.42659
+  PaymentStreamResetDates?: IPaymentStreamResetDates// [28] PaymentStreamResetDateRelativeTo.40761, PaymentStreamResetDateBusinessDayConvention.40762 .. PaymentStreamFixingDateType.42662
   PaymentStreamFixedRate?: IPaymentStreamFixedRate// [29] PaymentStreamRate.40784, PaymentStreamFixedAmount.40785 .. PaymentStreamContractPriceCurrency.41191
   PaymentStreamFloatingRate?: IPaymentStreamFloatingRate// [30] PaymentStreamRateIndex.40789, PaymentStreamRateIndexSource.40790 .. PaymentStreamVegaNotionalAmount.42682
   PaymentStreamCompoundingFixedRate?: number// [31] 42605 (Float)
   PaymentStreamCompoundingFloatingRate?: IPaymentStreamCompoundingFloatingRate// [32] PaymentStreamCompoundingRateIndex.42628, PaymentStreamCompoundingRateIndexCurvePeriod.42629 .. PaymentStreamCompoundingNegativeRateTreatment.42645
-  PaymentStreamCompoundingDates?: IPaymentStreamCompoundingDates// [33] PaymentStreamCompoundingDatesBusinessDayConvention.42609, PaymentStreamCompoundingDatesRelativeTo.42610 .. PaymentStreamBoundsLastDateUnadjusted.42619
-  PaymentStreamNonDeliverableSettlTerms?: IPaymentStreamNonDeliverableSettlTerms// [34] PaymentStreamNonDeliverableRefCurrency.40817, PaymentStreamNonDeliverableFixingDatesBusinessDayConvention.40818 .. PaymentStreamNonDeliverableFixingDatesOffsetDayType.40823
+  PaymentStreamCompoundingDates?: IPaymentStreamCompoundingDates// [33] PaymentStreamCompoundingDatesBusinessDayConvention.42609, PaymentStreamCompoundingDatesBusinessCenterGrp.42620 .. PaymentStreamBoundsLastDateUnadjusted.42619
+  PaymentStreamNonDeliverableSettlTerms?: IPaymentStreamNonDeliverableSettlTerms// [34] PaymentStreamNonDeliverableRefCurrency.40817, PaymentStreamNonDeliverableFixingDatesBusinessDayConvention.40818 .. SettlRatePostponementCalculationAgent.40089
 }

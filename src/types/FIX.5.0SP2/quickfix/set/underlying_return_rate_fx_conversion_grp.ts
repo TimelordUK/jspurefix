@@ -1,0 +1,5 @@
+import { IUnderlyingReturnRateFXConversionGrpNoUnderlyingReturnRateFXConversions } from './underlying_return_rate_fx_conversion_grp_no_underlying_return_rate_fx_conversions'
+
+export interface IUnderlyingReturnRateFXConversionGrp {
+  NoUnderlyingReturnRateFXConversions?: IUnderlyingReturnRateFXConversionGrpNoUnderlyingReturnRateFXConversions[]// [1] UnderlyingReturnRateFXCurrencySymbol.43031, UnderlyingReturnRateFXRate.43032, UnderlyingReturnRateFXRateCalc.43033
+}

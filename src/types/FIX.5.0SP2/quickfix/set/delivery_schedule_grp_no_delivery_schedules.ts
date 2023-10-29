@@ -1,3 +1,5 @@
+import { IDeliveryScheduleSettlDayGrp } from './delivery_schedule_settl_day_grp'
+
 export interface IDeliveryScheduleGrpNoDeliverySchedules {
   DeliveryScheduleType?: number// [1] 41038 (Int)
   DeliveryScheduleXID?: string// [2] 41039 (String)
@@ -12,4 +14,5 @@ export interface IDeliveryScheduleGrpNoDeliverySchedules {
   DeliveryScheduleSettlTimeZone?: string// [11] 41048 (String)
   DeliveryScheduleSettlFlowType?: number// [12] 41049 (Int)
   DeliveryScheduleSettlHolidaysProcessingInstruction?: number// [13] 41050 (Int)
+  DeliveryScheduleSettlDayGrp?: IDeliveryScheduleSettlDayGrp// [14] NoDeliveryScheduleSettlDays.41051, DeliveryScheduleSettlDay.41052, DeliveryScheduleSettlTotalHours.41053
 }

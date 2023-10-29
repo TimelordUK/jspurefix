@@ -9,7 +9,7 @@ export interface ITrdInstrmtLegExecGrpNoLegExecs {
   LegOrderQty?: number// [6] 685 (Float)
   LegPositionEffect?: string// [7] 564 (String)
   LegCoveredOrUncovered?: number// [8] 565 (Int)
-  NestedParties3?: INestedParties3// [9] NoNested3PartyIDs.948, Nested3PartyID.949 .. Nested3PartyRoleQualifier.2382
+  NestedParties3?: INestedParties3// [9] NoNested3PartyIDs.948, Nested3PartyID.949 .. Nested3PartySubIDType.954
   LegLastPx?: number// [10] 637 (Float)
   LegPriceType?: number// [11] 686 (Int)
   LegSettlCurrency?: string// [12] 675 (String)

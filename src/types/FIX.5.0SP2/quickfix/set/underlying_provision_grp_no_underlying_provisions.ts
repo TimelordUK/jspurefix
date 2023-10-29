@@ -40,5 +40,5 @@ export interface IUnderlyingProvisionGrpNoUnderlyingProvisions {
   UnderlyingProvisionText?: string// [30] 42170 (String)
   EncodedUnderlyingProvisionTextLen?: number// [31] 42171 (Length)
   EncodedUnderlyingProvisionText?: Buffer// [32] 42172 (RawData)
-  UnderlyingProvisionParties?: IUnderlyingProvisionParties// [33] NoUnderlyingProvisionPartyIDs.42173, UnderlyingProvisionPartyID.42174 .. UnderlyingProvisionPartyRoleQualifier.40918
+  UnderlyingProvisionParties?: IUnderlyingProvisionParties// [33] NoUnderlyingProvisionPartyIDs.42173, UnderlyingProvisionPartyID.42174 .. UnderlyingProvisionPartySubIDType.42179
 }

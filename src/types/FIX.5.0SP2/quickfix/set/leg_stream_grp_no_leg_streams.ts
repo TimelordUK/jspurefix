@@ -31,11 +31,11 @@ export interface ILegStreamGrpNoLegStreams {
   LegStreamEffectiveDate?: ILegStreamEffectiveDate// [20] LegStreamEffectiveDateUnadjusted.40249, LegStreamEffectiveDateBusinessDayConvention.40250 .. LegStreamEffectiveDateAdjusted.40256
   LegStreamTerminationDate?: ILegStreamTerminationDate// [21] LegStreamTerminationDateUnadjusted.40257, LegStreamTerminationDateBusinessDayConvention.40258 .. LegStreamTerminationDateAdjusted.40264
   LegStreamCalculationPeriodDates?: ILegStreamCalculationPeriodDates// [22] LegStreamCalculationPeriodDatesXID.41641, LegStreamCalculationPeriodDatesXIDRef.41642 .. LegStreamCalculationCorrectionUnit.41645
-  LegPaymentStream?: ILegPaymentStream// [23] LegPaymentStreamType.40279, LegPaymentStreamMarketRate.40280 .. LegPaymentStreamNonDeliverableFixingDatesOffsetDayType.40365
+  LegPaymentStream?: ILegPaymentStream// [23] LegPaymentStreamType.40279, LegPaymentStreamMarketRate.40280 .. LegSettlRatePostponementCalculationAgent.40906
   LegPaymentScheduleGrp?: ILegPaymentScheduleGrp// [24] NoLegPaymentSchedules.40374, LegPaymentScheduleType.40375 .. LegPaymentScheduleInterimExchangeDateAdjusted.40413
   LegPaymentStubGrp?: ILegPaymentStubGrp// [25] NoLegPaymentStubs.40418, LegPaymentStubType.40419 .. LegPaymentStubIndex2FloorRate.40447
   LegDeliveryStream?: ILegDeliveryStream// [26] LegDeliveryStreamType.41429, LegDeliveryStreamCommoditySourceGrp.41460 .. LegDeliveryStreamRouteOrCharter.43095
-  LegDeliveryScheduleGrp?: ILegDeliveryScheduleGrp// [27] NoLegDeliverySchedules.41408, LegDeliveryScheduleType.41409 .. LegDeliveryScheduleSettlHolidaysProcessingInstruction.41421
+  LegDeliveryScheduleGrp?: ILegDeliveryScheduleGrp// [27] NoLegDeliverySchedules.41408, LegDeliveryScheduleType.41409 .. LegDeliveryScheduleSettlTotalHours.41424
   LegStreamText?: string// [28] 40248 (String)
   EncodedLegStreamTextLen?: number// [29] 40978 (Length)
   EncodedLegStreamText?: Buffer// [30] 40979 (RawData)

@@ -1,3 +1,5 @@
+import { IUnderlyingDeliveryScheduleSettlDayGrp } from './underlying_delivery_schedule_settl_day_grp'
+
 export interface IUnderlyingDeliveryScheduleGrpNoUnderlyingDeliverySchedules {
   UnderlyingDeliveryScheduleType?: number// [1] 41757 (Int)
   UnderlyingDeliveryScheduleXID?: string// [2] 41758 (String)
@@ -12,4 +14,5 @@ export interface IUnderlyingDeliveryScheduleGrpNoUnderlyingDeliverySchedules {
   UnderlyingDeliveryScheduleSettlTimeZone?: string// [11] 41767 (String)
   UnderlyingDeliveryScheduleSettlFlowType?: number// [12] 41768 (Int)
   UnderlyingDeliveryScheduleSettlHolidaysProcessingInstruction?: number// [13] 41769 (Int)
+  UnderlyingDeliveryScheduleSettlDayGrp?: IUnderlyingDeliveryScheduleSettlDayGrp// [14] NoUnderlyingDeliveryScheduleSettlDays.41770, UnderlyingDeliveryScheduleSettlDay.41771, UnderlyingDeliveryScheduleSettlTotalHours.41772
 }

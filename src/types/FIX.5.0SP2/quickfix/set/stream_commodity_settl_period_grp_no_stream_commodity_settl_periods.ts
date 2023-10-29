@@ -12,7 +12,7 @@ export interface IStreamCommoditySettlPeriodGrpNoStreamCommoditySettlPeriods {
   StreamCommoditySettlPeriodPriceUnitOfMeasure?: string// [9] 41298 (String)
   StreamCommoditySettlPeriodPriceCurrency?: string// [10] 41299 (String)
   StreamCommoditySettlHolidaysProcessingInstruction?: number// [11] 41300 (Int)
-  StreamCommoditySettlDayGrp?: IStreamCommoditySettlDayGrp// [12] NoStreamCommoditySettlDays.41283, StreamCommoditySettlDay.41284, StreamCommoditySettlTotalHours.41285
+  StreamCommoditySettlDayGrp?: IStreamCommoditySettlDayGrp// [12] NoStreamCommoditySettlDays.41283, StreamCommoditySettlDay.41284 .. StreamCommoditySettlTimeType.41588
   StreamCommoditySettlPeriodXID?: string// [13] 41301 (String)
   StreamCommoditySettlPeriodXIDRef?: string// [14] 41302 (String)
 }

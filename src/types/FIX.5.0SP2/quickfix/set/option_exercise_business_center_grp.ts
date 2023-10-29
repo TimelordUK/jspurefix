@@ -1,0 +1,5 @@
+import { IOptionExerciseBusinessCenterGrpNoOptionExerciseBusinessCenters } from './option_exercise_business_center_grp_no_option_exercise_business_centers'
+
+export interface IOptionExerciseBusinessCenterGrp {
+  NoOptionExerciseBusinessCenters?: IOptionExerciseBusinessCenterGrpNoOptionExerciseBusinessCenters[]// [1] OptionExerciseBusinessCenter.41117
+}

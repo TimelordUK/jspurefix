@@ -1,0 +1,5 @@
+import { ILegPaymentStreamPaymentDateBusinessCenterGrpNoLegPaymentStreamPaymentDateBusinessCenters } from './leg_payment_stream_payment_date_business_center_grp_no_leg_payment_stream_payment_date_business_centers'
+
+export interface ILegPaymentStreamPaymentDateBusinessCenterGrp {
+  NoLegPaymentStreamPaymentDateBusinessCenters?: ILegPaymentStreamPaymentDateBusinessCenterGrpNoLegPaymentStreamPaymentDateBusinessCenters[]// [1] LegPaymentStreamPaymentDateBusinessCenter.40293
+}

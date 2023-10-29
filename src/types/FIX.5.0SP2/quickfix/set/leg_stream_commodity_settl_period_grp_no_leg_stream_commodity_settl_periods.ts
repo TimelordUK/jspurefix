@@ -12,7 +12,7 @@ export interface ILegStreamCommoditySettlPeriodGrpNoLegStreamCommoditySettlPerio
   LegStreamCommoditySettlPeriodPriceUnitOfMeasure?: string// [9] 41695 (String)
   LegStreamCommoditySettlPeriodPriceCurrency?: string// [10] 41696 (String)
   LegStreamCommoditySettlHolidaysProcessingInstruction?: number// [11] 41697 (Int)
-  LegStreamCommoditySettlDayGrp?: ILegStreamCommoditySettlDayGrp// [12] NoLegStreamCommoditySettlDays.41680, LegStreamCommoditySettlDay.41681, LegStreamCommoditySettlTotalHours.41682
+  LegStreamCommoditySettlDayGrp?: ILegStreamCommoditySettlDayGrp// [12] NoLegStreamCommoditySettlDays.41680, LegStreamCommoditySettlDay.41681 .. LegStreamCommoditySettlTimeType.41935
   LegStreamCommoditySettlPeriodXID?: string// [13] 41698 (String)
   LegStreamCommoditySettlPeriodXIDRef?: string// [14] 41699 (String)
 }

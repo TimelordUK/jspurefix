@@ -1,0 +1,5 @@
+import { IPaymentStreamPricingBusinessCenterGrpNoPaymentStreamPricingBusinessCenters } from './payment_stream_pricing_business_center_grp_no_payment_stream_pricing_business_centers'
+
+export interface IPaymentStreamPricingBusinessCenterGrp {
+  NoPaymentStreamPricingBusinessCenters?: IPaymentStreamPricingBusinessCenterGrpNoPaymentStreamPricingBusinessCenters[]// [1] PaymentStreamPricingBusinessCenter.41193
+}

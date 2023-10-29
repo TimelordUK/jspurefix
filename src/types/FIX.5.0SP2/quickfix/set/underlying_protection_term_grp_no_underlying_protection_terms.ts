@@ -11,7 +11,7 @@ export interface IUnderlyingProtectionTermGrpNoUnderlyingProtectionTerms {
   UnderlyingProtectionTermStandardSources?: boolean// [6] 42074 (Boolean)
   UnderlyingProtectionTermEventMinimumSources?: number// [7] 42075 (Int)
   UnderlyingProtectionTermEventNewsSourceGrp?: IUnderlyingProtectionTermEventNewsSourceGrp// [8] NoUnderlyingProtectionTermEventNewsSources.42090, UnderlyingProtectionTermEventNewsSource.42091
-  UnderlyingProtectionTermEventGrp?: IUnderlyingProtectionTermEventGrp// [9] NoUnderlyingProtectionTermEvents.42077, UnderlyingProtectionTermEventType.42078 .. UnderlyingProtectionTermEventRateSource.42084
+  UnderlyingProtectionTermEventGrp?: IUnderlyingProtectionTermEventGrp// [9] NoUnderlyingProtectionTermEvents.42077, UnderlyingProtectionTermEventType.42078 .. UnderlyingProtectionTermEventQualifier.42086
   UnderlyingProtectionTermObligationGrp?: IUnderlyingProtectionTermObligationGrp// [10] NoUnderlyingProtectionTermObligations.42087, UnderlyingProtectionTermObligationType.42088, UnderlyingProtectionTermObligationValue.42089
   UnderlyingProtectionTermXID?: string// [11] 42076 (String)
 }

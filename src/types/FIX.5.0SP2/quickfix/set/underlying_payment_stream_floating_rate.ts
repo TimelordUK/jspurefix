@@ -1,3 +1,10 @@
+import { IUnderlyingPaymentStreamPricingBusinessCenterGrp } from './underlying_payment_stream_pricing_business_center_grp'
+import { IUnderlyingPaymentStreamPricingDayGrp } from './underlying_payment_stream_pricing_day_grp'
+import { IUnderlyingPaymentStreamPricingDateGrp } from './underlying_payment_stream_pricing_date_grp'
+import { IUnderlyingPaymentStreamFormula } from './underlying_payment_stream_formula'
+import { IUnderlyingDividendConditions } from './underlying_dividend_conditions'
+import { IUnderlyingReturnRateGrp } from './underlying_return_rate_grp'
+
 export interface IUnderlyingPaymentStreamFloatingRate {
   UnderlyingPaymentStreamRateIndex?: string// [1] 40620 (String)
   UnderlyingPaymentStreamRateIndexSource?: number// [2] 40621 (Int)
@@ -52,29 +59,35 @@ export interface IUnderlyingPaymentStreamFloatingRate {
   UnderlyingPaymentStreamPricingDayCount?: number// [51] 41932 (Int)
   UnderlyingPaymentStreamPricingBusinessCalendar?: string// [52] 41933 (String)
   UnderlyingPaymentStreamPricingBusinessDayConvention?: number// [53] 41934 (Int)
-  UnderlyingPaymentStreamInflationLagPeriod?: number// [54] 40639 (Int)
-  UnderlyingPaymentStreamInflationLagUnit?: string// [55] 40640 (String)
-  UnderlyingPaymentStreamInflationLagDayType?: number// [56] 40641 (Int)
-  UnderlyingPaymentStreamInflationInterpolationMethod?: number// [57] 40642 (Int)
-  UnderlyingPaymentStreamInflationIndexSource?: number// [58] 40643 (Int)
-  UnderlyingPaymentStreamInflationPublicationSource?: string// [59] 40644 (String)
-  UnderlyingPaymentStreamInflationInitialIndexLevel?: number// [60] 40645 (Float)
-  UnderlyingPaymentStreamInflationFallbackBondApplicable?: boolean// [61] 40646 (Boolean)
-  UnderlyingPaymentStreamFRADiscounting?: number// [62] 40647 (Int)
-  UnderlyingPaymentStreamUnderlierRefID?: string// [63] 42962 (String)
-  UnderlyingReturnRateNotionalReset?: boolean// [64] 42963 (Boolean)
-  UnderlyingPaymentStreamLinkInitialLevel?: number// [65] 42964 (Float)
-  UnderlyingPaymentStreamLinkClosingLevelIndicator?: boolean// [66] 42965 (Boolean)
-  UnderlyingPaymentStreamLinkExpiringLevelIndicator?: boolean// [67] 42966 (Boolean)
-  UnderlyingPaymentStreamLinkEstimatedTradingDays?: number// [68] 42967 (Int)
-  UnderlyingPaymentStreamLinkStrikePrice?: number// [69] 42968 (Float)
-  UnderlyingPaymentStreamLinkStrikePriceType?: number// [70] 42969 (Int)
-  UnderlyingPaymentStreamLinkMaximumBoundary?: number// [71] 42970 (Float)
-  UnderlyingPaymentStreamLinkMinimumBoundary?: number// [72] 42971 (Float)
-  UnderlyingPaymentStreamLinkNumberOfDataSeries?: number// [73] 42972 (Int)
-  UnderlyingPaymentStreamVarianceUnadjustedCap?: number// [74] 42973 (Float)
-  UnderlyingPaymentStreamRealizedVarianceMethod?: number// [75] 42974 (Int)
-  UnderlyingPaymentStreamDaysAdjustmentIndicator?: boolean// [76] 42975 (Boolean)
-  UnderlyingPaymentStreamNearestExchangeContractRefID?: string// [77] 42976 (String)
-  UnderlyingPaymentStreamVegaNotionalAmount?: number// [78] 42977 (Float)
+  UnderlyingPaymentStreamPricingBusinessCenterGrp?: IUnderlyingPaymentStreamPricingBusinessCenterGrp// [54] NoUnderlyingPaymentStreamPricingBusinessCenters.41909, UnderlyingPaymentStreamPricingBusinessCenter.41910
+  UnderlyingPaymentStreamPricingDayGrp?: IUnderlyingPaymentStreamPricingDayGrp// [55] NoUnderlyingPaymentStreamPricingDays.41944, UnderlyingPaymentStreamPricingDayOfWeek.41945, UnderlyingPaymentStreamPricingDayNumber.41946
+  UnderlyingPaymentStreamPricingDateGrp?: IUnderlyingPaymentStreamPricingDateGrp// [56] NoUnderlyingPaymentStreamPricingDates.41941, UnderlyingPaymentStreamPricingDate.41942, UnderlyingPaymentStreamPricingDateType.41943
+  UnderlyingPaymentStreamInflationLagPeriod?: number// [57] 40639 (Int)
+  UnderlyingPaymentStreamInflationLagUnit?: string// [58] 40640 (String)
+  UnderlyingPaymentStreamInflationLagDayType?: number// [59] 40641 (Int)
+  UnderlyingPaymentStreamInflationInterpolationMethod?: number// [60] 40642 (Int)
+  UnderlyingPaymentStreamInflationIndexSource?: number// [61] 40643 (Int)
+  UnderlyingPaymentStreamInflationPublicationSource?: string// [62] 40644 (String)
+  UnderlyingPaymentStreamInflationInitialIndexLevel?: number// [63] 40645 (Float)
+  UnderlyingPaymentStreamInflationFallbackBondApplicable?: boolean// [64] 40646 (Boolean)
+  UnderlyingPaymentStreamFRADiscounting?: number// [65] 40647 (Int)
+  UnderlyingPaymentStreamUnderlierRefID?: string// [66] 42962 (String)
+  UnderlyingPaymentStreamFormula?: IUnderlyingPaymentStreamFormula// [67] UnderlyingPaymentStreamFormulaCurrency.42978, UnderlyingPaymentStreamFormulaCurrencyDeterminationMethod.42979 .. UnderlyingPaymentStreamFormulaImage.42948
+  UnderlyingDividendConditions?: IUnderlyingDividendConditions// [68] UnderlyingDividendReinvestmentIndicator.42826, UnderlyingDividendEntitlementEvent.42827 .. UnderlyingAllDividendsIndicator.42845
+  UnderlyingReturnRateNotionalReset?: boolean// [69] 42963 (Boolean)
+  UnderlyingReturnRateGrp?: IUnderlyingReturnRateGrp// [70] NoUnderlyingReturnRates.43034, UnderlyingReturnRatePriceSequence.43035 .. UnderlyingReturnRateFinalPriceFallback.43059
+  UnderlyingPaymentStreamLinkInitialLevel?: number// [71] 42964 (Float)
+  UnderlyingPaymentStreamLinkClosingLevelIndicator?: boolean// [72] 42965 (Boolean)
+  UnderlyingPaymentStreamLinkExpiringLevelIndicator?: boolean// [73] 42966 (Boolean)
+  UnderlyingPaymentStreamLinkEstimatedTradingDays?: number// [74] 42967 (Int)
+  UnderlyingPaymentStreamLinkStrikePrice?: number// [75] 42968 (Float)
+  UnderlyingPaymentStreamLinkStrikePriceType?: number// [76] 42969 (Int)
+  UnderlyingPaymentStreamLinkMaximumBoundary?: number// [77] 42970 (Float)
+  UnderlyingPaymentStreamLinkMinimumBoundary?: number// [78] 42971 (Float)
+  UnderlyingPaymentStreamLinkNumberOfDataSeries?: number// [79] 42972 (Int)
+  UnderlyingPaymentStreamVarianceUnadjustedCap?: number// [80] 42973 (Float)
+  UnderlyingPaymentStreamRealizedVarianceMethod?: number// [81] 42974 (Int)
+  UnderlyingPaymentStreamDaysAdjustmentIndicator?: boolean// [82] 42975 (Boolean)
+  UnderlyingPaymentStreamNearestExchangeContractRefID?: string// [83] 42976 (String)
+  UnderlyingPaymentStreamVegaNotionalAmount?: number// [84] 42977 (Float)
 }

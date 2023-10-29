@@ -31,11 +31,11 @@ export interface IStreamGrpNoStreams {
   StreamEffectiveDate?: IStreamEffectiveDate// [20] StreamEffectiveDateUnadjusted.40907, StreamEffectiveDateBusinessDayConvention.40908 .. StreamEffectiveDateAdjusted.40914
   StreamTerminationDate?: IStreamTerminationDate// [21] StreamTerminationDateUnadjusted.40065, StreamTerminationDateBusinessDayConvention.40066 .. StreamTerminationDateAdjusted.40072
   StreamCalculationPeriodDates?: IStreamCalculationPeriodDates// [22] StreamCalculationPeriodDatesXID.41244, StreamCalculationPeriodDatesXIDRef.41245 .. StreamCalculationCorrectionUnit.41248
-  PaymentStream?: IPaymentStream// [23] PaymentStreamType.40738, PaymentStreamMarketRate.40739 .. PaymentStreamNonDeliverableFixingDatesOffsetDayType.40823
+  PaymentStream?: IPaymentStream// [23] PaymentStreamType.40738, PaymentStreamMarketRate.40739 .. SettlRatePostponementCalculationAgent.40089
   PaymentScheduleGrp?: IPaymentScheduleGrp// [24] NoPaymentSchedules.40828, PaymentScheduleType.40829 .. PaymentScheduleInterimExchangeDateAdjusted.40867
   PaymentStubGrp?: IPaymentStubGrp// [25] NoPaymentStubs.40872, PaymentStubType.40873 .. PaymentStubIndex2FloorRate.40901
   DeliveryStream?: IDeliveryStream// [26] DeliveryStreamType.41058, DeliveryStreamCommoditySourceGrp.41085 .. DeliveryStreamRouteOrCharter.43094
-  DeliveryScheduleGrp?: IDeliveryScheduleGrp// [27] NoDeliverySchedules.41037, DeliveryScheduleType.41038 .. DeliveryScheduleSettlHolidaysProcessingInstruction.41050
+  DeliveryScheduleGrp?: IDeliveryScheduleGrp// [27] NoDeliverySchedules.41037, DeliveryScheduleType.41038 .. DeliveryScheduleSettlTotalHours.41053
   StreamText?: string// [28] 40056 (String)
   EncodedStreamTextLen?: number// [29] 40982 (Length)
   EncodedStreamText?: Buffer// [30] 40983 (RawData)

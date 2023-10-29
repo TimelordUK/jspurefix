@@ -40,5 +40,5 @@ export interface IProvisionGrpNoProvisions {
   ProvisionText?: string// [30] 40113 (String)
   EncodedProvisionTextLen?: number// [31] 40986 (Length)
   EncodedProvisionText?: Buffer// [32] 40987 (RawData)
-  ProvisionParties?: IProvisionParties// [33] NoProvisionPartyIDs.40174, ProvisionPartyID.40175 .. ProvisionPartyRoleQualifier.2385
+  ProvisionParties?: IProvisionParties// [33] NoProvisionPartyIDs.40174, ProvisionPartyID.40175 .. ProvisionPartySubIDType.40180
 }

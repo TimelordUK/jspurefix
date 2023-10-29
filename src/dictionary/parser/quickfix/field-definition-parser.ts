@@ -20,6 +20,7 @@ export class FieldDefinitionParser extends NodeParser {
           null,
           node.attributes.type,
           null)
+        this.progress.newDefines++
         this.progress.definitions.addSimpleFieldDef(this.currentField)
         break
       }

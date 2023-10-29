@@ -11,7 +11,7 @@ export interface IProtectionTermGrpNoProtectionTerms {
   ProtectionTermStandardSources?: boolean// [6] 40187 (Boolean)
   ProtectionTermEventMinimumSources?: number// [7] 40188 (Int)
   ProtectionTermEventNewsSourceGrp?: IProtectionTermEventNewsSourceGrp// [8] NoProtectionTermEventNewsSources.40951, ProtectionTermEventNewsSource.40189
-  ProtectionTermEventGrp?: IProtectionTermEventGrp// [9] NoProtectionTermEvents.40191, ProtectionTermEventType.40192 .. ProtectionTermEventRateSource.40198
+  ProtectionTermEventGrp?: IProtectionTermEventGrp// [9] NoProtectionTermEvents.40191, ProtectionTermEventType.40192 .. ProtectionTermEventQualifier.40200
   ProtectionTermObligationGrp?: IProtectionTermObligationGrp// [10] NoProtectionTermObligations.40201, ProtectionTermObligationType.40202, ProtectionTermObligationValue.40203
   ProtectionTermXID?: string// [11] 40190 (String)
 }

@@ -21,7 +21,7 @@ export interface IUnderlyingComplexEventsNoUnderlyingComplexEvents {
   UnderlyingComplexEventPriceBoundaryPrecision?: number// [13] 2050 (Float)
   UnderlyingComplexEventPriceTimeType?: number// [14] 2051 (Int)
   UnderlyingComplexEventCondition?: number// [15] 2052 (Int)
-  UnderlyingComplexEventDates?: IUnderlyingComplexEventDates// [16] NoUnderlyingComplexEventDates.2053, UnderlyingComplexEventStartDate.2054, UnderlyingComplexEventEndDate.2055
+  UnderlyingComplexEventDates?: IUnderlyingComplexEventDates// [16] NoUnderlyingComplexEventDates.2053, UnderlyingComplexEventStartDate.2054 .. UnderlyingComplexEventEndTime.2058
   UnderlyingComplexEventCurrencyOne?: string// [17] 2268 (String)
   UnderlyingComplexEventCurrencyOneCodeSource?: string// [18] 2948 (String)
   UnderlyingComplexEventCurrencyTwo?: string// [19] 2269 (String)
@@ -44,7 +44,7 @@ export interface IUnderlyingComplexEventsNoUnderlyingComplexEvents {
   UnderlyingComplexEventCreditEventStandardSources?: boolean// [36] 2280 (Boolean)
   UnderlyingComplexEventCreditEventMinimumSources?: number// [37] 2281 (Int)
   UnderlyingComplexEventCreditEventSourceGrp?: IUnderlyingComplexEventCreditEventSourceGrp// [38] NoUnderlyingComplexEventCreditEventSources.41748, UnderlyingComplexEventCreditEventSource.41749
-  UnderlyingComplexEventCreditEventGrp?: IUnderlyingComplexEventCreditEventGrp// [39] NoUnderlyingComplexEventCreditEvents.41716, UnderlyingComplexEventCreditEventType.41717 .. UnderlyingComplexEventCreditEventRateSource.41723
+  UnderlyingComplexEventCreditEventGrp?: IUnderlyingComplexEventCreditEventGrp// [39] NoUnderlyingComplexEventCreditEvents.41716, UnderlyingComplexEventCreditEventType.41717 .. UnderlyingComplexEventCreditEventQualifier.41725
   UnderlyingComplexEventFuturesPriceValuation?: boolean// [40] 2611 (Boolean)
   UnderlyingComplexEventOptionsPriceValuation?: boolean// [41] 2612 (Boolean)
   UnderlyingComplexEventPVFinalPriceElectionFallback?: number// [42] 2613 (Int)

@@ -2,15 +2,40 @@ import { ParseState } from './parse-state'
 import { FixDefinitions } from '../../definition'
 
 export class ParseProgress {
+  public definitions: FixDefinitions
   public parseState: ParseState = ParseState.Begin
   public numberPasses: number = 0
-  public definitions: FixDefinitions
   public cacheMisses: number = 0
-  public previousCacheMisses: number = 0
+  public newDefines: number = 0
+  public newAdds: number = 0
+  public newContexts: number = 0
+  public previousDelta: number = 0
+  public componentPasses: number = 0
   public readonly maxIterations: number = 5
 
+  public toString (): string {
+    return `parseState = ${this.parseState}, numberPasses = ${this.numberPasses}, componentPasses = ${this.componentPasses}, 
+    cacheMisses = ${this.cacheMisses}, newContexts = ${this.newContexts}, newDefines = ${this.newDefines}, 
+    newAdds = ${this.newAdds}, previousDelta = ${this.previousDelta}, delta = ${this.delta()}, changed = ${this.changed()}`
+  }
+
+  public delta (): number {
+    return this.newDefines + this.newAdds + this.newContexts
+  }
+
+  public changed (): boolean {
+    return this.cacheMisses > 0 || this.delta() !== this.previousDelta
+  }
+
+  public reset (): void {
+    this.previousDelta = this.delta()
+    this.cacheMisses = 0
+    this.newDefines = 0
+    this.newAdds = 0
+    this.newContexts = 0
+  }
+
   public next (): void {
-    this.previousCacheMisses = this.cacheMisses
     this.numberPasses++
     switch (this.parseState) {
       case ParseState.Begin: {
@@ -22,10 +47,10 @@ export class ParseProgress {
         break
       }
       case ParseState.Components: {
-        if (this.numberPasses === this.maxIterations) {
+        this.componentPasses++
+        const endComponentPass = this.numberPasses > this.maxIterations
+        if (endComponentPass) {
           this.parseState = ParseState.Messages
-        } else {
-          this.cacheMisses = 0
         }
         break
       }

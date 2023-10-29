@@ -33,12 +33,12 @@ export interface ILegPaymentStream {
   LegStreamMaximumPaymentCurrency?: string// [24] 41553 (String)
   LegStreamMaximumTransactionAmount?: number// [25] 41554 (Float)
   LegStreamMaximumTransactionCurrency?: string// [26] 41555 (String)
-  LegPaymentStreamPaymentDates?: ILegPaymentStreamPaymentDates// [27] LegPaymentStreamPaymentDateBusinessDayConvention.40292, LegPaymentStreamPaymentFrequencyPeriod.40294 .. LegPaymentStreamMasterAgreementPaymentDatesIndicator.41592
-  LegPaymentStreamResetDates?: ILegPaymentStreamResetDates// [28] LegPaymentStreamResetDateRelativeTo.40303, LegPaymentStreamResetDateBusinessDayConvention.40304 .. LegPaymentStreamRateCutoffDateOffsetDayType.40325
+  LegPaymentStreamPaymentDates?: ILegPaymentStreamPaymentDates// [27] LegPaymentStreamPaymentDateBusinessDayConvention.40292, LegPaymentStreamPaymentDateBusinessCenterGrp.40930 .. LegPaymentStreamFinalPricePaymentDateAdjusted.42458
+  LegPaymentStreamResetDates?: ILegPaymentStreamResetDates// [28] LegPaymentStreamResetDateRelativeTo.40303, LegPaymentStreamResetDateBusinessDayConvention.40304 .. LegPaymentStreamFixingDateType.42461
   LegPaymentStreamFixedRate?: ILegPaymentStreamFixedRate// [29] LegPaymentStreamRate.40326, LegPaymentStreamFixedAmount.40327 .. LegPaymentStreamContractPriceCurrency.41560
   LegPaymentStreamFloatingRate?: ILegPaymentStreamFloatingRate// [30] LegPaymentStreamRateIndex.40331, LegPaymentStreamRateIndexSource.40332 .. LegPaymentStreamVegaNotionalAmount.42481
   LegPaymentStreamCompoundingFixedRate?: number// [31] 42404 (Float)
   LegPaymentStreamCompoundingFloatingRate?: ILegPaymentStreamCompoundingFloatingRate// [32] LegPaymentStreamCompoundingRateIndex.42427, LegPaymentStreamCompoundingRateIndexCurvePeriod.42428 .. LegPaymentStreamCompoundingNegativeRateTreatment.42444
-  LegPaymentStreamCompoundingDates?: ILegPaymentStreamCompoundingDates// [33] LegPaymentStreamCompoundingDatesBusinessDayConvention.42408, LegPaymentStreamCompoundingDatesRelativeTo.42409 .. LegPaymentStreamBoundsLastDateUnadjusted.42418
-  LegPaymentStreamNonDeliverableSettlTerms?: ILegPaymentStreamNonDeliverableSettlTerms// [34] LegPaymentStreamNonDeliverableRefCurrency.40359, LegPaymentStreamNonDeliverableFixingDatesBusinessDayConvention.40360 .. LegPaymentStreamNonDeliverableFixingDatesOffsetDayType.40365
+  LegPaymentStreamCompoundingDates?: ILegPaymentStreamCompoundingDates// [33] LegPaymentStreamCompoundingDatesBusinessDayConvention.42408, LegPaymentStreamCompoundingDatesBusinessCenterGrp.42419 .. LegPaymentStreamBoundsLastDateUnadjusted.42418
+  LegPaymentStreamNonDeliverableSettlTerms?: ILegPaymentStreamNonDeliverableSettlTerms// [34] LegPaymentStreamNonDeliverableRefCurrency.40359, LegPaymentStreamNonDeliverableFixingDatesBusinessDayConvention.40360 .. LegSettlRatePostponementCalculationAgent.40906
 }

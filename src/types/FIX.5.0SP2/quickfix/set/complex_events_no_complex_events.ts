@@ -21,7 +21,7 @@ export interface IComplexEventsNoComplexEvents {
   ComplexEventPriceBoundaryPrecision?: number// [13] 1488 (Float)
   ComplexEventPriceTimeType?: number// [14] 1489 (Int)
   ComplexEventCondition?: number// [15] 1490 (Int)
-  ComplexEventDates?: IComplexEventDates// [16] NoComplexEventDates.1491, ComplexEventStartDate.1492, ComplexEventEndDate.1493
+  ComplexEventDates?: IComplexEventDates// [16] NoComplexEventDates.1491, ComplexEventStartDate.1492 .. ComplexEventEndTime.1496
   ComplexEventCurrencyOne?: string// [17] 2124 (String)
   ComplexEventCurrencyOneCodeSource?: string// [18] 2942 (String)
   ComplexEventCurrencyTwo?: string// [19] 2125 (String)
@@ -44,7 +44,7 @@ export interface IComplexEventsNoComplexEvents {
   ComplexEventCreditEventStandardSources?: boolean// [36] 2136 (Boolean)
   ComplexEventCreditEventMinimumSources?: number// [37] 2137 (Int)
   ComplexEventCreditEventSourceGrp?: IComplexEventCreditEventSourceGrp// [38] NoComplexEventCreditEventSources.41029, ComplexEventCreditEventSource.41030
-  ComplexEventCreditEventGrp?: IComplexEventCreditEventGrp// [39] NoComplexEventCreditEvents.40997, ComplexEventCreditEventType.40998 .. ComplexEventCreditEventRateSource.41004
+  ComplexEventCreditEventGrp?: IComplexEventCreditEventGrp// [39] NoComplexEventCreditEvents.40997, ComplexEventCreditEventType.40998 .. ComplexEventCreditEventQualifier.41006
   ComplexEventFuturesPriceValuation?: boolean// [40] 2597 (Boolean)
   ComplexEventOptionsPriceValuation?: boolean// [41] 2598 (Boolean)
   ComplexEventPVFinalPriceElectionFallback?: number// [42] 2599 (Int)

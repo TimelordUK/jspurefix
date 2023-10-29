@@ -18,6 +18,12 @@ export class FixDefinitions {
   constructor (public readonly source: FixDefinitionSource, public readonly version: FixVersion) {
   }
 
+  public toString (): string {
+    const msgs = this.message.values()
+    const strs: String[] = msgs.map(m => m.toString())
+    return JSON.stringify(strs, null, 4)
+  }
+
   public containedSet (type: string): ContainedFieldSet | null {
     return this.message.get(type) ?? this.component.get(type)
   }

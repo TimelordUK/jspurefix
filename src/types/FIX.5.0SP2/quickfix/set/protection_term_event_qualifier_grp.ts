@@ -1,0 +1,5 @@
+import { IProtectionTermEventQualifierGrpNoProtectionTermEventQualifiers } from './protection_term_event_qualifier_grp_no_protection_term_event_qualifiers'
+
+export interface IProtectionTermEventQualifierGrp {
+  NoProtectionTermEventQualifiers?: IProtectionTermEventQualifierGrpNoProtectionTermEventQualifiers[]// [1] ProtectionTermEventQualifier.40200
+}

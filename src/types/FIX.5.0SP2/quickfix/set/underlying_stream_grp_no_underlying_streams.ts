@@ -31,11 +31,11 @@ export interface IUnderlyingStreamGrpNoUnderlyingStreams {
   UnderlyingStreamEffectiveDate?: IUnderlyingStreamEffectiveDate// [20] UnderlyingStreamEffectiveDateUnadjusted.40057, UnderlyingStreamEffectiveDateBusinessDayConvention.40058 .. UnderlyingStreamEffectiveDateAdjusted.40064
   UnderlyingStreamTerminationDate?: IUnderlyingStreamTerminationDate// [21] UnderlyingStreamTerminationDateUnadjusted.40548, UnderlyingStreamTerminationDateBusinessDayConvention.40549 .. UnderlyingStreamTerminationDateAdjusted.40555
   UnderlyingStreamCalculationPeriodDates?: IUnderlyingStreamCalculationPeriodDates// [22] UnderlyingStreamCalculationPeriodDatesXID.41957, UnderlyingStreamCalculationPeriodDatesXIDRef.41958 .. UnderlyingStreamCalculationCorrectionUnit.41961
-  UnderlyingPaymentStream?: IUnderlyingPaymentStream// [23] UnderlyingPaymentStreamType.40568, UnderlyingPaymentStreamMarketRate.40569 .. UnderlyingPaymentStreamNonDeliverableFixingDatesOffsetDayType.40654
+  UnderlyingPaymentStream?: IUnderlyingPaymentStream// [23] UnderlyingPaymentStreamType.40568, UnderlyingPaymentStreamMarketRate.40569 .. UnderlyingSettlRatePostponementCalculationAgent.40663
   UnderlyingPaymentScheduleGrp?: IUnderlyingPaymentScheduleGrp// [24] NoUnderlyingPaymentSchedules.40664, UnderlyingPaymentScheduleType.40665 .. UnderlyingPaymentScheduleInterimExchangeDateAdjusted.40703
   UnderlyingPaymentStubGrp?: IUnderlyingPaymentStubGrp// [25] NoUnderlyingPaymentStubs.40708, UnderlyingPaymentStubType.40709 .. UnderlyingPaymentStubIndex2FloorRate.40737
   UnderlyingDeliveryStream?: IUnderlyingDeliveryStream// [26] UnderlyingDeliveryStreamType.41777, UnderlyingDeliveryStreamCommoditySourceGrp.41808 .. UnderlyingDeliveryStreamRouteOrCharter.43096
-  UnderlyingDeliveryScheduleGrp?: IUnderlyingDeliveryScheduleGrp// [27] NoUnderlyingDeliverySchedules.41756, UnderlyingDeliveryScheduleType.41757 .. UnderlyingDeliveryScheduleSettlHolidaysProcessingInstruction.41769
+  UnderlyingDeliveryScheduleGrp?: IUnderlyingDeliveryScheduleGrp// [27] NoUnderlyingDeliverySchedules.41756, UnderlyingDeliveryScheduleType.41757 .. UnderlyingDeliveryScheduleSettlTotalHours.41772
   UnderlyingStreamText?: string// [28] 40547 (String)
   EncodedUnderlyingStreamTextLen?: number// [29] 40988 (Length)
   EncodedUnderlyingStreamText?: Buffer// [30] 40989 (RawData)
