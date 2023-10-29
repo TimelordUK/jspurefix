@@ -172,7 +172,7 @@ export class QuickFixXmlFileParser extends FixParser {
           this.state.reset()
           await this.onePass()
           this.state.next()
-          //console.log(`${this.state.toString()}`)
+          // console.log(`${this.state.toString()}`)
         }
         this.encloseMessages()
         resolve(this.state.definitions)
