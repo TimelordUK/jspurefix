@@ -68,7 +68,7 @@ export class MessageGenerator {
     return reducer.reduce(set, {
       simple: (a: ILooseObject, sf: ContainedSimpleField) => {
         const tag: number = sf.definition.tag
-        const include = tag === set.firstSimple.definition.tag || this.length > 0 || Math.random() <= density
+        const include = tag === set.firstSimple?.definition.tag || this.length > 0 || Math.random() <= density
         if (include) {
           const val: any = sf.definition.isEnum() ? MessageGenerator.getRandomEnum(sf.definition) : this.createSimple(sf)
           if (val != null) {

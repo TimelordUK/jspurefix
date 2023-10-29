@@ -1,0 +1,5 @@
+import { IUnderlyingReturnRateValuationDateGrpNoUnderlyingReturnRateValuationDates } from './underlying_return_rate_valuation_date_grp_no_underlying_return_rate_valuation_dates'
+
+export interface IUnderlyingReturnRateValuationDateGrp {
+  NoUnderlyingReturnRateValuationDates?: IUnderlyingReturnRateValuationDateGrpNoUnderlyingReturnRateValuationDates[]// [1] UnderlyingReturnRateValuationDate.43072, UnderlyingReturnRateValuationDateType.43073
+}

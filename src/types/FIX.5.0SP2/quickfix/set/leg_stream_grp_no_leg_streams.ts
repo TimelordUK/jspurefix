@@ -35,7 +35,7 @@ export interface ILegStreamGrpNoLegStreams {
   LegPaymentScheduleGrp?: ILegPaymentScheduleGrp// [24] NoLegPaymentSchedules.40374, LegPaymentScheduleType.40375 .. LegPaymentScheduleInterimExchangeDateAdjusted.40413
   LegPaymentStubGrp?: ILegPaymentStubGrp// [25] NoLegPaymentStubs.40418, LegPaymentStubType.40419 .. LegPaymentStubIndex2FloorRate.40447
   LegDeliveryStream?: ILegDeliveryStream// [26] LegDeliveryStreamType.41429, LegDeliveryStreamCommoditySourceGrp.41460 .. LegDeliveryStreamRouteOrCharter.43095
-  LegDeliveryScheduleGrp?: ILegDeliveryScheduleGrp// [27] NoLegDeliverySchedules.41408, LegDeliveryScheduleType.41409 .. LegDeliveryScheduleSettlTotalHours.41424
+  LegDeliveryScheduleGrp?: ILegDeliveryScheduleGrp// [27] NoLegDeliverySchedules.41408, LegDeliveryScheduleType.41409 .. LegDeliveryScheduleSettlTimeType.41428
   LegStreamText?: string// [28] 40248 (String)
   EncodedLegStreamTextLen?: number// [29] 40978 (Length)
   EncodedLegStreamText?: Buffer// [30] 40979 (RawData)

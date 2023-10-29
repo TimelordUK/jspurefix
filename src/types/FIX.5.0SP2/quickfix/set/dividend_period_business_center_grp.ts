@@ -1,0 +1,5 @@
+import { IDividendPeriodBusinessCenterGrpNoDividendPeriodBusinessCenters } from './dividend_period_business_center_grp_no_dividend_period_business_centers'
+
+export interface IDividendPeriodBusinessCenterGrp {
+  NoDividendPeriodBusinessCenters?: IDividendPeriodBusinessCenterGrpNoDividendPeriodBusinessCenters[]// [1] DividendPeriodBusinessCenter.42295
+}

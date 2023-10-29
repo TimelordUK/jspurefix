@@ -1,0 +1,5 @@
+import { IUnderlyingReturnRateInformationSourceGrpNoUnderlyingReturnRateInformationSources } from './underlying_return_rate_information_source_grp_no_underlying_return_rate_information_sources'
+
+export interface IUnderlyingReturnRateInformationSourceGrp {
+  NoUnderlyingReturnRateInformationSources?: IUnderlyingReturnRateInformationSourceGrpNoUnderlyingReturnRateInformationSources[]// [1] UnderlyingReturnRateInformationSource.43061, UnderlyingReturnRateReferencePage.43062, UnderlyingReturnRateReferencePageHeading.43063
+}

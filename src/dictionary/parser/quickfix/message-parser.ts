@@ -49,8 +49,7 @@ export class MessageParser extends NodeParser {
     if (contained) {
       this.progress.newAdds++
       msg.add(contained)
-      this.progress.newContexts++
-      this.parseContexts.push(context)
+      this.startContext(context)
     }
   }
 

@@ -14,5 +14,5 @@ export interface ILegDeliveryScheduleGrpNoLegDeliverySchedules {
   LegDeliveryScheduleSettlTimeZone?: string// [11] 41419 (String)
   LegDeliveryScheduleSettlFlowType?: number// [12] 41420 (Int)
   LegDeliveryScheduleSettlHolidaysProcessingInstruction?: number// [13] 41421 (Int)
-  LegDeliveryScheduleSettlDayGrp?: ILegDeliveryScheduleSettlDayGrp// [14] NoLegDeliveryScheduleSettlDays.41422, LegDeliveryScheduleSettlDay.41423, LegDeliveryScheduleSettlTotalHours.41424
+  LegDeliveryScheduleSettlDayGrp?: ILegDeliveryScheduleSettlDayGrp// [14] NoLegDeliveryScheduleSettlDays.41422, LegDeliveryScheduleSettlDay.41423 .. LegDeliveryScheduleSettlTimeType.41428
 }

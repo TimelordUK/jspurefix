@@ -35,7 +35,7 @@ export interface IStreamGrpNoStreams {
   PaymentScheduleGrp?: IPaymentScheduleGrp// [24] NoPaymentSchedules.40828, PaymentScheduleType.40829 .. PaymentScheduleInterimExchangeDateAdjusted.40867
   PaymentStubGrp?: IPaymentStubGrp// [25] NoPaymentStubs.40872, PaymentStubType.40873 .. PaymentStubIndex2FloorRate.40901
   DeliveryStream?: IDeliveryStream// [26] DeliveryStreamType.41058, DeliveryStreamCommoditySourceGrp.41085 .. DeliveryStreamRouteOrCharter.43094
-  DeliveryScheduleGrp?: IDeliveryScheduleGrp// [27] NoDeliverySchedules.41037, DeliveryScheduleType.41038 .. DeliveryScheduleSettlTotalHours.41053
+  DeliveryScheduleGrp?: IDeliveryScheduleGrp// [27] NoDeliverySchedules.41037, DeliveryScheduleType.41038 .. DeliveryScheduleSettlTimeType.41057
   StreamText?: string// [28] 40056 (String)
   EncodedStreamTextLen?: number// [29] 40982 (Length)
   EncodedStreamText?: Buffer// [30] 40983 (RawData)

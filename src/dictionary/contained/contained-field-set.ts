@@ -10,6 +10,30 @@ import { TagType } from '../../buffer/tag/tag-type'
 import { ContainedSetType } from '../contained-set-type'
 
 export abstract class ContainedFieldSet {
+  public reset (): void {
+    this.groups.clear()
+    this.components.clear()
+    this.simple.clear()
+    this.empty(this.fields)
+    this.empty(this.flattenedTag)
+    this.empty(this.localAttribute)
+    this.localNameToField.clear()
+  }
+
+  private empty<T> (arr: T[]): void {
+    while (arr.length > 0) {
+      arr.pop()
+    }
+  }
+
+  private removeALl<T> (container: INumericKeyed<T>): void {
+    const keys: string[] = Object.keys(container)
+    keys.forEach(key => {
+      const kn: number = parseInt(key)
+      delete container[kn]
+    })
+  }
+
   public readonly groups: Dictionary<ContainedGroupField> = new Dictionary<ContainedGroupField>()
   public readonly components: Dictionary<ContainedComponentField> = new Dictionary<ContainedComponentField>()
   public readonly simple: Dictionary<ContainedSimpleField> = new Dictionary<ContainedSimpleField>()
@@ -36,7 +60,7 @@ export abstract class ContainedFieldSet {
   // all attributes in order of being declared
   public readonly localAttribute: ContainedSimpleField[] = []
   // at any level on this set, first declared simple field
-  public firstSimple: ContainedSimpleField
+  public firstSimple: (ContainedSimpleField | null)
   // parser needs to know about raw fields
   public containsRaw: boolean = false
 

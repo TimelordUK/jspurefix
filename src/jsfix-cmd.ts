@@ -661,6 +661,6 @@ if (help) {
       showHelp()
     }
   }).catch((e: Error) => {
-    console.log(`error ${e.message}`)
+    console.error(e)
   })
 }

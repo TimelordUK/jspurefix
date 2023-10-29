@@ -9,29 +9,36 @@ export class FieldSetParser extends NodeParser {
     super(progress)
   }
 
+  private expandName (componentName: string): string {
+    switch (componentName) {
+      case 'header': {
+        return 'StandardHeader'
+      }
+
+      case 'trailer': {
+        return 'StandardTrailer'
+      }
+
+      default:
+        return componentName
+    }
+  }
+
   public open (line: number, node: ISaxNode): void {
     switch (node.name) {
       case 'component':
       case 'header':
       case 'trailer': {
         const componentName: string = node.attributes.name || node.name
-        let fullName = componentName
-        if (componentName === 'header') {
-          fullName = 'StandardHeader'
-        } else if (componentName === 'trailer') {
-          fullName = 'StandardTrailer'
-        }
-
+        const fullName = this.expandName(componentName)
         if (!node.isSelfClosing) {
           const set: ComponentFieldDefinition = new ComponentFieldDefinition(fullName, componentName, null, null)
           const context: ParseContext = new ParseContext(fullName, true, set)
-          this.progress.newContexts++
-          this.parseContexts.push(context)
+          this.startContext(context)
         } else {
           this.addComponentField(fullName, node)
           const context: ParseContext = new ParseContext(fullName, false, null)
-          this.progress.newContexts++
-          this.parseContexts.push(context)
+          this.startContext(context)
         }
         break
       }

@@ -35,7 +35,7 @@ export interface IUnderlyingStreamGrpNoUnderlyingStreams {
   UnderlyingPaymentScheduleGrp?: IUnderlyingPaymentScheduleGrp// [24] NoUnderlyingPaymentSchedules.40664, UnderlyingPaymentScheduleType.40665 .. UnderlyingPaymentScheduleInterimExchangeDateAdjusted.40703
   UnderlyingPaymentStubGrp?: IUnderlyingPaymentStubGrp// [25] NoUnderlyingPaymentStubs.40708, UnderlyingPaymentStubType.40709 .. UnderlyingPaymentStubIndex2FloorRate.40737
   UnderlyingDeliveryStream?: IUnderlyingDeliveryStream// [26] UnderlyingDeliveryStreamType.41777, UnderlyingDeliveryStreamCommoditySourceGrp.41808 .. UnderlyingDeliveryStreamRouteOrCharter.43096
-  UnderlyingDeliveryScheduleGrp?: IUnderlyingDeliveryScheduleGrp// [27] NoUnderlyingDeliverySchedules.41756, UnderlyingDeliveryScheduleType.41757 .. UnderlyingDeliveryScheduleSettlTotalHours.41772
+  UnderlyingDeliveryScheduleGrp?: IUnderlyingDeliveryScheduleGrp// [27] NoUnderlyingDeliverySchedules.41756, UnderlyingDeliveryScheduleType.41757 .. UnderlyingDeliveryScheduleSettlTimeType.41776
   UnderlyingStreamText?: string// [28] 40547 (String)
   EncodedUnderlyingStreamTextLen?: number// [29] 40988 (Length)
   EncodedUnderlyingStreamText?: Buffer// [30] 40989 (RawData)

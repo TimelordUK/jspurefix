@@ -1,4 +1,6 @@
+import { ILegReturnRatePriceGrp } from './leg_return_rate_price_grp'
 import { ILegReturnRateFXConversionGrp } from './leg_return_rate_fx_conversion_grp'
+import { ILegReturnRateInformationSourceGrp } from './leg_return_rate_information_source_grp'
 import { ILegReturnRateDateGrp } from './leg_return_rate_date_grp'
 
 export interface ILegReturnRateGrpNoLegReturnRates {
@@ -8,25 +10,27 @@ export interface ILegReturnRateGrpNoLegReturnRates {
   LegReturnRateCommissionCurrency?: string// [4] 42538 (String)
   LegReturnRateTotalCommissionPerTrade?: number// [5] 42539 (Float)
   LegReturnRateDeterminationMethod?: string// [6] 42540 (String)
-  LegReturnRateFXConversionGrp?: ILegReturnRateFXConversionGrp// [7] NoLegReturnRateFXConversions.42530, LegReturnRateFXCurrencySymbol.42531 .. LegReturnRateFXRateCalc.42533
-  LegReturnRateAmountRelativeTo?: number// [8] 42541 (Int)
-  LegReturnRateQuoteMeasureType?: string// [9] 42542 (String)
-  LegReturnRateQuoteUnits?: string// [10] 42543 (String)
-  LegReturnRateQuoteMethod?: number// [11] 42544 (Int)
-  LegReturnRateQuoteCurrency?: string// [12] 42545 (String)
-  LegReturnRateQuoteCurrencyType?: string// [13] 42546 (String)
-  LegReturnRateQuoteTimeType?: number// [14] 42547 (Int)
-  LegReturnRateQuoteTime?: string// [15] 42548 (String)
-  LegReturnRateQuoteDate?: Date// [16] 42549 (LocalDate)
-  LegReturnRateQuoteExpirationTime?: string// [17] 42550 (String)
-  LegReturnRateQuoteBusinessCenter?: string// [18] 42551 (String)
-  LegReturnRateQuoteExchange?: string// [19] 42552 (String)
-  LegReturnRateQuotePricingModel?: string// [20] 42553 (String)
-  LegReturnRateCashFlowType?: string// [21] 42554 (String)
-  LegReturnRateDateGrp?: ILegReturnRateDateGrp// [22] NoLegReturnRateDates.42508, LegReturnRateDateMode.42509 .. LegReturnRateValuationDateBusinessDayConvention.42529
-  LegReturnRateValuationTimeType?: number// [23] 42555 (Int)
-  LegReturnRateValuationTime?: string// [24] 42556 (String)
-  LegReturnRateValuationTimeBusinessCenter?: string// [25] 42557 (String)
-  LegReturnRateValuationPriceOption?: number// [26] 42558 (Int)
-  LegReturnRateFinalPriceFallback?: number// [27] 42559 (Int)
+  LegReturnRatePriceGrp?: ILegReturnRatePriceGrp// [7] NoLegReturnRatePrices.42564, LegReturnRatePriceBasis.42565 .. LegReturnRatePriceType.42568
+  LegReturnRateFXConversionGrp?: ILegReturnRateFXConversionGrp// [8] NoLegReturnRateFXConversions.42530, LegReturnRateFXCurrencySymbol.42531 .. LegReturnRateFXRateCalc.42533
+  LegReturnRateAmountRelativeTo?: number// [9] 42541 (Int)
+  LegReturnRateQuoteMeasureType?: string// [10] 42542 (String)
+  LegReturnRateQuoteUnits?: string// [11] 42543 (String)
+  LegReturnRateQuoteMethod?: number// [12] 42544 (Int)
+  LegReturnRateQuoteCurrency?: string// [13] 42545 (String)
+  LegReturnRateQuoteCurrencyType?: string// [14] 42546 (String)
+  LegReturnRateQuoteTimeType?: number// [15] 42547 (Int)
+  LegReturnRateQuoteTime?: string// [16] 42548 (String)
+  LegReturnRateQuoteDate?: Date// [17] 42549 (LocalDate)
+  LegReturnRateQuoteExpirationTime?: string// [18] 42550 (String)
+  LegReturnRateQuoteBusinessCenter?: string// [19] 42551 (String)
+  LegReturnRateQuoteExchange?: string// [20] 42552 (String)
+  LegReturnRateInformationSourceGrp?: ILegReturnRateInformationSourceGrp// [21] NoLegReturnRateInformationSources.42560, LegReturnRateInformationSource.42561 .. LegReturnRateReferencePageHeading.42563
+  LegReturnRateQuotePricingModel?: string// [22] 42553 (String)
+  LegReturnRateCashFlowType?: string// [23] 42554 (String)
+  LegReturnRateDateGrp?: ILegReturnRateDateGrp// [24] NoLegReturnRateDates.42508, LegReturnRateDateMode.42509 .. LegReturnRateValuationDateBusinessCenter.42570
+  LegReturnRateValuationTimeType?: number// [25] 42555 (Int)
+  LegReturnRateValuationTime?: string// [26] 42556 (String)
+  LegReturnRateValuationTimeBusinessCenter?: string// [27] 42557 (String)
+  LegReturnRateValuationPriceOption?: number// [28] 42558 (Int)
+  LegReturnRateFinalPriceFallback?: number// [29] 42559 (Int)
 }
