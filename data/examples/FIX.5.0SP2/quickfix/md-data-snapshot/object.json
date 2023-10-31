@@ -1,0 +1,41 @@
+{
+  "MDReqID": "EURJPY10Y=TDS",
+  "Instrument": {
+    "SecurityID": "EURJPY10Y=TDS",
+    "SecurityIDSource": "8",
+    "SecurityType": "FXFWD",
+    "SecuritySubType": "NONE",
+    "Currency": "EUR",
+    "InstrumentCustom": "EUZZ02X3F8ZYPHZZZZ"
+  },
+  "MDFullGrp": {
+    "NoMDEntries": [
+      {
+        "MDEntryType": "0",
+        "MDEntryID": "2971",
+        "MDEntryPx": -3657.05,
+        "MDEntrySize": 0,
+        "MDEntryDate": "2023-10-30T00:00:00.000Z",
+        "MDEntryTime": "1899-12-31T10:18:33.507Z",
+        "TradingSessionID": "1"
+      },
+      {
+        "MDEntryType": "1",
+        "MDEntryID": "2972",
+        "MDEntryPx": -3590.35,
+        "MDEntrySize": 0,
+        "MDEntryDate": "2023-10-30T00:00:00.000Z",
+        "MDEntryTime": "1899-12-31T10:18:33.507Z",
+        "TradingSessionID": "1"
+      },
+      {
+        "MDEntryType": "H",
+        "MDEntryID": "2973",
+        "MDEntryPx": -3623.7,
+        "MDEntryDate": "2023-10-30T00:00:00.000Z",
+        "MDEntryTime": "1899-12-31T10:18:33.507Z",
+        "TradingSessionID": "1"
+      }
+    ]
+  }
+}
