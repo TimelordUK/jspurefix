@@ -2900,6 +2900,7 @@ export enum MsgTag {
   SecurityReferenceDataSupplement = 2962,
   MultiJurisdictionReportingIndicator = 2963,
   SelfMatchPreventionInstruction = 2964,
+  InstrumentCustom = 20460,
   NoAdditionalTermBondRefs = 40000,
   AdditionalTermBondSecurityID = 40001,
   AdditionalTermBondSecurityIDSource = 40002,

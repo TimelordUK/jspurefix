@@ -94,6 +94,29 @@
          <field name='EncodedTextLen' required='N' />
          <field name='EncodedText' required='N' />
      </message>
+     <message name='Heartbeat' msgcat='admin' msgtype='0'>
+         <field name='TestReqID' required='N' />
+     </message>
+     <message name='TestRequest' msgcat='admin' msgtype='1'>
+         <field name='TestReqID' required='Y' />
+     </message>
+     <message name='ResendRequest' msgcat='admin' msgtype='2'>
+         <field name='BeginSeqNo' required='Y' />
+         <field name='EndSeqNo' required='Y' />
+     </message>
+     <message name='Reject' msgcat='admin' msgtype='3'>
+         <field name='RefSeqNum' required='Y' />
+         <field name='RefTagID' required='N' />
+         <field name='RefMsgType' required='N' />
+         <field name='SessionRejectReason' required='N' />
+         <field name='Text' required='N' />
+         <field name='EncodedTextLen' required='N' />
+         <field name='EncodedText' required='N' />
+     </message>
+     <message name='SequenceReset' msgcat='admin' msgtype='4'>
+         <field name='GapFillFlag' required='N' />
+         <field name='NewSeqNo' required='Y' />
+     </message>
   <message name='IOI' msgtype='6' msgcat='app'>
    <component name='ApplicationSequenceControl' required='N' />
    <field name='IOIID' required='Y' />
@@ -4836,6 +4859,8 @@
    <field name='UPICode' required='N' />
    <field name='SecurityType' required='N' />
    <field name='SecuritySubType' required='N' />
+   <field name='Currency' required='N' />
+   <field name='InstrumentCustom' required='N' />
    <field name='MaturityMonthYear' required='N' />
    <field name='MaturityDate' required='N' />
    <field name='MaturityTime' required='N' />
@@ -5006,6 +5031,7 @@
    <field name='NextIndexRollDate' required='N' />
    <component name='FloatingRateIndex' required='N' />
    <component name='ReferenceDataDateGrp' required='N' />
+
   </component>
   <component name='InstrumentLeg'>
    <field name='LegSymbol' required='N' />
@@ -24282,6 +24308,7 @@
    <value enum='1' description='ABSOLUTE' />
    <value enum='2' description='PERCENTAGE' />
   </field>
+  <field number='20460' name='InstrumentCustom' type='STRING' />
   <field number='2480' name='MDStatisticValueUnit' type='INT' />
   <field number='2481' name='EncodedMDStatisticDescLen' type='LENGTH' />
   <field number='2482' name='EncodedMDStatisticDesc' type='DATA' />
