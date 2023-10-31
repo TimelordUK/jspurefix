@@ -73,6 +73,23 @@ export abstract class NodeParser {
     }
   }
 
+  protected addComponentDefinition (name: string): void {
+    const latest: ParseContext | null = this.parseContexts.pop() ?? null
+    if (latest == null) {
+      throw new Error(`component field ${name} closes yet does not exist.`)
+    }
+    if (!latest.defining) {
+      return
+    }
+    const asComponent: ComponentFieldDefinition | null = latest.asComponent() ?? null
+    if (asComponent != null) {
+      this.progress.newDefines++
+      this.progress.definitions.addComponentFieldDef(asComponent)
+    } else {
+      throw new Error(`latest not instance of component field ${latest.name} `)
+    }
+  }
+
   protected addGroupField (name: string): void {
     const group: ParseContext | null = this.parseContexts.pop() ?? null
     if (group == null) {
@@ -87,6 +104,35 @@ export abstract class NodeParser {
       }
     } else {
       throw new Error(`group field ${group.name} has no parent on which to add.`)
+    }
+  }
+
+  private expandName (componentName: string): string {
+    switch (componentName) {
+      case 'header': {
+        return 'StandardHeader'
+      }
+
+      case 'trailer': {
+        return 'StandardTrailer'
+      }
+
+      default:
+        return componentName
+    }
+  }
+
+  protected beginComponentDefinition (node: ISaxNode): void {
+    const componentName: string = node.attributes.name || node.name
+    const fullName = this.expandName(componentName)
+    if (!node.isSelfClosing) {
+      const set: ComponentFieldDefinition = new ComponentFieldDefinition(fullName, componentName, null, null)
+      const context: ParseContext = new ParseContext(fullName, true, set)
+      this.startContext(context)
+    } else {
+      this.addComponentField(fullName, node)
+      const context: ParseContext = new ParseContext(fullName, false, null)
+      this.startContext(context)
     }
   }
 
