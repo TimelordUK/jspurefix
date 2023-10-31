@@ -21,9 +21,16 @@ beforeAll(async () => {
   config = setup.clientConfig
 }, 45000)
 
-test('test md request JSON => object => fix => object', async () => {
+test('test md snapshot JSON => object => fix => object', async () => {
   const msgType: string = MsgType.MarketDataSnapshotFullRefresh
   const file: string = path.join(root, 'md-data-snapshot/object.json')
+  const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
+  await expect(testEncodeDecode(config, msgType, msg)).resolves.toEqual(msg)
+}, 1000)
+
+test('test md inc snapshot JSON => object => fix => object', async () => {
+  const msgType: string = MsgType.MarketDataIncrementalRefresh
+  const file: string = path.join(root, 'md-data-inc-snapshot/object.json')
   const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
   await expect(testEncodeDecode(config, msgType, msg)).resolves.toEqual(msg)
 }, 1000)

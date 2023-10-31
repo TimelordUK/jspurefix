@@ -1,0 +1,86 @@
+[
+  {
+    "name": "StandardHeader",
+    "depth": 1,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 122,
+    "endPosition": 10,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Instrument",
+    "depth": 3,
+    "startTag": 48,
+    "startPosition": 16,
+    "endTag": 22,
+    "endPosition": 17,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Instrument",
+    "depth": 3,
+    "startTag": 48,
+    "startPosition": 26,
+    "endTag": 22,
+    "endPosition": 27,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Instrument",
+    "depth": 3,
+    "startTag": 48,
+    "startPosition": 36,
+    "endTag": 22,
+    "endPosition": 37,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NoMDEntries",
+    "depth": 2,
+    "startTag": 268,
+    "startPosition": 12,
+    "endTag": 336,
+    "endPosition": 42,
+    "delimiterTag": 279,
+    "delimiterPositions": [
+      13,
+      23,
+      33
+    ]
+  },
+  {
+    "name": "MDIncGrp",
+    "depth": 1,
+    "startTag": 268,
+    "startPosition": 12,
+    "endTag": 336,
+    "endPosition": 42,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MarketDataIncrementalRefresh",
+    "depth": 0,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 10,
+    "endPosition": 43,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StandardTrailer",
+    "depth": 1,
+    "startTag": 10,
+    "startPosition": 43,
+    "endTag": 10,
+    "endPosition": 43,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  }
+]
