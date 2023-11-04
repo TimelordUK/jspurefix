@@ -20,6 +20,7 @@ import { ContainedSetType } from '../dictionary/contained-set-type'
 export abstract class MsgView {
   protected sortedTagPosForwards: TagPos[]
   protected sortedTagPosBackwards: TagPos[]
+  private readonly reducer: SetReduce<ILooseObject> = new SetReduce<ILooseObject>()
 
   protected constructor (public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
   }
@@ -328,9 +329,8 @@ export abstract class MsgView {
   }
 
   private asLoose (def: ContainedFieldSet): ILooseObject {
-    const reducer = new SetReduce<ILooseObject>()
     // eslint-disable-next-line
-    return reducer.reduce(def, {
+    return this.reducer.reduce(def, {
       group: (a: ILooseObject, field: ContainedGroupField) => { this.asLooseGroup(a, field) },
       simple: (a: ILooseObject, field: ContainedSimpleField) => { this.asLooseSimple(a, field) },
       component: (a: ILooseObject, field: ContainedComponentField) => { this.asLooseComponent(a, field) }

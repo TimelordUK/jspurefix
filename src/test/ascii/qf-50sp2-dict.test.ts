@@ -1,16 +1,21 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { ComponentFieldDefinition, FixDefinitions } from '../../dictionary/definition'
+import { FixDefinitions } from '../../dictionary/definition'
 import { DefinitionFactory } from '../../util'
-import { ContainedComponentField, ContainedFieldSet, ContainedFieldType } from '../../dictionary/contained'
+import { ContainedFieldSet } from '../../dictionary/contained'
+import { SetConstraintHelper } from '../env/set-constraint-helper'
 
 const root: string = path.join(__dirname, '../env/data')
 
 let definitions: FixDefinitions
+let secHelper: SecDefHelper
+let setHelper: SetConstraintHelper
 
 beforeAll(async () => {
   definitions = await new DefinitionFactory().getDefinitions(`${root}/fix5-mod.xml` ?? '')
+  secHelper = new SecDefHelper(definitions)
+  setHelper = new SetConstraintHelper(definitions)
 }, 45000)
 
 /*
@@ -37,67 +42,58 @@ beforeAll(async () => {
         </message>
  */
 
-function isComponent (set: (ContainedFieldSet | null), index: number, name: string, expected: boolean): void {
-  expect(set).toBeTruthy()
-  const field = set?.fields[index]
-  expect(field?.type).toEqual(ContainedFieldType.Component)
-  expect(field?.name).toEqual(name)
-  expect(field?.required).toEqual(expected)
-  expect(set?.components.get(name)).toBeTruthy()
-}
+class SecDefHelper {
+  constructor (public definitions: FixDefinitions) {}
+  public getSecListGrp (): (ContainedFieldSet | null) {
+    return this.definitions.getSet('SecurityList.SecListGrp')
+  }
 
-function isGroup (set: (ContainedFieldSet | null), index: number, name: string, expected: boolean): void {
-  expect(set).toBeTruthy()
-  const field = set?.fields[index]
-  expect(field?.type).toEqual(ContainedFieldType.Group)
-  expect(field?.name).toEqual(name)
-  expect(field?.required).toEqual(expected)
-  expect(set?.groups.get(name)).toBeTruthy()
-}
+  public getNumRelatedSym (): (ContainedFieldSet | null) {
+    return this.getSecListGrp()?.getSet('NoRelatedSym') ?? null
+  }
 
-function isSimple (set: (ContainedFieldSet | null), index: number, name: string, expected: boolean): void {
-  expect(set).toBeTruthy()
-  const field = set?.fields[index]
-  expect(field?.type).toEqual(ContainedFieldType.Simple)
-  expect(field?.name).toEqual(name)
-  expect(field?.required).toEqual(expected)
-  const masterDef = definitions.simple.get(name)
-  expect(masterDef).toBeTruthy()
-  expect(masterDef?.name).toEqual(name)
-  const tag = masterDef?.tag ?? -1
-  expect(set?.containedTag[tag]).toBeTruthy()
-  expect(set?.simple.get(name)).toBeTruthy()
-  expect(set?.localTag[tag]).toBeTruthy()
-  expect(set?.tagToSimple[tag]).toBeTruthy()
-  expect(set?.localNameToField.get(name)).toBeTruthy()
-  expect(set?.tagToField[tag]).toBeFalsy()
+  public getSecurityTradingRules (): (ContainedFieldSet | null) {
+    return this.getNumRelatedSym()?.getSet('SecurityTradingRules') ?? null
+  }
+
+  public getBaseTradingRules (): (ContainedFieldSet | null) {
+    return this.getSecurityTradingRules()?.getSet('BaseTradingRules') ?? null
+  }
+
+  public getTickRules (): (ContainedFieldSet | null) {
+    return this.getBaseTradingRules()?.getSet('TickRules') ?? null
+  }
+
+  public getNoTickRules (): (ContainedFieldSet | null) {
+    return this.getTickRules()?.getSet('NoTickRules') ?? null
+  }
 }
 
 test('check message', () => {
-  const securityList = definitions.message.get('SecurityList')
+  const securityList: (ContainedFieldSet | null) = definitions?.getSet('SecurityList') ?? null
   expect(securityList).toBeTruthy()
   let index = 0
-  isComponent(securityList, index++, 'StandardHeader', true)
-  isSimple(securityList, index++, 'SecurityReqID', false)
-  isSimple(securityList, index++, 'SecurityResponseID', false)
-  isSimple(securityList, index++, 'SecurityRequestResult', false)
-  isSimple(securityList, index++, 'SecurityListRequestType', false)
-  isSimple(securityList, index++, 'TotNoRelatedSym', false)
-  isSimple(securityList, index++, 'LastFragment', false)
-  isComponent(securityList, index++, 'SecListGrp', false)
-  isSimple(securityList, index++, 'SecurityReportID', false)
-  isSimple(securityList, index++, 'ClearingBusinessDate', false)
-  isSimple(securityList, index++, 'MarketID', false)
-  isSimple(securityList, index++, 'MarketSegmentID', false)
-  isSimple(securityList, index++, 'SecurityListID', false)
-  isSimple(securityList, index++, 'SecurityListRefID', false)
-  isSimple(securityList, index++, 'SecurityListDesc', false)
-  isSimple(securityList, index++, 'EncodedSecurityListDescLen', false)
-  isSimple(securityList, index++, 'EncodedSecurityListDesc', false)
-  isSimple(securityList, index++, 'SecurityListType', false)
-  isSimple(securityList, index++, 'SecurityListTypeSource', false)
-  isSimple(securityList, index++, 'TransactTime', false)
-  isComponent(securityList, index++, 'StandardTrailer', true)
+  setHelper.isComponent(securityList, index++, 'StandardHeader', true)
+  setHelper.isSimple(securityList, index++, 'SecurityReqID', false)
+  setHelper.isSimple(securityList, index++, 'SecurityResponseID', false)
+  setHelper.isSimple(securityList, index++, 'SecurityRequestResult', false)
+  setHelper.isSimple(securityList, index++, 'SecurityListRequestType', false)
+  setHelper.isSimple(securityList, index++, 'TotNoRelatedSym', false)
+  setHelper.isSimple(securityList, index++, 'LastFragment', false)
+  setHelper.isComponent(securityList, index++, 'SecListGrp', false)
+  setHelper.isSimple(securityList, index++, 'SecurityReportID', false)
+  setHelper.isSimple(securityList, index++, 'ClearingBusinessDate', false)
+  setHelper.isSimple(securityList, index++, 'MarketID', false)
+  setHelper.isSimple(securityList, index++, 'MarketSegmentID', false)
+  setHelper.isSimple(securityList, index++, 'SecurityListID', false)
+  setHelper.isSimple(securityList, index++, 'SecurityListRefID', false)
+  setHelper.isSimple(securityList, index++, 'SecurityListDesc', false)
+  setHelper.isSimple(securityList, index++, 'EncodedSecurityListDescLen', false)
+  setHelper.isSimple(securityList, index++, 'EncodedSecurityListDesc', false)
+  setHelper.isSimple(securityList, index++, 'SecurityListType', false)
+  setHelper.isSimple(securityList, index++, 'SecurityListTypeSource', false)
+  setHelper.isSimple(securityList, index++, 'TransactTime', false)
+  setHelper.isComponent(securityList, index++, 'StandardTrailer', true)
 })
 
 /*
@@ -123,63 +119,32 @@ test('check message', () => {
         </component>
  */
 
-function getSecListGrp (): (ContainedComponentField | null) {
-  const securityList = definitions.message.get('SecurityList')
-  expect(securityList).toBeTruthy()
-  const secListGrp = securityList?.components.get('SecListGrp')
-  expect(secListGrp).toBeTruthy()
-  return secListGrp ?? null
-}
-
-function getNumRelatedSym (): (ComponentFieldDefinition | null) {
-  const secListGrp = getSecListGrp()
-  const noRelatedField = secListGrp?.definition?.fields[0] as ContainedComponentField
-  expect(noRelatedField).toBeTruthy()
-  const noRelatedSym = noRelatedField?.definition ?? null
-  expect(noRelatedSym).toBeTruthy()
-  return noRelatedSym
-}
-
-function getSecurityTradingRules (): (ComponentFieldDefinition | null) {
-  const numRelatedSym = getNumRelatedSym()
-  const securityTradingRules = numRelatedSym?.components.get('SecurityTradingRules')
-  expect(securityTradingRules).toBeTruthy()
-  return securityTradingRules?.definition ?? null
-}
-
-function getBaseTradingRules (): (ComponentFieldDefinition | null) {
-  const securityTradingRules = getSecurityTradingRules()
-  expect(securityTradingRules).toBeTruthy()
-  const baseTradingRules = securityTradingRules?.components.get('BaseTradingRules')
-  return baseTradingRules?.definition ?? null
-}
-
 test('check SecListGrp', () => {
-  const secListGrp = getSecListGrp()
+  const secListGrp = secHelper.getSecListGrp()
   expect(secListGrp).toBeTruthy()
-  expect(secListGrp?.definition?.fields?.length).toEqual(1)
-  isGroup(secListGrp?.definition ?? null, 0, 'NoRelatedSym', false)
+  expect(secListGrp?.fields?.length).toEqual(1)
+  setHelper.isGroup(secListGrp ?? null, 0, 'NoRelatedSym', false)
 })
 
 test('check NoRelatedSym', () => {
   let index = 0
-  const noRelatedSym = getNumRelatedSym()
-  isComponent(noRelatedSym, index++, 'Instrument', false)
-  isComponent(noRelatedSym, index++, 'InstrumentExtension', false)
-  isComponent(noRelatedSym, index++, 'FinancingDetails', false)
-  isComponent(noRelatedSym, index++, 'UndInstrmtGrp', false)
-  isSimple(noRelatedSym, index++, 'Currency', false)
-  isSimple(noRelatedSym, index++, 'ContractPositionNumber', false)
-  isComponent(noRelatedSym, index++, 'Stipulations', false)
-  isComponent(noRelatedSym, index++, 'InstrmtLegSecListGrp', false)
-  isComponent(noRelatedSym, index++, 'SpreadOrBenchmarkCurveData', false)
-  isComponent(noRelatedSym, index++, 'YieldData', false)
-  isSimple(noRelatedSym, index++, 'Text', false)
-  isSimple(noRelatedSym, index++, 'EncodedTextLen', false)
-  isSimple(noRelatedSym, index++, 'EncodedText', false)
-  isComponent(noRelatedSym, index++, 'SecurityTradingRules', false)
-  isComponent(noRelatedSym, index++, 'StrikeRules', false)
-  isSimple(noRelatedSym, index++, 'RelSymTransactTime', false)
+  const noRelatedSym = secHelper.getNumRelatedSym()
+  setHelper.isComponent(noRelatedSym, index++, 'Instrument', false)
+  setHelper.isComponent(noRelatedSym, index++, 'InstrumentExtension', false)
+  setHelper.isComponent(noRelatedSym, index++, 'FinancingDetails', false)
+  setHelper.isComponent(noRelatedSym, index++, 'UndInstrmtGrp', false)
+  setHelper.isSimple(noRelatedSym, index++, 'Currency', false)
+  setHelper.isSimple(noRelatedSym, index++, 'ContractPositionNumber', false)
+  setHelper.isComponent(noRelatedSym, index++, 'Stipulations', false)
+  setHelper.isComponent(noRelatedSym, index++, 'InstrmtLegSecListGrp', false)
+  setHelper.isComponent(noRelatedSym, index++, 'SpreadOrBenchmarkCurveData', false)
+  setHelper.isComponent(noRelatedSym, index++, 'YieldData', false)
+  setHelper.isSimple(noRelatedSym, index++, 'Text', false)
+  setHelper.isSimple(noRelatedSym, index++, 'EncodedTextLen', false)
+  setHelper.isSimple(noRelatedSym, index++, 'EncodedText', false)
+  setHelper.isComponent(noRelatedSym, index++, 'SecurityTradingRules', false)
+  setHelper.isComponent(noRelatedSym, index++, 'StrikeRules', false)
+  setHelper.isSimple(noRelatedSym, index++, 'RelSymTransactTime', false)
 })
 
 /*
@@ -192,10 +157,10 @@ test('check NoRelatedSym', () => {
 
 test('check SecurityTradingRules', () => {
   let index = 0
-  const securityTradingRules = getSecurityTradingRules()
-  isComponent(securityTradingRules, index++, 'BaseTradingRules', false)
-  isComponent(securityTradingRules, index++, 'TradingSessionRulesGrp', false)
-  isComponent(securityTradingRules, index++, 'NestedInstrumentAttribute', false)
+  const securityTradingRules = secHelper.getSecurityTradingRules()
+  setHelper.isComponent(securityTradingRules, index++, 'BaseTradingRules', false)
+  setHelper.isComponent(securityTradingRules, index++, 'TradingSessionRulesGrp', false)
+  setHelper.isComponent(securityTradingRules, index++, 'NestedInstrumentAttribute', false)
 })
 
 /*
@@ -218,18 +183,44 @@ test('check SecurityTradingRules', () => {
 
 test('check BaseTradingRules', () => {
   let index = 0
-  const securityTradingRules = getBaseTradingRules()
-  isComponent(securityTradingRules, index++, 'TickRules', false)
-  isComponent(securityTradingRules, index++, 'LotTypeRules', false)
-  isComponent(securityTradingRules, index++, 'PriceLimits', false)
-  isSimple(securityTradingRules, index++, 'ExpirationCycle', false)
-  isSimple(securityTradingRules, index++, 'MinTradeVol', false)
-  isSimple(securityTradingRules, index++, 'MaxTradeVol', false)
-  isSimple(securityTradingRules, index++, 'MaxPriceVariation', false)
-  isSimple(securityTradingRules, index++, 'ImpliedMarketIndicator', false)
-  isSimple(securityTradingRules, index++, 'TradingCurrency', false)
-  isSimple(securityTradingRules, index++, 'RoundLot', false)
-  isSimple(securityTradingRules, index++, 'MultilegModel', false)
-  isSimple(securityTradingRules, index++, 'MultilegPriceMethod', false)
-  isSimple(securityTradingRules, index++, 'PriceType', false)
+  const securityTradingRules = secHelper.getBaseTradingRules()
+  setHelper.isComponent(securityTradingRules, index++, 'TickRules', false)
+  setHelper.isComponent(securityTradingRules, index++, 'LotTypeRules', false)
+  setHelper.isComponent(securityTradingRules, index++, 'PriceLimits', false)
+  setHelper.isSimple(securityTradingRules, index++, 'ExpirationCycle', false)
+  setHelper.isSimple(securityTradingRules, index++, 'MinTradeVol', false)
+  setHelper.isSimple(securityTradingRules, index++, 'MaxTradeVol', false)
+  setHelper.isSimple(securityTradingRules, index++, 'MaxPriceVariation', false)
+  setHelper.isSimple(securityTradingRules, index++, 'ImpliedMarketIndicator', false)
+  setHelper.isSimple(securityTradingRules, index++, 'TradingCurrency', false)
+  setHelper.isSimple(securityTradingRules, index++, 'RoundLot', false)
+  setHelper.isSimple(securityTradingRules, index++, 'MultilegModel', false)
+  setHelper.isSimple(securityTradingRules, index++, 'MultilegPriceMethod', false)
+  setHelper.isSimple(securityTradingRules, index++, 'PriceType', false)
+})
+
+/*
+        <component name="TickRules">
+            <group name="NoTickRules" required="N">
+                <field name="StartTickPriceRange" required="N" />
+                <field name="EndTickPriceRange" required="N" />
+                <field name="TickIncrement" required="N" />
+                <field name="TickRuleType" required="N" />
+            </group>
+        </component>
+ */
+
+test('check TickRules', () => {
+  let index = 0
+  const tickRules = secHelper.getTickRules()
+  setHelper.isGroup(tickRules, index++, 'NoTickRules', false)
+})
+
+test('check NoTickRules', () => {
+  let index = 0
+  const noTickRules = secHelper.getNoTickRules()
+  setHelper.isSimple(noTickRules, index++, 'StartTickPriceRange', false)
+  setHelper.isSimple(noTickRules, index++, 'EndTickPriceRange', false)
+  setHelper.isSimple(noTickRules, index++, 'TickIncrement', false)
+  setHelper.isSimple(noTickRules, index++, 'TickRuleType', false)
 })
