@@ -1,9 +1,9 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { FixDefinitions } from '../../dictionary/definition'
+import { ComponentFieldDefinition, FixDefinitions } from '../../dictionary/definition'
 import { DefinitionFactory } from '../../util'
-import { ContainedField, ContainedFieldSet, ContainedFieldType } from '../../dictionary/contained'
+import { ContainedComponentField, ContainedFieldSet, ContainedFieldType } from '../../dictionary/contained'
 
 const root: string = path.join(__dirname, '../env/data')
 
@@ -43,6 +43,16 @@ function isComponent (set: (ContainedFieldSet | null), index: number, name: stri
   expect(field?.type).toEqual(ContainedFieldType.Component)
   expect(field?.name).toEqual(name)
   expect(field?.required).toEqual(expected)
+  expect(set?.components.get(name)).toBeTruthy()
+}
+
+function isGroup (set: (ContainedFieldSet | null), index: number, name: string, expected: boolean): void {
+  expect(set).toBeTruthy()
+  const field = set?.fields[index]
+  expect(field?.type).toEqual(ContainedFieldType.Group)
+  expect(field?.name).toEqual(name)
+  expect(field?.required).toEqual(expected)
+  expect(set?.groups.get(name)).toBeTruthy()
 }
 
 function isSimple (set: (ContainedFieldSet | null), index: number, name: string, expected: boolean): void {
@@ -59,6 +69,8 @@ function isSimple (set: (ContainedFieldSet | null), index: number, name: string,
   expect(set?.simple.get(name)).toBeTruthy()
   expect(set?.localTag[tag]).toBeTruthy()
   expect(set?.tagToSimple[tag]).toBeTruthy()
+  expect(set?.localNameToField.get(name)).toBeTruthy()
+  expect(set?.tagToField[tag]).toBeFalsy()
 }
 
 test('check message', () => {
@@ -86,4 +98,72 @@ test('check message', () => {
   isSimple(securityList, index++, 'SecurityListTypeSource', false)
   isSimple(securityList, index++, 'TransactTime', false)
   isComponent(securityList, index++, 'StandardTrailer', true)
+})
+
+/*
+ <component name="SecListGrp">
+            <group name="NoRelatedSym" required="N">
+                <component name="Instrument"/>
+                <component name="InstrumentExtension"/>
+                <component name="FinancingDetails"/>
+                <component name="UndInstrmtGrp"/>
+                <field name="Currency" required="N"/>
+                <field name="ContractPositionNumber" required="N"/>
+                <component name="Stipulations"/>
+                <component name="InstrmtLegSecListGrp"/>
+                <component name="SpreadOrBenchmarkCurveData"/>
+                <component name="YieldData"/>
+                <field name="Text" required="N"/>
+                <field name="EncodedTextLen" required="N"/>
+                <field name="EncodedText" required="N"/>
+                <component name="SecurityTradingRules" required="N" />
+                <component name="StrikeRules" required="N" />
+                <field name="RelSymTransactTime" required="N" />
+            </group>
+        </component>
+ */
+
+function getSecListGrp (): (ContainedComponentField | null) {
+  const securityList = definitions.message.get('SecurityList')
+  expect(securityList).toBeTruthy()
+  const secListGrp = securityList?.components.get('SecListGrp')
+  expect(secListGrp).toBeTruthy()
+  return secListGrp ?? null
+}
+
+function getNumRelatedSym (): (ComponentFieldDefinition | null) {
+  const secListGrp = getSecListGrp()
+  const noRelatedField = secListGrp?.definition?.fields[0] as ContainedComponentField
+  expect(noRelatedField).toBeTruthy()
+  const noRelatedSym = noRelatedField?.definition ?? null
+  expect(noRelatedSym).toBeTruthy()
+  return noRelatedSym
+}
+
+test('check SecListGrp', () => {
+  const secListGrp = getSecListGrp()
+  expect(secListGrp).toBeTruthy()
+  expect(secListGrp?.definition?.fields?.length).toEqual(1)
+  isGroup(secListGrp?.definition ?? null, 0, 'NoRelatedSym', false)
+})
+
+test('check NoRelatedSym', () => {
+  let index = 0
+  const noRelatedSym = getNumRelatedSym()
+  isComponent(noRelatedSym, index++, 'Instrument', false)
+  isComponent(noRelatedSym, index++, 'InstrumentExtension', false)
+  isComponent(noRelatedSym, index++, 'FinancingDetails', false)
+  isComponent(noRelatedSym, index++, 'UndInstrmtGrp', false)
+  isSimple(noRelatedSym, index++, 'Currency', false)
+  isSimple(noRelatedSym, index++, 'ContractPositionNumber', false)
+  isComponent(noRelatedSym, index++, 'Stipulations', false)
+  isComponent(noRelatedSym, index++, 'InstrmtLegSecListGrp', false)
+  isComponent(noRelatedSym, index++, 'SpreadOrBenchmarkCurveData', false)
+  isComponent(noRelatedSym, index++, 'YieldData', false)
+  isSimple(noRelatedSym, index++, 'Text', false)
+  isSimple(noRelatedSym, index++, 'EncodedTextLen', false)
+  isSimple(noRelatedSym, index++, 'EncodedText', false)
+  isComponent(noRelatedSym, index++, 'SecurityTradingRules', false)
+  isComponent(noRelatedSym, index++, 'StrikeRules', false)
+  isSimple(noRelatedSym, index++, 'RelSymTransactTime', false)
 })
