@@ -147,6 +147,13 @@ function getSecurityTradingRules (): (ComponentFieldDefinition | null) {
   return securityTradingRules?.definition ?? null
 }
 
+function getBaseTradingRules (): (ComponentFieldDefinition | null) {
+  const securityTradingRules = getSecurityTradingRules()
+  expect(securityTradingRules).toBeTruthy()
+  const baseTradingRules = securityTradingRules?.components.get('BaseTradingRules')
+  return baseTradingRules?.definition ?? null
+}
+
 test('check SecListGrp', () => {
   const secListGrp = getSecListGrp()
   expect(secListGrp).toBeTruthy()
@@ -189,4 +196,40 @@ test('check SecurityTradingRules', () => {
   isComponent(securityTradingRules, index++, 'BaseTradingRules', false)
   isComponent(securityTradingRules, index++, 'TradingSessionRulesGrp', false)
   isComponent(securityTradingRules, index++, 'NestedInstrumentAttribute', false)
+})
+
+/*
+        <component name="BaseTradingRules">
+            <component name="TickRules" required="N" />
+            <component name="LotTypeRules" required="N" />
+            <component name="PriceLimits" required="N" />
+            <field name="ExpirationCycle" required="N" />
+            <field name="MinTradeVol" required="N" />
+            <field name="MaxTradeVol" required="N" />
+            <field name="MaxPriceVariation" required="N" />
+            <field name="ImpliedMarketIndicator" required="N" />
+            <field name="TradingCurrency" required="N" />
+            <field name="RoundLot" required="N" />
+            <field name="MultilegModel" required="N" />
+            <field name="MultilegPriceMethod" required="N" />
+            <field name="PriceType" required="N" />
+        </component>
+ */
+
+test('check BaseTradingRules', () => {
+  let index = 0
+  const securityTradingRules = getBaseTradingRules()
+  isComponent(securityTradingRules, index++, 'TickRules', false)
+  isComponent(securityTradingRules, index++, 'LotTypeRules', false)
+  isComponent(securityTradingRules, index++, 'PriceLimits', false)
+  isSimple(securityTradingRules, index++, 'ExpirationCycle', false)
+  isSimple(securityTradingRules, index++, 'MinTradeVol', false)
+  isSimple(securityTradingRules, index++, 'MaxTradeVol', false)
+  isSimple(securityTradingRules, index++, 'MaxPriceVariation', false)
+  isSimple(securityTradingRules, index++, 'ImpliedMarketIndicator', false)
+  isSimple(securityTradingRules, index++, 'TradingCurrency', false)
+  isSimple(securityTradingRules, index++, 'RoundLot', false)
+  isSimple(securityTradingRules, index++, 'MultilegModel', false)
+  isSimple(securityTradingRules, index++, 'MultilegPriceMethod', false)
+  isSimple(securityTradingRules, index++, 'PriceType', false)
 })
