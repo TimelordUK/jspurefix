@@ -140,6 +140,13 @@ function getNumRelatedSym (): (ComponentFieldDefinition | null) {
   return noRelatedSym
 }
 
+function getSecurityTradingRules (): (ComponentFieldDefinition | null) {
+  const numRelatedSym = getNumRelatedSym()
+  const securityTradingRules = numRelatedSym?.components.get('SecurityTradingRules')
+  expect(securityTradingRules).toBeTruthy()
+  return securityTradingRules?.definition ?? null
+}
+
 test('check SecListGrp', () => {
   const secListGrp = getSecListGrp()
   expect(secListGrp).toBeTruthy()
@@ -166,4 +173,20 @@ test('check NoRelatedSym', () => {
   isComponent(noRelatedSym, index++, 'SecurityTradingRules', false)
   isComponent(noRelatedSym, index++, 'StrikeRules', false)
   isSimple(noRelatedSym, index++, 'RelSymTransactTime', false)
+})
+
+/*
+        <component name="SecurityTradingRules">
+            <component name="BaseTradingRules" required="N" />
+            <component name="TradingSessionRulesGrp" required="N" />
+            <component name="NestedInstrumentAttribute" required="N" />
+        </component>
+ */
+
+test('check SecurityTradingRules', () => {
+  let index = 0
+  const securityTradingRules = getSecurityTradingRules()
+  isComponent(securityTradingRules, index++, 'BaseTradingRules', false)
+  isComponent(securityTradingRules, index++, 'TradingSessionRulesGrp', false)
+  isComponent(securityTradingRules, index++, 'NestedInstrumentAttribute', false)
 })
