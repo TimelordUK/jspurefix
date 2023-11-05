@@ -92,12 +92,21 @@ export abstract class MsgView {
     return this.missingRequired(this.segment.set, [])
   }
 
+  /**
+   * does this view contain this tag
+   * @param tagOrName the name or tag of field to check 8 or BeginString
+   */
   public contains (tagOrName: number | string): boolean {
     const tag: number = this.resolveTag(tagOrName)
     const position: number = this.getPosition(tag)
     return position >= 0
   }
 
+  /**
+   * if this view represents a repeated group then return a sub view representing
+   * this instance of repeated group.
+   * @param i the index to return i.e. 0 is first within repeated group
+   */
   public getGroupInstance (i: number): MsgView | null {
     const instance: SegmentDescription | null = this.segment?.getInstance(i)
     if (!instance) {
@@ -123,11 +132,20 @@ export abstract class MsgView {
     return msg
   }
 
+  /**
+   * if this view represents a repeated group then return number
+   * of repeated instances within this view
+   */
   public groupCount (): number {
     const positions = this.segment.delimiterPositions
     return positions ? positions.length : 0
   }
 
+  /**
+   * regardless of how this type is represented in data dictionary,
+   * return its value as a string.
+   * @param tagOrName name or tag to return 8 or BeginString
+   */
   public getString (tagOrName: number | string): string | null {
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
@@ -140,6 +158,11 @@ export abstract class MsgView {
     return this.stringAtPosition(position)
   }
 
+  /**
+   * for a repeated group, one field may be repeted across each instance of a component
+   * return all values for a specified field as array of strings
+   * @param tagOrName the name of the repeated field to fetch
+   */
   public getStrings (tagOrName: number | string | null = null): Array<(string | null)> | null {
     if (!tagOrName) {
       return this.allStrings()
@@ -158,6 +181,10 @@ export abstract class MsgView {
     })
   }
 
+  /**
+   * returns typed value of a sinple field within this view
+   * @param tagOrName the name or tag of required field e.g. 8, BeginString
+   */
   public getTyped (tagOrName: number | string): any {
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
@@ -170,10 +197,30 @@ export abstract class MsgView {
     return this.toTyped(field)
   }
 
+  /**
+   * use a varargs list of tags or tag names to fetch typed values for those fields within this view.
+   * @param tagOrNames list of tags e.g. 'BeginString', 'BodyLength', ...
+   */
+  public getTypedList(...tagOrNames: (number | string)[]): Array<boolean | string | number | Date | null> {
+    return tagOrNames.map((s) => this.getTyped(s))
+  }
+
+  /**
+   * use an array of tags or tag names to fetch typed values for those fields within this view.
+   * @param tagOrName the list of params as array ['BeginString','BodyLength', 'MsgType']
+   */
   public getTypedTags (tagOrName: Array<string | number>): Array<boolean | string | number | Date | null> {
     return tagOrName.map((s) => this.getTyped(s))
   }
 
+  /**
+   * produce an object representation of the view which when coupled with its
+   * interface (generated against the same dictionary source) will allow easy
+   * navigation of the object where a group is resolved to an array and simple
+   * fields are properties. This is relatively expensive operation as every
+   * field is fully resolved regardless of depth i.e. all groups and compoennts
+   * are fully resolved.
+   */
   public toObject (): ILooseObject | ILooseObject[] | null {
     const segment: SegmentDescription = this.segment
     if (segment.set == null) return null
@@ -198,6 +245,10 @@ export abstract class MsgView {
     return this.asLoose(segment.set)
   }
 
+  /**
+   * easy human-readable format showing each field, its position, value and resolved
+   * enum.
+   */
   public toString (): string {
     return this.stringify(MsgView.asToken)
   }
@@ -206,6 +257,9 @@ export abstract class MsgView {
     return this.stringify(MsgView.asVerbose)
   }
 
+  /**
+   * a string in JSON format representing this view as an object
+   */
   public toJson (): string {
     return JSON.stringify(this.toObject(), null, 4)
   }
