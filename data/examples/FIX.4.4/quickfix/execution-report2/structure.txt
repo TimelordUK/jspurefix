@@ -1,0 +1,74 @@
+[
+    {
+        "name": "StandardHeader",
+        "depth": 1,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 56,
+        "endPosition": 6,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "OrderQtyData",
+        "depth": 1,
+        "startTag": 38,
+        "startPosition": 16,
+        "endTag": 38,
+        "endPosition": 16,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "Instrument",
+        "depth": 1,
+        "startTag": 55,
+        "startPosition": 20,
+        "endTag": 55,
+        "endPosition": 20,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "NoPartyIDs",
+        "depth": 2,
+        "startTag": 453,
+        "startPosition": 24,
+        "endTag": 452,
+        "endPosition": 27,
+        "delimiterTag": 448,
+        "delimiterPositions": [
+            25
+        ]
+    },
+    {
+        "name": "Parties",
+        "depth": 1,
+        "startTag": 453,
+        "startPosition": 24,
+        "endTag": 452,
+        "endPosition": 27,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "ExecutionReport",
+        "depth": 0,
+        "startTag": 8,
+        "startPosition": 0,
+        "endTag": 10,
+        "endPosition": 28,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    },
+    {
+        "name": "StandardTrailer",
+        "depth": 1,
+        "startTag": 10,
+        "startPosition": 28,
+        "endTag": 10,
+        "endPosition": 28,
+        "delimiterTag": 0,
+        "delimiterPositions": []
+    }
+]

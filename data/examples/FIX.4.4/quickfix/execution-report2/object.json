@@ -1,0 +1,32 @@
+ {
+  "OrderID": "20636730646335310000",
+  "ClOrdID": "636730640278898634",
+  "Parties": {
+    "NoPartyIDs": [
+      {
+        "PartyID": "BRK2",
+        "PartyIDSource": "D",
+        "PartyRole": 1
+      }
+    ]
+  },
+  "ExecID": "20636730646335310000",
+  "ExecType": "F",
+  "OrdStatus": "1",
+  "Instrument": {
+    "Symbol": "MSFT"
+  },
+  "Side": "1",
+  "OrderQtyData": {
+    "OrderQty": 7000
+  },
+  "OrdType": "1",
+  "Currency": "USD",
+  "LastQty": 3500,
+  "LastPx": 113.35,
+  "LeavesQty": 3500,
+  "CumQty": 3500,
+  "AvgPx": 113.35,
+  "TransactTime": "2018-09-20T18:23:53.531Z",
+  "HandlInst": "2"
+}

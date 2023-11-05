@@ -36,6 +36,13 @@ test('test execution report JSON => object => fix => object', async () => {
   await expect(testEncodeDecode(config, msgType, msg)).resolves.toEqual(msg)
 }, 2000)
 
+test('test execution2 report JSON => object => fix => object', async () => {
+  const msgType: string = MsgType.ExecutionReport
+  const file: string = path.join(root, 'execution-report2/object.json')
+  const msg: ILooseObject = jsonHelper.fromJson(file, msgType)
+  await expect(testEncodeDecode(config, msgType, msg)).resolves.toEqual(msg)
+}, 2000)
+
 test('test order cxl reject JSON => object => fix => object', async () => {
   const msgType: string = MsgType.OrderCancelReject
   const file: string = path.join(root, 'order-cancel-reject/object.json')
