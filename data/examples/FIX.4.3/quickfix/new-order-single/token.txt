@@ -1,0 +1,11 @@
+[0] 8 (BeginString) = FIX.4.2, [1] 9 (BodyLength) = 154
+[2] 35 (MsgType) = D[OrderSingle], [3] 34 (MsgSeqNum) = 578
+[4] 49 (SenderCompID) = LEH_LZJ02, [5] 52 (SendingTime) = 20100302-22:50:34
+[6] 56 (TargetCompID) = CCG, [7] 115 (OnBehalfOfCompID) = LZJ
+[8] 11 (ClOrdID) = NF 0040/03022010, [9] 54 (Side) = 1[Buy]
+[10] 38 (OrderQty) = 1000, [11] 55 (Symbol) = IOC
+[12] 40 (OrdType) = 2[Limit], [13] 44 (Price) = 49.38
+[14] 59 (TimeInForce) = 0[Day], [15] 1 (Account) = ABC123ZYX
+[16] 21 (HandlInst) = 1[AutomatedExecutionOrderPrivateNoBrokerIntervention], [17] 207 (SecurityExchange) = N
+[18] 47 (Rule80A) = A[AgencySingleOrder], [19] 111 (MaxFloor) = 0
+[20] 10 (CheckSum) = 121

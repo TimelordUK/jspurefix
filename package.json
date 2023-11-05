@@ -34,6 +34,7 @@
     "repo44-replay": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/fix.txt --delimiter=\"|\" --stats--delimiter=\"|\" --objects",
     "repo44-repscr": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/fix.txt --delimiter=\"|\" --stats--delimiter=\"|\" --stats",
     "repo44-bench": "node dist/jsfix-cmd --dict=repo44 --benchmark --delimiter=\"|\"",
+    "qf43-bench-nos": "node dist/jsfix-cmd  --dict=qf43 --fix=data/examples/FIX.4.3/quickfix/new-order-single/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
     "qf44-bench-er": "node dist/jsfix-cmd  --dict=qf44 --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
     "qf44-bench-er2": "node dist/jsfix-cmd  --dict=qf44 --fix=data/examples/FIX.4.4/quickfix/execution-report2/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
     "qf50sp2-bench-md-inc": "node dist/jsfix-cmd  --dict=qf50sp2 --fix=data/examples/FIX.5.0SP2/quickfix/md-data-inc-snapshot/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",

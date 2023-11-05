@@ -201,7 +201,7 @@ export abstract class MsgView {
    * use a varargs list of tags or tag names to fetch typed values for those fields within this view.
    * @param tagOrNames list of tags e.g. 'BeginString', 'BodyLength', ...
    */
-  public getTypedList(...tagOrNames: (number | string)[]): Array<boolean | string | number | Date | null> {
+  public getTypedList (...tagOrNames: Array<number | string>): Array<boolean | string | number | Date | null> {
     return tagOrNames.map((s) => this.getTyped(s))
   }
 
@@ -489,8 +489,8 @@ export abstract class MsgView {
       const tagPos: TagPos = tags.tagPos[i]
       const field: SimpleFieldDefinition | null = simple.get(tagPos.tag.toString())
       const val: string | null = this.stringAtPosition(i) ?? ''
-      if (!field) return ''
-      const token = getToken(field, val, i - segment.startPosition, count, tagPos)
+      // [0] 8 (BeginString) = FIX4.4
+      const token = field ? getToken(field, val, i - segment.startPosition, count, tagPos) : `[${i}] ${tagPos.tag} (unknown) = ${val}, `
       buffer.writeString(token)
     }
 
