@@ -1,3 +1,3 @@
 export interface IUnderlyingPaymentStubEndDateBusinessCenterGrp {
-  UnderlyingPaymentStubEndDateBusinessCenter?: string// 42992
+  UnderlyingPaymentStubEndDateBusinessCenter?: string// [1] 42992 (String)
 }

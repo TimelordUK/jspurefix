@@ -1,3 +1,3 @@
 export interface ILegStreamCalculationPeriodBusinessCenterGrp {
-  LegStreamCalculationPeriodBusinessCenter?: string// 40266
+  LegStreamCalculationPeriodBusinessCenter?: string// [1] 40266 (String)
 }

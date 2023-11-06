@@ -1,20 +1,20 @@
 export interface IUnderlyingPaymentStreamCompoundingFloatingRate {
-  UnderlyingPaymentStreamCompoundingRateIndex?: string// 42923
-  UnderlyingPaymentStreamCompoundingRateIndexCurvePeriod?: number// 42924
-  UnderlyingPaymentStreamCompoundingRateIndexCurveUnit?: string// 42925
-  UnderlyingPaymentStreamCompoundingRateMultiplier?: number// 42926
-  UnderlyingPaymentStreamCompoundingRateSpread?: number// 42927
-  UnderlyingPaymentStreamCompoundingRateSpreadPositionType?: number// 42928
-  UnderlyingPaymentStreamCompoundingRateTreatment?: number// 42929
-  UnderlyingPaymentStreamCompoundingCapRate?: number// 42930
-  UnderlyingPaymentStreamCompoundingCapRateBuySide?: number// 42931
-  UnderlyingPaymentStreamCompoundingCapRateSellSide?: number// 42932
-  UnderlyingPaymentStreamCompoundingFloorRate?: number// 42933
-  UnderlyingPaymentStreamCompoundingFloorRateBuySide?: number// 42934
-  UnderlyingPaymentStreamCompoundingFloorRateSellSide?: number// 42935
-  UnderlyingPaymentStreamCompoundingInitialRate?: number// 42936
-  UnderlyingPaymentStreamCompoundingFinalRateRoundingDirection?: string// 42937
-  UnderlyingPaymentStreamCompoundingFinalRatePrecision?: number// 42938
-  UnderlyingPaymentStreamCompoundingAveragingMethod?: number// 42939
-  UnderlyingPaymentStreamCompoundingNegativeRateTreatment?: number// 42940
+  UnderlyingPaymentStreamCompoundingRateIndex?: string// [1] 42923 (String)
+  UnderlyingPaymentStreamCompoundingRateIndexCurvePeriod?: number// [1] 42924 (Int)
+  UnderlyingPaymentStreamCompoundingRateIndexCurveUnit?: string// [1] 42925 (String)
+  UnderlyingPaymentStreamCompoundingRateMultiplier?: number// [1] 42926 (Float)
+  UnderlyingPaymentStreamCompoundingRateSpread?: number// [1] 42927 (Float)
+  UnderlyingPaymentStreamCompoundingRateSpreadPositionType?: number// [1] 42928 (Int)
+  UnderlyingPaymentStreamCompoundingRateTreatment?: number// [1] 42929 (Int)
+  UnderlyingPaymentStreamCompoundingCapRate?: number// [1] 42930 (Float)
+  UnderlyingPaymentStreamCompoundingCapRateBuySide?: number// [1] 42931 (Int)
+  UnderlyingPaymentStreamCompoundingCapRateSellSide?: number// [1] 42932 (Int)
+  UnderlyingPaymentStreamCompoundingFloorRate?: number// [1] 42933 (Float)
+  UnderlyingPaymentStreamCompoundingFloorRateBuySide?: number// [1] 42934 (Int)
+  UnderlyingPaymentStreamCompoundingFloorRateSellSide?: number// [1] 42935 (Int)
+  UnderlyingPaymentStreamCompoundingInitialRate?: number// [1] 42936 (Float)
+  UnderlyingPaymentStreamCompoundingFinalRateRoundingDirection?: string// [1] 42937 (String)
+  UnderlyingPaymentStreamCompoundingFinalRatePrecision?: number// [1] 42938 (Int)
+  UnderlyingPaymentStreamCompoundingAveragingMethod?: number// [1] 42939 (Int)
+  UnderlyingPaymentStreamCompoundingNegativeRateTreatment?: number// [1] 42940 (Int)
 }

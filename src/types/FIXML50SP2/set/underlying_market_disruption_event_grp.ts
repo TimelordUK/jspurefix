@@ -1,4 +1,4 @@
 export interface IUnderlyingMarketDisruptionEventGrp {
-  UnderlyingMarketDisruptionEvent?: string// 41865
-  UnderlyingMarketDisruptionValue?: string// 41338
+  UnderlyingMarketDisruptionEvent?: string// [1] 41865 (String)
+  UnderlyingMarketDisruptionValue?: string// [1] 41338 (String)
 }

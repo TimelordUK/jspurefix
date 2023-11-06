@@ -1,4 +1,4 @@
 export interface ILegMarketDisruptionFallbackGrp {
-  LegMarketDisruptionFallbackType?: string// 41470
-  LegMarketDisruptionFallbackValue?: string// 40990
+  LegMarketDisruptionFallbackType?: string// [1] 41470 (String)
+  LegMarketDisruptionFallbackValue?: string// [1] 40990 (String)
 }

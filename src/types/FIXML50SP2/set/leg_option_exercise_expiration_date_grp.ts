@@ -1,4 +1,4 @@
 export interface ILegOptionExerciseExpirationDateGrp {
-  LegOptionExerciseExpirationDate?: Date// 41528
-  LegOptionExerciseExpirationDateType?: number// 41529
+  LegOptionExerciseExpirationDate?: Date// [1] 41528 (LocalDate)
+  LegOptionExerciseExpirationDateType?: number// [1] 41529 (Int)
 }

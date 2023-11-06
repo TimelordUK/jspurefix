@@ -1,5 +1,5 @@
 export interface ILegAssetAttributeGrp {
-  LegAssetAttributeType?: string// 2309
-  LegAssetAttributeValue?: string// 2310
-  LegAssetAttributeLimit?: string// 2311
+  LegAssetAttributeType?: string// [1] 2309 (String)
+  LegAssetAttributeValue?: string// [1] 2310 (String)
+  LegAssetAttributeLimit?: string// [1] 2311 (String)
 }

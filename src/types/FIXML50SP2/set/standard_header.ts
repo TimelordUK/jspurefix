@@ -1,22 +1,22 @@
 export interface IStandardHeader {
-  MsgType?: string// 35
-  ApplVerID?: string// 1128
-  SenderCompID?: string// 49
-  TargetCompID?: string// 56
-  OnBehalfOfCompID?: string// 115
-  DeliverToCompID?: string// 128
-  MsgSeqNum?: number// 34
-  SenderSubID?: string// 50
-  SenderLocationID?: string// 142
-  TargetSubID?: string// 57
-  TargetLocationID?: string// 143
-  OnBehalfOfSubID?: string// 116
-  OnBehalfOfLocationID?: string// 144
-  DeliverToSubID?: string// 129
-  DeliverToLocationID?: string// 145
-  PossDupFlag?: boolean// 43
-  PossResend?: boolean// 97
-  SendingTime?: Date// 52
-  OrigSendingTime?: Date// 122
-  MessageEncoding?: string// 347
+  MsgType?: string// [1] 35 (String)
+  ApplVerID?: string// [1] 1128 (String)
+  SenderCompID?: string// [1] 49 (String)
+  TargetCompID?: string// [1] 56 (String)
+  OnBehalfOfCompID?: string// [1] 115 (String)
+  DeliverToCompID?: string// [1] 128 (String)
+  MsgSeqNum?: number// [1] 34 (Int)
+  SenderSubID?: string// [1] 50 (String)
+  SenderLocationID?: string// [1] 142 (String)
+  TargetSubID?: string// [1] 57 (String)
+  TargetLocationID?: string// [1] 143 (String)
+  OnBehalfOfSubID?: string// [1] 116 (String)
+  OnBehalfOfLocationID?: string// [1] 144 (String)
+  DeliverToSubID?: string// [1] 129 (String)
+  DeliverToLocationID?: string// [1] 145 (String)
+  PossDupFlag?: boolean// [1] 43 (Boolean)
+  PossResend?: boolean// [1] 97 (Boolean)
+  SendingTime?: Date// [1] 52 (UtcTimestamp)
+  OrigSendingTime?: Date// [1] 122 (UtcTimestamp)
+  MessageEncoding?: string// [1] 347 (String)
 }

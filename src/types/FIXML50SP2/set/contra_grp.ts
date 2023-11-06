@@ -1,7 +1,7 @@
 export interface IContraGrp {
-  ContraBroker?: string// 375
-  ContraTrader?: string// 337
-  ContraTradeQty?: number// 437
-  ContraTradeTime?: Date// 438
-  ContraLegRefID?: string// 655
+  ContraBroker?: string// [1] 375 (String)
+  ContraTrader?: string// [1] 337 (String)
+  ContraTradeQty?: number// [1] 437 (Float)
+  ContraTradeTime?: Date// [1] 438 (UtcTimestamp)
+  ContraLegRefID?: string// [1] 655 (String)
 }

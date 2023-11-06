@@ -45,257 +45,257 @@ import { IThrottleResponse } from './set/throttle_response'
 ***************************************************
 */
 export interface IExecutionReport {
-  OrderID: string// 37
-  OrderRequestID?: number// 2422
-  MassOrderRequestID?: string// 2423
-  SecondaryOrderID?: string// 198
-  SecondaryClOrdID?: string// 526
-  SecondaryExecID?: string// 527
-  ClOrdID?: string// 11
-  QuoteMsgID?: string// 1166
-  OrigClOrdID?: string// 41
-  ClOrdLinkID?: string// 583
-  MDEntryID?: string// 278
-  QuoteRespID?: string// 693
-  OrdStatusReqID?: string// 790
-  MassStatusReqID?: string// 584
-  HostCrossID?: string// 961
-  TotNumReports?: number// 911
-  LastRptRequested?: boolean// 912
-  TradeOriginationDate?: Date// 229
-  ListID?: string// 66
-  CrossID?: string// 548
-  OrigCrossID?: string// 551
-  CrossType?: number// 549
-  RefRiskLimitCheckID?: string// 2334
-  RefRiskLimitCheckIDType?: number// 2335
-  TrdMatchID?: string// 880
-  TrdMatchSubID?: string// 1891
-  ExecID: string// 17
-  ExecRefID?: string// 19
-  ExecType: string// 150
-  ExecTypeReason?: number// 2431
-  OrdStatus: string// 39
-  WorkingIndicator?: boolean// 636
-  OrdRejReason?: number// 103
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  ExecRestatementReason?: number// 378
-  AlgorithmicTradeIndicator?: number// 2667
-  TrdType?: number// 828
-  TrdSubType?: number// 829
-  SecondaryTrdType?: number// 855
-  RegulatoryTransactionType?: number// 2347
-  PreviouslyReported?: boolean// 570
-  TradeReportingIndicator?: number// 2524
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  DayBookingInst?: string// 589
-  BookingUnit?: string// 590
-  PreallocMethod?: string// 591
-  AllocID?: string// 70
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  MatchType?: string// 574
-  OrderCategory?: string// 1115
-  CashMargin?: string// 544
-  ClearingFeeIndicator?: string// 635
-  Side: string// 54
-  ShortMarkingExemptIndicator?: boolean// 2102
-  ShortSaleExemptionReason?: number// 1688
-  QtyType?: number// 854
-  LotType?: string// 1093
-  OrdType?: string// 40
-  PriceType?: number// 423
-  Price?: number// 44
-  PriceProtectionScope?: string// 1092
-  StopPx?: number// 99
-  Triggered?: number// 1823
-  PeggedPrice?: number// 839
-  PeggedRefPrice?: number// 1095
-  DiscretionPrice?: number// 845
-  TradePriceNegotiationMethod?: number// 1740
-  UpfrontPrice?: number// 1742
-  UpfrontPriceType?: number// 1741
-  TargetStrategy?: number// 847
-  TargetStrategyParameters?: string// 848
-  ParticipationRate?: number// 849
-  TargetStrategyPerformance?: number// 850
-  Currency?: string// 15
-  ComplianceID?: string// 376
-  ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: number// 2351
-  EncodedComplianceText?: Buffer// 2352
-  SolicitedFlag?: boolean// 377
-  TimeInForce?: string// 59
-  EffectiveTime?: Date// 168
-  ExpireDate?: Date// 432
-  ExpireTime?: Date// 126
-  ExposureDuration?: number// 1629
-  ExposureDurationUnit?: number// 1916
-  ExecInst?: string// 18
-  AuctionInstruction?: number// 1805
-  AggressorIndicator?: boolean// 1057
-  OrderCapacity?: string// 528
-  OrderRestrictions?: string// 529
-  TradingCapacity?: number// 1815
-  PreTradeAnonymity?: boolean// 1091
-  TradePublishIndicator?: number// 1390
-  CustOrderCapacity?: number// 582
-  LastQty?: number// 32
-  CalculatedCcyLastQty?: number// 1056
-  LastSwapPoints?: number// 1071
-  UnderlyingLastQty?: number// 652
-  LastQtyVariance?: number// 1828
-  LastPx?: number// 31
-  UnderlyingLastPx?: number// 651
-  LastParPx?: number// 669
-  MidPx?: number// 631
-  LastSpotRate?: number// 194
-  LastForwardPoints?: number// 195
-  LastUpfrontPrice?: number// 1743
-  LastMkt?: string// 30
-  VenueType?: string// 1430
-  MarketSegmentID?: string// 1300
-  ExDestination?: string// 100
-  ExDestinationIDSource?: string// 1133
-  ExDestinationType?: number// 2704
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  TimeBracket?: string// 943
-  LastCapacity?: string// 29
-  LeavesQty: number// 151
-  CumQty: number// 14
-  CxlQty?: number// 84
-  AvgPx?: number// 6
-  DayOrderQty?: number// 424
-  DayCumQty?: number// 425
-  DayAvgPx?: number// 426
-  TotNoFills?: number// 1361
-  LastFragment?: boolean// 893
-  GTBookingInst?: number// 427
-  TradeDate?: Date// 75
-  TransactTime?: Date// 60
-  ReportToExch?: boolean// 113
-  GrossTradeAmt?: number// 381
-  NumDaysInterest?: number// 157
-  ExDate?: Date// 230
-  AccruedInterestRate?: number// 158
-  AccruedInterestAmt?: number// 159
-  InterestAtMaturity?: number// 738
-  EndAccruedInterestAmt?: number// 920
-  StartCash?: number// 921
-  EndCash?: number// 922
-  TradedFlatSwitch?: boolean// 258
-  BasisFeatureDate?: Date// 259
-  BasisFeaturePrice?: number// 260
-  Concession?: number// 238
-  TotalTakedown?: number// 237
-  NetMoney?: number// 118
-  SettlCurrAmt?: number// 119
-  SettlCurrency?: string// 120
-  SettlCurrFxRate?: number// 155
-  SettlCurrFxRateCalc?: string// 156
-  HandlInst?: string// 21
-  MinQty?: number// 110
-  MinQtyMethod?: number// 1822
-  MatchIncrement?: number// 1089
-  MaxPriceLevels?: number// 1090
-  MaximumPricePercentage?: number// 2676
-  SelfMatchPreventionID?: string// 2362
-  CrossedIndicator?: number// 2523
-  MaxFloor?: number// 111
-  ClearingAccountType?: number// 1816
-  PositionEffect?: string// 77
-  MaxShow?: number// 210
-  BookingType?: number// 775
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  SettlDate2?: Date// 193
-  OrderQty2?: number// 192
-  LastForwardPoints2?: number// 641
-  MultiLegReportingType?: string// 442
-  ContingencyType?: number// 1385
-  CancellationRights?: string// 480
-  MoneyLaunderingStatus?: string// 481
-  RegistID?: string// 513
-  Designation?: string// 494
-  TransBkdTime?: Date// 483
-  ExecValuationPoint?: Date// 515
-  ExecPriceType?: string// 484
-  ExecPriceAdjustment?: number// 485
-  PriorityIndicator?: number// 638
-  PriceImprovement?: number// 639
-  LastLiquidityInd?: number// 851
-  CopyMsgIndicator?: boolean// 797
-  DividendYield?: number// 1380
-  ManualOrderIndicator?: boolean// 1028
-  CustDirectedOrder?: boolean// 1029
-  ReceivedDeptID?: string// 1030
-  CustOrderHandlingInst?: string// 1031
-  OrderHandlingInstSource?: number// 1032
-  OrderOrigination?: number// 1724
-  OriginatingDeptID?: string// 1725
-  ReceivingDeptID?: string// 1726
-  OwnerType?: number// 522
-  OrderOwnershipIndicator?: number// 2679
-  Volatility?: number// 1188
-  TimeToExpiration?: number// 1189
-  RiskFreeRate?: number// 1190
-  PriceDelta?: number// 811
-  CoverPrice?: number// 1917
-  RefOrderID?: string// 1080
-  RefOrderIDSource?: string// 1081
-  RefClOrdID?: string// 1806
-  AuctionType?: number// 1803
-  AuctionAllocationPct?: number// 1804
-  LockedQty?: number// 1808
-  SecondaryLockedQty?: number// 1809
-  LockType?: number// 1807
-  ReleaseInstruction?: number// 1810
-  ReleaseQty?: number// 1811
-  RelatedHighPrice?: number// 1819
-  RelatedLowPrice?: number// 1820
-  RelatedPriceSource?: number// 1821
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
-  Parties?: IParties[]
-  TargetParties?: ITargetParties[]
-  ContraGrp?: IContraGrp[]
-  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]
-  PreAllocGrp?: IPreAllocGrp[]
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  PaymentGrp?: IPaymentGrp[]
-  Stipulations?: IStipulations[]
-  OrderQtyData?: IOrderQtyData
-  TriggeringInstruction?: ITriggeringInstruction
-  PegInstructions?: IPegInstructions
-  DiscretionInstructions?: IDiscretionInstructions
-  StrategyParametersGrp?: IStrategyParametersGrp[]
-  OrderAttributeGrp?: IOrderAttributeGrp[]
-  LimitAmts?: ILimitAmts[]
-  FillsGrp?: IFillsGrp[]
-  OrderEventGrp?: IOrderEventGrp[]
-  CommissionData?: ICommissionData
-  CommissionDataGrp?: ICommissionDataGrp[]
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  RelativeValueGrp?: IRelativeValueGrp[]
-  YieldData?: IYieldData
-  RateSource?: IRateSource[]
-  ValueChecksGrp?: IValueChecksGrp[]
-  MatchingInstructions?: IMatchingInstructions[]
-  DisplayInstruction?: IDisplayInstruction
-  DisclosureInstructionGrp?: IDisclosureInstructionGrp[]
-  ContAmtGrp?: IContAmtGrp[]
-  InstrmtLegExecGrp?: IInstrmtLegExecGrp[]
-  MiscFeesGrp?: IMiscFeesGrp[]
-  TrdRegTimestamps?: ITrdRegTimestamps[]
-  TrdRegPublicationGrp?: ITrdRegPublicationGrp[]
-  TradePriceConditionGrp?: ITradePriceConditionGrp[]
-  ThrottleResponse?: IThrottleResponse
+  OrderID: string// [2] 37 (String)
+  OrderRequestID?: number// [2] 2422 (Int)
+  MassOrderRequestID?: string// [2] 2423 (String)
+  SecondaryOrderID?: string// [2] 198 (String)
+  SecondaryClOrdID?: string// [2] 526 (String)
+  SecondaryExecID?: string// [2] 527 (String)
+  ClOrdID?: string// [2] 11 (String)
+  QuoteMsgID?: string// [2] 1166 (String)
+  OrigClOrdID?: string// [2] 41 (String)
+  ClOrdLinkID?: string// [2] 583 (String)
+  MDEntryID?: string// [2] 278 (String)
+  QuoteRespID?: string// [2] 693 (String)
+  OrdStatusReqID?: string// [2] 790 (String)
+  MassStatusReqID?: string// [2] 584 (String)
+  HostCrossID?: string// [2] 961 (String)
+  TotNumReports?: number// [2] 911 (Int)
+  LastRptRequested?: boolean// [2] 912 (Boolean)
+  TradeOriginationDate?: Date// [2] 229 (LocalDate)
+  ListID?: string// [2] 66 (String)
+  CrossID?: string// [2] 548 (String)
+  OrigCrossID?: string// [2] 551 (String)
+  CrossType?: number// [2] 549 (Int)
+  RefRiskLimitCheckID?: string// [2] 2334 (String)
+  RefRiskLimitCheckIDType?: number// [2] 2335 (Int)
+  TrdMatchID?: string// [2] 880 (String)
+  TrdMatchSubID?: string// [2] 1891 (String)
+  ExecID: string// [2] 17 (String)
+  ExecRefID?: string// [2] 19 (String)
+  ExecType: string// [2] 150 (String)
+  ExecTypeReason?: number// [2] 2431 (Int)
+  OrdStatus: string// [2] 39 (String)
+  WorkingIndicator?: boolean// [2] 636 (Boolean)
+  OrdRejReason?: number// [2] 103 (Int)
+  RejectText?: string// [2] 1328 (String)
+  EncodedRejectTextLen?: number// [2] 1664 (Length)
+  EncodedRejectText?: Buffer// [2] 1665 (RawData)
+  ExecRestatementReason?: number// [2] 378 (Int)
+  AlgorithmicTradeIndicator?: number// [2] 2667 (Int)
+  TrdType?: number// [2] 828 (Int)
+  TrdSubType?: number// [2] 829 (Int)
+  SecondaryTrdType?: number// [2] 855 (Int)
+  RegulatoryTransactionType?: number// [2] 2347 (Int)
+  PreviouslyReported?: boolean// [2] 570 (Boolean)
+  TradeReportingIndicator?: number// [2] 2524 (Int)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  DayBookingInst?: string// [2] 589 (String)
+  BookingUnit?: string// [2] 590 (String)
+  PreallocMethod?: string// [2] 591 (String)
+  AllocID?: string// [2] 70 (String)
+  SettlType?: string// [2] 63 (String)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  MatchType?: string// [2] 574 (String)
+  OrderCategory?: string// [2] 1115 (String)
+  CashMargin?: string// [2] 544 (String)
+  ClearingFeeIndicator?: string// [2] 635 (String)
+  Side: string// [2] 54 (String)
+  ShortMarkingExemptIndicator?: boolean// [2] 2102 (Boolean)
+  ShortSaleExemptionReason?: number// [2] 1688 (Int)
+  QtyType?: number// [2] 854 (Int)
+  LotType?: string// [2] 1093 (String)
+  OrdType?: string// [2] 40 (String)
+  PriceType?: number// [2] 423 (Int)
+  Price?: number// [2] 44 (Float)
+  PriceProtectionScope?: string// [2] 1092 (String)
+  StopPx?: number// [2] 99 (Float)
+  Triggered?: number// [2] 1823 (Int)
+  PeggedPrice?: number// [2] 839 (Float)
+  PeggedRefPrice?: number// [2] 1095 (Float)
+  DiscretionPrice?: number// [2] 845 (Float)
+  TradePriceNegotiationMethod?: number// [2] 1740 (Int)
+  UpfrontPrice?: number// [2] 1742 (Float)
+  UpfrontPriceType?: number// [2] 1741 (Int)
+  TargetStrategy?: number// [2] 847 (Int)
+  TargetStrategyParameters?: string// [2] 848 (String)
+  ParticipationRate?: number// [2] 849 (Float)
+  TargetStrategyPerformance?: number// [2] 850 (Float)
+  Currency?: string// [2] 15 (String)
+  ComplianceID?: string// [2] 376 (String)
+  ComplianceText?: string// [2] 2404 (String)
+  EncodedComplianceTextLen?: number// [2] 2351 (Length)
+  EncodedComplianceText?: Buffer// [2] 2352 (RawData)
+  SolicitedFlag?: boolean// [2] 377 (Boolean)
+  TimeInForce?: string// [2] 59 (String)
+  EffectiveTime?: Date// [2] 168 (UtcTimestamp)
+  ExpireDate?: Date// [2] 432 (LocalDate)
+  ExpireTime?: Date// [2] 126 (UtcTimestamp)
+  ExposureDuration?: number// [2] 1629 (Int)
+  ExposureDurationUnit?: number// [2] 1916 (Int)
+  ExecInst?: string// [2] 18 (String)
+  AuctionInstruction?: number// [2] 1805 (Int)
+  AggressorIndicator?: boolean// [2] 1057 (Boolean)
+  OrderCapacity?: string// [2] 528 (String)
+  OrderRestrictions?: string// [2] 529 (String)
+  TradingCapacity?: number// [2] 1815 (Int)
+  PreTradeAnonymity?: boolean// [2] 1091 (Boolean)
+  TradePublishIndicator?: number// [2] 1390 (Int)
+  CustOrderCapacity?: number// [2] 582 (Int)
+  LastQty?: number// [2] 32 (Float)
+  CalculatedCcyLastQty?: number// [2] 1056 (Float)
+  LastSwapPoints?: number// [2] 1071 (Float)
+  UnderlyingLastQty?: number// [2] 652 (Float)
+  LastQtyVariance?: number// [2] 1828 (Float)
+  LastPx?: number// [2] 31 (Float)
+  UnderlyingLastPx?: number// [2] 651 (Float)
+  LastParPx?: number// [2] 669 (Float)
+  MidPx?: number// [2] 631 (Float)
+  LastSpotRate?: number// [2] 194 (Float)
+  LastForwardPoints?: number// [2] 195 (Float)
+  LastUpfrontPrice?: number// [2] 1743 (Float)
+  LastMkt?: string// [2] 30 (String)
+  VenueType?: string// [2] 1430 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  ExDestination?: string// [2] 100 (String)
+  ExDestinationIDSource?: string// [2] 1133 (String)
+  ExDestinationType?: number// [2] 2704 (Int)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  TimeBracket?: string// [2] 943 (String)
+  LastCapacity?: string// [2] 29 (String)
+  LeavesQty: number// [2] 151 (Float)
+  CumQty: number// [2] 14 (Float)
+  CxlQty?: number// [2] 84 (Float)
+  AvgPx?: number// [2] 6 (Float)
+  DayOrderQty?: number// [2] 424 (Float)
+  DayCumQty?: number// [2] 425 (Float)
+  DayAvgPx?: number// [2] 426 (Float)
+  TotNoFills?: number// [2] 1361 (Int)
+  LastFragment?: boolean// [2] 893 (Boolean)
+  GTBookingInst?: number// [2] 427 (Int)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  ReportToExch?: boolean// [2] 113 (Boolean)
+  GrossTradeAmt?: number// [2] 381 (Float)
+  NumDaysInterest?: number// [2] 157 (Int)
+  ExDate?: Date// [2] 230 (LocalDate)
+  AccruedInterestRate?: number// [2] 158 (Float)
+  AccruedInterestAmt?: number// [2] 159 (Float)
+  InterestAtMaturity?: number// [2] 738 (Float)
+  EndAccruedInterestAmt?: number// [2] 920 (Float)
+  StartCash?: number// [2] 921 (Float)
+  EndCash?: number// [2] 922 (Float)
+  TradedFlatSwitch?: boolean// [2] 258 (Boolean)
+  BasisFeatureDate?: Date// [2] 259 (LocalDate)
+  BasisFeaturePrice?: number// [2] 260 (Float)
+  Concession?: number// [2] 238 (Float)
+  TotalTakedown?: number// [2] 237 (Float)
+  NetMoney?: number// [2] 118 (Float)
+  SettlCurrAmt?: number// [2] 119 (Float)
+  SettlCurrency?: string// [2] 120 (String)
+  SettlCurrFxRate?: number// [2] 155 (Float)
+  SettlCurrFxRateCalc?: string// [2] 156 (String)
+  HandlInst?: string// [2] 21 (String)
+  MinQty?: number// [2] 110 (Float)
+  MinQtyMethod?: number// [2] 1822 (Int)
+  MatchIncrement?: number// [2] 1089 (Float)
+  MaxPriceLevels?: number// [2] 1090 (Int)
+  MaximumPricePercentage?: number// [2] 2676 (Float)
+  SelfMatchPreventionID?: string// [2] 2362 (String)
+  CrossedIndicator?: number// [2] 2523 (Int)
+  MaxFloor?: number// [2] 111 (Float)
+  ClearingAccountType?: number// [2] 1816 (Int)
+  PositionEffect?: string// [2] 77 (String)
+  MaxShow?: number// [2] 210 (Float)
+  BookingType?: number// [2] 775 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  SettlDate2?: Date// [2] 193 (LocalDate)
+  OrderQty2?: number// [2] 192 (Float)
+  LastForwardPoints2?: number// [2] 641 (Float)
+  MultiLegReportingType?: string// [2] 442 (String)
+  ContingencyType?: number// [2] 1385 (Int)
+  CancellationRights?: string// [2] 480 (String)
+  MoneyLaunderingStatus?: string// [2] 481 (String)
+  RegistID?: string// [2] 513 (String)
+  Designation?: string// [2] 494 (String)
+  TransBkdTime?: Date// [2] 483 (UtcTimestamp)
+  ExecValuationPoint?: Date// [2] 515 (UtcTimestamp)
+  ExecPriceType?: string// [2] 484 (String)
+  ExecPriceAdjustment?: number// [2] 485 (Float)
+  PriorityIndicator?: number// [2] 638 (Int)
+  PriceImprovement?: number// [2] 639 (Float)
+  LastLiquidityInd?: number// [2] 851 (Int)
+  CopyMsgIndicator?: boolean// [2] 797 (Boolean)
+  DividendYield?: number// [2] 1380 (Float)
+  ManualOrderIndicator?: boolean// [2] 1028 (Boolean)
+  CustDirectedOrder?: boolean// [2] 1029 (Boolean)
+  ReceivedDeptID?: string// [2] 1030 (String)
+  CustOrderHandlingInst?: string// [2] 1031 (String)
+  OrderHandlingInstSource?: number// [2] 1032 (Int)
+  OrderOrigination?: number// [2] 1724 (Int)
+  OriginatingDeptID?: string// [2] 1725 (String)
+  ReceivingDeptID?: string// [2] 1726 (String)
+  OwnerType?: number// [2] 522 (Int)
+  OrderOwnershipIndicator?: number// [2] 2679 (Int)
+  Volatility?: number// [2] 1188 (Float)
+  TimeToExpiration?: number// [2] 1189 (Float)
+  RiskFreeRate?: number// [2] 1190 (Float)
+  PriceDelta?: number// [2] 811 (Float)
+  CoverPrice?: number// [2] 1917 (Float)
+  RefOrderID?: string// [2] 1080 (String)
+  RefOrderIDSource?: string// [2] 1081 (String)
+  RefClOrdID?: string// [2] 1806 (String)
+  AuctionType?: number// [2] 1803 (Int)
+  AuctionAllocationPct?: number// [2] 1804 (Float)
+  LockedQty?: number// [2] 1808 (Float)
+  SecondaryLockedQty?: number// [2] 1809 (Float)
+  LockType?: number// [2] 1807 (Int)
+  ReleaseInstruction?: number// [2] 1810 (Int)
+  ReleaseQty?: number// [2] 1811 (Float)
+  RelatedHighPrice?: number// [2] 1819 (Float)
+  RelatedLowPrice?: number// [2] 1820 (Float)
+  RelatedPriceSource?: number// [2] 1821 (Int)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
+  TargetParties?: ITargetParties[]// [4] ID.1462, Src.1463 .. Qual.1818
+  ContraGrp?: IContraGrp[]// [5] CntraBrkr.375, CntraTrdr.337 .. CntraLegRefID.655
+  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]// [6] ID.1903, Src.1905 .. Scope.2397
+  PreAllocGrp?: IPreAllocGrp[]// [7] Acct.79, ActIDSrc.661 .. CurCostBasis.1755
+  Instrument?: IInstrument// [8] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  FinancingDetails?: IFinancingDetails// [9] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [10] Sym.311, Sfx.312 .. XID.2631
+  PaymentGrp?: IPaymentGrp[]// [11] Typ.139, SubTyp.40993 .. EncTxt.40985
+  Stipulations?: IStipulations[]// [12] Typ.233, Val.234
+  OrderQtyData?: IOrderQtyData// [13] Qty.38, Cash.152 .. RndMod.469
+  TriggeringInstruction?: ITriggeringInstruction// [14] TrgrTyp.1100, TrgrActn.1101 .. TrgrTrdSessSubID.1114
+  PegInstructions?: IPegInstructions// [15] OfstVal.211, PegPxTyp.1094 .. PegSecDesc.1099
+  DiscretionInstructions?: IDiscretionInstructions// [16] DsctnInst.388, OfstValu.389 .. Scope.846
+  StrategyParametersGrp?: IStrategyParametersGrp[]// [17] StrtPrmNme.958, StrtPrmTyp.959, StrtPrmVal.960
+  OrderAttributeGrp?: IOrderAttributeGrp[]// [18] Typ.139, Val.2595
+  LimitAmts?: ILimitAmts[]// [19] LmtAmtTyp.1631, LastLmtAmt.1632 .. LmtR.2396
+  FillsGrp?: IFillsGrp[]// [20] FillExecID.1363, FillPx.1364 .. Yld.1623
+  OrderEventGrp?: IOrderEventGrp[]// [21] Typ.40, ID.1797 .. Txt.1802
+  CommissionData?: ICommissionData// [22] Comm.12, CommTyp.13 .. FundRenewWaiv.497
+  CommissionDataGrp?: ICommissionDataGrp[]// [23] Amt.2640, Typ.2641 .. EncDesc.2652
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [24] Spread.218, Ccy.220 .. SecIDSrc.761
+  RelativeValueGrp?: IRelativeValueGrp[]// [25] Typ.139, Val.2531, Side.2532
+  YieldData?: IYieldData// [26] Typ.235, Yld.236 .. RedPxTyp.698
+  RateSource?: IRateSource[]// [27] RtSrc.1446, RtSrcTyp.1447 .. RefHdng.2412
+  ValueChecksGrp?: IValueChecksGrp[]// [28] Typ.1869, Actn.1870
+  MatchingInstructions?: IMatchingInstructions[]// [29] Inst.1625, MktID.1673 .. Valu.1627
+  DisplayInstruction?: IDisplayInstruction// [30] DisplayQty.1138, SecDspQty.1082 .. RfrshQty.1088
+  DisclosureInstructionGrp?: IDisclosureInstructionGrp[]// [31] Typ.139, Inst.1814
+  ContAmtGrp?: IContAmtGrp[]// [32] ContAmtTyp.519, ContAmtValu.520, ContAmtCurr.521
+  InstrmtLegExecGrp?: IInstrmtLegExecGrp[]// [33] OrdQty.685, Qty.687 .. FillRefID.2421
+  MiscFeesGrp?: IMiscFeesGrp[]// [34] Amt.137, Curr.138 .. AmtDue.2217
+  TrdRegTimestamps?: ITrdRegTimestamps[]// [35] TS.769, Typ.770 .. InfoBrrID.1727
+  TrdRegPublicationGrp?: ITrdRegPublicationGrp[]// [36] Typ.2669, Rsn.2670
+  TradePriceConditionGrp?: ITradePriceConditionGrp[]// [37] TrdPxCond.1839
+  ThrottleResponse?: IThrottleResponse// [38] ThrttlInst.1685, ThrttlStat.1609, ThrttlCntInd.1686
 }

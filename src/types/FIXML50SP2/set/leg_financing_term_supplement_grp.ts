@@ -1,4 +1,4 @@
 export interface ILegFinancingTermSupplementGrp {
-  LegFinancingTermSupplementDesc?: string// 42201
-  LegFinancingTermSupplementDate?: Date// 42202
+  LegFinancingTermSupplementDesc?: string// [1] 42201 (String)
+  LegFinancingTermSupplementDate?: Date// [1] 42202 (LocalDate)
 }

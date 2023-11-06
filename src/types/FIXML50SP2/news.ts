@@ -15,25 +15,25 @@ import { ILinesOfTextGrp } from './set/lines_of_text_grp'
 ****************************************
 */
 export interface INews {
-  NewsID?: string// 1472
-  NewsCategory?: number// 1473
-  LanguageCode?: string// 1474
-  OrigTime?: Date// 42
-  Urgency?: string// 61
-  Headline: string// 148
-  EncodedHeadlineLen?: number// 358
-  EncodedHeadline?: Buffer// 359
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  URLLink?: string// 149
-  RawDataLength?: number// 95
-  RawData?: Buffer// 96
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
-  NewsRefGrp?: INewsRefGrp[]
-  RoutingGrp?: IRoutingGrp[]
-  InstrmtGrp?: IInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  LinesOfTextGrp?: ILinesOfTextGrp[]
+  NewsID?: string// [2] 1472 (String)
+  NewsCategory?: number// [2] 1473 (Int)
+  LanguageCode?: string// [2] 1474 (String)
+  OrigTime?: Date// [2] 42 (UtcTimestamp)
+  Urgency?: string// [2] 61 (String)
+  Headline: string// [2] 148 (String)
+  EncodedHeadlineLen?: number// [2] 358 (Length)
+  EncodedHeadline?: Buffer// [2] 359 (RawData)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  URLLink?: string// [2] 149 (String)
+  RawDataLength?: number// [2] 95 (Length)
+  RawData?: Buffer// [2] 96 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
+  NewsRefGrp?: INewsRefGrp[]// [3] RefID.1476, RefTyp.1477
+  RoutingGrp?: IRoutingGrp[]// [4] RtgTyp.216, RtgID.217
+  InstrmtGrp?: IInstrmtGrp[]// [5] 
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [6] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [7] Sym.311, Sfx.312 .. XID.2631
+  LinesOfTextGrp?: ILinesOfTextGrp[]// [8] Txt.58, EncTxtLen.354, EncTxt.355
 }

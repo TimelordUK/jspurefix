@@ -1,3 +1,3 @@
 export interface IBusinessCenterGrp {
-  BusinessCenter?: string// 40471
+  BusinessCenter?: string// [1] 40471 (String)
 }

@@ -1,4 +1,4 @@
 export interface IDerivativeInstrumentAttribute {
-  DerivativeInstrAttribType?: number// 1313
-  DerivativeInstrAttribValue?: string// 1314
+  DerivativeInstrAttribType?: number// [1] 1313 (Int)
+  DerivativeInstrAttribValue?: string// [1] 1314 (String)
 }

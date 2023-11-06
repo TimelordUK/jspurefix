@@ -1,4 +1,4 @@
 export interface IUnderlyingExtraordinaryEventGrp {
-  UnderlyingExtraordinaryEventType?: string// 42885
-  UnderlyingExtraordinaryEventValue?: string// 42886
+  UnderlyingExtraordinaryEventType?: string// [1] 42885 (String)
+  UnderlyingExtraordinaryEventValue?: string// [1] 42886 (String)
 }

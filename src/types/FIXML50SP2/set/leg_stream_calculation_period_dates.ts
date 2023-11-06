@@ -3,22 +3,22 @@ import { ILegStreamCalculationPeriodDateGrp } from './leg_stream_calculation_per
 import { ILegStreamFirstPeriodStartDateBusinessCenterGrp } from './leg_stream_first_period_start_date_business_center_grp'
 
 export interface ILegStreamCalculationPeriodDates {
-  LegStreamCalculationPeriodDatesXID?: string// 41641
-  LegStreamCalculationPeriodDatesXIDRef?: string// 41642
-  LegStreamCalculationPeriodBusinessDayConvention?: number// 40265
-  LegStreamFirstPeriodStartDateUnadjusted?: Date// 40267
-  LegStreamFirstPeriodStartDateBusinessDayConvention?: number// 40268
-  LegStreamFirstPeriodStartDateAdjusted?: Date// 40270
-  LegStreamFirstRegularPeriodStartDateUnadjusted?: Date// 40271
-  LegStreamFirstCompoundingPeriodEndDateUnadjusted?: Date// 40272
-  LegStreamLastRegularPeriodEndDateUnadjusted?: Date// 40273
-  LegStreamCalculationFrequencyPeriod?: number// 40274
-  LegStreamCalculationFrequencyUnit?: string// 40275
-  LegStreamCalculationRollConvention?: string// 40276
-  LegStreamCalculationBalanceOfFirstPeriod?: boolean// 41643
-  LegStreamCalculationCorrectionPeriod?: number// 41644
-  LegStreamCalculationCorrectionUnit?: string// 41645
-  LegStreamCalculationPeriodBusinessCenterGrp?: ILegStreamCalculationPeriodBusinessCenterGrp[]
-  LegStreamCalculationPeriodDateGrp?: ILegStreamCalculationPeriodDateGrp[]
-  LegStreamFirstPeriodStartDateBusinessCenterGrp?: ILegStreamFirstPeriodStartDateBusinessCenterGrp[]
+  LegStreamCalculationPeriodDatesXID?: string// [1] 41641 (String)
+  LegStreamCalculationPeriodDatesXIDRef?: string// [1] 41642 (String)
+  LegStreamCalculationPeriodBusinessDayConvention?: number// [1] 40265 (Int)
+  LegStreamFirstPeriodStartDateUnadjusted?: Date// [1] 40267 (LocalDate)
+  LegStreamFirstPeriodStartDateBusinessDayConvention?: number// [1] 40268 (Int)
+  LegStreamFirstPeriodStartDateAdjusted?: Date// [1] 40270 (LocalDate)
+  LegStreamFirstRegularPeriodStartDateUnadjusted?: Date// [1] 40271 (LocalDate)
+  LegStreamFirstCompoundingPeriodEndDateUnadjusted?: Date// [1] 40272 (LocalDate)
+  LegStreamLastRegularPeriodEndDateUnadjusted?: Date// [1] 40273 (LocalDate)
+  LegStreamCalculationFrequencyPeriod?: number// [1] 40274 (Int)
+  LegStreamCalculationFrequencyUnit?: string// [1] 40275 (String)
+  LegStreamCalculationRollConvention?: string// [1] 40276 (String)
+  LegStreamCalculationBalanceOfFirstPeriod?: boolean// [1] 41643 (Boolean)
+  LegStreamCalculationCorrectionPeriod?: number// [1] 41644 (Int)
+  LegStreamCalculationCorrectionUnit?: string// [1] 41645 (String)
+  LegStreamCalculationPeriodBusinessCenterGrp?: ILegStreamCalculationPeriodBusinessCenterGrp[]// [1] Ctr.40266
+  LegStreamCalculationPeriodDateGrp?: ILegStreamCalculationPeriodDateGrp[]// [2] Dt.41639, Typ.41640
+  LegStreamFirstPeriodStartDateBusinessCenterGrp?: ILegStreamFirstPeriodStartDateBusinessCenterGrp[]// [3] Ctr.40269
 }

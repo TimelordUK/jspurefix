@@ -8,12 +8,12 @@ import { IStandardHeader } from './set/standard_header'
 ***********************************************
 */
 export interface IListExecute {
-  ListID: string// 66
-  ClientBidID?: string// 391
-  BidID?: string// 390
-  TransactTime: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
+  ListID: string// [2] 66 (String)
+  ClientBidID?: string// [2] 391 (String)
+  BidID?: string// [2] 390 (String)
+  TransactTime: Date// [2] 60 (UtcTimestamp)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
 }

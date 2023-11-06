@@ -1,7 +1,7 @@
 export interface IComplexEventScheduleGrp {
-  ComplexEventScheduleStartDate?: Date// 41032
-  ComplexEventScheduleEndDate?: Date// 41033
-  ComplexEventScheduleFrequencyPeriod?: number// 41034
-  ComplexEventScheduleFrequencyUnit?: string// 41035
-  ComplexEventScheduleRollConvention?: string// 41036
+  ComplexEventScheduleStartDate?: Date// [1] 41032 (LocalDate)
+  ComplexEventScheduleEndDate?: Date// [1] 41033 (LocalDate)
+  ComplexEventScheduleFrequencyPeriod?: number// [1] 41034 (Int)
+  ComplexEventScheduleFrequencyUnit?: string// [1] 41035 (String)
+  ComplexEventScheduleRollConvention?: string// [1] 41036 (String)
 }

@@ -1,7 +1,7 @@
 import { ElasticBuffer, Tags } from '../../buffer'
 import { AsciiChars } from '../../buffer/ascii/'
 import { ICompilerSettings } from './compiler-settings'
-import { FixDefinitions } from '../definition'
+import { FixDefinitions, SimpleFieldDefinition } from '../definition'
 import {
   ContainedComponentField,
   ContainedFieldSet,
@@ -129,13 +129,17 @@ export class MsgCompiler {
     completed.addUpdate(fullName, ct)
   }
 
+  private simpleComment (simple: ContainedSimpleField): string {
+    return `[${simple.position + 1}] ${simple.definition.tag} (${TagType[simple.definition.tagType]})`
+  }
+
   private fieldSimple (simple: ContainedSimpleField): void {
     const snippets = this.snippets
     const settings = this.settings
     const buffer = this.buffer
     const len = buffer.writeString(snippets.simple(simple.name, Tags.toJSType(simple), simple.required, 1))
     if (settings.tags) {
-      buffer.writeString(snippets.commentLine(`[${simple.position + 1}] ${simple.definition.tag} (${TagType[simple.definition.tagType]})`, justifiedWidth - len))
+      buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
     }
     buffer.writeString(newLine)
   }
@@ -204,7 +208,7 @@ export class MsgCompiler {
     compilerType.set.localAttribute.forEach((simple: ContainedSimpleField) => {
       const len = buffer.writeString(snippets.simple(simple.definition.name, Tags.toJSType(simple), simple.required, 1))
       if (settings.tags) {
-        buffer.writeString(snippets.commentLine(`${simple.definition.tag}`, justifiedWidth - len))
+        buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
       }
       buffer.writeString(newLine)
     })

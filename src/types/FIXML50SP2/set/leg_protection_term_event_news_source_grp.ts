@@ -1,3 +1,3 @@
 export interface ILegProtectionTermEventNewsSourceGrp {
-  LegProtectionTermEventNewsSource?: string// 41615
+  LegProtectionTermEventNewsSource?: string// [1] 41615 (String)
 }

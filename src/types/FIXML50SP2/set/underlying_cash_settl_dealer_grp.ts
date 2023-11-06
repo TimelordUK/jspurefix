@@ -1,3 +1,3 @@
 export interface IUnderlyingCashSettlDealerGrp {
-  UnderlyingCashSettlDealer?: string// 42040
+  UnderlyingCashSettlDealer?: string// [1] 42040 (String)
 }

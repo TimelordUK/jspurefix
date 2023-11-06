@@ -3,9 +3,9 @@ import { ILegStipulations } from './leg_stipulations'
 import { ILegBenchmarkCurveData } from './leg_benchmark_curve_data'
 
 export interface IInstrmtLegSecListGrp {
-  LegSwapType?: number// 690
-  SettlType?: string// 63
-  InstrumentLeg?: IInstrumentLeg
-  LegStipulations?: ILegStipulations[]
-  LegBenchmarkCurveData?: ILegBenchmarkCurveData
+  LegSwapType?: number// [1] 690 (Int)
+  SettlType?: string// [1] 63 (String)
+  InstrumentLeg?: IInstrumentLeg// [1] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  LegStipulations?: ILegStipulations[]// [2] StipTyp.688, StipVal.689
+  LegBenchmarkCurveData?: ILegBenchmarkCurveData// [3] Ccy.676, Name.677 .. PxTyp.680
 }

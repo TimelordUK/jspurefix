@@ -1,4 +1,4 @@
 export interface IPaymentStreamPricingDayGrp {
-  PaymentStreamPricingDayOfWeek?: number// 41228
-  PaymentStreamPricingDayNumber?: number// 41229
+  PaymentStreamPricingDayOfWeek?: number// [1] 41228 (Int)
+  PaymentStreamPricingDayNumber?: number// [1] 41229 (Int)
 }

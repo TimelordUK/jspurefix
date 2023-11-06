@@ -1,6 +1,6 @@
 export interface ITradeAllocAmtGrp {
-  TradeAllocAmtType?: string// 1845
-  TradeAllocAmt?: number// 1846
-  TradeAllocCurrency?: string// 1847
-  SecurityClassificationReason?: number// 1583
+  TradeAllocAmtType?: string// [1] 1845 (String)
+  TradeAllocAmt?: number// [1] 1846 (Float)
+  TradeAllocCurrency?: string// [1] 1847 (String)
+  SecurityClassificationReason?: number// [1] 1583 (Int)
 }

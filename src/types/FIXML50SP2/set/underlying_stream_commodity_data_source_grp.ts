@@ -1,4 +1,4 @@
 export interface IUnderlyingStreamCommodityDataSourceGrp {
-  UnderlyingStreamCommodityDataSourceID?: string// 41994
-  UnderlyingStreamCommodityDataSourceIDType?: number// 41995
+  UnderlyingStreamCommodityDataSourceID?: string// [1] 41994 (String)
+  UnderlyingStreamCommodityDataSourceIDType?: number// [1] 41995 (Int)
 }

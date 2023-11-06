@@ -12,27 +12,27 @@ import { IAllocAckGrp } from './set/alloc_ack_grp'
 ************************************************************
 */
 export interface IAllocationInstructionAck {
-  AllocID: string// 70
-  SecondaryAllocID?: string// 793
-  AllocGroupID?: string// 1730
-  FirmGroupID?: string// 1728
-  AvgPxGroupID?: string// 1731
-  TradeDate?: Date// 75
-  TransactTime?: Date// 60
-  AllocStatus: number// 87
-  AllocRejCode?: number// 88
-  AllocType?: number// 626
-  AllocIntermedReqType?: number// 808
-  MatchStatus?: string// 573
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  StandardHeader?: IStandardHeader
-  Instrument?: IInstrument
-  Parties?: IParties[]
-  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]
-  AllocAckGrp?: IAllocAckGrp[]
+  AllocID: string// [2] 70 (String)
+  SecondaryAllocID?: string// [2] 793 (String)
+  AllocGroupID?: string// [2] 1730 (String)
+  FirmGroupID?: string// [2] 1728 (String)
+  AvgPxGroupID?: string// [2] 1731 (String)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  AllocStatus: number// [2] 87 (Int)
+  AllocRejCode?: number// [2] 88 (Int)
+  AllocType?: number// [2] 626 (Int)
+  AllocIntermedReqType?: number// [2] 808 (Int)
+  MatchStatus?: string// [2] 573 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  RejectText?: string// [2] 1328 (String)
+  EncodedRejectTextLen?: number// [2] 1664 (Length)
+  EncodedRejectText?: Buffer// [2] 1665 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Instrument?: IInstrument// [2] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
+  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]// [4] ID.1903, Src.1905 .. Scope.2397
+  AllocAckGrp?: IAllocAckGrp[]// [5] Acct.79, ActIDSrc.661 .. CurCostBasis.1755
 }

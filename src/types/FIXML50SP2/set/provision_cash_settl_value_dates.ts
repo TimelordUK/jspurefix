@@ -1,13 +1,13 @@
 import { IProvisionCashSettlValueDateBusinessCenterGrp } from './provision_cash_settl_value_date_business_center_grp'
 
 export interface IProvisionCashSettlValueDates {
-  ProvisionCashSettlValueTime?: string// 40114
-  ProvisionCashSettlValueTimeBusinessCenter?: string// 40115
-  ProvisionCashSettlValueDateBusinessDayConvention?: number// 40116
-  ProvisionCashSettlValueDateRelativeTo?: number// 40118
-  ProvisionCashSettlValueDateOffsetPeriod?: number// 40119
-  ProvisionCashSettlValueDateOffsetUnit?: string// 40120
-  ProvisionCashSettlValueDateOffsetDayType?: number// 40121
-  ProvisionCashSettlValueDateAdjusted?: Date// 40122
-  ProvisionCashSettlValueDateBusinessCenterGrp?: IProvisionCashSettlValueDateBusinessCenterGrp[]
+  ProvisionCashSettlValueTime?: string// [1] 40114 (String)
+  ProvisionCashSettlValueTimeBusinessCenter?: string// [1] 40115 (String)
+  ProvisionCashSettlValueDateBusinessDayConvention?: number// [1] 40116 (Int)
+  ProvisionCashSettlValueDateRelativeTo?: number// [1] 40118 (Int)
+  ProvisionCashSettlValueDateOffsetPeriod?: number// [1] 40119 (Int)
+  ProvisionCashSettlValueDateOffsetUnit?: string// [1] 40120 (String)
+  ProvisionCashSettlValueDateOffsetDayType?: number// [1] 40121 (Int)
+  ProvisionCashSettlValueDateAdjusted?: Date// [1] 40122 (LocalDate)
+  ProvisionCashSettlValueDateBusinessCenterGrp?: IProvisionCashSettlValueDateBusinessCenterGrp[]// [1] Ctr.40117
 }

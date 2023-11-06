@@ -1,3 +1,3 @@
 export interface IUnderlyingPaymentScheduleFixingDateBusinessCenterGrp {
-  UnderlyingPaymentScheduleFixingDateBusinessCenter?: string// 40690
+  UnderlyingPaymentScheduleFixingDateBusinessCenter?: string// [1] 40690 (String)
 }

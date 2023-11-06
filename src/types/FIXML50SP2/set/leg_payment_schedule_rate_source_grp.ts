@@ -1,5 +1,5 @@
 export interface ILegPaymentScheduleRateSourceGrp {
-  LegPaymentScheduleRateSource?: number// 40415
-  LegPaymentScheduleRateSourceType?: number// 40416
-  LegPaymentScheduleReferencePage?: string// 40417
+  LegPaymentScheduleRateSource?: number// [1] 40415 (Int)
+  LegPaymentScheduleRateSourceType?: number// [1] 40416 (Int)
+  LegPaymentScheduleReferencePage?: string// [1] 40417 (String)
 }

@@ -1,4 +1,4 @@
 export interface ILegStreamCommodityAltIDGrp {
-  LegStreamCommodityAltID?: string// 41675
-  LegStreamCommodityAltIDSource?: string// 41676
+  LegStreamCommodityAltID?: string// [1] 41675 (String)
+  LegStreamCommodityAltIDSource?: string// [1] 41676 (String)
 }

@@ -1,3 +1,3 @@
 export interface IOptionExerciseBusinessCenterGrp {
-  OptionExerciseBusinessCenter?: string// 41117
+  OptionExerciseBusinessCenter?: string// [1] 41117 (String)
 }

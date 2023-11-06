@@ -1,4 +1,4 @@
 export interface IUnderlyingComplexEventTimes {
-  UnderlyingComplexEventStartTime?: Date// 2057
-  UnderlyingComplexEventEndTime?: Date// 2058
+  UnderlyingComplexEventStartTime?: Date// [1] 2057 (UtcTimeOnly)
+  UnderlyingComplexEventEndTime?: Date// [1] 2058 (UtcTimeOnly)
 }

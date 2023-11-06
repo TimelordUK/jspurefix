@@ -14,28 +14,28 @@ import { IRelatedInstrumentGrp } from './set/related_instrument_grp'
 *************************************************
 */
 export interface IAdvertisement {
-  AdvId: string// 2
-  AdvTransType: string// 5
-  AdvRefID?: string// 3
-  AdvSide: string// 4
-  Quantity: number// 53
-  QtyType?: number// 854
-  Price?: number// 44
-  Currency?: string// 15
-  TradeDate?: Date// 75
-  TransactTime?: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  URLLink?: string// 149
-  LastMkt?: string// 30
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  StandardHeader?: IStandardHeader
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  FinancingDetails?: IFinancingDetails
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]
+  AdvId: string// [2] 2 (String)
+  AdvTransType: string// [2] 5 (String)
+  AdvRefID?: string// [2] 3 (String)
+  AdvSide: string// [2] 4 (String)
+  Quantity: number// [2] 53 (Float)
+  QtyType?: number// [2] 854 (Int)
+  Price?: number// [2] 44 (Float)
+  Currency?: string// [2] 15 (String)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  URLLink?: string// [2] 149 (String)
+  LastMkt?: string// [2] 30 (String)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Instrument?: IInstrument// [2] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [3] DlvryForm.668, PctAtRisk.869
+  FinancingDetails?: IFinancingDetails// [4] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [5] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [6] Sym.311, Sfx.312 .. XID.2631
+  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]// [7] InstrmtTyp.1648, Sym.1649 .. XIDRef.2417
 }

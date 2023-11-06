@@ -1,11 +1,11 @@
 export interface ILegMarketDisruptionFallbackReferencePriceGrp {
-  LegMarketDisruptionFallbackUnderlierType?: number// 41472
-  LegMarketDisruptionFallbackUnderlierSecurityID?: string// 41473
-  LegMarketDisruptionFallbackUnderlierSecurityIDSource?: string// 41474
-  LegMarketDisruptionFallbackUnderlierSecurityDesc?: string// 41475
-  EncodedLegMarketDisruptionFallbackUnderlierSecurityDescLen?: number// 41476
-  EncodedLegMarketDisruptionFallbackUnderlierSecurityDesc?: Buffer// 41477
-  LegMarketDisruptionFallbackOpenUnits?: number// 41478
-  LegMarketDisruptionFallbackBasketCurrency?: string// 41479
-  LegMarketDisruptionFallbackBasketDivisor?: number// 41480
+  LegMarketDisruptionFallbackUnderlierType?: number// [1] 41472 (Int)
+  LegMarketDisruptionFallbackUnderlierSecurityID?: string// [1] 41473 (String)
+  LegMarketDisruptionFallbackUnderlierSecurityIDSource?: string// [1] 41474 (String)
+  LegMarketDisruptionFallbackUnderlierSecurityDesc?: string// [1] 41475 (String)
+  EncodedLegMarketDisruptionFallbackUnderlierSecurityDescLen?: number// [1] 41476 (Length)
+  EncodedLegMarketDisruptionFallbackUnderlierSecurityDesc?: Buffer// [1] 41477 (RawData)
+  LegMarketDisruptionFallbackOpenUnits?: number// [1] 41478 (Float)
+  LegMarketDisruptionFallbackBasketCurrency?: string// [1] 41479 (String)
+  LegMarketDisruptionFallbackBasketDivisor?: number// [1] 41480 (Float)
 }

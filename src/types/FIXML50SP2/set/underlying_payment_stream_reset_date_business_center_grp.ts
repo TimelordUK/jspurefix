@@ -1,3 +1,3 @@
 export interface IUnderlyingPaymentStreamResetDateBusinessCenterGrp {
-  UnderlyingPaymentStreamResetDateBusinessCenter?: string// 40594
+  UnderlyingPaymentStreamResetDateBusinessCenter?: string// [1] 40594 (String)
 }

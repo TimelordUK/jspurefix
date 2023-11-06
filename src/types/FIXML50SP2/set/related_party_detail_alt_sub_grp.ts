@@ -1,4 +1,4 @@
 export interface IRelatedPartyDetailAltSubGrp {
-  RelatedPartyDetailAltSubID?: string// 1573
-  MiscFeeType?: string// 139
+  RelatedPartyDetailAltSubID?: string// [1] 1573 (String)
+  MiscFeeType?: string// [1] 139 (String)
 }

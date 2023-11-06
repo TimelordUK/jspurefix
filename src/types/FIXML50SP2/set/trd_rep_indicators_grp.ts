@@ -1,4 +1,4 @@
 export interface ITrdRepIndicatorsGrp {
-  TrdRepPartyRole?: number// 1388
-  TrdRepIndicator?: boolean// 1389
+  TrdRepPartyRole?: number// [1] 1388 (Int)
+  TrdRepIndicator?: boolean// [1] 1389 (Boolean)
 }

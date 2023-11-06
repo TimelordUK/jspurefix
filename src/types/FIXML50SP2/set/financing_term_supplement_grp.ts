@@ -1,4 +1,4 @@
 export interface IFinancingTermSupplementGrp {
-  FinancingTermSupplementDesc?: string// 40047
-  FinancingTermSupplementDate?: Date// 40048
+  FinancingTermSupplementDesc?: string// [1] 40047 (String)
+  FinancingTermSupplementDate?: Date// [1] 40048 (LocalDate)
 }

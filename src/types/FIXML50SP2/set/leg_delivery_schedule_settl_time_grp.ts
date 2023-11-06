@@ -1,5 +1,5 @@
 export interface ILegDeliveryScheduleSettlTimeGrp {
-  LegDeliveryScheduleSettlStart?: string// 41426
-  LegDeliveryScheduleSettlEnd?: string// 41427
-  LegDeliveryScheduleSettlTimeType?: number// 41428
+  LegDeliveryScheduleSettlStart?: string// [1] 41426 (String)
+  LegDeliveryScheduleSettlEnd?: string// [1] 41427 (String)
+  LegDeliveryScheduleSettlTimeType?: number// [1] 41428 (Int)
 }

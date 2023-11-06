@@ -16,37 +16,37 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 ********************************************************
 */
 export interface ICollateralInquiryAck {
-  CollInquiryID: string// 909
-  CollInquiryStatus: number// 945
-  PosMaintResult?: number// 723
-  TotNumReports?: number// 911
-  Account?: string// 1
-  AccountType?: number// 581
-  ClOrdID?: string// 11
-  OrderID?: string// 37
-  SecondaryOrderID?: string// 198
-  SecondaryClOrdID?: string// 526
-  SettlDate?: Date// 64
-  Quantity?: number// 53
-  QtyType?: number// 854
-  Currency?: string// 15
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  SettlSessID?: string// 716
-  SettlSessSubID?: string// 717
-  ClearingBusinessDate?: Date// 715
-  ResponseTransportType?: number// 725
-  ResponseDestination?: string// 726
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  CollInqQualGrp?: ICollInqQualGrp[]
-  Parties?: IParties[]
-  ExecCollGrp?: IExecCollGrp[]
-  TrdCollGrp?: ITrdCollGrp[]
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  UndInstrmtGrp?: IUndInstrmtGrp[]
+  CollInquiryID: string// [2] 909 (String)
+  CollInquiryStatus: number// [2] 945 (Int)
+  PosMaintResult?: number// [2] 723 (Int)
+  TotNumReports?: number// [2] 911 (Int)
+  Account?: string// [2] 1 (String)
+  AccountType?: number// [2] 581 (Int)
+  ClOrdID?: string// [2] 11 (String)
+  OrderID?: string// [2] 37 (String)
+  SecondaryOrderID?: string// [2] 198 (String)
+  SecondaryClOrdID?: string// [2] 526 (String)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  Quantity?: number// [2] 53 (Float)
+  QtyType?: number// [2] 854 (Int)
+  Currency?: string// [2] 15 (String)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  SettlSessID?: string// [2] 716 (String)
+  SettlSessSubID?: string// [2] 717 (String)
+  ClearingBusinessDate?: Date// [2] 715 (LocalDate)
+  ResponseTransportType?: number// [2] 725 (Int)
+  ResponseDestination?: string// [2] 726 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  CollInqQualGrp?: ICollInqQualGrp[]// [2] Qual.896
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
+  ExecCollGrp?: IExecCollGrp[]// [4] ExecID.17
+  TrdCollGrp?: ITrdCollGrp[]// [5] RptID.571, TrdRptID2.818
+  Instrument?: IInstrument// [6] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  FinancingDetails?: IFinancingDetails// [7] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [8] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [9] Sym.311, Sfx.312 .. XID.2631
 }

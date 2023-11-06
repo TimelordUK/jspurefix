@@ -6,82 +6,82 @@ import { IDividendConditions } from './dividend_conditions'
 import { IReturnRateGrp } from './return_rate_grp'
 
 export interface IPaymentStreamFloatingRate {
-  PaymentStreamRateIndex?: string// 40789
-  PaymentStreamRateIndexSource?: number// 40790
-  PaymentStreamRateIndexCurveUnit?: string// 40791
-  PaymentStreamRateIndexCurvePeriod?: number// 40792
-  PaymentStreamRateIndex2CurvePeriod?: number// 41194
-  PaymentStreamRateIndex2CurveUnit?: string// 41195
-  PaymentStreamRateIndexLocation?: string// 41196
-  PaymentStreamRateIndexLevel?: number// 41197
-  PaymentStreamRateIndexUnitOfMeasure?: string// 41198
-  PaymentStreamSettlLevel?: number// 41199
-  PaymentStreamReferenceLevel?: number// 41200
-  PaymentStreamReferenceLevelUnitOfMeasure?: string// 41201
-  PaymentStreamReferenceLevelEqualsZeroIndicator?: boolean// 41202
-  PaymentStreamRateMultiplier?: number// 40793
-  PaymentStreamRateSpread?: number// 40794
-  PaymentStreamRateSpreadCurrency?: string// 41203
-  PaymentStreamRateSpreadUnitOfMeasure?: string// 41204
-  PaymentStreamRateConversionFactor?: number// 41205
-  PaymentStreamRateSpreadType?: number// 41206
-  PaymentStreamRateSpreadPositionType?: number// 40795
-  PaymentStreamRateTreatment?: number// 40796
-  PaymentStreamCapRate?: number// 40797
-  PaymentStreamCapRateBuySide?: number// 40798
-  PaymentStreamCapRateSellSide?: number// 40799
-  PaymentStreamFloorRate?: number// 40800
-  PaymentStreamFloorRateBuySide?: number// 40801
-  PaymentStreamFloorRateSellSide?: number// 40802
-  PaymentStreamInitialRate?: number// 40803
-  PaymentStreamLastResetRate?: number// 41207
-  PaymentStreamFinalRate?: number// 41208
-  PaymentStreamFinalRateRoundingDirection?: string// 40804
-  PaymentStreamFinalRatePrecision?: number// 40805
-  PaymentStreamAveragingMethod?: number// 40806
-  PaymentStreamNegativeRateTreatment?: number// 40807
-  PaymentStreamCalculationLagPeriod?: number// 41209
-  PaymentStreamCalculationLagUnit?: string// 41210
-  PaymentStreamFirstObservationDateUnadjusted?: Date// 42663
-  PaymentStreamFirstObservationDateRelativeTo?: number// 42664
-  PaymentStreamFirstObservationDateOffsetDayType?: number// 42665
-  PaymentStreamFirstObservationDateOffsetPeriod?: number// 41211
-  PaymentStreamFirstObservationDateOffsetUnit?: string// 41212
-  PaymentStreamFirstObservationDateAdjusted?: Date// 42666
-  PaymentStreamPricingDayType?: number// 41213
-  PaymentStreamPricingDayDistribution?: number// 41214
-  PaymentStreamPricingDayCount?: number// 41215
-  PaymentStreamPricingBusinessCalendar?: string// 41216
-  PaymentStreamPricingBusinessDayConvention?: number// 41217
-  PaymentStreamInflationLagPeriod?: number// 40808
-  PaymentStreamInflationLagUnit?: string// 40809
-  PaymentStreamInflationLagDayType?: number// 40810
-  PaymentStreamInflationInterpolationMethod?: number// 40811
-  PaymentStreamInflationIndexSource?: number// 40812
-  PaymentStreamInflationPublicationSource?: string// 40813
-  PaymentStreamInflationInitialIndexLevel?: number// 40814
-  PaymentStreamInflationFallbackBondApplicable?: boolean// 40815
-  PaymentStreamFRADiscounting?: number// 40816
-  PaymentStreamUnderlierRefID?: string// 42667
-  ReturnRateNotionalReset?: boolean// 42668
-  PaymentStreamLinkInitialLevel?: number// 42669
-  PaymentStreamLinkClosingLevelIndicator?: boolean// 42670
-  PaymentStreamLinkExpiringLevelIndicator?: boolean// 42671
-  PaymentStreamLinkEstimatedTradingDays?: number// 42672
-  PaymentStreamLinkStrikePrice?: number// 42673
-  PaymentStreamLinkStrikePriceType?: number// 42674
-  PaymentStreamLinkMaximumBoundary?: number// 42675
-  PaymentStreamLinkMinimumBoundary?: number// 42676
-  PaymentStreamLinkNumberOfDataSeries?: number// 42677
-  PaymentStreamVarianceUnadjustedCap?: number// 42678
-  PaymentStreamRealizedVarianceMethod?: number// 42679
-  PaymentStreamDaysAdjustmentIndicator?: boolean// 42680
-  PaymentStreamNearestExchangeContractRefID?: string// 42681
-  PaymentStreamVegaNotionalAmount?: number// 42682
-  PaymentStreamPricingBusinessCenterGrp?: IPaymentStreamPricingBusinessCenterGrp[]
-  PaymentStreamPricingDayGrp?: IPaymentStreamPricingDayGrp[]
-  PaymentStreamPricingDateGrp?: IPaymentStreamPricingDateGrp[]
-  PaymentStreamFormula?: IPaymentStreamFormula
-  DividendConditions?: IDividendConditions
-  ReturnRateGrp?: IReturnRateGrp[]
+  PaymentStreamRateIndex?: string// [1] 40789 (String)
+  PaymentStreamRateIndexSource?: number// [1] 40790 (Int)
+  PaymentStreamRateIndexCurveUnit?: string// [1] 40791 (String)
+  PaymentStreamRateIndexCurvePeriod?: number// [1] 40792 (Int)
+  PaymentStreamRateIndex2CurvePeriod?: number// [1] 41194 (Int)
+  PaymentStreamRateIndex2CurveUnit?: string// [1] 41195 (String)
+  PaymentStreamRateIndexLocation?: string// [1] 41196 (String)
+  PaymentStreamRateIndexLevel?: number// [1] 41197 (Float)
+  PaymentStreamRateIndexUnitOfMeasure?: string// [1] 41198 (String)
+  PaymentStreamSettlLevel?: number// [1] 41199 (Int)
+  PaymentStreamReferenceLevel?: number// [1] 41200 (Float)
+  PaymentStreamReferenceLevelUnitOfMeasure?: string// [1] 41201 (String)
+  PaymentStreamReferenceLevelEqualsZeroIndicator?: boolean// [1] 41202 (Boolean)
+  PaymentStreamRateMultiplier?: number// [1] 40793 (Float)
+  PaymentStreamRateSpread?: number// [1] 40794 (Float)
+  PaymentStreamRateSpreadCurrency?: string// [1] 41203 (String)
+  PaymentStreamRateSpreadUnitOfMeasure?: string// [1] 41204 (String)
+  PaymentStreamRateConversionFactor?: number// [1] 41205 (Float)
+  PaymentStreamRateSpreadType?: number// [1] 41206 (Int)
+  PaymentStreamRateSpreadPositionType?: number// [1] 40795 (Int)
+  PaymentStreamRateTreatment?: number// [1] 40796 (Int)
+  PaymentStreamCapRate?: number// [1] 40797 (Float)
+  PaymentStreamCapRateBuySide?: number// [1] 40798 (Int)
+  PaymentStreamCapRateSellSide?: number// [1] 40799 (Int)
+  PaymentStreamFloorRate?: number// [1] 40800 (Float)
+  PaymentStreamFloorRateBuySide?: number// [1] 40801 (Int)
+  PaymentStreamFloorRateSellSide?: number// [1] 40802 (Int)
+  PaymentStreamInitialRate?: number// [1] 40803 (Float)
+  PaymentStreamLastResetRate?: number// [1] 41207 (Float)
+  PaymentStreamFinalRate?: number// [1] 41208 (Float)
+  PaymentStreamFinalRateRoundingDirection?: string// [1] 40804 (String)
+  PaymentStreamFinalRatePrecision?: number// [1] 40805 (Int)
+  PaymentStreamAveragingMethod?: number// [1] 40806 (Int)
+  PaymentStreamNegativeRateTreatment?: number// [1] 40807 (Int)
+  PaymentStreamCalculationLagPeriod?: number// [1] 41209 (Int)
+  PaymentStreamCalculationLagUnit?: string// [1] 41210 (String)
+  PaymentStreamFirstObservationDateUnadjusted?: Date// [1] 42663 (LocalDate)
+  PaymentStreamFirstObservationDateRelativeTo?: number// [1] 42664 (Int)
+  PaymentStreamFirstObservationDateOffsetDayType?: number// [1] 42665 (Int)
+  PaymentStreamFirstObservationDateOffsetPeriod?: number// [1] 41211 (Int)
+  PaymentStreamFirstObservationDateOffsetUnit?: string// [1] 41212 (String)
+  PaymentStreamFirstObservationDateAdjusted?: Date// [1] 42666 (LocalDate)
+  PaymentStreamPricingDayType?: number// [1] 41213 (Int)
+  PaymentStreamPricingDayDistribution?: number// [1] 41214 (Int)
+  PaymentStreamPricingDayCount?: number// [1] 41215 (Int)
+  PaymentStreamPricingBusinessCalendar?: string// [1] 41216 (String)
+  PaymentStreamPricingBusinessDayConvention?: number// [1] 41217 (Int)
+  PaymentStreamInflationLagPeriod?: number// [1] 40808 (Int)
+  PaymentStreamInflationLagUnit?: string// [1] 40809 (String)
+  PaymentStreamInflationLagDayType?: number// [1] 40810 (Int)
+  PaymentStreamInflationInterpolationMethod?: number// [1] 40811 (Int)
+  PaymentStreamInflationIndexSource?: number// [1] 40812 (Int)
+  PaymentStreamInflationPublicationSource?: string// [1] 40813 (String)
+  PaymentStreamInflationInitialIndexLevel?: number// [1] 40814 (Float)
+  PaymentStreamInflationFallbackBondApplicable?: boolean// [1] 40815 (Boolean)
+  PaymentStreamFRADiscounting?: number// [1] 40816 (Int)
+  PaymentStreamUnderlierRefID?: string// [1] 42667 (String)
+  ReturnRateNotionalReset?: boolean// [1] 42668 (Boolean)
+  PaymentStreamLinkInitialLevel?: number// [1] 42669 (Float)
+  PaymentStreamLinkClosingLevelIndicator?: boolean// [1] 42670 (Boolean)
+  PaymentStreamLinkExpiringLevelIndicator?: boolean// [1] 42671 (Boolean)
+  PaymentStreamLinkEstimatedTradingDays?: number// [1] 42672 (Int)
+  PaymentStreamLinkStrikePrice?: number// [1] 42673 (Float)
+  PaymentStreamLinkStrikePriceType?: number// [1] 42674 (Int)
+  PaymentStreamLinkMaximumBoundary?: number// [1] 42675 (Float)
+  PaymentStreamLinkMinimumBoundary?: number// [1] 42676 (Float)
+  PaymentStreamLinkNumberOfDataSeries?: number// [1] 42677 (Int)
+  PaymentStreamVarianceUnadjustedCap?: number// [1] 42678 (Float)
+  PaymentStreamRealizedVarianceMethod?: number// [1] 42679 (Int)
+  PaymentStreamDaysAdjustmentIndicator?: boolean// [1] 42680 (Boolean)
+  PaymentStreamNearestExchangeContractRefID?: string// [1] 42681 (String)
+  PaymentStreamVegaNotionalAmount?: number// [1] 42682 (Float)
+  PaymentStreamPricingBusinessCenterGrp?: IPaymentStreamPricingBusinessCenterGrp[]// [1] Ctr.41193
+  PaymentStreamPricingDayGrp?: IPaymentStreamPricingDayGrp[]// [2] DayOfWk.41228, DayNum.41229
+  PaymentStreamPricingDateGrp?: IPaymentStreamPricingDateGrp[]// [3] Dt.41225, Typ.41226
+  PaymentStreamFormula?: IPaymentStreamFormula// [4] Ccy.42686, CcyDtrmnMeth.42687, RefAmt.42688
+  DividendConditions?: IDividendConditions// [5] RnvstmntInd.42245, EntlmntEvnt.42246 .. AllDividendInd.42264
+  ReturnRateGrp?: IReturnRateGrp[]// [6] PxSeq.42736, CommBasis.42737 .. FnlPxFallbck.42760
 }

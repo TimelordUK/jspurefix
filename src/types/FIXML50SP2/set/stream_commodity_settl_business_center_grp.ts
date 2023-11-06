@@ -1,3 +1,3 @@
 export interface IStreamCommoditySettlBusinessCenterGrp {
-  StreamCommoditySettlBusinessCenter?: string// 41250
+  StreamCommoditySettlBusinessCenter?: string// [1] 41250 (String)
 }

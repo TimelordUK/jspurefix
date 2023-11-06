@@ -1,4 +1,4 @@
 export interface IPhysicalSettlDeliverableObligationGrp {
-  PhysicalSettlDeliverableObligationType?: string// 40210
-  PhysicalSettlDeliverableObligationValue?: string// 40211
+  PhysicalSettlDeliverableObligationType?: string// [1] 40210 (String)
+  PhysicalSettlDeliverableObligationValue?: string// [1] 40211 (String)
 }

@@ -1,6 +1,6 @@
 export interface IEntitlementAttribGrp {
-  EntitlementAttribType?: number// 1778
-  EntitlementAttribDatatype?: number// 1779
-  EntitlementAttribValue?: string// 1780
-  EntitlementAttribCurrency?: string// 1781
+  EntitlementAttribType?: number// [1] 1778 (Int)
+  EntitlementAttribDatatype?: number// [1] 1779 (Int)
+  EntitlementAttribValue?: string// [1] 1780 (String)
+  EntitlementAttribCurrency?: string// [1] 1781 (String)
 }

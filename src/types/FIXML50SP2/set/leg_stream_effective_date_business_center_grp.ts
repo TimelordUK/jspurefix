@@ -1,3 +1,3 @@
 export interface ILegStreamEffectiveDateBusinessCenterGrp {
-  LegStreamEffectiveDateBusinessCenter?: string// 40251
+  LegStreamEffectiveDateBusinessCenter?: string// [1] 40251 (String)
 }

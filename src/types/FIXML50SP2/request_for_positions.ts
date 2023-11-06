@@ -13,29 +13,29 @@ import { ITrdgSesGrp } from './set/trdg_ses_grp'
 *******************************************************
 */
 export interface IRequestForPositions {
-  PosReqID: string// 710
-  PosReqType: number// 724
-  MatchStatus?: string// 573
-  SubscriptionRequestType?: string// 263
-  SettlCurrency?: string// 120
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  Currency?: string// 15
-  ClearingBusinessDate: Date// 715
-  SettlDate?: Date// 64
-  SettlSessID?: string// 716
-  SettlSessSubID?: string// 717
-  TransactTime: Date// 60
-  ResponseTransportType?: number// 725
-  ResponseDestination?: string// 726
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
-  Instrument?: IInstrument
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  TrdgSesGrp?: ITrdgSesGrp[]
+  PosReqID: string// [2] 710 (String)
+  PosReqType: number// [2] 724 (Int)
+  MatchStatus?: string// [2] 573 (String)
+  SubscriptionRequestType?: string// [2] 263 (String)
+  SettlCurrency?: string// [2] 120 (String)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  Currency?: string// [2] 15 (String)
+  ClearingBusinessDate: Date// [2] 715 (LocalDate)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  SettlSessID?: string// [2] 716 (String)
+  SettlSessSubID?: string// [2] 717 (String)
+  TransactTime: Date// [2] 60 (UtcTimestamp)
+  ResponseTransportType?: number// [2] 725 (Int)
+  ResponseDestination?: string// [2] 726 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
+  Instrument?: IInstrument// [3] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [4] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [5] Sym.311, Sfx.312 .. XID.2631
+  TrdgSesGrp?: ITrdgSesGrp[]// [6] SesID.336, SesSub.625
 }

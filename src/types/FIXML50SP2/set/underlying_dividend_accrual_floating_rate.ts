@@ -1,20 +1,20 @@
 export interface IUnderlyingDividendAccrualFloatingRate {
-  UnderlyingDividendFloatingRateIndex?: string// 42801
-  UnderlyingDividendFloatingRateIndexCurvePeriod?: number// 42802
-  UnderlyingDividendFloatingRateIndexCurveUnit?: string// 42803
-  UnderlyingDividendFloatingRateMultiplier?: number// 42804
-  UnderlyingDividendFloatingRateSpread?: number// 42805
-  UnderlyingDividendFloatingRateSpreadPositionType?: number// 42806
-  UnderlyingDividendFloatingRateTreatment?: number// 42807
-  UnderlyingDividendCapRate?: number// 42808
-  UnderlyingDividendCapRateBuySide?: number// 42809
-  UnderlyingDividendCapRateSellSide?: number// 42810
-  UnderlyingDividendFloorRate?: number// 42811
-  UnderlyingDividendFloorRateBuySide?: number// 42812
-  UnderlyingDividendFloorRateSellSide?: number// 42813
-  UnderlyingDividendInitialRate?: number// 42814
-  UnderlyingDividendFinalRateRoundingDirection?: string// 42815
-  UnderlyingDividendFinalRatePrecision?: number// 42816
-  UnderlyingDividendAveragingMethod?: number// 42817
-  UnderlyingDividendNegativeRateTreatment?: number// 42818
+  UnderlyingDividendFloatingRateIndex?: string// [1] 42801 (String)
+  UnderlyingDividendFloatingRateIndexCurvePeriod?: number// [1] 42802 (Int)
+  UnderlyingDividendFloatingRateIndexCurveUnit?: string// [1] 42803 (String)
+  UnderlyingDividendFloatingRateMultiplier?: number// [1] 42804 (Float)
+  UnderlyingDividendFloatingRateSpread?: number// [1] 42805 (Float)
+  UnderlyingDividendFloatingRateSpreadPositionType?: number// [1] 42806 (Int)
+  UnderlyingDividendFloatingRateTreatment?: number// [1] 42807 (Int)
+  UnderlyingDividendCapRate?: number// [1] 42808 (Float)
+  UnderlyingDividendCapRateBuySide?: number// [1] 42809 (Int)
+  UnderlyingDividendCapRateSellSide?: number// [1] 42810 (Int)
+  UnderlyingDividendFloorRate?: number// [1] 42811 (Float)
+  UnderlyingDividendFloorRateBuySide?: number// [1] 42812 (Int)
+  UnderlyingDividendFloorRateSellSide?: number// [1] 42813 (Int)
+  UnderlyingDividendInitialRate?: number// [1] 42814 (Float)
+  UnderlyingDividendFinalRateRoundingDirection?: string// [1] 42815 (String)
+  UnderlyingDividendFinalRatePrecision?: number// [1] 42816 (Int)
+  UnderlyingDividendAveragingMethod?: number// [1] 42817 (Int)
+  UnderlyingDividendNegativeRateTreatment?: number// [1] 42818 (Int)
 }

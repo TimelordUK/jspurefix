@@ -1,10 +1,10 @@
 export interface IRgstDistInstGrp {
-  DistribPaymentMethod?: number// 477
-  DistribPercentage?: number// 512
-  CashDistribCurr?: string// 478
-  CashDistribAgentName?: string// 498
-  CashDistribAgentCode?: string// 499
-  CashDistribAgentAcctNumber?: string// 500
-  CashDistribPayRef?: string// 501
-  CashDistribAgentAcctName?: string// 502
+  DistribPaymentMethod?: number// [1] 477 (Int)
+  DistribPercentage?: number// [1] 512 (Float)
+  CashDistribCurr?: string// [1] 478 (String)
+  CashDistribAgentName?: string// [1] 498 (String)
+  CashDistribAgentCode?: string// [1] 499 (String)
+  CashDistribAgentAcctNumber?: string// [1] 500 (String)
+  CashDistribPayRef?: string// [1] 501 (String)
+  CashDistribAgentAcctName?: string// [1] 502 (String)
 }

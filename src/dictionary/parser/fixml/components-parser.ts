@@ -1,14 +1,8 @@
+import { ISaxNode } from '../../sax-node'
 import { Dictionary } from '../../../collections'
 import { XsdParser } from './xsd-parser'
-import {
-  ComponentFieldDefinition, SimpleFieldDefinition,
-  GroupFieldDefinition, FixDefinitions, MessageDefinition
-} from '../../definition'
-import {
-  ContainedSimpleField, ContainedComponentField,
-  ContainedFieldSet, ContainedGroupField
-} from '../../contained'
-import { ISaxNode } from '../../sax-node'
+import { ContainedGroupField, ContainedFieldSet, ContainedComponentField, ContainedSimpleField } from '../../contained'
+import { MessageDefinition, FixDefinitions, GroupFieldDefinition, ComponentFieldDefinition } from '../../definition'
 
 interface IElement {
   ref: string
@@ -76,16 +70,16 @@ export class ComponentsParser extends XsdParser {
   private readonly complexTypes: Dictionary<IComplexType> = new Dictionary<IComplexType>()
 
   private newComplexTypes: IComplexType[]
-  private currentGroup: IGroup | null
+  private currentGroup: (IGroup | null)
   private readonly currentAttributeGroupStack: IAttributeGroup[] = []
-  private currentComplexType: IComplexType | null
+  private currentComplexType: (IComplexType | null)
   private previousComplexType: IComplexType
 
   public constructor (public readonly definitions: FixDefinitions) {
     super(definitions)
   }
 
-  private static getName (group: IGroup, attributeGroup: IAttributeGroup, type: IComplexType): string {
+  private static getName (group: (IGroup | null), attributeGroup: (IAttributeGroup | null), type: IComplexType): string {
     let name: string
     if (type?.appInfo) {
       name = type.appInfo.name
@@ -136,9 +130,9 @@ export class ComponentsParser extends XsdParser {
       case 'xs:attributeGroup': {
         const attributeStack = this.currentAttributeGroupStack
         if (attributeStack.length > 0) {
-          const group: IAttributeGroup | null = attributeStack.pop() ?? null
-          if (group) {
-            this.attributeGroups.addUpdate(group.name, group)
+          const group = attributeStack.pop()
+          if (group?.name) {
+            this.attributeGroups.addUpdate(group?.name, group)
           }
         }
         break
@@ -174,9 +168,8 @@ export class ComponentsParser extends XsdParser {
       }
 
       case 'xs:appinfo': {
-        const ct = this.currentComplexType
-        if (ct) {
-          ct.appInfo = {} as IAppInfo
+        if (this.currentComplexType) {
+          this.currentComplexType.appInfo = {} as IAppInfo
         }
         break
       }
@@ -302,7 +295,7 @@ export class ComponentsParser extends XsdParser {
     const isGroup: boolean = element.maxOccurs === 'unbounded'
     const isComponent: boolean = element.maxOccurs === '1' || !isGroup
     const key = element.type || element.ref || element.name
-    const containedType: IComplexType | null = this.complexTypes.get(key)
+    const containedType = this.complexTypes.get(key)
     if (containedType) {
       if (isComponent) {
         const containedDefinition: ComponentFieldDefinition = this.getComponent(containedType)
@@ -333,14 +326,14 @@ export class ComponentsParser extends XsdParser {
       elements.forEach((element: IElement) => {
         switch (element.type) {
           case 'xs:group': {
-            const groupElements: IGroup | null = this.groups.get(element.name)
+            const groupElements = this.groups.get(element.name)
             if (groupElements) {
               this.addElements(set, groupElements.elements)
             } else {
               throw new Error(`unable to get xs:group ${element.name}`)
             }
-            break
           }
+            break
 
           default: {
             this.addElement(set, element)
@@ -351,7 +344,7 @@ export class ComponentsParser extends XsdParser {
   }
 
   private addSimpleAttribute (set: ContainedFieldSet, attribute: IAttribute): void {
-    let sf: SimpleFieldDefinition | null = this.definitions.getSimple(attribute.type)
+    let sf = this.definitions.getSimple(attribute.type)
     if (!sf) {
       sf = this.definitions.getSimple(attribute.name, set.category)
     }
@@ -371,7 +364,7 @@ export class ComponentsParser extends XsdParser {
     attributes.forEach((attribute: IAttribute) => {
       switch (attribute.type) {
         case 'xs:attributeGroup': {
-          const attributeGroup: IAttributeGroup | null = this.attributeGroups.get(attribute.name)
+          const attributeGroup = this.attributeGroups.get(attribute.name)
           if (attributeGroup) {
             this.addAttributes(set, attributeGroup.attributes)
           } else {
@@ -388,10 +381,10 @@ export class ComponentsParser extends XsdParser {
   }
 
   private getGroup (type: IComplexType): GroupFieldDefinition {
-    const group: IGroup | null = this.groups.get(type.group)
-    const attributeGroup: IAttributeGroup | null = this.attributeGroups.get(type.attributeGroup)
-    const name: string = group && attributeGroup ? ComponentsParser.getName(group, attributeGroup, type) : ''
-    const category: string | null = type.appInfo != null ? type.appInfo.Category : null
+    const group = this.groups.get(type.group)
+    const attributeGroup = this.attributeGroups.get(type.attributeGroup)
+    const name: string = ComponentsParser.getName(group, attributeGroup, type)
+    const category = type.appInfo != null ? type.appInfo.Category : null
     const groupDefinition: GroupFieldDefinition = new GroupFieldDefinition(name, name, category, null, null)
     this.populateSet(type, groupDefinition)
     return groupDefinition
@@ -399,15 +392,15 @@ export class ComponentsParser extends XsdParser {
 
   private getComponent (type: IComplexType): ComponentFieldDefinition {
     const definitions = this.definitions
-    const group: IGroup | null = this.groups.get(type.group)
-    const attributeGroup: IAttributeGroup | null = this.attributeGroups.get(type.attributeGroup)
-    let name: string = group && attributeGroup ? ComponentsParser.getName(group, attributeGroup, type) : ''
-    const cached: ComponentFieldDefinition | null = definitions.component.get(name)
+    const group = this.groups.get(type.group)
+    const attributeGroup = this.attributeGroups.get(type.attributeGroup)
+    let name: string = ComponentsParser.getName(group, attributeGroup, type)
+    const cached = definitions.component.get(name)
     if (cached) {
       return cached
     }
 
-    const category: string | null = type.appInfo != null ? type.appInfo.Category : null
+    const category = type.appInfo != null ? type.appInfo.Category : null
     if (type.extensionBase) {
       const base = this.complexTypes.get(type.extensionBase)
       if (base) {
@@ -430,7 +423,7 @@ export class ComponentsParser extends XsdParser {
       type.appInfo.MsgID,
       type.appInfo.Category,
       type.annotation.documentation)
-    const abstractMessage: ComponentFieldDefinition | null = definitions.component.get('Message')
+    const abstractMessage = definitions.component.get('Message')
     abstractMessage?.fields.forEach((f) => {
       message.add(f)
     })
@@ -443,25 +436,25 @@ export class ComponentsParser extends XsdParser {
     return message
   }
 
-  private getBaseAttributes (type: IComplexType): IAttributeGroup | null {
+  private getBaseAttributes (type: IComplexType): (IAttributeGroup | null) {
     const attributeGroups = this.attributeGroups
-    let baseGroup: IAttributeGroup | null = null
+    let baseGroup
     if (type.extensionBase) {
       const base = this.complexTypes.get(type.extensionBase)
       if (base) {
         baseGroup = attributeGroups.get(base.attributeGroup)
       }
-      return baseGroup
+      return baseGroup ?? null
     }
     return null
   }
 
   private populateSet (type: IComplexType, set: ContainedFieldSet): void {
-    const group: IGroup | null = this.groups.get(type.group)
+    const group = this.groups.get(type.group)
     const elements: IElement[] = group ? group.elements : type.element
     const attributeGroups = this.attributeGroups
-    const attributeGroup: IAttributeGroup | null = attributeGroups.get(type.attributeGroup)
-    const baseGroup: IAttributeGroup | null = this.getBaseAttributes(type)
+    const attributeGroup = attributeGroups.get(type.attributeGroup)
+    const baseGroup = this.getBaseAttributes(type)
     // if a base is specified add the attributes from there
     if (baseGroup) {
       this.addAttributes(set, baseGroup.attributes)

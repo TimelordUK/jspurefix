@@ -9,33 +9,33 @@ import { IParties } from './set/parties'
 *****************************************************
 */
 export interface IOrderCancelReject {
-  OrderID: string// 37
-  OrderRequestID?: number// 2422
-  SecondaryOrderID?: string// 198
-  SecondaryClOrdID?: string// 526
-  ClOrdID: string// 11
-  ClOrdLinkID?: string// 583
-  OrigClOrdID?: string// 41
-  OrdStatus: string// 39
-  WorkingIndicator?: boolean// 636
-  OrigOrdModTime?: Date// 586
-  ListID?: string// 66
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  TradeOriginationDate?: Date// 229
-  TradeDate?: Date// 75
-  TransactTime?: Date// 60
-  CxlRejResponseTo: string// 434
-  CxlRejReason?: number// 102
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  ExDestination?: string// 100
-  ExDestinationIDSource?: string// 1133
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
+  OrderID: string// [2] 37 (String)
+  OrderRequestID?: number// [2] 2422 (Int)
+  SecondaryOrderID?: string// [2] 198 (String)
+  SecondaryClOrdID?: string// [2] 526 (String)
+  ClOrdID: string// [2] 11 (String)
+  ClOrdLinkID?: string// [2] 583 (String)
+  OrigClOrdID?: string// [2] 41 (String)
+  OrdStatus: string// [2] 39 (String)
+  WorkingIndicator?: boolean// [2] 636 (Boolean)
+  OrigOrdModTime?: Date// [2] 586 (UtcTimestamp)
+  ListID?: string// [2] 66 (String)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  TradeOriginationDate?: Date// [2] 229 (LocalDate)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  CxlRejResponseTo: string// [2] 434 (String)
+  CxlRejReason?: number// [2] 102 (Int)
+  RejectText?: string// [2] 1328 (String)
+  EncodedRejectTextLen?: number// [2] 1664 (Length)
+  EncodedRejectText?: Buffer// [2] 1665 (RawData)
+  ExDestination?: string// [2] 100 (String)
+  ExDestinationIDSource?: string// [2] 1133 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
 }

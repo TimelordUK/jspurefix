@@ -4,61 +4,61 @@ import { IUnderlyingPaymentScheduleFixingDayGrp } from './underlying_payment_sch
 import { IUnderlyingPaymentScheduleInterimExchangeDateBusinessCenterGrp } from './underlying_payment_schedule_interim_exchange_date_business_center_grp'
 
 export interface IUnderlyingPaymentScheduleGrp {
-  UnderlyingPaymentScheduleType?: number// 40665
-  UnderlyingPaymentScheduleXID?: string// 41881
-  UnderlyingPaymentScheduleXIDRef?: string// 41882
-  UnderlyingPaymentScheduleStubType?: number// 40666
-  UnderlyingPaymentScheduleStartDateUnadjusted?: Date// 40667
-  UnderlyingPaymentScheduleEndDateUnadjusted?: Date// 40668
-  UnderlyingPaymentSchedulePaySide?: number// 40669
-  UnderlyingPaymentScheduleReceiveSide?: number// 40670
-  UnderlyingPaymentScheduleNotional?: number// 40671
-  UnderlyingPaymentScheduleCurrency?: string// 40672
-  UnderlyingPaymentScheduleRate?: number// 40673
-  UnderlyingPaymentScheduleRateMultiplier?: number// 40674
-  UnderlyingPaymentScheduleRateSpread?: number// 40675
-  UnderlyingPaymentScheduleRateCurrency?: string// 41883
-  UnderlyingPaymentScheduleRateUnitOfMeasure?: string// 41884
-  UnderlyingPaymentScheduleRateConversionFactor?: number// 41885
-  UnderlyingPaymentScheduleRateSpreadType?: number// 41886
-  UnderlyingPaymentScheduleRateSpreadPositionType?: number// 40676
-  UnderlyingPaymentScheduleRateTreatment?: number// 40677
-  UnderlyingPaymentScheduleFixedAmount?: number// 40678
-  UnderlyingPaymentScheduleFixedCurrency?: string// 40679
-  UnderlyingPaymentScheduleSettlPeriodPrice?: number// 41887
-  UnderlyingPaymentScheduleSettlPeriodPriceCurrency?: string// 41888
-  UnderlyingPaymentScheduleSettlPeriodPriceUnitOfMeasure?: string// 41889
-  UnderlyingPaymentScheduleStepUnitOfMeasure?: string// 41890
-  UnderlyingPaymentScheduleStepFrequencyPeriod?: number// 40680
-  UnderlyingPaymentScheduleStepFrequencyUnit?: string// 40681
-  UnderlyingPaymentScheduleStepOffsetValue?: number// 40682
-  UnderlyingPaymentScheduleStepRate?: number// 40683
-  UnderlyingPaymentScheduleStepOffsetRate?: number// 40684
-  UnderlyingPaymentScheduleStepRelativeTo?: number// 40685
-  UnderlyingPaymentScheduleFixingDateUnadjusted?: Date// 40686
-  UnderlyingPaymentScheduleWeight?: number// 40687
-  UnderlyingPaymentScheduleFixingDateRelativeTo?: number// 40688
-  UnderlyingPaymentScheduleFixingDateBusinessDayCnvtn?: number// 40689
-  UnderlyingPaymentScheduleFixingDateOffsetPeriod?: number// 40691
-  UnderlyingPaymentScheduleFixingDateOffsetUnit?: string// 40692
-  UnderlyingPaymentScheduleFixingDateOffsetDayType?: number// 40693
-  UnderlyingPaymentScheduleFixingDayDistribution?: number// 41891
-  UnderlyingPaymentScheduleFixingDayCount?: number// 41892
-  UnderlyingPaymentScheduleFixingDateAdjusted?: Date// 40694
-  UnderlyingPaymentScheduleFixingLagPeriod?: number// 41893
-  UnderlyingPaymentScheduleFixingLagUnit?: string// 41894
-  UnderlyingPaymentScheduleFixingFirstObservationDateOffsetPeriod?: number// 41895
-  UnderlyingPaymentScheduleFixingFirstObservationDateOffsetUnit?: string// 41896
-  UnderlyingPaymentScheduleFixingTime?: string// 40695
-  UnderlyingPaymentScheduleFixingTimeBusinessCenter?: string// 40696
-  UnderlyingPaymentScheduleInterimExchangePaymentDateRelativeTo?: number// 40697
-  UnderlyingPaymentScheduleInterimExchangeDatesBusinessDayConvention?: number// 40698
-  UnderlyingPaymentScheduleInterimExchangeDatesOffsetPeriod?: number// 40700
-  UnderlyingPaymentScheduleInterimExchangeDatesOffsetUnit?: string// 40701
-  UnderlyingPaymentScheduleInterimExchangeDatesOffsetDayType?: number// 40702
-  UnderlyingPaymentScheduleInterimExchangeDateAdjusted?: Date// 40703
-  UnderlyingPaymentScheduleRateSourceGrp?: IUnderlyingPaymentScheduleRateSourceGrp[]
-  UnderlyingPaymentScheduleFixingDateBusinessCenterGrp?: IUnderlyingPaymentScheduleFixingDateBusinessCenterGrp[]
-  UnderlyingPaymentScheduleFixingDayGrp?: IUnderlyingPaymentScheduleFixingDayGrp[]
-  UnderlyingPaymentScheduleInterimExchangeDateBusinessCenterGrp?: IUnderlyingPaymentScheduleInterimExchangeDateBusinessCenterGrp[]
+  UnderlyingPaymentScheduleType?: number// [1] 40665 (Int)
+  UnderlyingPaymentScheduleXID?: string// [1] 41881 (String)
+  UnderlyingPaymentScheduleXIDRef?: string// [1] 41882 (String)
+  UnderlyingPaymentScheduleStubType?: number// [1] 40666 (Int)
+  UnderlyingPaymentScheduleStartDateUnadjusted?: Date// [1] 40667 (LocalDate)
+  UnderlyingPaymentScheduleEndDateUnadjusted?: Date// [1] 40668 (LocalDate)
+  UnderlyingPaymentSchedulePaySide?: number// [1] 40669 (Int)
+  UnderlyingPaymentScheduleReceiveSide?: number// [1] 40670 (Int)
+  UnderlyingPaymentScheduleNotional?: number// [1] 40671 (Float)
+  UnderlyingPaymentScheduleCurrency?: string// [1] 40672 (String)
+  UnderlyingPaymentScheduleRate?: number// [1] 40673 (Float)
+  UnderlyingPaymentScheduleRateMultiplier?: number// [1] 40674 (Float)
+  UnderlyingPaymentScheduleRateSpread?: number// [1] 40675 (Float)
+  UnderlyingPaymentScheduleRateCurrency?: string// [1] 41883 (String)
+  UnderlyingPaymentScheduleRateUnitOfMeasure?: string// [1] 41884 (String)
+  UnderlyingPaymentScheduleRateConversionFactor?: number// [1] 41885 (Float)
+  UnderlyingPaymentScheduleRateSpreadType?: number// [1] 41886 (Int)
+  UnderlyingPaymentScheduleRateSpreadPositionType?: number// [1] 40676 (Int)
+  UnderlyingPaymentScheduleRateTreatment?: number// [1] 40677 (Int)
+  UnderlyingPaymentScheduleFixedAmount?: number// [1] 40678 (Float)
+  UnderlyingPaymentScheduleFixedCurrency?: string// [1] 40679 (String)
+  UnderlyingPaymentScheduleSettlPeriodPrice?: number// [1] 41887 (Float)
+  UnderlyingPaymentScheduleSettlPeriodPriceCurrency?: string// [1] 41888 (String)
+  UnderlyingPaymentScheduleSettlPeriodPriceUnitOfMeasure?: string// [1] 41889 (String)
+  UnderlyingPaymentScheduleStepUnitOfMeasure?: string// [1] 41890 (String)
+  UnderlyingPaymentScheduleStepFrequencyPeriod?: number// [1] 40680 (Int)
+  UnderlyingPaymentScheduleStepFrequencyUnit?: string// [1] 40681 (String)
+  UnderlyingPaymentScheduleStepOffsetValue?: number// [1] 40682 (Float)
+  UnderlyingPaymentScheduleStepRate?: number// [1] 40683 (Float)
+  UnderlyingPaymentScheduleStepOffsetRate?: number// [1] 40684 (Float)
+  UnderlyingPaymentScheduleStepRelativeTo?: number// [1] 40685 (Int)
+  UnderlyingPaymentScheduleFixingDateUnadjusted?: Date// [1] 40686 (LocalDate)
+  UnderlyingPaymentScheduleWeight?: number// [1] 40687 (Float)
+  UnderlyingPaymentScheduleFixingDateRelativeTo?: number// [1] 40688 (Int)
+  UnderlyingPaymentScheduleFixingDateBusinessDayCnvtn?: number// [1] 40689 (Int)
+  UnderlyingPaymentScheduleFixingDateOffsetPeriod?: number// [1] 40691 (Int)
+  UnderlyingPaymentScheduleFixingDateOffsetUnit?: string// [1] 40692 (String)
+  UnderlyingPaymentScheduleFixingDateOffsetDayType?: number// [1] 40693 (Int)
+  UnderlyingPaymentScheduleFixingDayDistribution?: number// [1] 41891 (Int)
+  UnderlyingPaymentScheduleFixingDayCount?: number// [1] 41892 (Int)
+  UnderlyingPaymentScheduleFixingDateAdjusted?: Date// [1] 40694 (LocalDate)
+  UnderlyingPaymentScheduleFixingLagPeriod?: number// [1] 41893 (Int)
+  UnderlyingPaymentScheduleFixingLagUnit?: string// [1] 41894 (String)
+  UnderlyingPaymentScheduleFixingFirstObservationDateOffsetPeriod?: number// [1] 41895 (Int)
+  UnderlyingPaymentScheduleFixingFirstObservationDateOffsetUnit?: string// [1] 41896 (String)
+  UnderlyingPaymentScheduleFixingTime?: string// [1] 40695 (String)
+  UnderlyingPaymentScheduleFixingTimeBusinessCenter?: string// [1] 40696 (String)
+  UnderlyingPaymentScheduleInterimExchangePaymentDateRelativeTo?: number// [1] 40697 (Int)
+  UnderlyingPaymentScheduleInterimExchangeDatesBusinessDayConvention?: number// [1] 40698 (Int)
+  UnderlyingPaymentScheduleInterimExchangeDatesOffsetPeriod?: number// [1] 40700 (Int)
+  UnderlyingPaymentScheduleInterimExchangeDatesOffsetUnit?: string// [1] 40701 (String)
+  UnderlyingPaymentScheduleInterimExchangeDatesOffsetDayType?: number// [1] 40702 (Int)
+  UnderlyingPaymentScheduleInterimExchangeDateAdjusted?: Date// [1] 40703 (LocalDate)
+  UnderlyingPaymentScheduleRateSourceGrp?: IUnderlyingPaymentScheduleRateSourceGrp[]// [1] Src.40705, Typ.40706, RefPg.40707
+  UnderlyingPaymentScheduleFixingDateBusinessCenterGrp?: IUnderlyingPaymentScheduleFixingDateBusinessCenterGrp[]// [2] Ctr.40690
+  UnderlyingPaymentScheduleFixingDayGrp?: IUnderlyingPaymentScheduleFixingDayGrp[]// [3] DayOfWk.41879, DayNum.41880
+  UnderlyingPaymentScheduleInterimExchangeDateBusinessCenterGrp?: IUnderlyingPaymentScheduleInterimExchangeDateBusinessCenterGrp[]// [4] Ctr.40699
 }

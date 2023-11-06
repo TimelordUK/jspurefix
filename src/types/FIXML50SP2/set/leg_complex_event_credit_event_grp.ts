@@ -1,12 +1,12 @@
 import { ILegComplexEventCreditEventQualifierGrp } from './leg_complex_event_credit_event_qualifier_grp'
 
 export interface ILegComplexEventCreditEventGrp {
-  LegComplexEventCreditEventType?: string// 41367
-  LegComplexEventCreditEventValue?: string// 41368
-  LegComplexEventCreditEventCurrency?: string// 41369
-  LegComplexEventCreditEventPeriod?: number// 41370
-  LegComplexEventCreditEventUnit?: string// 41371
-  LegComplexEventCreditEventDayType?: number// 41372
-  LegComplexEventCreditEventRateSource?: number// 41373
-  LegComplexEventCreditEventQualifierGrp?: ILegComplexEventCreditEventQualifierGrp[]
+  LegComplexEventCreditEventType?: string// [1] 41367 (String)
+  LegComplexEventCreditEventValue?: string// [1] 41368 (String)
+  LegComplexEventCreditEventCurrency?: string// [1] 41369 (String)
+  LegComplexEventCreditEventPeriod?: number// [1] 41370 (Int)
+  LegComplexEventCreditEventUnit?: string// [1] 41371 (String)
+  LegComplexEventCreditEventDayType?: number// [1] 41372 (Int)
+  LegComplexEventCreditEventRateSource?: number// [1] 41373 (Int)
+  LegComplexEventCreditEventQualifierGrp?: ILegComplexEventCreditEventQualifierGrp[]// [1] Qual.41375
 }

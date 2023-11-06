@@ -1,7 +1,7 @@
 import { IComplexEventTimes } from './complex_event_times'
 
 export interface IComplexEventDates {
-  ComplexEventStartDate?: Date// 1492
-  ComplexEventEndDate?: Date// 1493
-  ComplexEventTimes?: IComplexEventTimes[]
+  ComplexEventStartDate?: Date// [1] 1492 (UtcDateOnly)
+  ComplexEventEndDate?: Date// [1] 1493 (UtcDateOnly)
+  ComplexEventTimes?: IComplexEventTimes[]// [1] StartTm.1495, EndTm.1496
 }

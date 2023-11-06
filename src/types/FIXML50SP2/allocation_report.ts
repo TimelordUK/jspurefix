@@ -23,101 +23,101 @@ import { IRateSource } from './set/rate_source'
 ****************************************************
 */
 export interface IAllocationReport {
-  AllocReportID: string// 755
-  AllocID?: string// 70
-  AllocTransType: string// 71
-  AllocReportRefID?: string// 795
-  AllocCancReplaceReason?: number// 796
-  SecondaryAllocID?: string// 793
-  AllocGroupID?: string// 1730
-  FirmGroupID?: string// 1728
-  AllocReportType: number// 794
-  AllocStatus: number// 87
-  AllocRejCode?: number// 88
-  RefAllocID?: string// 72
-  AllocReversalStatus?: number// 1738
-  AllocIntermedReqType?: number// 808
-  AllocLinkID?: string// 196
-  AllocLinkType?: number// 197
-  BookingRefID?: string// 466
-  ClearingBusinessDate?: Date// 715
-  TrdType?: number// 828
-  TrdSubType?: number// 829
-  MultiLegReportingType?: string// 442
-  CustOrderCapacity?: number// 582
-  TradeInputSource?: string// 578
-  RndPx?: number// 991
-  MessageEventSource?: string// 1011
-  TradeInputDevice?: string// 579
-  AvgPxIndicator?: number// 819
-  AvgPxGroupID?: string// 1731
-  AllocNoOrdersType?: number// 857
-  PreviouslyReported?: boolean// 570
-  ReversalIndicator?: boolean// 700
-  MatchType?: string// 574
-  Side: string// 54
-  Quantity: number// 53
-  QtyType?: number// 854
-  AllocGroupQuantity?: number// 1736
-  AllocGroupRemainingQuantity?: number// 1737
-  LastMkt?: string// 30
-  TradeOriginationDate?: Date// 229
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  PriceType?: number// 423
-  AvgPx: number// 6
-  AvgParPx?: number// 860
-  Currency?: string// 15
-  AvgPxPrecision?: number// 74
-  TradeDate: Date// 75
-  TransactTime?: Date// 60
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  BookingType?: number// 775
-  GrossTradeAmt?: number// 381
-  Concession?: number// 238
-  TotalTakedown?: number// 237
-  NetMoney?: number// 118
-  PositionEffect?: string// 77
-  AutoAcceptIndicator?: boolean// 754
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  NumDaysInterest?: number// 157
-  AccruedInterestRate?: number// 158
-  AccruedInterestAmt?: number// 159
-  TotalAccruedInterestAmt?: number// 540
-  InterestAtMaturity?: number// 738
-  EndAccruedInterestAmt?: number// 920
-  StartCash?: number// 921
-  EndCash?: number// 922
-  LegalConfirm?: boolean// 650
-  CustOrderHandlingInst?: string// 1031
-  OrderHandlingInstSource?: number// 1032
-  TotNoAllocs?: number// 892
-  LastFragment?: boolean// 893
-  VenueType?: string// 1430
-  RefRiskLimitCheckID?: string// 2334
-  RefRiskLimitCheckIDType?: number// 2335
-  RiskLimitCheckStatus?: number// 2343
-  ClearDate?: Date// 60003
-  ExecutingClaimingIndicator?: number// 60002
-  PostTradeType?: number// 60001
-  TradeMatchID?: string// 60004
-  StandardHeader?: IStandardHeader
-  OrdAllocGrp?: IOrdAllocGrp[]
-  ExecAllocGrp?: IExecAllocGrp[]
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  Parties?: IParties[]
-  Stipulations?: IStipulations[]
-  YieldData?: IYieldData
-  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]
-  PositionAmountData?: IPositionAmountData[]
-  AllocGrp?: IAllocGrp[]
-  RateSource?: IRateSource[]
+  AllocReportID: string// [2] 755 (String)
+  AllocID?: string// [2] 70 (String)
+  AllocTransType: string// [2] 71 (String)
+  AllocReportRefID?: string// [2] 795 (String)
+  AllocCancReplaceReason?: number// [2] 796 (Int)
+  SecondaryAllocID?: string// [2] 793 (String)
+  AllocGroupID?: string// [2] 1730 (String)
+  FirmGroupID?: string// [2] 1728 (String)
+  AllocReportType: number// [2] 794 (Int)
+  AllocStatus: number// [2] 87 (Int)
+  AllocRejCode?: number// [2] 88 (Int)
+  RefAllocID?: string// [2] 72 (String)
+  AllocReversalStatus?: number// [2] 1738 (Int)
+  AllocIntermedReqType?: number// [2] 808 (Int)
+  AllocLinkID?: string// [2] 196 (String)
+  AllocLinkType?: number// [2] 197 (Int)
+  BookingRefID?: string// [2] 466 (String)
+  ClearingBusinessDate?: Date// [2] 715 (LocalDate)
+  TrdType?: number// [2] 828 (Int)
+  TrdSubType?: number// [2] 829 (Int)
+  MultiLegReportingType?: string// [2] 442 (String)
+  CustOrderCapacity?: number// [2] 582 (Int)
+  TradeInputSource?: string// [2] 578 (String)
+  RndPx?: number// [2] 991 (Float)
+  MessageEventSource?: string// [2] 1011 (String)
+  TradeInputDevice?: string// [2] 579 (String)
+  AvgPxIndicator?: number// [2] 819 (Int)
+  AvgPxGroupID?: string// [2] 1731 (String)
+  AllocNoOrdersType?: number// [2] 857 (Int)
+  PreviouslyReported?: boolean// [2] 570 (Boolean)
+  ReversalIndicator?: boolean// [2] 700 (Boolean)
+  MatchType?: string// [2] 574 (String)
+  Side: string// [2] 54 (String)
+  Quantity: number// [2] 53 (Float)
+  QtyType?: number// [2] 854 (Int)
+  AllocGroupQuantity?: number// [2] 1736 (Float)
+  AllocGroupRemainingQuantity?: number// [2] 1737 (Float)
+  LastMkt?: string// [2] 30 (String)
+  TradeOriginationDate?: Date// [2] 229 (LocalDate)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  PriceType?: number// [2] 423 (Int)
+  AvgPx: number// [2] 6 (Float)
+  AvgParPx?: number// [2] 860 (Float)
+  Currency?: string// [2] 15 (String)
+  AvgPxPrecision?: number// [2] 74 (Int)
+  TradeDate: Date// [2] 75 (LocalDate)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  SettlType?: string// [2] 63 (String)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  BookingType?: number// [2] 775 (Int)
+  GrossTradeAmt?: number// [2] 381 (Float)
+  Concession?: number// [2] 238 (Float)
+  TotalTakedown?: number// [2] 237 (Float)
+  NetMoney?: number// [2] 118 (Float)
+  PositionEffect?: string// [2] 77 (String)
+  AutoAcceptIndicator?: boolean// [2] 754 (Boolean)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  NumDaysInterest?: number// [2] 157 (Int)
+  AccruedInterestRate?: number// [2] 158 (Float)
+  AccruedInterestAmt?: number// [2] 159 (Float)
+  TotalAccruedInterestAmt?: number// [2] 540 (Float)
+  InterestAtMaturity?: number// [2] 738 (Float)
+  EndAccruedInterestAmt?: number// [2] 920 (Float)
+  StartCash?: number// [2] 921 (Float)
+  EndCash?: number// [2] 922 (Float)
+  LegalConfirm?: boolean// [2] 650 (Boolean)
+  CustOrderHandlingInst?: string// [2] 1031 (String)
+  OrderHandlingInstSource?: number// [2] 1032 (Int)
+  TotNoAllocs?: number// [2] 892 (Int)
+  LastFragment?: boolean// [2] 893 (Boolean)
+  VenueType?: string// [2] 1430 (String)
+  RefRiskLimitCheckID?: string// [2] 2334 (String)
+  RefRiskLimitCheckIDType?: number// [2] 2335 (Int)
+  RiskLimitCheckStatus?: number// [2] 2343 (Int)
+  ClearDate?: Date// [2] 60003 (LocalDate)
+  ExecutingClaimingIndicator?: number// [2] 60002 (Int)
+  PostTradeType?: number// [2] 60001 (Int)
+  TradeMatchID?: string// [2] 60004 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  OrdAllocGrp?: IOrdAllocGrp[]// [2] ClOrdID.11, OrdID.37 .. BkngQty.800
+  ExecAllocGrp?: IExecAllocGrp[]// [3] LastQty.32, ExecID.17 .. FirmTrdID.1041
+  Instrument?: IInstrument// [4] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [5] DlvryForm.668, PctAtRisk.869
+  FinancingDetails?: IFinancingDetails// [6] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [7] Sym.311, Sfx.312 .. XID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [8] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [9] Spread.218, Ccy.220 .. SecIDSrc.761
+  Parties?: IParties[]// [10] ID.448, Src.447 .. Qual.2376
+  Stipulations?: IStipulations[]// [11] Typ.233, Val.234
+  YieldData?: IYieldData// [12] Typ.235, Yld.236 .. RedPxTyp.698
+  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]// [13] ID.1903, Src.1905 .. Scope.2397
+  PositionAmountData?: IPositionAmountData[]// [14] Typ.707, Amt.708 .. MktID.2100
+  AllocGrp?: IAllocGrp[]// [15] Acct.79, ActIDSrc.661 .. OrigTrdID2.60006
+  RateSource?: IRateSource[]// [16] RtSrc.1446, RtSrcTyp.1447 .. RefHdng.2412
 }

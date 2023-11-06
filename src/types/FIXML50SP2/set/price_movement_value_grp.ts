@@ -1,5 +1,5 @@
 export interface IPriceMovementValueGrp {
-  PriceMovementValue?: number// 1921
-  PriceMovementPoint?: number// 1922
-  PriceMovementType?: number// 1923
+  PriceMovementValue?: number// [1] 1921 (Float)
+  PriceMovementPoint?: number// [1] 1922 (Int)
+  PriceMovementType?: number// [1] 1923 (Int)
 }

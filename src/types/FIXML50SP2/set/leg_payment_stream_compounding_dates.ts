@@ -4,19 +4,19 @@ import { ILegPaymentStreamCompoundingStartDate } from './leg_payment_stream_comp
 import { ILegPaymentStreamCompoundingEndDate } from './leg_payment_stream_compounding_end_date'
 
 export interface ILegPaymentStreamCompoundingDates {
-  LegPaymentStreamCompoundingDatesBusinessDayConvention?: number// 42408
-  LegPaymentStreamCompoundingDatesRelativeTo?: number// 42409
-  LegPaymentStreamCompoundingDatesOffsetPeriod?: number// 42410
-  LegPaymentStreamCompoundingDatesOffsetUnit?: string// 42411
-  LegPaymentStreamCompoundingDatesOffsetDayType?: number// 42412
-  LegPaymentStreamCompoundingPeriodSkip?: number// 42413
-  LegPaymentStreamCompoundingFrequencyPeriod?: number// 42414
-  LegPaymentStreamCompoundingFrequencyUnit?: string// 42415
-  LegPaymentStreamCompoundingRollConvention?: string// 42416
-  LegPaymentStreamBoundsFirstDateUnadjusted?: Date// 42417
-  LegPaymentStreamBoundsLastDateUnadjusted?: Date// 42418
-  LegPaymentStreamCompoundingDatesBusinessCenterGrp?: ILegPaymentStreamCompoundingDatesBusinessCenterGrp[]
-  LegPaymentStreamCompoundingDateGrp?: ILegPaymentStreamCompoundingDateGrp[]
-  LegPaymentStreamCompoundingStartDate?: ILegPaymentStreamCompoundingStartDate
-  LegPaymentStreamCompoundingEndDate?: ILegPaymentStreamCompoundingEndDate
+  LegPaymentStreamCompoundingDatesBusinessDayConvention?: number// [1] 42408 (Int)
+  LegPaymentStreamCompoundingDatesRelativeTo?: number// [1] 42409 (Int)
+  LegPaymentStreamCompoundingDatesOffsetPeriod?: number// [1] 42410 (Int)
+  LegPaymentStreamCompoundingDatesOffsetUnit?: string// [1] 42411 (String)
+  LegPaymentStreamCompoundingDatesOffsetDayType?: number// [1] 42412 (Int)
+  LegPaymentStreamCompoundingPeriodSkip?: number// [1] 42413 (Int)
+  LegPaymentStreamCompoundingFrequencyPeriod?: number// [1] 42414 (Int)
+  LegPaymentStreamCompoundingFrequencyUnit?: string// [1] 42415 (String)
+  LegPaymentStreamCompoundingRollConvention?: string// [1] 42416 (String)
+  LegPaymentStreamBoundsFirstDateUnadjusted?: Date// [1] 42417 (LocalDate)
+  LegPaymentStreamBoundsLastDateUnadjusted?: Date// [1] 42418 (LocalDate)
+  LegPaymentStreamCompoundingDatesBusinessCenterGrp?: ILegPaymentStreamCompoundingDatesBusinessCenterGrp[]// [1] Ctr.42420
+  LegPaymentStreamCompoundingDateGrp?: ILegPaymentStreamCompoundingDateGrp[]// [2] Dt.42406, Typ.42407
+  LegPaymentStreamCompoundingStartDate?: ILegPaymentStreamCompoundingStartDate// [3] DtUnadj.42445, Reltv.42446 .. Dt.42450
+  LegPaymentStreamCompoundingEndDate?: ILegPaymentStreamCompoundingEndDate// [4] DtUnadj.42421, Reltv.42422 .. Dt.42426
 }

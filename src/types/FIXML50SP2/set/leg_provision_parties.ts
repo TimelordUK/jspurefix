@@ -1,9 +1,9 @@
 import { ILegProvisionPtysSubGrp } from './leg_provision_ptys_sub_grp'
 
 export interface ILegProvisionParties {
-  LegProvisionPartyID?: string// 40534
-  SecurityIDSource?: string// 22
-  LegProvisionPartyRole?: number// 40536
-  LegProvisionPartyRoleQualifier?: number// 2380
-  LegProvisionPtysSubGrp?: ILegProvisionPtysSubGrp[]
+  LegProvisionPartyID?: string// [1] 40534 (String)
+  SecurityIDSource?: string// [1] 22 (String)
+  LegProvisionPartyRole?: number// [1] 40536 (Int)
+  LegProvisionPartyRoleQualifier?: number// [1] 2380 (Int)
+  LegProvisionPtysSubGrp?: ILegProvisionPtysSubGrp[]// [1] ID.40538, Typ.139
 }

@@ -1,12 +1,12 @@
 export interface IUnderlyingEvntGrp {
-  UnderlyingEventType?: number// 1982
-  UnderlyingEventDate?: Date// 1983
-  UnderlyingEventTime?: Date// 1984
-  UnderlyingEventTimeUnit?: string// 1985
-  UnderlyingEventTimePeriod?: number// 1986
-  UnderlyingEventMonthYear?: string// 2342
-  UnderlyingEventPx?: number// 1987
-  UnderlyingEventText?: string// 2071
-  EncodedUnderlyingEventTextLen?: number// 2072
-  EncodedUnderlyingEventText?: Buffer// 2073
+  UnderlyingEventType?: number// [1] 1982 (Int)
+  UnderlyingEventDate?: Date// [1] 1983 (LocalDate)
+  UnderlyingEventTime?: Date// [1] 1984 (UtcTimestamp)
+  UnderlyingEventTimeUnit?: string// [1] 1985 (String)
+  UnderlyingEventTimePeriod?: number// [1] 1986 (Int)
+  UnderlyingEventMonthYear?: string// [1] 2342 (String)
+  UnderlyingEventPx?: number// [1] 1987 (Float)
+  UnderlyingEventText?: string// [1] 2071 (String)
+  EncodedUnderlyingEventTextLen?: number// [1] 2072 (Length)
+  EncodedUnderlyingEventText?: Buffer// [1] 2073 (RawData)
 }

@@ -1,4 +1,4 @@
 export interface ISettlRateFallbackRateSource {
-  SettlRateFallbackRateSource?: number// 40373
-  SettlRateFallbackReferencePage?: string// 40655
+  SettlRateFallbackRateSource?: number// [1] 40373 (Int)
+  SettlRateFallbackReferencePage?: string// [1] 40655 (String)
 }

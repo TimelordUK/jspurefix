@@ -24,74 +24,74 @@ import { IMiscFeesGrp } from './set/misc_fees_grp'
 ************************************************
 */
 export interface IConfirmation {
-  ConfirmID: string// 664
-  ConfirmRefID?: string// 772
-  ConfirmReqID?: string// 859
-  ConfirmTransType: number// 666
-  ConfirmType: number// 773
-  CopyMsgIndicator?: boolean// 797
-  LegalConfirm?: boolean// 650
-  ConfirmStatus: number// 665
-  AffirmStatus?: number// 940
-  TradeConfirmationReferenceID?: string// 2390
-  ClearedIndicator?: number// 1832
-  AllocID?: string// 70
-  SecondaryAllocID?: string// 793
-  IndividualAllocID?: string// 467
-  TransactTime: Date// 60
-  TradeDate: Date// 75
-  AllocQty: number// 80
-  QtyType?: number// 854
-  Side: string// 54
-  Currency?: string// 15
-  LastMkt?: string// 30
-  AllocAccount: string// 79
-  AllocAcctIDSource?: number// 661
-  AllocAccountType?: number// 798
-  AvgPx: number// 6
-  AvgPxPrecision?: number// 74
-  PriceType?: number// 423
-  AvgParPx?: number// 860
-  ReportedPx?: number// 861
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  ProcessCode?: string// 81
-  GrossTradeAmt: number// 381
-  NumDaysInterest?: number// 157
-  ExDate?: Date// 230
-  AccruedInterestRate?: number// 158
-  AccruedInterestAmt?: number// 159
-  InterestAtMaturity?: number// 738
-  EndAccruedInterestAmt?: number// 920
-  StartCash?: number// 921
-  EndCash?: number// 922
-  Concession?: number// 238
-  TotalTakedown?: number// 237
-  NetMoney: number// 118
-  MaturityNetMoney?: number// 890
-  SettlCurrAmt?: number// 119
-  SettlCurrency?: string// 120
-  SettlCurrFxRate?: number// 155
-  SettlCurrFxRateCalc?: string// 156
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  SharedCommission?: number// 858
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
-  OrdAllocGrp?: IOrdAllocGrp[]
-  TrdRegTimestamps?: ITrdRegTimestamps[]
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  YieldData?: IYieldData
-  CpctyConfGrp?: ICpctyConfGrp[]
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  SettlInstructionsData?: ISettlInstructionsData
-  CommissionData?: ICommissionData
-  CommissionDataGrp?: ICommissionDataGrp[]
-  Stipulations?: IStipulations[]
-  MiscFeesGrp?: IMiscFeesGrp[]
+  ConfirmID: string// [2] 664 (String)
+  ConfirmRefID?: string// [2] 772 (String)
+  ConfirmReqID?: string// [2] 859 (String)
+  ConfirmTransType: number// [2] 666 (Int)
+  ConfirmType: number// [2] 773 (Int)
+  CopyMsgIndicator?: boolean// [2] 797 (Boolean)
+  LegalConfirm?: boolean// [2] 650 (Boolean)
+  ConfirmStatus: number// [2] 665 (Int)
+  AffirmStatus?: number// [2] 940 (Int)
+  TradeConfirmationReferenceID?: string// [2] 2390 (String)
+  ClearedIndicator?: number// [2] 1832 (Int)
+  AllocID?: string// [2] 70 (String)
+  SecondaryAllocID?: string// [2] 793 (String)
+  IndividualAllocID?: string// [2] 467 (String)
+  TransactTime: Date// [2] 60 (UtcTimestamp)
+  TradeDate: Date// [2] 75 (LocalDate)
+  AllocQty: number// [2] 80 (Float)
+  QtyType?: number// [2] 854 (Int)
+  Side: string// [2] 54 (String)
+  Currency?: string// [2] 15 (String)
+  LastMkt?: string// [2] 30 (String)
+  AllocAccount: string// [2] 79 (String)
+  AllocAcctIDSource?: number// [2] 661 (Int)
+  AllocAccountType?: number// [2] 798 (Int)
+  AvgPx: number// [2] 6 (Float)
+  AvgPxPrecision?: number// [2] 74 (Int)
+  PriceType?: number// [2] 423 (Int)
+  AvgParPx?: number// [2] 860 (Float)
+  ReportedPx?: number// [2] 861 (Float)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  ProcessCode?: string// [2] 81 (String)
+  GrossTradeAmt: number// [2] 381 (Float)
+  NumDaysInterest?: number// [2] 157 (Int)
+  ExDate?: Date// [2] 230 (LocalDate)
+  AccruedInterestRate?: number// [2] 158 (Float)
+  AccruedInterestAmt?: number// [2] 159 (Float)
+  InterestAtMaturity?: number// [2] 738 (Float)
+  EndAccruedInterestAmt?: number// [2] 920 (Float)
+  StartCash?: number// [2] 921 (Float)
+  EndCash?: number// [2] 922 (Float)
+  Concession?: number// [2] 238 (Float)
+  TotalTakedown?: number// [2] 237 (Float)
+  NetMoney: number// [2] 118 (Float)
+  MaturityNetMoney?: number// [2] 890 (Float)
+  SettlCurrAmt?: number// [2] 119 (Float)
+  SettlCurrency?: string// [2] 120 (String)
+  SettlCurrFxRate?: number// [2] 155 (Float)
+  SettlCurrFxRateCalc?: string// [2] 156 (String)
+  SettlType?: string// [2] 63 (String)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  SharedCommission?: number// [2] 858 (Float)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
+  OrdAllocGrp?: IOrdAllocGrp[]// [3] ClOrdID.11, OrdID.37 .. BkngQty.800
+  TrdRegTimestamps?: ITrdRegTimestamps[]// [4] TS.769, Typ.770 .. InfoBrrID.1727
+  Instrument?: IInstrument// [5] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [6] DlvryForm.668, PctAtRisk.869
+  FinancingDetails?: IFinancingDetails// [7] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [8] Sym.311, Sfx.312 .. XID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [9] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  YieldData?: IYieldData// [10] Typ.235, Yld.236 .. RedPxTyp.698
+  CpctyConfGrp?: ICpctyConfGrp[]// [11] Cpcty.528, Rstctions.529, CpctyQty.863
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [12] Spread.218, Ccy.220 .. SecIDSrc.761
+  SettlInstructionsData?: ISettlInstructionsData// [13] DlvryTyp.172, StandInstDbTyp.169 .. StandInstDbID.171
+  CommissionData?: ICommissionData// [14] Comm.12, CommTyp.13 .. FundRenewWaiv.497
+  CommissionDataGrp?: ICommissionDataGrp[]// [15] Amt.2640, Typ.2641 .. EncDesc.2652
+  Stipulations?: IStipulations[]// [16] Typ.233, Val.234
+  MiscFeesGrp?: IMiscFeesGrp[]// [17] Amt.137, Curr.138 .. AmtDue.2217
 }

@@ -8,10 +8,10 @@ import { IStandardHeader } from './set/standard_header'
 ***********************************************************
 */
 export interface IMarketDefinitionRequest {
-  MarketReqID: string// 1393
-  SubscriptionRequestType: string// 263
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  ParentMktSegmID?: string// 1325
-  StandardHeader?: IStandardHeader
+  MarketReqID: string// [2] 1393 (String)
+  SubscriptionRequestType: string// [2] 263 (String)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  ParentMktSegmID?: string// [2] 1325 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
 }

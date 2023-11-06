@@ -1,4 +1,4 @@
 export interface IUnderlyingProvisionPtysSubGrp {
-  UnderlyingProvisionPartySubID?: string// 42178
-  MiscFeeType?: string// 139
+  UnderlyingProvisionPartySubID?: string// [1] 42178 (String)
+  MiscFeeType?: string// [1] 139 (String)
 }

@@ -1,6 +1,6 @@
 export interface IUnderlyingDividendPaymentGrp {
-  UnderlyingDividendPaymentDate?: Date// 42856
-  UnderlyingDividendPaymentAmount?: number// 42857
-  UnderlyingDividendPaymentCurrency?: string// 42858
-  UnderlyingDividendAccruedInterest?: number// 42859
+  UnderlyingDividendPaymentDate?: Date// [1] 42856 (LocalDate)
+  UnderlyingDividendPaymentAmount?: number// [1] 42857 (Float)
+  UnderlyingDividendPaymentCurrency?: string// [1] 42858 (String)
+  UnderlyingDividendAccruedInterest?: number// [1] 42859 (Float)
 }

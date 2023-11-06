@@ -1,3 +1,3 @@
 export interface IMDRjctGrp {
-  AltMDSourceID?: string// 817
+  AltMDSourceID?: string// [1] 817 (String)
 }

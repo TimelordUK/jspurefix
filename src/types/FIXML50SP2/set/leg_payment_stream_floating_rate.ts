@@ -6,82 +6,82 @@ import { ILegDividendConditions } from './leg_dividend_conditions'
 import { ILegReturnRateGrp } from './leg_return_rate_grp'
 
 export interface ILegPaymentStreamFloatingRate {
-  LegPaymentStreamRateIndex?: string// 40331
-  LegPaymentStreamRateIndexSource?: number// 40332
-  LegPaymentStreamRateIndexCurveUnit?: string// 40333
-  LegPaymentStreamRateIndexCurvePeriod?: number// 40334
-  LegPaymentStreamRateIndex2CurveUnit?: string// 41563
-  LegPaymentStreamRateIndex2CurvePeriod?: number// 41564
-  LegPaymentStreamRateIndexLocation?: string// 41565
-  LegPaymentStreamRateIndexLevel?: number// 41566
-  LegPaymentStreamRateIndexUnitOfMeasure?: string// 41567
-  LegPaymentStreamSettlLevel?: number// 41568
-  LegPaymentStreamReferenceLevel?: number// 41569
-  LegPaymentStreamReferenceLevelUnitOfMeasure?: string// 41570
-  LegPaymentStreamReferenceLevelEqualsZeroIndicator?: boolean// 41571
-  LegPaymentStreamRateMultiplier?: number// 40335
-  LegPaymentStreamRateSpread?: number// 40336
-  LegPaymentStreamRateSpreadCurrency?: string// 41572
-  LegPaymentStreamRateSpreadUnitOfMeasure?: string// 41573
-  LegPaymentStreamRateConversionFactor?: number// 41574
-  LegPaymentStreamRateSpreadType?: number// 41575
-  LegPaymentStreamRateSpreadPositionType?: number// 40337
-  LegPaymentStreamRateTreatment?: number// 40338
-  LegPaymentStreamCapRate?: number// 40339
-  LegPaymentStreamCapRateBuySide?: number// 40340
-  LegPaymentStreamCapRateSellSide?: number// 40341
-  LegPaymentStreamFloorRate?: number// 40342
-  LegPaymentStreamFloorRateBuySide?: number// 40343
-  LegPaymentStreamFloorRateSellSide?: number// 40344
-  LegPaymentStreamInitialRate?: number// 40345
-  LegPaymentStreamLastResetRate?: number// 41576
-  LegPaymentStreamFinalRate?: number// 41577
-  LegPaymentStreamFinalRateRoundingDirection?: string// 40346
-  LegPaymentStreamFinalRatePrecision?: number// 40347
-  LegPaymentStreamAveragingMethod?: number// 40348
-  LegPaymentStreamNegativeRateTreatment?: number// 40349
-  LegPaymentStreamCalculationLagPeriod?: number// 41578
-  LegPaymentStreamCalculationLagUnit?: string// 41579
-  LegPaymentStreamFirstObservationDateUnadjusted?: Date// 42462
-  LegPaymentStreamFirstObservationDateRelativeTo?: number// 42463
-  LegPaymentStreamFirstObservationDateOffsetDayType?: number// 42464
-  LegPaymentStreamFirstObservationDateOffsetPeriod?: number// 41580
-  LegPaymentStreamFirstObservationDateOffsetUnit?: string// 41581
-  LegPaymentStreamFirstObservationDateAdjusted?: Date// 42465
-  LegPaymentStreamPricingDayType?: number// 41582
-  LegPaymentStreamPricingDayDistribution?: number// 41583
-  LegPaymentStreamPricingDayCount?: number// 41584
-  LegPaymentStreamPricingBusinessCalendar?: string// 41585
-  LegPaymentStreamPricingBusinessDayConvention?: number// 41586
-  LegPaymentStreamInflationLagPeriod?: number// 40350
-  LegPaymentStreamInflationLagUnit?: string// 40351
-  LegPaymentStreamInflationLagDayType?: number// 40352
-  LegPaymentStreamInflationInterpolationMethod?: number// 40353
-  LegPaymentStreamInflationIndexSource?: number// 40354
-  LegPaymentStreamInflationPublicationSource?: string// 40355
-  LegPaymentStreamInflationInitialIndexLevel?: number// 40356
-  LegPaymentStreamInflationFallbackBondApplicable?: boolean// 40357
-  LegPaymentStreamFRADiscounting?: number// 40358
-  LegPaymentStreamUnderlierRefID?: string// 42466
-  LegReturnRateNotionalReset?: boolean// 42467
-  LegPaymentStreamLinkInitialLevel?: number// 42468
-  LegPaymentStreamLinkClosingLevelIndicator?: boolean// 42469
-  LegPaymentStreamLinkExpiringLevelIndicator?: boolean// 42470
-  LegPaymentStreamLinkEstimatedTradingDays?: number// 42471
-  LegPaymentStreamLinkStrikePrice?: number// 42472
-  LegPaymentStreamLinkStrikePriceType?: number// 42473
-  LegPaymentStreamLinkMaximumBoundary?: number// 42474
-  LegPaymentStreamLinkMinimumBoundary?: number// 42475
-  LegPaymentStreamLinkNumberOfDataSeries?: number// 42476
-  LegPaymentStreamVarianceUnadjustedCap?: number// 42477
-  LegPaymentStreamRealizedVarianceMethod?: number// 42478
-  LegPaymentStreamDaysAdjustmentIndicator?: boolean// 42479
-  LegPaymentStreamNearestExchangeContractRefID?: string// 42480
-  LegPaymentStreamVegaNotionalAmount?: number// 42481
-  LegPaymentStreamPricingBusinessCenterGrp?: ILegPaymentStreamPricingBusinessCenterGrp[]
-  LegPaymentStreamPricingDayGrp?: ILegPaymentStreamPricingDayGrp[]
-  LegPaymentStreamPricingDateGrp?: ILegPaymentStreamPricingDateGrp[]
-  LegPaymentStreamFormula?: ILegPaymentStreamFormula
-  LegDividendConditions?: ILegDividendConditions
-  LegReturnRateGrp?: ILegReturnRateGrp[]
+  LegPaymentStreamRateIndex?: string// [1] 40331 (String)
+  LegPaymentStreamRateIndexSource?: number// [1] 40332 (Int)
+  LegPaymentStreamRateIndexCurveUnit?: string// [1] 40333 (String)
+  LegPaymentStreamRateIndexCurvePeriod?: number// [1] 40334 (Int)
+  LegPaymentStreamRateIndex2CurveUnit?: string// [1] 41563 (String)
+  LegPaymentStreamRateIndex2CurvePeriod?: number// [1] 41564 (Int)
+  LegPaymentStreamRateIndexLocation?: string// [1] 41565 (String)
+  LegPaymentStreamRateIndexLevel?: number// [1] 41566 (Float)
+  LegPaymentStreamRateIndexUnitOfMeasure?: string// [1] 41567 (String)
+  LegPaymentStreamSettlLevel?: number// [1] 41568 (Int)
+  LegPaymentStreamReferenceLevel?: number// [1] 41569 (Float)
+  LegPaymentStreamReferenceLevelUnitOfMeasure?: string// [1] 41570 (String)
+  LegPaymentStreamReferenceLevelEqualsZeroIndicator?: boolean// [1] 41571 (Boolean)
+  LegPaymentStreamRateMultiplier?: number// [1] 40335 (Float)
+  LegPaymentStreamRateSpread?: number// [1] 40336 (Float)
+  LegPaymentStreamRateSpreadCurrency?: string// [1] 41572 (String)
+  LegPaymentStreamRateSpreadUnitOfMeasure?: string// [1] 41573 (String)
+  LegPaymentStreamRateConversionFactor?: number// [1] 41574 (Float)
+  LegPaymentStreamRateSpreadType?: number// [1] 41575 (Int)
+  LegPaymentStreamRateSpreadPositionType?: number// [1] 40337 (Int)
+  LegPaymentStreamRateTreatment?: number// [1] 40338 (Int)
+  LegPaymentStreamCapRate?: number// [1] 40339 (Float)
+  LegPaymentStreamCapRateBuySide?: number// [1] 40340 (Int)
+  LegPaymentStreamCapRateSellSide?: number// [1] 40341 (Int)
+  LegPaymentStreamFloorRate?: number// [1] 40342 (Float)
+  LegPaymentStreamFloorRateBuySide?: number// [1] 40343 (Int)
+  LegPaymentStreamFloorRateSellSide?: number// [1] 40344 (Int)
+  LegPaymentStreamInitialRate?: number// [1] 40345 (Float)
+  LegPaymentStreamLastResetRate?: number// [1] 41576 (Float)
+  LegPaymentStreamFinalRate?: number// [1] 41577 (Float)
+  LegPaymentStreamFinalRateRoundingDirection?: string// [1] 40346 (String)
+  LegPaymentStreamFinalRatePrecision?: number// [1] 40347 (Int)
+  LegPaymentStreamAveragingMethod?: number// [1] 40348 (Int)
+  LegPaymentStreamNegativeRateTreatment?: number// [1] 40349 (Int)
+  LegPaymentStreamCalculationLagPeriod?: number// [1] 41578 (Int)
+  LegPaymentStreamCalculationLagUnit?: string// [1] 41579 (String)
+  LegPaymentStreamFirstObservationDateUnadjusted?: Date// [1] 42462 (LocalDate)
+  LegPaymentStreamFirstObservationDateRelativeTo?: number// [1] 42463 (Int)
+  LegPaymentStreamFirstObservationDateOffsetDayType?: number// [1] 42464 (Int)
+  LegPaymentStreamFirstObservationDateOffsetPeriod?: number// [1] 41580 (Int)
+  LegPaymentStreamFirstObservationDateOffsetUnit?: string// [1] 41581 (String)
+  LegPaymentStreamFirstObservationDateAdjusted?: Date// [1] 42465 (LocalDate)
+  LegPaymentStreamPricingDayType?: number// [1] 41582 (Int)
+  LegPaymentStreamPricingDayDistribution?: number// [1] 41583 (Int)
+  LegPaymentStreamPricingDayCount?: number// [1] 41584 (Int)
+  LegPaymentStreamPricingBusinessCalendar?: string// [1] 41585 (String)
+  LegPaymentStreamPricingBusinessDayConvention?: number// [1] 41586 (Int)
+  LegPaymentStreamInflationLagPeriod?: number// [1] 40350 (Int)
+  LegPaymentStreamInflationLagUnit?: string// [1] 40351 (String)
+  LegPaymentStreamInflationLagDayType?: number// [1] 40352 (Int)
+  LegPaymentStreamInflationInterpolationMethod?: number// [1] 40353 (Int)
+  LegPaymentStreamInflationIndexSource?: number// [1] 40354 (Int)
+  LegPaymentStreamInflationPublicationSource?: string// [1] 40355 (String)
+  LegPaymentStreamInflationInitialIndexLevel?: number// [1] 40356 (Float)
+  LegPaymentStreamInflationFallbackBondApplicable?: boolean// [1] 40357 (Boolean)
+  LegPaymentStreamFRADiscounting?: number// [1] 40358 (Int)
+  LegPaymentStreamUnderlierRefID?: string// [1] 42466 (String)
+  LegReturnRateNotionalReset?: boolean// [1] 42467 (Boolean)
+  LegPaymentStreamLinkInitialLevel?: number// [1] 42468 (Float)
+  LegPaymentStreamLinkClosingLevelIndicator?: boolean// [1] 42469 (Boolean)
+  LegPaymentStreamLinkExpiringLevelIndicator?: boolean// [1] 42470 (Boolean)
+  LegPaymentStreamLinkEstimatedTradingDays?: number// [1] 42471 (Int)
+  LegPaymentStreamLinkStrikePrice?: number// [1] 42472 (Float)
+  LegPaymentStreamLinkStrikePriceType?: number// [1] 42473 (Int)
+  LegPaymentStreamLinkMaximumBoundary?: number// [1] 42474 (Float)
+  LegPaymentStreamLinkMinimumBoundary?: number// [1] 42475 (Float)
+  LegPaymentStreamLinkNumberOfDataSeries?: number// [1] 42476 (Int)
+  LegPaymentStreamVarianceUnadjustedCap?: number// [1] 42477 (Float)
+  LegPaymentStreamRealizedVarianceMethod?: number// [1] 42478 (Int)
+  LegPaymentStreamDaysAdjustmentIndicator?: boolean// [1] 42479 (Boolean)
+  LegPaymentStreamNearestExchangeContractRefID?: string// [1] 42480 (String)
+  LegPaymentStreamVegaNotionalAmount?: number// [1] 42481 (Float)
+  LegPaymentStreamPricingBusinessCenterGrp?: ILegPaymentStreamPricingBusinessCenterGrp[]// [1] Ctr.41562
+  LegPaymentStreamPricingDayGrp?: ILegPaymentStreamPricingDayGrp[]// [2] DayOfWk.41597, DayNum.41598
+  LegPaymentStreamPricingDateGrp?: ILegPaymentStreamPricingDateGrp[]// [3] Dt.41594, Typ.41595
+  LegPaymentStreamFormula?: ILegPaymentStreamFormula// [4] Ccy.42482, CcyDtrmnMeth.42483, RefAmt.42484
+  LegDividendConditions?: ILegDividendConditions// [5] RnvstmntInd.42337, EntlmntEvnt.42338 .. AllDividendInd.42356
+  LegReturnRateGrp?: ILegReturnRateGrp[]// [6] PxSeq.42535, CommBasis.42536 .. FnlPxFallbck.42559
 }

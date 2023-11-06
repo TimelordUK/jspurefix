@@ -12,26 +12,26 @@ import { IInstrmtLegGrp } from './set/instrmt_leg_grp'
 ****************************************************************
 */
 export interface ITradeCaptureReportRequestAck {
-  TradeRequestID: string// 568
-  TradeID?: string// 1003
-  SecondaryTradeID?: string// 1040
-  FirmTradeID?: string// 1041
-  SecondaryFirmTradeID?: string// 1042
-  TradeRequestType: number// 569
-  SubscriptionRequestType?: string// 263
-  TotNumTradeReports?: number// 748
-  SecurityRequestResult: number// 560
-  TradeRequestStatus: number// 750
-  MultiLegReportingType?: string// 442
-  ResponseTransportType?: number// 725
-  ResponseDestination?: string// 726
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  MessageEventSource?: string// 1011
-  StandardHeader?: IStandardHeader
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
+  TradeRequestID: string// [2] 568 (String)
+  TradeID?: string// [2] 1003 (String)
+  SecondaryTradeID?: string// [2] 1040 (String)
+  FirmTradeID?: string// [2] 1041 (String)
+  SecondaryFirmTradeID?: string// [2] 1042 (String)
+  TradeRequestType: number// [2] 569 (Int)
+  SubscriptionRequestType?: string// [2] 263 (String)
+  TotNumTradeReports?: number// [2] 748 (Int)
+  SecurityRequestResult: number// [2] 560 (Int)
+  TradeRequestStatus: number// [2] 750 (Int)
+  MultiLegReportingType?: string// [2] 442 (String)
+  ResponseTransportType?: number// [2] 725 (Int)
+  ResponseDestination?: string// [2] 726 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  MessageEventSource?: string// [2] 1011 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Instrument?: IInstrument// [2] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [3] DlvryForm.668, PctAtRisk.869
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [4] Sym.311, Sfx.312 .. XID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [5] Sym.600, Sfx.601 .. ExchLookAlike.2607
 }

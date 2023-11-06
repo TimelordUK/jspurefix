@@ -1,4 +1,4 @@
 export interface IProvisionOptionExerciseFixedDateGrp {
-  ProvisionOptionExerciseFixedDate?: Date// 40143
-  ProvisionOptionExerciseFixedDateType?: number// 40144
+  ProvisionOptionExerciseFixedDate?: Date// [1] 40143 (LocalDate)
+  ProvisionOptionExerciseFixedDateType?: number// [1] 40144 (Int)
 }

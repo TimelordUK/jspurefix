@@ -8,15 +8,15 @@ import { IStandardHeader } from './set/standard_header'
 *********************************************************
 */
 export interface IBusinessMessageReject {
-  RefSeqNum?: number// 45
-  RefMsgType: string// 372
-  RefApplVerID?: string// 1130
-  RefApplExtID?: number// 1406
-  RefCstmApplVerID?: string// 1131
-  BusinessRejectRefID?: string// 379
-  BusinessRejectReason: number// 380
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
+  RefSeqNum?: number// [2] 45 (Int)
+  RefMsgType: string// [2] 372 (String)
+  RefApplVerID?: string// [2] 1130 (String)
+  RefApplExtID?: number// [2] 1406 (Int)
+  RefCstmApplVerID?: string// [2] 1131 (String)
+  BusinessRejectRefID?: string// [2] 379 (String)
+  BusinessRejectReason: number// [2] 380 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
 }

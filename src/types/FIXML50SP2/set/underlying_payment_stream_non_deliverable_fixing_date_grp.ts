@@ -1,4 +1,4 @@
 export interface IUnderlyingPaymentStreamNonDeliverableFixingDateGrp {
-  UnderlyingNonDeliverableFixingDate?: Date// 40657
-  UnderlyingNonDeliverableFixingDateType?: number// 40658
+  UnderlyingNonDeliverableFixingDate?: Date// [1] 40657 (LocalDate)
+  UnderlyingNonDeliverableFixingDateType?: number// [1] 40658 (Int)
 }

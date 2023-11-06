@@ -1,3 +1,3 @@
 export interface IMarginReqmtInqQualGrp {
-  MarginReqmtInqQualifier?: number// 1637
+  MarginReqmtInqQualifier?: number// [1] 1637 (Int)
 }

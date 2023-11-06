@@ -1,4 +1,4 @@
 export interface IMarketDisruptionFallbackGrp {
-  MarketDisruptionFallbackType?: string// 41095
-  MarketDisruptionFallbackValue?: string// 40992
+  MarketDisruptionFallbackType?: string// [1] 41095 (String)
+  MarketDisruptionFallbackValue?: string// [1] 40992 (String)
 }

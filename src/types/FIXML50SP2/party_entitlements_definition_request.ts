@@ -11,11 +11,11 @@ import { IPartyEntitlementUpdateGrp } from './set/party_entitlement_update_grp'
 ***************************************************************
 */
 export interface IPartyEntitlementsDefinitionRequest {
-  EntitlementRequestID: string// 1770
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  RequestingPartyGrp?: IRequestingPartyGrp[]
-  PartyEntitlementUpdateGrp?: IPartyEntitlementUpdateGrp[]
+  EntitlementRequestID: string// [2] 1770 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RequestingPartyGrp?: IRequestingPartyGrp[]// [2] ID.1658, Src.1659 .. Qual.2338
+  PartyEntitlementUpdateGrp?: IPartyEntitlementUpdateGrp[]// [3] ListUpdActn.1324, Stat.1883, RefID.1885
 }

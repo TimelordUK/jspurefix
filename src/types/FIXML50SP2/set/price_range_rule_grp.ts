@@ -1,8 +1,8 @@
 export interface IPriceRangeRuleGrp {
-  StartPriceRange?: number// 2551
-  EndPriceRange?: number// 2552
-  PriceRangeValue?: number// 2553
-  PriceRangePercentage?: number// 2554
-  PriceRangeRuleID?: string// 2556
-  PriceRangeProductComplex?: string// 2555
+  StartPriceRange?: number// [1] 2551 (Float)
+  EndPriceRange?: number// [1] 2552 (Float)
+  PriceRangeValue?: number// [1] 2553 (Float)
+  PriceRangePercentage?: number// [1] 2554 (Float)
+  PriceRangeRuleID?: string// [1] 2556 (String)
+  PriceRangeProductComplex?: string// [1] 2555 (String)
 }

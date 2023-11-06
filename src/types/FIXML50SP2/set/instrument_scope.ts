@@ -1,25 +1,25 @@
 import { IInstrumentScopeSecurityAltIDGrp } from './instrument_scope_security_alt_id_grp'
 
 export interface IInstrumentScope {
-  InstrumentScopeSymbol?: string// 1536
-  InstrumentScopeSymbolSfx?: string// 1537
-  InstrumentScopeSecurityID?: string// 1538
-  InstrumentScopeSecurityIDSource?: string// 1539
-  InstrumentScopeProduct?: number// 1543
-  InstrumentScopeProductComplex?: string// 1544
-  InstrumentScopeSecurityGroup?: string// 1545
-  InstrumentScopeCFICode?: string// 1546
-  InstrumentScopeSecurityType?: string// 1547
-  InstrumentScopeSecuritySubType?: string// 1548
-  InstrumentScopeMaturityMonthYear?: string// 1549
-  InstrumentScopeMaturityTime?: string// 1550
-  InstrumentScopeRestructuringType?: string// 1551
-  InstrumentScopeSeniority?: string// 1552
-  InstrumentScopePutOrCall?: number// 1553
-  InstrumentScopeFlexibleIndicator?: boolean// 1554
-  InstrumentScopeCouponRate?: number// 1555
-  InstrumentScopeSecurityExchange?: string// 1616
-  InstrumentScopeSecurityDesc?: string// 1556
-  SettlType?: string// 63
-  InstrumentScopeSecurityAltIDGrp?: IInstrumentScopeSecurityAltIDGrp[]
+  InstrumentScopeSymbol?: string// [1] 1536 (String)
+  InstrumentScopeSymbolSfx?: string// [1] 1537 (String)
+  InstrumentScopeSecurityID?: string// [1] 1538 (String)
+  InstrumentScopeSecurityIDSource?: string// [1] 1539 (String)
+  InstrumentScopeProduct?: number// [1] 1543 (Int)
+  InstrumentScopeProductComplex?: string// [1] 1544 (String)
+  InstrumentScopeSecurityGroup?: string// [1] 1545 (String)
+  InstrumentScopeCFICode?: string// [1] 1546 (String)
+  InstrumentScopeSecurityType?: string// [1] 1547 (String)
+  InstrumentScopeSecuritySubType?: string// [1] 1548 (String)
+  InstrumentScopeMaturityMonthYear?: string// [1] 1549 (String)
+  InstrumentScopeMaturityTime?: string// [1] 1550 (String)
+  InstrumentScopeRestructuringType?: string// [1] 1551 (String)
+  InstrumentScopeSeniority?: string// [1] 1552 (String)
+  InstrumentScopePutOrCall?: number// [1] 1553 (Int)
+  InstrumentScopeFlexibleIndicator?: boolean// [1] 1554 (Boolean)
+  InstrumentScopeCouponRate?: number// [1] 1555 (Float)
+  InstrumentScopeSecurityExchange?: string// [1] 1616 (String)
+  InstrumentScopeSecurityDesc?: string// [1] 1556 (String)
+  SettlType?: string// [1] 63 (String)
+  InstrumentScopeSecurityAltIDGrp?: IInstrumentScopeSecurityAltIDGrp[]// [1] AltID.1541, AltIDSrc.1542
 }

@@ -9,12 +9,12 @@ import { IApplIDReportGrp } from './set/appl_id_report_grp'
 ************************************************************
 */
 export interface IApplicationMessageReport {
-  ApplReportID: string// 1356
-  ApplReqID?: string// 1346
-  ApplReportType: number// 1426
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  ApplIDReportGrp?: IApplIDReportGrp[]
+  ApplReportID: string// [2] 1356 (String)
+  ApplReqID?: string// [2] 1346 (String)
+  ApplReportType: number// [2] 1426 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplIDReportGrp?: IApplIDReportGrp[]// [2] RefApplID.1355, ApplNewSeqNum.1399, RefApplLastSeqNum.1357
 }

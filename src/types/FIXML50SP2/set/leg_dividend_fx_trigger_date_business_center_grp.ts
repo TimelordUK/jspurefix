@@ -1,3 +1,3 @@
 export interface ILegDividendFXTriggerDateBusinessCenterGrp {
-  LegDividendFXTriggerDateBusinessCenter?: string// 42365
+  LegDividendFXTriggerDateBusinessCenter?: string// [1] 42365 (String)
 }

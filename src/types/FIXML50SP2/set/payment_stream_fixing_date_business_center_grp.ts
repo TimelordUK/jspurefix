@@ -1,3 +1,3 @@
 export interface IPaymentStreamFixingDateBusinessCenterGrp {
-  PaymentStreamFixingDateBusinessCenter?: string// 40776
+  PaymentStreamFixingDateBusinessCenter?: string// [1] 40776 (String)
 }

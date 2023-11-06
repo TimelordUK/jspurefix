@@ -1,9 +1,9 @@
 export interface IOptionExerciseMakeWholeProvision {
-  MakeWholeDate?: Date// 42591
-  MakeWholeAmount?: number// 42592
-  MakeWholeBenchmarkCurveName?: string// 42593
-  MakeWholeBenchmarkCurvePoint?: string// 42594
-  MakeWholeRecallSpread?: number// 42595
-  MakeWholeBenchmarkQuote?: number// 42596
-  MakeWholeInterpolationMethod?: number// 42597
+  MakeWholeDate?: Date// [1] 42591 (LocalDate)
+  MakeWholeAmount?: number// [1] 42592 (Float)
+  MakeWholeBenchmarkCurveName?: string// [1] 42593 (String)
+  MakeWholeBenchmarkCurvePoint?: string// [1] 42594 (String)
+  MakeWholeRecallSpread?: number// [1] 42595 (Float)
+  MakeWholeBenchmarkQuote?: number// [1] 42596 (Int)
+  MakeWholeInterpolationMethod?: number// [1] 42597 (Int)
 }

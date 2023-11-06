@@ -1,3 +1,3 @@
 export interface ILegDividendAccrualPaymentDateBusinessCenterGrp {
-  LegDividendAccrualPaymentDateBusinessCenter?: string// 42311
+  LegDividendAccrualPaymentDateBusinessCenter?: string// [1] 42311 (String)
 }

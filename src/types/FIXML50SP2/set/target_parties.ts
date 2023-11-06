@@ -1,9 +1,9 @@
 import { ITargetPtysSubGrp } from './target_ptys_sub_grp'
 
 export interface ITargetParties {
-  TargetPartyID?: string// 1462
-  TargetPartyIDSource?: string// 1463
-  TargetPartyRole?: number// 1464
-  TargetPartyRoleQualifier?: number// 1818
-  TargetPtysSubGrp?: ITargetPtysSubGrp[]
+  TargetPartyID?: string// [1] 1462 (String)
+  TargetPartyIDSource?: string// [1] 1463 (String)
+  TargetPartyRole?: number// [1] 1464 (Int)
+  TargetPartyRoleQualifier?: number// [1] 1818 (Int)
+  TargetPtysSubGrp?: ITargetPtysSubGrp[]// [1] ID.2434, Typ.139
 }

@@ -1,14 +1,14 @@
 export interface ISideCollateralAmountGrp {
-  SideCurrentCollateralAmount?: number// 2702
-  SideCollateralCurrency?: string// 2695
-  SideCollateralAmountType?: number// 2694
-  SideCollateralFXRate?: number// 2696
-  SideCollateralFXRateCalc?: string// 2697
-  SideCollateralType?: string// 2701
-  SideCollateralAmountMarketSegmentID?: string// 2693
-  SideCollateralAmountMarketID?: string// 2692
-  SideHaircutIndicator?: boolean// 2703
-  SideCollateralPortfolioID?: string// 2700
-  SideCollateralPercentOverage?: number// 2699
-  SideCollateralMarketPrice?: number// 2698
+  SideCurrentCollateralAmount?: number// [1] 2702 (Float)
+  SideCollateralCurrency?: string// [1] 2695 (String)
+  SideCollateralAmountType?: number// [1] 2694 (Int)
+  SideCollateralFXRate?: number// [1] 2696 (Float)
+  SideCollateralFXRateCalc?: string// [1] 2697 (String)
+  SideCollateralType?: string// [1] 2701 (String)
+  SideCollateralAmountMarketSegmentID?: string// [1] 2693 (String)
+  SideCollateralAmountMarketID?: string// [1] 2692 (String)
+  SideHaircutIndicator?: boolean// [1] 2703 (Boolean)
+  SideCollateralPortfolioID?: string// [1] 2700 (String)
+  SideCollateralPercentOverage?: number// [1] 2699 (Float)
+  SideCollateralMarketPrice?: number// [1] 2698 (Float)
 }

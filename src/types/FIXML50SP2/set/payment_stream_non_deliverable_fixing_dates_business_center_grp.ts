@@ -1,3 +1,3 @@
 export interface IPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp {
-  PaymentStreamNonDeliverableFixingDatesBusinessCenter?: string// 40819
+  PaymentStreamNonDeliverableFixingDatesBusinessCenter?: string// [1] 40819 (String)
 }

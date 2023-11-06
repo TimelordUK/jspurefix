@@ -4,14 +4,14 @@ import { ILegPaymentStreamNonDeliverableFixingDateGrp } from './leg_payment_stre
 import { ILegSettlRateDisruptionFallbackGrp } from './leg_settl_rate_disruption_fallback_grp'
 
 export interface ILegPaymentStreamNonDeliverableSettlTerms {
-  LegPaymentStreamNonDeliverableRefCurrency?: string// 40359
-  LegPaymentStreamNonDeliverableFixingDatesBusinessDayConvention?: number// 40360
-  LegPaymentStreamNonDeliverableFixingDatesRelativeTo?: number// 40362
-  LegPaymentStreamNonDeliverableFixingDatesOffsetPeriod?: number// 40363
-  LegPaymentStreamNonDeliverableFixingDatesOffsetUnit?: string// 40364
-  LegPaymentStreamNonDeliverableFixingDatesOffsetDayType?: number// 40365
-  LegPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp?: ILegPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp[]
-  LegPaymentStreamNonDeliverableSettlRateSource?: ILegPaymentStreamNonDeliverableSettlRateSource
-  LegPaymentStreamNonDeliverableFixingDateGrp?: ILegPaymentStreamNonDeliverableFixingDateGrp
-  LegSettlRateDisruptionFallbackGrp?: ILegSettlRateDisruptionFallbackGrp[]
+  LegPaymentStreamNonDeliverableRefCurrency?: string// [1] 40359 (String)
+  LegPaymentStreamNonDeliverableFixingDatesBusinessDayConvention?: number// [1] 40360 (Int)
+  LegPaymentStreamNonDeliverableFixingDatesRelativeTo?: number// [1] 40362 (Int)
+  LegPaymentStreamNonDeliverableFixingDatesOffsetPeriod?: number// [1] 40363 (Int)
+  LegPaymentStreamNonDeliverableFixingDatesOffsetUnit?: string// [1] 40364 (String)
+  LegPaymentStreamNonDeliverableFixingDatesOffsetDayType?: number// [1] 40365 (Int)
+  LegPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp?: ILegPaymentStreamNonDeliverableFixingDatesBusinessCenterGrp[]// [1] Ctr.40361
+  LegPaymentStreamNonDeliverableSettlRateSource?: ILegPaymentStreamNonDeliverableSettlRateSource// [2] RtSrc.40087, RefPg.40228
+  LegPaymentStreamNonDeliverableFixingDateGrp?: ILegPaymentStreamNonDeliverableFixingDateGrp// [3] Dt.40368, Typ.40369
+  LegSettlRateDisruptionFallbackGrp?: ILegSettlRateDisruptionFallbackGrp[]// [4] MaxDays.40903, Survey.40905, CalcAgent.40906
 }

@@ -1,7 +1,7 @@
 export interface IUnderlyingComplexEventScheduleGrp {
-  UnderlyingComplexEventScheduleStartDate?: Date// 41751
-  UnderlyingComplexEventScheduleEndDate?: Date// 41752
-  UnderlyingComplexEventScheduleFrequencyPeriod?: number// 41753
-  UnderlyingComplexEventScheduleFrequencyUnit?: string// 41754
-  UnderlyingComplexEventScheduleRollConvention?: string// 41755
+  UnderlyingComplexEventScheduleStartDate?: Date// [1] 41751 (LocalDate)
+  UnderlyingComplexEventScheduleEndDate?: Date// [1] 41752 (LocalDate)
+  UnderlyingComplexEventScheduleFrequencyPeriod?: number// [1] 41753 (Int)
+  UnderlyingComplexEventScheduleFrequencyUnit?: string// [1] 41754 (String)
+  UnderlyingComplexEventScheduleRollConvention?: string// [1] 41755 (String)
 }

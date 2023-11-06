@@ -1,3 +1,3 @@
 export interface IStatsIndGrp {
-  StatsType?: number// 1176
+  StatsType?: number// [1] 1176 (Int)
 }

@@ -1,3 +1,3 @@
 export interface ILegReturnRateValuationDateBusinessCenterGrp {
-  LegReturnRateValuationDateBusinessCenter?: string// 42570
+  LegReturnRateValuationDateBusinessCenter?: string// [1] 42570 (String)
 }

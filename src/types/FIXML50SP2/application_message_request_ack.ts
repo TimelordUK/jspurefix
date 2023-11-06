@@ -10,15 +10,15 @@ import { IParties } from './set/parties'
 ****************************************************************
 */
 export interface IApplicationMessageRequestAck {
-  ApplResponseID: string// 1353
-  ApplReqID?: string// 1346
-  ApplReqType?: number// 1347
-  ApplResponseType?: number// 1348
-  ApplTotalMessageCount?: number// 1349
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  ApplIDRequestAckGrp?: IApplIDRequestAckGrp[]
-  Parties?: IParties[]
+  ApplResponseID: string// [2] 1353 (String)
+  ApplReqID?: string// [2] 1346 (String)
+  ApplReqType?: number// [2] 1347 (Int)
+  ApplResponseType?: number// [2] 1348 (Int)
+  ApplTotalMessageCount?: number// [2] 1349 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplIDRequestAckGrp?: IApplIDRequestAckGrp[]// [2] RefApplID.1355, RefID.1433 .. ApplRespErr.1354
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
 }

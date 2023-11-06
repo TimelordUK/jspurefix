@@ -1,4 +1,4 @@
 export interface IUnderlyingProvisionCashSettlQuoteSource {
-  UnderlyingProvisionCashSettlQuoteSource?: number// 42102
-  UnderlyingProvisionCashSettlQuoteReferencePage?: string// 42103
+  UnderlyingProvisionCashSettlQuoteSource?: number// [1] 42102 (Int)
+  UnderlyingProvisionCashSettlQuoteReferencePage?: string// [1] 42103 (String)
 }

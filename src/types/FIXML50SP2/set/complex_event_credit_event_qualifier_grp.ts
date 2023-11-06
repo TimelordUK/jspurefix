@@ -1,3 +1,3 @@
 export interface IComplexEventCreditEventQualifierGrp {
-  ComplexEventCreditEventQualifier?: string// 41006
+  ComplexEventCreditEventQualifier?: string// [1] 41006 (String)
 }

@@ -1,3 +1,3 @@
 export interface IUnderlyingDeliveryStreamCommoditySourceGrp {
-  UnderlyingDeliveryStreamCommoditySource?: string// 41809
+  UnderlyingDeliveryStreamCommoditySource?: string// [1] 41809 (String)
 }

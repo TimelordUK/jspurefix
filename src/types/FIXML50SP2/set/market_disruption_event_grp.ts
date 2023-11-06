@@ -1,4 +1,4 @@
 export interface IMarketDisruptionEventGrp {
-  MarketDisruptionEvent?: string// 41093
-  MarketDisruptionValue?: string// 40991
+  MarketDisruptionEvent?: string// [1] 41093 (String)
+  MarketDisruptionValue?: string// [1] 40991 (String)
 }

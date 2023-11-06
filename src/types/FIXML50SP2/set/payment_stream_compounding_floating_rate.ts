@@ -1,20 +1,20 @@
 export interface IPaymentStreamCompoundingFloatingRate {
-  PaymentStreamCompoundingRateIndex?: string// 42628
-  PaymentStreamCompoundingRateIndexCurvePeriod?: number// 42629
-  PaymentStreamCompoundingRateIndexCurveUnit?: string// 42630
-  PaymentStreamCompoundingRateMultiplier?: number// 42631
-  PaymentStreamCompoundingRateSpread?: number// 42632
-  PaymentStreamCompoundingRateSpreadPositionType?: number// 42633
-  PaymentStreamCompoundingRateTreatment?: number// 42634
-  PaymentStreamCompoundingCapRate?: number// 42635
-  PaymentStreamCompoundingCapRateBuySide?: number// 42636
-  PaymentStreamCompoundingCapRateSellSide?: number// 42637
-  PaymentStreamCompoundingFloorRate?: number// 42638
-  PaymentStreamCompoundingFloorRateBuySide?: number// 42639
-  PaymentStreamCompoundingFloorRateSellSide?: number// 42640
-  PaymentStreamCompoundingInitialRate?: number// 42641
-  PaymentStreamCompoundingFinalRateRoundingDirection?: string// 42642
-  PaymentStreamCompoundingFinalRatePrecision?: number// 42643
-  PaymentStreamCompoundingAveragingMethod?: number// 42644
-  PaymentStreamCompoundingNegativeRateTreatment?: number// 42645
+  PaymentStreamCompoundingRateIndex?: string// [1] 42628 (String)
+  PaymentStreamCompoundingRateIndexCurvePeriod?: number// [1] 42629 (Int)
+  PaymentStreamCompoundingRateIndexCurveUnit?: string// [1] 42630 (String)
+  PaymentStreamCompoundingRateMultiplier?: number// [1] 42631 (Float)
+  PaymentStreamCompoundingRateSpread?: number// [1] 42632 (Float)
+  PaymentStreamCompoundingRateSpreadPositionType?: number// [1] 42633 (Int)
+  PaymentStreamCompoundingRateTreatment?: number// [1] 42634 (Int)
+  PaymentStreamCompoundingCapRate?: number// [1] 42635 (Float)
+  PaymentStreamCompoundingCapRateBuySide?: number// [1] 42636 (Int)
+  PaymentStreamCompoundingCapRateSellSide?: number// [1] 42637 (Int)
+  PaymentStreamCompoundingFloorRate?: number// [1] 42638 (Float)
+  PaymentStreamCompoundingFloorRateBuySide?: number// [1] 42639 (Int)
+  PaymentStreamCompoundingFloorRateSellSide?: number// [1] 42640 (Int)
+  PaymentStreamCompoundingInitialRate?: number// [1] 42641 (Float)
+  PaymentStreamCompoundingFinalRateRoundingDirection?: string// [1] 42642 (String)
+  PaymentStreamCompoundingFinalRatePrecision?: number// [1] 42643 (Int)
+  PaymentStreamCompoundingAveragingMethod?: number// [1] 42644 (Int)
+  PaymentStreamCompoundingNegativeRateTreatment?: number// [1] 42645 (Int)
 }

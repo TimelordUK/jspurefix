@@ -1,5 +1,5 @@
 export interface IUnderlyingStreamAssetAttributeGrp {
-  UnderlyingStreamAssetAttributeType?: string// 41801
-  UnderlyingStreamAssetAttributeValue?: string// 41802
-  UnderlyingStreamAssetAttributeLimit?: string// 41803
+  UnderlyingStreamAssetAttributeType?: string// [1] 41801 (String)
+  UnderlyingStreamAssetAttributeValue?: string// [1] 41802 (String)
+  UnderlyingStreamAssetAttributeLimit?: string// [1] 41803 (String)
 }

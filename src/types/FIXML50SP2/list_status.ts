@@ -9,19 +9,19 @@ import { IOrdListStatGrp } from './set/ord_list_stat_grp'
 **********************************************
 */
 export interface IListStatus {
-  ListID: string// 66
-  ListStatusType: number// 429
-  NoRpts: number// 82
-  ListOrderStatus: number// 431
-  ContingencyType?: number// 1385
-  ListRejectReason?: number// 1386
-  RptSeq: number// 83
-  ListStatusText?: string// 444
-  EncodedListStatusTextLen?: number// 445
-  EncodedListStatusText?: Buffer// 446
-  TransactTime?: Date// 60
-  TotNoOrders: number// 68
-  LastFragment?: boolean// 893
-  StandardHeader?: IStandardHeader
-  OrdListStatGrp?: IOrdListStatGrp[]
+  ListID: string// [2] 66 (String)
+  ListStatusType: number// [2] 429 (Int)
+  NoRpts: number// [2] 82 (Int)
+  ListOrderStatus: number// [2] 431 (Int)
+  ContingencyType?: number// [2] 1385 (Int)
+  ListRejectReason?: number// [2] 1386 (Int)
+  RptSeq: number// [2] 83 (Int)
+  ListStatusText?: string// [2] 444 (String)
+  EncodedListStatusTextLen?: number// [2] 445 (Length)
+  EncodedListStatusText?: Buffer// [2] 446 (RawData)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  TotNoOrders: number// [2] 68 (Int)
+  LastFragment?: boolean// [2] 893 (Boolean)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  OrdListStatGrp?: IOrdListStatGrp[]// [2] ClOrdID.11, OrdID.37 .. EncTxt.355
 }

@@ -23,94 +23,94 @@ import { IRoutingGrp } from './set/routing_grp'
 *****************************************
 */
 export interface IQuote {
-  QuoteReqID?: string// 131
-  QuoteID: string// 117
-  BidID?: string// 390
-  OfferID?: string// 1867
-  SecondaryQuoteID?: string// 1751
-  QuoteMsgID?: string// 1166
-  QuoteRespID?: string// 693
-  QuoteType?: number// 537
-  QuoteModelType?: number// 2403
-  PrivateQuote?: boolean// 1171
-  NegotiationMethod?: number// 2115
-  QuoteResponseLevel?: number// 301
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  Side?: string// 54
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  SettlDate2?: Date// 193
-  OrderQty2?: number// 192
-  Currency?: string// 15
-  SettlCurrency?: string// 120
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  BidPx?: number// 132
-  OfferPx?: number// 133
-  MktBidPx?: number// 645
-  MktOfferPx?: number// 646
-  MinBidSize?: number// 647
-  BidSize?: number// 134
-  TotalBidSize?: number// 1749
-  MinOfferSize?: number// 648
-  OfferSize?: number// 135
-  TotalOfferSize?: number// 1750
-  MinQty?: number// 110
-  ExposureDuration?: number// 1629
-  ExposureDurationUnit?: number// 1916
-  ValidUntilTime?: Date// 62
-  BidSpotRate?: number// 188
-  OfferSpotRate?: number// 190
-  BidForwardPoints?: number// 189
-  OfferForwardPoints?: number// 191
-  BidSwapPoints?: number// 1065
-  OfferSwapPoints?: number// 1066
-  MidPx?: number// 631
-  BidYield?: number// 632
-  MidYield?: number// 633
-  OfferYield?: number// 634
-  TransactTime?: Date// 60
-  OrdType?: string// 40
-  BidForwardPoints2?: number// 642
-  OfferForwardPoints2?: number// 643
-  SettlCurrBidFxRate?: number// 656
-  SettlCurrOfferFxRate?: number// 657
-  SettlCurrFxRateCalc?: string// 156
-  CustOrderCapacity?: number// 582
-  ExDestination?: string// 100
-  ExDestinationIDSource?: string// 1133
-  BookingType?: number// 775
-  OrderCapacity?: string// 528
-  OrderRestrictions?: string// 529
-  PriceType?: number// 423
-  BidSpread?: number// 2533
-  OfferSpread?: number// 2534
-  SelfMatchPreventionID?: string// 2362
-  ThrottleInst?: number// 1685
-  ComplianceID?: string// 376
-  ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: number// 2351
-  EncodedComplianceText?: Buffer// 2352
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StrikeTime?: Date// 443
-  StandardHeader?: IStandardHeader
-  QuotQualGrp?: IQuotQualGrp[]
-  ValueChecksGrp?: IValueChecksGrp[]
-  Parties?: IParties[]
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  OrderQtyData?: IOrderQtyData
-  RateSource?: IRateSource[]
-  Stipulations?: IStipulations[]
-  LegQuotGrp?: ILegQuotGrp[]
-  CommissionData?: ICommissionData
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  RelativeValueGrp?: IRelativeValueGrp[]
-  YieldData?: IYieldData
-  RoutingGrp?: IRoutingGrp[]
+  QuoteReqID?: string// [2] 131 (String)
+  QuoteID: string// [2] 117 (String)
+  BidID?: string// [2] 390 (String)
+  OfferID?: string// [2] 1867 (String)
+  SecondaryQuoteID?: string// [2] 1751 (String)
+  QuoteMsgID?: string// [2] 1166 (String)
+  QuoteRespID?: string// [2] 693 (String)
+  QuoteType?: number// [2] 537 (Int)
+  QuoteModelType?: number// [2] 2403 (Int)
+  PrivateQuote?: boolean// [2] 1171 (Boolean)
+  NegotiationMethod?: number// [2] 2115 (Int)
+  QuoteResponseLevel?: number// [2] 301 (Int)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  Side?: string// [2] 54 (String)
+  SettlType?: string// [2] 63 (String)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  SettlDate2?: Date// [2] 193 (LocalDate)
+  OrderQty2?: number// [2] 192 (Float)
+  Currency?: string// [2] 15 (String)
+  SettlCurrency?: string// [2] 120 (String)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  BidPx?: number// [2] 132 (Float)
+  OfferPx?: number// [2] 133 (Float)
+  MktBidPx?: number// [2] 645 (Float)
+  MktOfferPx?: number// [2] 646 (Float)
+  MinBidSize?: number// [2] 647 (Float)
+  BidSize?: number// [2] 134 (Float)
+  TotalBidSize?: number// [2] 1749 (Float)
+  MinOfferSize?: number// [2] 648 (Float)
+  OfferSize?: number// [2] 135 (Float)
+  TotalOfferSize?: number// [2] 1750 (Float)
+  MinQty?: number// [2] 110 (Float)
+  ExposureDuration?: number// [2] 1629 (Int)
+  ExposureDurationUnit?: number// [2] 1916 (Int)
+  ValidUntilTime?: Date// [2] 62 (UtcTimestamp)
+  BidSpotRate?: number// [2] 188 (Float)
+  OfferSpotRate?: number// [2] 190 (Float)
+  BidForwardPoints?: number// [2] 189 (Float)
+  OfferForwardPoints?: number// [2] 191 (Float)
+  BidSwapPoints?: number// [2] 1065 (Float)
+  OfferSwapPoints?: number// [2] 1066 (Float)
+  MidPx?: number// [2] 631 (Float)
+  BidYield?: number// [2] 632 (Float)
+  MidYield?: number// [2] 633 (Float)
+  OfferYield?: number// [2] 634 (Float)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  OrdType?: string// [2] 40 (String)
+  BidForwardPoints2?: number// [2] 642 (Float)
+  OfferForwardPoints2?: number// [2] 643 (Float)
+  SettlCurrBidFxRate?: number// [2] 656 (Float)
+  SettlCurrOfferFxRate?: number// [2] 657 (Float)
+  SettlCurrFxRateCalc?: string// [2] 156 (String)
+  CustOrderCapacity?: number// [2] 582 (Int)
+  ExDestination?: string// [2] 100 (String)
+  ExDestinationIDSource?: string// [2] 1133 (String)
+  BookingType?: number// [2] 775 (Int)
+  OrderCapacity?: string// [2] 528 (String)
+  OrderRestrictions?: string// [2] 529 (String)
+  PriceType?: number// [2] 423 (Int)
+  BidSpread?: number// [2] 2533 (Float)
+  OfferSpread?: number// [2] 2534 (Float)
+  SelfMatchPreventionID?: string// [2] 2362 (String)
+  ThrottleInst?: number// [2] 1685 (Int)
+  ComplianceID?: string// [2] 376 (String)
+  ComplianceText?: string// [2] 2404 (String)
+  EncodedComplianceTextLen?: number// [2] 2351 (Length)
+  EncodedComplianceText?: Buffer// [2] 2352 (RawData)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StrikeTime?: Date// [2] 443 (UtcTimestamp)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  QuotQualGrp?: IQuotQualGrp[]// [2] Qual.695
+  ValueChecksGrp?: IValueChecksGrp[]// [3] Typ.1869, Actn.1870
+  Parties?: IParties[]// [4] ID.448, Src.447 .. Qual.2376
+  Instrument?: IInstrument// [5] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  FinancingDetails?: IFinancingDetails// [6] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [7] Sym.311, Sfx.312 .. XID.2631
+  OrderQtyData?: IOrderQtyData// [8] Qty.38, Cash.152 .. RndMod.469
+  RateSource?: IRateSource[]// [9] RtSrc.1446, RtSrcTyp.1447 .. RefHdng.2412
+  Stipulations?: IStipulations[]// [10] Typ.233, Val.234
+  LegQuotGrp?: ILegQuotGrp[]// [11] OrdQty.685, Qty.687 .. LegOfrFwdPnts.1068
+  CommissionData?: ICommissionData// [12] Comm.12, CommTyp.13 .. FundRenewWaiv.497
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [13] Spread.218, Ccy.220 .. SecIDSrc.761
+  RelativeValueGrp?: IRelativeValueGrp[]// [14] Typ.139, Val.2531, Side.2532
+  YieldData?: IYieldData// [15] Typ.235, Yld.236 .. RedPxTyp.698
+  RoutingGrp?: IRoutingGrp[]// [16] RtgTyp.216, RtgID.217
 }

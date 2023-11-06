@@ -1,3 +1,3 @@
 export interface ICashSettlDateBusinessCenterGrp {
-  CashSettlDateBusinessCenter?: string// 42215
+  CashSettlDateBusinessCenter?: string// [1] 42215 (String)
 }

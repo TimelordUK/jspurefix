@@ -1,24 +1,24 @@
 import { IDividendPeriodBusinessCenterGrp } from './dividend_period_business_center_grp'
 
 export interface IDividendPeriodGrp {
-  DividendPeriodSequence?: number// 42275
-  DividendPeriodStartDateUnadjusted?: Date// 42276
-  DividendPeriodEndDateUnadjusted?: Date// 42277
-  DividendPeriodUnderlierRefID?: string// 42278
-  DividendPeriodStrikePrice?: number// 42279
-  DividendPeriodBusinessDayConvention?: number// 42280
-  DividendPeriodValuationDateUnadjusted?: Date// 42281
-  DividendPeriodValuationDateRelativeTo?: number// 42282
-  DividendPeriodValuationDateOffsetPeriod?: number// 42283
-  DividendPeriodValuationDateOffsetUnit?: string// 42284
-  DividendPeriodValuationDateOffsetDayType?: number// 42285
-  DividendPeriodValuationDateAdjusted?: Date// 42286
-  DividendPeriodPaymentDateUnadjusted?: Date// 42287
-  DividendPeriodPaymentDateRelativeTo?: number// 42288
-  DividendPeriodPaymentDateOffsetPeriod?: number// 42289
-  DividendPeriodPaymentDateOffsetUnit?: string// 42290
-  DividendPeriodPaymentDateOffsetDayType?: number// 42291
-  DividendPeriodPaymentDateAdjusted?: Date// 42292
-  DividendPeriodXID?: string// 42293
-  DividendPeriodBusinessCenterGrp?: IDividendPeriodBusinessCenterGrp[]
+  DividendPeriodSequence?: number// [1] 42275 (Int)
+  DividendPeriodStartDateUnadjusted?: Date// [1] 42276 (LocalDate)
+  DividendPeriodEndDateUnadjusted?: Date// [1] 42277 (LocalDate)
+  DividendPeriodUnderlierRefID?: string// [1] 42278 (String)
+  DividendPeriodStrikePrice?: number// [1] 42279 (Float)
+  DividendPeriodBusinessDayConvention?: number// [1] 42280 (Int)
+  DividendPeriodValuationDateUnadjusted?: Date// [1] 42281 (LocalDate)
+  DividendPeriodValuationDateRelativeTo?: number// [1] 42282 (Int)
+  DividendPeriodValuationDateOffsetPeriod?: number// [1] 42283 (Int)
+  DividendPeriodValuationDateOffsetUnit?: string// [1] 42284 (String)
+  DividendPeriodValuationDateOffsetDayType?: number// [1] 42285 (Int)
+  DividendPeriodValuationDateAdjusted?: Date// [1] 42286 (LocalDate)
+  DividendPeriodPaymentDateUnadjusted?: Date// [1] 42287 (LocalDate)
+  DividendPeriodPaymentDateRelativeTo?: number// [1] 42288 (Int)
+  DividendPeriodPaymentDateOffsetPeriod?: number// [1] 42289 (Int)
+  DividendPeriodPaymentDateOffsetUnit?: string// [1] 42290 (String)
+  DividendPeriodPaymentDateOffsetDayType?: number// [1] 42291 (Int)
+  DividendPeriodPaymentDateAdjusted?: Date// [1] 42292 (LocalDate)
+  DividendPeriodXID?: string// [1] 42293 (String)
+  DividendPeriodBusinessCenterGrp?: IDividendPeriodBusinessCenterGrp[]// [1] Ctr.42295
 }

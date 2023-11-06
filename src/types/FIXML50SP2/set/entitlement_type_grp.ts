@@ -1,4 +1,4 @@
 export interface IEntitlementTypeGrp {
-  MiscFeeType?: string// 139
-  SecuritySubType?: string// 762
+  MiscFeeType?: string// [1] 139 (String)
+  SecuritySubType?: string// [1] 762 (String)
 }

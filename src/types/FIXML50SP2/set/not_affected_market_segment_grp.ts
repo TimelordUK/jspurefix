@@ -1,3 +1,3 @@
 export interface INotAffectedMarketSegmentGrp {
-  NotAffectedMarketSegmentID?: string// 1794
+  NotAffectedMarketSegmentID?: string// [1] 1794 (String)
 }

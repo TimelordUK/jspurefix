@@ -14,25 +14,25 @@ import { IRelatedInstrumentGrp } from './set/related_instrument_grp'
 *******************************************************
 */
 export interface ISecurityListRequest {
-  SecurityReqID: string// 320
-  SecurityListRequestType: number// 559
-  SecurityListID?: string// 1465
-  SecurityListType?: number// 1470
-  SecurityListTypeSource?: number// 1471
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  Currency?: string// 15
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  SubscriptionRequestType?: string// 263
-  StandardHeader?: IStandardHeader
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]
+  SecurityReqID: string// [2] 320 (String)
+  SecurityListRequestType: number// [2] 559 (Int)
+  SecurityListID?: string// [2] 1465 (String)
+  SecurityListType?: number// [2] 1470 (Int)
+  SecurityListTypeSource?: number// [2] 1471 (Int)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  Currency?: string// [2] 15 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  SubscriptionRequestType?: string// [2] 263 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Instrument?: IInstrument// [2] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [3] DlvryForm.668, PctAtRisk.869
+  FinancingDetails?: IFinancingDetails// [4] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [5] Sym.311, Sfx.312 .. XID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [6] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]// [7] InstrmtTyp.1648, Sym.1649 .. XIDRef.2417
 }

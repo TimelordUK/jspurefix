@@ -1,4 +1,4 @@
 export interface INestedInstrumentAttribute {
-  NestedInstrAttribType?: number// 1210
-  NestedInstrAttribValue?: string// 1211
+  NestedInstrAttribType?: number// [1] 1210 (Int)
+  NestedInstrAttribValue?: string// [1] 1211 (String)
 }

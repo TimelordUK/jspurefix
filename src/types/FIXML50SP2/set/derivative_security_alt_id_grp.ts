@@ -1,4 +1,4 @@
 export interface IDerivativeSecurityAltIDGrp {
-  DerivativeSecurityAltID?: string// 1219
-  DerivativeSecurityAltIDSource?: string// 1220
+  DerivativeSecurityAltID?: string// [1] 1219 (String)
+  DerivativeSecurityAltIDSource?: string// [1] 1220 (String)
 }

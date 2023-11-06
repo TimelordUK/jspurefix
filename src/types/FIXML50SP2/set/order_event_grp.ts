@@ -1,9 +1,9 @@
 export interface IOrderEventGrp {
-  OrdType?: string// 40
-  OrderEventExecID?: string// 1797
-  SecurityClassificationReason?: number// 1583
-  OrderEventPx?: number// 1799
-  OrderEventQty?: number// 1800
-  OrderEventLiquidityIndicator?: number// 1801
-  OrderEventText?: string// 1802
+  OrdType?: string// [1] 40 (String)
+  OrderEventExecID?: string// [1] 1797 (String)
+  SecurityClassificationReason?: number// [1] 1583 (Int)
+  OrderEventPx?: number// [1] 1799 (Float)
+  OrderEventQty?: number// [1] 1800 (Float)
+  OrderEventLiquidityIndicator?: number// [1] 1801 (Int)
+  OrderEventText?: string// [1] 1802 (String)
 }

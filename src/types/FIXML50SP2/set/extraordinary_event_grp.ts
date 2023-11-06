@@ -1,4 +1,4 @@
 export interface IExtraordinaryEventGrp {
-  ExtraordinaryEventType?: string// 42297
-  ExtraordinaryEventValue?: string// 42298
+  ExtraordinaryEventType?: string// [1] 42297 (String)
+  ExtraordinaryEventValue?: string// [1] 42298 (String)
 }

@@ -1,3 +1,3 @@
 export interface IMandatoryClearingJurisdictionGrp {
-  MandatoryClearingJurisdiction?: string// 41313
+  MandatoryClearingJurisdiction?: string// [1] 41313 (String)
 }

@@ -1,4 +1,4 @@
 export interface ILegProvisionCashSettlPaymentFixedDateGrp {
-  LegProvisionCashSettlPaymentDate?: Date// 40474
-  LegProvisionCashSettlPaymentDateType?: number// 40475
+  LegProvisionCashSettlPaymentDate?: Date// [1] 40474 (LocalDate)
+  LegProvisionCashSettlPaymentDateType?: number// [1] 40475 (Int)
 }

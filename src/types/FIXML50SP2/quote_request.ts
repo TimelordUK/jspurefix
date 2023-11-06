@@ -10,23 +10,23 @@ import { IQuotReqGrp } from './set/quot_req_grp'
 ************************************************
 */
 export interface IQuoteRequest {
-  QuoteReqID: string// 131
-  RFQReqID?: string// 644
-  ClOrdID?: string// 11
-  BookingType?: number// 775
-  OrderCapacity?: string// 528
-  OrderRestrictions?: string// 529
-  PrivateQuote?: boolean// 1171
-  RespondentType?: number// 1172
-  PreTradeAnonymity?: boolean// 1091
-  ComplianceID?: string// 376
-  ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: number// 2351
-  EncodedComplianceText?: Buffer// 2352
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  RootParties?: IRootParties[]
-  QuotReqGrp?: IQuotReqGrp[]
+  QuoteReqID: string// [2] 131 (String)
+  RFQReqID?: string// [2] 644 (String)
+  ClOrdID?: string// [2] 11 (String)
+  BookingType?: number// [2] 775 (Int)
+  OrderCapacity?: string// [2] 528 (String)
+  OrderRestrictions?: string// [2] 529 (String)
+  PrivateQuote?: boolean// [2] 1171 (Boolean)
+  RespondentType?: number// [2] 1172 (Int)
+  PreTradeAnonymity?: boolean// [2] 1091 (Boolean)
+  ComplianceID?: string// [2] 376 (String)
+  ComplianceText?: string// [2] 2404 (String)
+  EncodedComplianceTextLen?: number// [2] 2351 (Length)
+  EncodedComplianceText?: Buffer// [2] 2352 (RawData)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RootParties?: IRootParties[]// [2] ID.1117, Src.1118 .. Qual.2388
+  QuotReqGrp?: IQuotReqGrp[]// [3] PrevClsPx.140, ReqTyp.303 .. StrkTm.443
 }

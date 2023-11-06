@@ -1,4 +1,4 @@
 export interface ILegProtectionTermObligationGrp {
-  LegProtectionTermObligationType?: string// 41636
-  LegProtectionTermObligationValue?: string// 41637
+  LegProtectionTermObligationType?: string// [1] 41636 (String)
+  LegProtectionTermObligationValue?: string// [1] 41637 (String)
 }

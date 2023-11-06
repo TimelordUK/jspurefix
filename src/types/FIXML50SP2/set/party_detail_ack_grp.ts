@@ -1,11 +1,11 @@
 import { IPartyDetailGrp } from './party_detail_grp'
 
 export interface IPartyDetailAckGrp {
-  ListUpdateAction?: string// 1324
-  PartyDetailDefinitionStatus?: number// 1879
-  PartyDetailDefinitionResult?: number// 1880
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  PartyDetailGrp?: IPartyDetailGrp[]
+  ListUpdateAction?: string// [1] 1324 (String)
+  PartyDetailDefinitionStatus?: number// [1] 1879 (Int)
+  PartyDetailDefinitionResult?: number// [1] 1880 (Int)
+  RejectText?: string// [1] 1328 (String)
+  EncodedRejectTextLen?: number// [1] 1664 (Length)
+  EncodedRejectText?: Buffer// [1] 1665 (RawData)
+  PartyDetailGrp?: IPartyDetailGrp[]// [1] ID.1691, Src.1692 .. Stat.1672
 }

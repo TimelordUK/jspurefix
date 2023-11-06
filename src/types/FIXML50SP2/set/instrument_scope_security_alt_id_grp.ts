@@ -1,4 +1,4 @@
 export interface IInstrumentScopeSecurityAltIDGrp {
-  InstrumentScopeSecurityAltID?: string// 1541
-  InstrumentScopeSecurityAltIDSource?: string// 1542
+  InstrumentScopeSecurityAltID?: string// [1] 1541 (String)
+  InstrumentScopeSecurityAltIDSource?: string// [1] 1542 (String)
 }

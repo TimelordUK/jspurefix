@@ -1,13 +1,13 @@
 import { IAttachmentKeywordGrp } from './attachment_keyword_grp'
 
 export interface IAttachmentGrp {
-  AttachmentName?: string// 2105
-  AttachmentMediaType?: string// 2106
-  AttachmentClassification?: string// 2107
-  AttachmentExternalURL?: string// 2108
-  AttachmentEncodingType?: number// 2109
-  UnencodedAttachmentLen?: number// 2110
-  EncodedAttachmentLen?: number// 2111
-  EncodedAttachment?: Buffer// 2112
-  AttachmentKeywordGrp?: IAttachmentKeywordGrp[]
+  AttachmentName?: string// [1] 2105 (String)
+  AttachmentMediaType?: string// [1] 2106 (String)
+  AttachmentClassification?: string// [1] 2107 (String)
+  AttachmentExternalURL?: string// [1] 2108 (String)
+  AttachmentEncodingType?: number// [1] 2109 (Int)
+  UnencodedAttachmentLen?: number// [1] 2110 (Int)
+  EncodedAttachmentLen?: number// [1] 2111 (Length)
+  EncodedAttachment?: Buffer// [1] 2112 (RawData)
+  AttachmentKeywordGrp?: IAttachmentKeywordGrp[]// [1] Keywd.2114
 }

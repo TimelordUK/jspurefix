@@ -1,4 +1,4 @@
 export interface IDerivativeInstrumentPartySubIDsGrp {
-  DerivativeInstrumentPartySubID?: string// 1297
-  DerivativeInstrumentPartySubIDType?: number// 1298
+  DerivativeInstrumentPartySubID?: string// [1] 1297 (String)
+  DerivativeInstrumentPartySubIDType?: number// [1] 1298 (Int)
 }
