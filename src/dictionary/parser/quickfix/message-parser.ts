@@ -58,7 +58,7 @@ export class MessageParser extends NodeParser {
       case 'message': {
         const parent: ParseContext | null = this.parseContexts.pop() ?? null
         const message: MessageDefinition | null = parent?.asMessage() ?? null
-        if (message != null) {
+        if (message) {
           this.progress.newDefines++
           this.progress.definitions.addMessage(message)
         }

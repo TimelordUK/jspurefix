@@ -54,7 +54,13 @@ export abstract class SessionLauncher {
     }
   }
 
-  protected makeFactory (_: IJsFixConfig): EngineFactory | null {
+  /**
+   * provide a factory which will be invoked with a config where an instance of the application
+   * should be constructed and returned.
+   * @param config to be provided to the constucted application representing this session
+   * @protected
+   */
+  protected makeFactory (config: IJsFixConfig): EngineFactory | null {
     return null
   }
 
@@ -80,10 +86,18 @@ export abstract class SessionLauncher {
     })
   }
 
+  /**
+   * is this session config representing an ascii based session
+   * @param description config to be tested.
+   */
   public isAscii (description: ISessionDescription): boolean {
     return this.sessionContainer.isAscii(description)
   }
 
+  /**
+   * is this session config representing an initiator based session
+   * @param description config to be tested.
+   */
   public isInitiator (description: ISessionDescription): boolean {
     return this.sessionContainer.isInitiator(description)
   }

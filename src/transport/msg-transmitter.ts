@@ -28,7 +28,7 @@ export abstract class MsgTransmitter extends events.EventEmitter {
     this.encodeStream.write(new MsgPayload(msgType, obj))
   }
 
-  public abstract encodeMessage (msgType: string, obj: ILooseObject): any
+  public abstract encodeMessage (msgType: string, obj: ILooseObject): (ILooseObject | null)
 
   // read fix messages from one side, encode buffers on other ready to pipe
   // to output stream, say a socket

@@ -406,17 +406,68 @@ export abstract class FixSession extends events.EventEmitter {
     this.transport = null
   }
 
+  /**
+   * dispatches a message into the subclass that inherits from FixSession. The view contains
+   * the parsed message which has utility methods such as toObject(). The Ascii session provides
+   * an implementation to handle admin level messages such as logon, hearbeat and resest request.
+   * Any application messges are dispatched via onApplicationMsg where the application can action
+   * the message.
+   * @param msgType the string based msg type the view represents
+   * @param view container for all parsed fields representing the received message.
+   * @protected
+   */
   protected abstract onMsg (msgType: string, view: MsgView): void
-  // application responsible for writing its own log
+  /**
+   * the parsed txt recieved from the peer application.  Given the applicaton is
+   * responible for maintaining the fix log, this can be used to persist all received
+   * messages.
+   * @param msgType the string based msg type the view represents
+   * @param txt the received message where for Ascii, the wire SOH delimeter is replaced
+   * with that specified in the config e.g. '|'
+   * @protected
+   */
   protected abstract onDecoded (msgType: string, txt: string): void
+  /**
+   * the formatted txt sent to the peer application as an outbound message.  Given the applicaton is
+   * responible for maintaining the fix log, this can be used to persist all transmitted
+   * messages. use msgType for example to persist only trade capture messages to database
+   * @param msgType the msg type representing the message.
+   * @param txt the sent message where for Ascii, the wire SOH delimeter is replaced
+   * with that specified in the config e.g. '|'
+   * @protected
+   */
   protected abstract onEncoded (msgType: string, txt: string): void
-  // an application level message to be handled by implementation, unless
-  // manageSession = false in which case all messages will be forwarded
+  /**
+   * typically all session level messages are handled by AsciiSession and these are
+   * application level such as MarketDataRefresh. This will represent the applications main
+   * work functiono where responses can be sent back to the peer. If manageSession has been set false
+   * (not recommended) all messages are sent to this function
+   * @param msgType the msg type representing the message.
+   * @param view a wrapper containing the parsed message received.
+   * @protected
+   */
   protected abstract onApplicationMsg (msgType: string, view: MsgView): void
-  // inform application peer has logged in - provide login message
+  /**
+   * at this point the application is ready to send messages - peer login has been achieved
+   * and the session can be considered ready to use. In the case of an initiator the application
+   * may at this point send for security definitions or send market data subscriptions
+   * @param view the login message causing session to be ready
+   * @protected
+   */
   protected abstract onReady (view: MsgView): void
-  // inform application this session has now ended - either from logout or connection dropped
+
+  /**
+   * Inform application this session has now ended - either from logout or connection dropped
+   * @param error if session has been terminated via an error it is provided
+   * @protected
+   */
   protected abstract onStopped (error?: Error): void
-  // does the application accept the inbound logon request
+  /**
+   * Placeholder infomring the application of a peer login attempt.
+   * @param view the login message
+   * @param user extracted user from message
+   * @param password extracted password from the message.
+   * @protected
+   */
   protected abstract onLogon (view: MsgView, user: string, password: string): boolean
 }

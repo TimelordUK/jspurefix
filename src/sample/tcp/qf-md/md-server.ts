@@ -46,12 +46,10 @@ export class MDServer extends AsciiSession {
     return true
   }
 
-  // use msgType for example to persist only trade capture messages to database
   protected onDecoded (msgType: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
-  // delimiter substitution now done in encoding
   protected onEncoded (msgType: string, txt: string): void {
     this.fixLog.info(txt)
   }

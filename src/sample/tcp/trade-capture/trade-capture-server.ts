@@ -57,12 +57,10 @@ export class TradeCaptureServer extends AsciiSession {
     return true
   }
 
-  // use msgType for example to persist only trade capture messages to database
   protected onDecoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
-  // delimiter substitution now done in encoding
   protected onEncoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }

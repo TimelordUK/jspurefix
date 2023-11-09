@@ -30,12 +30,12 @@ export abstract class NodeParser {
   protected addSimple (node: ISaxNode): void {
     if (node.isSelfClosing) {
       const parent: ParseContext | null = this.peek()
-      if (parent == null) {
+      if (!parent) {
         throw new Error(`simple field ${node.name} has no parent on which to add.`)
       }
       const fieldName: string = node.attributes.name
       const fieldDefinition: SimpleFieldDefinition | null = this.progress.definitions.simple.get(fieldName)
-      if (fieldDefinition == null) {
+      if (!fieldDefinition) {
         throw new Error(`simple field ${fieldName} has no declaration in dictionary.`)
       }
       const containedField: ContainedSimpleField = this.makeContainedSimple(fieldDefinition, parent, node.attributes.required === 'Y')
@@ -57,11 +57,11 @@ export abstract class NodeParser {
 
   protected addComponentField (componentName: string, node: ISaxNode): void {
     const parent: ParseContext | null = this.peek()
-    if (parent == null) {
+    if (!parent) {
       throw new Error(`component ${node.name} has no parent on which to add.`)
     }
     const fieldDef: ComponentFieldDefinition | null = this.progress.definitions.component.get(componentName)
-    if (fieldDef != null) {
+    if (fieldDef) {
       const containedField: ContainedComponentField = this.makeContainedComponent(fieldDef, parent)
       this.addto(parent, containedField)
     } else {
@@ -75,14 +75,14 @@ export abstract class NodeParser {
 
   protected addComponentDefinition (name: string): void {
     const latest: ParseContext | null = this.parseContexts.pop() ?? null
-    if (latest == null) {
+    if (!latest) {
       throw new Error(`component field ${name} closes yet does not exist.`)
     }
     if (!latest.defining) {
       return
     }
     const asComponent: ComponentFieldDefinition | null = latest.asComponent() ?? null
-    if (asComponent != null) {
+    if (asComponent) {
       this.progress.newDefines++
       this.progress.definitions.addComponentFieldDef(asComponent)
     } else {
@@ -92,11 +92,11 @@ export abstract class NodeParser {
 
   protected addGroupField (name: string): void {
     const group: ParseContext | null = this.parseContexts.pop() ?? null
-    if (group == null) {
+    if (!group) {
       throw new Error(`group field ${name} closes yet does not exist.`)
     }
     const parent: ParseContext | null = this.peek()
-    if (parent != null) {
+    if (parent) {
       const asGroup: GroupFieldDefinition | null = group.asGroup()
       if (asGroup) {
         const containedField: ContainedGroupField = this.makeContainedGroup(asGroup, parent, group.required)
@@ -141,15 +141,15 @@ export abstract class NodeParser {
     // a group should have a field that matches its name
     const groupName: string = node.attributes.name
     const noOfField: SimpleFieldDefinition | null = this.progress.definitions.simple.get(groupName) ?? null
-    if (noOfField == null) {
+    if (!noOfField) {
       const msg: string = `group ${groupName} has no field defined.`
       throw new Error(msg)
     }
-    const fullName = this.fullContextName() + '.' + groupName
-    let cached: (GroupFieldDefinition | null) = this.progress.groupDefinitionCache.get(fullName)
+    const fullQualifiedName = `${this.fullContextName()}.${groupName}`
+    let cached: (GroupFieldDefinition | null) = this.progress.groupDefinitionCache.get(fullQualifiedName)
     if (!cached) {
       cached = new GroupFieldDefinition(groupName, groupName, null, noOfField, null)
-      this.progress.groupDefinitionCache.add(fullName, cached)
+      this.progress.groupDefinitionCache.add(fullQualifiedName, cached)
     } else {
       cached.reset()
     }
