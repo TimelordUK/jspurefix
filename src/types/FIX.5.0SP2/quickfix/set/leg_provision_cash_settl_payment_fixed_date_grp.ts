@@ -1,0 +1,5 @@
+import { ILegProvisionCashSettlPaymentFixedDateGrpNoLegProvisionCashSettlPaymentDates } from './leg_provision_cash_settl_payment_fixed_date_grp_no_leg_provision_cash_settl_payment_dates'
+
+export interface ILegProvisionCashSettlPaymentFixedDateGrp {
+  NoLegProvisionCashSettlPaymentDates?: ILegProvisionCashSettlPaymentFixedDateGrpNoLegProvisionCashSettlPaymentDates[]// [1] LegProvisionCashSettlPaymentDate.40474, LegProvisionCashSettlPaymentDateType.40475
+}

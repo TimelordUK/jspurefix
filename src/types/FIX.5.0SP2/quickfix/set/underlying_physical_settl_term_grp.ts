@@ -1,0 +1,5 @@
+import { IUnderlyingPhysicalSettlTermGrpNoUnderlyingPhysicalSettlTerms } from './underlying_physical_settl_term_grp_no_underlying_physical_settl_terms'
+
+export interface IUnderlyingPhysicalSettlTermGrp {
+  NoUnderlyingPhysicalSettlTerms?: IUnderlyingPhysicalSettlTermGrpNoUnderlyingPhysicalSettlTerms[]// [1] UnderlyingPhysicalSettlDeliverableObligationGrp.42065, UnderlyingPhysicalSettlDeliverableObligationType.42066 .. UnderlyingPhysicalSettlTermXID.42064
+}

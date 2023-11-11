@@ -2,32 +2,32 @@ import { IUnderlyingDeliveryStreamCommoditySourceGrp } from './underlying_delive
 import { IUnderlyingDeliveryStreamCycleGrp } from './underlying_delivery_stream_cycle_grp'
 
 export interface IUnderlyingDeliveryStream {
-  UnderlyingDeliveryStreamType?: number// 41777
-  UnderlyingDeliveryStreamPipeline?: string// 41778
-  UnderlyingDeliveryStreamEntryPoint?: string// 41779
-  UnderlyingDeliveryStreamWithdrawalPoint?: string// 41780
-  UnderlyingDeliveryStreamDeliveryPoint?: string// 41781
-  UnderlyingDeliveryStreamDeliveryPointSource?: number// 42196
-  UnderlyingDeliveryStreamDeliveryPointDesc?: string// 42197
-  UnderlyingDeliveryStreamDeliveryRestriction?: number// 41782
-  UnderlyingDeliveryStreamDeliveryContingency?: string// 41783
-  UnderlyingDeliveryStreamDeliveryContingentPartySide?: number// 41784
-  UnderlyingDeliveryStreamDeliverAtSourceIndicator?: boolean// 41785
-  UnderlyingDeliveryStreamRiskApportionment?: string// 41786
-  UnderlyingDeliveryStreamRiskApportionmentSource?: string// 41587
-  UnderlyingDeliveryStreamTitleTransferLocation?: string// 41787
-  UnderlyingDeliveryStreamTitleTransferCondition?: number// 41788
-  UnderlyingDeliveryStreamImporterOfRecord?: string// 41789
-  UnderlyingDeliveryStreamNegativeTolerance?: number// 41790
-  UnderlyingDeliveryStreamPositiveTolerance?: number// 41791
-  UnderlyingDeliveryStreamToleranceUnitOfMeasure?: string// 41792
-  UnderlyingDeliveryStreamToleranceType?: number// 41793
-  UnderlyingDeliveryStreamToleranceOptionSide?: number// 41794
-  UnderlyingDeliveryStreamTotalPositiveTolerance?: number// 41795
-  UnderlyingDeliveryStreamTotalNegativeTolerance?: number// 41796
-  UnderlyingDeliveryStreamNotionalConversionFactor?: number// 41797
-  UnderlyingDeliveryStreamTransportEquipment?: string// 41798
-  UnderlyingDeliveryStreamElectingPartySide?: number// 41799
-  UnderlyingDeliveryStreamCommoditySourceGrp?: IUnderlyingDeliveryStreamCommoditySourceGrp[]
-  UnderlyingDeliveryStreamCycleGrp?: IUnderlyingDeliveryStreamCycleGrp[]
+  UnderlyingDeliveryStreamType?: number// [1] 41777 (Int)
+  UnderlyingDeliveryStreamPipeline?: string// [1] 41778 (String)
+  UnderlyingDeliveryStreamEntryPoint?: string// [1] 41779 (String)
+  UnderlyingDeliveryStreamWithdrawalPoint?: string// [1] 41780 (String)
+  UnderlyingDeliveryStreamDeliveryPoint?: string// [1] 41781 (String)
+  UnderlyingDeliveryStreamDeliveryPointSource?: number// [1] 42196 (Int)
+  UnderlyingDeliveryStreamDeliveryPointDesc?: string// [1] 42197 (String)
+  UnderlyingDeliveryStreamDeliveryRestriction?: number// [1] 41782 (Int)
+  UnderlyingDeliveryStreamDeliveryContingency?: string// [1] 41783 (String)
+  UnderlyingDeliveryStreamDeliveryContingentPartySide?: number// [1] 41784 (Int)
+  UnderlyingDeliveryStreamDeliverAtSourceIndicator?: boolean// [1] 41785 (Boolean)
+  UnderlyingDeliveryStreamRiskApportionment?: string// [1] 41786 (String)
+  UnderlyingDeliveryStreamRiskApportionmentSource?: string// [1] 41587 (String)
+  UnderlyingDeliveryStreamTitleTransferLocation?: string// [1] 41787 (String)
+  UnderlyingDeliveryStreamTitleTransferCondition?: number// [1] 41788 (Int)
+  UnderlyingDeliveryStreamImporterOfRecord?: string// [1] 41789 (String)
+  UnderlyingDeliveryStreamNegativeTolerance?: number// [1] 41790 (Float)
+  UnderlyingDeliveryStreamPositiveTolerance?: number// [1] 41791 (Float)
+  UnderlyingDeliveryStreamToleranceUnitOfMeasure?: string// [1] 41792 (String)
+  UnderlyingDeliveryStreamToleranceType?: number// [1] 41793 (Int)
+  UnderlyingDeliveryStreamToleranceOptionSide?: number// [1] 41794 (Int)
+  UnderlyingDeliveryStreamTotalPositiveTolerance?: number// [1] 41795 (Float)
+  UnderlyingDeliveryStreamTotalNegativeTolerance?: number// [1] 41796 (Float)
+  UnderlyingDeliveryStreamNotionalConversionFactor?: number// [1] 41797 (Float)
+  UnderlyingDeliveryStreamTransportEquipment?: string// [1] 41798 (String)
+  UnderlyingDeliveryStreamElectingPartySide?: number// [1] 41799 (Int)
+  UnderlyingDeliveryStreamCommoditySourceGrp?: IUnderlyingDeliveryStreamCommoditySourceGrp[]// [1] Src.41809
+  UnderlyingDeliveryStreamCycleGrp?: IUnderlyingDeliveryStreamCycleGrp[]// [2] Desc.41805, EncDescLen.41806, EncDesc.41807
 }

@@ -1,4 +1,4 @@
 export interface IInstrumentPtysSubGrp {
-  InstrumentPartySubID?: string// 1053
-  InstrumentPartySubIDType?: number// 1054
+  InstrumentPartySubID?: string// [1] 1053 (String)
+  InstrumentPartySubIDType?: number// [1] 1054 (Int)
 }

@@ -1,3 +1,3 @@
 export interface IUnderlyingStreamCalculationPeriodBusinessCenterGrp {
-  UnderlyingStreamCalculationPeriodBusinessCenter?: string// 40557
+  UnderlyingStreamCalculationPeriodBusinessCenter?: string// [1] 40557 (String)
 }

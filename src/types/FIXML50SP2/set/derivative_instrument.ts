@@ -4,69 +4,69 @@ import { IDerivativeEventsGrp } from './derivative_events_grp'
 import { IDerivativeInstrumentParties } from './derivative_instrument_parties'
 
 export interface IDerivativeInstrument {
-  DerivativeSymbol?: string// 1214
-  DerivativeSymbolSfx?: string// 1215
-  DerivativeSecurityID?: string// 1216
-  DerivativeSecurityIDSource?: string// 1217
-  DerivativeProduct?: number// 1246
-  DerivativeProductComplex?: string// 1228
-  DerivFlexProductEligibilityIndicator?: boolean// 1243
-  DerivativeSecurityGroup?: string// 1247
-  DerivativeCFICode?: string// 1248
-  DerivativeSecurityType?: string// 1249
-  DerivativeSecuritySubType?: string// 1250
-  DerivativeMaturityMonthYear?: string// 1251
-  DerivativeMaturityDate?: Date// 1252
-  DerivativeMaturityTime?: string// 1253
-  DerivativeSettleOnOpenFlag?: string// 1254
-  DerivativeInstrmtAssignmentMethod?: string// 1255
-  DerivativeSecurityStatus?: string// 1256
-  DerivativeIssueDate?: Date// 1276
-  DerivativeInstrRegistry?: string// 1257
-  DerivativeCountryOfIssue?: string// 1258
-  DerivativeStateOrProvinceOfIssue?: string// 1259
-  DerivativeLocaleOfIssue?: string// 1260
-  DerivativeStrikePrice?: number// 1261
-  DerivativeStrikeCurrency?: string// 1262
-  DerivativeStrikeMultiplier?: number// 1263
-  DerivativeStrikeValue?: number// 1264
-  DerivativeOptAttribute?: string// 1265
-  DerivativeContractMultiplier?: number// 1266
-  DerivativeContractMultiplierUnit?: number// 1438
-  FlowScheduleType?: number// 1439
-  DerivativeMinPriceIncrement?: number// 1267
-  DerivativeMinPriceIncrementAmount?: number// 1268
-  DerivativeUnitOfMeasure?: string// 1269
-  DerivativeUnitOfMeasureQty?: number// 1270
-  DerivativeUnitOfMeasureCurrency?: string// 1722
-  DerivativePriceUnitOfMeasure?: string// 1315
-  DerivativePriceUnitOfMeasureQty?: number// 1316
-  DerivativePriceUnitOfMeasureCurrency?: string// 1723
-  DerivativeSettlMethod?: string// 1317
-  DerivativePriceQuoteMethod?: string// 1318
-  DerivativeValuationMethod?: string// 1319
-  DerivativePriceQuoteCurrency?: string// 1576
-  DerivativeListMethod?: number// 1320
-  DerivativeCapPrice?: number// 1321
-  DerivativeFloorPrice?: number// 1322
-  DerivativePutOrCall?: number// 1323
-  DerivativeInTheMoneyCondition?: number// 2684
-  DerivativeContraryInstructionEligibilityIndicator?: boolean// 2688
-  DerivativeExerciseStyle?: number// 1299
-  DerivativeOptPayAmount?: number// 1225
-  DerivativeTimeUnit?: string// 1271
-  DerivativeSecurityExchange?: string// 1272
-  DerivativePositionLimit?: number// 1273
-  DerivativeNTPositionLimit?: number// 1274
-  DerivativeIssuer?: string// 1275
-  DerivativeEncodedIssuerLen?: number// 1277
-  DerivativeEncodedIssuer?: Buffer// 1278
-  DerivativeSecurityDesc?: string// 1279
-  DerivativeEncodedSecurityDescLen?: number// 1280
-  DerivativeEncodedSecurityDesc?: Buffer// 1281
-  DerivativeContractSettlMonth?: string// 1285
-  DerivativeSecurityAltIDGrp?: IDerivativeSecurityAltIDGrp[]
-  DerivativeSecurityXML?: IDerivativeSecurityXML
-  DerivativeEventsGrp?: IDerivativeEventsGrp[]
-  DerivativeInstrumentParties?: IDerivativeInstrumentParties[]
+  DerivativeSymbol?: string// [1] 1214 (String)
+  DerivativeSymbolSfx?: string// [1] 1215 (String)
+  DerivativeSecurityID?: string// [1] 1216 (String)
+  DerivativeSecurityIDSource?: string// [1] 1217 (String)
+  DerivativeProduct?: number// [1] 1246 (Int)
+  DerivativeProductComplex?: string// [1] 1228 (String)
+  DerivFlexProductEligibilityIndicator?: boolean// [1] 1243 (Boolean)
+  DerivativeSecurityGroup?: string// [1] 1247 (String)
+  DerivativeCFICode?: string// [1] 1248 (String)
+  DerivativeSecurityType?: string// [1] 1249 (String)
+  DerivativeSecuritySubType?: string// [1] 1250 (String)
+  DerivativeMaturityMonthYear?: string// [1] 1251 (String)
+  DerivativeMaturityDate?: Date// [1] 1252 (LocalDate)
+  DerivativeMaturityTime?: string// [1] 1253 (String)
+  DerivativeSettleOnOpenFlag?: string// [1] 1254 (String)
+  DerivativeInstrmtAssignmentMethod?: string// [1] 1255 (String)
+  DerivativeSecurityStatus?: string// [1] 1256 (String)
+  DerivativeIssueDate?: Date// [1] 1276 (LocalDate)
+  DerivativeInstrRegistry?: string// [1] 1257 (String)
+  DerivativeCountryOfIssue?: string// [1] 1258 (String)
+  DerivativeStateOrProvinceOfIssue?: string// [1] 1259 (String)
+  DerivativeLocaleOfIssue?: string// [1] 1260 (String)
+  DerivativeStrikePrice?: number// [1] 1261 (Float)
+  DerivativeStrikeCurrency?: string// [1] 1262 (String)
+  DerivativeStrikeMultiplier?: number// [1] 1263 (Float)
+  DerivativeStrikeValue?: number// [1] 1264 (Float)
+  DerivativeOptAttribute?: string// [1] 1265 (String)
+  DerivativeContractMultiplier?: number// [1] 1266 (Float)
+  DerivativeContractMultiplierUnit?: number// [1] 1438 (Int)
+  FlowScheduleType?: number// [1] 1439 (Int)
+  DerivativeMinPriceIncrement?: number// [1] 1267 (Float)
+  DerivativeMinPriceIncrementAmount?: number// [1] 1268 (Float)
+  DerivativeUnitOfMeasure?: string// [1] 1269 (String)
+  DerivativeUnitOfMeasureQty?: number// [1] 1270 (Float)
+  DerivativeUnitOfMeasureCurrency?: string// [1] 1722 (String)
+  DerivativePriceUnitOfMeasure?: string// [1] 1315 (String)
+  DerivativePriceUnitOfMeasureQty?: number// [1] 1316 (Float)
+  DerivativePriceUnitOfMeasureCurrency?: string// [1] 1723 (String)
+  DerivativeSettlMethod?: string// [1] 1317 (String)
+  DerivativePriceQuoteMethod?: string// [1] 1318 (String)
+  DerivativeValuationMethod?: string// [1] 1319 (String)
+  DerivativePriceQuoteCurrency?: string// [1] 1576 (String)
+  DerivativeListMethod?: number// [1] 1320 (Int)
+  DerivativeCapPrice?: number// [1] 1321 (Float)
+  DerivativeFloorPrice?: number// [1] 1322 (Float)
+  DerivativePutOrCall?: number// [1] 1323 (Int)
+  DerivativeInTheMoneyCondition?: number// [1] 2684 (Int)
+  DerivativeContraryInstructionEligibilityIndicator?: boolean// [1] 2688 (Boolean)
+  DerivativeExerciseStyle?: number// [1] 1299 (Int)
+  DerivativeOptPayAmount?: number// [1] 1225 (Float)
+  DerivativeTimeUnit?: string// [1] 1271 (String)
+  DerivativeSecurityExchange?: string// [1] 1272 (String)
+  DerivativePositionLimit?: number// [1] 1273 (Int)
+  DerivativeNTPositionLimit?: number// [1] 1274 (Int)
+  DerivativeIssuer?: string// [1] 1275 (String)
+  DerivativeEncodedIssuerLen?: number// [1] 1277 (Length)
+  DerivativeEncodedIssuer?: Buffer// [1] 1278 (RawData)
+  DerivativeSecurityDesc?: string// [1] 1279 (String)
+  DerivativeEncodedSecurityDescLen?: number// [1] 1280 (Length)
+  DerivativeEncodedSecurityDesc?: Buffer// [1] 1281 (RawData)
+  DerivativeContractSettlMonth?: string// [1] 1285 (String)
+  DerivativeSecurityAltIDGrp?: IDerivativeSecurityAltIDGrp[]// [1] ID.1219, Src.1220
+  DerivativeSecurityXML?: IDerivativeSecurityXML// [2] Schema.1284
+  DerivativeEventsGrp?: IDerivativeEventsGrp[]// [3] EventTyp.1287, Dt.1288 .. Txt.1291
+  DerivativeInstrumentParties?: IDerivativeInstrumentParties[]// [4] ID.1293, Src.1294 .. Qual.2377
 }

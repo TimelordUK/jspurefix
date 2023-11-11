@@ -7,7 +7,7 @@ export class FileReplayer {
   constructor (public readonly config: IJsFixConfig) {
   }
 
-  replayFixFile (replayFile: string): Promise<MsgView[]> {
+  async replayFixFile (replayFile: string): Promise<MsgView[]> {
     return new Promise<MsgView[]>((accept, reject) => {
       try {
         const arr: MsgView[] = []

@@ -1,0 +1,23 @@
+{
+  "application": {
+    "reconnectSeconds": 10,
+    "type": "initiator",
+    "name": "test_client",
+    "tcp": {
+      "host" : "localhost",
+      "port": 2344
+    },
+    "protocol": "ascii",
+    "dictionary": "data/FIX50SP2.xml"
+  },
+  "Username": "js-client",
+  "Password": "pwd-client",
+  "EncryptMethod": 0,
+  "ResetSeqNumFlag": true,
+  "HeartBtInt": 30,
+  "SenderCompId": "init-comp",
+  "TargetCompID": "accept-comp",
+  "DefaultApplVerID": "t1",
+  "TargetSubID": "fix",
+  "BeginString": "FIX.5.0SP2"
+}

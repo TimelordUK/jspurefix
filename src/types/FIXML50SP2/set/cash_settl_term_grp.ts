@@ -2,26 +2,26 @@ import { ICashSettlDealerGrp } from './cash_settl_dealer_grp'
 import { ICashSettlDate } from './cash_settl_date'
 
 export interface ICashSettlTermGrp {
-  CashSettlCurrency?: string// 40023
-  CashSettlValuationFirstBusinessDayOffset?: number// 40024
-  CashSettlValuationSubsequentBusinessDaysOffset?: number// 40916
-  CashSettlNumOfValuationDates?: number// 40917
-  CashSettlValuationTime?: string// 40025
-  CashSettlBusinessCenter?: string// 40026
-  CashSettlQuoteMethod?: number// 40027
-  CashSettlQuoteAmount?: number// 40028
-  CashSettlQuoteCurrency?: string// 40029
-  CashSettlMinimumQuoteAmount?: number// 40030
-  CashSettlMinimumQuoteCurrency?: string// 40031
-  CashSettlPriceSource?: string// 42216
-  CashSettlPriceDefault?: number// 42217
-  CashSettlBusinessDays?: number// 40033
-  CashSettlAmount?: number// 40034
-  CashSettlRecoveryFactor?: number// 40035
-  CashSettlFixedTermIndicator?: boolean// 40036
-  CashSettlAccruedInterestIndicator?: boolean// 40037
-  CashSettlValuationMethod?: number// 40038
-  CashSettlTermXID?: string// 40039
-  CashSettlDealerGrp?: ICashSettlDealerGrp[]
-  CashSettlDate?: ICashSettlDate
+  CashSettlCurrency?: string// [1] 40023 (String)
+  CashSettlValuationFirstBusinessDayOffset?: number// [1] 40024 (Int)
+  CashSettlValuationSubsequentBusinessDaysOffset?: number// [1] 40916 (Int)
+  CashSettlNumOfValuationDates?: number// [1] 40917 (Int)
+  CashSettlValuationTime?: string// [1] 40025 (String)
+  CashSettlBusinessCenter?: string// [1] 40026 (String)
+  CashSettlQuoteMethod?: number// [1] 40027 (Int)
+  CashSettlQuoteAmount?: number// [1] 40028 (Float)
+  CashSettlQuoteCurrency?: string// [1] 40029 (String)
+  CashSettlMinimumQuoteAmount?: number// [1] 40030 (Float)
+  CashSettlMinimumQuoteCurrency?: string// [1] 40031 (String)
+  CashSettlPriceSource?: string// [1] 42216 (String)
+  CashSettlPriceDefault?: number// [1] 42217 (Int)
+  CashSettlBusinessDays?: number// [1] 40033 (Int)
+  CashSettlAmount?: number// [1] 40034 (Float)
+  CashSettlRecoveryFactor?: number// [1] 40035 (Float)
+  CashSettlFixedTermIndicator?: boolean// [1] 40036 (Boolean)
+  CashSettlAccruedInterestIndicator?: boolean// [1] 40037 (Boolean)
+  CashSettlValuationMethod?: number// [1] 40038 (Int)
+  CashSettlTermXID?: string// [1] 40039 (String)
+  CashSettlDealerGrp?: ICashSettlDealerGrp[]// [1] Dlr.40032
+  CashSettlDate?: ICashSettlDate// [2] DtUnadj.42207, BizDayCnvtn.42208 .. Dt.42213
 }

@@ -1,0 +1,5 @@
+import { IStreamFirstPeriodStartDateBusinessCenterGrpNoStreamFirstPeriodStartDateBusinessCenters } from './stream_first_period_start_date_business_center_grp_no_stream_first_period_start_date_business_centers'
+
+export interface IStreamFirstPeriodStartDateBusinessCenterGrp {
+  NoStreamFirstPeriodStartDateBusinessCenters?: IStreamFirstPeriodStartDateBusinessCenterGrpNoStreamFirstPeriodStartDateBusinessCenters[]// [1] StreamFirstPeriodStartDateBusinessCenter.40077
+}

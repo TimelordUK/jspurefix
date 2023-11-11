@@ -14,29 +14,29 @@ import { IUnderlyingInstrument } from './set/underlying_instrument'
 *********************************************************
 */
 export interface IOrderMassCancelReport {
-  ClOrdID?: string// 11
-  SecondaryClOrdID?: string// 526
-  OrderID: string// 37
-  MassActionReportID: string// 1369
-  SecondaryOrderID?: string// 198
-  MassCancelRequestType: string// 530
-  MassCancelResponse: string// 531
-  MassCancelRejectReason?: number// 532
-  TotalAffectedOrders?: number// 533
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  Side?: string// 54
-  TransactTime?: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  AffectedOrdGrp?: IAffectedOrdGrp[]
-  NotAffectedOrdGrp?: INotAffectedOrdGrp[]
-  Parties?: IParties[]
-  TargetParties?: ITargetParties[]
-  Instrument?: IInstrument
-  UnderlyingInstrument?: IUnderlyingInstrument
+  ClOrdID?: string// [2] 11 (String)
+  SecondaryClOrdID?: string// [2] 526 (String)
+  OrderID: string// [2] 37 (String)
+  MassActionReportID: string// [2] 1369 (String)
+  SecondaryOrderID?: string// [2] 198 (String)
+  MassCancelRequestType: string// [2] 530 (String)
+  MassCancelResponse: string// [2] 531 (String)
+  MassCancelRejectReason?: number// [2] 532 (Int)
+  TotalAffectedOrders?: number// [2] 533 (Int)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  Side?: string// [2] 54 (String)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  AffectedOrdGrp?: IAffectedOrdGrp[]// [2] OrigClOrdID.1824, OrdID.535, OrdID2.536
+  NotAffectedOrdGrp?: INotAffectedOrdGrp[]// [3] OrigClOrdID.1372, OrdID.1371 .. Rsn.1583
+  Parties?: IParties[]// [4] ID.448, Src.447 .. Qual.2376
+  TargetParties?: ITargetParties[]// [5] ID.1462, Src.1463 .. Qual.1818
+  Instrument?: IInstrument// [6] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  UnderlyingInstrument?: IUnderlyingInstrument// [7] Sym.311, Sfx.312 .. XID.2631
 }

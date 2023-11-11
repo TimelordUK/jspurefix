@@ -36,7 +36,7 @@ export class MsgCompiler {
 
   public async generate (): Promise<void> {
     const types: string[] = this.settings.types ?? this.definitions.message.keys()
-    return await this.createTypes(types)
+    await this.createTypes(types)
   }
 
   private getFileName (compilerType: CompilerType): string {
@@ -85,7 +85,7 @@ export class MsgCompiler {
     exports.push('')
     const api: string = exports.join(newLine)
     const fullName: string = Path.join(settings.output, fileName)
-    return await writeFile(fullName, api, { encoding: 'utf8' })
+    await writeFile(fullName, api, { encoding: 'utf8' })
   }
 
   private generateMessages (compilerType: CompilerType): string {
@@ -129,13 +129,17 @@ export class MsgCompiler {
     completed.addUpdate(fullName, ct)
   }
 
+  private simpleComment (simple: ContainedSimpleField): string {
+    return `[${simple.position + 1}] ${simple.definition.tag} (${TagType[simple.definition.tagType]})`
+  }
+
   private fieldSimple (simple: ContainedSimpleField): void {
     const snippets = this.snippets
     const settings = this.settings
     const buffer = this.buffer
     const len = buffer.writeString(snippets.simple(simple.name, Tags.toJSType(simple), simple.required, 1))
     if (settings.tags) {
-      buffer.writeString(snippets.commentLine(`[${simple.position + 1}] ${simple.definition.tag} (${TagType[simple.definition.tagType]})`, justifiedWidth - len))
+      buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
     }
     buffer.writeString(newLine)
   }
@@ -191,9 +195,9 @@ export class MsgCompiler {
   private fields (compilerType: CompilerType): void {
     this.attributes(compilerType)
     new FieldsDispatch().dispatchFields(compilerType.set.fields, {
-      group: (g: ContainedGroupField) => this.fieldGroup(g, compilerType),
-      simple: (simple: ContainedSimpleField) => this.fieldSimple(simple),
-      component: (c: ContainedComponentField) => this.fieldComponent(c, compilerType)
+      group: (g: ContainedGroupField) => { this.fieldGroup(g, compilerType) },
+      simple: (simple: ContainedSimpleField) => { this.fieldSimple(simple) },
+      component: (c: ContainedComponentField) => { this.fieldComponent(c, compilerType) }
     })
   }
 
@@ -204,7 +208,7 @@ export class MsgCompiler {
     compilerType.set.localAttribute.forEach((simple: ContainedSimpleField) => {
       const len = buffer.writeString(snippets.simple(simple.definition.name, Tags.toJSType(simple), simple.required, 1))
       if (settings.tags) {
-        buffer.writeString(snippets.commentLine(`${simple.definition.tag}`, justifiedWidth - len))
+        buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
       }
       buffer.writeString(newLine)
     })

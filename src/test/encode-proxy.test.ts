@@ -3,11 +3,9 @@ import 'reflect-metadata'
 import { EncodeProxy } from '../buffer'
 import { FixDefinitions } from '../dictionary/definition'
 import { ILooseObject } from '../collections/collection'
-import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { Setup } from './env/setup'
 
 let definitions: FixDefinitions
-let session: AsciiMsgTransmitter
 let proxyFactory: EncodeProxy
 let setup: Setup
 
@@ -15,8 +13,6 @@ beforeAll(async () => {
   setup = new Setup('session/qf-fix44.json', 'session/qf-fix44.json')
   await setup.init()
   definitions = setup.definitions
-  const config = setup.clientConfig
-  session = new AsciiMsgTransmitter(config)
   proxyFactory = new EncodeProxy(definitions)
 }, 45000)
 

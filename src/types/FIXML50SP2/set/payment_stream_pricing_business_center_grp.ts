@@ -1,3 +1,3 @@
 export interface IPaymentStreamPricingBusinessCenterGrp {
-  PaymentStreamPricingBusinessCenter?: string// 41193
+  PaymentStreamPricingBusinessCenter?: string// [1] 41193 (String)
 }

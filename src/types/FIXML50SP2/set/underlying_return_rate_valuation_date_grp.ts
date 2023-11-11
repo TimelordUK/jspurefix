@@ -1,4 +1,4 @@
 export interface IUnderlyingReturnRateValuationDateGrp {
-  UnderlyingReturnRateValuationDate?: Date// 43072
-  UnderlyingReturnRateValuationDateType?: number// 43073
+  UnderlyingReturnRateValuationDate?: Date// [1] 43072 (LocalDate)
+  UnderlyingReturnRateValuationDateType?: number// [1] 43073 (Int)
 }

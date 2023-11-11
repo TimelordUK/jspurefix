@@ -61,7 +61,7 @@ export class FixMsgAsciiStoreResend {
     if (record.obj) return
     if (!record.encoded) return
     const parser = this.parser
-    parser.on('error', (e: Error) => {
+    parser.on('error', (_: Error) => {
       record.obj = null
     })
     parser.on('msg', (view: MsgView) => {

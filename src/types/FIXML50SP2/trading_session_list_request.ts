@@ -8,14 +8,14 @@ import { IStandardHeader } from './set/standard_header'
 *************************************************************
 */
 export interface ITradingSessionListRequest {
-  TradSesReqID: string// 335
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  SecurityExchange?: string// 207
-  TradSesMethod?: number// 338
-  TradSesMode?: number// 339
-  SubscriptionRequestType: string// 263
-  StandardHeader?: IStandardHeader
+  TradSesReqID: string// [2] 335 (String)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  SecurityExchange?: string// [2] 207 (String)
+  TradSesMethod?: number// [2] 338 (Int)
+  TradSesMode?: number// [2] 339 (Int)
+  SubscriptionRequestType: string// [2] 263 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
 }

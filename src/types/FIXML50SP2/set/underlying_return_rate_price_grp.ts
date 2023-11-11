@@ -1,6 +1,6 @@
 export interface IUnderlyingReturnRatePriceGrp {
-  UnderlyingReturnRatePriceBasis?: number// 43065
-  UnderlyingReturnRatePrice?: number// 43066
-  UnderlyingReturnRatePriceCurrency?: string// 43067
-  UnderlyingReturnRatePriceType?: number// 43068
+  UnderlyingReturnRatePriceBasis?: number// [1] 43065 (Int)
+  UnderlyingReturnRatePrice?: number// [1] 43066 (Float)
+  UnderlyingReturnRatePriceCurrency?: string// [1] 43067 (String)
+  UnderlyingReturnRatePriceType?: number// [1] 43068 (Int)
 }

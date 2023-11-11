@@ -9,9 +9,9 @@ import { IStrmAsgnRptGrp } from './set/strm_asgn_rpt_grp'
 **********************************************************
 */
 export interface IStreamAssignmentReport {
-  StreamAsgnRptID: string// 1501
-  StreamAsgnReqType?: number// 1498
-  StreamAsgnReqID?: string// 1497
-  StandardHeader?: IStandardHeader
-  StrmAsgnRptGrp?: IStrmAsgnRptGrp[]
+  StreamAsgnRptID: string// [2] 1501 (String)
+  StreamAsgnReqType?: number// [2] 1498 (Int)
+  StreamAsgnReqID?: string// [2] 1497 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  StrmAsgnRptGrp?: IStrmAsgnRptGrp[]// [2] 
 }

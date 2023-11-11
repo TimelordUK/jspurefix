@@ -1,4 +1,4 @@
 export interface IUnderlyingStreamCalculationPeriodDateGrp {
-  UnderlyingStreamCalculationPeriodDate?: Date// 41955
-  UnderlyingStreamCalculationPeriodDateType?: number// 41956
+  UnderlyingStreamCalculationPeriodDate?: Date// [1] 41955 (LocalDate)
+  UnderlyingStreamCalculationPeriodDateType?: number// [1] 41956 (Int)
 }

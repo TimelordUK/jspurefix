@@ -45,13 +45,11 @@ export class TradeCaptureClient extends AsciiSession {
     this.logger.info('stopped')
   }
 
-  // use msgType for example to persist only trade capture messages to database
-  protected onDecoded (msgType: string, txt: string): void {
+  protected onDecoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
-  // delimiter substitution now done in encoding
-  protected onEncoded (msgType: string, txt: string): void {
+  protected onEncoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
@@ -72,7 +70,7 @@ export class TradeCaptureClient extends AsciiSession {
   }
 
   protected onLogon (view: MsgView, user: string, password: string): boolean {
-    this.logger.info(`onLogon user ${user}`)
+    this.logger.info(`onLogon user ${user} ${password?.length}`)
     return true
   }
 }

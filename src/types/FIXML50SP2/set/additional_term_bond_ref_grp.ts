@@ -1,20 +1,20 @@
 export interface IAdditionalTermBondRefGrp {
-  AdditionalTermBondSecurityID?: string// 40001
-  SecurityIDSource?: string// 22
-  AdditionalTermBondDesc?: string// 40003
-  EncodedAdditionalTermBondDescLen?: number// 40004
-  EncodedAdditionalTermBondDesc?: Buffer// 40005
-  AdditionalTermBondCurrency?: string// 40006
-  AdditionalTermBondIssuer?: string// 40007
-  EncodedAdditionalTermBondIssuerLen?: number// 40008
-  EncodedAdditionalTermBondIssuer?: Buffer// 40009
-  AdditionalTermBondSeniority?: string// 40010
-  AdditionalTermBondCouponType?: number// 40011
-  AdditionalTermBondCouponRate?: number// 40012
-  AdditionalTermBondMaturityDate?: Date// 40013
-  AdditionalTermBondParValue?: number// 40014
-  AdditionalTermBondCurrentTotalIssuedAmount?: number// 40015
-  AdditionalTermBondCouponFrequencyPeriod?: number// 40016
-  AdditionalTermBondCouponFrequencyUnit?: string// 40017
-  AdditionalTermBondDayCount?: number// 40018
+  AdditionalTermBondSecurityID?: string// [1] 40001 (String)
+  SecurityIDSource?: string// [1] 22 (String)
+  AdditionalTermBondDesc?: string// [1] 40003 (String)
+  EncodedAdditionalTermBondDescLen?: number// [1] 40004 (Length)
+  EncodedAdditionalTermBondDesc?: Buffer// [1] 40005 (RawData)
+  AdditionalTermBondCurrency?: string// [1] 40006 (String)
+  AdditionalTermBondIssuer?: string// [1] 40007 (String)
+  EncodedAdditionalTermBondIssuerLen?: number// [1] 40008 (Length)
+  EncodedAdditionalTermBondIssuer?: Buffer// [1] 40009 (RawData)
+  AdditionalTermBondSeniority?: string// [1] 40010 (String)
+  AdditionalTermBondCouponType?: number// [1] 40011 (Int)
+  AdditionalTermBondCouponRate?: number// [1] 40012 (Float)
+  AdditionalTermBondMaturityDate?: Date// [1] 40013 (LocalDate)
+  AdditionalTermBondParValue?: number// [1] 40014 (Float)
+  AdditionalTermBondCurrentTotalIssuedAmount?: number// [1] 40015 (Float)
+  AdditionalTermBondCouponFrequencyPeriod?: number// [1] 40016 (Int)
+  AdditionalTermBondCouponFrequencyUnit?: string// [1] 40017 (String)
+  AdditionalTermBondDayCount?: number// [1] 40018 (Int)
 }

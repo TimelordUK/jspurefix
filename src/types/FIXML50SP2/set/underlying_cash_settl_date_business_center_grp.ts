@@ -1,3 +1,3 @@
 export interface IUnderlyingCashSettlDateBusinessCenterGrp {
-  UnderlyingCashSettlDateBusinessCenter?: string// 42789
+  UnderlyingCashSettlDateBusinessCenter?: string// [1] 42789 (String)
 }

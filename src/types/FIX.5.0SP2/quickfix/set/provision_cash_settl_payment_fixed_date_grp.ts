@@ -1,0 +1,5 @@
+import { IProvisionCashSettlPaymentFixedDateGrpNoProvisionCashSettlPaymentDates } from './provision_cash_settl_payment_fixed_date_grp_no_provision_cash_settl_payment_dates'
+
+export interface IProvisionCashSettlPaymentFixedDateGrp {
+  NoProvisionCashSettlPaymentDates?: IProvisionCashSettlPaymentFixedDateGrpNoProvisionCashSettlPaymentDates[]// [1] ProvisionCashSettlPaymentDate.40172, ProvisionCashSettlPaymentDateType.40173
+}

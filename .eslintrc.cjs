@@ -26,6 +26,7 @@ module.exports = {
     "no-async-promise-executor": "off",
     "valid-typeof": "off",
     "@typescript-eslint/consistent-type-imports":"off",
-    "@typescript-eslint/ban-types":"off"
+    "@typescript-eslint/ban-types":"off",
+    "@typescript-eslint/prefer-ts-expect-error":"off"
   },
 };

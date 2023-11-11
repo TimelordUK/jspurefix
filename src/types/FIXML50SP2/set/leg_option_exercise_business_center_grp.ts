@@ -1,3 +1,3 @@
 export interface ILegOptionExerciseBusinessCenterGrp {
-  LegOptionExerciseBusinessCenter?: string// 41492
+  LegOptionExerciseBusinessCenter?: string// [1] 41492 (String)
 }

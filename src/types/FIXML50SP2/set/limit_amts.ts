@@ -1,9 +1,9 @@
 export interface ILimitAmts {
-  LimitAmtType?: number// 1631
-  LastLimitAmt?: number// 1632
-  LimitAmtRemaining?: number// 1633
-  LimitUtilizationAmt?: number// 2394
-  LimitAmt?: number// 2395
-  LimitAmtCurrency?: string// 1634
-  LimitRole?: number// 2396
+  LimitAmtType?: number// [1] 1631 (Int)
+  LastLimitAmt?: number// [1] 1632 (Float)
+  LimitAmtRemaining?: number// [1] 1633 (Float)
+  LimitUtilizationAmt?: number// [1] 2394 (Float)
+  LimitAmt?: number// [1] 2395 (Float)
+  LimitAmtCurrency?: string// [1] 1634 (String)
+  LimitRole?: number// [1] 2396 (Int)
 }

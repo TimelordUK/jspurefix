@@ -19,101 +19,101 @@ import { ITrdCapRptAckSideGrp } from './set/trd_cap_rpt_ack_side_grp'
 *********************************************************
 */
 export interface ITradeCaptureReportAck {
-  TradeReportID?: string// 571
-  TradeID?: string// 1003
-  SecondaryTradeID?: string// 1040
-  FirmTradeID?: string// 1041
-  SecondaryFirmTradeID?: string// 1042
-  TradeReportTransType?: number// 487
-  TradeReportType?: number// 856
-  TrdType?: number// 828
-  TrdSubType?: number// 829
-  SecondaryTrdType?: number// 855
-  OffsetInstruction?: number// 1849
-  TradeHandlingInstr?: string// 1123
-  OrigTradeHandlingInstr?: string// 1124
-  OrigTradeDate?: Date// 1125
-  OrigTradeID?: string// 1126
-  OrigSecondaryTradeID?: string// 1127
-  TransferReason?: string// 830
-  ExecType?: string// 150
-  TradeReportRefID?: string// 572
-  SecondaryTradeReportRefID?: string// 881
-  TrdRptStatus?: number// 939
-  TrdAckStatus?: number// 1523
-  OrdRejReason?: number// 103
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  SecondaryTradeReportID?: string// 818
-  SubscriptionRequestType?: string// 263
-  TradeLinkID?: string// 820
-  TrdMatchID?: string// 880
-  ExecID?: string// 17
-  SecondaryExecID?: string// 527
-  ExecRestatementReason?: number// 378
-  PreviouslyReported?: boolean// 570
-  PriceType?: number// 423
-  CrossType?: number// 549
-  UnderlyingTradingSessionID?: string// 822
-  UnderlyingTradingSessionSubID?: string// 823
-  SettlSessID?: string// 716
-  SettlSessSubID?: string// 717
-  QtyType?: number// 854
-  LastQty?: number// 32
-  LastPx?: number// 31
-  VenueType?: string// 1430
-  MarketSegmentID?: string// 1300
-  MarketID?: string// 1301
-  LastParPx?: number// 669
-  CalculatedCcyLastQty?: number// 1056
-  LastSwapPoints?: number// 1071
-  Currency?: string// 15
-  SettlCurrency?: string// 120
-  LastSpotRate?: number// 194
-  LastForwardPoints?: number// 195
-  LastMkt?: string// 30
-  TradeDate?: Date// 75
-  ClearingBusinessDate?: Date// 715
-  AvgPx?: number// 6
-  AvgPxGroupID?: string// 1731
-  AvgPxIndicator?: number// 819
-  MultiLegReportingType?: string// 442
-  TradeLegRefID?: string// 824
-  TransactTime?: Date// 60
-  SettlType?: string// 63
-  MatchStatus?: string// 573
-  MatchType?: string// 574
-  CopyMsgIndicator?: boolean// 797
-  PublishTrdIndicator?: boolean// 852
-  TradePublishIndicator?: number// 1390
-  ShortSaleReason?: number// 853
-  ResponseTransportType?: number// 725
-  ResponseDestination?: string// 726
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  AsOfIndicator?: string// 1015
-  ClearingFeeIndicator?: string// 635
-  TierCode?: string// 994
-  MessageEventSource?: string// 1011
-  LastUpdateTime?: Date// 779
-  RndPx?: number// 991
-  RptSys?: string// 1135
-  GrossTradeAmt?: number// 381
-  SettlDate?: Date// 64
-  FeeMultiplier?: number// 1329
-  RiskLimitCheckStatus?: number// 2343
-  StandardHeader?: IStandardHeader
-  RootParties?: IRootParties[]
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  TrdRepIndicatorsGrp?: ITrdRepIndicatorsGrp[]
-  TrdInstrmtLegGrp?: ITrdInstrmtLegGrp[]
-  TrdRegTimestamps?: ITrdRegTimestamps[]
-  PositionAmountData?: IPositionAmountData[]
-  TradeQtyGrp?: ITradeQtyGrp[]
-  TrdCapRptAckSideGrp?: ITrdCapRptAckSideGrp[]
+  TradeReportID?: string// [2] 571 (String)
+  TradeID?: string// [2] 1003 (String)
+  SecondaryTradeID?: string// [2] 1040 (String)
+  FirmTradeID?: string// [2] 1041 (String)
+  SecondaryFirmTradeID?: string// [2] 1042 (String)
+  TradeReportTransType?: number// [2] 487 (Int)
+  TradeReportType?: number// [2] 856 (Int)
+  TrdType?: number// [2] 828 (Int)
+  TrdSubType?: number// [2] 829 (Int)
+  SecondaryTrdType?: number// [2] 855 (Int)
+  OffsetInstruction?: number// [2] 1849 (Int)
+  TradeHandlingInstr?: string// [2] 1123 (String)
+  OrigTradeHandlingInstr?: string// [2] 1124 (String)
+  OrigTradeDate?: Date// [2] 1125 (LocalDate)
+  OrigTradeID?: string// [2] 1126 (String)
+  OrigSecondaryTradeID?: string// [2] 1127 (String)
+  TransferReason?: string// [2] 830 (String)
+  ExecType?: string// [2] 150 (String)
+  TradeReportRefID?: string// [2] 572 (String)
+  SecondaryTradeReportRefID?: string// [2] 881 (String)
+  TrdRptStatus?: number// [2] 939 (Int)
+  TrdAckStatus?: number// [2] 1523 (Int)
+  OrdRejReason?: number// [2] 103 (Int)
+  RejectText?: string// [2] 1328 (String)
+  EncodedRejectTextLen?: number// [2] 1664 (Length)
+  EncodedRejectText?: Buffer// [2] 1665 (RawData)
+  SecondaryTradeReportID?: string// [2] 818 (String)
+  SubscriptionRequestType?: string// [2] 263 (String)
+  TradeLinkID?: string// [2] 820 (String)
+  TrdMatchID?: string// [2] 880 (String)
+  ExecID?: string// [2] 17 (String)
+  SecondaryExecID?: string// [2] 527 (String)
+  ExecRestatementReason?: number// [2] 378 (Int)
+  PreviouslyReported?: boolean// [2] 570 (Boolean)
+  PriceType?: number// [2] 423 (Int)
+  CrossType?: number// [2] 549 (Int)
+  UnderlyingTradingSessionID?: string// [2] 822 (String)
+  UnderlyingTradingSessionSubID?: string// [2] 823 (String)
+  SettlSessID?: string// [2] 716 (String)
+  SettlSessSubID?: string// [2] 717 (String)
+  QtyType?: number// [2] 854 (Int)
+  LastQty?: number// [2] 32 (Float)
+  LastPx?: number// [2] 31 (Float)
+  VenueType?: string// [2] 1430 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  MarketID?: string// [2] 1301 (String)
+  LastParPx?: number// [2] 669 (Float)
+  CalculatedCcyLastQty?: number// [2] 1056 (Float)
+  LastSwapPoints?: number// [2] 1071 (Float)
+  Currency?: string// [2] 15 (String)
+  SettlCurrency?: string// [2] 120 (String)
+  LastSpotRate?: number// [2] 194 (Float)
+  LastForwardPoints?: number// [2] 195 (Float)
+  LastMkt?: string// [2] 30 (String)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  ClearingBusinessDate?: Date// [2] 715 (LocalDate)
+  AvgPx?: number// [2] 6 (Float)
+  AvgPxGroupID?: string// [2] 1731 (String)
+  AvgPxIndicator?: number// [2] 819 (Int)
+  MultiLegReportingType?: string// [2] 442 (String)
+  TradeLegRefID?: string// [2] 824 (String)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  SettlType?: string// [2] 63 (String)
+  MatchStatus?: string// [2] 573 (String)
+  MatchType?: string// [2] 574 (String)
+  CopyMsgIndicator?: boolean// [2] 797 (Boolean)
+  PublishTrdIndicator?: boolean// [2] 852 (Boolean)
+  TradePublishIndicator?: number// [2] 1390 (Int)
+  ShortSaleReason?: number// [2] 853 (Int)
+  ResponseTransportType?: number// [2] 725 (Int)
+  ResponseDestination?: string// [2] 726 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  AsOfIndicator?: string// [2] 1015 (String)
+  ClearingFeeIndicator?: string// [2] 635 (String)
+  TierCode?: string// [2] 994 (String)
+  MessageEventSource?: string// [2] 1011 (String)
+  LastUpdateTime?: Date// [2] 779 (UtcTimestamp)
+  RndPx?: number// [2] 991 (Float)
+  RptSys?: string// [2] 1135 (String)
+  GrossTradeAmt?: number// [2] 381 (Float)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  FeeMultiplier?: number// [2] 1329 (Float)
+  RiskLimitCheckStatus?: number// [2] 2343 (Int)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RootParties?: IRootParties[]// [2] ID.1117, Src.1118 .. Qual.2388
+  Instrument?: IInstrument// [3] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [4] DlvryForm.668, PctAtRisk.869
+  FinancingDetails?: IFinancingDetails// [5] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [6] Sym.311, Sfx.312 .. XID.2631
+  TrdRepIndicatorsGrp?: ITrdRepIndicatorsGrp[]// [7] PtyRole.1388, TrdRepInd.1389
+  TrdInstrmtLegGrp?: ITrdInstrmtLegGrp[]// [8] OrdQty.685, Qty.687 .. DiffPx.2492
+  TrdRegTimestamps?: ITrdRegTimestamps[]// [9] TS.769, Typ.770 .. InfoBrrID.1727
+  PositionAmountData?: IPositionAmountData[]// [10] Typ.707, Amt.708 .. MktID.2100
+  TradeQtyGrp?: ITradeQtyGrp[]// [11] Typ.1842, Qty.1843
+  TrdCapRptAckSideGrp?: ITrdCapRptAckSideGrp[]// [12] Side.54, SideExecID.1427 .. RiskLmtChkStat.2344
 }

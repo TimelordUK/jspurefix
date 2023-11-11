@@ -9,20 +9,20 @@ import { IParties } from './set/parties'
 ********************************************
 */
 export interface IQuoteAck {
-  QuoteID?: string// 117
-  QuoteMsgID?: string// 1166
-  QuoteReqID?: string// 131
-  QuoteType?: number// 537
-  QuoteCancelType?: number// 298
-  SecondaryQuoteID?: string// 1751
-  QuoteAckStatus: number// 1865
-  OrdRejReason?: number// 103
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
+  QuoteID?: string// [2] 117 (String)
+  QuoteMsgID?: string// [2] 1166 (String)
+  QuoteReqID?: string// [2] 131 (String)
+  QuoteType?: number// [2] 537 (Int)
+  QuoteCancelType?: number// [2] 298 (Int)
+  SecondaryQuoteID?: string// [2] 1751 (String)
+  QuoteAckStatus: number// [2] 1865 (Int)
+  OrdRejReason?: number// [2] 103 (Int)
+  RejectText?: string// [2] 1328 (String)
+  EncodedRejectTextLen?: number// [2] 1664 (Length)
+  EncodedRejectText?: Buffer// [2] 1665 (RawData)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
 }

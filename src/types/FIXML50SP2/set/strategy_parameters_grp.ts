@@ -1,5 +1,5 @@
 export interface IStrategyParametersGrp {
-  StrategyParameterName?: string// 958
-  StrategyParameterType?: number// 959
-  StrategyParameterValue?: string// 960
+  StrategyParameterName?: string// [1] 958 (String)
+  StrategyParameterType?: number// [1] 959 (Int)
+  StrategyParameterValue?: string// [1] 960 (String)
 }

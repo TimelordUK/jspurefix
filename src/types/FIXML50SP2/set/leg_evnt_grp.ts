@@ -1,12 +1,12 @@
 export interface ILegEvntGrp {
-  LegEventType?: number// 2060
-  LegEventDate?: Date// 2061
-  LegEventTime?: Date// 2062
-  LegEventTimeUnit?: string// 2063
-  LegEventTimePeriod?: number// 2064
-  LegEventMonthYear?: string// 2341
-  LegEventPx?: number// 2065
-  LegEventText?: string// 2066
-  EncodedLegEventTextLen?: number// 2074
-  EncodedLegEventText?: Buffer// 2075
+  LegEventType?: number// [1] 2060 (Int)
+  LegEventDate?: Date// [1] 2061 (LocalDate)
+  LegEventTime?: Date// [1] 2062 (UtcTimestamp)
+  LegEventTimeUnit?: string// [1] 2063 (String)
+  LegEventTimePeriod?: number// [1] 2064 (Int)
+  LegEventMonthYear?: string// [1] 2341 (String)
+  LegEventPx?: number// [1] 2065 (Float)
+  LegEventText?: string// [1] 2066 (String)
+  EncodedLegEventTextLen?: number// [1] 2074 (Length)
+  EncodedLegEventText?: Buffer// [1] 2075 (RawData)
 }

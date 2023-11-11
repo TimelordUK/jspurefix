@@ -1,5 +1,5 @@
 export interface ILegStreamAssetAttributeGrp {
-  LegStreamAssetAttributeType?: string// 41453
-  LegStreamAssetAttributeValue?: string// 41454
-  LegStreamAssetAttributeLimit?: string// 41455
+  LegStreamAssetAttributeType?: string// [1] 41453 (String)
+  LegStreamAssetAttributeValue?: string// [1] 41454 (String)
+  LegStreamAssetAttributeLimit?: string// [1] 41455 (String)
 }

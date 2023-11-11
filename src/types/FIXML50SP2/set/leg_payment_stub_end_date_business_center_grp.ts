@@ -1,3 +1,3 @@
 export interface ILegPaymentStubEndDateBusinessCenterGrp {
-  LegPaymentStubEndDateBusinessCenter?: string// 42496
+  LegPaymentStubEndDateBusinessCenter?: string// [1] 42496 (String)
 }

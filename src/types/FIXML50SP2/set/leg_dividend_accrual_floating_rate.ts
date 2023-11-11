@@ -1,20 +1,20 @@
 export interface ILegDividendAccrualFloatingRate {
-  LegDividendFloatingRateIndex?: string// 42312
-  LegDividendFloatingRateIndexCurvePeriod?: number// 42313
-  LegDividendFloatingRateIndexCurveUnit?: string// 42314
-  LegDividendFloatingRateMultiplier?: number// 42315
-  LegDividendFloatingRateSpread?: number// 42316
-  LegDividendFloatingRateSpreadPositionType?: number// 42317
-  LegDividendFloatingRateTreatment?: number// 42318
-  LegDividendCapRate?: number// 42319
-  LegDividendCapRateBuySide?: number// 42320
-  LegDividendCapRateSellSide?: number// 42321
-  LegDividendFloorRate?: number// 42322
-  LegDividendFloorRateBuySide?: number// 42323
-  LegDividendFloorRateSellSide?: number// 42324
-  LegDividendInitialRate?: number// 42325
-  LegDividendFinalRateRoundingDirection?: string// 42326
-  LegDividendFinalRatePrecision?: number// 42327
-  LegDividendAveragingMethod?: number// 42328
-  LegDividendNegativeRateTreatment?: number// 42329
+  LegDividendFloatingRateIndex?: string// [1] 42312 (String)
+  LegDividendFloatingRateIndexCurvePeriod?: number// [1] 42313 (Int)
+  LegDividendFloatingRateIndexCurveUnit?: string// [1] 42314 (String)
+  LegDividendFloatingRateMultiplier?: number// [1] 42315 (Float)
+  LegDividendFloatingRateSpread?: number// [1] 42316 (Float)
+  LegDividendFloatingRateSpreadPositionType?: number// [1] 42317 (Int)
+  LegDividendFloatingRateTreatment?: number// [1] 42318 (Int)
+  LegDividendCapRate?: number// [1] 42319 (Float)
+  LegDividendCapRateBuySide?: number// [1] 42320 (Int)
+  LegDividendCapRateSellSide?: number// [1] 42321 (Int)
+  LegDividendFloorRate?: number// [1] 42322 (Float)
+  LegDividendFloorRateBuySide?: number// [1] 42323 (Int)
+  LegDividendFloorRateSellSide?: number// [1] 42324 (Int)
+  LegDividendInitialRate?: number// [1] 42325 (Float)
+  LegDividendFinalRateRoundingDirection?: string// [1] 42326 (String)
+  LegDividendFinalRatePrecision?: number// [1] 42327 (Int)
+  LegDividendAveragingMethod?: number// [1] 42328 (Int)
+  LegDividendNegativeRateTreatment?: number// [1] 42329 (Int)
 }

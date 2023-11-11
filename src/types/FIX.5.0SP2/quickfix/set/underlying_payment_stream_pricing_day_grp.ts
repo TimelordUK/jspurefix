@@ -1,0 +1,5 @@
+import { IUnderlyingPaymentStreamPricingDayGrpNoUnderlyingPaymentStreamPricingDays } from './underlying_payment_stream_pricing_day_grp_no_underlying_payment_stream_pricing_days'
+
+export interface IUnderlyingPaymentStreamPricingDayGrp {
+  NoUnderlyingPaymentStreamPricingDays?: IUnderlyingPaymentStreamPricingDayGrpNoUnderlyingPaymentStreamPricingDays[]// [1] UnderlyingPaymentStreamPricingDayOfWeek.41945, UnderlyingPaymentStreamPricingDayNumber.41946
+}

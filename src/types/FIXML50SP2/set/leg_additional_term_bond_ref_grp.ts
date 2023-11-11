@@ -1,20 +1,20 @@
 export interface ILegAdditionalTermBondRefGrp {
-  LegAdditionalTermBondSecurityID?: string// 41317
-  SecurityIDSource?: string// 22
-  LegAdditionalTermBondDesc?: string// 41319
-  EncodedLegAdditionalTermBondDescLen?: number// 41320
-  EncodedLegAdditionalTermBondDesc?: Buffer// 41321
-  LegAdditionalTermBondCurrency?: string// 41322
-  LegAdditionalTermBondIssuer?: string// 41323
-  EncodedLegAdditionalTermBondIssuerLen?: number// 41324
-  EncodedLegAdditionalTermBondIssuer?: Buffer// 41325
-  LegAdditionalTermBondSeniority?: string// 41326
-  LegAdditionalTermBondCouponType?: number// 41327
-  LegAdditionalTermBondCouponRate?: number// 41328
-  LegAdditionalTermBondMaturityDate?: Date// 41329
-  LegAdditionalTermBondParValue?: number// 41330
-  LegAdditionalTermBondCurrentTotalIssuedAmount?: number// 41331
-  LegAdditionalTermBondCouponFrequencyPeriod?: number// 41332
-  LegAdditionalTermBondCouponFrequencyUnit?: string// 41333
-  AdditionalTermBondDayCount?: number// 40018
+  LegAdditionalTermBondSecurityID?: string// [1] 41317 (String)
+  SecurityIDSource?: string// [1] 22 (String)
+  LegAdditionalTermBondDesc?: string// [1] 41319 (String)
+  EncodedLegAdditionalTermBondDescLen?: number// [1] 41320 (Length)
+  EncodedLegAdditionalTermBondDesc?: Buffer// [1] 41321 (RawData)
+  LegAdditionalTermBondCurrency?: string// [1] 41322 (String)
+  LegAdditionalTermBondIssuer?: string// [1] 41323 (String)
+  EncodedLegAdditionalTermBondIssuerLen?: number// [1] 41324 (Length)
+  EncodedLegAdditionalTermBondIssuer?: Buffer// [1] 41325 (RawData)
+  LegAdditionalTermBondSeniority?: string// [1] 41326 (String)
+  LegAdditionalTermBondCouponType?: number// [1] 41327 (Int)
+  LegAdditionalTermBondCouponRate?: number// [1] 41328 (Float)
+  LegAdditionalTermBondMaturityDate?: Date// [1] 41329 (LocalDate)
+  LegAdditionalTermBondParValue?: number// [1] 41330 (Float)
+  LegAdditionalTermBondCurrentTotalIssuedAmount?: number// [1] 41331 (Float)
+  LegAdditionalTermBondCouponFrequencyPeriod?: number// [1] 41332 (Int)
+  LegAdditionalTermBondCouponFrequencyUnit?: string// [1] 41333 (String)
+  AdditionalTermBondDayCount?: number// [1] 40018 (Int)
 }

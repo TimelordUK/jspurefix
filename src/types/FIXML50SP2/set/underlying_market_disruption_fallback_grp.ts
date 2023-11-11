@@ -1,4 +1,4 @@
 export interface IUnderlyingMarketDisruptionFallbackGrp {
-  UnderlyingMarketDisruptionFallbackType?: string// 41867
-  UnderlyingMarketDisruptionFallbackValue?: string// 41339
+  UnderlyingMarketDisruptionFallbackType?: string// [1] 41867 (String)
+  UnderlyingMarketDisruptionFallbackValue?: string// [1] 41339 (String)
 }

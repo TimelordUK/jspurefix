@@ -1,0 +1,232 @@
+import { IUndSecAltIDGrp } from './und_sec_alt_id_grp'
+import { IUnderlyingSecurityXML } from './underlying_security_xml'
+import { IUnderlyingStipulations } from './underlying_stipulations'
+import { IUndlyInstrumentParties } from './undly_instrument_parties'
+import { IUnderlyingEvntGrp } from './underlying_evnt_grp'
+import { IUnderlyingSecondaryAssetGrp } from './underlying_secondary_asset_grp'
+import { IUnderlyingAssetAttributeGrp } from './underlying_asset_attribute_grp'
+import { IUnderlyingComplexEvents } from './underlying_complex_events'
+import { IUnderlyingDateAdjustment } from './underlying_date_adjustment'
+import { IUnderlyingPricingDateTime } from './underlying_pricing_date_time'
+import { IUnderlyingMarketDisruption } from './underlying_market_disruption'
+import { IUnderlyingOptionExercise } from './underlying_option_exercise'
+import { IUnderlyingStreamGrp } from './underlying_stream_grp'
+import { IUnderlyingProvisionGrp } from './underlying_provision_grp'
+import { IUnderlyingAdditionalTermGrp } from './underlying_additional_term_grp'
+import { IUnderlyingProtectionTermGrp } from './underlying_protection_term_grp'
+import { IUnderlyingCashSettlTermGrp } from './underlying_cash_settl_term_grp'
+import { IUnderlyingPhysicalSettlTermGrp } from './underlying_physical_settl_term_grp'
+import { IUnderlyingRateSpreadSchedule } from './underlying_rate_spread_schedule'
+import { IUnderlyingDividendPayout } from './underlying_dividend_payout'
+import { IUnderlyingExtraordinaryEventGrp } from './underlying_extraordinary_event_grp'
+
+export interface IUnderlyingInstrument {
+  UnderlyingSymbol?: string// [1] 311 (String)
+  UnderlyingSymbolSfx?: string// [2] 312 (String)
+  UnderlyingSecurityID?: string// [3] 309 (String)
+  UnderlyingSecurityIDSource?: string// [4] 305 (String)
+  UndSecAltIDGrp?: IUndSecAltIDGrp// [5] NoUnderlyingSecurityAltID.457, UnderlyingSecurityAltID.458 .. UnderlyingSymbolPositionNumber.2959
+  UnderlyingID?: string// [6] 2874 (String)
+  UnderlyingProduct?: number// [7] 462 (Int)
+  UnderlyingSecurityXML?: IUnderlyingSecurityXML// [8] UnderlyingSecurityXMLLen.1874, UnderlyingSecurityXML.1875, UnderlyingSecurityXMLSchema.1876
+  UnderlyingCFICode?: string// [9] 463 (String)
+  UnderlyingUPICode?: string// [10] 2894 (String)
+  UnderlyingSecurityType?: string// [11] 310 (String)
+  UnderlyingSecuritySubType?: string// [12] 763 (String)
+  UnderlyingMaturityMonthYear?: string// [13] 313 (String)
+  UnderlyingMaturityDate?: Date// [14] 542 (LocalDate)
+  UnderlyingMaturityTime?: string// [15] 1213 (String)
+  UnderlyingContractPriceRefMonth?: string// [16] 1837 (String)
+  UnderlyingCouponPaymentDate?: Date// [17] 241 (LocalDate)
+  UnderlyingRestructuringType?: string// [18] 1453 (String)
+  UnderlyingSeniority?: string// [19] 1454 (String)
+  UnderlyingNotional?: number// [20] 2614 (Float)
+  UnderlyingNotionalCurrency?: string// [21] 2615 (String)
+  UnderlyingNotionalCurrencyCodeSource?: string// [22] 2921 (String)
+  UnderlyingNotionalDeterminationMethod?: string// [23] 2616 (String)
+  UnderlyingNotionalAdjustments?: number// [24] 2617 (Int)
+  UnderlyingNotionalXIDRef?: string// [25] 2619 (String)
+  UnderlyingNotionalPercentageOutstanding?: number// [26] 1455 (Float)
+  UnderlyingOriginalNotionalPercentageOutstanding?: number// [27] 1456 (Float)
+  UnderlyingAttachmentPoint?: number// [28] 1459 (Float)
+  UnderlyingDetachmentPoint?: number// [29] 1460 (Float)
+  UnderlyingIssueDate?: Date// [30] 242 (LocalDate)
+  UnderlyingRepoCollateralSecurityType?: string// [31] 243 (String)
+  UnderlyingRepurchaseTerm?: number// [32] 244 (Int)
+  UnderlyingRepurchaseRate?: number// [33] 245 (Float)
+  UnderlyingFactor?: number// [34] 246 (Float)
+  UnderlyingCreditRating?: string// [35] 256 (String)
+  UnderlyingInstrRegistry?: string// [36] 595 (String)
+  UnderlyingCountryOfIssue?: string// [37] 592 (String)
+  UnderlyingStateOrProvinceOfIssue?: string// [38] 593 (String)
+  UnderlyingLocaleOfIssue?: string// [39] 594 (String)
+  UnderlyingRedemptionDate?: Date// [40] 247 (LocalDate)
+  UnderlyingStrikePrice?: number// [41] 316 (Float)
+  UnderlyingStrikeCurrency?: string// [42] 941 (String)
+  UnderlyingStrikeCurrencyCodeSource?: string// [43] 2917 (String)
+  UnderlyingOptAttribute?: string// [44] 317 (String)
+  UnderlyingContractMultiplier?: number// [45] 436 (Float)
+  UnderlyingContractMultiplierUnit?: number// [46] 1437 (Int)
+  UnderlyingTradingUnitPeriodMultiplier?: number// [47] 2363 (Int)
+  UnderlyingFlowScheduleType?: number// [48] 1441 (Int)
+  UnderlyingUnitOfMeasure?: string// [49] 998 (String)
+  UnderlyingUnitOfMeasureQty?: number// [50] 1423 (Float)
+  UnderlyingUnitOfMeasureCurrency?: string// [51] 1718 (String)
+  UnderlyingUnitOfMeasureCurrencyCodeSource?: string// [52] 2918 (String)
+  UnderlyingPriceUnitOfMeasure?: string// [53] 1424 (String)
+  UnderlyingPriceUnitOfMeasureQty?: number// [54] 1425 (Float)
+  UnderlyingPriceUnitOfMeasureCurrency?: string// [55] 1719 (String)
+  UnderlyingPriceUnitOfMeasureCurrencyCodeSource?: string// [56] 2919 (String)
+  UnderlyingTimeUnit?: string// [57] 1000 (String)
+  UnderlyingExerciseStyle?: number// [58] 1419 (Int)
+  UnderlyingPriceQuoteCurrency?: string// [59] 1526 (String)
+  UnderlyingPriceQuoteCurrencyCodeSource?: string// [60] 2920 (String)
+  UnderlyingCouponRate?: number// [61] 435 (Float)
+  UnderlyingSecurityExchange?: string// [62] 308 (String)
+  UnderlyingIssuer?: string// [63] 306 (String)
+  EncodedUnderlyingIssuerLen?: number// [64] 362 (Length)
+  EncodedUnderlyingIssuer?: Buffer// [65] 363 (RawData)
+  UnderlyingFinancialInstrumentShortName?: string// [66] 2742 (String)
+  UnderlyingFinancialInstrumentFullName?: string// [67] 2720 (String)
+  EncodedUnderlyingFinancialInstrumentFullNameLen?: number// [68] 2721 (Length)
+  EncodedUnderlyingFinancialInstrumentFullName?: Buffer// [69] 2722 (RawData)
+  UnderlyingIndexCurveUnit?: string// [70] 2723 (String)
+  UnderlyingIndexCurvePeriod?: number// [71] 2724 (Int)
+  UnderlyingSecurityDesc?: string// [72] 307 (String)
+  EncodedUnderlyingSecurityDescLen?: number// [73] 364 (Length)
+  EncodedUnderlyingSecurityDesc?: Buffer// [74] 365 (RawData)
+  UnderlyingCPProgram?: number// [75] 877 (Int)
+  UnderlyingCPRegType?: string// [76] 878 (String)
+  UnderlyingAllocationPercent?: number// [77] 972 (Float)
+  UnderlyingCurrency?: string// [78] 318 (String)
+  UnderlyingCurrencyCodeSource?: string// [79] 2916 (String)
+  UnderlyingQty?: number// [80] 879 (Float)
+  UnderlyingSettlementType?: number// [81] 975 (Int)
+  UnderlyingCashAmount?: number// [82] 973 (Float)
+  UnderlyingCashType?: string// [83] 974 (String)
+  UnderlyingPx?: number// [84] 810 (Float)
+  UnderlyingDirtyPrice?: number// [85] 882 (Float)
+  UnderlyingEndPrice?: number// [86] 883 (Float)
+  UnderlyingStartValue?: number// [87] 884 (Float)
+  UnderlyingCurrentValue?: number// [88] 885 (Float)
+  UnderlyingEndValue?: number// [89] 886 (Float)
+  UnderlyingAccruedInterestAmt?: number// [90] 2885 (Float)
+  UnderlyingNumDaysInterest?: number// [91] 2886 (Int)
+  UnderlyingStipulations?: IUnderlyingStipulations// [92] NoUnderlyingStips.887, UnderlyingStipType.888, UnderlyingStipValue.889
+  UnderlyingAdjustedQuantity?: number// [93] 1044 (Float)
+  UnderlyingFXRate?: number// [94] 1045 (Float)
+  UnderlyingFXRateCalc?: string// [95] 1046 (String)
+  UnderlyingCapValue?: number// [96] 1038 (Float)
+  UndlyInstrumentParties?: IUndlyInstrumentParties// [97] NoUndlyInstrumentParties.1058, UnderlyingInstrumentPartyID.1059 .. UnderlyingInstrumentPartySubIDType.1064
+  UnderlyingSettlMethod?: string// [98] 1039 (String)
+  UnderlyingPutOrCall?: number// [99] 315 (Int)
+  UnderlyingInTheMoneyCondition?: number// [100] 2683 (Int)
+  UnderlyingContraryInstructionEligibilityIndicator?: boolean// [101] 2687 (Boolean)
+  UnderlyingConstituentWeight?: number// [102] 1988 (Float)
+  UnderlyingCouponType?: number// [103] 1989 (Int)
+  UnderlyingTotalIssuedAmount?: number// [104] 1990 (Float)
+  UnderlyingCouponFrequencyPeriod?: number// [105] 1991 (Int)
+  UnderlyingCouponFrequencyUnit?: string// [106] 1992 (String)
+  UnderlyingCouponDayCount?: number// [107] 1993 (Int)
+  UnderlyingCouponOtherDayCount?: string// [108] 2881 (String)
+  UnderlyingObligationID?: string// [109] 1994 (String)
+  UnderlyingObligationIDSource?: string// [110] 1995 (String)
+  UnderlyingEquityID?: string// [111] 1996 (String)
+  UnderlyingEquityIDSource?: string// [112] 1997 (String)
+  UnderlyingFutureID?: string// [113] 2620 (String)
+  UnderlyingFutureIDSource?: string// [114] 2621 (String)
+  UnderlyingEvntGrp?: IUnderlyingEvntGrp// [115] NoUnderlyingEvents.1981, UnderlyingEventType.1982 .. EncodedUnderlyingEventText.2073
+  UnderlyingLienSeniority?: number// [116] 1998 (Int)
+  UnderlyingLoanFacility?: number// [117] 1999 (Int)
+  UnderlyingReferenceEntityType?: number// [118] 2000 (Int)
+  UnderlyingIndexSeries?: number// [119] 2003 (Int)
+  UnderlyingIndexAnnexVersion?: number// [120] 2004 (Int)
+  UnderlyingIndexAnnexDate?: Date// [121] 2005 (LocalDate)
+  UnderlyingIndexAnnexSource?: string// [122] 2006 (String)
+  UnderlyingSettlRateIndex?: string// [123] 2284 (String)
+  UnderlyingSettlRateIndexLocation?: string// [124] 2285 (String)
+  UnderlyingOptionExpirationDesc?: string// [125] 2286 (String)
+  EncodedUnderlyingOptionExpirationDescLen?: number// [126] 2287 (Length)
+  EncodedUnderlyingOptionExpirationDesc?: Buffer// [127] 2288 (RawData)
+  UnderlyingProductComplex?: string// [128] 2007 (String)
+  UnderlyingSecurityGroup?: string// [129] 2008 (String)
+  UnderlyingSettleOnOpenFlag?: string// [130] 2009 (String)
+  UnderlyingAssignmentMethod?: string// [131] 2010 (String)
+  UnderlyingSecurityStatus?: string// [132] 2011 (String)
+  UnderlyingObligationType?: string// [133] 2012 (String)
+  UnderlyingAssetGroup?: number// [134] 2491 (Int)
+  UnderlyingAssetClass?: number// [135] 2013 (Int)
+  UnderlyingAssetSubClass?: number// [136] 2014 (Int)
+  UnderlyingAssetType?: string// [137] 2015 (String)
+  UnderlyingAssetSubType?: string// [138] 2744 (String)
+  UnderlyingSecondaryAssetGrp?: IUnderlyingSecondaryAssetGrp// [139] NoUnderlyingSecondaryAssetClasses.2080, UnderlyingSecondaryAssetClass.2081 .. UnderlyingSecondaryAssetSubType.2745
+  UnderlyingAssetAttributeGrp?: IUnderlyingAssetAttributeGrp// [140] NoUnderlyingAssetAttributes.2312, UnderlyingAssetAttributeType.2313 .. UnderlyingAssetAttributeLimit.2315
+  UnderlyingSwapClass?: string// [141] 2016 (String)
+  UnderlyingSwapSubClass?: string// [142] 2289 (String)
+  UnderlyingNthToDefault?: number// [143] 2017 (Int)
+  UnderlyingMthToDefault?: number// [144] 2018 (Int)
+  UnderlyingSettledEntityMatrixSource?: string// [145] 2019 (String)
+  UnderlyingSettledEntityMatrixPublicationDate?: Date// [146] 2020 (LocalDate)
+  UnderlyingStrikeMultiplier?: number// [147] 2021 (Float)
+  UnderlyingStrikeValue?: number// [148] 2022 (Float)
+  UnderlyingStrikeUnitOfMeasure?: string// [149] 2290 (String)
+  UnderlyingStrikeIndexCurvePoint?: string// [150] 2622 (String)
+  UnderlyingStrikeIndex?: string// [151] 2291 (String)
+  UnderlyingStrikeIndexQuote?: number// [152] 2623 (Int)
+  UnderlyingStrikeIndexSpread?: number// [153] 2292 (Float)
+  UnderlyingStrikePriceDeterminationMethod?: number// [154] 2023 (Int)
+  UnderlyingStrikePriceBoundaryMethod?: number// [155] 2024 (Int)
+  UnderlyingStrikePriceBoundaryPrecision?: number// [156] 2025 (Float)
+  UnderlyingMinPriceIncrement?: number// [157] 2026 (Float)
+  UnderlyingMinPriceIncrementAmount?: number// [158] 2027 (Float)
+  UnderlyingOptPayoutType?: number// [159] 2028 (Int)
+  UnderlyingOptPayoutAmount?: number// [160] 2029 (Float)
+  UnderlyingReturnTrigger?: number// [161] 2757 (Int)
+  UnderlyingPriceQuoteMethod?: string// [162] 2030 (String)
+  UnderlyingValuationMethod?: string// [163] 2031 (String)
+  UnderlyingValuationSource?: string// [164] 2293 (String)
+  UnderlyingValuationReferenceModel?: string// [165] 2294 (String)
+  UnderlyingListMethod?: number// [166] 2032 (Int)
+  UnderlyingCapPrice?: number// [167] 2033 (Float)
+  UnderlyingFloorPrice?: number// [168] 2034 (Float)
+  UnderlyingFlexibleIndicator?: boolean// [169] 2035 (Boolean)
+  UnderlyingFlexProductEligibilityIndicator?: boolean// [170] 2036 (Boolean)
+  UnderlyingPositionLimit?: number// [171] 2037 (Int)
+  UnderlyingNTPositionLimit?: number// [172] 2038 (Int)
+  UnderlyingPool?: string// [173] 2039 (String)
+  UnderlyingContractSettlMonth?: string// [174] 2040 (String)
+  UnderlyingDatedDate?: Date// [175] 2041 (LocalDate)
+  UnderlyingInterestAccrualDate?: Date// [176] 2042 (LocalDate)
+  UnderlyingShortSaleRestriction?: number// [177] 2043 (Int)
+  UnderlyingRefTickTableID?: number// [178] 2044 (Int)
+  UnderlyingProtectionTermXIDRef?: string// [179] 41314 (String)
+  UnderlyingSettlTermXIDRef?: string// [180] 41315 (String)
+  UnderlyingComplexEvents?: IUnderlyingComplexEvents// [181] NoUnderlyingComplexEvents.2045, UnderlyingComplexEventType.2046 .. UnderlyingComplexEventXIDRef.2283
+  UnderlyingStrategyType?: string// [182] 2295 (String)
+  UnderlyingCommonPricingIndicator?: boolean// [183] 2296 (Boolean)
+  UnderlyingSettlDisruptionProvision?: number// [184] 2297 (Int)
+  UnderlyingDeliveryRouteOrCharter?: string// [185] 2756 (String)
+  UnderlyingInstrumentRoundingDirection?: string// [186] 2298 (String)
+  UnderlyingInstrumentRoundingPrecision?: number// [187] 2299 (Int)
+  UnderlyingDateAdjustment?: IUnderlyingDateAdjustment// [188] UnderlyingBusinessDayConvention.40964, UnderlyingBusinessCenterGrp.40962 .. UnderlyingDateRollConvention.40965
+  UnderlyingPricingDateTime?: IUnderlyingPricingDateTime// [189] UnderlyingPricingDateUnadjusted.41949, UnderlyingPricingDateBusinessDayConvention.41950 .. UnderlyingPricingTimeBusinessCenter.41953
+  UnderlyingMarketDisruption?: IUnderlyingMarketDisruption// [190] UnderlyingMarketDisruptionProvision.41859, UnderlyingMarketDisruptionEventGrp.41864 .. UnderlyingMarketDisruptionMinimumFuturesContracts.41863
+  UnderlyingOptionExercise?: IUnderlyingOptionExercise// [191] UnderlyingExerciseDesc.41810, EncodedUnderlyingExerciseDescLen.41811 .. UnderlyingMakeWholeInterpolationMethod.42894
+  UnderlyingStreamGrp?: IUnderlyingStreamGrp// [192] NoUnderlyingStreams.40540, UnderlyingStreamType.40541 .. EncodedUnderlyingStreamText.40989
+  UnderlyingProvisionGrp?: IUnderlyingProvisionGrp// [193] NoUnderlyingProvisions.42149, UnderlyingProvisionType.42150 .. UnderlyingProvisionPartySubIDType.42179
+  UnderlyingAdditionalTermGrp?: IUnderlyingAdditionalTermGrp// [194] NoUnderlyingAdditionalTerms.42036, UnderlyingAdditionalTermConditionPrecedentBondIndicator.42037 .. UnderlyingAdditionalTermBondDayCount.42035
+  UnderlyingProtectionTermGrp?: IUnderlyingProtectionTermGrp// [195] NoUnderlyingProtectionTerms.42068, UnderlyingProtectionTermNotional.42069 .. UnderlyingProtectionTermXID.42076
+  UnderlyingCashSettlTermGrp?: IUnderlyingCashSettlTermGrp// [196] NoUnderlyingCashSettlTerms.42041, UnderlyingCashSettlCurrency.42042 .. UnderlyingCashSettlTermXID.42059
+  UnderlyingPhysicalSettlTermGrp?: IUnderlyingPhysicalSettlTermGrp// [197] NoUnderlyingPhysicalSettlTerms.42060, NoUnderlyingPhysicalSettlTerms.42065 .. UnderlyingPhysicalSettlTermXID.42064
+  UnderlyingRateSpreadSchedule?: IUnderlyingRateSpreadSchedule// [198] UnderlyingRateSpreadInitialValue.43004, UnderlyingRateSpreadStepGrp.43005 .. UnderlyingRateSpreadStepValue.43007
+  UnderlyingDividendPayout?: IUnderlyingDividendPayout// [199] UnderlyingDividendPayoutRatio.42860, UnderlyingDividendPayoutConditions.42861 .. UnderlyingDividendAccruedInterest.42859
+  UnderlyingExtraordinaryEventGrp?: IUnderlyingExtraordinaryEventGrp// [200] NoUnderlyingExtraordinaryEvents.42884, UnderlyingExtraordinaryEventType.42885, UnderlyingExtraordinaryEventValue.42886
+  UnderlyingExtraordinaryEventAdjustmentMethod?: number// [201] 2624 (Int)
+  UnderlyingExchangeLookAlike?: boolean// [202] 2625 (Boolean)
+  UnderlyingAverageVolumeLimitationPercentage?: number// [203] 2626 (Float)
+  UnderlyingAverageVolumeLimitationPeriodDays?: number// [204] 2627 (Int)
+  UnderlyingDepositoryReceiptIndicator?: boolean// [205] 2628 (Boolean)
+  UnderlyingOpenUnits?: number// [206] 2629 (Float)
+  UnderlyingBasketDivisor?: number// [207] 2630 (Float)
+  UnderlyingInstrumentXID?: string// [208] 2631 (String)
+}

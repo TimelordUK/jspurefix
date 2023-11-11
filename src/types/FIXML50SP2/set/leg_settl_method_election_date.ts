@@ -1,12 +1,12 @@
 import { ILegSettlMethodElectionDateBusinessCenterGrp } from './leg_settl_method_election_date_business_center_grp'
 
 export interface ILegSettlMethodElectionDate {
-  LegSettlMethodElectionDateUnadjusted?: Date// 42574
-  LegSettlMethodElectionDateBusinessDayConvention?: number// 42575
-  LegSettlMethodElectionDateRelativeTo?: number// 42576
-  LegSettlMethodElectionDateOffsetPeriod?: number// 42577
-  LegSettlMethodElectionDateOffsetUnit?: string// 42578
-  LegSettlMethodElectionDateOffsetDayType?: number// 42579
-  LegSettlMethodElectionDateAdjusted?: Date// 42580
-  LegSettlMethodElectionDateBusinessCenterGrp?: ILegSettlMethodElectionDateBusinessCenterGrp[]
+  LegSettlMethodElectionDateUnadjusted?: Date// [1] 42574 (LocalDate)
+  LegSettlMethodElectionDateBusinessDayConvention?: number// [1] 42575 (Int)
+  LegSettlMethodElectionDateRelativeTo?: number// [1] 42576 (Int)
+  LegSettlMethodElectionDateOffsetPeriod?: number// [1] 42577 (Int)
+  LegSettlMethodElectionDateOffsetUnit?: string// [1] 42578 (String)
+  LegSettlMethodElectionDateOffsetDayType?: number// [1] 42579 (Int)
+  LegSettlMethodElectionDateAdjusted?: Date// [1] 42580 (LocalDate)
+  LegSettlMethodElectionDateBusinessCenterGrp?: ILegSettlMethodElectionDateBusinessCenterGrp[]// [1] Ctr.42582
 }

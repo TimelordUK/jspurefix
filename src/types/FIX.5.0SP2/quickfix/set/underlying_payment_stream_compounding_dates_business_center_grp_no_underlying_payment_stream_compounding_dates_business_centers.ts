@@ -1,0 +1,3 @@
+export interface IUnderlyingPaymentStreamCompoundingDatesBusinessCenterGrpNoUnderlyingPaymentStreamCompoundingDatesBusinessCenters {
+  UnderlyingPaymentStreamCompoundingDatesBusinessCenter?: string// [1] 42916 (String)
+}

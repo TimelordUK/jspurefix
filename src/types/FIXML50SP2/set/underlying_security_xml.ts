@@ -1,3 +1,3 @@
 export interface IUnderlyingSecurityXML {
-  UnderlyingSecurityXMLSchema?: string// 1876
+  UnderlyingSecurityXMLSchema?: string// [1] 1876 (String)
 }

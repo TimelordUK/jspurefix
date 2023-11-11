@@ -18,6 +18,7 @@ export class AsciiEncoder extends MsgEncoder {
   public msgTypePos: number
   public tags: Tags
   public checkGroups: boolean = true
+  readonly dispatcher: FieldsDispatch = new FieldsDispatch()
 
   constructor (public readonly buffer: ElasticBuffer,
     public readonly definitions: FixDefinitions,
@@ -57,7 +58,7 @@ export class AsciiEncoder extends MsgEncoder {
 
   private encodeObject (objectToEncode: ILooseObject, set: ContainedFieldSet, state: AsciiEncodeSetSummary): void {
     const fields: ContainedField[] = this.getFields(set, objectToEncode)
-    new FieldsDispatch().dispatchFields(fields, {
+    this.dispatcher.dispatchFields(fields, {
       simple: (sf: ContainedSimpleField) => {
         const val: any = objectToEncode[sf.name]
         // Empty strings are omitted as they result in empty values for tags, which are considered malformed.

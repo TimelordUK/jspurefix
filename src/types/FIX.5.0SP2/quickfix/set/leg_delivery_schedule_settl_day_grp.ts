@@ -1,0 +1,5 @@
+import { ILegDeliveryScheduleSettlDayGrpNoLegDeliveryScheduleSettlDays } from './leg_delivery_schedule_settl_day_grp_no_leg_delivery_schedule_settl_days'
+
+export interface ILegDeliveryScheduleSettlDayGrp {
+  NoLegDeliveryScheduleSettlDays?: ILegDeliveryScheduleSettlDayGrpNoLegDeliveryScheduleSettlDays[]// [1] LegDeliveryScheduleSettlDay.41423, LegDeliveryScheduleSettlTotalHours.41424 .. LegDeliveryScheduleSettlTimeType.41428
+}

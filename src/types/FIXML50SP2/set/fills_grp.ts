@@ -1,13 +1,13 @@
 import { INestedParties4 } from './nested_parties_4'
 
 export interface IFillsGrp {
-  FillExecID?: string// 1363
-  FillPx?: number// 1364
-  FillQty?: number// 1365
-  FillMatchID?: string// 2673
-  FillMatchSubID?: string// 2674
-  FillLiquidityInd?: number// 1443
-  FillYieldType?: string// 1622
-  FillYield?: number// 1623
-  NestedParties4?: INestedParties4[]
+  FillExecID?: string// [1] 1363 (String)
+  FillPx?: number// [1] 1364 (Float)
+  FillQty?: number// [1] 1365 (Float)
+  FillMatchID?: string// [1] 2673 (String)
+  FillMatchSubID?: string// [1] 2674 (String)
+  FillLiquidityInd?: number// [1] 1443 (Int)
+  FillYieldType?: string// [1] 1622 (String)
+  FillYield?: number// [1] 1623 (Float)
+  NestedParties4?: INestedParties4[]// [1] ID.1415, Src.1416 .. Qual.2383
 }

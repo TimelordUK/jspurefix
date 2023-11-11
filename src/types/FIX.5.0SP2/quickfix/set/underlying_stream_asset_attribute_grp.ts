@@ -1,0 +1,5 @@
+import { IUnderlyingStreamAssetAttributeGrpNoUnderlyingStreamAssetAttributes } from './underlying_stream_asset_attribute_grp_no_underlying_stream_asset_attributes'
+
+export interface IUnderlyingStreamAssetAttributeGrp {
+  NoUnderlyingStreamAssetAttributes?: IUnderlyingStreamAssetAttributeGrpNoUnderlyingStreamAssetAttributes[]// [1] UnderlyingStreamAssetAttributeType.41801, UnderlyingStreamAssetAttributeValue.41802, UnderlyingStreamAssetAttributeLimit.41803
+}

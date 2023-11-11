@@ -1,12 +1,12 @@
 import { ILegPaymentStubEndDateBusinessCenterGrp } from './leg_payment_stub_end_date_business_center_grp'
 
 export interface ILegPaymentStubEndDate {
-  LegPaymentStubEndDateUnadjusted?: Date// 42488
-  LegPaymentStubEndDateBusinessDayConvention?: number// 42489
-  LegPaymentStubEndDateRelativeTo?: number// 42490
-  LegPaymentStubEndDateOffsetPeriod?: number// 42491
-  LegPaymentStubEndDateOffsetUnit?: string// 42492
-  LegPaymentStubEndDateOffsetDayType?: number// 42493
-  LegPaymentStubEndDateAdjusted?: Date// 42494
-  LegPaymentStubEndDateBusinessCenterGrp?: ILegPaymentStubEndDateBusinessCenterGrp[]
+  LegPaymentStubEndDateUnadjusted?: Date// [1] 42488 (LocalDate)
+  LegPaymentStubEndDateBusinessDayConvention?: number// [1] 42489 (Int)
+  LegPaymentStubEndDateRelativeTo?: number// [1] 42490 (Int)
+  LegPaymentStubEndDateOffsetPeriod?: number// [1] 42491 (Int)
+  LegPaymentStubEndDateOffsetUnit?: string// [1] 42492 (String)
+  LegPaymentStubEndDateOffsetDayType?: number// [1] 42493 (Int)
+  LegPaymentStubEndDateAdjusted?: Date// [1] 42494 (LocalDate)
+  LegPaymentStubEndDateBusinessCenterGrp?: ILegPaymentStubEndDateBusinessCenterGrp[]// [1] Ctr.42496
 }

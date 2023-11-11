@@ -1,15 +1,15 @@
 export interface IAllocCommissionDataGrp {
-  AllocCommissionAmount?: number// 2654
-  AllocCommissionAmountType?: number// 2655
-  AllocCommissionBasis?: string// 2656
-  AllocCommissionCurrency?: string// 2657
-  AllocCommissionUnitOfMeasure?: string// 2658
-  AllocCommissionUnitOfMeasureCurrency?: string// 2659
-  AllocCommissionRate?: number// 2660
-  AllocCommissionSharedIndicator?: boolean// 2661
-  AllocCommissionAmountShared?: number// 2662
-  AllocCommissionLegRefID?: string// 2663
-  AllocCommissionDesc?: string// 2664
-  EncodedAllocCommissionDescLen?: number// 2665
-  EncodedAllocCommissionDesc?: Buffer// 2666
+  AllocCommissionAmount?: number// [1] 2654 (Float)
+  AllocCommissionAmountType?: number// [1] 2655 (Int)
+  AllocCommissionBasis?: string// [1] 2656 (String)
+  AllocCommissionCurrency?: string// [1] 2657 (String)
+  AllocCommissionUnitOfMeasure?: string// [1] 2658 (String)
+  AllocCommissionUnitOfMeasureCurrency?: string// [1] 2659 (String)
+  AllocCommissionRate?: number// [1] 2660 (Float)
+  AllocCommissionSharedIndicator?: boolean// [1] 2661 (Boolean)
+  AllocCommissionAmountShared?: number// [1] 2662 (Float)
+  AllocCommissionLegRefID?: string// [1] 2663 (String)
+  AllocCommissionDesc?: string// [1] 2664 (String)
+  EncodedAllocCommissionDescLen?: number// [1] 2665 (Length)
+  EncodedAllocCommissionDesc?: Buffer// [1] 2666 (RawData)
 }

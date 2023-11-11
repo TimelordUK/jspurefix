@@ -1,0 +1,5 @@
+import { IUnderlyingOptionExerciseExpirationDateGrpNoUnderlyingOptionExerciseExpirationDates } from './underlying_option_exercise_expiration_date_grp_no_underlying_option_exercise_expiration_dates'
+
+export interface IUnderlyingOptionExerciseExpirationDateGrp {
+  NoUnderlyingOptionExerciseExpirationDates?: IUnderlyingOptionExerciseExpirationDateGrpNoUnderlyingOptionExerciseExpirationDates[]// [1] UnderlyingOptionExerciseExpirationDate.41857, UnderlyingOptionExerciseExpirationDateType.41858
+}

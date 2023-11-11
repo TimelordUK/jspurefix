@@ -4,19 +4,19 @@ import { IUnderlyingPaymentStreamCompoundingStartDate } from './underlying_payme
 import { IUnderlyingPaymentStreamCompoundingEndDate } from './underlying_payment_stream_compounding_end_date'
 
 export interface IUnderlyingPaymentStreamCompoundingDates {
-  UnderlyingPaymentStreamCompoundingDatesBusinessDayConvention?: number// 42904
-  UnderlyingPaymentStreamCompoundingDatesRelativeTo?: number// 42905
-  UnderlyingPaymentStreamCompoundingDatesOffsetPeriod?: number// 42906
-  UnderlyingPaymentStreamCompoundingDatesOffsetUnit?: string// 42907
-  UnderlyingPaymentStreamCompoundingDatesOffsetDayType?: number// 42908
-  UnderlyingPaymentStreamCompoundingPeriodSkip?: number// 42909
-  UnderlyingPaymentStreamCompoundingFrequencyPeriod?: number// 42910
-  UnderlyingPaymentStreamCompoundingFrequencyUnit?: string// 42911
-  UnderlyingPaymentStreamCompoundingRollConvention?: string// 42912
-  UnderlyingPaymentStreamBoundsFirstDateUnadjusted?: Date// 42913
-  UnderlyingPaymentStreamBoundsLastDateUnadjusted?: Date// 42914
-  UnderlyingPaymentStreamCompoundingDatesBusinessCenterGrp?: IUnderlyingPaymentStreamCompoundingDatesBusinessCenterGrp[]
-  UnderlyingPaymentStreamCompoundingDateGrp?: IUnderlyingPaymentStreamCompoundingDateGrp
-  UnderlyingPaymentStreamCompoundingStartDate?: IUnderlyingPaymentStreamCompoundingStartDate
-  UnderlyingPaymentStreamCompoundingEndDate?: IUnderlyingPaymentStreamCompoundingEndDate
+  UnderlyingPaymentStreamCompoundingDatesBusinessDayConvention?: number// [1] 42904 (Int)
+  UnderlyingPaymentStreamCompoundingDatesRelativeTo?: number// [1] 42905 (Int)
+  UnderlyingPaymentStreamCompoundingDatesOffsetPeriod?: number// [1] 42906 (Int)
+  UnderlyingPaymentStreamCompoundingDatesOffsetUnit?: string// [1] 42907 (String)
+  UnderlyingPaymentStreamCompoundingDatesOffsetDayType?: number// [1] 42908 (Int)
+  UnderlyingPaymentStreamCompoundingPeriodSkip?: number// [1] 42909 (Int)
+  UnderlyingPaymentStreamCompoundingFrequencyPeriod?: number// [1] 42910 (Int)
+  UnderlyingPaymentStreamCompoundingFrequencyUnit?: string// [1] 42911 (String)
+  UnderlyingPaymentStreamCompoundingRollConvention?: string// [1] 42912 (String)
+  UnderlyingPaymentStreamBoundsFirstDateUnadjusted?: Date// [1] 42913 (LocalDate)
+  UnderlyingPaymentStreamBoundsLastDateUnadjusted?: Date// [1] 42914 (LocalDate)
+  UnderlyingPaymentStreamCompoundingDatesBusinessCenterGrp?: IUnderlyingPaymentStreamCompoundingDatesBusinessCenterGrp[]// [1] Ctr.42916
+  UnderlyingPaymentStreamCompoundingDateGrp?: IUnderlyingPaymentStreamCompoundingDateGrp// [2] Dt.42902, Typ.42903
+  UnderlyingPaymentStreamCompoundingStartDate?: IUnderlyingPaymentStreamCompoundingStartDate// [3] DtUnadj.42941, Reltv.42942 .. Dt.42946
+  UnderlyingPaymentStreamCompoundingEndDate?: IUnderlyingPaymentStreamCompoundingEndDate// [4] DtUnadj.42917, Reltv.42918 .. Dt.42922
 }

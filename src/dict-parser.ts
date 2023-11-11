@@ -142,7 +142,6 @@ async function runTest (): Promise<any> {
   })
 }
 
-
 async function compileDefinitions (definitionPath: string, outputPath: string): Promise<void> {
   const definitions = await new DefinitionFactory().getDefinitions(definitionPath)
   const compilerSettings: ICompilerSettings = require('../data/compiler.json')

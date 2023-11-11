@@ -9,34 +9,34 @@ import { IDeliveryStream } from './delivery_stream'
 import { IDeliveryScheduleGrp } from './delivery_schedule_grp'
 
 export interface IStreamGrp {
-  StreamType?: number// 40050
-  StreamXID?: string// 41303
-  StreamDesc?: string// 40051
-  StreamVersion?: string// 42784
-  StreamVersionEffectiveDate?: Date// 42785
-  StreamPaySide?: number// 40052
-  StreamReceiveSide?: number// 40053
-  StreamNotionalXIDRef?: string// 41305
-  StreamNotional?: number// 40054
-  StreamCurrency?: string// 40055
-  StreamNotionalDeterminationMethod?: string// 42786
-  StreamNotionalAdjustments?: number// 42787
-  StreamNotionalFrequencyPeriod?: number// 41306
-  StreamNotionalFrequencyUnit?: string// 41307
-  StreamNotionalCommodityFrequency?: number// 41308
-  StreamNotionalUnitOfMeasure?: string// 41309
-  StreamTotalNotional?: number// 41310
-  StreamTotalNotionalUnitOfMeasure?: string// 41311
-  StreamText?: string// 40056
-  EncodedStreamTextLen?: number// 40982
-  EncodedStreamText?: Buffer// 40983
-  StreamCommodity?: IStreamCommodity
-  StreamEffectiveDate?: IStreamEffectiveDate
-  StreamTerminationDate?: IStreamTerminationDate
-  StreamCalculationPeriodDates?: IStreamCalculationPeriodDates
-  PaymentStream?: IPaymentStream
-  PaymentScheduleGrp?: IPaymentScheduleGrp[]
-  PaymentStubGrp?: IPaymentStubGrp[]
-  DeliveryStream?: IDeliveryStream
-  DeliveryScheduleGrp?: IDeliveryScheduleGrp[]
+  StreamType?: number// [1] 40050 (Int)
+  StreamXID?: string// [1] 41303 (String)
+  StreamDesc?: string// [1] 40051 (String)
+  StreamVersion?: string// [1] 42784 (String)
+  StreamVersionEffectiveDate?: Date// [1] 42785 (LocalDate)
+  StreamPaySide?: number// [1] 40052 (Int)
+  StreamReceiveSide?: number// [1] 40053 (Int)
+  StreamNotionalXIDRef?: string// [1] 41305 (String)
+  StreamNotional?: number// [1] 40054 (Float)
+  StreamCurrency?: string// [1] 40055 (String)
+  StreamNotionalDeterminationMethod?: string// [1] 42786 (String)
+  StreamNotionalAdjustments?: number// [1] 42787 (Int)
+  StreamNotionalFrequencyPeriod?: number// [1] 41306 (Int)
+  StreamNotionalFrequencyUnit?: string// [1] 41307 (String)
+  StreamNotionalCommodityFrequency?: number// [1] 41308 (Int)
+  StreamNotionalUnitOfMeasure?: string// [1] 41309 (String)
+  StreamTotalNotional?: number// [1] 41310 (Float)
+  StreamTotalNotionalUnitOfMeasure?: string// [1] 41311 (String)
+  StreamText?: string// [1] 40056 (String)
+  EncodedStreamTextLen?: number// [1] 40982 (Length)
+  EncodedStreamText?: Buffer// [1] 40983 (RawData)
+  StreamCommodity?: IStreamCommodity// [1] Base.41251, CmdtyTyp.41252 .. XIDRef.41276
+  StreamEffectiveDate?: IStreamEffectiveDate// [2] DtUnadj.40907, BizDayCnvtn.40908 .. Dt.40914
+  StreamTerminationDate?: IStreamTerminationDate// [3] DtUnadj.40065, BizDayCnvtn.40066 .. Dt.40072
+  StreamCalculationPeriodDates?: IStreamCalculationPeriodDates// [4] XID.41244, XIDRef.41245 .. CrrctnUnit.41248
+  PaymentStream?: IPaymentStream// [5] Typ.40738, MktRt.40739 .. CmpndgFixedRt.42605
+  PaymentScheduleGrp?: IPaymentScheduleGrp[]// [6] Typ.40829, XID.41164 .. IntrmExchDt.40867
+  PaymentStubGrp?: IPaymentStubGrp[]// [7] Typ.40873, Lngth.40874 .. FlrRt2.40901
+  DeliveryStream?: IDeliveryStream// [8] Typ.41058, Ppln.41059 .. ElctngSide.41080
+  DeliveryScheduleGrp?: IDeliveryScheduleGrp[]// [9] Typ.41038, XID.41039 .. Holidays.41050
 }

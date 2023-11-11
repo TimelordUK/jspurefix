@@ -1,0 +1,18 @@
+export interface IAllocCommissionDataGrpNoAllocCommissions {
+  AllocCommissionAmount?: number// [1] 2654 (Float)
+  AllocCommissionAmountType?: number// [2] 2655 (Int)
+  AllocCommissionAmountSubType?: number// [3] 2726 (Int)
+  AllocCommissionBasis?: string// [4] 2656 (String)
+  AllocCommissionCurrency?: string// [5] 2657 (String)
+  AllocCommissionCurrencyCodeSource?: string// [6] 2925 (String)
+  AllocCommissionUnitOfMeasure?: string// [7] 2658 (String)
+  AllocCommissionUnitOfMeasureCurrency?: string// [8] 2659 (String)
+  AllocCommissionUnitOfMeasureCurrencyCodeSource?: string// [9] 2926 (String)
+  AllocCommissionRate?: number// [10] 2660 (Float)
+  AllocCommissionSharedIndicator?: boolean// [11] 2661 (Boolean)
+  AllocCommissionAmountShared?: number// [12] 2662 (Float)
+  AllocCommissionLegRefID?: string// [13] 2663 (String)
+  AllocCommissionDesc?: string// [14] 2664 (String)
+  EncodedAllocCommissionDescLen?: number// [15] 2665 (Length)
+  EncodedAllocCommissionDesc?: Buffer// [16] 2666 (RawData)
+}

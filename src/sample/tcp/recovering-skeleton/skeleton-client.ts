@@ -26,13 +26,11 @@ export class SkeletonClient extends AsciiSession {
     }
   }
 
-  // use msgType for example to persist only trade capture messages to database
-  protected onDecoded (msgType: string, txt: string): void {
+  protected onDecoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
-  // delimiter substitution now done in encoding
-  protected onEncoded (msgType: string, txt: string): void {
+  protected onEncoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 

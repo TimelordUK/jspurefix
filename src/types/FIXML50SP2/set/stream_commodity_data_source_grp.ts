@@ -1,4 +1,4 @@
 export interface IStreamCommodityDataSourceGrp {
-  StreamCommodityDataSourceID?: string// 41281
-  StreamCommodityDataSourceIDType?: number// 41282
+  StreamCommodityDataSourceID?: string// [1] 41281 (String)
+  StreamCommodityDataSourceIDType?: number// [1] 41282 (Int)
 }

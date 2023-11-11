@@ -2,35 +2,35 @@ import { IPaymentBusinessCenterGrp } from './payment_business_center_grp'
 import { IPaymentSettlGrp } from './payment_settl_grp'
 
 export interface IPaymentGrp {
-  MiscFeeType?: string// 139
-  PaymentSubType?: number// 40993
-  PaymentPaySide?: number// 40214
-  PaymentReceiveSide?: number// 40215
-  PaymentDesc?: string// 43087
-  PaymentCurrency?: string// 40216
-  PaymentAmount?: number// 40217
-  PaymentAmountRelativeTo?: number// 42598
-  PaymentAmountDeterminationMethod?: string// 42599
-  PaymentPrice?: number// 40218
-  PaymentPriceType?: number// 40919
-  PaymentUnitOfMeasure?: string// 41155
-  PaymentDateUnadjusted?: Date// 40219
-  PaymentBusinessDayConvention?: number// 40220
-  PaymentDateRelativeTo?: number// 41156
-  PaymentDateOffsetPeriod?: number// 41157
-  PaymentDateOffsetUnit?: string// 41158
-  PaymentDateOffsetDayType?: number// 41159
-  PaymentDateAdjusted?: Date// 40222
-  PaymentForwardStartType?: number// 41160
-  PaymentDiscountFactor?: number// 40224
-  PaymentPresentValueAmount?: number// 40225
-  PaymentPresentValueCurrency?: string// 40226
-  PaymentSettlStyle?: number// 40227
-  PaymentMethod?: number// 492
-  PaymentLegRefID?: string// 41304
-  PaymentText?: string// 40229
-  EncodedPaymentTextLen?: number// 40984
-  EncodedPaymentText?: Buffer// 40985
-  PaymentBusinessCenterGrp?: IPaymentBusinessCenterGrp[]
-  PaymentSettlGrp?: IPaymentSettlGrp[]
+  MiscFeeType?: string// [1] 139 (String)
+  PaymentSubType?: number// [1] 40993 (Int)
+  PaymentPaySide?: number// [1] 40214 (Int)
+  PaymentReceiveSide?: number// [1] 40215 (Int)
+  PaymentDesc?: string// [1] 43087 (String)
+  PaymentCurrency?: string// [1] 40216 (String)
+  PaymentAmount?: number// [1] 40217 (Float)
+  PaymentAmountRelativeTo?: number// [1] 42598 (Int)
+  PaymentAmountDeterminationMethod?: string// [1] 42599 (String)
+  PaymentPrice?: number// [1] 40218 (Float)
+  PaymentPriceType?: number// [1] 40919 (Int)
+  PaymentUnitOfMeasure?: string// [1] 41155 (String)
+  PaymentDateUnadjusted?: Date// [1] 40219 (LocalDate)
+  PaymentBusinessDayConvention?: number// [1] 40220 (Int)
+  PaymentDateRelativeTo?: number// [1] 41156 (Int)
+  PaymentDateOffsetPeriod?: number// [1] 41157 (Int)
+  PaymentDateOffsetUnit?: string// [1] 41158 (String)
+  PaymentDateOffsetDayType?: number// [1] 41159 (Int)
+  PaymentDateAdjusted?: Date// [1] 40222 (LocalDate)
+  PaymentForwardStartType?: number// [1] 41160 (Int)
+  PaymentDiscountFactor?: number// [1] 40224 (Float)
+  PaymentPresentValueAmount?: number// [1] 40225 (Float)
+  PaymentPresentValueCurrency?: string// [1] 40226 (String)
+  PaymentSettlStyle?: number// [1] 40227 (Int)
+  PaymentMethod?: number// [1] 492 (Int)
+  PaymentLegRefID?: string// [1] 41304 (String)
+  PaymentText?: string// [1] 40229 (String)
+  EncodedPaymentTextLen?: number// [1] 40984 (Length)
+  EncodedPaymentText?: Buffer// [1] 40985 (RawData)
+  PaymentBusinessCenterGrp?: IPaymentBusinessCenterGrp[]// [1] Ctr.40221
+  PaymentSettlGrp?: IPaymentSettlGrp[]// [2] Amt.40231, Ccy.40232
 }

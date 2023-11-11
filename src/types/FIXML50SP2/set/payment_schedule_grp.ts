@@ -4,61 +4,61 @@ import { IPaymentScheduleFixingDayGrp } from './payment_schedule_fixing_day_grp'
 import { IPaymentScheduleInterimExchangeDateBusinessCenterGrp } from './payment_schedule_interim_exchange_date_business_center_grp'
 
 export interface IPaymentScheduleGrp {
-  PaymentScheduleType?: number// 40829
-  PaymentScheduleXID?: string// 41164
-  PaymentScheduleXIDRef?: string// 41165
-  PaymentScheduleStubType?: number// 40830
-  PaymentScheduleStartDateUnadjusted?: Date// 40831
-  PaymentScheduleEndDateUnadjusted?: Date// 40832
-  PaymentSchedulePaySide?: number// 40833
-  PaymentScheduleReceiveSide?: number// 40834
-  PaymentScheduleNotional?: number// 40835
-  PaymentScheduleCurrency?: string// 40836
-  PaymentScheduleRate?: number// 40837
-  PaymentScheduleRateMultiplier?: number// 40838
-  PaymentScheduleRateSpread?: number// 40839
-  PaymentScheduleRateCurrency?: string// 41166
-  PaymentScheduleRateUnitOfMeasure?: string// 41167
-  PaymentScheduleRateConversionFactor?: number// 41168
-  PaymentScheduleRateSpreadType?: number// 41169
-  PaymentScheduleRateSpreadPositionType?: number// 40840
-  PaymentScheduleRateTreatment?: number// 40841
-  PaymentScheduleFixedAmount?: number// 40842
-  PaymentScheduleFixedCurrency?: string// 40843
-  PaymentScheduleSettlPeriodPrice?: number// 41170
-  PaymentScheduleSettlPeriodPriceCurrency?: string// 41171
-  PaymentScheduleSettlPeriodPriceUnitOfMeasure?: string// 41172
-  PaymentScheduleStepUnitOfMeasure?: string// 41173
-  PaymentScheduleStepFrequencyPeriod?: number// 40844
-  PaymentScheduleStepFrequencyUnit?: string// 40845
-  PaymentScheduleStepOffsetValue?: number// 40846
-  PaymentScheduleStepRate?: number// 40847
-  PaymentScheduleStepOffsetRate?: number// 40848
-  PaymentScheduleStepRelativeTo?: number// 40849
-  PaymentScheduleFixingDateUnadjusted?: Date// 40850
-  PaymentScheduleWeight?: number// 40851
-  PaymentScheduleFixingDateRelativeTo?: number// 40852
-  PaymentScheduleFixingDateBusinessDayConvention?: number// 40853
-  PaymentScheduleFixingDateOffsetPeriod?: number// 40855
-  PaymentScheduleFixingDateOffsetUnit?: string// 40856
-  PaymentScheduleFixingDateOffsetDayType?: number// 40857
-  PaymentScheduleFixingDayDistribution?: number// 41174
-  PaymentScheduleFixingDayCount?: number// 41175
-  PaymentScheduleFixingDateAdjusted?: Date// 40858
-  PaymentScheduleFixingLagPeriod?: number// 41176
-  PaymentScheduleFixingLagUnit?: string// 41177
-  PaymentScheduleFixingFirstObservationDateOffsetPeriod?: number// 41178
-  PaymentScheduleFixingFirstObservationDateOffsetUnit?: string// 41179
-  PaymentScheduleFixingTime?: string// 40859
-  PaymentScheduleFixingTimeBusinessCenter?: string// 40860
-  PaymentScheduleInterimExchangePaymentDateRelativeTo?: number// 40861
-  PaymentScheduleInterimExchangeDatesBusinessDayConvention?: number// 40862
-  PaymentScheduleInterimExchangeDatesOffsetPeriod?: number// 40864
-  PaymentScheduleInterimExchangeDatesOffsetUnit?: string// 40865
-  PaymentScheduleInterimExchangeDatesOffsetDayType?: number// 40866
-  PaymentScheduleInterimExchangeDateAdjusted?: Date// 40867
-  PaymentScheduleRateSourceGrp?: IPaymentScheduleRateSourceGrp[]
-  PaymentScheduleFixingDateBusinessCenterGrp?: IPaymentScheduleFixingDateBusinessCenterGrp[]
-  PaymentScheduleFixingDayGrp?: IPaymentScheduleFixingDayGrp[]
-  PaymentScheduleInterimExchangeDateBusinessCenterGrp?: IPaymentScheduleInterimExchangeDateBusinessCenterGrp[]
+  PaymentScheduleType?: number// [1] 40829 (Int)
+  PaymentScheduleXID?: string// [1] 41164 (String)
+  PaymentScheduleXIDRef?: string// [1] 41165 (String)
+  PaymentScheduleStubType?: number// [1] 40830 (Int)
+  PaymentScheduleStartDateUnadjusted?: Date// [1] 40831 (LocalDate)
+  PaymentScheduleEndDateUnadjusted?: Date// [1] 40832 (LocalDate)
+  PaymentSchedulePaySide?: number// [1] 40833 (Int)
+  PaymentScheduleReceiveSide?: number// [1] 40834 (Int)
+  PaymentScheduleNotional?: number// [1] 40835 (Float)
+  PaymentScheduleCurrency?: string// [1] 40836 (String)
+  PaymentScheduleRate?: number// [1] 40837 (Float)
+  PaymentScheduleRateMultiplier?: number// [1] 40838 (Float)
+  PaymentScheduleRateSpread?: number// [1] 40839 (Float)
+  PaymentScheduleRateCurrency?: string// [1] 41166 (String)
+  PaymentScheduleRateUnitOfMeasure?: string// [1] 41167 (String)
+  PaymentScheduleRateConversionFactor?: number// [1] 41168 (Float)
+  PaymentScheduleRateSpreadType?: number// [1] 41169 (Int)
+  PaymentScheduleRateSpreadPositionType?: number// [1] 40840 (Int)
+  PaymentScheduleRateTreatment?: number// [1] 40841 (Int)
+  PaymentScheduleFixedAmount?: number// [1] 40842 (Float)
+  PaymentScheduleFixedCurrency?: string// [1] 40843 (String)
+  PaymentScheduleSettlPeriodPrice?: number// [1] 41170 (Float)
+  PaymentScheduleSettlPeriodPriceCurrency?: string// [1] 41171 (String)
+  PaymentScheduleSettlPeriodPriceUnitOfMeasure?: string// [1] 41172 (String)
+  PaymentScheduleStepUnitOfMeasure?: string// [1] 41173 (String)
+  PaymentScheduleStepFrequencyPeriod?: number// [1] 40844 (Int)
+  PaymentScheduleStepFrequencyUnit?: string// [1] 40845 (String)
+  PaymentScheduleStepOffsetValue?: number// [1] 40846 (Float)
+  PaymentScheduleStepRate?: number// [1] 40847 (Float)
+  PaymentScheduleStepOffsetRate?: number// [1] 40848 (Float)
+  PaymentScheduleStepRelativeTo?: number// [1] 40849 (Int)
+  PaymentScheduleFixingDateUnadjusted?: Date// [1] 40850 (LocalDate)
+  PaymentScheduleWeight?: number// [1] 40851 (Float)
+  PaymentScheduleFixingDateRelativeTo?: number// [1] 40852 (Int)
+  PaymentScheduleFixingDateBusinessDayConvention?: number// [1] 40853 (Int)
+  PaymentScheduleFixingDateOffsetPeriod?: number// [1] 40855 (Int)
+  PaymentScheduleFixingDateOffsetUnit?: string// [1] 40856 (String)
+  PaymentScheduleFixingDateOffsetDayType?: number// [1] 40857 (Int)
+  PaymentScheduleFixingDayDistribution?: number// [1] 41174 (Int)
+  PaymentScheduleFixingDayCount?: number// [1] 41175 (Int)
+  PaymentScheduleFixingDateAdjusted?: Date// [1] 40858 (LocalDate)
+  PaymentScheduleFixingLagPeriod?: number// [1] 41176 (Int)
+  PaymentScheduleFixingLagUnit?: string// [1] 41177 (String)
+  PaymentScheduleFixingFirstObservationDateOffsetPeriod?: number// [1] 41178 (Int)
+  PaymentScheduleFixingFirstObservationDateOffsetUnit?: string// [1] 41179 (String)
+  PaymentScheduleFixingTime?: string// [1] 40859 (String)
+  PaymentScheduleFixingTimeBusinessCenter?: string// [1] 40860 (String)
+  PaymentScheduleInterimExchangePaymentDateRelativeTo?: number// [1] 40861 (Int)
+  PaymentScheduleInterimExchangeDatesBusinessDayConvention?: number// [1] 40862 (Int)
+  PaymentScheduleInterimExchangeDatesOffsetPeriod?: number// [1] 40864 (Int)
+  PaymentScheduleInterimExchangeDatesOffsetUnit?: string// [1] 40865 (String)
+  PaymentScheduleInterimExchangeDatesOffsetDayType?: number// [1] 40866 (Int)
+  PaymentScheduleInterimExchangeDateAdjusted?: Date// [1] 40867 (LocalDate)
+  PaymentScheduleRateSourceGrp?: IPaymentScheduleRateSourceGrp[]// [1] Src.40869, Typ.40870, RefPg.40871
+  PaymentScheduleFixingDateBusinessCenterGrp?: IPaymentScheduleFixingDateBusinessCenterGrp[]// [2] Ctr.40854
+  PaymentScheduleFixingDayGrp?: IPaymentScheduleFixingDayGrp[]// [3] DayOfWk.41162, DayNum.41163
+  PaymentScheduleInterimExchangeDateBusinessCenterGrp?: IPaymentScheduleInterimExchangeDateBusinessCenterGrp[]// [4] Ctr.40863
 }

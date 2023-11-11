@@ -1,3 +1,3 @@
 export interface IUsernameGrp {
-  Username?: string// 553
+  Username?: string// [1] 553 (String)
 }

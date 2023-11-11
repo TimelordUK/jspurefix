@@ -1,0 +1,15 @@
+[0] 8 (BeginString) = FIX.4.4, [1] 9 (BodyLength) = 289
+[2] 35 (MsgType) = 8[ExecutionReport], [3] 34 (MsgSeqNum) = 1090
+[4] 49 (SenderCompID) = TESTSELL1, [5] 52 (SendingTime) = 20180920-18:23:53.671
+[6] 56 (TargetCompID) = TESTBUY1, [7] 6 (AvgPx) = 113.35
+[8] 11 (ClOrdID) = 636730640278898634, [9] 14 (CumQty) = 3500.0000000000
+[10] 15 (Currency) = USD, [11] 17 (ExecID) = 20636730646335310000
+[12] 21 (HandlInst) = 2[AutomatedExecutionOrderPublicBrokerInterventionOk], [13] 31 (LastPx) = 113.35
+[14] 32 (LastQty) = 3500, [15] 37 (OrderID) = 20636730646335310000
+[16] 38 (OrderQty) = 7000, [17] 39 (OrdStatus) = 1[PartiallyFilled]
+[18] 40 (OrdType) = 1[Market], [19] 54 (Side) = 1[Buy]
+[20] 55 (Symbol) = MSFT, [21] 60 (TransactTime) = 20180920-18:23:53.531
+[22] 150 (ExecType) = F[Trade], [23] 151 (LeavesQty) = 3500
+[24] 453 (NoPartyIDs) = 1, [25] 448 (PartyID) = BRK2
+[26] 447 (PartyIDSource) = D[ProprietaryCustomCode], [27] 452 (PartyRole) = 1[ExecutingFirm]
+[28] 10 (CheckSum) = 151

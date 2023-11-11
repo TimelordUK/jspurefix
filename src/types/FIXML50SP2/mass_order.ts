@@ -10,28 +10,28 @@ import { IOrderEntryGrp } from './set/order_entry_grp'
 *********************************************
 */
 export interface IMassOrder {
-  MassOrderRequestID: string// 2423
-  OrderResponseLevel?: number// 2427
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  TradingCapacity?: number// 1815
-  ClearingAccountType?: number// 1816
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  OrderCapacity?: string// 528
-  OrderRestrictions?: string// 529
-  CustOrderCapacity?: number// 582
-  ManualOrderIndicator?: boolean// 1028
-  CustOrderHandlingInst?: string// 1031
-  TransactTime?: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  ThrottleInst?: number// 1685
-  TotNoOrderEntries?: number// 2432
-  LastFragment?: boolean// 893
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
-  OrderEntryGrp?: IOrderEntryGrp[]
+  MassOrderRequestID: string// [2] 2423 (String)
+  OrderResponseLevel?: number// [2] 2427 (Int)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  TradingCapacity?: number// [2] 1815 (Int)
+  ClearingAccountType?: number// [2] 1816 (Int)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  OrderCapacity?: string// [2] 528 (String)
+  OrderRestrictions?: string// [2] 529 (String)
+  CustOrderCapacity?: number// [2] 582 (Int)
+  ManualOrderIndicator?: boolean// [2] 1028 (Boolean)
+  CustOrderHandlingInst?: string// [2] 1031 (String)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  ThrottleInst?: number// [2] 1685 (Int)
+  TotNoOrderEntries?: number// [2] 2432 (Int)
+  LastFragment?: boolean// [2] 893 (Boolean)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
+  OrderEntryGrp?: IOrderEntryGrp[]// [3] OrdEntryActn.2429, OrdEntryID.2430 .. TmInForce.59
 }

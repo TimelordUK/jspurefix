@@ -1,3 +1,3 @@
 export interface ILegComplexEventCreditEventQualifierGrp {
-  LegComplexEventCreditEventQualifier?: string// 41375
+  LegComplexEventCreditEventQualifier?: string// [1] 41375 (String)
 }

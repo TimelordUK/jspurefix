@@ -1,4 +1,4 @@
 export interface ILegProvisionCashSettlQuoteSource {
-  LegProvisionCashSettlQuoteSource?: number// 40470
-  LegProvisionCashSettlQuoteReferencePage?: string// 41407
+  LegProvisionCashSettlQuoteSource?: number// [1] 40470 (Int)
+  LegProvisionCashSettlQuoteReferencePage?: string// [1] 41407 (String)
 }

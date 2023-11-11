@@ -1,3 +1,3 @@
 export interface ILegOptionExerciseExpirationDateBusinessCenterGrp {
-  LegOptionExerciseExpirationDateBusinessCenter?: string// 41516
+  LegOptionExerciseExpirationDateBusinessCenter?: string// [1] 41516 (String)
 }

@@ -1,0 +1,5 @@
+import { IProvisionOptionExpirationDateBusinessCenterGrpNoProvisionOptionExpirationDateBusinessCenters } from './provision_option_expiration_date_business_center_grp_no_provision_option_expiration_date_business_centers'
+
+export interface IProvisionOptionExpirationDateBusinessCenterGrp {
+  NoProvisionOptionExpirationDateBusinessCenters?: IProvisionOptionExpirationDateBusinessCenterGrpNoProvisionOptionExpirationDateBusinessCenters[]// [1] ProvisionOptionExpirationDateBusinessCenter.40147
+}

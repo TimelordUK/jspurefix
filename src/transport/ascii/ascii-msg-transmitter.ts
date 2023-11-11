@@ -43,7 +43,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     return checksum
   }
 
-  public encodeMessage (msgType: string, obj: ILooseObject): any {
+  public encodeMessage (msgType: string, obj: ILooseObject): (ILooseObject | null) {
     const encoder: AsciiEncoder = this.encoder as AsciiEncoder
     const factory = this.config.factory
     let headerProps: Partial<IStandardHeader> = {}
@@ -68,7 +68,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     const msgDef: MessageDefinition | null = this.definitions.message.get(msgType)
     if (!msgDef) {
       this.emit('error', new Error(`ascii transmitter cannot find definition for ${msgType}`))
-      return
+      return null
     }
     const headerName = this.header?.name ?? 'header'
     const trailerName = this.trailer?.name ?? 'trailer'

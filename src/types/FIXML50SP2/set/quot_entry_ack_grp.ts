@@ -2,35 +2,35 @@ import { IInstrument } from './instrument'
 import { IInstrmtLegGrp } from './instrmt_leg_grp'
 
 export interface IQuotEntryAckGrp {
-  QuoteEntryID?: string// 299
-  BidPx?: number// 132
-  OfferPx?: number// 133
-  BidSize?: number// 134
-  OfferSize?: number// 135
-  ValidUntilTime?: Date// 62
-  BidSpotRate?: number// 188
-  OfferSpotRate?: number// 190
-  BidForwardPoints?: number// 189
-  OfferForwardPoints?: number// 191
-  MidPx?: number// 631
-  BidYield?: number// 632
-  MidYield?: number// 633
-  OfferYield?: number// 634
-  TransactTime?: Date// 60
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  SettlDate?: Date// 64
-  OrdType?: string// 40
-  SettlDate2?: Date// 193
-  OrderQty2?: number// 192
-  BidForwardPoints2?: number// 642
-  OfferForwardPoints2?: number// 643
-  Currency?: string// 15
-  BookingType?: number// 775
-  OrderCapacity?: string// 528
-  OrderRestrictions?: string// 529
-  QuoteEntryStatus?: number// 1167
-  QuoteEntryRejectReason?: number// 368
-  Instrument?: IInstrument
-  InstrmtLegGrp?: IInstrmtLegGrp[]
+  QuoteEntryID?: string// [1] 299 (String)
+  BidPx?: number// [1] 132 (Float)
+  OfferPx?: number// [1] 133 (Float)
+  BidSize?: number// [1] 134 (Float)
+  OfferSize?: number// [1] 135 (Float)
+  ValidUntilTime?: Date// [1] 62 (UtcTimestamp)
+  BidSpotRate?: number// [1] 188 (Float)
+  OfferSpotRate?: number// [1] 190 (Float)
+  BidForwardPoints?: number// [1] 189 (Float)
+  OfferForwardPoints?: number// [1] 191 (Float)
+  MidPx?: number// [1] 631 (Float)
+  BidYield?: number// [1] 632 (Float)
+  MidYield?: number// [1] 633 (Float)
+  OfferYield?: number// [1] 634 (Float)
+  TransactTime?: Date// [1] 60 (UtcTimestamp)
+  TradingSessionID?: string// [1] 336 (String)
+  TradingSessionSubID?: string// [1] 625 (String)
+  SettlDate?: Date// [1] 64 (LocalDate)
+  OrdType?: string// [1] 40 (String)
+  SettlDate2?: Date// [1] 193 (LocalDate)
+  OrderQty2?: number// [1] 192 (Float)
+  BidForwardPoints2?: number// [1] 642 (Float)
+  OfferForwardPoints2?: number// [1] 643 (Float)
+  Currency?: string// [1] 15 (String)
+  BookingType?: number// [1] 775 (Int)
+  OrderCapacity?: string// [1] 528 (String)
+  OrderRestrictions?: string// [1] 529 (String)
+  QuoteEntryStatus?: number// [1] 1167 (Int)
+  QuoteEntryRejectReason?: number// [1] 368 (Int)
+  Instrument?: IInstrument// [1] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [2] Sym.600, Sfx.601 .. ExchLookAlike.2607
 }

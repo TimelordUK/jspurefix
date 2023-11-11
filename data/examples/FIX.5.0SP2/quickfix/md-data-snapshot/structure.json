@@ -1,0 +1,66 @@
+[
+  {
+    "name": "StandardHeader",
+    "depth": 1,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 122,
+    "endPosition": 10,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Instrument",
+    "depth": 1,
+    "startTag": 48,
+    "startPosition": 12,
+    "endTag": 20460,
+    "endPosition": 17,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NoMDEntries",
+    "depth": 2,
+    "startTag": 268,
+    "startPosition": 18,
+    "endTag": 336,
+    "endPosition": 38,
+    "delimiterTag": 269,
+    "delimiterPositions": [
+      19,
+      26,
+      33
+    ]
+  },
+  {
+    "name": "MDFullGrp",
+    "depth": 1,
+    "startTag": 268,
+    "startPosition": 18,
+    "endTag": 336,
+    "endPosition": 38,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "MarketDataSnapshotFullRefresh",
+    "depth": 0,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 10,
+    "endPosition": 39,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StandardTrailer",
+    "depth": 1,
+    "startTag": 10,
+    "startPosition": 39,
+    "endTag": 10,
+    "endPosition": 39,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  }
+]

@@ -1,4 +1,3 @@
-
 import { AsciiSessionMsgFactory } from '../../transport/ascii'
 import { FixDuplex, StringDuplex } from '../../transport'
 import { Setup } from './setup'

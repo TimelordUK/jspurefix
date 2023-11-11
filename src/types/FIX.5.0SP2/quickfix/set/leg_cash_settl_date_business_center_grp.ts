@@ -1,0 +1,5 @@
+import { ILegCashSettlDateBusinessCenterGrpNoLegCashSettlDateBusinessCenters } from './leg_cash_settl_date_business_center_grp_no_leg_cash_settl_date_business_centers'
+
+export interface ILegCashSettlDateBusinessCenterGrp {
+  NoLegCashSettlDateBusinessCenters?: ILegCashSettlDateBusinessCenterGrpNoLegCashSettlDateBusinessCenters[]// [1] LegCashSettlDateBusinessCenter.42307
+}

@@ -26,7 +26,7 @@ export class TradeCaptureServer extends AsciiSession {
     this.logger.info(`${view.toJson()}`)
     switch (msgType) {
       case MsgType.TradeCaptureReportRequest: {
-        this.tradeCaptureReportRequest(view!.toObject() as ITradeCaptureReportRequest)
+        this.tradeCaptureReportRequest(view.toObject() as ITradeCaptureReportRequest)
         break
       }
 
@@ -41,7 +41,7 @@ export class TradeCaptureServer extends AsciiSession {
     }
   }
 
-  protected onReady (view: MsgView): void {
+  protected onReady (_: MsgView): void {
     // server waits for client to make a request
     this.logger.info('ready for requests.')
   }
@@ -57,13 +57,11 @@ export class TradeCaptureServer extends AsciiSession {
     return true
   }
 
-  // use msgType for example to persist only trade capture messages to database
-  protected onDecoded (msgType: string, txt: string): void {
+  protected onDecoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
-  // delimiter substitution now done in encoding
-  protected onEncoded (msgType: string, txt: string): void {
+  protected onEncoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 

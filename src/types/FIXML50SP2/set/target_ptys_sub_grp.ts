@@ -1,4 +1,4 @@
 export interface ITargetPtysSubGrp {
-  TargetPartySubID?: string// 2434
-  MiscFeeType?: string// 139
+  TargetPartySubID?: string// [1] 2434 (String)
+  MiscFeeType?: string// [1] 139 (String)
 }

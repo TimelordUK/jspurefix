@@ -1,6 +1,6 @@
 export interface ILegComplexEventRateSourceGrp {
-  LegComplexEventRateSource?: number// 41383
-  LegComplexEventRateSourceType?: number// 41384
-  LegComplexEventReferencePage?: string// 41385
-  LegComplexEvenReferencePageHeading?: string// 41386
+  LegComplexEventRateSource?: number// [1] 41383 (Int)
+  LegComplexEventRateSourceType?: number// [1] 41384 (Int)
+  LegComplexEventReferencePage?: string// [1] 41385 (String)
+  LegComplexEvenReferencePageHeading?: string// [1] 41386 (String)
 }

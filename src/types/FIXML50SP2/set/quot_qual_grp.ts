@@ -1,3 +1,3 @@
 export interface IQuotQualGrp {
-  QuoteQualifier?: string// 695
+  QuoteQualifier?: string// [1] 695 (String)
 }

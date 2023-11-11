@@ -1,0 +1,18 @@
+export interface IClearingPriceParametersGrpNoClearingPriceParameters {
+  BusinessDayType?: number// [1] 2581 (Int)
+  ClearingPriceOffset?: number// [2] 2582 (Float)
+  VegaMultiplier?: number// [3] 2583 (Float)
+  AnnualTradingBusinessDays?: number// [4] 2584 (Int)
+  TotalTradingBusinessDays?: number// [5] 2585 (Int)
+  TradingBusinessDays?: number// [6] 2586 (Int)
+  StandardVariance?: number// [7] 2588 (Float)
+  RealizedVariance?: number// [8] 2587 (Float)
+  RelatedClosePrice?: number// [9] 2589 (Float)
+  RiskFreeRate?: number// [10] 1190 (Float)
+  OvernightInterestRate?: number// [11] 2590 (Float)
+  AccumulatedReturnModifiedVariationMargin?: number// [12] 2591 (Float)
+  DiscountFactor?: number// [13] 1592 (Float)
+  Volatility?: number// [14] 1188 (Float)
+  ClearingSettlPrice?: number// [15] 2528 (Float)
+  CalculationMethod?: number// [16] 2592 (Int)
+}

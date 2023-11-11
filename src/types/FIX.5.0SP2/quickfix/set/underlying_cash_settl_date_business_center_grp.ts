@@ -1,0 +1,5 @@
+import { IUnderlyingCashSettlDateBusinessCenterGrpNoUnderlyingCashSettlDateBusinessCenters } from './underlying_cash_settl_date_business_center_grp_no_underlying_cash_settl_date_business_centers'
+
+export interface IUnderlyingCashSettlDateBusinessCenterGrp {
+  NoUnderlyingCashSettlDateBusinessCenters?: IUnderlyingCashSettlDateBusinessCenterGrpNoUnderlyingCashSettlDateBusinessCenters[]// [1] UnderlyingCashSettlDateBusinessCenter.42789
+}

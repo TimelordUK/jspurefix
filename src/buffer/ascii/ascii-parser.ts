@@ -86,6 +86,10 @@ export class AsciiParser extends MsgParser {
     state.beginMessage()
   }
 
+  /**
+   * useful helper for testing where characters are parsed as if from the transport
+   * @param text to be parsed
+   */
   public parseText (text: string): void {
     const buff = Buffer.from(text)
     this.parse(buff, buff.length)

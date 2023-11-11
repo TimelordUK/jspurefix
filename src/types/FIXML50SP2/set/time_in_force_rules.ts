@@ -1,3 +1,3 @@
 export interface ITimeInForceRules {
-  TimeInForce?: string// 59
+  TimeInForce?: string// [1] 59 (String)
 }

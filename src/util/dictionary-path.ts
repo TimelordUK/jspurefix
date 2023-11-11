@@ -1,4 +1,4 @@
 export interface IDictionaryPath {
-  output: string,
+  output: string
   dict: string
 }

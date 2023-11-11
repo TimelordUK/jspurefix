@@ -20,35 +20,35 @@ import { IMarketSegmentGrp } from './set/market_segment_grp'
 **************************************************************
 */
 export interface ISecurityDefinitionUpdateReport {
-  SecurityReportID?: number// 964
-  SecurityReqID?: string// 320
-  SecurityResponseID?: string// 322
-  SecurityResponseType?: number// 323
-  ClearingBusinessDate?: Date// 715
-  SecurityUpdateAction?: string// 980
-  CorporateAction?: string// 292
-  Currency?: string// 15
-  PreviousAdjustedOpenInterest?: number// 2572
-  PreviousUnadjustedOpenInterest?: number// 2573
-  PriorSettlPrice?: number// 734
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  NumOfSimpleInstruments?: number// 1606
-  NumOfComplexInstruments?: number// 2562
-  LastUpdateTime?: Date// 779
-  EffectiveBusinessDate?: Date// 2400
-  TransactTime?: Date// 60
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]
-  Stipulations?: IStipulations[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  YieldData?: IYieldData
-  MarketSegmentGrp?: IMarketSegmentGrp[]
+  SecurityReportID?: number// [2] 964 (Int)
+  SecurityReqID?: string// [2] 320 (String)
+  SecurityResponseID?: string// [2] 322 (String)
+  SecurityResponseType?: number// [2] 323 (Int)
+  ClearingBusinessDate?: Date// [2] 715 (LocalDate)
+  SecurityUpdateAction?: string// [2] 980 (String)
+  CorporateAction?: string// [2] 292 (String)
+  Currency?: string// [2] 15 (String)
+  PreviousAdjustedOpenInterest?: number// [2] 2572 (Float)
+  PreviousUnadjustedOpenInterest?: number// [2] 2573 (Float)
+  PriorSettlPrice?: number// [2] 734 (Float)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  NumOfSimpleInstruments?: number// [2] 1606 (Int)
+  NumOfComplexInstruments?: number// [2] 2562 (Int)
+  LastUpdateTime?: Date// [2] 779 (UtcTimestamp)
+  EffectiveBusinessDate?: Date// [2] 2400 (LocalDate)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
+  Instrument?: IInstrument// [3] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [4] DlvryForm.668, PctAtRisk.869
+  FinancingDetails?: IFinancingDetails// [5] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [6] Sym.311, Sfx.312 .. XID.2631
+  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]// [7] InstrmtTyp.1648, Sym.1649 .. XIDRef.2417
+  Stipulations?: IStipulations[]// [8] Typ.233, Val.234
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [9] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [10] Spread.218, Ccy.220 .. SecIDSrc.761
+  YieldData?: IYieldData// [11] Typ.235, Yld.236 .. RedPxTyp.698
+  MarketSegmentGrp?: IMarketSegmentGrp[]// [12] MktID.1301, MktSegID.1300
 }

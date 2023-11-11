@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger } from '../config'
-import { ISessionDescription, FixEntity, FixSession } from '../transport'
+import { FixEntity, FixSession, ISessionDescription } from '../transport'
 import { DependencyContainer } from 'tsyringe'
 import { EngineFactory } from './engine-factory'
 import { SessionContainer } from './session-container'
@@ -54,6 +54,12 @@ export abstract class SessionLauncher {
     }
   }
 
+  /**
+   * provide a factory which will be invoked with a config where an instance of the application
+   * should be constructed and returned.
+   * @param config to be provided to the constucted application representing this session
+   * @protected
+   */
   protected makeFactory (config: IJsFixConfig): EngineFactory | null {
     return null
   }
@@ -80,15 +86,23 @@ export abstract class SessionLauncher {
     })
   }
 
+  /**
+   * is this session config representing an ascii based session
+   * @param description config to be tested.
+   */
   public isAscii (description: ISessionDescription): boolean {
     return this.sessionContainer.isAscii(description)
   }
 
+  /**
+   * is this session config representing an initiator based session
+   * @param description config to be tested.
+   */
   public isInitiator (description: ISessionDescription): boolean {
     return this.sessionContainer.isInitiator(description)
   }
 
-  protected registerApplication (sessionContainer: DependencyContainer): void {
+  protected registerApplication (_: DependencyContainer): void {
     this.logger.info('bypass register via DI')
   }
 
@@ -129,13 +143,11 @@ export abstract class SessionLauncher {
   }
 
   async serverOrEmpty (): Promise<any> {
-    const server = this.acceptorConfig ? this.makeServer() : this.empty()
-    return server
+    return this.acceptorConfig ? this.makeServer() : this.empty()
   }
 
   async clientOrEmpty (): Promise<any> {
-    const client = this.initiatorConfig ? this.makeClient() : this.empty()
-    return client
+    return this.initiatorConfig ? this.makeClient() : this.empty()
   }
 
   private async setup (): Promise<any> {

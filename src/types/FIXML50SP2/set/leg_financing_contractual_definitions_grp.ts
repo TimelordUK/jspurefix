@@ -1,3 +1,3 @@
 export interface ILegFinancingContractualDefinitionsGrp {
-  LegContractualDefinition?: string// 42199
+  LegContractualDefinition?: string// [1] 42199 (String)
 }

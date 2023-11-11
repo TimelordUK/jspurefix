@@ -13,22 +13,22 @@ import { ITrdgSesGrp } from './set/trdg_ses_grp'
 *****************************************************
 */
 export interface IMarketDataRequest {
-  MDReqID: string// 262
-  SubscriptionRequestType: string// 263
-  MarketDepth: number// 264
-  MDUpdateType?: number// 265
-  AggregatedBook?: boolean// 266
-  OpenCloseSettlFlag?: string// 286
-  Scope?: string// 546
-  MDImplicitDelete?: boolean// 547
-  ApplQueueAction?: number// 815
-  ApplQueueMax?: number// 812
-  MDQuoteType?: number// 1070
-  FastMarketIndicator?: boolean// 2447
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
-  MDReqGrp?: IMDReqGrp[]
-  MarketSegmentScopeGrp?: IMarketSegmentScopeGrp[]
-  InstrmtMDReqGrp?: IInstrmtMDReqGrp[]
-  TrdgSesGrp?: ITrdgSesGrp[]
+  MDReqID: string// [2] 262 (String)
+  SubscriptionRequestType: string// [2] 263 (String)
+  MarketDepth: number// [2] 264 (Int)
+  MDUpdateType?: number// [2] 265 (Int)
+  AggregatedBook?: boolean// [2] 266 (Boolean)
+  OpenCloseSettlFlag?: string// [2] 286 (String)
+  Scope?: string// [2] 546 (String)
+  MDImplicitDelete?: boolean// [2] 547 (Boolean)
+  ApplQueueAction?: number// [2] 815 (Int)
+  ApplQueueMax?: number// [2] 812 (Int)
+  MDQuoteType?: number// [2] 1070 (Int)
+  FastMarketIndicator?: boolean// [2] 2447 (Boolean)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
+  MDReqGrp?: IMDReqGrp[]// [3] Typ.269
+  MarketSegmentScopeGrp?: IMarketSegmentScopeGrp[]// [4] MktID.1301, MktSegID.1300
+  InstrmtMDReqGrp?: IInstrmtMDReqGrp[]// [5] Ccy.15, Typ.537 .. MDStrmID.1500
+  TrdgSesGrp?: ITrdgSesGrp[]// [6] SesID.336, SesSub.625
 }

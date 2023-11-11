@@ -10,16 +10,16 @@ import { IQuotReqRjctGrp } from './set/quot_req_rjct_grp'
 ******************************************************
 */
 export interface IQuoteRequestReject {
-  QuoteReqID: string// 131
-  RFQReqID?: string// 644
-  QuoteRequestRejectReason: number// 658
-  PrivateQuote?: boolean// 1171
-  RespondentType?: number// 1172
-  PreTradeAnonymity?: boolean// 1091
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  RootParties?: IRootParties[]
-  QuotReqRjctGrp?: IQuotReqRjctGrp[]
+  QuoteReqID: string// [2] 131 (String)
+  RFQReqID?: string// [2] 644 (String)
+  QuoteRequestRejectReason: number// [2] 658 (Int)
+  PrivateQuote?: boolean// [2] 1171 (Boolean)
+  RespondentType?: number// [2] 1172 (Int)
+  PreTradeAnonymity?: boolean// [2] 1091 (Boolean)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RootParties?: IRootParties[]// [2] ID.1117, Src.1118 .. Qual.2388
+  QuotReqRjctGrp?: IQuotReqRjctGrp[]// [3] PrevClsPx.140, ReqTyp.303 .. StrkTm.443
 }

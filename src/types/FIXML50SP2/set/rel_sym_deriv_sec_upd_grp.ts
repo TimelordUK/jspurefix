@@ -4,15 +4,15 @@ import { ISecondaryPriceLimits } from './secondary_price_limits'
 import { IInstrmtLegGrp } from './instrmt_leg_grp'
 
 export interface IRelSymDerivSecUpdGrp {
-  ListUpdateAction?: string// 1324
-  CorporateAction?: string// 292
-  Currency?: string// 15
-  RelSymTransactTime?: Date// 1504
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  SecondaryPriceLimits?: ISecondaryPriceLimits
-  InstrmtLegGrp?: IInstrmtLegGrp[]
+  ListUpdateAction?: string// [1] 1324 (String)
+  CorporateAction?: string// [1] 292 (String)
+  Currency?: string// [1] 15 (String)
+  RelSymTransactTime?: Date// [1] 1504 (UtcTimestamp)
+  Text?: string// [1] 58 (String)
+  EncodedTextLen?: number// [1] 354 (Length)
+  EncodedText?: Buffer// [1] 355 (RawData)
+  Instrument?: IInstrument// [1] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [2] DlvryForm.668, PctAtRisk.869
+  SecondaryPriceLimits?: ISecondaryPriceLimits// [3] PxLmtTyp.1305, LowLmtPx.1221 .. TrdgRefPx.1240
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [4] Sym.600, Sfx.601 .. ExchLookAlike.2607
 }

@@ -1,4 +1,4 @@
 export interface IPaymentStreamPaymentDateGrp {
-  PaymentStreamPaymentDate?: Date// 41221
-  PaymentStreamPaymentDateType?: number// 41222
+  PaymentStreamPaymentDate?: Date// [1] 41221 (LocalDate)
+  PaymentStreamPaymentDateType?: number// [1] 41222 (Int)
 }

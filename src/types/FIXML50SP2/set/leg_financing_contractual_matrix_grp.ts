@@ -1,5 +1,5 @@
 export interface ILegFinancingContractualMatrixGrp {
-  LegContractualMatrixSource?: string// 42204
-  LegContractualMatrixDate?: Date// 42205
-  LegContractualMatrixTerm?: string// 42206
+  LegContractualMatrixSource?: string// [1] 42204 (String)
+  LegContractualMatrixDate?: Date// [1] 42205 (LocalDate)
+  LegContractualMatrixTerm?: string// [1] 42206 (String)
 }

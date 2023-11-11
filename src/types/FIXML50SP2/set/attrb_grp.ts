@@ -1,4 +1,4 @@
 export interface IAttrbGrp {
-  MiscFeeType?: string// 139
-  InstrAttribValue?: string// 872
+  MiscFeeType?: string// [1] 139 (String)
+  InstrAttribValue?: string// [1] 872 (String)
 }

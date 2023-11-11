@@ -23,69 +23,69 @@ import { IStrategyParametersGrp } from './set/strategy_parameters_grp'
 **************************************************************
 */
 export interface ICrossOrderCancelReplaceRequest {
-  OrderID?: string// 37
-  OrderRequestID?: number// 2422
-  CrossID: string// 548
-  OrigCrossID: string// 551
-  HostCrossID?: string// 961
-  CrossType: number// 549
-  CrossPrioritization: number// 550
-  SettlType?: string// 63
-  SettlDate?: Date// 64
-  HandlInst?: string// 21
-  ExecInst?: string// 18
-  MinQty?: number// 110
-  MinQtyMethod?: number// 1822
-  MatchIncrement?: number// 1089
-  MaxPriceLevels?: number// 1090
-  MaxFloor?: number// 111
-  MarketSegmentID?: string// 1300
-  ExDestination?: string// 100
-  ExDestinationIDSource?: string// 1133
-  ProcessCode?: string// 81
-  PrevClosePx?: number// 140
-  LocateReqd?: boolean// 114
-  TransactTime: Date// 60
-  TransBkdTime?: Date// 483
-  OrdType: string// 40
-  PriceType?: number// 423
-  Price?: number// 44
-  PriceProtectionScope?: string// 1092
-  StopPx?: number// 99
-  Currency?: string// 15
-  ComplianceID?: string// 376
-  IOIID?: string// 23
-  QuoteID?: string// 117
-  TimeInForce?: string// 59
-  EffectiveTime?: Date// 168
-  ExpireDate?: Date// 432
-  ExpireTime?: Date// 126
-  GTBookingInst?: number// 427
-  ExposureDuration?: number// 1629
-  ExposureDurationUnit?: number// 1916
-  TradingCapacity?: number// 1815
-  MaxShow?: number// 210
-  TargetStrategy?: number// 847
-  TargetStrategyParameters?: string// 848
-  ParticipationRate?: number// 849
-  CancellationRights?: string// 480
-  MoneyLaunderingStatus?: string// 481
-  RegistID?: string// 513
-  Designation?: string// 494
-  ThrottleInst?: number// 1685
-  StandardHeader?: IStandardHeader
-  RootParties?: IRootParties[]
-  SideCrossOrdModGrp?: ISideCrossOrdModGrp[]
-  Instrument?: IInstrument
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  DisplayInstruction?: IDisplayInstruction
-  TrdgSesGrp?: ITrdgSesGrp[]
-  Stipulations?: IStipulations[]
-  TriggeringInstruction?: ITriggeringInstruction
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  YieldData?: IYieldData
-  PegInstructions?: IPegInstructions
-  DiscretionInstructions?: IDiscretionInstructions
-  StrategyParametersGrp?: IStrategyParametersGrp[]
+  OrderID?: string// [2] 37 (String)
+  OrderRequestID?: number// [2] 2422 (Int)
+  CrossID: string// [2] 548 (String)
+  OrigCrossID: string// [2] 551 (String)
+  HostCrossID?: string// [2] 961 (String)
+  CrossType: number// [2] 549 (Int)
+  CrossPrioritization: number// [2] 550 (Int)
+  SettlType?: string// [2] 63 (String)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  HandlInst?: string// [2] 21 (String)
+  ExecInst?: string// [2] 18 (String)
+  MinQty?: number// [2] 110 (Float)
+  MinQtyMethod?: number// [2] 1822 (Int)
+  MatchIncrement?: number// [2] 1089 (Float)
+  MaxPriceLevels?: number// [2] 1090 (Int)
+  MaxFloor?: number// [2] 111 (Float)
+  MarketSegmentID?: string// [2] 1300 (String)
+  ExDestination?: string// [2] 100 (String)
+  ExDestinationIDSource?: string// [2] 1133 (String)
+  ProcessCode?: string// [2] 81 (String)
+  PrevClosePx?: number// [2] 140 (Float)
+  LocateReqd?: boolean// [2] 114 (Boolean)
+  TransactTime: Date// [2] 60 (UtcTimestamp)
+  TransBkdTime?: Date// [2] 483 (UtcTimestamp)
+  OrdType: string// [2] 40 (String)
+  PriceType?: number// [2] 423 (Int)
+  Price?: number// [2] 44 (Float)
+  PriceProtectionScope?: string// [2] 1092 (String)
+  StopPx?: number// [2] 99 (Float)
+  Currency?: string// [2] 15 (String)
+  ComplianceID?: string// [2] 376 (String)
+  IOIID?: string// [2] 23 (String)
+  QuoteID?: string// [2] 117 (String)
+  TimeInForce?: string// [2] 59 (String)
+  EffectiveTime?: Date// [2] 168 (UtcTimestamp)
+  ExpireDate?: Date// [2] 432 (LocalDate)
+  ExpireTime?: Date// [2] 126 (UtcTimestamp)
+  GTBookingInst?: number// [2] 427 (Int)
+  ExposureDuration?: number// [2] 1629 (Int)
+  ExposureDurationUnit?: number// [2] 1916 (Int)
+  TradingCapacity?: number// [2] 1815 (Int)
+  MaxShow?: number// [2] 210 (Float)
+  TargetStrategy?: number// [2] 847 (Int)
+  TargetStrategyParameters?: string// [2] 848 (String)
+  ParticipationRate?: number// [2] 849 (Float)
+  CancellationRights?: string// [2] 480 (String)
+  MoneyLaunderingStatus?: string// [2] 481 (String)
+  RegistID?: string// [2] 513 (String)
+  Designation?: string// [2] 494 (String)
+  ThrottleInst?: number// [2] 1685 (Int)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RootParties?: IRootParties[]// [2] ID.1117, Src.1118 .. Qual.2388
+  SideCrossOrdModGrp?: ISideCrossOrdModGrp[]// [3] Side.54, SMEInd.2102 .. SideTmFrc.962
+  Instrument?: IInstrument// [4] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [5] Sym.311, Sfx.312 .. XID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [6] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  DisplayInstruction?: IDisplayInstruction// [7] DisplayQty.1138, SecDspQty.1082 .. RfrshQty.1088
+  TrdgSesGrp?: ITrdgSesGrp[]// [8] SesID.336, SesSub.625
+  Stipulations?: IStipulations[]// [9] Typ.233, Val.234
+  TriggeringInstruction?: ITriggeringInstruction// [10] TrgrTyp.1100, TrgrActn.1101 .. TrgrTrdSessSubID.1114
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [11] Spread.218, Ccy.220 .. SecIDSrc.761
+  YieldData?: IYieldData// [12] Typ.235, Yld.236 .. RedPxTyp.698
+  PegInstructions?: IPegInstructions// [13] OfstVal.211, PegPxTyp.1094 .. PegSecDesc.1099
+  DiscretionInstructions?: IDiscretionInstructions// [14] DsctnInst.388, OfstValu.389 .. Scope.846
+  StrategyParametersGrp?: IStrategyParametersGrp[]// [15] StrtPrmNme.958, StrtPrmTyp.959, StrtPrmVal.960
 }

@@ -1,3 +1,3 @@
 export interface ILegPaymentStreamFixingDateBusinessCenterGrp {
-  LegPaymentStreamFixingDateBusinessCenter?: string// 40318
+  LegPaymentStreamFixingDateBusinessCenter?: string// [1] 40318 (String)
 }

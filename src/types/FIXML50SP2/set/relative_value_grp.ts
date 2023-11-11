@@ -1,5 +1,5 @@
 export interface IRelativeValueGrp {
-  MiscFeeType?: string// 139
-  RelativeValue?: number// 2531
-  RelativeValueSide?: number// 2532
+  MiscFeeType?: string// [1] 139 (String)
+  RelativeValue?: number// [1] 2531 (Float)
+  RelativeValueSide?: number// [1] 2532 (Int)
 }

@@ -4,28 +4,28 @@ import { IPaymentStreamFixingDateBusinessCenterGrp } from './payment_stream_fixi
 import { IPaymentStreamFixingDateGrp } from './payment_stream_fixing_date_grp'
 
 export interface IPaymentStreamResetDates {
-  PaymentStreamResetDateRelativeTo?: number// 40761
-  PaymentStreamResetDateBusinessDayConvention?: number// 40762
-  PaymentStreamResetFrequencyPeriod?: number// 40764
-  PaymentStreamResetFrequencyUnit?: string// 40765
-  PaymentStreamResetWeeklyRollConvention?: string// 40766
-  PaymentStreamInitialFixingDateRelativeTo?: number// 40767
-  PaymentStreamInitialFixingDateBusinessDayConvention?: number// 40768
-  PaymentStreamInitialFixingDateOffsetPeriod?: number// 40770
-  PaymentStreamInitialFixingDateOffsetUnit?: string// 40771
-  PaymentStreamInitialFixingDateOffsetDayType?: number// 40772
-  PaymentStreamInitialFixingDateAdjusted?: Date// 40773
-  PaymentStreamFixingDateRelativeTo?: number// 40774
-  PaymentStreamFixingDateBusinessDayConvention?: number// 40775
-  PaymentStreamFixingDateOffsetPeriod?: number// 40777
-  PaymentStreamFixingDateOffsetUnit?: string// 40778
-  PaymentStreamFixingDateOffsetDayType?: number// 40779
-  PaymentStreamFixingDateAdjusted?: Date// 40780
-  PaymentStreamRateCutoffDateOffsetPeriod?: number// 40781
-  PaymentStreamRateCutoffDateOffsetUnit?: string// 40782
-  PaymentStreamRateCutoffDateOffsetDayType?: number// 40783
-  PaymentStreamResetDateBusinessCenterGrp?: IPaymentStreamResetDateBusinessCenterGrp[]
-  PaymentStreamInitialFixingDateBusinessCenterGrp?: IPaymentStreamInitialFixingDateBusinessCenterGrp[]
-  PaymentStreamFixingDateBusinessCenterGrp?: IPaymentStreamFixingDateBusinessCenterGrp[]
-  PaymentStreamFixingDateGrp?: IPaymentStreamFixingDateGrp
+  PaymentStreamResetDateRelativeTo?: number// [1] 40761 (Int)
+  PaymentStreamResetDateBusinessDayConvention?: number// [1] 40762 (Int)
+  PaymentStreamResetFrequencyPeriod?: number// [1] 40764 (Int)
+  PaymentStreamResetFrequencyUnit?: string// [1] 40765 (String)
+  PaymentStreamResetWeeklyRollConvention?: string// [1] 40766 (String)
+  PaymentStreamInitialFixingDateRelativeTo?: number// [1] 40767 (Int)
+  PaymentStreamInitialFixingDateBusinessDayConvention?: number// [1] 40768 (Int)
+  PaymentStreamInitialFixingDateOffsetPeriod?: number// [1] 40770 (Int)
+  PaymentStreamInitialFixingDateOffsetUnit?: string// [1] 40771 (String)
+  PaymentStreamInitialFixingDateOffsetDayType?: number// [1] 40772 (Int)
+  PaymentStreamInitialFixingDateAdjusted?: Date// [1] 40773 (LocalDate)
+  PaymentStreamFixingDateRelativeTo?: number// [1] 40774 (Int)
+  PaymentStreamFixingDateBusinessDayConvention?: number// [1] 40775 (Int)
+  PaymentStreamFixingDateOffsetPeriod?: number// [1] 40777 (Int)
+  PaymentStreamFixingDateOffsetUnit?: string// [1] 40778 (String)
+  PaymentStreamFixingDateOffsetDayType?: number// [1] 40779 (Int)
+  PaymentStreamFixingDateAdjusted?: Date// [1] 40780 (LocalDate)
+  PaymentStreamRateCutoffDateOffsetPeriod?: number// [1] 40781 (Int)
+  PaymentStreamRateCutoffDateOffsetUnit?: string// [1] 40782 (String)
+  PaymentStreamRateCutoffDateOffsetDayType?: number// [1] 40783 (Int)
+  PaymentStreamResetDateBusinessCenterGrp?: IPaymentStreamResetDateBusinessCenterGrp[]// [1] Ctr.40763
+  PaymentStreamInitialFixingDateBusinessCenterGrp?: IPaymentStreamInitialFixingDateBusinessCenterGrp[]// [2] Ctr.40769
+  PaymentStreamFixingDateBusinessCenterGrp?: IPaymentStreamFixingDateBusinessCenterGrp[]// [3] Ctr.40776
+  PaymentStreamFixingDateGrp?: IPaymentStreamFixingDateGrp// [4] Dt.42661, Typ.42662
 }

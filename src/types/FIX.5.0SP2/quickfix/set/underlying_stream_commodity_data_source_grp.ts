@@ -1,0 +1,5 @@
+import { IUnderlyingStreamCommodityDataSourceGrpNoUnderlyingStreamCommodityDataSources } from './underlying_stream_commodity_data_source_grp_no_underlying_stream_commodity_data_sources'
+
+export interface IUnderlyingStreamCommodityDataSourceGrp {
+  NoUnderlyingStreamCommodityDataSources?: IUnderlyingStreamCommodityDataSourceGrpNoUnderlyingStreamCommodityDataSources[]// [1] UnderlyingStreamCommodityDataSourceID.41994, UnderlyingStreamCommodityDataSourceIDType.41995
+}

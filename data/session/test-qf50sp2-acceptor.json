@@ -1,0 +1,22 @@
+{
+  "application": {
+    "type": "acceptor",
+    "name": "test_server",
+    "tcp": {
+      "host" : "localhost",
+      "port": 2344
+    },
+    "protocol": "ascii",
+    "dictionary": "data/FIX50SP2.xml"
+  },
+  "Username": "js-server",
+  "Password": "pwd-server",
+  "EncryptMethod": 0,
+  "ResetSeqNumFlag": true,
+  "HeartBtInt": 30,
+  "SenderCompId": "accept-comp",
+  "TargetCompID": "init-comp",
+  "TargetSubID": "fix",
+  "DefaultApplVerID": "t2",
+  "BeginString": "FIX.5.0SP2"
+}

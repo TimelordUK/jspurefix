@@ -9,9 +9,9 @@ import { IInstrmtStrkPxGrp } from './set/instrmt_strk_px_grp'
 ***************************************************
 */
 export interface IListStrikePrice {
-  ListID: string// 66
-  TotNoStrikes: number// 422
-  LastFragment?: boolean// 893
-  StandardHeader?: IStandardHeader
-  InstrmtStrkPxGrp?: IInstrmtStrkPxGrp[]
+  ListID: string// [2] 66 (String)
+  TotNoStrikes: number// [2] 422 (Int)
+  LastFragment?: boolean// [2] 893 (Boolean)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  InstrmtStrkPxGrp?: IInstrmtStrkPxGrp[]// [2] PrevClsPx.140, ClOrdID.11 .. EncTxt.355
 }

@@ -1,3 +1,3 @@
 export interface IRequestedRiskLimitTypesGrp {
-  MiscFeeType?: string// 139
+  MiscFeeType?: string// [1] 139 (String)
 }

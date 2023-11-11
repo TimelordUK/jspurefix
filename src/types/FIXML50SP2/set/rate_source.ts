@@ -1,6 +1,6 @@
 export interface IRateSource {
-  RateSource?: number// 1446
-  RateSourceType?: number// 1447
-  ReferencePage?: string// 1448
-  RateSourceReferemcePageHeading?: string// 2412
+  RateSource?: number// [1] 1446 (Int)
+  RateSourceType?: number// [1] 1447 (Int)
+  ReferencePage?: string// [1] 1448 (String)
+  RateSourceReferemcePageHeading?: string// [1] 2412 (String)
 }

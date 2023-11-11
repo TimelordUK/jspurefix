@@ -1,3 +1,3 @@
 export interface IUnderlyingProtectionTermEventNewsSourceGrp {
-  UnderlyingProtectionTermEventNewsSource?: string// 42091
+  UnderlyingProtectionTermEventNewsSource?: string// [1] 42091 (String)
 }

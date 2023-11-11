@@ -1,0 +1,5 @@
+import { ILegPaymentStreamNonDeliverableFixingDateGrpNoLegNonDeliverableFixingDates } from './leg_payment_stream_non_deliverable_fixing_date_grp_no_leg_non_deliverable_fixing_dates'
+
+export interface ILegPaymentStreamNonDeliverableFixingDateGrp {
+  NoLegNonDeliverableFixingDates?: ILegPaymentStreamNonDeliverableFixingDateGrpNoLegNonDeliverableFixingDates[]// [1] LegNonDeliverableFixingDate.40368, LegNonDeliverableFixingDateType.40369
+}

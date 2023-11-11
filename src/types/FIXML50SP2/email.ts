@@ -14,21 +14,21 @@ import { IAttachmentGrp } from './set/attachment_grp'
 *****************************************
 */
 export interface IEmail {
-  EmailThreadID: string// 164
-  EmailType: string// 94
-  OrigTime?: Date// 42
-  Subject: string// 147
-  EncodedSubjectLen?: number// 356
-  EncodedSubject?: Buffer// 357
-  OrderID?: string// 37
-  ClOrdID?: string// 11
-  RawDataLength?: number// 95
-  RawData?: Buffer// 96
-  StandardHeader?: IStandardHeader
-  RoutingGrp?: IRoutingGrp[]
-  InstrmtGrp?: IInstrmtGrp[]
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  LinesOfTextGrp?: ILinesOfTextGrp[]
-  AttachmentGrp?: IAttachmentGrp[]
+  EmailThreadID: string// [2] 164 (String)
+  EmailType: string// [2] 94 (String)
+  OrigTime?: Date// [2] 42 (UtcTimestamp)
+  Subject: string// [2] 147 (String)
+  EncodedSubjectLen?: number// [2] 356 (Length)
+  EncodedSubject?: Buffer// [2] 357 (RawData)
+  OrderID?: string// [2] 37 (String)
+  ClOrdID?: string// [2] 11 (String)
+  RawDataLength?: number// [2] 95 (Length)
+  RawData?: Buffer// [2] 96 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RoutingGrp?: IRoutingGrp[]// [2] RtgTyp.216, RtgID.217
+  InstrmtGrp?: IInstrmtGrp[]// [3] 
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [4] Sym.311, Sfx.312 .. XID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [5] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  LinesOfTextGrp?: ILinesOfTextGrp[]// [6] Txt.58, EncTxtLen.354, EncTxt.355
+  AttachmentGrp?: IAttachmentGrp[]// [7] Name.2105, MediaTyp.2106 .. EncAttchmnt.2112
 }

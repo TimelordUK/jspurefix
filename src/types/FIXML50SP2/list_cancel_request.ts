@@ -9,13 +9,13 @@ import { IParties } from './set/parties'
 *****************************************************
 */
 export interface IListCancelRequest {
-  ListID: string// 66
-  TransactTime: Date// 60
-  TradeOriginationDate?: Date// 229
-  TradeDate?: Date// 75
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
+  ListID: string// [2] 66 (String)
+  TransactTime: Date// [2] 60 (UtcTimestamp)
+  TradeOriginationDate?: Date// [2] 229 (LocalDate)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
 }

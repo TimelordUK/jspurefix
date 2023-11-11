@@ -1,0 +1,5 @@
+import { IProtectionTermEventNewsSourceGrpNoProtectionTermEventNewsSources } from './protection_term_event_news_source_grp_no_protection_term_event_news_sources'
+
+export interface IProtectionTermEventNewsSourceGrp {
+  NoProtectionTermEventNewsSources?: IProtectionTermEventNewsSourceGrpNoProtectionTermEventNewsSources[]// [1] ProtectionTermEventNewsSource.40189
+}

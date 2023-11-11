@@ -1,0 +1,18 @@
+export interface ICommissionDataGrpNoCommissions {
+  CommissionAmount?: number// [1] 2640 (Float)
+  CommissionAmountType?: number// [2] 2641 (Int)
+  CommissionAmountSubType?: number// [3] 2725 (Int)
+  CommissionBasis?: string// [4] 2642 (String)
+  CommissionCurrency?: string// [5] 2643 (String)
+  CommissionCurrencyCodeSource?: string// [6] 2923 (String)
+  CommissionUnitOfMeasure?: string// [7] 2644 (String)
+  CommissionUnitOfMeasureCurrency?: string// [8] 2645 (String)
+  CommissionUnitOfMeasureCurrencyCodeSource?: string// [9] 2924 (String)
+  CommissionRate?: number// [10] 2646 (Float)
+  CommissionSharedIndicator?: boolean// [11] 2647 (Boolean)
+  CommissionAmountShared?: number// [12] 2648 (Float)
+  CommissionLegRefID?: string// [13] 2649 (String)
+  CommissionDesc?: string// [14] 2650 (String)
+  EncodedCommissionDescLen?: number// [15] 2651 (Length)
+  EncodedCommissionDesc?: Buffer// [16] 2652 (RawData)
+}

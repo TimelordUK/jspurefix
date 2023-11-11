@@ -1,6 +1,6 @@
 export interface IApplicationSequenceControl {
-  ApplID?: string// 1180
-  ApplSeqNum?: number// 1181
-  ApplLastSeqNum?: number// 1350
-  ApplResendFlag?: boolean// 1352
+  ApplID?: string// [1] 1180 (String)
+  ApplSeqNum?: number// [1] 1181 (Int)
+  ApplLastSeqNum?: number// [1] 1350 (Int)
+  ApplResendFlag?: boolean// [1] 1352 (Boolean)
 }

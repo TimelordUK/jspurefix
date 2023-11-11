@@ -8,17 +8,17 @@ import { IStandardHeader } from './set/standard_header'
 ***********************************************
 */
 export interface IUserRequest {
-  UserRequestID: string// 923
-  UserRequestType: number// 924
-  Username: string// 553
-  Password?: string// 554
-  NewPassword?: string// 925
-  EncryptedPasswordMethod?: number// 1400
-  EncryptedPasswordLen?: number// 1401
-  EncryptedPassword?: Buffer// 1402
-  EncryptedNewPasswordLen?: number// 1403
-  EncryptedNewPassword?: Buffer// 1404
-  RawDataLength?: number// 95
-  RawData?: Buffer// 96
-  StandardHeader?: IStandardHeader
+  UserRequestID: string// [2] 923 (String)
+  UserRequestType: number// [2] 924 (Int)
+  Username: string// [2] 553 (String)
+  Password?: string// [2] 554 (String)
+  NewPassword?: string// [2] 925 (String)
+  EncryptedPasswordMethod?: number// [2] 1400 (Int)
+  EncryptedPasswordLen?: number// [2] 1401 (Length)
+  EncryptedPassword?: Buffer// [2] 1402 (RawData)
+  EncryptedNewPasswordLen?: number// [2] 1403 (Length)
+  EncryptedNewPassword?: Buffer// [2] 1404 (RawData)
+  RawDataLength?: number// [2] 95 (Length)
+  RawData?: Buffer// [2] 96 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
 }

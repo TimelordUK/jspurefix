@@ -17,8 +17,10 @@ export abstract class VersionUtil {
       version = FixVersion.FIX50
     } else if (description.includes('FIX.5.0SP1')) {
       version = FixVersion.FIX50SP1
-    } else if (description.includes('FIX.5.0SP1')) {
+    } else if (description.includes('FIX.5.0SP2')) {
       version = FixVersion.FIX50SP2
+    } else if (description.includes('FIXML.5.0SP2')) {
+      version = FixVersion.FIXML50SP2
     }
     return version
   }

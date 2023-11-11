@@ -2,25 +2,25 @@ import { ILegOptionExerciseBusinessCenterGrp } from './leg_option_exercise_busin
 import { ILegOptionExerciseDateGrp } from './leg_option_exercise_date_grp'
 
 export interface ILegOptionExerciseDates {
-  LegOptionExerciseBusinessDayConvention?: number// 41493
-  LegOptionExerciseEarliestDateOffsetDayType?: number// 41494
-  LegOptionExerciseEarliestDateOffsetPeriod?: number// 41495
-  LegOptionExerciseEarliestDateOffsetUnit?: string// 41496
-  LegOptionExerciseFrequencyPeriod?: number// 41497
-  LegOptionExerciseFrequencyUnit?: string// 41498
-  LegOptionExerciseStartDateUnadjusted?: Date// 41499
-  LegOptionExerciseStartDateRelativeTo?: number// 41500
-  LegOptionExerciseStartDateOffsetPeriod?: number// 41501
-  LegOptionExerciseStartDateOffsetUnit?: string// 41502
-  LegOptionExerciseStartDateOffsetDayType?: number// 41503
-  LegOptionExerciseStartDateAdjusted?: Date// 41504
-  LegOptionExerciseSkip?: number// 41505
-  LegOptionExerciseNominationDeadline?: Date// 41506
-  LegOptionExerciseFirstDateUnadjusted?: Date// 41507
-  LegOptionExerciseLastDateUnadjusted?: Date// 41508
-  LegOptionExerciseEarliestTime?: string// 41509
-  LegOptionExerciseLatestTime?: string// 41510
-  LegOptionExerciseTimeBusinessCenter?: string// 41511
-  LegOptionExerciseBusinessCenterGrp?: ILegOptionExerciseBusinessCenterGrp[]
-  LegOptionExerciseDateGrp?: ILegOptionExerciseDateGrp[]
+  LegOptionExerciseBusinessDayConvention?: number// [1] 41493 (Int)
+  LegOptionExerciseEarliestDateOffsetDayType?: number// [1] 41494 (Int)
+  LegOptionExerciseEarliestDateOffsetPeriod?: number// [1] 41495 (Int)
+  LegOptionExerciseEarliestDateOffsetUnit?: string// [1] 41496 (String)
+  LegOptionExerciseFrequencyPeriod?: number// [1] 41497 (Int)
+  LegOptionExerciseFrequencyUnit?: string// [1] 41498 (String)
+  LegOptionExerciseStartDateUnadjusted?: Date// [1] 41499 (LocalDate)
+  LegOptionExerciseStartDateRelativeTo?: number// [1] 41500 (Int)
+  LegOptionExerciseStartDateOffsetPeriod?: number// [1] 41501 (Int)
+  LegOptionExerciseStartDateOffsetUnit?: string// [1] 41502 (String)
+  LegOptionExerciseStartDateOffsetDayType?: number// [1] 41503 (Int)
+  LegOptionExerciseStartDateAdjusted?: Date// [1] 41504 (LocalDate)
+  LegOptionExerciseSkip?: number// [1] 41505 (Int)
+  LegOptionExerciseNominationDeadline?: Date// [1] 41506 (LocalDate)
+  LegOptionExerciseFirstDateUnadjusted?: Date// [1] 41507 (LocalDate)
+  LegOptionExerciseLastDateUnadjusted?: Date// [1] 41508 (LocalDate)
+  LegOptionExerciseEarliestTime?: string// [1] 41509 (String)
+  LegOptionExerciseLatestTime?: string// [1] 41510 (String)
+  LegOptionExerciseTimeBusinessCenter?: string// [1] 41511 (String)
+  LegOptionExerciseBusinessCenterGrp?: ILegOptionExerciseBusinessCenterGrp[]// [1] Ctr.41492
+  LegOptionExerciseDateGrp?: ILegOptionExerciseDateGrp[]// [2] Dt.41513, Typ.41514
 }

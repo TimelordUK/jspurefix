@@ -1,5 +1,5 @@
 export interface IUnderlyingDeliveryScheduleSettlTimeGrp {
-  UnderlyingDeliveryScheduleSettlStart?: string// 41774
-  UnderlyingDeliveryScheduleSettlEnd?: string// 41775
-  UnderlyingDeliveryScheduleSettlTimeType?: number// 41776
+  UnderlyingDeliveryScheduleSettlStart?: string// [1] 41774 (String)
+  UnderlyingDeliveryScheduleSettlEnd?: string// [1] 41775 (String)
+  UnderlyingDeliveryScheduleSettlTimeType?: number// [1] 41776 (Int)
 }

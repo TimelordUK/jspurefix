@@ -1,7 +1,7 @@
 export interface IMiscFeesSubGrp {
-  MiscFeeSubType?: string// 2634
-  MiscFeeSubTypeAmt?: number// 2635
-  MiscFeeSubTypeDesc?: string// 2636
-  EncodedMiscFeeSubTypeDescLen?: number// 2637
-  EncodedMiscFeeSubTypeDesc?: Buffer// 2638
+  MiscFeeSubType?: string// [1] 2634 (String)
+  MiscFeeSubTypeAmt?: number// [1] 2635 (Float)
+  MiscFeeSubTypeDesc?: string// [1] 2636 (String)
+  EncodedMiscFeeSubTypeDescLen?: number// [1] 2637 (Length)
+  EncodedMiscFeeSubTypeDesc?: Buffer// [1] 2638 (RawData)
 }

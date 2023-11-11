@@ -31,6 +31,10 @@
     "output": "src/types/FIX.5.0SP2/repo",
     "dict": "data/fix_repo/FIX.5.0SP2/Base"
   },
+  "qf50sp2": {
+    "output": "src/types/FIX.5.0SP2/quickfix",
+    "dict": "data/FIX50SP2.xml"
+  },
   "repofixml": {
     "output": "src/types/FIXML50SP2",
     "dict": "data/fix_repo/fixmlschema_FIX.5.0SP2_EP228"

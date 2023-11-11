@@ -1,0 +1,5 @@
+import { IStreamCommoditySettlBusinessCenterGrpNoStreamCommoditySettlBusinessCenters } from './stream_commodity_settl_business_center_grp_no_stream_commodity_settl_business_centers'
+
+export interface IStreamCommoditySettlBusinessCenterGrp {
+  NoStreamCommoditySettlBusinessCenters?: IStreamCommoditySettlBusinessCenterGrpNoStreamCommoditySettlBusinessCenters[]// [1] StreamCommoditySettlBusinessCenter.41250
+}

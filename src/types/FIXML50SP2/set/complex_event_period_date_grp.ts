@@ -1,4 +1,4 @@
 export interface IComplexEventPeriodDateGrp {
-  ComplexEventPeriodDate?: Date// 41008
-  ComplexEventPeriodTime?: string// 41009
+  ComplexEventPeriodDate?: Date// [1] 41008 (LocalDate)
+  ComplexEventPeriodTime?: string// [1] 41009 (String)
 }

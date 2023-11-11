@@ -1,3 +1,3 @@
 export interface IReturnRateValuationDateBusinessCenterGrp {
-  ReturnRateValuationDateBusinessCenter?: string// 42771
+  ReturnRateValuationDateBusinessCenter?: string// [1] 42771 (String)
 }

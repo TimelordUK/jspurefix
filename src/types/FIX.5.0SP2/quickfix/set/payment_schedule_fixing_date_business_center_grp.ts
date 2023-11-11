@@ -1,0 +1,5 @@
+import { IPaymentScheduleFixingDateBusinessCenterGrpNoPaymentScheduleFixingDateBusinessCenters } from './payment_schedule_fixing_date_business_center_grp_no_payment_schedule_fixing_date_business_centers'
+
+export interface IPaymentScheduleFixingDateBusinessCenterGrp {
+  NoPaymentScheduleFixingDateBusinessCenters?: IPaymentScheduleFixingDateBusinessCenterGrpNoPaymentScheduleFixingDateBusinessCenters[]// [1] PaymentScheduleFixingDateBusinessCenter.40854
+}

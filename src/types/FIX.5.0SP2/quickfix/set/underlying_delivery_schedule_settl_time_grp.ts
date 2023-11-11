@@ -1,0 +1,5 @@
+import { IUnderlyingDeliveryScheduleSettlTimeGrpNoUnderlyingDeliveryScheduleSettlTimes } from './underlying_delivery_schedule_settl_time_grp_no_underlying_delivery_schedule_settl_times'
+
+export interface IUnderlyingDeliveryScheduleSettlTimeGrp {
+  NoUnderlyingDeliveryScheduleSettlTimes?: IUnderlyingDeliveryScheduleSettlTimeGrpNoUnderlyingDeliveryScheduleSettlTimes[]// [1] UnderlyingDeliveryScheduleSettlStart.41774, UnderlyingDeliveryScheduleSettlEnd.41775, UnderlyingDeliveryScheduleSettlTimeType.41776
+}

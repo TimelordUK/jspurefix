@@ -11,13 +11,13 @@ import { IPartyRiskLimitsAckGrp } from './set/party_risk_limits_ack_grp'
 ****************************************************************
 */
 export interface IPartyRiskLimitsDefinitionRequestAck {
-  RiskLimitRequestID: string// 1666
-  SecurityRequestResult?: number// 560
-  RiskLimitRequestStatus: number// 1762
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  RequestingPartyGrp?: IRequestingPartyGrp[]
-  PartyRiskLimitsAckGrp?: IPartyRiskLimitsAckGrp[]
+  RiskLimitRequestID: string// [2] 1666 (String)
+  SecurityRequestResult?: number// [2] 560 (Int)
+  RiskLimitRequestStatus: number// [2] 1762 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RequestingPartyGrp?: IRequestingPartyGrp[]// [2] ID.1658, Src.1659 .. Qual.2338
+  PartyRiskLimitsAckGrp?: IPartyRiskLimitsAckGrp[]// [3] ListUpdActn.1324, Stat.1763 .. PtyRiskLmtStat.2355
 }

@@ -1,0 +1,5 @@
+import { IPaymentStreamPaymentDateBusinessCenterGrpNoPaymentStreamPaymentDateBusinessCenters } from './payment_stream_payment_date_business_center_grp_no_payment_stream_payment_date_business_centers'
+
+export interface IPaymentStreamPaymentDateBusinessCenterGrp {
+  NoPaymentStreamPaymentDateBusinessCenters?: IPaymentStreamPaymentDateBusinessCenterGrpNoPaymentStreamPaymentDateBusinessCenters[]// [1] PaymentStreamPaymentDateBusinessCenter.40752
+}

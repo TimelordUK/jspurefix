@@ -1,12 +1,12 @@
 import { IProtectionTermEventQualifierGrp } from './protection_term_event_qualifier_grp'
 
 export interface IProtectionTermEventGrp {
-  ProtectionTermEventType?: string// 40192
-  ProtectionTermEventValue?: string// 40193
-  ProtectionTermEventCurrency?: string// 40194
-  ProtectionTermEventPeriod?: number// 40195
-  ProtectionTermEventUnit?: string// 40196
-  ProtectionTermEventDayType?: number// 40197
-  ProtectionTermEventRateSource?: string// 40198
-  ProtectionTermEventQualifierGrp?: IProtectionTermEventQualifierGrp[]
+  ProtectionTermEventType?: string// [1] 40192 (String)
+  ProtectionTermEventValue?: string// [1] 40193 (String)
+  ProtectionTermEventCurrency?: string// [1] 40194 (String)
+  ProtectionTermEventPeriod?: number// [1] 40195 (Int)
+  ProtectionTermEventUnit?: string// [1] 40196 (String)
+  ProtectionTermEventDayType?: number// [1] 40197 (Int)
+  ProtectionTermEventRateSource?: string// [1] 40198 (String)
+  ProtectionTermEventQualifierGrp?: IProtectionTermEventQualifierGrp[]// [1] Qual.40200
 }

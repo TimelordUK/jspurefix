@@ -11,20 +11,20 @@ import { IQuotCxlEntriesGrp } from './set/quot_cxl_entries_grp'
 ***********************************************
 */
 export interface IQuoteCancel {
-  QuoteReqID?: string// 131
-  QuoteID?: string// 117
-  SecondaryQuoteID?: string// 1751
-  QuoteMsgID?: string// 1166
-  QuoteCancelType: number// 298
-  QuoteType?: number// 537
-  QuoteResponseLevel?: number// 301
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
-  TargetParties?: ITargetParties[]
-  QuotCxlEntriesGrp?: IQuotCxlEntriesGrp[]
+  QuoteReqID?: string// [2] 131 (String)
+  QuoteID?: string// [2] 117 (String)
+  SecondaryQuoteID?: string// [2] 1751 (String)
+  QuoteMsgID?: string// [2] 1166 (String)
+  QuoteCancelType: number// [2] 298 (Int)
+  QuoteType?: number// [2] 537 (Int)
+  QuoteResponseLevel?: number// [2] 301 (Int)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
+  TargetParties?: ITargetParties[]// [3] ID.1462, Src.1463 .. Qual.1818
+  QuotCxlEntriesGrp?: IQuotCxlEntriesGrp[]// [4] 
 }

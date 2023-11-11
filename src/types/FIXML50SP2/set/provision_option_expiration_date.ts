@@ -1,14 +1,14 @@
 import { IProvisionOptionExpirationDateBusinessCenterGrp } from './provision_option_expiration_date_business_center_grp'
 
 export interface IProvisionOptionExpirationDate {
-  ProvisionOptionExpirationDateUnadjusted?: Date// 40145
-  ProvisionOptionExpirationDateBusinessDayConvention?: number// 40146
-  ProvisionOptionExpirationDateRelativeTo?: number// 40148
-  ProvisionOptionExpirationDateOffsetPeriod?: number// 40149
-  ProvisionOptionExpirationDateOffsetUnit?: string// 40150
-  ProvisionOptionExpirationDateOffsetDayType?: number// 40151
-  ProvisionOptionExpirationDateAdjusted?: Date// 40152
-  ProvisionOptionExpirationTime?: string// 40153
-  ProvisionOptionExpirationTimeBusinessCenter?: string// 40154
-  ProvisionOptionExpirationDateBusinessCenterGrp?: IProvisionOptionExpirationDateBusinessCenterGrp[]
+  ProvisionOptionExpirationDateUnadjusted?: Date// [1] 40145 (LocalDate)
+  ProvisionOptionExpirationDateBusinessDayConvention?: number// [1] 40146 (Int)
+  ProvisionOptionExpirationDateRelativeTo?: number// [1] 40148 (Int)
+  ProvisionOptionExpirationDateOffsetPeriod?: number// [1] 40149 (Int)
+  ProvisionOptionExpirationDateOffsetUnit?: string// [1] 40150 (String)
+  ProvisionOptionExpirationDateOffsetDayType?: number// [1] 40151 (Int)
+  ProvisionOptionExpirationDateAdjusted?: Date// [1] 40152 (LocalDate)
+  ProvisionOptionExpirationTime?: string// [1] 40153 (String)
+  ProvisionOptionExpirationTimeBusinessCenter?: string// [1] 40154 (String)
+  ProvisionOptionExpirationDateBusinessCenterGrp?: IProvisionOptionExpirationDateBusinessCenterGrp[]// [1] Ctr.40147
 }

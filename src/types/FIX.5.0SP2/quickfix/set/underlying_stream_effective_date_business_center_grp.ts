@@ -1,0 +1,5 @@
+import { IUnderlyingStreamEffectiveDateBusinessCenterGrpNoUnderlyingStreamEffectiveDateBusinessCenters } from './underlying_stream_effective_date_business_center_grp_no_underlying_stream_effective_date_business_centers'
+
+export interface IUnderlyingStreamEffectiveDateBusinessCenterGrp {
+  NoUnderlyingStreamEffectiveDateBusinessCenters?: IUnderlyingStreamEffectiveDateBusinessCenterGrpNoUnderlyingStreamEffectiveDateBusinessCenters[]// [1] UnderlyingStreamEffectiveDateBusinessCenter.40059
+}

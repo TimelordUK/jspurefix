@@ -1,4 +1,4 @@
 export interface IPaymentStreamCompoundingDateGrp {
-  PaymentStreamCompoundingDate?: Date// 42607
-  PaymentStreamCompoundingDateType?: number// 42608
+  PaymentStreamCompoundingDate?: Date// [1] 42607 (LocalDate)
+  PaymentStreamCompoundingDateType?: number// [1] 42608 (Int)
 }

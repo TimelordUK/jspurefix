@@ -1,0 +1,5 @@
+import { IUnderlyingStreamCommoditySettlDayGrpNoUnderlyingStreamCommoditySettlDays } from './underlying_stream_commodity_settl_day_grp_no_underlying_stream_commodity_settl_days'
+
+export interface IUnderlyingStreamCommoditySettlDayGrp {
+  NoUnderlyingStreamCommoditySettlDays?: IUnderlyingStreamCommoditySettlDayGrpNoUnderlyingStreamCommoditySettlDays[]// [1] UnderlyingStreamCommoditySettlDay.41997, UnderlyingStreamCommoditySettlTotalHours.41998 .. UnderlyingStreamCommoditySettlTimeType.41936
+}

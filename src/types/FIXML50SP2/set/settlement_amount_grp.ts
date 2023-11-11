@@ -1,4 +1,4 @@
 export interface ISettlementAmountGrp {
-  SettlementAmount?: number// 1701
-  SettlementAmountCurrency?: string// 1702
+  SettlementAmount?: number// [1] 1701 (Float)
+  SettlementAmountCurrency?: string// [1] 1702 (String)
 }

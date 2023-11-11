@@ -1,3 +1,3 @@
 export interface ILegStreamCommoditySettlBusinessCenterGrp {
-  LegStreamCommoditySettlBusinessCenter?: string// 41647
+  LegStreamCommoditySettlBusinessCenter?: string// [1] 41647 (String)
 }

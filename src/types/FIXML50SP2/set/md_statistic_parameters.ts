@@ -1,33 +1,33 @@
 export interface IMDStatisticParameters {
-  MiscFeeType: string// 139
-  Scope: string// 546
-  MDStatisticSubScope?: number// 2458
-  MDStatisticScopeType?: number// 2459
-  MDStatisticName?: string// 2454
-  MDStatisticDesc?: string// 2455
-  EncodedMDStatisticDescLen?: number// 2481
-  EncodedMDStatisticDesc?: Buffer// 2482
-  MarketDepth?: number// 264
-  MDStatisticFrequencyPeriod?: number// 2460
-  MDStatisticFrequencyUnit?: number// 2461
-  MDStatisticDelayPeriod?: number// 2462
-  MDStatisticDelayUnit?: number// 2463
-  MDStatisticIntervalType: number// 2464
-  MDStatisticIntervalTypeUnit?: string// 2465
-  MDStatisticIntervalPeriod?: number// 2466
-  MDStatisticIntervalUnit?: number// 2467
-  MDStatisticStartDate?: Date// 2468
-  MDStatisticEndDate?: Date// 2469
-  MDStatisticStartTime?: Date// 2470
-  MDStatisticEndTime?: Date// 2471
-  MDStatisticRatioType?: number// 2472
-  TradingCapacity?: number// 1815
-  OrdType?: string// 40
-  TimeInForce?: string// 59
-  QuoteCondition?: string// 276
-  TradeCondition?: string// 277
-  Side?: string// 54
-  TradeInputSource?: string// 578
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
+  MiscFeeType: string// [1] 139 (String)
+  Scope: string// [1] 546 (String)
+  MDStatisticSubScope?: number// [1] 2458 (Int)
+  MDStatisticScopeType?: number// [1] 2459 (Int)
+  MDStatisticName?: string// [1] 2454 (String)
+  MDStatisticDesc?: string// [1] 2455 (String)
+  EncodedMDStatisticDescLen?: number// [1] 2481 (Length)
+  EncodedMDStatisticDesc?: Buffer// [1] 2482 (RawData)
+  MarketDepth?: number// [1] 264 (Int)
+  MDStatisticFrequencyPeriod?: number// [1] 2460 (Int)
+  MDStatisticFrequencyUnit?: number// [1] 2461 (Int)
+  MDStatisticDelayPeriod?: number// [1] 2462 (Int)
+  MDStatisticDelayUnit?: number// [1] 2463 (Int)
+  MDStatisticIntervalType: number// [1] 2464 (Int)
+  MDStatisticIntervalTypeUnit?: string// [1] 2465 (String)
+  MDStatisticIntervalPeriod?: number// [1] 2466 (Int)
+  MDStatisticIntervalUnit?: number// [1] 2467 (Int)
+  MDStatisticStartDate?: Date// [1] 2468 (UtcTimestamp)
+  MDStatisticEndDate?: Date// [1] 2469 (UtcTimestamp)
+  MDStatisticStartTime?: Date// [1] 2470 (UtcTimeOnly)
+  MDStatisticEndTime?: Date// [1] 2471 (UtcTimeOnly)
+  MDStatisticRatioType?: number// [1] 2472 (Int)
+  TradingCapacity?: number// [1] 1815 (Int)
+  OrdType?: string// [1] 40 (String)
+  TimeInForce?: string// [1] 59 (String)
+  QuoteCondition?: string// [1] 276 (String)
+  TradeCondition?: string// [1] 277 (String)
+  Side?: string// [1] 54 (String)
+  TradeInputSource?: string// [1] 578 (String)
+  TradingSessionID?: string// [1] 336 (String)
+  TradingSessionSubID?: string// [1] 625 (String)
 }

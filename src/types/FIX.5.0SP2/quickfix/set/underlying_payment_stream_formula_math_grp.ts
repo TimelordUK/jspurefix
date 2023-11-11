@@ -1,0 +1,5 @@
+import { IUnderlyingPaymentStreamFormulaMathGrpNoUnderlyingPaymentStreamFormulas } from './underlying_payment_stream_formula_math_grp_no_underlying_payment_stream_formulas'
+
+export interface IUnderlyingPaymentStreamFormulaMathGrp {
+  NoUnderlyingPaymentStreamFormulas?: IUnderlyingPaymentStreamFormulaMathGrpNoUnderlyingPaymentStreamFormulas[]// [1] UnderlyingPaymentStreamFormulaLength.43111, UnderlyingPaymentStreamFormula.42982, UnderlyingPaymentStreamFormulaDesc.42983
+}

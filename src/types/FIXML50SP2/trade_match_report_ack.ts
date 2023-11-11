@@ -9,15 +9,15 @@ import { IApplicationSequenceControl } from './set/application_sequence_control'
 *******************************************************
 */
 export interface ITradeMatchReportAck {
-  TrdMatchID: string// 880
-  TradeMatchAckStatus: number// 1896
-  OrdRejReason?: number// 103
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
+  TrdMatchID: string// [2] 880 (String)
+  TradeMatchAckStatus: number// [2] 1896 (Int)
+  OrdRejReason?: number// [2] 103 (Int)
+  RejectText?: string// [2] 1328 (String)
+  EncodedRejectTextLen?: number// [2] 1664 (Length)
+  EncodedRejectText?: Buffer// [2] 1665 (RawData)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
 }

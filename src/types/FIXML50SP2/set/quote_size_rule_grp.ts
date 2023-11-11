@@ -1,5 +1,5 @@
 export interface IQuoteSizeRuleGrp {
-  MinBidSize?: number// 647
-  MinOfferSize?: number// 648
-  FastMarketIndicator?: boolean// 2447
+  MinBidSize?: number// [1] 647 (Float)
+  MinOfferSize?: number// [1] 648 (Float)
+  FastMarketIndicator?: boolean// [1] 2447 (Boolean)
 }

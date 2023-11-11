@@ -1,8 +1,8 @@
 export interface IPaymentStreamFinalPricePaymentDate {
-  PaymentStreamFinalPricePaymentDateUnadjusted?: Date// 42654
-  PaymentStreamFinalPricePaymentDateRelativeTo?: number// 42655
-  PaymentStreamFinalPricePaymentDateOffsetfPeriod?: number// 42656
-  PaymentStreamFinalPricePaymentDateOffsetUnit?: string// 42657
-  PaymentStreamFinalPricePaymentDateOffsetDayType?: number// 42658
-  PaymentStreamFinalPricePaymentDateAdjusted?: Date// 42659
+  PaymentStreamFinalPricePaymentDateUnadjusted?: Date// [1] 42654 (LocalDate)
+  PaymentStreamFinalPricePaymentDateRelativeTo?: number// [1] 42655 (Int)
+  PaymentStreamFinalPricePaymentDateOffsetfPeriod?: number// [1] 42656 (Int)
+  PaymentStreamFinalPricePaymentDateOffsetUnit?: string// [1] 42657 (String)
+  PaymentStreamFinalPricePaymentDateOffsetDayType?: number// [1] 42658 (Int)
+  PaymentStreamFinalPricePaymentDateAdjusted?: Date// [1] 42659 (LocalDate)
 }

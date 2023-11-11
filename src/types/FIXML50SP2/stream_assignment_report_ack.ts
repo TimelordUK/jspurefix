@@ -8,11 +8,11 @@ import { IStandardHeader } from './set/standard_header'
 *************************************************************
 */
 export interface IStreamAssignmentReportACK {
-  StreamAsgnAckType: number// 1503
-  StreamAsgnRptID: string// 1501
-  OrdRejReason?: number// 103
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
+  StreamAsgnAckType: number// [2] 1503 (Int)
+  StreamAsgnRptID: string// [2] 1501 (String)
+  OrdRejReason?: number// [2] 103 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
 }

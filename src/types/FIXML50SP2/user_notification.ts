@@ -10,11 +10,11 @@ import { IThrottleParamsGrp } from './set/throttle_params_grp'
 ****************************************************
 */
 export interface IUserNotification {
-  UserStatus: number// 926
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  UsernameGrp?: IUsernameGrp[]
-  ThrottleParamsGrp?: IThrottleParamsGrp[]
+  UserStatus: number// [2] 926 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  UsernameGrp?: IUsernameGrp[]// [2] Username.553
+  ThrottleParamsGrp?: IThrottleParamsGrp[]// [3] Actn.1611, Typ.1612 .. TmUnit.1615
 }

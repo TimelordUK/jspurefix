@@ -1,16 +1,10 @@
 import 'reflect-metadata'
 
 import { TagPos } from '../../buffer'
-import { FixDefinitions } from '../../dictionary/definition'
-import { JsonHelper } from '../../util'
-import { IJsFixConfig, MsgType } from '../../index'
+import { MsgType } from '../../index'
 import { Setup } from '../env/setup'
 import { SegmentType } from '../../buffer/segment/segment-type'
 import { ParsingResult } from '../env/parsing-result'
-
-let config: IJsFixConfig
-let definitions: FixDefinitions
-let jsonHelper: JsonHelper
 
 const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57=sub-a|52=20180610-10:39:01.621|98=2|108=62441|95=20|96=VgfoSqo56NqSVI1fLdlI|141=Y|789=4886|383=20|384=1|372=ipsum|385=R|464=N|553=sit|554=consectetur|10=49|'
 const expectedTagPos = [
@@ -42,44 +36,40 @@ beforeAll(async () => {
   expect.assertions(1)
   setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
   await setup.init()
-  definitions = setup.definitions
-  config = setup.clientConfig
-  definitions = setup.definitions
-  jsonHelper = new JsonHelper(definitions)
 }, 45000)
 
 test('begin string incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(
     new Error('BeginString: not expected at position [2]')
   )
 })
 
 test('body length incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|9=101|9=101|')).rejects.toEqual(
     new Error('BodyLengthTag: not expected at position [3]')
   )
 })
 
 test('msg type incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|9=101|35=A|35=A|')).rejects.toEqual(
     new Error('MsgTag: not expected at position [4]')
   )
 })
 
 test('do not start with 8=', async () => {
-  return await expect(setup.client.parseText('59=FIX4.4|')).rejects.toEqual(
+  await expect(setup.client.parseText('59=FIX4.4|')).rejects.toEqual(
     new Error('position 1 [59] must be BeginString: 8=')
   )
 })
 
 test('body length incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|59=101|9=101|')).rejects.toEqual(
     new Error('position 2 [59] must be BodyLengthTag: 9=')
   )
 })
 
 test('msgTag incorrectly placed', async () => {
-  return await expect(setup.client.parseText('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
+  await expect(setup.client.parseText('8=FIX4.4|9=101|59=A|')).rejects.toEqual(
     new Error('position 3 [59] must be MsgTag: 35=')
   )
 })
@@ -116,7 +106,7 @@ test('logon parsers to correct tag set', async () => {
 test('tags other than 10 past body length', async () => {
   const begin = '8=FIX4.4|9=0000208|'
   const changed = logon.replace('10=49|', '555=you know nothin|10=49')
-  return await expect(setup.client.parseText(changed)).rejects.toEqual(
+  await expect(setup.client.parseText(changed)).rejects.toEqual(
     new Error(`Tag: [555] cant be after ${208 + begin.length - 1}`)
   )
 })

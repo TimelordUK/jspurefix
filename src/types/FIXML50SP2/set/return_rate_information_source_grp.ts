@@ -1,5 +1,5 @@
 export interface IReturnRateInformationSourceGrp {
-  ReturnRateInformationSource?: number// 42762
-  ReturnRateReferencePage?: string// 42763
-  ReturnRateReferencePageHeading?: string// 42764
+  ReturnRateInformationSource?: number// [1] 42762 (Int)
+  ReturnRateReferencePage?: string// [1] 42763 (String)
+  ReturnRateReferencePageHeading?: string// [1] 42764 (String)
 }

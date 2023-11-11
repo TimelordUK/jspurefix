@@ -1,12 +1,12 @@
 export interface IRelatedInstrumentGrp {
-  RelatedInstrumentType?: number// 1648
-  RelatedSymbol?: string// 1649
-  RelatedSecurityID?: string// 1650
-  SecurityIDSource?: string// 22
-  RelatedSecurityType?: string// 1652
-  RelatedMaturityMonthYear?: string// 1653
-  RelatedToSecurityID?: string// 2413
-  RelatedToSecurityIDSource?: string// 2414
-  RelatedToStreamXIDRef?: string// 2415
-  RelatedToDividendPeriodXIDRef?: string// 2417
+  RelatedInstrumentType?: number// [1] 1648 (Int)
+  RelatedSymbol?: string// [1] 1649 (String)
+  RelatedSecurityID?: string// [1] 1650 (String)
+  SecurityIDSource?: string// [1] 22 (String)
+  RelatedSecurityType?: string// [1] 1652 (String)
+  RelatedMaturityMonthYear?: string// [1] 1653 (String)
+  RelatedToSecurityID?: string// [1] 2413 (String)
+  RelatedToSecurityIDSource?: string// [1] 2414 (String)
+  RelatedToStreamXIDRef?: string// [1] 2415 (String)
+  RelatedToDividendPeriodXIDRef?: string// [1] 2417 (String)
 }

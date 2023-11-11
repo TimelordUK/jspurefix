@@ -39,7 +39,7 @@ export class EnumCompiler {
   public async generate (asOneFile: string | null = null): Promise<void> {
     this.generateTagEnum('MsgTag').then(async () => {
       const toDo: SimpleFieldDefinition[] = this.toDo()
-      const promised = toDo.map(async field => await this.oneEnum(field, asOneFile))
+      const promised = toDo.map(async field => { await this.oneEnum(field, asOneFile) })
       await Promise.all(promised)
       if (asOneFile) {
         await this.writeAsOne(asOneFile)

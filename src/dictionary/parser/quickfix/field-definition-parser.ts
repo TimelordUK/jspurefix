@@ -1,12 +1,12 @@
-import { FixDefinitions, SimpleFieldDefinition } from '../../definition'
+import { SimpleFieldDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
 import { ISaxNode } from '../../sax-node'
+import { ParseProgress } from './parse-progress'
 
 export class FieldDefinitionParser extends NodeParser {
   private currentField: SimpleFieldDefinition
-
-  constructor (definitions: FixDefinitions, public passes: number) {
-    super(definitions, passes)
+  constructor (protected readonly progress: ParseProgress) {
+    super(progress)
   }
 
   public open (line: number, node: ISaxNode): void {
@@ -20,7 +20,8 @@ export class FieldDefinitionParser extends NodeParser {
           null,
           node.attributes.type,
           null)
-        this.definitions.addSimpleFieldDef(this.currentField)
+        this.progress.newDefines++
+        this.progress.definitions.addSimpleFieldDef(this.currentField)
         break
       }
 

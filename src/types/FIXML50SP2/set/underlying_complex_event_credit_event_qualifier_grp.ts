@@ -1,3 +1,3 @@
 export interface IUnderlyingComplexEventCreditEventQualifierGrp {
-  UnderlyingComplexEventCreditEventQualifier?: string// 41725
+  UnderlyingComplexEventCreditEventQualifier?: string// [1] 41725 (String)
 }

@@ -1,3 +1,3 @@
 export interface ILegProvisionOptionRelevantUnderlyingDateBusinessCenterGrp {
-  LegProvisionOptionRelevantUnderlyingDateBusinessCenter?: string// 40510
+  LegProvisionOptionRelevantUnderlyingDateBusinessCenter?: string// [1] 40510 (String)
 }

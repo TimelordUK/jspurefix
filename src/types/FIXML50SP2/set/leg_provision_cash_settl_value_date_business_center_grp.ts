@@ -1,3 +1,3 @@
 export interface ILegProvisionCashSettlValueDateBusinessCenterGrp {
-  LegProvisionCashSettlValueDateBusinessCenter?: string// 40527
+  LegProvisionCashSettlValueDateBusinessCenter?: string// [1] 40527 (String)
 }

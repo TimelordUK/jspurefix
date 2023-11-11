@@ -1,0 +1,5 @@
+import { ILegComplexEventCreditEventQualifierGrpNoLegComplexEventCreditEventQualifiers } from './leg_complex_event_credit_event_qualifier_grp_no_leg_complex_event_credit_event_qualifiers'
+
+export interface ILegComplexEventCreditEventQualifierGrp {
+  NoLegComplexEventCreditEventQualifiers?: ILegComplexEventCreditEventQualifierGrpNoLegComplexEventCreditEventQualifiers[]// [1] LegComplexEventCreditEventQualifier.41375
+}

@@ -1,3 +1,3 @@
 export interface IProvisionDateBusinessCenterGrp {
-  ProvisionDateBusinessCenter?: string// 40094
+  ProvisionDateBusinessCenter?: string// [1] 40094 (String)
 }

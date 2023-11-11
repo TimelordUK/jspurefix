@@ -1,20 +1,20 @@
 export interface IUnderlyingAdditionalTermBondRefGrp {
-  UnderlyingAdditionalTermBondSecurityID?: string// 41341
-  SecurityIDSource?: string// 22
-  UnderlyingAdditionalTermBondDesc?: string// 41709
-  EncodedUnderlyingAdditionalTermBondDescLen?: number// 41710
-  EncodedUnderlyingAdditionalTermBondDesc?: Buffer// 41711
-  UnderlyingAdditionalTermBondCurrency?: string// 41712
-  UnderlyingAdditionalTermBondIssuer?: string// 42017
-  EncodedUnderlyingAdditionalTermBondIssuerLen?: number// 42025
-  EncodedUnderlyingAdditionalTermBondIssuer?: Buffer// 42026
-  UnderlyingAdditionalTermBondSeniority?: string// 42027
-  UnderlyingAdditionalTermBondCouponType?: number// 42028
-  UnderlyingAdditionalTermBondCouponRate?: number// 42029
-  UnderlyingAdditionalTermBondMaturityDate?: Date// 42030
-  UnderlyingAdditionalTermBondParValue?: number// 42031
-  UnderlyingAdditionalTermBondCurrentTotalIssuedAmount?: number// 42032
-  UnderlyingAdditionalTermBondCouponFrequencyPeriod?: number// 42033
-  UnderlyingAdditionalTermBondCouponFrequencyUnit?: string// 42034
-  AdditionalTermBondDayCount?: number// 40018
+  UnderlyingAdditionalTermBondSecurityID?: string// [1] 41341 (String)
+  SecurityIDSource?: string// [1] 22 (String)
+  UnderlyingAdditionalTermBondDesc?: string// [1] 41709 (String)
+  EncodedUnderlyingAdditionalTermBondDescLen?: number// [1] 41710 (Length)
+  EncodedUnderlyingAdditionalTermBondDesc?: Buffer// [1] 41711 (RawData)
+  UnderlyingAdditionalTermBondCurrency?: string// [1] 41712 (String)
+  UnderlyingAdditionalTermBondIssuer?: string// [1] 42017 (String)
+  EncodedUnderlyingAdditionalTermBondIssuerLen?: number// [1] 42025 (Length)
+  EncodedUnderlyingAdditionalTermBondIssuer?: Buffer// [1] 42026 (RawData)
+  UnderlyingAdditionalTermBondSeniority?: string// [1] 42027 (String)
+  UnderlyingAdditionalTermBondCouponType?: number// [1] 42028 (Int)
+  UnderlyingAdditionalTermBondCouponRate?: number// [1] 42029 (Float)
+  UnderlyingAdditionalTermBondMaturityDate?: Date// [1] 42030 (LocalDate)
+  UnderlyingAdditionalTermBondParValue?: number// [1] 42031 (Float)
+  UnderlyingAdditionalTermBondCurrentTotalIssuedAmount?: number// [1] 42032 (Float)
+  UnderlyingAdditionalTermBondCouponFrequencyPeriod?: number// [1] 42033 (Int)
+  UnderlyingAdditionalTermBondCouponFrequencyUnit?: string// [1] 42034 (String)
+  AdditionalTermBondDayCount?: number// [1] 40018 (Int)
 }

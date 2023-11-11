@@ -1,3 +1,3 @@
 export interface IProvisionCashSettlPaymentDateBusinessCenterGrp {
-  ProvisionCashSettlPaymentDateBusinessCenter?: string// 40164
+  ProvisionCashSettlPaymentDateBusinessCenter?: string// [1] 40164 (String)
 }

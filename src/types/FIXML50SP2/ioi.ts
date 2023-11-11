@@ -23,37 +23,37 @@ import { IYieldData } from './set/yield_data'
 ***************************************
 */
 export interface IIOI {
-  IOIID: string// 23
-  IOITransType: string// 28
-  IOIRefID?: string// 26
-  Side: string// 54
-  QtyType?: number// 854
-  IOIQty: string// 27
-  Currency?: string// 15
-  PriceType?: number// 423
-  Price?: number// 44
-  ValidUntilTime?: Date// 62
-  IOIQltyInd?: string// 25
-  IOINaturalFlag?: boolean// 130
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  TransactTime?: Date// 60
-  URLLink?: string// 149
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
-  Instrument?: IInstrument
-  InstrumentExtension?: IInstrumentExtension
-  Parties?: IParties[]
-  FinancingDetails?: IFinancingDetails
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]
-  OrderQtyData?: IOrderQtyData
-  Stipulations?: IStipulations[]
-  InstrmtLegIOIGrp?: IInstrmtLegIOIGrp[]
-  IOIQualGrp?: IIOIQualGrp[]
-  RoutingGrp?: IRoutingGrp[]
-  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData
-  RelativeValueGrp?: IRelativeValueGrp[]
-  YieldData?: IYieldData
+  IOIID: string// [2] 23 (String)
+  IOITransType: string// [2] 28 (String)
+  IOIRefID?: string// [2] 26 (String)
+  Side: string// [2] 54 (String)
+  QtyType?: number// [2] 854 (Int)
+  IOIQty: string// [2] 27 (String)
+  Currency?: string// [2] 15 (String)
+  PriceType?: number// [2] 423 (Int)
+  Price?: number// [2] 44 (Float)
+  ValidUntilTime?: Date// [2] 62 (UtcTimestamp)
+  IOIQltyInd?: string// [2] 25 (String)
+  IOINaturalFlag?: boolean// [2] 130 (Boolean)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  URLLink?: string// [2] 149 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
+  Instrument?: IInstrument// [3] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  InstrumentExtension?: IInstrumentExtension// [4] DlvryForm.668, PctAtRisk.869
+  Parties?: IParties[]// [5] ID.448, Src.447 .. Qual.2376
+  FinancingDetails?: IFinancingDetails// [6] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [7] Sym.311, Sfx.312 .. XID.2631
+  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]// [8] InstrmtTyp.1648, Sym.1649 .. XIDRef.2417
+  OrderQtyData?: IOrderQtyData// [9] Qty.38, Cash.152 .. RndMod.469
+  Stipulations?: IStipulations[]// [10] Typ.233, Val.234
+  InstrmtLegIOIGrp?: IInstrmtLegIOIGrp[]// [11] IOIQty.27
+  IOIQualGrp?: IIOIQualGrp[]// [12] Qual.104
+  RoutingGrp?: IRoutingGrp[]// [13] RtgTyp.216, RtgID.217
+  SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [14] Spread.218, Ccy.220 .. SecIDSrc.761
+  RelativeValueGrp?: IRelativeValueGrp[]// [15] Typ.139, Val.2531, Side.2532
+  YieldData?: IYieldData// [16] Typ.235, Yld.236 .. RedPxTyp.698
 }

@@ -1,3 +1,3 @@
 export interface IUnderlyingDividendPeriodBusinessCenterGrp {
-  UnderlyingDividendPeriodBusinessCenter?: string// 42883
+  UnderlyingDividendPeriodBusinessCenter?: string// [1] 42883 (String)
 }

@@ -1,11 +1,11 @@
 export interface IDisplayInstruction {
-  DisplayQty?: number// 1138
-  SecondaryDisplayQty?: number// 1082
-  InitialDisplayQty?: number// 1608
-  DisplayWhen?: string// 1083
-  DisplayMethod?: string// 1084
-  DisplayLowQty?: number// 1085
-  DisplayHighQty?: number// 1086
-  DisplayMinIncr?: number// 1087
-  RefreshQty?: number// 1088
+  DisplayQty?: number// [1] 1138 (Float)
+  SecondaryDisplayQty?: number// [1] 1082 (Float)
+  InitialDisplayQty?: number// [1] 1608 (Float)
+  DisplayWhen?: string// [1] 1083 (String)
+  DisplayMethod?: string// [1] 1084 (String)
+  DisplayLowQty?: number// [1] 1085 (Float)
+  DisplayHighQty?: number// [1] 1086 (Float)
+  DisplayMinIncr?: number// [1] 1087 (Float)
+  RefreshQty?: number// [1] 1088 (Float)
 }

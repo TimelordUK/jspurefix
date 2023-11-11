@@ -1,4 +1,4 @@
 export interface IUnderlyingProtectionTermObligationGrp {
-  UnderlyingProtectionTermObligationType?: string// 42088
-  UnderlyingProtectionTermObligationValue?: string// 42089
+  UnderlyingProtectionTermObligationType?: string// [1] 42088 (String)
+  UnderlyingProtectionTermObligationValue?: string// [1] 42089 (String)
 }

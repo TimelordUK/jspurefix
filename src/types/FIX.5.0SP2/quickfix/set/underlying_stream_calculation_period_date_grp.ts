@@ -1,0 +1,5 @@
+import { IUnderlyingStreamCalculationPeriodDateGrpNoUnderlyingStreamCalculationPeriodDates } from './underlying_stream_calculation_period_date_grp_no_underlying_stream_calculation_period_dates'
+
+export interface IUnderlyingStreamCalculationPeriodDateGrp {
+  NoUnderlyingStreamCalculationPeriodDates?: IUnderlyingStreamCalculationPeriodDateGrpNoUnderlyingStreamCalculationPeriodDates[]// [1] UnderlyingStreamCalculationPeriodDate.41955, UnderlyingStreamCalculationPeriodDateType.41956
+}

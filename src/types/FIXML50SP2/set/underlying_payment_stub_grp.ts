@@ -2,35 +2,35 @@ import { IUnderlyingPaymentStubStartDate } from './underlying_payment_stub_start
 import { IUnderlyingPaymentStubEndDate } from './underlying_payment_stub_end_date'
 
 export interface IUnderlyingPaymentStubGrp {
-  UnderlyingPaymentStubType?: number// 40709
-  UnderlyingPaymentStubLength?: number// 40710
-  UnderlyingPaymentStubRate?: number// 40711
-  UnderlyingPaymentStubFixedAmount?: number// 40712
-  UnderlyingPaymentStubFixedCurrency?: string// 40713
-  UnderlyingPaymentStubIndex?: string// 40714
-  UnderlyingPaymentStubIndexSource?: number// 40715
-  UnderlyingPaymentStubIndexCurvePeriod?: number// 40716
-  UnderlyingPaymentStubIndexCurveUnit?: string// 40717
-  UnderlyingPaymentStubIndexRateMultiplier?: number// 40718
-  UnderlyingPaymentStubIndexRateSpread?: number// 40719
-  UnderlyingPaymentStubIndexRateSpreadPositionType?: number// 40720
-  UnderlyingPaymentStubIndexRateTreatment?: number// 40721
-  UnderlyingPaymentStubIndexCapRate?: number// 40722
-  UnderlyingPaymentStubIndexCapRateBuySide?: number// 40723
-  UnderlyingPaymentStubIndexCapRateSellSide?: number// 40724
-  UnderlyingPaymentStubIndexFloorRate?: number// 40725
-  UnderlyingPaymentStubIndexFloorRateBuySide?: number// 40726
-  UnderlyingPaymentStubIndexFloorRateSellSide?: number// 40727
-  UnderlyingPaymentStubIndex2?: string// 40728
-  UnderlyingPaymentStubIndex2Source?: number// 40729
-  UnderlyingPaymentStubIndex2CurvePeriod?: number// 40730
-  UnderlyingPaymentStubIndex2CurveUnit?: string// 40731
-  UnderlyingPaymentStubIndex2RateMultiplier?: number// 40732
-  UnderlyingPaymentStubIndex2RateSpread?: number// 40733
-  UnderlyingPaymentStubIndex2RateSpreadPositionType?: number// 40734
-  UnderlyingPaymentStubIndex2RateTreatment?: number// 40735
-  UnderlyingPaymentStubIndex2CapRate?: number// 40736
-  UnderlyingPaymentStubIndex2FloorRate?: number// 40737
-  UnderlyingPaymentStubStartDate?: IUnderlyingPaymentStubStartDate
-  UnderlyingPaymentStubEndDate?: IUnderlyingPaymentStubEndDate
+  UnderlyingPaymentStubType?: number// [1] 40709 (Int)
+  UnderlyingPaymentStubLength?: number// [1] 40710 (Int)
+  UnderlyingPaymentStubRate?: number// [1] 40711 (Float)
+  UnderlyingPaymentStubFixedAmount?: number// [1] 40712 (Float)
+  UnderlyingPaymentStubFixedCurrency?: string// [1] 40713 (String)
+  UnderlyingPaymentStubIndex?: string// [1] 40714 (String)
+  UnderlyingPaymentStubIndexSource?: number// [1] 40715 (Int)
+  UnderlyingPaymentStubIndexCurvePeriod?: number// [1] 40716 (Int)
+  UnderlyingPaymentStubIndexCurveUnit?: string// [1] 40717 (String)
+  UnderlyingPaymentStubIndexRateMultiplier?: number// [1] 40718 (Float)
+  UnderlyingPaymentStubIndexRateSpread?: number// [1] 40719 (Float)
+  UnderlyingPaymentStubIndexRateSpreadPositionType?: number// [1] 40720 (Int)
+  UnderlyingPaymentStubIndexRateTreatment?: number// [1] 40721 (Int)
+  UnderlyingPaymentStubIndexCapRate?: number// [1] 40722 (Float)
+  UnderlyingPaymentStubIndexCapRateBuySide?: number// [1] 40723 (Int)
+  UnderlyingPaymentStubIndexCapRateSellSide?: number// [1] 40724 (Int)
+  UnderlyingPaymentStubIndexFloorRate?: number// [1] 40725 (Float)
+  UnderlyingPaymentStubIndexFloorRateBuySide?: number// [1] 40726 (Int)
+  UnderlyingPaymentStubIndexFloorRateSellSide?: number// [1] 40727 (Int)
+  UnderlyingPaymentStubIndex2?: string// [1] 40728 (String)
+  UnderlyingPaymentStubIndex2Source?: number// [1] 40729 (Int)
+  UnderlyingPaymentStubIndex2CurvePeriod?: number// [1] 40730 (Int)
+  UnderlyingPaymentStubIndex2CurveUnit?: string// [1] 40731 (String)
+  UnderlyingPaymentStubIndex2RateMultiplier?: number// [1] 40732 (Float)
+  UnderlyingPaymentStubIndex2RateSpread?: number// [1] 40733 (Float)
+  UnderlyingPaymentStubIndex2RateSpreadPositionType?: number// [1] 40734 (Int)
+  UnderlyingPaymentStubIndex2RateTreatment?: number// [1] 40735 (Int)
+  UnderlyingPaymentStubIndex2CapRate?: number// [1] 40736 (Float)
+  UnderlyingPaymentStubIndex2FloorRate?: number// [1] 40737 (Float)
+  UnderlyingPaymentStubStartDate?: IUnderlyingPaymentStubStartDate// [1] DtUnadj.42993, BizDayCnvtn.42994 .. Dt.42999
+  UnderlyingPaymentStubEndDate?: IUnderlyingPaymentStubEndDate// [2] DtUnadj.42984, BizDayCnvtn.42985 .. Dt.42990
 }

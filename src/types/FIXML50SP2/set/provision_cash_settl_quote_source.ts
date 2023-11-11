@@ -1,4 +1,4 @@
 export interface IProvisionCashSettlQuoteSource {
-  ProvisionCashSettlQuoteSource?: number// 40112
-  ProvisionCashSettlQuoteReferencePage?: string// 41406
+  ProvisionCashSettlQuoteSource?: number// [1] 40112 (Int)
+  ProvisionCashSettlQuoteReferencePage?: string// [1] 41406 (String)
 }

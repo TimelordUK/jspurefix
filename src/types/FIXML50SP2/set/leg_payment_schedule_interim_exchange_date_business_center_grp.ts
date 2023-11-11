@@ -1,3 +1,3 @@
 export interface ILegPaymentScheduleInterimExchangeDateBusinessCenterGrp {
-  LegPaymentScheduleInterimExchangeDatesBusinessCenter?: string// 40409
+  LegPaymentScheduleInterimExchangeDatesBusinessCenter?: string// [1] 40409 (String)
 }

@@ -1,5 +1,5 @@
 export interface IContAmtGrp {
-  ContAmtType?: number// 519
-  ContAmtValue?: number// 520
-  ContAmtCurr?: string// 521
+  ContAmtType?: number// [1] 519 (Int)
+  ContAmtValue?: number// [1] 520 (Float)
+  ContAmtCurr?: string// [1] 521 (String)
 }

@@ -8,16 +8,16 @@ import { IStandardHeader } from './set/standard_header'
 *******************************************************
 */
 export interface ISecurityTypeRequest {
-  SecurityReqID: string// 320
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  Product?: number// 460
-  SecurityType?: string// 167
-  SecuritySubType?: string// 762
-  StandardHeader?: IStandardHeader
+  SecurityReqID: string// [2] 320 (String)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  Product?: number// [2] 460 (Int)
+  SecurityType?: string// [2] 167 (String)
+  SecuritySubType?: string// [2] 762 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
 }

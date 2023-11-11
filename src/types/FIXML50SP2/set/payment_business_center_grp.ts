@@ -1,3 +1,3 @@
 export interface IPaymentBusinessCenterGrp {
-  PaymentBusinessCenter?: string// 40221
+  PaymentBusinessCenter?: string// [1] 40221 (String)
 }

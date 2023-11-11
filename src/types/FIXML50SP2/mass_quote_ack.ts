@@ -12,26 +12,26 @@ import { IThrottleResponse } from './set/throttle_response'
 ************************************************
 */
 export interface IMassQuoteAck {
-  QuoteReqID?: string// 131
-  QuoteID?: string// 117
-  QuoteStatus: number// 297
-  OrdRejReason?: number// 103
-  QuoteResponseLevel?: number// 301
-  QuoteType?: number// 537
-  QuoteCancelType?: number// 298
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  ComplianceID?: string// 376
-  ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: number// 2351
-  EncodedComplianceText?: Buffer// 2352
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
-  TargetParties?: ITargetParties[]
-  QuotSetAckGrp?: IQuotSetAckGrp[]
-  ThrottleResponse?: IThrottleResponse
+  QuoteReqID?: string// [2] 131 (String)
+  QuoteID?: string// [2] 117 (String)
+  QuoteStatus: number// [2] 297 (Int)
+  OrdRejReason?: number// [2] 103 (Int)
+  QuoteResponseLevel?: number// [2] 301 (Int)
+  QuoteType?: number// [2] 537 (Int)
+  QuoteCancelType?: number// [2] 298 (Int)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  ComplianceID?: string// [2] 376 (String)
+  ComplianceText?: string// [2] 2404 (String)
+  EncodedComplianceTextLen?: number// [2] 2351 (Length)
+  EncodedComplianceText?: Buffer// [2] 2352 (RawData)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
+  TargetParties?: ITargetParties[]// [3] ID.1462, Src.1463 .. Qual.1818
+  QuotSetAckGrp?: IQuotSetAckGrp[]// [4] SetID.302, ValidTil.367 .. LastFragment.893
+  ThrottleResponse?: IThrottleResponse// [5] ThrttlInst.1685, ThrttlStat.1609, ThrttlCntInd.1686
 }

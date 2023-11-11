@@ -9,20 +9,20 @@ export class EmptyLogger implements IJsFixLogger {
   constructor (public readonly type: string = '') {
   }
 
-  public info (message: string): void {
+  public info (_: string): void {
     // nothing
   }
 
-  public warning (message: string): void {
+  public warning (_: string): void {
     // nothing
   }
 
-  public debug (message: string): void {
+  public debug (_: string): void {
     // nothing
   }
 
   // eslint-disable-next-line n/handle-callback-err
-  public error (error: Error): void {
+  public error (_: Error): void {
     // nothing
   }
 }

@@ -1,0 +1,5 @@
+import { IUnderlyingPaymentStreamNonDeliverableFixingDateGrpNoUnderlyingNonDeliverableFixingDates } from './underlying_payment_stream_non_deliverable_fixing_date_grp_no_underlying_non_deliverable_fixing_dates'
+
+export interface IUnderlyingPaymentStreamNonDeliverableFixingDateGrp {
+  NoUnderlyingNonDeliverableFixingDates?: IUnderlyingPaymentStreamNonDeliverableFixingDateGrpNoUnderlyingNonDeliverableFixingDates[]// [1] UnderlyingNonDeliverableFixingDate.40657, UnderlyingNonDeliverableFixingDateType.40658
+}

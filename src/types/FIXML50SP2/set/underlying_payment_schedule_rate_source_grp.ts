@@ -1,5 +1,5 @@
 export interface IUnderlyingPaymentScheduleRateSourceGrp {
-  UnderlyingPaymentScheduleRateSource?: number// 40705
-  UnderlyingPaymentScheduleRateSourceType?: number// 40706
-  UnderlyingPaymentScheduleReferencePage?: string// 40707
+  UnderlyingPaymentScheduleRateSource?: number// [1] 40705 (Int)
+  UnderlyingPaymentScheduleRateSourceType?: number// [1] 40706 (Int)
+  UnderlyingPaymentScheduleReferencePage?: string// [1] 40707 (String)
 }

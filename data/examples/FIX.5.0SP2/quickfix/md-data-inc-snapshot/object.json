@@ -1,0 +1,49 @@
+{
+  "MDReqID": "EGPINR=TDS",
+  "MDIncGrp": {
+    "NoMDEntries": [
+      {
+        "MDUpdateAction": "1",
+        "MDEntryType": "0",
+        "MDEntryID": "17828",
+        "Instrument": {
+          "SecurityID": "EGPINR=TDS",
+          "SecurityIDSource": "8"
+        },
+        "MDEntryPx": 2.686142,
+        "Currency": "EGP",
+        "MDEntryDate": "2023-10-30T00:00:00.000Z",
+        "MDEntryTime": "1899-12-31T10:18:47.166Z",
+        "TradingSessionID": "1"
+      },
+      {
+        "MDUpdateAction": "1",
+        "MDEntryType": "1",
+        "MDEntryID": "17829",
+        "Instrument": {
+          "SecurityID": "EGPINR=TDS",
+          "SecurityIDSource": "8"
+        },
+        "MDEntryPx": 2.706302,
+        "Currency": "EGP",
+        "MDEntryDate": "2023-10-30T00:00:00.000Z",
+        "MDEntryTime": "1899-12-31T10:18:47.166Z",
+        "TradingSessionID": "1"
+      },
+      {
+        "MDUpdateAction": "1",
+        "MDEntryType": "H",
+        "MDEntryID": "17830",
+        "Instrument": {
+          "SecurityID": "EGPINR=TDS",
+          "SecurityIDSource": "8"
+        },
+        "MDEntryPx": 2.696222,
+        "Currency": "EGP",
+        "MDEntryDate": "2023-10-30T00:00:00.000Z",
+        "MDEntryTime": "1899-12-31T10:18:47.166Z",
+        "TradingSessionID": "1"
+      }
+    ]
+  }
+}

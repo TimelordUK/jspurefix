@@ -1,4 +1,4 @@
 export interface IComplexEventTimes {
-  ComplexEventStartTime?: Date// 1495
-  ComplexEventEndTime?: Date// 1496
+  ComplexEventStartTime?: Date// [1] 1495 (UtcTimeOnly)
+  ComplexEventEndTime?: Date// [1] 1496 (UtcTimeOnly)
 }

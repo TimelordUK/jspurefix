@@ -13,26 +13,26 @@ import { IRegulatoryTradeIDGrp } from './set/regulatory_trade_id_grp'
 ************************************************
 */
 export interface IExecutionAck {
-  OrderID: string// 37
-  SecondaryOrderID?: string// 198
-  ClOrdID?: string// 11
-  ExecAckStatus: string// 1036
-  ExecID: string// 17
-  DKReason?: string// 127
-  Side: string// 54
-  LastQty?: number// 32
-  LastPx?: number// 31
-  PriceType?: number// 423
-  LastParPx?: number// 669
-  CumQty?: number// 14
-  AvgPx?: number// 6
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  Instrument?: IInstrument
-  UndInstrmtGrp?: IUndInstrmtGrp[]
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  OrderQtyData?: IOrderQtyData
-  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]
+  OrderID: string// [2] 37 (String)
+  SecondaryOrderID?: string// [2] 198 (String)
+  ClOrdID?: string// [2] 11 (String)
+  ExecAckStatus: string// [2] 1036 (String)
+  ExecID: string// [2] 17 (String)
+  DKReason?: string// [2] 127 (String)
+  Side: string// [2] 54 (String)
+  LastQty?: number// [2] 32 (Float)
+  LastPx?: number// [2] 31 (Float)
+  PriceType?: number// [2] 423 (Int)
+  LastParPx?: number// [2] 669 (Float)
+  CumQty?: number// [2] 14 (Float)
+  AvgPx?: number// [2] 6 (Float)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Instrument?: IInstrument// [2] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [3] Sym.311, Sfx.312 .. XID.2631
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [4] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  OrderQtyData?: IOrderQtyData// [5] Qty.38, Cash.152 .. RndMod.469
+  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]// [6] ID.1903, Src.1905 .. Scope.2397
 }

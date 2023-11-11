@@ -1,0 +1,5 @@
+import { IUnderlyingComplexEventCreditEventSourceGrpNoUnderlyingComplexEventCreditEventSources } from './underlying_complex_event_credit_event_source_grp_no_underlying_complex_event_credit_event_sources'
+
+export interface IUnderlyingComplexEventCreditEventSourceGrp {
+  NoUnderlyingComplexEventCreditEventSources?: IUnderlyingComplexEventCreditEventSourceGrpNoUnderlyingComplexEventCreditEventSources[]// [1] UnderlyingComplexEventCreditEventSource.41749
+}

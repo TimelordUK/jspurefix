@@ -2,32 +2,32 @@ import { ILegDeliveryStreamCommoditySourceGrp } from './leg_delivery_stream_comm
 import { ILegDeliveryStreamCycleGrp } from './leg_delivery_stream_cycle_grp'
 
 export interface ILegDeliveryStream {
-  LegDeliveryStreamType?: number// 41429
-  LegDeliveryStreamPipeline?: string// 41430
-  LegDeliveryStreamEntryPoint?: string// 41431
-  LegDeliveryStreamWithdrawalPoint?: string// 41432
-  LegDeliveryStreamDeliveryPoint?: string// 41433
-  LegDeliveryStreamDeliveryPointSource?: number// 42194
-  LegDeliveryStreamDeliveryPointDesc?: string// 42195
-  LegDeliveryStreamDeliveryRestriction?: number// 41434
-  LegDeliveryStreamDeliveryContingency?: string// 41435
-  LegDeliveryStreamDeliveryContingentPartySide?: number// 41436
-  LegDeliveryStreamDeliverAtSourceIndicator?: boolean// 41437
-  LegDeliveryStreamRiskApportionment?: string// 41438
-  LegDeliveryStreamRiskApportionmentSource?: string// 41219
-  LegDeliveryStreamTitleTransferLocation?: string// 41439
-  LegDeliveryStreamTitleTransferCondition?: number// 41440
-  LegDeliveryStreamImporterOfRecord?: string// 41441
-  LegDeliveryStreamNegativeTolerance?: number// 41442
-  LegDeliveryStreamPositiveTolerance?: number// 41443
-  LegDeliveryStreamToleranceUnitOfMeasure?: string// 41444
-  LegDeliveryStreamToleranceType?: number// 41445
-  LegDeliveryStreamToleranceOptionSide?: number// 41446
-  LegDeliveryStreamTotalPositiveTolerance?: number// 41447
-  LegDeliveryStreamTotalNegativeTolerance?: number// 41448
-  LegDeliveryStreamNotionalConversionFactor?: number// 41449
-  LegDeliveryStreamTransportEquipment?: string// 41450
-  LegDeliveryStreamElectingPartySide?: number// 41451
-  LegDeliveryStreamCommoditySourceGrp?: ILegDeliveryStreamCommoditySourceGrp[]
-  LegDeliveryStreamCycleGrp?: ILegDeliveryStreamCycleGrp[]
+  LegDeliveryStreamType?: number// [1] 41429 (Int)
+  LegDeliveryStreamPipeline?: string// [1] 41430 (String)
+  LegDeliveryStreamEntryPoint?: string// [1] 41431 (String)
+  LegDeliveryStreamWithdrawalPoint?: string// [1] 41432 (String)
+  LegDeliveryStreamDeliveryPoint?: string// [1] 41433 (String)
+  LegDeliveryStreamDeliveryPointSource?: number// [1] 42194 (Int)
+  LegDeliveryStreamDeliveryPointDesc?: string// [1] 42195 (String)
+  LegDeliveryStreamDeliveryRestriction?: number// [1] 41434 (Int)
+  LegDeliveryStreamDeliveryContingency?: string// [1] 41435 (String)
+  LegDeliveryStreamDeliveryContingentPartySide?: number// [1] 41436 (Int)
+  LegDeliveryStreamDeliverAtSourceIndicator?: boolean// [1] 41437 (Boolean)
+  LegDeliveryStreamRiskApportionment?: string// [1] 41438 (String)
+  LegDeliveryStreamRiskApportionmentSource?: string// [1] 41219 (String)
+  LegDeliveryStreamTitleTransferLocation?: string// [1] 41439 (String)
+  LegDeliveryStreamTitleTransferCondition?: number// [1] 41440 (Int)
+  LegDeliveryStreamImporterOfRecord?: string// [1] 41441 (String)
+  LegDeliveryStreamNegativeTolerance?: number// [1] 41442 (Float)
+  LegDeliveryStreamPositiveTolerance?: number// [1] 41443 (Float)
+  LegDeliveryStreamToleranceUnitOfMeasure?: string// [1] 41444 (String)
+  LegDeliveryStreamToleranceType?: number// [1] 41445 (Int)
+  LegDeliveryStreamToleranceOptionSide?: number// [1] 41446 (Int)
+  LegDeliveryStreamTotalPositiveTolerance?: number// [1] 41447 (Float)
+  LegDeliveryStreamTotalNegativeTolerance?: number// [1] 41448 (Float)
+  LegDeliveryStreamNotionalConversionFactor?: number// [1] 41449 (Float)
+  LegDeliveryStreamTransportEquipment?: string// [1] 41450 (String)
+  LegDeliveryStreamElectingPartySide?: number// [1] 41451 (Int)
+  LegDeliveryStreamCommoditySourceGrp?: ILegDeliveryStreamCommoditySourceGrp[]// [1] Src.41461
+  LegDeliveryStreamCycleGrp?: ILegDeliveryStreamCycleGrp[]// [2] Desc.41457, EncDescLen.41458, EncDesc.41459
 }

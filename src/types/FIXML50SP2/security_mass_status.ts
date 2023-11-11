@@ -11,24 +11,24 @@ import { ISecMassStatGrp } from './set/sec_mass_stat_grp'
 ******************************************************
 */
 export interface ISecurityMassStatus {
-  SecurityStatusReqID?: string// 324
-  SecurityListID?: string// 1465
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  TradeDate?: Date// 75
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  UnsolicitedIndicator?: boolean// 325
-  SecurityMassTradingStatus?: number// 1679
-  FastMarketIndicator?: boolean// 2447
-  SecurityMassTradingEvent?: number// 1680
-  MassHaltReason?: number// 1681
-  MDBookType?: number// 1021
-  MarketDepth?: number// 264
-  TransactTime?: Date// 60
-  Adjustment?: number// 334
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
-  InstrumentScope?: IInstrumentScope
-  SecMassStatGrp?: ISecMassStatGrp[]
+  SecurityStatusReqID?: string// [2] 324 (String)
+  SecurityListID?: string// [2] 1465 (String)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  UnsolicitedIndicator?: boolean// [2] 325 (Boolean)
+  SecurityMassTradingStatus?: number// [2] 1679 (Int)
+  FastMarketIndicator?: boolean// [2] 2447 (Boolean)
+  SecurityMassTradingEvent?: number// [2] 1680 (Int)
+  MassHaltReason?: number// [2] 1681 (Int)
+  MDBookType?: number// [2] 1021 (Int)
+  MarketDepth?: number// [2] 264 (Int)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  Adjustment?: number// [2] 334 (Int)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
+  InstrumentScope?: IInstrumentScope// [3] Sym.1536, Sfx.1537 .. SettlTyp.63
+  SecMassStatGrp?: ISecMassStatGrp[]// [4] TrdgStat.326, SecTrdEvnt.1174 .. EncTxt.355
 }

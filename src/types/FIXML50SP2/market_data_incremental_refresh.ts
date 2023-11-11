@@ -11,17 +11,17 @@ import { IRoutingGrp } from './set/routing_grp'
 ****************************************************************
 */
 export interface IMarketDataIncrementalRefresh {
-  MDBookType?: number// 1021
-  MDFeedType?: string// 1022
-  MDSubFeedType?: string// 1683
-  TradeDate?: Date// 75
-  MDReqID?: string// 262
-  MarketID?: string// 1301
-  MarketSegmentID?: string// 1300
-  ApplQueueDepth?: number// 813
-  ApplQueueResolution?: number// 814
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
-  MDIncGrp?: IMDIncGrp[]
-  RoutingGrp?: IRoutingGrp[]
+  MDBookType?: number// [2] 1021 (Int)
+  MDFeedType?: string// [2] 1022 (String)
+  MDSubFeedType?: string// [2] 1683 (String)
+  TradeDate?: Date// [2] 75 (LocalDate)
+  MDReqID?: string// [2] 262 (String)
+  MarketID?: string// [2] 1301 (String)
+  MarketSegmentID?: string// [2] 1300 (String)
+  ApplQueueDepth?: number// [2] 813 (Int)
+  ApplQueueResolution?: number// [2] 814 (Int)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
+  MDIncGrp?: IMDIncGrp[]// [3] UpdtAct.279, DelRsn.285 .. MDEntryFwdPnts.1027
+  RoutingGrp?: IRoutingGrp[]// [4] RtgTyp.216, RtgID.217
 }

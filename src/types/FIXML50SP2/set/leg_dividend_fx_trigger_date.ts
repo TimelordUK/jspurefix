@@ -1,12 +1,12 @@
 import { ILegDividendFXTriggerDateBusinessCenterGrp } from './leg_dividend_fx_trigger_date_business_center_grp'
 
 export interface ILegDividendFXTriggerDate {
-  LegDividendFXTriggerDateRelativeTo?: number// 42357
-  LegDividendFXTriggerDateOffsetPeriod?: number// 42358
-  LegDividendFXTriggerDateOffsetUnit?: string// 42359
-  LegDividendFXTriggerDateOffsetDayType?: number// 42360
-  LegDividendFXTriggerDateUnadjusted?: Date// 42361
-  LegDividendFXTriggerDateBusinessDayConvention?: number// 42362
-  LegDividendFXTriggerDateAdjusted?: Date// 42363
-  LegDividendFXTriggerDateBusinessCenterGrp?: ILegDividendFXTriggerDateBusinessCenterGrp[]
+  LegDividendFXTriggerDateRelativeTo?: number// [1] 42357 (Int)
+  LegDividendFXTriggerDateOffsetPeriod?: number// [1] 42358 (Int)
+  LegDividendFXTriggerDateOffsetUnit?: string// [1] 42359 (String)
+  LegDividendFXTriggerDateOffsetDayType?: number// [1] 42360 (Int)
+  LegDividendFXTriggerDateUnadjusted?: Date// [1] 42361 (LocalDate)
+  LegDividendFXTriggerDateBusinessDayConvention?: number// [1] 42362 (Int)
+  LegDividendFXTriggerDateAdjusted?: Date// [1] 42363 (LocalDate)
+  LegDividendFXTriggerDateBusinessCenterGrp?: ILegDividendFXTriggerDateBusinessCenterGrp[]// [1] Ctr.42365
 }

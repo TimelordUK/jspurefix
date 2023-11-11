@@ -1,0 +1,5 @@
+import { ILegProvisionOptionExerciseFixedDateGrpNoLegProvisionOptionExerciseFixedDates } from './leg_provision_option_exercise_fixed_date_grp_no_leg_provision_option_exercise_fixed_dates'
+
+export interface ILegProvisionOptionExerciseFixedDateGrp {
+  NoLegProvisionOptionExerciseFixedDates?: ILegProvisionOptionExerciseFixedDateGrpNoLegProvisionOptionExerciseFixedDates[]// [1] LegProvisionOptionExerciseFixedDate.40496, LegProvisionOptionExerciseFixedDateType.40497
+}

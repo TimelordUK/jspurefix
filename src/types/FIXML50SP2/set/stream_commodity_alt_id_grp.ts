@@ -1,4 +1,4 @@
 export interface IStreamCommodityAltIDGrp {
-  StreamCommodityAltID?: string// 41278
-  StreamCommodityAltIDSource?: string// 41279
+  StreamCommodityAltID?: string// [1] 41278 (String)
+  StreamCommodityAltIDSource?: string// [1] 41279 (String)
 }

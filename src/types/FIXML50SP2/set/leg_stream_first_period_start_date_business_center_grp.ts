@@ -1,3 +1,3 @@
 export interface ILegStreamFirstPeriodStartDateBusinessCenterGrp {
-  LegStreamFirstPeriodStartDateBusinessCenter?: string// 40269
+  LegStreamFirstPeriodStartDateBusinessCenter?: string// [1] 40269 (String)
 }

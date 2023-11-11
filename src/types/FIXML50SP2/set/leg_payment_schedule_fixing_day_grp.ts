@@ -1,4 +1,4 @@
 export interface ILegPaymentScheduleFixingDayGrp {
-  LegPaymentScheduleFixingDayOfWeek?: number// 41531
-  LegPaymentScheduleFixingDayNumber?: number// 41532
+  LegPaymentScheduleFixingDayOfWeek?: number// [1] 41531 (Int)
+  LegPaymentScheduleFixingDayNumber?: number// [1] 41532 (Int)
 }

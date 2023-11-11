@@ -1,3 +1,3 @@
 export interface IPricingDateBusinessCenterGrp {
-  PricingDateBusinessCenter?: string// 41231
+  PricingDateBusinessCenter?: string// [1] 41231 (String)
 }

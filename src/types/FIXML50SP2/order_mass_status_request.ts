@@ -12,16 +12,16 @@ import { IUnderlyingInstrument } from './set/underlying_instrument'
 **********************************************************
 */
 export interface IOrderMassStatusRequest {
-  MassStatusReqID: string// 584
-  MassStatusReqType: number// 585
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  TradingSessionID?: string// 336
-  TradingSessionSubID?: string// 625
-  Side?: string// 54
-  StandardHeader?: IStandardHeader
-  Parties?: IParties[]
-  TargetParties?: ITargetParties[]
-  Instrument?: IInstrument
-  UnderlyingInstrument?: IUnderlyingInstrument
+  MassStatusReqID: string// [2] 584 (String)
+  MassStatusReqType: number// [2] 585 (Int)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  TradingSessionID?: string// [2] 336 (String)
+  TradingSessionSubID?: string// [2] 625 (String)
+  Side?: string// [2] 54 (String)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
+  TargetParties?: ITargetParties[]// [3] ID.1462, Src.1463 .. Qual.1818
+  Instrument?: IInstrument// [4] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  UnderlyingInstrument?: IUnderlyingInstrument// [5] Sym.311, Sfx.312 .. XID.2631
 }

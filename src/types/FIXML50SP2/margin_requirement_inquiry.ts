@@ -11,20 +11,20 @@ import { IInstrument } from './set/instrument'
 ************************************************************
 */
 export interface IMarginRequirementInquiry {
-  MarginReqmtInqID: string// 1635
-  SubscriptionRequestType?: string// 263
-  ResponseTransportType?: number// 725
-  ResponseDestination?: string// 726
-  ClearingBusinessDate?: Date// 715
-  SettlSessID?: string// 716
-  SettlSessSubID?: string// 717
-  MarginClass?: string// 1639
-  TransactTime?: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  MarginReqmtInqQualGrp?: IMarginReqmtInqQualGrp[]
-  Parties?: IParties[]
-  Instrument?: IInstrument
+  MarginReqmtInqID: string// [2] 1635 (String)
+  SubscriptionRequestType?: string// [2] 263 (String)
+  ResponseTransportType?: number// [2] 725 (Int)
+  ResponseDestination?: string// [2] 726 (String)
+  ClearingBusinessDate?: Date// [2] 715 (LocalDate)
+  SettlSessID?: string// [2] 716 (String)
+  SettlSessSubID?: string// [2] 717 (String)
+  MarginClass?: string// [2] 1639 (String)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  MarginReqmtInqQualGrp?: IMarginReqmtInqQualGrp[]// [2] Qual.1637
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
+  Instrument?: IInstrument// [4] Sym.55, Sfx.65 .. ExchLookAlike.2603
 }

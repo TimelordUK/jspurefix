@@ -1,3 +1,3 @@
 export interface IOrdTypeRules {
-  OrdType?: string// 40
+  OrdType?: string// [1] 40 (String)
 }

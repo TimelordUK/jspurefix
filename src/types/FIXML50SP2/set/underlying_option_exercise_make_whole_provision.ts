@@ -1,9 +1,9 @@
 export interface IUnderlyingOptionExerciseMakeWholeProvision {
-  UnderlyingMakeWholeDate?: Date// 42888
-  UnderlyingMakeWholeAmount?: number// 42889
-  UnderlyingMakeWholeBenchmarkCurveName?: string// 42890
-  UnderlyingMakeWholeBenchmarkCurvePoint?: string// 42891
-  UnderlyingMakeWholeRecallSpread?: number// 42892
-  UnderlyingMakeWholeBenchmarkQuote?: number// 42893
-  UnderlyingMakeWholeInterpolationMethod?: number// 42894
+  UnderlyingMakeWholeDate?: Date// [1] 42888 (LocalDate)
+  UnderlyingMakeWholeAmount?: number// [1] 42889 (Float)
+  UnderlyingMakeWholeBenchmarkCurveName?: string// [1] 42890 (String)
+  UnderlyingMakeWholeBenchmarkCurvePoint?: string// [1] 42891 (String)
+  UnderlyingMakeWholeRecallSpread?: number// [1] 42892 (Float)
+  UnderlyingMakeWholeBenchmarkQuote?: number// [1] 42893 (Int)
+  UnderlyingMakeWholeInterpolationMethod?: number// [1] 42894 (Int)
 }

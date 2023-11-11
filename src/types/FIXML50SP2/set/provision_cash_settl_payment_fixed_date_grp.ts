@@ -1,4 +1,4 @@
 export interface IProvisionCashSettlPaymentFixedDateGrp {
-  ProvisionCashSettlPaymentDate?: Date// 40172
-  ProvisionCashSettlPaymentDateType?: number// 40173
+  ProvisionCashSettlPaymentDate?: Date// [1] 40172 (LocalDate)
+  ProvisionCashSettlPaymentDateType?: number// [1] 40173 (Int)
 }

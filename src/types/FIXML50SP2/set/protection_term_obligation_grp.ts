@@ -1,4 +1,4 @@
 export interface IProtectionTermObligationGrp {
-  ProtectionTermObligationType?: string// 40202
-  ProtectionTermObligationValue?: string// 40203
+  ProtectionTermObligationType?: string// [1] 40202 (String)
+  ProtectionTermObligationValue?: string// [1] 40203 (String)
 }

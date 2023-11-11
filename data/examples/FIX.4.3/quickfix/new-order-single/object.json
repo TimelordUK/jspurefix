@@ -1,0 +1,17 @@
+{
+  "ClOrdID": "NF 0040/03022010",
+  "Account": "ABC123ZYX",
+  "HandlInst": "1",
+  "MaxFloor": 0,
+  "Instrument": {
+    "Symbol": "IOC"
+  },
+  "Side": "1",
+  "OrderQtyData": {
+    "OrderQty": 1000
+  },
+  "OrdType": "2",
+  "Price": 49.38,
+  "TimeInForce": "0",
+  "Rule80A": "A"
+}

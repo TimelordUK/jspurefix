@@ -1,4 +1,4 @@
 export interface IPaymentStreamFormulaImage {
-  PaymentStreamFormulaImageLength?: number// 42652
-  PaymentStreamFormulaImage?: Buffer// 42653
+  PaymentStreamFormulaImageLength?: number// [1] 42652 (Length)
+  PaymentStreamFormulaImage?: Buffer// [1] 42653 (RawData)
 }

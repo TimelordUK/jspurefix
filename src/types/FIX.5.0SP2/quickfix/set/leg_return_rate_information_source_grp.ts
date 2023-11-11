@@ -1,0 +1,5 @@
+import { ILegReturnRateInformationSourceGrpNoLegReturnRateInformationSources } from './leg_return_rate_information_source_grp_no_leg_return_rate_information_sources'
+
+export interface ILegReturnRateInformationSourceGrp {
+  NoLegReturnRateInformationSources?: ILegReturnRateInformationSourceGrpNoLegReturnRateInformationSources[]// [1] LegReturnRateInformationSource.42561, LegReturnRateReferencePage.42562, LegReturnRateReferencePageHeading.42563
+}

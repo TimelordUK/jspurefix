@@ -24,7 +24,7 @@ export class HttpServer extends FixmlSession {
     this.logger.info(view.toJson())
     switch (msgType) {
       case 'Order': {
-        const order: INewOrderSingle = view!.toObject() as INewOrderSingle
+        const order: INewOrderSingle = view.toObject() as INewOrderSingle
         this.logger.info(`received order id ${order.ClOrdID}`)
         const fill: IExecutionReport = this.factory.fillOrder(order)
         this.send('ExecutionReport', fill)
@@ -39,11 +39,11 @@ export class HttpServer extends FixmlSession {
   }
 
   // use msgType for example to persist only trade capture messages to database
-  protected onDecoded (msgType: string, txt: string): void {
+  protected onDecoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 
-  protected onEncoded (msgType: string, txt: string): void {
+  protected onEncoded (_: string, txt: string): void {
     this.fixLog.info(txt)
   }
 

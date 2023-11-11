@@ -21,74 +21,74 @@ import { IRelatedTradeGrp } from './set/related_trade_grp'
 **************************************************
 */
 export interface IPositionReport {
-  PosMaintRptID: string// 721
-  PositionID?: string// 2618
-  PosReqID?: string// 710
-  PosReqType?: number// 724
-  PosReportAction?: number// 2364
-  MarginReqmtInqID?: string// 1635
-  SubscriptionRequestType?: string// 263
-  TotalNumPosReports?: number// 727
-  TotNumReports?: number// 911
-  LastRptRequested?: boolean// 912
-  PosMaintResult?: number// 723
-  UnsolicitedIndicator?: boolean// 325
-  ClearingBusinessDate: Date// 715
-  PreviousClearingBusinessDate?: Date// 2084
-  SettlSessID?: string// 716
-  SettlSessSubID?: string// 717
-  PriceType?: number// 423
-  SettlCurrency?: string// 120
-  MessageEventSource?: string// 1011
-  ClearedIndicator?: number// 1832
-  ContractRefPosType?: number// 1833
-  PositionCapacity?: number// 1834
-  TerminatedIndicator?: boolean// 2101
-  IntraFirmTradeIndicator?: boolean// 2373
-  TradeContinuation?: number// 1937
-  TradeContinuationText?: string// 2374
-  EncodedTradeContinuationTextLen?: number// 2372
-  EncodedTradeContinuationText?: Buffer// 2371
-  TradeCollateralization?: number// 1936
-  Account?: string// 1
-  AcctIDSource?: number// 660
-  AccountType?: number// 581
-  TaxonomyType?: string// 2375
-  Currency?: string// 15
-  SettlDate?: Date// 64
-  SettlPrice?: number// 730
-  SettlPriceFxRateCalc?: string// 2366
-  SettlForwardPoints?: number// 2365
-  SettlPriceUnitOfMeasure?: string// 1886
-  SettlPriceUnitOfMeasureCurrency?: string// 1887
-  SettlPriceType?: number// 731
-  PriorSettlPrice?: number// 734
-  PositionContingentPrice?: number// 1595
-  DiscountFactor?: number// 1592
-  ValuationDate?: Date// 2085
-  ValuationTime?: string// 2086
-  ValuationBusinessCenter?: string// 2087
-  MatchStatus?: string// 573
-  TransactTime?: Date// 60
-  RegistStatus?: string// 506
-  DeliveryDate?: Date// 743
-  ModelType?: number// 1434
-  PriceDelta?: number// 811
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  ApplicationSequenceControl?: IApplicationSequenceControl
-  Parties?: IParties[]
-  Instrument?: IInstrument
-  FinancingDetails?: IFinancingDetails
-  InstrmtLegGrp?: IInstrmtLegGrp[]
-  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]
-  CollateralAmountGrp?: ICollateralAmountGrp[]
-  PosUndInstrmtGrp?: IPosUndInstrmtGrp[]
-  PositionQty?: IPositionQty[]
-  PositionAmountData?: IPositionAmountData[]
-  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]
-  PaymentGrp?: IPaymentGrp[]
-  RelatedTradeGrp?: IRelatedTradeGrp[]
+  PosMaintRptID: string// [2] 721 (String)
+  PositionID?: string// [2] 2618 (String)
+  PosReqID?: string// [2] 710 (String)
+  PosReqType?: number// [2] 724 (Int)
+  PosReportAction?: number// [2] 2364 (Int)
+  MarginReqmtInqID?: string// [2] 1635 (String)
+  SubscriptionRequestType?: string// [2] 263 (String)
+  TotalNumPosReports?: number// [2] 727 (Int)
+  TotNumReports?: number// [2] 911 (Int)
+  LastRptRequested?: boolean// [2] 912 (Boolean)
+  PosMaintResult?: number// [2] 723 (Int)
+  UnsolicitedIndicator?: boolean// [2] 325 (Boolean)
+  ClearingBusinessDate: Date// [2] 715 (LocalDate)
+  PreviousClearingBusinessDate?: Date// [2] 2084 (LocalDate)
+  SettlSessID?: string// [2] 716 (String)
+  SettlSessSubID?: string// [2] 717 (String)
+  PriceType?: number// [2] 423 (Int)
+  SettlCurrency?: string// [2] 120 (String)
+  MessageEventSource?: string// [2] 1011 (String)
+  ClearedIndicator?: number// [2] 1832 (Int)
+  ContractRefPosType?: number// [2] 1833 (Int)
+  PositionCapacity?: number// [2] 1834 (Int)
+  TerminatedIndicator?: boolean// [2] 2101 (Boolean)
+  IntraFirmTradeIndicator?: boolean// [2] 2373 (Boolean)
+  TradeContinuation?: number// [2] 1937 (Int)
+  TradeContinuationText?: string// [2] 2374 (String)
+  EncodedTradeContinuationTextLen?: number// [2] 2372 (Length)
+  EncodedTradeContinuationText?: Buffer// [2] 2371 (RawData)
+  TradeCollateralization?: number// [2] 1936 (Int)
+  Account?: string// [2] 1 (String)
+  AcctIDSource?: number// [2] 660 (Int)
+  AccountType?: number// [2] 581 (Int)
+  TaxonomyType?: string// [2] 2375 (String)
+  Currency?: string// [2] 15 (String)
+  SettlDate?: Date// [2] 64 (LocalDate)
+  SettlPrice?: number// [2] 730 (Float)
+  SettlPriceFxRateCalc?: string// [2] 2366 (String)
+  SettlForwardPoints?: number// [2] 2365 (Float)
+  SettlPriceUnitOfMeasure?: string// [2] 1886 (String)
+  SettlPriceUnitOfMeasureCurrency?: string// [2] 1887 (String)
+  SettlPriceType?: number// [2] 731 (Int)
+  PriorSettlPrice?: number// [2] 734 (Float)
+  PositionContingentPrice?: number// [2] 1595 (Float)
+  DiscountFactor?: number// [2] 1592 (Float)
+  ValuationDate?: Date// [2] 2085 (LocalDate)
+  ValuationTime?: string// [2] 2086 (String)
+  ValuationBusinessCenter?: string// [2] 2087 (String)
+  MatchStatus?: string// [2] 573 (String)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  RegistStatus?: string// [2] 506 (String)
+  DeliveryDate?: Date// [2] 743 (LocalDate)
+  ModelType?: number// [2] 1434 (Int)
+  PriceDelta?: number// [2] 811 (Float)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
+  Instrument?: IInstrument// [4] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  FinancingDetails?: IFinancingDetails// [5] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [6] Sym.600, Sfx.601 .. ExchLookAlike.2607
+  RelatedInstrumentGrp?: IRelatedInstrumentGrp[]// [7] InstrmtTyp.1648, Sym.1649 .. XIDRef.2417
+  CollateralAmountGrp?: ICollateralAmountGrp[]// [8] Amt.1704, Ccy.1705 .. MktPx.2689
+  PosUndInstrmtGrp?: IPosUndInstrmtGrp[]// [9] UndSetPx.732, UndSetPxTyp.733, UndlyDlvAmt.1037
+  PositionQty?: IPositionQty[]// [10] Typ.703, Long.704 .. UOMCcy.1835
+  PositionAmountData?: IPositionAmountData[]// [11] Typ.707, Amt.708 .. MktID.2100
+  RegulatoryTradeIDGrp?: IRegulatoryTradeIDGrp[]// [12] ID.1903, Src.1905 .. Scope.2397
+  PaymentGrp?: IPaymentGrp[]// [13] Typ.139, SubTyp.40993 .. EncTxt.40985
+  RelatedTradeGrp?: IRelatedTradeGrp[]// [14] ID.1856, Src.1857 .. Qty.1860
 }

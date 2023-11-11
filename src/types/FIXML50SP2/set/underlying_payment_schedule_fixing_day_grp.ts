@@ -1,4 +1,4 @@
 export interface IUnderlyingPaymentScheduleFixingDayGrp {
-  UnderlyingPaymentScheduleFixingDayOfWeek?: number// 41879
-  UnderlyingPaymentScheduleFixingDayNumber?: number// 41880
+  UnderlyingPaymentScheduleFixingDayOfWeek?: number// [1] 41879 (Int)
+  UnderlyingPaymentScheduleFixingDayNumber?: number// [1] 41880 (Int)
 }

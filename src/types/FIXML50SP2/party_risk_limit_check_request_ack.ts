@@ -15,33 +15,33 @@ import { IUndInstrmtGrp } from './set/und_instrmt_grp'
 *************************************************************
 */
 export interface IPartyRiskLimitCheckRequestAck {
-  RiskLimitCheckRequestID?: string// 2318
-  RiskLimitCheckID?: string// 2319
-  RiskLimitCheckRequestStatus: number// 2325
-  RiskLimitCheckRequestResult?: number// 2326
-  RiskLimitCheckTransType: number// 2320
-  RiskLimitCheckType: number// 2321
-  RiskLimitCheckRequestRefID?: number// 2322
-  RejectText?: string// 1328
-  EncodedRejectTextLen?: number// 1664
-  EncodedRejectText?: Buffer// 1665
-  RefOrderID?: string// 1080
-  RefOrderIDSource?: string// 1081
-  Side?: string// 54
-  RiskLimitApprovedAmount?: number// 2327
-  RiskLimitCheckAmount?: number// 2324
-  RiskLimitID?: string// 1670
-  Currency?: string// 15
-  ExpireTime?: Date// 126
-  TransactTime?: Date// 60
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  RequestingPartyGrp?: IRequestingPartyGrp[]
-  Parties?: IParties[]
-  RelatedPartyDetailGrp?: IRelatedPartyDetailGrp[]
-  Instrument?: IInstrument
-  LegOrdGrp?: ILegOrdGrp[]
-  UndInstrmtGrp?: IUndInstrmtGrp[]
+  RiskLimitCheckRequestID?: string// [2] 2318 (String)
+  RiskLimitCheckID?: string// [2] 2319 (String)
+  RiskLimitCheckRequestStatus: number// [2] 2325 (Int)
+  RiskLimitCheckRequestResult?: number// [2] 2326 (Int)
+  RiskLimitCheckTransType: number// [2] 2320 (Int)
+  RiskLimitCheckType: number// [2] 2321 (Int)
+  RiskLimitCheckRequestRefID?: number// [2] 2322 (Int)
+  RejectText?: string// [2] 1328 (String)
+  EncodedRejectTextLen?: number// [2] 1664 (Length)
+  EncodedRejectText?: Buffer// [2] 1665 (RawData)
+  RefOrderID?: string// [2] 1080 (String)
+  RefOrderIDSource?: string// [2] 1081 (String)
+  Side?: string// [2] 54 (String)
+  RiskLimitApprovedAmount?: number// [2] 2327 (Float)
+  RiskLimitCheckAmount?: number// [2] 2324 (Float)
+  RiskLimitID?: string// [2] 1670 (String)
+  Currency?: string// [2] 15 (String)
+  ExpireTime?: Date// [2] 126 (UtcTimestamp)
+  TransactTime?: Date// [2] 60 (UtcTimestamp)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  RequestingPartyGrp?: IRequestingPartyGrp[]// [2] ID.1658, Src.1659 .. Qual.2338
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
+  RelatedPartyDetailGrp?: IRelatedPartyDetailGrp[]// [4] ID.1563, Src.1564 .. Qual.1675
+  Instrument?: IInstrument// [5] Sym.55, Sfx.65 .. ExchLookAlike.2603
+  LegOrdGrp?: ILegOrdGrp[]// [6] OrdQty.685, Qty.687 .. ShrtSaleExmptnRsn.1689
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [7] Sym.311, Sfx.312 .. XID.2631
 }

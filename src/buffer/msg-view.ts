@@ -20,6 +20,7 @@ import { ContainedSetType } from '../dictionary/contained-set-type'
 export abstract class MsgView {
   protected sortedTagPosForwards: TagPos[]
   protected sortedTagPosBackwards: TagPos[]
+  private readonly reducer: SetReduce<ILooseObject> = new SetReduce<ILooseObject>()
 
   protected constructor (public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
   }
@@ -91,12 +92,21 @@ export abstract class MsgView {
     return this.missingRequired(this.segment.set, [])
   }
 
+  /**
+   * does this view contain this tag
+   * @param tagOrName the name or tag of field to check 8 or BeginString
+   */
   public contains (tagOrName: number | string): boolean {
     const tag: number = this.resolveTag(tagOrName)
     const position: number = this.getPosition(tag)
     return position >= 0
   }
 
+  /**
+   * if this view represents a repeated group then return a sub view representing
+   * this instance of repeated group.
+   * @param i the index to return i.e. 0 is first within repeated group
+   */
   public getGroupInstance (i: number): MsgView | null {
     const instance: SegmentDescription | null = this.segment?.getInstance(i)
     if (!instance) {
@@ -122,11 +132,20 @@ export abstract class MsgView {
     return msg
   }
 
+  /**
+   * if this view represents a repeated group then return number
+   * of repeated instances within this view
+   */
   public groupCount (): number {
     const positions = this.segment.delimiterPositions
     return positions ? positions.length : 0
   }
 
+  /**
+   * regardless of how this type is represented in data dictionary,
+   * return its value as a string.
+   * @param tagOrName name or tag to return 8 or BeginString
+   */
   public getString (tagOrName: number | string): string | null {
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
@@ -139,6 +158,11 @@ export abstract class MsgView {
     return this.stringAtPosition(position)
   }
 
+  /**
+   * for a repeated group, one field may be repeted across each instance of a component
+   * return all values for a specified field as array of strings
+   * @param tagOrName the name of the repeated field to fetch
+   */
   public getStrings (tagOrName: number | string | null = null): Array<(string | null)> | null {
     if (!tagOrName) {
       return this.allStrings()
@@ -157,6 +181,10 @@ export abstract class MsgView {
     })
   }
 
+  /**
+   * returns typed value of a sinple field within this view
+   * @param tagOrName the name or tag of required field e.g. 8, BeginString
+   */
   public getTyped (tagOrName: number | string): any {
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
@@ -169,11 +197,31 @@ export abstract class MsgView {
     return this.toTyped(field)
   }
 
-  public getTypedTags (tagOrName: (string|number)[]): (boolean|string|number|Date|null)[] {
+  /**
+   * use a varargs list of tags or tag names to fetch typed values for those fields within this view.
+   * @param tagOrNames list of tags e.g. 'BeginString', 'BodyLength', ...
+   */
+  public getTypedList (...tagOrNames: Array<number | string>): Array<boolean | string | number | Date | null> {
+    return tagOrNames.map((s) => this.getTyped(s))
+  }
+
+  /**
+   * use an array of tags or tag names to fetch typed values for those fields within this view.
+   * @param tagOrName the list of params as array ['BeginString','BodyLength', 'MsgType']
+   */
+  public getTypedTags (tagOrName: Array<string | number>): Array<boolean | string | number | Date | null> {
     return tagOrName.map((s) => this.getTyped(s))
   }
 
-  public toObject (): ILooseObject|ILooseObject[]|null {
+  /**
+   * produce an object representation of the view which when coupled with its
+   * interface (generated against the same dictionary source) will allow easy
+   * navigation of the object where a group is resolved to an array and simple
+   * fields are properties. This is relatively expensive operation as every
+   * field is fully resolved regardless of depth i.e. all groups and compoennts
+   * are fully resolved.
+   */
+  public toObject (): ILooseObject | ILooseObject[] | null {
     const segment: SegmentDescription = this.segment
     if (segment.set == null) return null
     if (segment.delimiterTag) {
@@ -197,6 +245,10 @@ export abstract class MsgView {
     return this.asLoose(segment.set)
   }
 
+  /**
+   * easy human-readable format showing each field, its position, value and resolved
+   * enum.
+   */
   public toString (): string {
     return this.stringify(MsgView.asToken)
   }
@@ -205,6 +257,9 @@ export abstract class MsgView {
     return this.stringify(MsgView.asVerbose)
   }
 
+  /**
+   * a string in JSON format representing this view as an object
+   */
   public toJson (): string {
     return JSON.stringify(this.toObject(), null, 4)
   }
@@ -242,7 +297,7 @@ export abstract class MsgView {
 
   protected abstract stringAtPosition (position: number): string | null
 
-  protected abstract toTyped (field: SimpleFieldDefinition): boolean|string|number|Date
+  protected abstract toTyped (field: SimpleFieldDefinition): boolean | string | number | Date
 
   protected resolveTag (tagOrName: number | string): number {
     let tag: number
@@ -313,12 +368,12 @@ export abstract class MsgView {
     return range.map((i: number) => this.stringAtPosition(i))
   }
 
-  private asInstances (name: string): (ILooseObject|null)[] | null {
+  private asInstances (name: string): Array<ILooseObject | null> | null {
     const groupView: MsgView | null = this.getView(name)
     if (groupView == null) {
       return null
     }
-    const groupArray: (ILooseObject|null)[] = new Array(groupView.groupCount())
+    const groupArray = new Array<ILooseObject | null>(groupView.groupCount())
     const count: number = groupView.groupCount()
     for (let j: number = 0; j < count; ++j) {
       const instance: MsgView | null = groupView.getGroupInstance(j)
@@ -328,12 +383,11 @@ export abstract class MsgView {
   }
 
   private asLoose (def: ContainedFieldSet): ILooseObject {
-    const reducer = new SetReduce<ILooseObject>()
     // eslint-disable-next-line
-    return reducer.reduce(def, {
-      group: (a: ILooseObject, field: ContainedGroupField) => this.asLooseGroup(a, field),
-      simple: (a: ILooseObject, field: ContainedSimpleField) => this.asLooseSimple(a, field),
-      component: (a: ILooseObject, field: ContainedComponentField) => this.asLooseComponent(a, field)
+    return this.reducer.reduce(def, {
+      group: (a: ILooseObject, field: ContainedGroupField) => { this.asLooseGroup(a, field) },
+      simple: (a: ILooseObject, field: ContainedSimpleField) => { this.asLooseSimple(a, field) },
+      component: (a: ILooseObject, field: ContainedComponentField) => { this.asLooseComponent(a, field) }
     } as ITypeDispatcher<ILooseObject>, def.localAttribute.reduce<ILooseObject>((a: ILooseObject, sf: ContainedSimpleField) => {
       const def = sf.definition
       const position: number = this.getPosition(def.tag)
@@ -347,9 +401,9 @@ export abstract class MsgView {
   private missingRequired (def: ContainedFieldSet, tags: number []): number[] {
     const reducer = new SetReduce<number[]>()
     const dispatcher: ITypeDispatcher<number[]> = {
-      group: (a: number[], field: ContainedGroupField) => this.missingGroup(def, field, a),
-      simple: (a: number[], field: ContainedSimpleField) => this.missingSimple(field, a),
-      component: (a: number[], field: ContainedComponentField) => this.missingComponent(field, a)
+      group: (a: number[], field: ContainedGroupField) => { this.missingGroup(def, field, a) },
+      simple: (a: number[], field: ContainedSimpleField) => { this.missingSimple(field, a) },
+      component: (a: number[], field: ContainedComponentField) => { this.missingComponent(field, a) }
     }
     return reducer.reduce(def, dispatcher, tags)
   }
@@ -394,7 +448,7 @@ export abstract class MsgView {
     const def = sf.definition
     const position: number = this.getPosition(def.tag)
     if (position >= 0) {
-      const asSimple: boolean|string|number|Date = this.toTyped(def)
+      const asSimple: boolean | string | number | Date = this.toTyped(def)
       if (asSimple != null) { // beware, may be false value
         a[sf.name] = asSimple
       }
@@ -435,8 +489,8 @@ export abstract class MsgView {
       const tagPos: TagPos = tags.tagPos[i]
       const field: SimpleFieldDefinition | null = simple.get(tagPos.tag.toString())
       const val: string | null = this.stringAtPosition(i) ?? ''
-      if (!field) return ''
-      const token = getToken(field, val, i - segment.startPosition, count, tagPos)
+      // [0] 8 (BeginString) = FIX4.4
+      const token = field ? getToken(field, val, i - segment.startPosition, count, tagPos) : `[${i}] ${tagPos.tag} (unknown) = ${val}, `
       buffer.writeString(token)
     }
 

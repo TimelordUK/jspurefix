@@ -1,12 +1,12 @@
 import { IUnderlyingProvisionOptionRelevantUnderlyingDateBusinessCenterGrp } from './underlying_provision_option_relevant_underlying_date_business_center_grp'
 
 export interface IUnderlyingProvisionOptionRelevantUnderlyingDate {
-  UnderlyingProvisionOptionRelevantUnderlyingDateUnadjusted?: Date// 42142
-  UnderlyingProvisionOptionRelevantUnderlyingDateBusinessDayConvention?: number// 42143
-  UnderlyingProvisionOptionRelevantUnderlyingDateRelativeTo?: number// 42144
-  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetPeriod?: number// 42145
-  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetUnit?: string// 42146
-  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetDayType?: number// 42147
-  UnderlyingProvisionOptionRelevantUnderlyingDateAdjusted?: Date// 42148
-  UnderlyingProvisionOptionRelevantUnderlyingDateBusinessCenterGrp?: IUnderlyingProvisionOptionRelevantUnderlyingDateBusinessCenterGrp[]
+  UnderlyingProvisionOptionRelevantUnderlyingDateUnadjusted?: Date// [1] 42142 (LocalDate)
+  UnderlyingProvisionOptionRelevantUnderlyingDateBusinessDayConvention?: number// [1] 42143 (Int)
+  UnderlyingProvisionOptionRelevantUnderlyingDateRelativeTo?: number// [1] 42144 (Int)
+  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetPeriod?: number// [1] 42145 (Int)
+  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetUnit?: string// [1] 42146 (String)
+  UnderlyingProvisionOptionRelevantUnderlyingDateOffsetDayType?: number// [1] 42147 (Int)
+  UnderlyingProvisionOptionRelevantUnderlyingDateAdjusted?: Date// [1] 42148 (LocalDate)
+  UnderlyingProvisionOptionRelevantUnderlyingDateBusinessCenterGrp?: IUnderlyingProvisionOptionRelevantUnderlyingDateBusinessCenterGrp[]// [1] Ctr.42189
 }

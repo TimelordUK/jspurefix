@@ -34,12 +34,12 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
     const config = new JsFixConfig(null, definitions, sessionDescription, AsciiChars.Pipe)
     const xmlParser: MsgParser = new FiXmlParser(config, new StringDuplex(fixml).readable)
     if (asObj.Batch) {
-      xmlParser.on('batch', (msgType: string, v: MsgView) => {
+      xmlParser.on('batch', (_: string, v: MsgView) => {
         const o: ILooseObject = v.toObject() as ILooseObject
         resolve(o)
       })
     } else {
-      xmlParser.on('msg', (msgType: string, v: MsgView) => {
+      xmlParser.on('msg', (_: string, v: MsgView) => {
         const o: ILooseObject = v.toObject() as ILooseObject
         resolve(o)
       })

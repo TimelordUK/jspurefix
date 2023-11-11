@@ -10,12 +10,12 @@ import { IParties } from './set/parties'
 *************************************************************
 */
 export interface IApplicationMessageRequest {
-  ApplReqID: string// 1346
-  ApplReqType: number// 1347
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  StandardHeader?: IStandardHeader
-  ApplIDRequestGrp?: IApplIDRequestGrp[]
-  Parties?: IParties[]
+  ApplReqID: string// [2] 1346 (String)
+  ApplReqType: number// [2] 1347 (Int)
+  Text?: string// [2] 58 (String)
+  EncodedTextLen?: number// [2] 354 (Length)
+  EncodedText?: Buffer// [2] 355 (RawData)
+  StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
+  ApplIDRequestGrp?: IApplIDRequestGrp[]// [2] RefApplID.1355, RefID.1433 .. ApplEndSeq.1183
+  Parties?: IParties[]// [3] ID.448, Src.447 .. Qual.2376
 }

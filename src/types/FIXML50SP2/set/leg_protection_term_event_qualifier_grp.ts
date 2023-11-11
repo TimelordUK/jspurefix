@@ -1,3 +1,3 @@
 export interface ILegProtectionTermEventQualifierGrp {
-  LegProtectionTermEventQualifier?: string// 41634
+  LegProtectionTermEventQualifier?: string// [1] 41634 (String)
 }

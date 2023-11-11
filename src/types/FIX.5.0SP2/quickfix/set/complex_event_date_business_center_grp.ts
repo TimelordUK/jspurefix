@@ -1,0 +1,5 @@
+import { IComplexEventDateBusinessCenterGrpNoComplexEventDateBusinessCenters } from './complex_event_date_business_center_grp_no_complex_event_date_business_centers'
+
+export interface IComplexEventDateBusinessCenterGrp {
+  NoComplexEventDateBusinessCenters?: IComplexEventDateBusinessCenterGrpNoComplexEventDateBusinessCenters[]// [1] ComplexEventDateBusinessCenter.41019
+}

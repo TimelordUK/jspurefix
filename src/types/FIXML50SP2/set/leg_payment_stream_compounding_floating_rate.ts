@@ -1,20 +1,20 @@
 export interface ILegPaymentStreamCompoundingFloatingRate {
-  LegPaymentStreamCompoundingRateIndex?: string// 42427
-  LegPaymentStreamCompoundingRateIndexCurvePeriod?: number// 42428
-  LegPaymentStreamCompoundingRateIndexCurveUnit?: string// 42429
-  LegPaymentStreamCompoundingRateMultiplier?: number// 42430
-  LegPaymentStreamCompoundingRateSpread?: number// 42431
-  LegPaymentStreamCompoundingRateSpreadPositionType?: number// 42432
-  LegPaymentStreamCompoundingRateTreatment?: number// 42433
-  LegPaymentStreamCompoundingCapRate?: number// 42434
-  LegPaymentStreamCompoundingCapRateBuySide?: number// 42435
-  LegPaymentStreamCompoundingCapRateSellSide?: number// 42436
-  LegPaymentStreamCompoundingFloorRate?: number// 42437
-  LegPaymentStreamCompoundingFloorRateBuySide?: number// 42438
-  LegPaymentStreamCompoundingFloorRateSellSide?: number// 42439
-  LegPaymentStreamCompoundingInitialRate?: number// 42440
-  LegPaymentStreamCompoundingFinalRateRoundingDirection?: string// 42441
-  LegPaymentStreamCompoundingFinalRatePrecision?: number// 42442
-  LegPaymentStreamCompoundingAveragingMethod?: number// 42443
-  LegPaymentStreamCompoundingNegativeRateTreatment?: number// 42444
+  LegPaymentStreamCompoundingRateIndex?: string// [1] 42427 (String)
+  LegPaymentStreamCompoundingRateIndexCurvePeriod?: number// [1] 42428 (Int)
+  LegPaymentStreamCompoundingRateIndexCurveUnit?: string// [1] 42429 (String)
+  LegPaymentStreamCompoundingRateMultiplier?: number// [1] 42430 (Float)
+  LegPaymentStreamCompoundingRateSpread?: number// [1] 42431 (Float)
+  LegPaymentStreamCompoundingRateSpreadPositionType?: number// [1] 42432 (Int)
+  LegPaymentStreamCompoundingRateTreatment?: number// [1] 42433 (Int)
+  LegPaymentStreamCompoundingCapRate?: number// [1] 42434 (Float)
+  LegPaymentStreamCompoundingCapRateBuySide?: number// [1] 42435 (Int)
+  LegPaymentStreamCompoundingCapRateSellSide?: number// [1] 42436 (Int)
+  LegPaymentStreamCompoundingFloorRate?: number// [1] 42437 (Float)
+  LegPaymentStreamCompoundingFloorRateBuySide?: number// [1] 42438 (Int)
+  LegPaymentStreamCompoundingFloorRateSellSide?: number// [1] 42439 (Int)
+  LegPaymentStreamCompoundingInitialRate?: number// [1] 42440 (Float)
+  LegPaymentStreamCompoundingFinalRateRoundingDirection?: string// [1] 42441 (String)
+  LegPaymentStreamCompoundingFinalRatePrecision?: number// [1] 42442 (Int)
+  LegPaymentStreamCompoundingAveragingMethod?: number// [1] 42443 (Int)
+  LegPaymentStreamCompoundingNegativeRateTreatment?: number// [1] 42444 (Int)
 }

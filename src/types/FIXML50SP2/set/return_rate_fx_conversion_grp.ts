@@ -1,5 +1,5 @@
 export interface IReturnRateFXConversionGrp {
-  ReturnRateFXCurrencySymbol?: string// 42732
-  ReturnRateFXRate?: number// 42733
-  ReturnRateFXRateCalc?: string// 42734
+  ReturnRateFXCurrencySymbol?: string// [1] 42732 (String)
+  ReturnRateFXRate?: number// [1] 42733 (Float)
+  ReturnRateFXRateCalc?: string// [1] 42734 (String)
 }

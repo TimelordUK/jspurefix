@@ -1,3 +1,3 @@
 export interface IPartyRelationshipGrp {
-  PartyRelationship?: number// 1515
+  PartyRelationship?: number// [1] 1515 (Int)
 }

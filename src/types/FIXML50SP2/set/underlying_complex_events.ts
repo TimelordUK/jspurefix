@@ -6,45 +6,45 @@ import { IUnderlyingComplexEventCreditEventSourceGrp } from './underlying_comple
 import { IUnderlyingComplexEventCreditEventGrp } from './underlying_complex_event_credit_event_grp'
 
 export interface IUnderlyingComplexEvents {
-  UnderlyingComplexEventType?: number// 2046
-  UnderlyingComplexOptPayoutPaySide?: number// 2261
-  UnderlyingComplexOptPayoutReceiveSide?: number// 2262
-  UnderlyingComplexOptPayoutUnderlier?: string// 2263
-  UnderlyingComplexOptPayoutAmount?: number// 2047
-  UnderlyingComplexOptPayoutPercentage?: number// 2264
-  UnderlyingComplexOptPayoutTime?: number// 2265
-  UnderlyingComplexOptPayoutCurrency?: string// 2266
-  UnderlyingComplexEventPrice?: number// 2048
-  UnderlyingComplexEventPricePercentage?: number// 2267
-  UnderlyingComplexEventPriceBoundaryMethod?: number// 2049
-  UnderlyingComplexEventPriceBoundaryPrecision?: number// 2050
-  UnderlyingComplexEventPriceTimeType?: number// 2051
-  UnderlyingComplexEventCondition?: number// 2052
-  UnderlyingComplexEventCurrencyOne?: string// 2268
-  UnderlyingComplexEventCurrencyTwo?: string// 2269
-  UnderlyingComplexEventQuoteBasis?: number// 2270
-  UnderlyingComplexEventFixedFXRate?: number// 2271
-  UnderlyingComplexEventSpotRate?: number// 2419
-  UnderlyingComplexEventForwardPoints?: number// 2420
-  UnderlyingComplexEventDeterminationMethod?: string// 2272
-  UnderlyingComplexEventCalculationAgent?: number// 2273
-  UnderlyingComplexEventStrikePrice?: number// 2274
-  UnderlyingComplexEventStrikeFactor?: number// 2275
-  UnderlyingComplexEventStrikeNumberOfOptions?: number// 2276
-  UnderlyingComplexEventCreditEventsXIDRef?: string// 2277
-  UnderlyingComplexEventCreditEventNotifyingParty?: number// 2278
-  UnderlyingComplexEventCreditEventBusinessCenter?: string// 2279
-  UnderlyingComplexEventCreditEventStandardSources?: boolean// 2280
-  UnderlyingComplexEventCreditEventMinimumSources?: number// 2281
-  UnderlyingComplexEventFuturesPriceValuation?: boolean// 2611
-  UnderlyingComplexEventOptionsPriceValuation?: boolean// 2612
-  UnderlyingComplexEventPVFinalPriceElectionFallback?: number// 2613
-  UnderlyingComplexEventXID?: string// 2282
-  UnderlyingComplexEventXIDRef?: string// 2283
-  UnderlyingComplexEventDates?: IUnderlyingComplexEventDates[]
-  UnderlyingComplexEventRateSourceGrp?: IUnderlyingComplexEventRateSourceGrp[]
-  UnderlyingComplexEventRelativeDate?: IUnderlyingComplexEventRelativeDate
-  UnderlyingComplexEventPeriodGrp?: IUnderlyingComplexEventPeriodGrp[]
-  UnderlyingComplexEventCreditEventSourceGrp?: IUnderlyingComplexEventCreditEventSourceGrp[]
-  UnderlyingComplexEventCreditEventGrp?: IUnderlyingComplexEventCreditEventGrp[]
+  UnderlyingComplexEventType?: number// [1] 2046 (Int)
+  UnderlyingComplexOptPayoutPaySide?: number// [1] 2261 (Int)
+  UnderlyingComplexOptPayoutReceiveSide?: number// [1] 2262 (Int)
+  UnderlyingComplexOptPayoutUnderlier?: string// [1] 2263 (String)
+  UnderlyingComplexOptPayoutAmount?: number// [1] 2047 (Float)
+  UnderlyingComplexOptPayoutPercentage?: number// [1] 2264 (Float)
+  UnderlyingComplexOptPayoutTime?: number// [1] 2265 (Int)
+  UnderlyingComplexOptPayoutCurrency?: string// [1] 2266 (String)
+  UnderlyingComplexEventPrice?: number// [1] 2048 (Float)
+  UnderlyingComplexEventPricePercentage?: number// [1] 2267 (Float)
+  UnderlyingComplexEventPriceBoundaryMethod?: number// [1] 2049 (Int)
+  UnderlyingComplexEventPriceBoundaryPrecision?: number// [1] 2050 (Float)
+  UnderlyingComplexEventPriceTimeType?: number// [1] 2051 (Int)
+  UnderlyingComplexEventCondition?: number// [1] 2052 (Int)
+  UnderlyingComplexEventCurrencyOne?: string// [1] 2268 (String)
+  UnderlyingComplexEventCurrencyTwo?: string// [1] 2269 (String)
+  UnderlyingComplexEventQuoteBasis?: number// [1] 2270 (Int)
+  UnderlyingComplexEventFixedFXRate?: number// [1] 2271 (Float)
+  UnderlyingComplexEventSpotRate?: number// [1] 2419 (Float)
+  UnderlyingComplexEventForwardPoints?: number// [1] 2420 (Float)
+  UnderlyingComplexEventDeterminationMethod?: string// [1] 2272 (String)
+  UnderlyingComplexEventCalculationAgent?: number// [1] 2273 (Int)
+  UnderlyingComplexEventStrikePrice?: number// [1] 2274 (Float)
+  UnderlyingComplexEventStrikeFactor?: number// [1] 2275 (Float)
+  UnderlyingComplexEventStrikeNumberOfOptions?: number// [1] 2276 (Int)
+  UnderlyingComplexEventCreditEventsXIDRef?: string// [1] 2277 (String)
+  UnderlyingComplexEventCreditEventNotifyingParty?: number// [1] 2278 (Int)
+  UnderlyingComplexEventCreditEventBusinessCenter?: string// [1] 2279 (String)
+  UnderlyingComplexEventCreditEventStandardSources?: boolean// [1] 2280 (Boolean)
+  UnderlyingComplexEventCreditEventMinimumSources?: number// [1] 2281 (Int)
+  UnderlyingComplexEventFuturesPriceValuation?: boolean// [1] 2611 (Boolean)
+  UnderlyingComplexEventOptionsPriceValuation?: boolean// [1] 2612 (Boolean)
+  UnderlyingComplexEventPVFinalPriceElectionFallback?: number// [1] 2613 (Int)
+  UnderlyingComplexEventXID?: string// [1] 2282 (String)
+  UnderlyingComplexEventXIDRef?: string// [1] 2283 (String)
+  UnderlyingComplexEventDates?: IUnderlyingComplexEventDates[]// [1] StartDt.2054, EndDt.2055
+  UnderlyingComplexEventRateSourceGrp?: IUnderlyingComplexEventRateSourceGrp[]// [2] RtSrc.41733, RtSrcTyp.41734 .. RefHdg.41736
+  UnderlyingComplexEventRelativeDate?: IUnderlyingComplexEventRelativeDate// [3] DtUnadj.41739, Reltv.41740 .. FixngBizCtr.41747
+  UnderlyingComplexEventPeriodGrp?: IUnderlyingComplexEventPeriodGrp[]// [4] Typ.41730, BizCtr.41731
+  UnderlyingComplexEventCreditEventSourceGrp?: IUnderlyingComplexEventCreditEventSourceGrp[]// [5] Src.41749
+  UnderlyingComplexEventCreditEventGrp?: IUnderlyingComplexEventCreditEventGrp[]// [6] Typ.41717, Val.41718 .. RtSrc.41723
 }

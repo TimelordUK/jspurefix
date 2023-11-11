@@ -4,54 +4,54 @@ import { ITradeReportOrderDetail } from './trade_report_order_detail'
 import { ITrdInstrmtLegExecGrp } from './trd_instrmt_leg_exec_grp'
 
 export interface ITrdMatchSideGrp {
-  Side?: string// 54
-  SideExecID?: string// 1427
-  SideExecRefID?: string// 1900
-  SideTradeID?: string// 1506
-  SideTradeReportID?: string// 1005
-  OrderDelay?: number// 1428
-  OrderDelayUnit?: number// 1429
-  SideLastQty?: number// 1009
-  SideClearingTradePrice?: number// 1597
-  SidePriceDifferential?: number// 1599
-  SideClearingTradePriceType?: number// 1598
-  SideFillStationCd?: string// 1006
-  SideReasonCd?: string// 1007
-  SideTrdSubTyp?: number// 1008
-  NetGrossInd?: number// 430
-  SideCurrency?: string// 1154
-  SideSettlCurrency?: string// 1155
-  TradeInputSource?: string// 578
-  TradeInputDevice?: string// 579
-  ComplianceID?: string// 376
-  ComplianceText?: string// 2404
-  EncodedComplianceTextLen?: number// 2351
-  EncodedComplianceText?: Buffer// 2352
-  SolicitedFlag?: boolean// 377
-  CustOrderCapacity?: number// 582
-  TimeBracket?: string// 943
-  PositionEffect?: string// 77
-  ExchangeRule?: string// 825
-  TradeAllocIndicator?: number// 826
-  PreallocMethod?: string// 591
-  AllocID?: string// 70
-  SideGrossTradeAmt?: number// 1072
-  AggressorIndicator?: boolean// 1057
-  ExchangeSpecialInstructions?: string// 1139
-  SideShortSaleExemptionReason?: number// 1690
-  OrderCategory?: string// 1115
-  AvgPxIndicator?: number// 819
-  AvgPxGroupID?: string// 1731
-  SideMarketSegmentID?: string// 1898
-  SideVenueType?: string// 1899
-  ClearingFeeIndicator?: string// 635
-  CustOrderHandlingInst?: string// 1031
-  OrderHandlingInstSource?: number// 1032
-  Text?: string// 58
-  EncodedTextLen?: number// 354
-  EncodedText?: Buffer// 355
-  Parties?: IParties[]
-  TrdAllocGrp?: ITrdAllocGrp[]
-  TradeReportOrderDetail?: ITradeReportOrderDetail
-  TrdInstrmtLegExecGrp?: ITrdInstrmtLegExecGrp[]
+  Side?: string// [1] 54 (String)
+  SideExecID?: string// [1] 1427 (String)
+  SideExecRefID?: string// [1] 1900 (String)
+  SideTradeID?: string// [1] 1506 (String)
+  SideTradeReportID?: string// [1] 1005 (String)
+  OrderDelay?: number// [1] 1428 (Int)
+  OrderDelayUnit?: number// [1] 1429 (Int)
+  SideLastQty?: number// [1] 1009 (Float)
+  SideClearingTradePrice?: number// [1] 1597 (Float)
+  SidePriceDifferential?: number// [1] 1599 (Float)
+  SideClearingTradePriceType?: number// [1] 1598 (Int)
+  SideFillStationCd?: string// [1] 1006 (String)
+  SideReasonCd?: string// [1] 1007 (String)
+  SideTrdSubTyp?: number// [1] 1008 (Int)
+  NetGrossInd?: number// [1] 430 (Int)
+  SideCurrency?: string// [1] 1154 (String)
+  SideSettlCurrency?: string// [1] 1155 (String)
+  TradeInputSource?: string// [1] 578 (String)
+  TradeInputDevice?: string// [1] 579 (String)
+  ComplianceID?: string// [1] 376 (String)
+  ComplianceText?: string// [1] 2404 (String)
+  EncodedComplianceTextLen?: number// [1] 2351 (Length)
+  EncodedComplianceText?: Buffer// [1] 2352 (RawData)
+  SolicitedFlag?: boolean// [1] 377 (Boolean)
+  CustOrderCapacity?: number// [1] 582 (Int)
+  TimeBracket?: string// [1] 943 (String)
+  PositionEffect?: string// [1] 77 (String)
+  ExchangeRule?: string// [1] 825 (String)
+  TradeAllocIndicator?: number// [1] 826 (Int)
+  PreallocMethod?: string// [1] 591 (String)
+  AllocID?: string// [1] 70 (String)
+  SideGrossTradeAmt?: number// [1] 1072 (Float)
+  AggressorIndicator?: boolean// [1] 1057 (Boolean)
+  ExchangeSpecialInstructions?: string// [1] 1139 (String)
+  SideShortSaleExemptionReason?: number// [1] 1690 (Int)
+  OrderCategory?: string// [1] 1115 (String)
+  AvgPxIndicator?: number// [1] 819 (Int)
+  AvgPxGroupID?: string// [1] 1731 (String)
+  SideMarketSegmentID?: string// [1] 1898 (String)
+  SideVenueType?: string// [1] 1899 (String)
+  ClearingFeeIndicator?: string// [1] 635 (String)
+  CustOrderHandlingInst?: string// [1] 1031 (String)
+  OrderHandlingInstSource?: number// [1] 1032 (Int)
+  Text?: string// [1] 58 (String)
+  EncodedTextLen?: number// [1] 354 (Length)
+  EncodedText?: Buffer// [1] 355 (RawData)
+  Parties?: IParties[]// [1] ID.448, Src.447 .. Qual.2376
+  TrdAllocGrp?: ITrdAllocGrp[]// [2] Acct.79, ActIDSrc.661 .. RefRiskLmtChkIDTyp.2393
+  TradeReportOrderDetail?: ITradeReportOrderDetail// [3] OrdID.37, OrdID2.198 .. OrigOrdModTm.586
+  TrdInstrmtLegExecGrp?: ITrdInstrmtLegExecGrp[]// [4] RefID.654, ExecID.1893 .. QtyTyp.1591
 }

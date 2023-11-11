@@ -1,6 +1,6 @@
 export interface IComplexEventRateSourceGrp {
-  ComplexEventRateSource?: number// 41014
-  ComplexEventRateSourceType?: number// 41015
-  ComplexEventReferencePage?: string// 41016
-  ComplexEventReferencePageHeading?: string// 41017
+  ComplexEventRateSource?: number// [1] 41014 (Int)
+  ComplexEventRateSourceType?: number// [1] 41015 (Int)
+  ComplexEventReferencePage?: string// [1] 41016 (String)
+  ComplexEventReferencePageHeading?: string// [1] 41017 (String)
 }

@@ -1,5 +1,5 @@
 export interface IDeliveryScheduleSettlTimeGrp {
-  DeliveryScheduleSettlStart?: string// 41055
-  DeliveryScheduleSettlEnd?: string// 41056
-  DeliveryScheduleSettlTimeType?: number// 41057
+  DeliveryScheduleSettlStart?: string// [1] 41055 (String)
+  DeliveryScheduleSettlEnd?: string// [1] 41056 (String)
+  DeliveryScheduleSettlTimeType?: number// [1] 41057 (Int)
 }

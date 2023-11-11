@@ -2,27 +2,27 @@ import { IUnderlyingReturnRateValuationDateGrp } from './underlying_return_rate_
 import { IUnderlyingReturnRateValuationDateBusinessCenterGrp } from './underlying_return_rate_valuation_date_business_center_grp'
 
 export interface IUnderlyingReturnRateDateGrp {
-  UnderlyingReturnRateDateMode?: number// 43009
-  UnderlyingReturnRateValuationDateRelativeTo?: number// 43010
-  UnderlyingReturnRateValuationDateOffsetPeriod?: number// 43011
-  UnderlyingReturnRateValuationDateOffsetUnit?: string// 43012
-  UnderlyingReturnRateValuationDateOffsetDayType?: number// 43013
-  UnderlyingReturnRateValuationStartDateUnadjusted?: Date// 43014
-  UnderlyingReturnRateValuationStartDateRelativeTo?: number// 43015
-  UnderlyingReturnRateValuationStartDateOffsetPeriod?: number// 43016
-  UnderlyingReturnRateValuationStartDateOffsetUnit?: string// 43017
-  UnderlyingReturnRateValuationStartDateOffsetDayType?: number// 43018
-  UnderlyingReturnRateValuationStartDateAdjusted?: Date// 43019
-  UnderlyingReturnRateValuationEndDateUnadjusted?: Date// 43020
-  UnderlyingReturnRateValuationEndDateRelativeTo?: number// 43021
-  UnderlyingReturnRateValuationEndDateOffsetPeriod?: number// 43022
-  UnderlyingReturnRateValuationEndDateOffsetUnit?: string// 43023
-  UnderlyingReturnRateValuationEndDateOffsetDayType?: number// 43024
-  UnderlyingReturnRateValuationEndDateAdjusted?: Date// 43025
-  UnderlyingReturnRateValuationFrequencyPeriod?: number// 43026
-  UnderlyingReturnRateValuationFrequencyUnit?: string// 43027
-  UnderlyingReturnRateValuationFrequencyRollConvention?: string// 43028
-  UnderlyingReturnRateValuationDateBusinessDayConvention?: number// 43029
-  UnderlyingReturnRateValuationDateGrp?: IUnderlyingReturnRateValuationDateGrp[]
-  UnderlyingReturnRateValuationDateBusinessCenterGrp?: IUnderlyingReturnRateValuationDateBusinessCenterGrp[]
+  UnderlyingReturnRateDateMode?: number// [1] 43009 (Int)
+  UnderlyingReturnRateValuationDateRelativeTo?: number// [1] 43010 (Int)
+  UnderlyingReturnRateValuationDateOffsetPeriod?: number// [1] 43011 (Int)
+  UnderlyingReturnRateValuationDateOffsetUnit?: string// [1] 43012 (String)
+  UnderlyingReturnRateValuationDateOffsetDayType?: number// [1] 43013 (Int)
+  UnderlyingReturnRateValuationStartDateUnadjusted?: Date// [1] 43014 (LocalDate)
+  UnderlyingReturnRateValuationStartDateRelativeTo?: number// [1] 43015 (Int)
+  UnderlyingReturnRateValuationStartDateOffsetPeriod?: number// [1] 43016 (Int)
+  UnderlyingReturnRateValuationStartDateOffsetUnit?: string// [1] 43017 (String)
+  UnderlyingReturnRateValuationStartDateOffsetDayType?: number// [1] 43018 (Int)
+  UnderlyingReturnRateValuationStartDateAdjusted?: Date// [1] 43019 (LocalDate)
+  UnderlyingReturnRateValuationEndDateUnadjusted?: Date// [1] 43020 (LocalDate)
+  UnderlyingReturnRateValuationEndDateRelativeTo?: number// [1] 43021 (Int)
+  UnderlyingReturnRateValuationEndDateOffsetPeriod?: number// [1] 43022 (Int)
+  UnderlyingReturnRateValuationEndDateOffsetUnit?: string// [1] 43023 (String)
+  UnderlyingReturnRateValuationEndDateOffsetDayType?: number// [1] 43024 (Int)
+  UnderlyingReturnRateValuationEndDateAdjusted?: Date// [1] 43025 (LocalDate)
+  UnderlyingReturnRateValuationFrequencyPeriod?: number// [1] 43026 (Int)
+  UnderlyingReturnRateValuationFrequencyUnit?: string// [1] 43027 (String)
+  UnderlyingReturnRateValuationFrequencyRollConvention?: string// [1] 43028 (String)
+  UnderlyingReturnRateValuationDateBusinessDayConvention?: number// [1] 43029 (Int)
+  UnderlyingReturnRateValuationDateGrp?: IUnderlyingReturnRateValuationDateGrp[]// [1] Dt.43072, Typ.43073
+  UnderlyingReturnRateValuationDateBusinessCenterGrp?: IUnderlyingReturnRateValuationDateBusinessCenterGrp[]// [2] Ctr.43070
 }

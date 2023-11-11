@@ -1,17 +1,12 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { MsgView, TagPos, Structure } from '../../buffer'
-import { FixDefinitions } from '../../dictionary/definition'
-import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
+import { MsgView, TagPos } from '../../buffer'
 import { Setup } from '../env/setup'
 
 const root: string = path.join(__dirname, '../../../data')
 
-let definitions: FixDefinitions
-let session: AsciiMsgTransmitter
 let views: MsgView[]
-let structure: Structure | null
 let tp: TagPos[] | undefined
 
 const testTags: TagPos[] = [
@@ -58,11 +53,8 @@ let setup: Setup
 beforeAll(async () => {
   setup = new Setup('session/test-initiator.json', null)
   await setup.init()
-  definitions = setup.clientConfig.definitions
-  session = setup.client.transmitter as AsciiMsgTransmitter
   views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/quickfix/logon/fix.txt'))
   if (views && views.length > 0) {
-    structure = views[0].structure
     tp = views[0].structure?.tags.tagPos.slice(0, views[0].segment.endPosition)
   }
 }, 45000)

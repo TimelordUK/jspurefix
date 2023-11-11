@@ -4,61 +4,61 @@ import { ILegPaymentScheduleFixingDayGrp } from './leg_payment_schedule_fixing_d
 import { ILegPaymentScheduleInterimExchangeDateBusinessCenterGrp } from './leg_payment_schedule_interim_exchange_date_business_center_grp'
 
 export interface ILegPaymentScheduleGrp {
-  LegPaymentScheduleType?: number// 40375
-  LegPaymentScheduleXID?: string// 41533
-  LegPaymentScheduleXIDRef?: string// 41534
-  LegPaymentScheduleStubType?: number// 40376
-  LegPaymentScheduleStartDateUnadjusted?: Date// 40377
-  LegPaymentScheduleEndDateUnadjusted?: Date// 40378
-  LegPaymentSchedulePaySide?: number// 40379
-  LegPaymentScheduleReceiveSide?: number// 40380
-  LegPaymentScheduleNotional?: number// 40381
-  LegPaymentScheduleCurrency?: string// 40382
-  LegPaymentScheduleRate?: number// 40383
-  LegPaymentScheduleRateMultiplier?: number// 40384
-  LegPaymentScheduleRateSpread?: number// 40385
-  LegPaymentScheduleRateCurrency?: string// 41535
-  LegPaymentScheduleRateUnitOfMeasure?: string// 41536
-  LegPaymentScheduleRateConversionFactor?: number// 41537
-  LegPaymentScheduleRateSpreadType?: number// 41538
-  LegPaymentScheduleRateSpreadPositionType?: number// 40386
-  LegPaymentScheduleRateTreatment?: number// 40387
-  LegPaymentScheduleFixedAmount?: number// 40388
-  LegPaymentScheduleFixedCurrency?: string// 40389
-  LegPaymentScheduleSettlPeriodPrice?: number// 41539
-  LegPaymentScheduleSettlPeriodPriceCurrency?: string// 41540
-  LegPaymentScheduleSettlPeriodPriceUnitOfMeasure?: string// 41541
-  LegPaymentScheduleStepUnitOfMeasure?: string// 41542
-  LegPaymentScheduleStepFrequencyPeriod?: number// 40390
-  LegPaymentScheduleStepFrequencyUnit?: string// 40391
-  LegPaymentScheduleStepOffsetValue?: number// 40392
-  LegPaymentScheduleStepRate?: number// 40393
-  LegPaymentScheduleStepOffsetRate?: number// 40394
-  LegPaymentScheduleStepRelativeTo?: number// 40395
-  LegPaymentScheduleFixingDateUnadjusted?: Date// 40396
-  LegPaymentScheduleWeight?: number// 40397
-  LegPaymentScheduleFixingDateRelativeTo?: number// 40398
-  LegPaymentScheduleFixingDateBusinessDayConvention?: number// 40399
-  LegPaymentScheduleFixingDateOffsetPeriod?: number// 40401
-  LegPaymentScheduleFixingDateOffsetUnit?: string// 40402
-  LegPaymentScheduleFixingDateOffsetDayType?: number// 40403
-  LegPaymentScheduleFixingDayDistribution?: number// 41543
-  LegPaymentScheduleFixingDayCount?: number// 41544
-  LegPaymentScheduleFixingDateAdjusted?: Date// 40404
-  LegPaymentScheduleFixingLagPeriod?: number// 41545
-  LegPaymentScheduleFixingLagUnit?: string// 41546
-  LegPaymentScheduleFixingFirstObservationDateOffsetPeriod?: number// 41547
-  LegPaymentScheduleFixingFirstObservationDateOffsetUnit?: string// 41548
-  LegPaymentScheduleFixingTime?: string// 40405
-  LegPaymentScheduleFixingTimeBusinessCenter?: string// 40406
-  LegPaymentScheduleInterimExchangePaymentDateRelativeTo?: number// 40407
-  LegPaymentScheduleInterimExchangeDatesBusinessDayConvention?: number// 40408
-  LegPaymentScheduleInterimExchangeDatesOffsetPeriod?: number// 40410
-  LegPaymentScheduleInterimExchangeDatesOffsetUnit?: string// 40411
-  LegPaymentScheduleInterimExchangeDatesOffsetDayType?: number// 40412
-  LegPaymentScheduleInterimExchangeDateAdjusted?: Date// 40413
-  LegPaymentScheduleRateSourceGrp?: ILegPaymentScheduleRateSourceGrp[]
-  LegPaymentScheduleFixingDateBusinessCenterGrp?: ILegPaymentScheduleFixingDateBusinessCenterGrp[]
-  LegPaymentScheduleFixingDayGrp?: ILegPaymentScheduleFixingDayGrp[]
-  LegPaymentScheduleInterimExchangeDateBusinessCenterGrp?: ILegPaymentScheduleInterimExchangeDateBusinessCenterGrp[]
+  LegPaymentScheduleType?: number// [1] 40375 (Int)
+  LegPaymentScheduleXID?: string// [1] 41533 (String)
+  LegPaymentScheduleXIDRef?: string// [1] 41534 (String)
+  LegPaymentScheduleStubType?: number// [1] 40376 (Int)
+  LegPaymentScheduleStartDateUnadjusted?: Date// [1] 40377 (LocalDate)
+  LegPaymentScheduleEndDateUnadjusted?: Date// [1] 40378 (LocalDate)
+  LegPaymentSchedulePaySide?: number// [1] 40379 (Int)
+  LegPaymentScheduleReceiveSide?: number// [1] 40380 (Int)
+  LegPaymentScheduleNotional?: number// [1] 40381 (Float)
+  LegPaymentScheduleCurrency?: string// [1] 40382 (String)
+  LegPaymentScheduleRate?: number// [1] 40383 (Float)
+  LegPaymentScheduleRateMultiplier?: number// [1] 40384 (Float)
+  LegPaymentScheduleRateSpread?: number// [1] 40385 (Float)
+  LegPaymentScheduleRateCurrency?: string// [1] 41535 (String)
+  LegPaymentScheduleRateUnitOfMeasure?: string// [1] 41536 (String)
+  LegPaymentScheduleRateConversionFactor?: number// [1] 41537 (Float)
+  LegPaymentScheduleRateSpreadType?: number// [1] 41538 (Int)
+  LegPaymentScheduleRateSpreadPositionType?: number// [1] 40386 (Int)
+  LegPaymentScheduleRateTreatment?: number// [1] 40387 (Int)
+  LegPaymentScheduleFixedAmount?: number// [1] 40388 (Float)
+  LegPaymentScheduleFixedCurrency?: string// [1] 40389 (String)
+  LegPaymentScheduleSettlPeriodPrice?: number// [1] 41539 (Float)
+  LegPaymentScheduleSettlPeriodPriceCurrency?: string// [1] 41540 (String)
+  LegPaymentScheduleSettlPeriodPriceUnitOfMeasure?: string// [1] 41541 (String)
+  LegPaymentScheduleStepUnitOfMeasure?: string// [1] 41542 (String)
+  LegPaymentScheduleStepFrequencyPeriod?: number// [1] 40390 (Int)
+  LegPaymentScheduleStepFrequencyUnit?: string// [1] 40391 (String)
+  LegPaymentScheduleStepOffsetValue?: number// [1] 40392 (Float)
+  LegPaymentScheduleStepRate?: number// [1] 40393 (Float)
+  LegPaymentScheduleStepOffsetRate?: number// [1] 40394 (Float)
+  LegPaymentScheduleStepRelativeTo?: number// [1] 40395 (Int)
+  LegPaymentScheduleFixingDateUnadjusted?: Date// [1] 40396 (LocalDate)
+  LegPaymentScheduleWeight?: number// [1] 40397 (Float)
+  LegPaymentScheduleFixingDateRelativeTo?: number// [1] 40398 (Int)
+  LegPaymentScheduleFixingDateBusinessDayConvention?: number// [1] 40399 (Int)
+  LegPaymentScheduleFixingDateOffsetPeriod?: number// [1] 40401 (Int)
+  LegPaymentScheduleFixingDateOffsetUnit?: string// [1] 40402 (String)
+  LegPaymentScheduleFixingDateOffsetDayType?: number// [1] 40403 (Int)
+  LegPaymentScheduleFixingDayDistribution?: number// [1] 41543 (Int)
+  LegPaymentScheduleFixingDayCount?: number// [1] 41544 (Int)
+  LegPaymentScheduleFixingDateAdjusted?: Date// [1] 40404 (LocalDate)
+  LegPaymentScheduleFixingLagPeriod?: number// [1] 41545 (Int)
+  LegPaymentScheduleFixingLagUnit?: string// [1] 41546 (String)
+  LegPaymentScheduleFixingFirstObservationDateOffsetPeriod?: number// [1] 41547 (Int)
+  LegPaymentScheduleFixingFirstObservationDateOffsetUnit?: string// [1] 41548 (String)
+  LegPaymentScheduleFixingTime?: string// [1] 40405 (String)
+  LegPaymentScheduleFixingTimeBusinessCenter?: string// [1] 40406 (String)
+  LegPaymentScheduleInterimExchangePaymentDateRelativeTo?: number// [1] 40407 (Int)
+  LegPaymentScheduleInterimExchangeDatesBusinessDayConvention?: number// [1] 40408 (Int)
+  LegPaymentScheduleInterimExchangeDatesOffsetPeriod?: number// [1] 40410 (Int)
+  LegPaymentScheduleInterimExchangeDatesOffsetUnit?: string// [1] 40411 (String)
+  LegPaymentScheduleInterimExchangeDatesOffsetDayType?: number// [1] 40412 (Int)
+  LegPaymentScheduleInterimExchangeDateAdjusted?: Date// [1] 40413 (LocalDate)
+  LegPaymentScheduleRateSourceGrp?: ILegPaymentScheduleRateSourceGrp[]// [1] Src.40415, Typ.40416, RefPg.40417
+  LegPaymentScheduleFixingDateBusinessCenterGrp?: ILegPaymentScheduleFixingDateBusinessCenterGrp[]// [2] Ctr.40400
+  LegPaymentScheduleFixingDayGrp?: ILegPaymentScheduleFixingDayGrp[]// [3] DayOfWk.41531, DayNum.41532
+  LegPaymentScheduleInterimExchangeDateBusinessCenterGrp?: ILegPaymentScheduleInterimExchangeDateBusinessCenterGrp[]// [4] Ctr.40409
 }

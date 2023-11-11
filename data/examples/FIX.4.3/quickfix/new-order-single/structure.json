@@ -1,0 +1,62 @@
+[
+  {
+    "name": "StandardHeader",
+    "depth": 1,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 115,
+    "endPosition": 7,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "OrderQtyData",
+    "depth": 1,
+    "startTag": 38,
+    "startPosition": 10,
+    "endTag": 38,
+    "endPosition": 10,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Instrument",
+    "depth": 1,
+    "startTag": 55,
+    "startPosition": 11,
+    "endTag": 55,
+    "endPosition": 11,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "Instrument",
+    "depth": 1,
+    "startTag": 207,
+    "startPosition": 17,
+    "endTag": 207,
+    "endPosition": 17,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "NewOrderSingle",
+    "depth": 0,
+    "startTag": 8,
+    "startPosition": 0,
+    "endTag": 10,
+    "endPosition": 20,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  },
+  {
+    "name": "StandardTrailer",
+    "depth": 1,
+    "startTag": 10,
+    "startPosition": 20,
+    "endTag": 10,
+    "endPosition": 20,
+    "delimiterTag": 0,
+    "delimiterPositions": []
+  }
+]

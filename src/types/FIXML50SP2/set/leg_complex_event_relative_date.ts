@@ -1,14 +1,14 @@
 import { ILegComplexEventDateBusinessCenterGrp } from './leg_complex_event_date_business_center_grp'
 
 export interface ILegComplexEventRelativeDate {
-  LegComplexEventDateUnadjusted?: Date// 41389
-  LegComplexEventDateRelativeTo?: number// 41390
-  LegComplexEventDateOffsetPeriod?: number// 41391
-  LegComplexEventDateOffsetUnit?: string// 41392
-  LegComplexEventDateOffsetDayType?: number// 41393
-  LegComplexEventDateBusinessDayConvention?: number// 41394
-  LegComplexEventDateAdjusted?: Date// 41395
-  LegComplexEventFixingTime?: string// 41396
-  LegComplexEventFixingTimeBusinessCenter?: string// 41397
-  LegComplexEventDateBusinessCenterGrp?: ILegComplexEventDateBusinessCenterGrp[]
+  LegComplexEventDateUnadjusted?: Date// [1] 41389 (LocalDate)
+  LegComplexEventDateRelativeTo?: number// [1] 41390 (Int)
+  LegComplexEventDateOffsetPeriod?: number// [1] 41391 (Int)
+  LegComplexEventDateOffsetUnit?: string// [1] 41392 (String)
+  LegComplexEventDateOffsetDayType?: number// [1] 41393 (Int)
+  LegComplexEventDateBusinessDayConvention?: number// [1] 41394 (Int)
+  LegComplexEventDateAdjusted?: Date// [1] 41395 (LocalDate)
+  LegComplexEventFixingTime?: string// [1] 41396 (String)
+  LegComplexEventFixingTimeBusinessCenter?: string// [1] 41397 (String)
+  LegComplexEventDateBusinessCenterGrp?: ILegComplexEventDateBusinessCenterGrp[]// [1] Ctr.41388
 }

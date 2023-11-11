@@ -1,4 +1,4 @@
 export interface ILegPaymentStreamPaymentDateGrp {
-  LegPaymentStreamPaymentDate?: Date// 41590
-  LegPaymentStreamPaymentDateType?: number// 41591
+  LegPaymentStreamPaymentDate?: Date// [1] 41590 (LocalDate)
+  LegPaymentStreamPaymentDateType?: number// [1] 41591 (Int)
 }

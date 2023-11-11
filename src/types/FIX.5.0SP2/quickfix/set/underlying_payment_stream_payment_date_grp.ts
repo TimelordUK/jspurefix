@@ -1,0 +1,5 @@
+import { IUnderlyingPaymentStreamPaymentDateGrpNoUnderlyingPaymentStreamPaymentDates } from './underlying_payment_stream_payment_date_grp_no_underlying_payment_stream_payment_dates'
+
+export interface IUnderlyingPaymentStreamPaymentDateGrp {
+  NoUnderlyingPaymentStreamPaymentDates?: IUnderlyingPaymentStreamPaymentDateGrpNoUnderlyingPaymentStreamPaymentDates[]// [1] UnderlyingPaymentStreamPaymentDate.41938, UnderlyingPaymentStreamPaymentDateType.41939
+}

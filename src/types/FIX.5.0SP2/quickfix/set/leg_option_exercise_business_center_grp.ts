@@ -1,0 +1,5 @@
+import { ILegOptionExerciseBusinessCenterGrpNoLegOptionExerciseBusinessCenters } from './leg_option_exercise_business_center_grp_no_leg_option_exercise_business_centers'
+
+export interface ILegOptionExerciseBusinessCenterGrp {
+  NoLegOptionExerciseBusinessCenters?: ILegOptionExerciseBusinessCenterGrpNoLegOptionExerciseBusinessCenters[]// [1] LegOptionExerciseBusinessCenter.41492
+}

@@ -1,3 +1,3 @@
 export interface IPaymentScheduleInterimExchangeDateBusinessCenterGrp {
-  PaymentScheduleInterimExchangeDatesBusinessCenter?: string// 40863
+  PaymentScheduleInterimExchangeDatesBusinessCenter?: string// [1] 40863 (String)
 }

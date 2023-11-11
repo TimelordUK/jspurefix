@@ -1,4 +1,4 @@
 export interface ILegProvisionOptionExerciseFixedDateGrp {
-  LegProvisionOptionExerciseFixedDate?: Date// 40496
-  LegProvisionOptionExerciseFixedDateType?: number// 40497
+  LegProvisionOptionExerciseFixedDate?: Date// [1] 40496 (LocalDate)
+  LegProvisionOptionExerciseFixedDateType?: number// [1] 40497 (Int)
 }

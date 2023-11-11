@@ -1,3 +1,3 @@
 export interface IProtectionTermEventNewsSourceGrp {
-  ProtectionTermEventNewsSource?: string// 40189
+  ProtectionTermEventNewsSource?: string// [1] 40189 (String)
 }

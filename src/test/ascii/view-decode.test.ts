@@ -46,7 +46,7 @@ test('get NoMDEntries directly - expect an array', () => {
 test('get NoMDEntries via MDFullGrp - array within a component', () => {
   const mdFullGrp: MsgView | null = view.getView('MDFullGrp')
   expect(mdFullGrp).toBeTruthy()
-  const mdFullGrpAsObject: ILooseObject = mdFullGrp!.toObject() as ILooseObject
+  const mdFullGrpAsObject: ILooseObject = mdFullGrp?.toObject() as ILooseObject
   const noMDEntries: ILooseObject[] = mdFullGrpAsObject.NoMDEntries
   expect(Array.isArray(noMDEntries)).toEqual(true)
   expect(noMDEntries.length).toEqual(2)
@@ -55,7 +55,7 @@ test('get NoMDEntries via MDFullGrp - array within a component', () => {
 function getMdEntriesObjects (): ILooseObject[] {
   const noMDEntriesView: MsgView | null = view.getView('NoMDEntries')
   expect(noMDEntriesView).toBeTruthy()
-  const noMDEntries: ILooseObject[] = noMDEntriesView!.toObject() as ILooseObject[]
+  const noMDEntries: ILooseObject[] = noMDEntriesView?.toObject() as ILooseObject[]
   expect(Array.isArray(noMDEntries)).toEqual(true)
   expect(noMDEntries.length).toEqual(2)
   return noMDEntries
@@ -136,7 +136,7 @@ test('get selection tags one call - tag ids', () => {
 [8] 262 (MDReqID) = ipsum, [9] 55 (Symbol) = sit
  */
 
-test('get selection tags one call - tag names', () => {
+test('get selection tags one array call - tag names', () => {
   const [a, b, c, d, e, f] = view.getTypedTags([
     'BeginString',
     'BodyLength',
@@ -144,6 +144,22 @@ test('get selection tags one call - tag names', () => {
     'MsgSeqNum',
     'MDReqID',
     'Symbol'])
+  expect(a).toEqual('FIX4.4')
+  expect(b).toEqual(3957)
+  expect(c).toEqual('W')
+  expect(d).toEqual(1)
+  expect(e).toEqual('Lorem')
+  expect(f).toEqual('ipsum')
+})
+
+test('get selection tags one varargs call - tag names', () => {
+  const [a, b, c, d, e, f] = view.getTypedList(
+    'BeginString',
+    'BodyLength',
+    'MsgType',
+    'MsgSeqNum',
+    'MDReqID',
+    'Symbol')
   expect(a).toEqual('FIX4.4')
   expect(b).toEqual(3957)
   expect(c).toEqual('W')

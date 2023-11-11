@@ -1,3 +1,3 @@
 export interface ILegBusinessCenterGrp {
-  LegBusinessCenter?: string// 40924
+  LegBusinessCenter?: string// [1] 40924 (String)
 }

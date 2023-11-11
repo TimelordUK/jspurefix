@@ -1,4 +1,4 @@
 export interface IUnderlyingSettlRateFallbackRateSource {
-  UnderlyingSettlRateFallbackRateSource?: number// 40904
-  UnderlyingSettlRateFallbackReferencePage?: string// 40915
+  UnderlyingSettlRateFallbackRateSource?: number// [1] 40904 (Int)
+  UnderlyingSettlRateFallbackReferencePage?: string// [1] 40915 (String)
 }

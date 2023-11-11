@@ -1,0 +1,5 @@
+import { IUnderlyingProtectionTermEventGrpNoUnderlyingProtectionTermEvents } from './underlying_protection_term_event_grp_no_underlying_protection_term_events'
+
+export interface IUnderlyingProtectionTermEventGrp {
+  NoUnderlyingProtectionTermEvents?: IUnderlyingProtectionTermEventGrpNoUnderlyingProtectionTermEvents[]// [1] UnderlyingProtectionTermEventType.42078, UnderlyingProtectionTermEventValue.42079 .. UnderlyingProtectionTermEventQualifier.42086
+}

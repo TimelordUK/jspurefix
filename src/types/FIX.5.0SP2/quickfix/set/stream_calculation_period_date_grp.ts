@@ -1,0 +1,5 @@
+import { IStreamCalculationPeriodDateGrpNoStreamCalculationPeriodDates } from './stream_calculation_period_date_grp_no_stream_calculation_period_dates'
+
+export interface IStreamCalculationPeriodDateGrp {
+  NoStreamCalculationPeriodDates?: IStreamCalculationPeriodDateGrpNoStreamCalculationPeriodDates[]// [1] StreamCalculationPeriodDate.41242, StreamCalculationPeriodDateType.41243
+}
