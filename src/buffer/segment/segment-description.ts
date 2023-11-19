@@ -2,6 +2,7 @@ import { INumericKeyed } from '../../collections/collection'
 import { ContainedField, ContainedFieldSet } from '../../dictionary/contained'
 import { GroupFieldDefinition } from '../../dictionary/definition'
 import { SegmentType } from './segment-type'
+import { ElasticBuffer } from '../elastic-buffer'
 
 export class SegmentDescription {
   public index: number
@@ -19,6 +20,22 @@ export class SegmentDescription {
     public startPosition: number,
     public readonly depth: number,
     public readonly type: SegmentType) {
+  }
+
+  public toString (): String {
+    const buffer = new ElasticBuffer()
+    buffer.writeString(`name = ${this.name}, `)
+    buffer.writeString(`startTag = ${this.startTag}, `)
+    buffer.writeString(`startPosition = ${this.startPosition}, `)
+    buffer.writeString(`type = ${this.type}, `)
+    buffer.writeString(`depth = ${this.depth}, `)
+    buffer.writeString(`index = ${this.index}, `)
+    buffer.writeString(`endTag = ${this.endTag}, `)
+    buffer.writeString(`endPosition = ${this.endPosition}, `)
+    buffer.writeString(`delimiterTag = ${this.delimiterTag}, `)
+    buffer.writeString(`delimiterPositions = ${this.delimiterPositions}, `)
+    buffer.writeString(`currentField = ${this.currentField}, `)
+    return buffer.toString()
   }
 
   public contains (segment: SegmentDescription): boolean {

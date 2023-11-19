@@ -1,36 +1,21 @@
 import 'reflect-metadata'
 
 import * as path from 'path'
-import { MsgView } from '../../buffer'
-import { AsciiView } from '../../buffer/ascii'
-import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
-import { MsgTag } from '../../types'
-import { Setup } from '../env/setup'
+import { ReplayResult, StoreLoader } from '../env/LogReplayer'
 
 const root: string = path.join(__dirname, '../../../data')
 
-let views: MsgView[]
-let store: IFixMsgStore
-let records: IFixMsgStoreRecord[]
-let setup: Setup
+let loader: StoreLoader
+let result: ReplayResult
 
 beforeAll(async () => {
-  setup = new Setup('session/test-initiator.json', null)
-  await setup.init()
-  views = await setup.client.replayer.replayFixFile(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
-  store = new FixMsgMemoryStore('test', setup.clientConfig)
-  records = views.reduce((agg: IFixMsgStoreRecord[], v: AsciiView) => {
-    if (v.getString(MsgTag.SenderCompID) === 'accept-comp') {
-      agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
-    }
-    return agg
-  }, new Array<IFixMsgStoreRecord>())
-  const toWrite = records.map(async r => await store.put(r))
-  await Promise.all(toWrite)
+  loader = new StoreLoader('session/test-initiator.json')
+  await loader.init()
+  result = await loader.replay(path.join(root, 'examples/FIX.4.4/jsfix.test_client.txt'))
 }, 45000)
 
 test('expect 15 messages in log', () => {
-  expect(views.length).toEqual(15)
+  expect(result.views.length).toEqual(15)
 })
 
 /*
@@ -46,37 +31,37 @@ test('expect 15 messages in log', () => {
  */
 
 test('check messages loaded into store', async () => {
-  const state = await store.getState()
+  const state = await result.store.getState()
   expect(state.lastSeq).toEqual(10)
   expect(state.length).toEqual(9)
 })
 
 test('fetch sequence number from store', async () => {
-  const res1 = await store.exists(1)
+  const res1 = await result.store.exists(1)
   expect(res1).toBeFalsy()
   for (let seq = 2; seq <= 10; ++seq) {
-    const res = await store.exists(seq)
+    const res = await result.store.exists(seq)
     expect(res).toBeTruthy()
-    const get = await store.get(seq)
+    const get = await result.store.get(seq)
     expect(get).toBeTruthy()
   }
 })
 
 test('fetch from seqNum to inferred as end ', async () => {
-  const range1 = await store.getSeqNumRange(5) // to the end
+  const range1 = await result.store.getSeqNumRange(5) // to the end
   expect(range1.length).toEqual(6)
   expect(range1[0].seqNum).toEqual(5)
   expect(range1[range1.length - 1].seqNum).toEqual(10)
 })
 
 test('fetch from seqNum to = start', async () => {
-  const range1 = await store.getSeqNumRange(5, 5)
+  const range1 = await result.store.getSeqNumRange(5, 5)
   expect(range1.length).toEqual(1)
   expect(range1[0].seqNum).toEqual(5)
 })
 
 test('fetch start from seqNum not in store', async () => {
-  const range1 = await store.getSeqNumRange(1)
+  const range1 = await result.store.getSeqNumRange(1)
   expect(range1.length).toEqual(9)
   expect(range1[0].seqNum).toEqual(2)
   expect(range1[range1.length - 1].seqNum).toEqual(10)

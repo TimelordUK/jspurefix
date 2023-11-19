@@ -14,6 +14,7 @@ import {
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
+import { ElasticBuffer } from '../elastic-buffer'
 
 // this takes linear time i.e. it constantly makes forward progress
 // one tag at a time
@@ -56,6 +57,19 @@ export class AsciiSegmentParser {
       }
     }
 
+    function summarise (): any {
+      return {
+        msgType,
+        tags: tags.clone().tagPos,
+        last,
+        msgDefinition: msgDefinition?.toString(),
+        currentTagPosition,
+        peek: peek.toString(),
+        segments: segments.map(s => s.toString()),
+        structureStack: structureStack.map(s => s.toString())
+      }
+    }
+
     function examine (tag: number): SegmentDescription | null {
       let structure: SegmentDescription | null = null
       const type = peek.currentField?.type
@@ -84,10 +98,11 @@ export class AsciiSegmentParser {
           break
         }
 
-        default:
-          throw new Error(`unknown tag type ${tag}`)
+        default: {
+          const c = JSON.stringify(summarise(), null, 4)
+          throw new Error(`unknown type for tag = ${tag}  summary = ${c}`)
+        }
       }
-
       return structure
     }
 
