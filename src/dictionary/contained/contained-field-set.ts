@@ -255,7 +255,7 @@ export abstract class ContainedFieldSet {
     this.mapAllBelow(definition, componentField)
   }
 
-  private keys (): number[] {
+  public keys (): number[] {
     const keys: string[] = Object.keys(this.containedTag)
     const nums: number[] = new Array(keys.length)
     for (let j: number = 0; j < keys.length; ++j) {

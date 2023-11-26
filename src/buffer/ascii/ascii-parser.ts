@@ -14,6 +14,7 @@ import { IJsFixConfig } from '../../config'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
+import { AsciiParserError } from './ascii-segment-parser-error'
 
 @injectable()
 export class AsciiParser extends MsgParser {
@@ -184,15 +185,23 @@ export class AsciiParser extends MsgParser {
     const msgType = state.msgType ?? null
     if (!msgType) return null
     if (state.message) {
-      const structure: Structure | null = this.segmentParser.parse(msgType, locations,
-        locations.nextTagPos - 1)
-      if (!structure) return null
-      return new AsciiView(structure.msg(),
-        source,
-        structure,
-        ptr,
-        delimiter,
-        replace)
+      try {
+        const structure: Structure | null = this.segmentParser.parse(msgType, locations,
+          locations.nextTagPos - 1)
+        if (!structure) return null
+        return new AsciiView(structure.msg(),
+          source,
+          structure,
+          ptr,
+          delimiter,
+          replace)
+      } catch (error) {
+        if (error instanceof AsciiParserError) {
+          error.summary.buffer = source.toString()
+          this.emit('error', error)
+        }
+        throw error
+      }
     }
 
     const structure = new Structure(locations, [])

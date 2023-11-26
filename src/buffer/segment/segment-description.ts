@@ -1,6 +1,6 @@
 import { INumericKeyed } from '../../collections/collection'
 import { ContainedField, ContainedFieldSet } from '../../dictionary/contained'
-import { GroupFieldDefinition } from '../../dictionary/definition'
+import { FixDefinitions, GroupFieldDefinition } from '../../dictionary/definition'
 import { SegmentType } from './segment-type'
 import { ElasticBuffer } from '../elastic-buffer'
 
@@ -35,6 +35,7 @@ export class SegmentDescription {
     buffer.writeString(`delimiterTag = ${this.delimiterTag}, `)
     buffer.writeString(`delimiterPositions = ${this.delimiterPositions}, `)
     buffer.writeString(`currentField = ${this.currentField}, `)
+    buffer.writeString(`set = ${this.set?.keys()}`)
     return buffer.toString()
   }
 
