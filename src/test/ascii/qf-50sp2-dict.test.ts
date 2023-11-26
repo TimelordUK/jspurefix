@@ -5,6 +5,7 @@ import { FixDefinitions } from '../../dictionary/definition'
 import { DefinitionFactory } from '../../util'
 import { ContainedFieldSet } from '../../dictionary/contained'
 import { SetConstraintHelper } from '../env/set-constraint-helper'
+import { QuickFixXmlFileBuilder } from '../../dictionary/parser/quickfix/quick-fix-xml-file-builder'
 
 const root: string = path.join(__dirname, '../env/data')
 
@@ -223,4 +224,10 @@ test('check NoTickRules', () => {
   setHelper.isSimple(noTickRules, index++, 'EndTickPriceRange', false)
   setHelper.isSimple(noTickRules, index++, 'TickIncrement', false)
   setHelper.isSimple(noTickRules, index++, 'TickRuleType', false)
+})
+
+test('check builder', () => {
+  const builder = new QuickFixXmlFileBuilder(definitions, ['AE'])
+  builder.write()
+  const d = builder.elasticBuffer.toString()
 })

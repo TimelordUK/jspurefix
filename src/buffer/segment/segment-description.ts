@@ -1,6 +1,6 @@
 import { INumericKeyed } from '../../collections/collection'
 import { ContainedField, ContainedFieldSet } from '../../dictionary/contained'
-import { FixDefinitions, GroupFieldDefinition } from '../../dictionary/definition'
+import { GroupFieldDefinition } from '../../dictionary/definition'
 import { SegmentType } from './segment-type'
 import { ElasticBuffer } from '../elastic-buffer'
 
