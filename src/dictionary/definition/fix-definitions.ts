@@ -7,6 +7,7 @@ import { FixVersion } from '../fix-versions'
 import { CategorySimpleSet } from './category-simple-set'
 import { ContainedFieldSet } from '../contained'
 import { FixDefinitionSource } from '../fix-definition-source'
+import { FixVersionParser } from './fix-version-parser'
 
 export class FixDefinitions {
   /**
@@ -35,6 +36,18 @@ export class FixDefinitions {
   public readonly categorySimple: Dictionary<CategorySimpleSet> = new Dictionary<CategorySimpleSet>()
 
   constructor (public readonly source: FixDefinitionSource, public readonly version: FixVersion) {
+  }
+
+  public getMajor (): number {
+    return FixVersionParser.getMajor(this.version)
+  }
+
+  public getMinor (): number {
+    return FixVersionParser.getMinor(this.version)
+  }
+
+  public getServicePack (): number {
+    return FixVersionParser.getServicePack(this.version)
   }
 
   public toString (): string {
