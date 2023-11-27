@@ -1,4 +1,4 @@
-import { FixDefinitions, SimpleFieldDefinition } from '../../definition'
+import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../../definition'
 import { ElasticBuffer } from '../../../buffer'
 import { INumericKeyed } from '../../../collections/collection'
 import {
@@ -48,6 +48,15 @@ export class QuicfixFormmatter {
   public static addEnum (fe: (FieldEnum | null), ws: number): string {
     return `${QuicfixFormmatter.whitespace(ws)}<vaue enum='${fe?.key}' value='${fe?.val}'/>${newLine}`
   }
+
+  public static defineField (sf: SimpleFieldDefinition, ws: number): string {
+    const term = sf.isEnum() ? '>' : '/>'
+    return (`${QuicfixFormmatter.whitespace(ws)}<field number='${sf.tag}' name='${sf.name}' type='${sf.type}'${term}${newLine}`)
+  }
+
+  public static defineMessage (def: MessageDefinition, ws: number): string {
+    return `${QuicfixFormmatter.whitespace(ws)}<message name='${def.name}' msgcat='${def.category}' msgtype='${def.msgType}'>${newLine}`
+  }
 }
 
 export class QuickFixXmlFileBuilder {
@@ -76,9 +85,31 @@ export class QuickFixXmlFileBuilder {
     eb.writeString(header)
     const trailer = this.writeComponent(`${m0def?.name}.StandardTrailer`, 'trailer')
     eb.writeString(trailer)
+    const messages = this.writeMessages(this.indent)
+    eb.writeString(messages)
     const fields = this.writeFieldDefinitions(this.indent)
     eb.writeString(fields)
     eb.writeString(`</fix>${newLine}`)
+  }
+
+  /*
+   <message name='Heartbeat' msgcat='admin' msgtype='0'>
+   <field name='TestReqID' required='N' />
+  </message>
+   */
+  private writeMessages (leadingIndent: number): string {
+    const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
+    eb.writeString(QuicfixFormmatter.startEntity('messages', leadingIndent))
+    this.msgTypes.forEach(mt => {
+      const md = this.definitions.message.get(mt)
+      if (!md) return
+      eb.writeString(QuicfixFormmatter.defineMessage(md, leadingIndent + this.indent))
+      const fields = this.writeFields(md.fields.slice(1, md.fields.length - 1), md.name, leadingIndent + this.indent + this.indent)
+      eb.writeString(fields)
+      eb.writeString(QuicfixFormmatter.endEntity('message', leadingIndent + this.indent))
+    })
+    eb.writeString(QuicfixFormmatter.endEntity('messages', leadingIndent))
+    return eb.toString()
   }
 
   private writeFieldDefinitions (leadingIndent: number): string {
@@ -92,10 +123,8 @@ export class QuickFixXmlFileBuilder {
     tags.forEach(t => {
       const sf = this.definitions.tagToSimple[t]
       if (!sf) return
-      const term = sf.isEnum() ? '>' : '/>'
-      const ws = ' '.repeat(leadingIndent + this.indent)
       //   <field number='1' name='Account' type='STRING' />
-      eb.writeString(`${ws}<field number='${t} name='${sf.name} type='${sf.type}'${term}${newLine}`)
+      eb.writeString(QuicfixFormmatter.defineField(sf, leadingIndent + this.indent))
       if (sf.isEnum()) {
         const en = this.writeEnumDefinition(sf, leadingIndent + this.indent + this.indent)
         eb.writeString(en)
@@ -123,9 +152,13 @@ export class QuickFixXmlFileBuilder {
   }
 
   private writeComponent (name: string, destName: string): string {
+    const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
     const set = this.definitions.getSet(name)
     if (set == null) return ''
-    return this.writeFields(set.fields, destName, this.indent)
+    eb.writeString(QuicfixFormmatter.startEntity(destName, this.indent))
+    eb.writeString(this.writeFields(set.fields, destName, this.indent + this.indent))
+    eb.writeString(QuicfixFormmatter.endEntity(destName, this.indent))
+    return eb.toString()
   }
 
   /*
@@ -137,25 +170,21 @@ export class QuickFixXmlFileBuilder {
    */
   private writeFields (fields: ContainedField[], destName: string, leadingIndent: number): string {
     const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
-    const ws = ' '.repeat(leadingIndent)
-    const indent = ' '.repeat(this.indent)
-    eb.writeString(QuicfixFormmatter.startEntity(destName, leadingIndent))
     this.dispatcher.dispatchFields(fields, {
       simple: (sf: ContainedSimpleField) => {
-        eb.writeString(QuicfixFormmatter.addField(sf, leadingIndent + this.indent))
+        eb.writeString(QuicfixFormmatter.addField(sf, leadingIndent))
         this.usedTags[sf.definition.tag] = sf.name
       },
       component: (cf: ContainedComponentField) => {
-        eb.writeString(QuicfixFormmatter.addComponent(cf, leadingIndent + this.indent))
+        eb.writeString(QuicfixFormmatter.addComponent(cf, leadingIndent))
       },
       group: (gf: ContainedGroupField) => {
-        eb.writeString(QuicfixFormmatter.addGroup(gf, leadingIndent + this.indent))
-        const groupDef = this.writeFields(gf.definition.fields, gf.name, leadingIndent + this.indent)
+        eb.writeString(QuicfixFormmatter.addGroup(gf, leadingIndent))
+        const groupDef = this.writeFields(gf.definition.fields, gf.name, leadingIndent)
         eb.writeString(`${groupDef}`)
-        eb.writeString(QuicfixFormmatter.endGroup(leadingIndent + this.indent))
+        eb.writeString(QuicfixFormmatter.endGroup(leadingIndent))
       }
     })
-    eb.writeString(QuicfixFormmatter.endEntity(destName, leadingIndent))
     return eb.toString()
   }
 }

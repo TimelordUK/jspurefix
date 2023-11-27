@@ -227,7 +227,7 @@ test('check NoTickRules', () => {
 })
 
 test('check builder', () => {
-  const builder = new QuickFixXmlFileBuilder(definitions, ['AE'])
+  const builder = new QuickFixXmlFileBuilder(definitions, ['0', '1', '2', '3', '4', '5', 'AE'])
   builder.write()
   const d = builder.elasticBuffer.toString()
 })
