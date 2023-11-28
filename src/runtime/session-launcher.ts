@@ -11,13 +11,16 @@ const defaultLoggerFactory = new JsFixWinstonLogFactory(WinstonLogger.consoleOpt
 export abstract class SessionLauncher {
   public root: string = '../../'
   protected readonly logger: IJsFixLogger
-  public readonly initiatorConfig: ISessionDescription
+  public readonly initiatorConfig: ISessionDescription | null
   public readonly acceptorConfig: ISessionDescription | null
-  protected constructor (initiatorConfig: string | ISessionDescription,
+
+  protected constructor (
+    initiatorConfig: string | ISessionDescription | null = null,
     acceptorConfig: string | ISessionDescription | null = null,
-    private readonly loggerFactory: JsFixLoggerFactory = defaultLoggerFactory) {
+    private readonly loggerFactory: JsFixLoggerFactory = defaultLoggerFactory
+  ) {
     this.logger = this.loggerFactory.logger('launcher')
-    this.initiatorConfig = this.loadConfig(initiatorConfig)
+    this.initiatorConfig = initiatorConfig ? this.loadConfig(initiatorConfig) : null
     this.acceptorConfig = acceptorConfig ? this.loadConfig(acceptorConfig) : null
   }
 
@@ -128,6 +131,7 @@ export abstract class SessionLauncher {
   }
 
   private async makeClient (): Promise<any> {
+    if (!this.initiatorConfig) return
     const sessionContainer = await this.makeSystem(this.initiatorConfig)
     this.register(sessionContainer)
     this.logger.info('create initiator')
