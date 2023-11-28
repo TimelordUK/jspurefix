@@ -10,6 +10,8 @@ import {
 } from '../../contained'
 import { keys } from 'lodash'
 import { FieldEnum } from '../../field-enum'
+import { Dictionary } from '../../../collections'
+
 const newLine = require('os').EOL
 
 export class QuicfixFormmatter {
@@ -21,6 +23,14 @@ export class QuicfixFormmatter {
     return ' '.repeat(n)
   }
 
+  public static startFix (major: number, minor: number, servicePack: number): string {
+    return `<fix major='${major}' type='FIX' servicepack='${servicePack}' minor='${minor}'>${newLine}`
+  }
+
+  public static endFix (): string {
+    return `</fix>${newLine}`
+  }
+
   public static startEntity (name: string, ws: number): string {
     return `${QuicfixFormmatter.whitespace(ws)}<${name}>${newLine}`
   }
@@ -29,16 +39,24 @@ export class QuicfixFormmatter {
     return `${QuicfixFormmatter.whitespace(ws)}</${name}>${newLine}`
   }
 
+  public static startComponent (name: string, ws: number): string {
+    return `${QuicfixFormmatter.whitespace(ws)}<component name='${name}'>${newLine}`
+  }
+
+  public static endComponent (ws: number): string {
+    return `${QuicfixFormmatter.whitespace(ws)}</component>${newLine}`
+  }
+
   public static addField (sf: ContainedSimpleField, ws: number): string {
-    return `${QuicfixFormmatter.whitespace(ws)}<field name='${sf.name}' required='${QuicfixFormmatter.isRequired(sf.required)}/>${newLine}`
+    return `${QuicfixFormmatter.whitespace(ws)} <!-- ${sf.definition.tag} -->${newLine}${QuicfixFormmatter.whitespace(ws)}<field name='${sf.name}' required='${QuicfixFormmatter.isRequired(sf.required)}'/>${newLine}`
   }
 
   public static addComponent (cf: ContainedComponentField, ws: number): string {
-    return `${QuicfixFormmatter.whitespace(ws)}<component name='${cf.name}' required='${QuicfixFormmatter.isRequired(cf.required)}/>${newLine}`
+    return `${QuicfixFormmatter.whitespace(ws)}<component name='${cf.name}' required='${QuicfixFormmatter.isRequired(cf.required)}'/>${newLine}`
   }
 
   public static addGroup (gf: ContainedGroupField, ws: number): string {
-    return `${QuicfixFormmatter.whitespace(ws)}<group name='${gf.name}' required='${QuicfixFormmatter.isRequired(gf.required)}>${newLine}`
+    return `${QuicfixFormmatter.whitespace(ws)}<group name='${gf.name}' required='${QuicfixFormmatter.isRequired(gf.required)}'>${newLine}`
   }
 
   public static endGroup (ws: number): string {
@@ -61,6 +79,7 @@ export class QuicfixFormmatter {
 
 export class QuickFixXmlFileBuilder {
   private readonly usedTags: INumericKeyed<string> = {}
+  private readonly usedComponents: Dictionary<boolean> = new Dictionary<boolean>()
   private readonly indent: number = 2
   private readonly dispatcher: FieldsDispatch = new FieldsDispatch()
   public readonly elasticBuffer: ElasticBuffer = new ElasticBuffer(10 * 1024)
@@ -69,27 +88,47 @@ export class QuickFixXmlFileBuilder {
    * given an input parsed dictionary, build a new file based on only the input set of message types
    * providing a way of producing a fix file containing only those needed messages.
    * @param definitions parsed definitions from existing quick fix file
-   * @param msgTypes the required message types represented in the new file
    */
-  constructor (public readonly definitions: FixDefinitions, public readonly msgTypes: string[]) {
+  constructor (public readonly definitions: FixDefinitions) {
   }
 
-  public write (): void {
+  /**
+   *
+   * @param msgTypes the required message types represented in the new file
+   */
+  public write (msgTypes: string[]): void {
     const eb = this.elasticBuffer
-    if (this.msgTypes == null || this.msgTypes.length === 0) return
+    if (msgTypes == null || msgTypes.length === 0) return
     eb.reset()
-    const m0def = this.definitions.message.get(this.msgTypes[0])
+    const m0def = this.definitions.message.get(msgTypes[0])
     // <fix major='4' type='FIX' servicepack='0' minor='4'>
-    eb.writeString(`<fix major='${this.definitions.getMajor()}' type='FIX' servicepack='${this.definitions.getServicePack()}' minor=${this.definitions.getMinor()}>${newLine}`)
+    eb.writeString(QuicfixFormmatter.startFix(this.definitions.getMajor(), this.definitions.getServicePack(), this.definitions.getMinor()))
     const header = this.writeComponent(`${m0def?.name}.StandardHeader`, 'header')
     eb.writeString(header)
     const trailer = this.writeComponent(`${m0def?.name}.StandardTrailer`, 'trailer')
     eb.writeString(trailer)
-    const messages = this.writeMessages(this.indent)
+    const messages = this.writeMessages(msgTypes, this.indent)
     eb.writeString(messages)
+    const components = this.writeComponents(this.indent)
+    eb.writeString(components)
     const fields = this.writeFieldDefinitions(this.indent)
     eb.writeString(fields)
-    eb.writeString(`</fix>${newLine}`)
+    eb.writeString(QuicfixFormmatter.endFix())
+  }
+
+  private writeComponents (leadingIndent: number): string {
+    const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
+    eb.writeString(QuicfixFormmatter.startEntity('components', leadingIndent))
+    this.usedComponents.keys().forEach(k => {
+      const component = this.definitions.component.get(k)
+      if (!component) return
+      eb.writeString(QuicfixFormmatter.startComponent(component.name, leadingIndent + this.indent))
+      const def = this.writeFields(component.fields, leadingIndent + this.indent + this.indent)
+      eb.writeString(def)
+      eb.writeString(QuicfixFormmatter.endComponent(leadingIndent + this.indent))
+    })
+    eb.writeString(QuicfixFormmatter.endEntity('components', leadingIndent))
+    return eb.toString()
   }
 
   /*
@@ -97,14 +136,14 @@ export class QuickFixXmlFileBuilder {
    <field name='TestReqID' required='N' />
   </message>
    */
-  private writeMessages (leadingIndent: number): string {
+  private writeMessages (msgTypes: string[], leadingIndent: number): string {
     const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
     eb.writeString(QuicfixFormmatter.startEntity('messages', leadingIndent))
-    this.msgTypes.forEach(mt => {
+    msgTypes.forEach(mt => {
       const md = this.definitions.message.get(mt)
       if (!md) return
       eb.writeString(QuicfixFormmatter.defineMessage(md, leadingIndent + this.indent))
-      const fields = this.writeFields(md.fields.slice(1, md.fields.length - 1), md.name, leadingIndent + this.indent + this.indent)
+      const fields = this.writeFields(md.fields.slice(1, md.fields.length - 1), leadingIndent + this.indent + this.indent)
       eb.writeString(fields)
       eb.writeString(QuicfixFormmatter.endEntity('message', leadingIndent + this.indent))
     })
@@ -156,7 +195,7 @@ export class QuickFixXmlFileBuilder {
     const set = this.definitions.getSet(name)
     if (set == null) return ''
     eb.writeString(QuicfixFormmatter.startEntity(destName, this.indent))
-    eb.writeString(this.writeFields(set.fields, destName, this.indent + this.indent))
+    eb.writeString(this.writeFields(set.fields, this.indent + this.indent))
     eb.writeString(QuicfixFormmatter.endEntity(destName, this.indent))
     return eb.toString()
   }
@@ -168,7 +207,7 @@ export class QuickFixXmlFileBuilder {
     <field name='CheckSum' required='Y' />
  </trailer>
    */
-  private writeFields (fields: ContainedField[], destName: string, leadingIndent: number): string {
+  private writeFields (fields: ContainedField[], leadingIndent: number): string {
     const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
     this.dispatcher.dispatchFields(fields, {
       simple: (sf: ContainedSimpleField) => {
@@ -177,11 +216,12 @@ export class QuickFixXmlFileBuilder {
       },
       component: (cf: ContainedComponentField) => {
         eb.writeString(QuicfixFormmatter.addComponent(cf, leadingIndent))
+        this.usedComponents.add(cf.name, true)
       },
       group: (gf: ContainedGroupField) => {
         eb.writeString(QuicfixFormmatter.addGroup(gf, leadingIndent))
-        const groupDef = this.writeFields(gf.definition.fields, gf.name, leadingIndent)
-        eb.writeString(`${groupDef}`)
+        const groupDef = this.writeFields(gf.definition.fields, leadingIndent + this.indent)
+        eb.writeString(groupDef)
         eb.writeString(QuicfixFormmatter.endGroup(leadingIndent))
       }
     })
