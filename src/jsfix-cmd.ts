@@ -18,9 +18,129 @@ import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compi
 import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 import { SessionContainer } from './runtime'
 import { DITokens } from './runtime/di-tokens'
+import buildOptions from 'minimist-options'
+import { Dictionary } from './collections'
+import { QuickFixXmlFileBuilder } from './dictionary/parser/quickfix/quick-fix-xml-file-builder'
+
 const fs = require('node-fs-extra')
 
-const argv: any = minimist(process.argv.slice(2))
+const options = buildOptions({
+  dict: {
+    type: 'string',
+    alias: 'd',
+    default: 'data/FIX44.xml'
+  },
+
+  type: {
+    type: 'string-array',
+    alias: 't'
+  },
+
+  fix: {
+    type: 'string',
+    alias: 'f',
+    default: 'data/FIX44.xml'
+  },
+
+  delimiter: {
+    type: 'string',
+    alias: 'l',
+    default: '|'
+  },
+
+  help: {
+    type: 'boolean',
+    alias: ['h'],
+    default: false
+  },
+
+  unit: {
+    type: 'boolean',
+    alias: ['u'],
+    default: false
+  },
+
+  generate: {
+    type: 'boolean',
+    alias: ['g'],
+    default: false
+  },
+
+  stats: {
+    type: 'boolean',
+    alias: ['s'],
+    default: false
+  },
+
+  tokens: {
+    type: 'boolean',
+    alias: ['t'],
+    default: false
+  },
+
+  objects: {
+    type: 'boolean',
+    alias: ['o'],
+    default: true
+  },
+
+  structures: {
+    type: 'boolean',
+    alias: ['r'],
+    default: false
+  },
+
+  compile: {
+    type: 'boolean',
+    alias: ['c'],
+    default: false
+  },
+
+  groups: {
+    type: 'boolean',
+    alias: ['g'],
+    default: true
+  },
+
+  density: {
+    type: 'number',
+    alias: 'd',
+    default: 0.8
+  },
+
+  repeats: {
+    type: 'number',
+    alias: 'r',
+    default: 1
+  },
+
+  arr: {
+    type: 'array',
+    alias: 'a',
+    default: []
+  }
+
+  /*
+  booleans: {
+    type: 'boolean-array',
+    alias: 'b',
+    default: [true, false]
+  },
+
+  numbers: {
+    type: 'number-array',
+    alias: 'n',
+    default: [0, 1]
+  },
+
+  published: 'boolean',
+
+  // Special option for positional arguments (`_` in minimist)
+  arguments: 'string'
+  */
+})
+
+const argv: any = minimist(process.argv.slice(2), options)
 
 enum PrintMode {
   Structure = 1,
@@ -38,7 +158,8 @@ enum Command {
   Encode = 4,
   Benchmark = 5,
   Compile = 6,
-  Unknown = 7
+  Trim,
+  Unknown = 8
 }
 
 class ParseSummary {
@@ -70,13 +191,15 @@ export class JsfixCmd {
   private sessionDescription: ISessionDescription
   private delimiter: number = AsciiChars.Soh
   private stats: ILooseObject = {}
-  private filter: string | null = null
+  private readonly filter: Dictionary<boolean> = new Dictionary<boolean>()
   private messages: number = 0
   private print: boolean = true
 
   private static getCommand (): Command {
     let command: Command = Command.Unknown
-    if (argv.compile) {
+    if (argv.trim) {
+      command = Command.Trim
+    } else if (argv.compile) {
       command = Command.Compile
     } else if (argv.generate) {
       command = Command.Generate
@@ -106,6 +229,8 @@ export class JsfixCmd {
       mode = PrintMode.Structure
     } else if (argv.encoded) {
       mode = PrintMode.Encoded
+    } else if (argv.trim) {
+      mode = PrintMode.Object
     }
     return mode
   }
@@ -174,6 +299,12 @@ export class JsfixCmd {
 
           case Command.Compile: {
             await this.compile()
+            break
+          }
+
+          case Command.Trim: {
+            const xml = this.trim()
+            console.log(xml)
             break
           }
 
@@ -321,6 +452,13 @@ export class JsfixCmd {
     await enumCompiler.generate(writeFile)
   }
 
+  private trim (): string {
+    this.setFilter()
+    const qfb = new QuickFixXmlFileBuilder(this.definitions)
+    qfb.write(this.filter.keys())
+    return qfb.elasticBuffer.toString()
+  }
+
   private async compile (): Promise<void> {
     let output = argv.output
     const dp = new DefinitionFactory().getDictPath(argv.dict)
@@ -361,10 +499,26 @@ export class JsfixCmd {
     }
   }
 
-  private async dispatch (ft: MsgTransport): Promise<any> {
+  private setFilter (): void {
+    const types: string[] = []
     if (argv.type != null) {
-      this.filter = argv.type.toString()
+      if (Array.isArray(argv.type)) {
+        argv.type.forEach((mt: any) => {
+          types.push(mt)
+        })
+      } else {
+        argv.type.split(',').forEach((mt: string) => {
+          types.push(mt)
+        })
+      }
+      types.forEach((mt: any) => {
+        this.filter.add(mt, true)
+      })
     }
+  }
+
+  private async dispatch (ft: MsgTransport): Promise<any> {
+    this.setFilter()
     let time: boolean = false
     if (argv.time || argv.stats) {
       this.print = false
@@ -389,7 +543,7 @@ export class JsfixCmd {
     // the receiver is message parser which is piped from an input stream - file, socket
     ft.receiver.on('msg', (msgType: string, m: AsciiView) => {
       if (filter) {
-        if (msgType !== filter) {
+        if (filter.containsKey(msgType)) {
           return
         }
       }
@@ -558,46 +712,49 @@ function showHelp (): void {
   console.log('npm run cmd -- --help')
   console.log()
 
+  console.log('print to console a trim quickfix format xml only including given message types')
+  console.log('node dist/jsfix-cmd  --dict=qf44 --trim --type="0,1,2,3,4,5,AE"')
+
   console.log('token format i.e. [602] 687 (LegQty) = 33589')
-  console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/quickfix/FIX.4.4/execution-report/fix.txt --delimiter="|" --tokens')
+  console.log('node dist/jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/quickfix/FIX.4.4/execution-report/fix.txt --delimiter="|" --tokens')
   console.log()
 
   console.log('token format use fix repo dictionary')
-  console.log('jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --fix=data/examples/quickfix/FIX.4.4/execution-report/fix.txt' +
+  console.log('node dist/jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --fix=data/examples/quickfix/FIX.4.4/execution-report/fix.txt' +
     ' --delimiter="|" --tokens')
   console.log()
 
   console.log('structure format i.e. show locations of components etc.')
-  console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
+  console.log('node dist/jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
     ' --delimiter="|" --tokens --structures')
   console.log()
 
   console.log('full JS object in JSON format.')
-  console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
+  console.log('node dist/jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
     ' --delimiter="|" --tokens --objects')
   console.log()
 
   console.log('full JS object in JSON format - filter only type messages.')
-  console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
+  console.log('node dist/jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt' +
     ' --delimiter="|" --tokens --type=8 --objects')
   console.log()
 
   console.log('timing stats and message counts. Structured parsing of all messages.')
-  console.log('jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt --stats')
+  console.log('node dist/jsfix-cmd --dict=data/FIX44.xml --fix=data/examples/FIX.4.4/quickfix/execution-report/fix.txt --stats')
   console.log()
 
   console.log('encode a json object to fix format')
-  console.log('jsfix-cmd --json=data/examples/FIX.4.4/quickfix/execution-report/object.json' +
+  console.log('node dist/jsfix-cmd --json=data/examples/FIX.4.4/quickfix/execution-report/object.json' +
     ' --session=data/session.json --type=8 --delimiter="|"')
   console.log()
 
   console.log('display field definition')
-  console.log('jsfix-cmd --dict=data/FIX44.xml --field=MsgType|35')
+  console.log('node dist/jsfix-cmd --dict=data/FIX44.xml --field=MsgType|35')
   console.log()
 
   console.log('display field use fix repo dictionary e.g. 271 MDEntrySize QTY Quantity or volume represented by the Market Data Entry.')
-  console.log('jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --field=MsgType')
-  console.log('jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --field=35')
+  console.log('node dist/jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --field=MsgType')
+  console.log('node dist/jsfix-cmd --dict=data/fix_repo/FIX.4.4/Base --field=35')
   console.log()
 
   console.log('script to describe field in repository version 4.4')
@@ -609,21 +766,21 @@ function showHelp (): void {
   console.log()
 
   console.log('generate unit test set of files - i.e. randomly generate an object, encode to fix. density 1 is all fields')
-  console.log('jsfix-cmd --generate --type=AE --density=0.8 --unit --delimiter="|" --session=data/session/test-initiator.json')
+  console.log('node dist/jsfix-cmd --generate --type=AE --density=0.8 --unit --delimiter="|" --session=data/session/test-initiator.json')
   console.log('npm run repo44-unit -- --type=AE')
   console.log('test script with no repeat groups')
   console.log('npm run repo44-unit -- --type=AE --groups=false')
   console.log()
 
   console.log('generate a fix log of randomly generated but syntactically correct messages')
-  console.log('jsfix-cmd --generate --density=0.8 --repeats=50 --script --delimiter="|" --session=data/session/test-initiator.json')
+  console.log('node dist/jsfix-cmd --generate --density=0.8 --repeats=50 --script --delimiter="|" --session=data/session/test-initiator.json')
   console.log('npm run repo44-script')
   console.log('parse above generated script')
   console.log('npm run repo44-repscr')
   console.log()
 
   console.log('replay example repo fix file of 50 messages.')
-  console.log('jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/fix.txt --delimiter="|" --stats')
+  console.log('node dist/jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/fix.txt --delimiter="|" --stats')
   console.log('npm run repo44-replay -- --stats')
   console.log('npm run repo44-replay -- --objects')
   console.log('npm run repo44-replay -- --tokens')
@@ -631,7 +788,7 @@ function showHelp (): void {
   console.log()
 
   console.log('benchmark parse a message')
-  console.log('jsfix-cmd --delimiter="|" --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/repo/trade-capture-no-groups/fix.txt --benchmark')
+  console.log('node dist/jsfix-cmd --delimiter="|" --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/repo/trade-capture-no-groups/fix.txt --benchmark')
   console.log('npm run repo44-bench -- --fix=data/examples/FIX.4.4/repo/trade-capture-no-groups/fix.txt')
   console.log()
 
