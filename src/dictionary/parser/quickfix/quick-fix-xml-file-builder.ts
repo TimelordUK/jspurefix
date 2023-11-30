@@ -14,7 +14,8 @@ import { QuickFixXmlFormatter } from './quick-fix-xml-formatter'
 
 export class QuickFixXmlFileBuilder {
   private readonly usedTags: INumericKeyed<string> = {}
-  private readonly usedComponents: Dictionary<boolean> = new Dictionary<boolean>()
+  private readonly requiredComponents: string[] = []
+  private readonly seenComponents: Dictionary<boolean> = new Dictionary<boolean>()
   private readonly indent: number = 2
   private readonly dispatcher: FieldsDispatch = new FieldsDispatch()
   public readonly elasticBuffer: ElasticBuffer = new ElasticBuffer(10 * 1024)
@@ -54,14 +55,17 @@ export class QuickFixXmlFileBuilder {
   private writeComponents (leadingIndent: number): string {
     const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
     eb.writeString(QuickFixXmlFormatter.startEntity('components', leadingIndent))
-    this.usedComponents.keys().forEach(k => {
+    const components = this.requiredComponents
+    while (components.length > 0) {
+      const k = components.pop()
+      if (!k) continue
       const component = this.definitions.component.get(k)
-      if (!component) return
+      if (!component) continue
       eb.writeString(QuickFixXmlFormatter.startComponent(component.name, leadingIndent + this.indent))
       const def = this.writeFields(component.fields, leadingIndent + this.indent + this.indent)
       eb.writeString(def)
       eb.writeString(QuickFixXmlFormatter.endComponent(leadingIndent + this.indent))
-    })
+    }
     eb.writeString(QuickFixXmlFormatter.endEntity('components', leadingIndent))
     return eb.toString()
   }
@@ -93,7 +97,7 @@ export class QuickFixXmlFileBuilder {
     tags.sort(function (a, b) {
       return a - b
     })
-    QuickFixXmlFormatter.startEntity('fields', leadingIndent)
+    eb.writeString(QuickFixXmlFormatter.startEntity('fields', leadingIndent))
     tags.forEach(t => {
       const sf = this.definitions.tagToSimple[t]
       if (!sf) return
@@ -105,7 +109,7 @@ export class QuickFixXmlFileBuilder {
         eb.writeString(QuickFixXmlFormatter.endEntity('field', leadingIndent + this.indent))
       }
     })
-    QuickFixXmlFormatter.endEntity('fields', leadingIndent)
+    eb.writeString(QuickFixXmlFormatter.endEntity('fields', leadingIndent))
     return eb.toString()
   }
 
@@ -142,10 +146,14 @@ export class QuickFixXmlFileBuilder {
 
   private writeComponentField (cf: ContainedComponentField, eb: ElasticBuffer, leadingIndent: number): void {
     eb.writeString(QuickFixXmlFormatter.addComponent(cf, leadingIndent))
-    this.usedComponents.addUpdate(cf.name, true)
+    if (!this.seenComponents.containsKey(cf.name)) {
+      this.seenComponents.add(cf.name, true)
+      this.requiredComponents.push(cf.name)
+    }
   }
 
   private writeGroupField (gf: ContainedGroupField, eb: ElasticBuffer, leadingIndent: number): void {
+    this.usedTags[gf.definition.noOfField?.tag ?? 0] = gf.name
     eb.writeString(QuickFixXmlFormatter.addGroup(gf, leadingIndent))
     const groupDef = this.writeFields(gf.definition.fields, leadingIndent + this.indent)
     eb.writeString(groupDef)
