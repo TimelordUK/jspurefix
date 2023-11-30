@@ -19,7 +19,7 @@ export class HttpAcceptor extends FixAcceptor {
   private readonly logger: IJsFixLogger
   private readonly router: express.Router
   private nextId: number = 0
-  private readonly keys: Dictionary<MsgTransport> = new Dictionary()
+  private readonly keys: Dictionary<MsgTransport> = new Dictionary<MsgTransport>()
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config?.description?.application ?? null)
