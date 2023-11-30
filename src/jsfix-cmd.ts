@@ -454,8 +454,9 @@ export class JsfixCmd {
 
   private trim (): string {
     this.setFilter()
+    const types = this.filter.count() > 0 ? this.filter.keys() : this.definitions.simple.get('MsgType')?.enums.keys() ?? []
     const qfb = new QuickFixXmlFileBuilder(this.definitions)
-    qfb.write(this.filter.keys())
+    qfb.write(types)
     return qfb.elasticBuffer.toString()
   }
 

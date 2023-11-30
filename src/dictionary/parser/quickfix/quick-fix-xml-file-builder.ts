@@ -142,7 +142,7 @@ export class QuickFixXmlFileBuilder {
 
   private writeComponentField (cf: ContainedComponentField, eb: ElasticBuffer, leadingIndent: number): void {
     eb.writeString(QuickFixXmlFormatter.addComponent(cf, leadingIndent))
-    this.usedComponents.add(cf.name, true)
+    this.usedComponents.addUpdate(cf.name, true)
   }
 
   private writeGroupField (gf: ContainedGroupField, eb: ElasticBuffer, leadingIndent: number): void {
