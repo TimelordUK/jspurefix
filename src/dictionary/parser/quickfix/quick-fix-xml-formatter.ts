@@ -45,7 +45,7 @@ export class QuickFixXmlFormatter {
   }
 
   public static addGroup (gf: ContainedGroupField, ws: number): string {
-    return `${QuickFixXmlFormatter.whitespace(ws)}<group name='${gf.name}' required='${QuickFixXmlFormatter.isRequired(gf.required)}'>${newLine}`
+    return `${QuickFixXmlFormatter.whitespace(ws)} <!-- ${gf.definition.noOfField?.tag ?? -1} ${gf.definition.noOfField?.type} -->${newLine}${QuickFixXmlFormatter.whitespace(ws)}<group name='${gf.name}' required='${QuickFixXmlFormatter.isRequired(gf.required)}'>${newLine}`
   }
 
   public static endGroup (ws: number): string {
