@@ -53,7 +53,7 @@ export class QuickFixXmlFormatter {
   }
 
   public static addEnum (fe: (FieldEnum | null), ws: number): string {
-    return `${QuickFixXmlFormatter.whitespace(ws)}<vaue enum='${fe?.key}' value='${fe?.val}'/>${newLine}`
+    return `${QuickFixXmlFormatter.whitespace(ws)}<value enum='${fe?.key}' description='${fe?.description ?? fe?.val}'/>${newLine}`
   }
 
   public static defineField (sf: SimpleFieldDefinition, ws: number): string {
