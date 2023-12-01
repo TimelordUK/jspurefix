@@ -6,6 +6,8 @@ import { DefinitionFactory } from '../../util'
 import { ContainedFieldSet } from '../../dictionary/contained'
 import { SetConstraintHelper } from '../env/set-constraint-helper'
 import { QuickFixXmlFileBuilder } from '../../dictionary/parser/quickfix/quick-fix-xml-file-builder'
+import { FieldEnum } from '../../dictionary'
+import { Dictionary } from '../../collections'
 
 const root: string = path.join(__dirname, '../env/data')
 
@@ -230,4 +232,161 @@ test('check builder', () => {
   const builder = new QuickFixXmlFileBuilder(definitions)
   builder.write(['0', '1', '2', '3', '4', '5', 'AE'])
   const d = builder.elasticBuffer.toString()
+})
+
+/*
+  <field number='4' name='AdvSide' type='CHAR'>
+   <value enum='B' description='BUY' />
+   <value enum='S' description='SELL' />
+   <value enum='X' description='CROSS' />
+   <value enum='T' description='TRADE' />
+  </field>
+ */
+test('field fetch by name AdvSide', () => {
+  const def = definitions.simple.get('AdvSide')
+  expect(def).toBeTruthy()
+  expect(def?.tag).toEqual(4)
+})
+
+test('field fetch by name 4', () => {
+  const def = definitions.tagToSimple[4]
+  expect(def).toBeTruthy()
+  expect(def?.name).toEqual('AdvSide')
+})
+
+function checkEnum (enums: (Dictionary<FieldEnum> | undefined), key: string, expectedVal: string, expectedDescription: string): void {
+  expect(enums).toBeTruthy()
+  const en = enums?.get(key)
+  expect(en).toBeTruthy()
+  expect(en?.val).toEqual(expectedVal)
+  expect(en?.description).toEqual(expectedDescription)
+  expect(en?.key).toEqual(key)
+}
+
+function checkSimple (name: string, tag: number, type: string): void {
+  const def = definitions.simple.get(name)
+  expect(def).toBeTruthy()
+  expect(def?.tag).toEqual(tag)
+  expect(def?.name).toEqual(name)
+  expect(def?.type).toEqual(type)
+}
+
+test('field check AdvSide', () => {
+  const def = definitions.simple.get('AdvSide')
+  expect(def).toBeTruthy()
+  checkSimple('AdvSide', 4, 'CHAR')
+  expect(def?.isEnum()).toBeTruthy()
+  expect(def?.enumVals).toBeTruthy()
+  expect(def?.enumVals.keys().length).toEqual(4)
+  checkEnum(def?.enums, 'B', 'Buy', 'BUY')
+  checkEnum(def?.enums, 'S', 'Sell', 'SELL')
+  checkEnum(def?.enums, 'X', 'Cross', 'CROSS')
+  checkEnum(def?.enums, 'T', 'Trade', 'TRADE')
+})
+//  <field number='8' name='BeginString' type='STRING' />
+test('field check 8', () => {
+  checkSimple('BeginString', 8, 'STRING')
+})
+
+//   <field number='9' name='BodyLength' type='LENGTH' />
+test('field check 9', () => {
+  checkSimple('BodyLength', 9, 'LENGTH')
+})
+
+//    <field number='12' name='Commission' type='AMT' />
+test('field check 12', () => {
+  checkSimple('Commission', 12, 'AMT')
+})
+
+//   <field number='16' name='EndSeqNo' type='SEQNUM' />
+test('field check 16', () => {
+  checkSimple('EndSeqNo', 16, 'SEQNUM')
+})
+
+//   <field number='38' name='OrderQty' type='QTY' />
+test('field check 38', () => {
+  checkSimple('OrderQty', 38, 'QTY')
+})
+
+//   <field number='212' name='XmlDataLen' type='LENGTH' />
+test('field check 212', () => {
+  checkSimple('XmlDataLen', 212, 'LENGTH')
+})
+//   <field number='213' name='XmlData' type='DATA' />
+test('field check 213', () => {
+  checkSimple('XmlData', 213, 'DATA')
+})
+
+/*
+  <message name='Logon' msgcat='admin' msgtype='A'>
+         <field name='EncryptMethod' required='Y' />
+         <field name='HeartBtInt' required='Y' />
+         <field name='RawDataLength' required='N' />
+         <field name='RawData' required='N' />
+         <field name='ResetSeqNumFlag' required='N' />
+         <field name='NextExpectedMsgSeqNum' required='N' />
+         <field name='MaxMessageSize' required='N' />
+         <group name='NoMsgTypes' required='N'>
+             <field name='RefMsgType' required='N' />
+             <field name='MsgDirection' required='N' />
+         </group>
+         <field name='TestMessageIndicator' required='N' />
+         <field name='Username' required='N' />
+         <field name='Password' required='N' />
+         <field name='NewPassword' required='N' />
+         <field name='EncryptedPasswordMethod' required='N' />
+         <field name='EncryptedPasswordLen' required='N' />
+         <field name='EncryptedPassword' required='N' />
+         <field name='EncryptedNewPasswordLen' required='N' />
+         <field name='EncryptedNewPassword' required='N' />
+         <field name='SessionStatus' required='N' />
+         <field name='DefaultApplVerID' required='N' />
+         <field name='DefaultApplExtID' required='N' />
+         <field name='DefaultCstmApplVerID' required='N' />
+         <field name='Text' required='N' />
+         <field name='EncodedTextLen' required='N' />
+         <field name='EncodedText' required='N' />
+     </message>
+ */
+test('check logon fields', () => {
+  const logon = definitions.message.get('Logon')
+  expect(logon).toBeTruthy()
+  let index = 0
+  setHelper.isComponent(logon, index++, 'StandardHeader', true)
+  setHelper.isSimple(logon, index++, 'EncryptMethod', true)
+  setHelper.isSimple(logon, index++, 'HeartBtInt', true)
+  setHelper.isSimple(logon, index++, 'RawDataLength', false)
+  setHelper.isSimple(logon, index++, 'RawData', false)
+  setHelper.isSimple(logon, index++, 'ResetSeqNumFlag', false)
+  setHelper.isSimple(logon, index++, 'NextExpectedMsgSeqNum', false)
+  setHelper.isSimple(logon, index++, 'MaxMessageSize', false)
+  setHelper.isGroup(logon, index++, 'NoMsgTypes', false)
+  setHelper.isSimple(logon, index++, 'TestMessageIndicator', false)
+  setHelper.isSimple(logon, index++, 'Username', false)
+  setHelper.isSimple(logon, index++, 'Password', false)
+  setHelper.isSimple(logon, index++, 'NewPassword', false)
+  setHelper.isSimple(logon, index++, 'EncryptedPasswordMethod', false)
+  setHelper.isSimple(logon, index++, 'EncryptedPasswordLen', false)
+  setHelper.isSimple(logon, index++, 'EncryptedPassword', false)
+  setHelper.isSimple(logon, index++, 'EncryptedNewPasswordLen', false)
+  setHelper.isSimple(logon, index++, 'EncryptedNewPassword', false)
+  setHelper.isSimple(logon, index++, 'SessionStatus', false)
+  setHelper.isSimple(logon, index++, 'DefaultApplVerID', false)
+  setHelper.isSimple(logon, index++, 'DefaultApplExtID', false)
+  setHelper.isSimple(logon, index++, 'DefaultCstmApplVerID', false)
+  setHelper.isSimple(logon, index++, 'Text', false)
+  setHelper.isSimple(logon, index++, 'EncodedTextLen', false)
+  setHelper.isSimple(logon, index++, 'EncodedText', false)
+  expect(logon?.containsRaw).toBeTruthy()
+})
+
+test('check message existance', () => {
+  const mt = definitions.simple.get('MsgType')
+  expect(mt?.isEnum()).toBeTruthy()
+  expect(mt?.enums.get('0')).toBeTruthy()
+  expect(mt?.enums.get('1')).toBeTruthy()
+  mt?.enums.keys().forEach(k => {
+    const m = definitions.message.get(k)
+    expect(k).toBeTruthy()
+  })
 })

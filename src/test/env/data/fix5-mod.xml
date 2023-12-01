@@ -65,21 +65,34 @@
             <field name="EncodedTextLen" required="N"/>
             <field name="EncodedText" required="N"/>
         </message>
-        <message msgcat="admin" msgtype="A" name="Logon">
-            <field name="Text" required="N"/>
-            <field name="EncryptMethod" required="Y"/>
-            <field name="HeartBtInt" required="Y"/>
-            <field name="RawDataLength" required="N"/>
-            <field name="RawData" required="N"/>
-            <field name="ResetSeqNumFlag" required="N"/>
-            <field name="NextExpectedMsgSeqNum" required="N"/>
-            <field name="MaxMessageSize" required="N"/>
-            <field name="TestMessageIndicator" required="N"/>
-            <field name="Username" required="N"/>
-            <field name="Password" required="N"/>
-            <field name="OTP" required="N"/>
-            <field name="DefaultApplVerID" required="Y"/>
-            <component name="MsgTypeGrp" required="N"/>
+        <message name='Logon' msgcat='admin' msgtype='A'>
+            <field name='EncryptMethod' required='Y' />
+            <field name='HeartBtInt' required='Y' />
+            <field name='RawDataLength' required='N' />
+            <field name='RawData' required='N' />
+            <field name='ResetSeqNumFlag' required='N' />
+            <field name='NextExpectedMsgSeqNum' required='N' />
+            <field name='MaxMessageSize' required='N' />
+            <group name='NoMsgTypes' required='N'>
+                <field name='RefMsgType' required='N' />
+                <field name='MsgDirection' required='N' />
+            </group>
+            <field name='TestMessageIndicator' required='N' />
+            <field name='Username' required='N' />
+            <field name='Password' required='N' />
+            <field name='NewPassword' required='N' />
+            <field name='EncryptedPasswordMethod' required='N' />
+            <field name='EncryptedPasswordLen' required='N' />
+            <field name='EncryptedPassword' required='N' />
+            <field name='EncryptedNewPasswordLen' required='N' />
+            <field name='EncryptedNewPassword' required='N' />
+            <field name='SessionStatus' required='N' />
+            <field name='DefaultApplVerID' required='N' />
+            <field name='DefaultApplExtID' required='N' />
+            <field name='DefaultCstmApplVerID' required='N' />
+            <field name='Text' required='N' />
+            <field name='EncodedTextLen' required='N' />
+            <field name='EncodedText' required='N' />
         </message>
         <message name="BusinessMessageReject" msgtype="j" msgcat="app">
             <field name="RefSeqNum" required="N"/>
