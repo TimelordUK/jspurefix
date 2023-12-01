@@ -386,7 +386,10 @@ test('check message existance', () => {
   expect(mt?.enums.get('0')).toBeTruthy()
   expect(mt?.enums.get('1')).toBeTruthy()
   mt?.enums.keys().forEach(k => {
+    if (k === 'n') return
     const m = definitions.message.get(k)
     expect(k).toBeTruthy()
+    expect(m).toBeTruthy()
+    expect(m?.msgType).toEqual(k)
   })
 })
