@@ -1,6 +1,27 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
 
+class StrHandler extends Readable {
+  pos: number = 0
+  public selfTerminate = true
+
+  constructor (public readonly txt: string) {
+    super()
+  }
+
+  public _read (n: number): void {
+    const len = this.txt.length
+    const pos = this.pos
+    const toSend = Math.min(n, len - pos)
+    const slice = this.txt.slice(pos, pos + toSend)
+    this.push(slice)
+    this.pos += toSend
+    if (this.selfTerminate && this.pos >= len) {
+      this.push(null)
+    }
+  }
+}
+
 export class StringDuplex extends FixDuplex {
   constructor (public readonly text: string = '', public chunks: boolean = false) {
     super()
@@ -8,26 +29,30 @@ export class StringDuplex extends FixDuplex {
     this.writable = StringDuplex.makeWritable()
   }
 
+  public noSelfterminate (): void {
+    (this.readable as StrHandler).selfTerminate = false
+  }
+
   private static makeReadable (text: string, chunks: boolean): Readable {
-    const Readable = require('stream').Readable
-    let total: number = 0
-    const reader = {
-      read: (size: number) => {
-        total += size
-        if (text.length > 0 && total > text.length) {
-          readable.push(null)
+    if (!chunks) {
+      // readable.push(text)
+      return new StrHandler(text)
+    } else {
+      const Readable = require('stream').Readable
+      let total: number = 0
+      const reader = {
+        read: (size: number) => {
+          total += size
+          if (text.length > 0 && total >= text.length) {
+            readable.push(null)
+          }
         }
       }
-    }
-    const readable = new Readable(reader)
-    if (!chunks) {
-      readable.push(text)
-    } else {
+      const readable = new Readable(reader)
       // simulate a set of chunks sent to parser
       StringDuplex.sendReaderChunks(text, readable)
+      return readable
     }
-
-    return readable
   }
 
   private static makeWritable (): Writable {

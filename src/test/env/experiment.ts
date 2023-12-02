@@ -12,6 +12,7 @@ class FixEntity {
   constructor (public readonly config: IJsFixConfig,
     public readonly duplex: FixDuplex = new StringDuplex(),
     public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
+    (this.duplex as StringDuplex).noSelfterminate()
   }
 }
 

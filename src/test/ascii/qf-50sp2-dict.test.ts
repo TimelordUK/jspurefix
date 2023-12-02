@@ -235,11 +235,7 @@ test('check builder', async () => {
   const builder = new QuickFixXmlFileBuilder(definitions)
   builder.write(['0', '1', '2', '3', '4', '5', 'AE'])
   const d = builder.elasticBuffer.toString()
-  const parser = new QuickFixXmlFileParser(() => {
-    const duplex = new StringDuplex(d)
-    duplex.end()
-    return duplex
-  }, () => new EmptyLogger())
+  const parser = new QuickFixXmlFileParser(() => new StringDuplex(d), () => new EmptyLogger())
   const newdDefinitions = await parser.parse()
 })
 
