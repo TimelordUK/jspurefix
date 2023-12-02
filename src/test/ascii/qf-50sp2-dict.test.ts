@@ -4,7 +4,7 @@ import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
 import { DefinitionFactory } from '../../util'
 import { SetConstraintHelper } from '../env/set-constraint-helper'
 import { QuickFixXmlFileBuilder } from '../../dictionary/parser/quickfix/quick-fix-xml-file-builder'
-import { FieldEnum } from '../../dictionary'
+import { FieldEnum, FixVersion } from '../../dictionary'
 import { Dictionary } from '../../collections'
 import { QuickFixXmlFileParser } from '../../dictionary/parser'
 import { StringDuplex } from '../../transport'
@@ -209,6 +209,13 @@ function checkTradeCapture (tc: (MessageDefinition | null)): void {
   setHelper.isComponent(tc, index++, 'StandardTrailer', true)
 }
 
+test('check definitions version', () => {
+  expect(definitions.getMajor()).toEqual(5)
+  expect(definitions.getMinor()).toEqual(0)
+  expect(definitions.getServicePack()).toEqual(2)
+  expect(definitions.version).toEqual(FixVersion.FIX50SP2)
+})
+
 test('check trade caputure src xml', () => {
   checkTradeCapture(definitions.message.get('AE'))
 })
@@ -229,6 +236,15 @@ test('check builder', async () => {
     const m = newdDefinitions.message.get(mt)
     expect(m).toBeTruthy()
   })
+})
+
+test('check version on trim definitions', async () => {
+  const msgTypes = ['0']
+  const newdDefinitions = await getTrimDefinitions(msgTypes)
+  expect(newdDefinitions.getMajor()).toEqual(definitions.getMajor())
+  expect(newdDefinitions.getMinor()).toEqual(definitions.getMinor())
+  expect(newdDefinitions.getServicePack()).toEqual(definitions.getServicePack())
+  expect(newdDefinitions.version).toEqual(definitions.version)
 })
 
 test('check trade capture from trim', async () => {

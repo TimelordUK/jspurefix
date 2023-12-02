@@ -2,26 +2,15 @@ import { FixVersion } from './fix-versions'
 
 export abstract class VersionUtil {
   public static resolve (description: string): FixVersion {
-    let version: FixVersion = FixVersion.Unknown
-    if (description.includes('FIX.4.0')) {
-      version = FixVersion.FIX40
-    } else if (description.includes('FIX.4.1')) {
-      version = FixVersion.FIX41
-    } else if (description.includes('FIX.4.2')) {
-      version = FixVersion.FIX42
-    } else if (description.includes('FIX.4.3')) {
-      version = FixVersion.FIX43
-    } else if (description.includes('FIX.4.4')) {
-      version = FixVersion.FIX44
-    } else if (description.includes('FIX.5.0')) {
-      version = FixVersion.FIX50
-    } else if (description.includes('FIX.5.0SP1')) {
-      version = FixVersion.FIX50SP1
-    } else if (description.includes('FIX.5.0SP2')) {
-      version = FixVersion.FIX50SP2
-    } else if (description.includes('FIXML.5.0SP2')) {
-      version = FixVersion.FIXML50SP2
-    }
-    return version
+    if (description === 'FIX.4.0') return FixVersion.FIX40
+    if (description === 'FIX.4.1') return FixVersion.FIX41
+    if (description === 'FIX.4.2') return FixVersion.FIX42
+    if (description === 'FIX.4.3') return FixVersion.FIX43
+    if (description === 'FIX.4.4') return FixVersion.FIX44
+    if (description === 'FIX.5.0') return FixVersion.FIX50
+    if (description === 'FIX.5.0SP1') return FixVersion.FIX50SP1
+    if (description === 'FIX.5.0SP2') return FixVersion.FIX50SP2
+    if (description === 'FIXML.5.0SP2') return FixVersion.FIXML50SP2
+    return FixVersion.Unknown
   }
 }

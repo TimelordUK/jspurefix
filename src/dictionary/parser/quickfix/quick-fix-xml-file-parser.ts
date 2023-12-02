@@ -59,7 +59,7 @@ export class QuickFixXmlFileParser extends FixParser {
               const major = saxNode.attributes.major
               const minor = saxNode.attributes.minor
               const servicepack = saxNode.attributes.servicepack
-              const description: string = !servicepack ? `FIX.${major}.${minor}` : `FIX.${major}.${minor}SP${servicepack}`
+              const description: string = (major !== '5' || !servicepack) ? `FIX.${major}.${minor}` : `FIX.${major}.${minor}SP${servicepack}`
               progress.definitions = new FixDefinitions(FixDefinitionSource.QuickFix, VersionUtil.resolve(description))
               break
             }

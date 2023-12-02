@@ -2,6 +2,7 @@ import 'reflect-metadata'
 
 import { Setup } from '../env/setup'
 import { IMarketDataRequest } from '../../types/FIX4.4/quickfix'
+import { FixVersion } from '../../dictionary'
 
 let setup: Setup
 beforeAll(async () => {
@@ -33,6 +34,13 @@ async function checkMessage (txt: string): Promise<void> {
   })
   // console.log(JSON.stringify(o, null, 4))
 }
+
+test('check definitions version', () => {
+  expect(setup.definitions.getMajor()).toEqual(4)
+  expect(setup.definitions.getMinor()).toEqual(4)
+  expect(setup.definitions.getServicePack()).toEqual(0)
+  expect(setup.definitions.version).toEqual(FixVersion.FIX44)
+})
 
 test(`parse MD request with instrument ${from}`, async () => {
   await checkMessage(marketDataMsg)

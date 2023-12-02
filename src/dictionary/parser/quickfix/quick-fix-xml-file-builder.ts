@@ -38,7 +38,7 @@ export class QuickFixXmlFileBuilder {
     eb.reset()
     const m0def = this.definitions.message.get(msgTypes[0])
     // <fix major='4' type='FIX' servicepack='0' minor='4'>
-    eb.writeString(QuickFixXmlFormatter.startFix(this.definitions.getMajor(), this.definitions.getServicePack(), this.definitions.getMinor()))
+    eb.writeString(QuickFixXmlFormatter.startFix(this.definitions.getMajor(), this.definitions.getMinor(), this.definitions.getServicePack()))
     const header = this.writeComponent(`${m0def?.name}.StandardHeader`, 'header')
     eb.writeString(header)
     const trailer = this.writeComponent(`${m0def?.name}.StandardTrailer`, 'trailer')

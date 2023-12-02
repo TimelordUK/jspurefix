@@ -10,6 +10,7 @@ import { AsciiChars } from '../../buffer/ascii'
 import { FixmlEncoder, FiXmlParser } from '../../buffer/fixml'
 import { DefinitionFactory, JsonHelper } from '../../util'
 import { Setup } from '../env/setup'
+import { FixVersion } from '../../dictionary'
 
 let definitions: FixDefinitions
 let jsonHelper: JsonHelper
@@ -50,6 +51,13 @@ async function testEncodeDecode (asObj: ILooseObject, msgType: string): Promise<
     })
   })
 }
+
+test('check definitions version', () => {
+  expect(definitions.getMajor()).toEqual(5)
+  expect(definitions.getMinor()).toEqual(0)
+  expect(definitions.getServicePack()).toEqual(2)
+  expect(definitions.version).toEqual(FixVersion.FIXML50SP2)
+})
 
 test('MktDataFull settle fixml object', async () => {
   const msgType: string = 'MktDataFull'
