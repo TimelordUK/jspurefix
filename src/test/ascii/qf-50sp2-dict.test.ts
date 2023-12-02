@@ -8,6 +8,9 @@ import { SetConstraintHelper } from '../env/set-constraint-helper'
 import { QuickFixXmlFileBuilder } from '../../dictionary/parser/quickfix/quick-fix-xml-file-builder'
 import { FieldEnum } from '../../dictionary'
 import { Dictionary } from '../../collections'
+import { QuickFixXmlFileParser } from '../../dictionary/parser'
+import { StringDuplex } from '../../transport'
+import { EmptyLogger } from '../../config'
 
 const root: string = path.join(__dirname, '../env/data')
 
@@ -228,10 +231,16 @@ test('check NoTickRules', () => {
   setHelper.isSimple(noTickRules, index++, 'TickRuleType', false)
 })
 
-test('check builder', () => {
+test('check builder', async () => {
   const builder = new QuickFixXmlFileBuilder(definitions)
   builder.write(['0', '1', '2', '3', '4', '5', 'AE'])
   const d = builder.elasticBuffer.toString()
+  const parser = new QuickFixXmlFileParser(() => {
+    const duplex = new StringDuplex(d)
+    duplex.end()
+    return duplex
+  }, () => new EmptyLogger())
+  const newdDefinitions = await parser.parse()
 })
 
 /*

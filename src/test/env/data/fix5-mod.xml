@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fix minor="0" major="5">
+<fix minor="0" major="5" servicepack='2'>
     <header>
         <field name="BeginString" required="Y"/>
         <field name="BodyLength" required="Y"/>

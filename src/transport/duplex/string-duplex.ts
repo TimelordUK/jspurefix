@@ -63,8 +63,6 @@ export class StringDuplex extends FixDuplex {
   }
 
   public end (): void {
-    if (this.text.length === 0) {
-      this.readable.push(null)
-    }
+    this.readable.push(null)
   }
 }

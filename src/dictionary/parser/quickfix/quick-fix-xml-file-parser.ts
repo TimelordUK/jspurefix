@@ -15,12 +15,13 @@ import { FixDefinitionSource } from '../../fix-definition-source'
 import { VersionUtil } from '../../version-util'
 import { ParseState } from './parse-state'
 import { ParseProgress } from './parse-progress'
+import { MakeDuplex } from '../../../transport'
 
 export class QuickFixXmlFileParser extends FixParser {
   private readonly singlePass = promisify(QuickFixXmlFileParser.subscribe)
   private readonly state: ParseProgress = new ParseProgress()
 
-  constructor (public readonly xmlPath: string, public getLogger: GetJsFixLogger) {
+  constructor (public readonly make: MakeDuplex, public getLogger: GetJsFixLogger) {
     super()
   }
 
@@ -56,8 +57,9 @@ export class QuickFixXmlFileParser extends FixParser {
           switch (progress.parseState) {
             case ParseState.FieldDefinitions: {
               const major = saxNode.attributes.major
-              const minor = saxNode.attributes.major
-              const description: string = `FIX.${major}.${minor}`
+              const minor = saxNode.attributes.minor
+              const servicepack = saxNode.attributes.servicepack
+              const description: string = !servicepack ? `FIX.${major}.${minor}` : `FIX.${major}.${minor}SP${servicepack}`
               progress.definitions = new FixDefinitions(FixDefinitionSource.QuickFix, VersionUtil.resolve(description))
               break
             }
@@ -168,6 +170,7 @@ export class QuickFixXmlFileParser extends FixParser {
   public async parse (): Promise<FixDefinitions> {
     return await new Promise<FixDefinitions>(async (resolve, reject) => {
       try {
+        this.state.next()
         while (this.state.parseState !== ParseState.End) {
           this.state.reset()
           await this.onePass()
@@ -183,7 +186,8 @@ export class QuickFixXmlFileParser extends FixParser {
   }
 
   private async onePass (): Promise<FixDefinitions | undefined | null> {
-    const pass: fs.ReadStream = fs.createReadStream(this.xmlPath)
+    const duplex = this.make()
+    const pass = duplex.readable
     const saxStream: SAXStream = require('sax').createStream(true, {})
     pass.pipe(saxStream)
     return await this.singlePass(this.state, saxStream)
