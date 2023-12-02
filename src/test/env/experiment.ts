@@ -1,5 +1,5 @@
 import { AsciiSessionMsgFactory } from '../../transport/ascii'
-import { FixDuplex, StringDuplex } from '../../transport'
+import { FixDuplex, StringDuplex, StringDuplexTraits } from '../../transport'
 import { Setup } from './setup'
 import { MsgView } from '../../buffer'
 import { IJsFixConfig } from '../../config'
@@ -10,7 +10,7 @@ class FixEntity {
   public readonly errors: Error[] = []
 
   constructor (public readonly config: IJsFixConfig,
-    public readonly duplex: FixDuplex = new StringDuplex(),
+    public readonly duplex: FixDuplex = new StringDuplex('', StringDuplexTraits.None),
     public readonly transport: MsgTransport = new MsgTransport(0, config, duplex)) {
   }
 }

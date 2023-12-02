@@ -1,7 +1,13 @@
 import { FixDefinitions } from '../../dictionary/definition'
 import { DITokens } from '../../runtime/di-tokens'
 import { SessionContainer } from '../../runtime'
-import { ISessionDescription, ISessionMsgFactory, MsgTransmitter, StringDuplex } from '../../transport'
+import {
+  ISessionDescription,
+  ISessionMsgFactory,
+  MsgTransmitter,
+  StringDuplex,
+  StringDuplexTraits
+} from '../../transport'
 import { DependencyContainer } from 'tsyringe'
 import { IJsFixConfig } from '../../config'
 import * as path from 'path'
@@ -32,7 +38,8 @@ export class TestEntity {
   }
 
   getAsciiParser (text: string, chunks: boolean = false): AsciiParser {
-    return new AsciiParser(this.config, new StringDuplex(text, chunks).readable, this.rxBuffer)
+    const traits = chunks ? StringDuplexTraits.Hunked | StringDuplexTraits.Terminate : StringDuplexTraits.Terminate
+    return new AsciiParser(this.config, new StringDuplex(text, traits).readable, this.rxBuffer)
   }
 
   async parseText (text: string, chunks: boolean = false): Promise<ParsingResult> {

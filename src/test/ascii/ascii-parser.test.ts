@@ -33,7 +33,6 @@ const expectedTagPos = [
 
 let setup: Setup
 beforeAll(async () => {
-  expect.assertions(1)
   setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
   await setup.init()
 }, 45000)

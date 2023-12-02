@@ -12,7 +12,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
   private readonly logger: IJsFixLogger
   private readonly queue: HttpTransaction[] = []
   private token: string | null = null
-  private readonly routes: Dictionary<IHtmlRoute> = new Dictionary()
+  private readonly routes: Dictionary<IHtmlRoute> = new Dictionary<IHtmlRoute>()
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger('http.adapter')
     const routes = this.routes

@@ -177,7 +177,7 @@ export abstract class FixSession extends events.EventEmitter {
 
   protected rxOnError (e: Error): void {
     const logger = this.sessionLogger
-    logger.warning(`rx error event: ${e.message} ${e.stack ?? ''}`)
+    logger.warning(`rx error event: ${e.message} ${JSON.stringify(e)}`)
     this.terminate(e)
   }
 
@@ -189,7 +189,7 @@ export abstract class FixSession extends events.EventEmitter {
 
   protected txOnError (e: Error): void {
     const logger = this.sessionLogger
-    logger.warning(`tx error event: ${e.message} ${e.stack ?? ''}`)
+    logger.warning(`tx error event: ${e.message} ${JSON.stringify(e)}`)
     this.terminate(e)
   }
 

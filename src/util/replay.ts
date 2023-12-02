@@ -8,7 +8,7 @@ export class FileReplayer {
   }
 
   async replayFixFile (replayFile: string): Promise<MsgView[]> {
-    return new Promise<MsgView[]>((accept, reject) => {
+    return new Promise<MsgView[]>((resolve, reject) => {
       try {
         const arr: MsgView[] = []
         const transport: MsgTransport = new MsgTransport(1, this.config, new FileDuplex(replayFile))
@@ -17,7 +17,7 @@ export class FileReplayer {
           arr.push(m.clone())
         })
         transport.receiver.on('end', () => {
-          accept(arr)
+          resolve(arr)
         })
         transport.receiver.on('error', (e) => {
           reject(e)

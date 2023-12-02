@@ -1,6 +1,6 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
-import axios, { isCancel, AxiosError } from 'axios'
+import axios from 'axios'
 import { IHttpAdapter } from '../http/http-adapter'
 
 export class HttpDuplex extends FixDuplex {

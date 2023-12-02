@@ -68,6 +68,7 @@ export class SimpleFieldDefinition {
       this.enums = enums = new Dictionary<FieldEnum>()
       this.enumVals = enumVals = new Dictionary<boolean>()
     }
+    if (!description) description = val
     val = this.patchEnumValue(val)
     enums.add(key, new FieldEnum(key, val, description ?? ''))
     enumVals.add(val, true)

@@ -14,6 +14,8 @@ import {
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
+import { AsciiSegmentParserSummary } from './ascii-segment-parser-summary'
+import { AsciiParserError } from './ascii-segment-parser-error'
 
 // this takes linear time i.e. it constantly makes forward progress
 // one tag at a time
@@ -56,12 +58,26 @@ export class AsciiSegmentParser {
       }
     }
 
+    function summarise (): any {
+      return <AsciiSegmentParserSummary>{
+        msgType,
+        tags: tags.clone().tagPos,
+        last,
+        msgDefinition: msgDefinition?.toString(),
+        currentTagPosition,
+        peek: peek.toString(),
+        segments: segments.map(s => s.toString()),
+        structureStack: structureStack.map(s => s.toString())
+      }
+    }
+
     function examine (tag: number): SegmentDescription | null {
       let structure: SegmentDescription | null = null
-      const type = peek.currentField?.type
-      switch (type) {
+      const currentField = peek.currentField
+      if (!currentField) return null
+      switch (currentField.type) {
         case ContainedFieldType.Simple: {
-          const sf: ContainedSimpleField = peek.currentField as ContainedSimpleField
+          const sf: ContainedSimpleField = currentField as ContainedSimpleField
           if (sf.definition.tag === tag) {
             currentTagPosition = currentTagPosition + 1
           }
@@ -69,14 +85,14 @@ export class AsciiSegmentParser {
         }
         // moving deeper into structure, start a new context
         case ContainedFieldType.Component: {
-          const cf: ContainedComponentField = peek.currentField as ContainedComponentField
+          const cf: ContainedComponentField = currentField as ContainedComponentField
           structure = new SegmentDescription(cf.name, tag, cf.definition,
             currentTagPosition, structureStack.length, SegmentType.Component)
           break
         }
         // for a group also need to know where all delimiters are positioned
         case ContainedFieldType.Group: {
-          const gf: ContainedComponentField = peek.currentField as ContainedGroupField
+          const gf: ContainedComponentField = currentField as ContainedGroupField
           structure = new SegmentDescription(gf.name, tag, gf.definition,
             currentTagPosition, structureStack.length, SegmentType.Group)
           currentTagPosition = currentTagPosition + 1
@@ -84,10 +100,11 @@ export class AsciiSegmentParser {
           break
         }
 
-        default:
-          throw new Error(`unknown tag type ${tag}`)
+        default: {
+          const c = summarise()
+          throw new AsciiParserError(`examine unknown type for tag = ${tag}`, c)
+        }
       }
-
       return structure
     }
 
@@ -126,6 +143,9 @@ export class AsciiSegmentParser {
             unwind(tag)
           }
           continue
+        }
+        if (!peek.currentField || !peek.set) {
+          throw new AsciiParserError(`discover no currentField or set for tag = ${tag}`, summarise())
         }
         const structure = examine(tag)
         if (structure) {

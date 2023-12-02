@@ -218,4 +218,8 @@ export class AsciiView extends MsgView {
     const tagPos: TagPos = this.structure.tags.tagPos[position]
     return this.buffer.getBoolean(tagPos.start)
   }
+
+  public toString (): string {
+    return super.toString()
+  }
 }

@@ -5,6 +5,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { FixXsdParser, QuickFixXmlFileParser, RepositoryXmlParser } from '../dictionary/parser'
 import { IDictionaryPath } from './dictionary-path'
+import { FileDuplex } from '../transport'
 
 const root: string = path.join(__dirname, '../../')
 
@@ -31,7 +32,7 @@ export class DefinitionFactory {
     } else if (fs.lstatSync(path).isDirectory()) {
       parser = new RepositoryXmlParser(path, getLogger)
     } else {
-      parser = new QuickFixXmlFileParser(path, getLogger)
+      parser = new QuickFixXmlFileParser(() => new FileDuplex(path), getLogger)
     }
     return parser
   }
