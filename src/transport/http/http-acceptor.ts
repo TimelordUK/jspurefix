@@ -2,7 +2,7 @@ import { MsgTransport } from '../factory'
 import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { IFixmlRequest } from '../fixml'
-import { StringDuplex, FixDuplex } from '../duplex'
+import { FixDuplex, StringDuplex, StringDuplexTraits } from '../duplex'
 import { Dictionary } from '../../collections'
 
 import * as express from 'express'
@@ -100,7 +100,7 @@ export class HttpAcceptor extends FixAcceptor {
     const id = this.nextId++
     this.logger.info(JSON.stringify(body, null, 4))
     // check hand back session key
-    const d = new StringDuplex()
+    const d = new StringDuplex('', StringDuplexTraits.None)
     const transport = new MsgTransport(id, this.config, d)
     const token = this.saveTransport(id, transport)
     this.respond(d, res, token).then(() => {
