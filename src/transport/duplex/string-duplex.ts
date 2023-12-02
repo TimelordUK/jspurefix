@@ -1,12 +1,26 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
 
-class StrHandler extends Readable {
-  pos: number = 0
-  public selfTerminate = true
+export enum StringDuplexTraits {
+  None = 0,
+  Hunked = 1 << 0, // 0001 -- the bitshift is unnecessary, but done for consistency
+  Terminate = 1 << 1, // 0010
+  All = ~(~0 << 2) // 11
+}
 
-  constructor (public readonly txt: string) {
+class StrHandler extends Readable {
+  private pos: number = 0
+
+  constructor (public readonly txt: string, public readonly traits: StringDuplexTraits) {
     super()
+  }
+
+  public isTerminate (): boolean {
+    return (this.traits & StringDuplexTraits.Terminate) === StringDuplexTraits.Terminate
+  }
+
+  public isHunked (): boolean {
+    return (this.traits & StringDuplexTraits.Hunked) === StringDuplexTraits.Hunked
   }
 
   public _read (n: number): void {
@@ -16,43 +30,44 @@ class StrHandler extends Readable {
     const slice = this.txt.slice(pos, pos + toSend)
     this.push(slice)
     this.pos += toSend
-    if (this.selfTerminate && this.pos >= len) {
+    if (this.isTerminate() && this.pos >= len) {
+      this.push(null)
+    }
+  }
+}
+
+class HunkedStrHandler extends StrHandler {
+  private start = 0
+  private iteration = 0
+  private remaining: number
+
+  constructor (public readonly txt: string, public readonly traits: StringDuplexTraits) {
+    super(txt, traits)
+    this.remaining = this.txt.length
+  }
+
+  public _read (n: number): void {
+    this.iteration++
+    const want = (this.iteration % 10) + 1
+    const chunk = Math.min(this.remaining, want)
+    this.remaining -= chunk
+    const end = this.start + chunk
+    const snippet = this.txt.slice(this.start, end)
+    this.push(snippet)
+    this.start = end
+    if (this.isTerminate() && this.remaining <= 0) {
       this.push(null)
     }
   }
 }
 
 export class StringDuplex extends FixDuplex {
-  constructor (public readonly text: string = '', public chunks: boolean = false) {
+  constructor (public readonly text: string = '', public readonly traits: StringDuplexTraits = StringDuplexTraits.Terminate) {
     super()
-    this.readable = StringDuplex.makeReadable(text, chunks)
+    this.readable = ((traits & StringDuplexTraits.Hunked) === StringDuplexTraits.Hunked)
+      ? new HunkedStrHandler(text, traits)
+      : new StrHandler(text, traits)
     this.writable = StringDuplex.makeWritable()
-  }
-
-  public noSelfterminate (): void {
-    (this.readable as StrHandler).selfTerminate = false
-  }
-
-  private static makeReadable (text: string, chunks: boolean): Readable {
-    if (!chunks) {
-      // readable.push(text)
-      return new StrHandler(text)
-    } else {
-      const Readable = require('stream').Readable
-      let total: number = 0
-      const reader = {
-        read: (size: number) => {
-          total += size
-          if (text.length > 0 && total >= text.length) {
-            readable.push(null)
-          }
-        }
-      }
-      const readable = new Readable(reader)
-      // simulate a set of chunks sent to parser
-      StringDuplex.sendReaderChunks(text, readable)
-      return readable
-    }
   }
 
   private static makeWritable (): Writable {
@@ -69,22 +84,6 @@ export class StringDuplex extends FixDuplex {
     }
     const receiver = new Writable(writer)
     return receiver
-  }
-
-  private static sendReaderChunks (text: string, readable: Readable): void {
-    // simulate a set of chunks sent to parser
-    let start = 0
-    let iteration = 0
-    let remaining = text.length
-    while (remaining > 0) {
-      iteration++
-      const chunk = Math.min(remaining, iteration % 10)
-      remaining -= chunk
-      const end = start + chunk
-      const snippet = text.slice(start, end)
-      readable.push(snippet)
-      start = end
-    }
   }
 
   public end (): void {

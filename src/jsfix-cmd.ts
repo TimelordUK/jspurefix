@@ -638,7 +638,7 @@ export class JsfixCmd {
 
   async benchParse (contents: string, iterations: number): Promise<ParseSummary> {
     return new Promise((resolve, reject) => {
-      const toParse = new StringDuplex(contents.repeat(iterations), false)
+      const toParse = new StringDuplex(contents.repeat(iterations))
       const startsAt: Date = new Date()
       let i = 0
       const config = this.config
