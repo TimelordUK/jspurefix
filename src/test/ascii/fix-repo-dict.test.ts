@@ -4,15 +4,18 @@ import * as path from 'path'
 import { FixDefinitions } from '../../dictionary/definition'
 import { ISessionDescription } from '../../transport'
 import { DefinitionFactory } from '../../util'
-import { ContainedFieldType } from '../../dictionary/contained'
+import { ContainedFieldSet, ContainedFieldType } from '../../dictionary/contained'
+import { SetConstraintHelper } from '../env/set-constraint-helper'
 
 const root: string = path.join(__dirname, '../../../data')
 
 let definitions: FixDefinitions
+let setHelper: SetConstraintHelper
 
 beforeAll(async () => {
   const sessionDescription: ISessionDescription = require(path.join(root, 'session/test-initiator.json'))
   definitions = await new DefinitionFactory().getDefinitions(sessionDescription?.application?.dictionary ?? '')
+  setHelper = new SetConstraintHelper(definitions)
 }, 45000)
 // eslint-disable no-tabs
 /*
@@ -270,3 +273,60 @@ test('message check TestRequest', () => {
   expect(msg?.fields[2].type).toEqual(ContainedFieldType.Component)
   expect(msg?.fields[2].name).toEqual('StandardTrailer')
 })
+
+/*
+ StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. HopRefID.630
+  EmailThreadID: string// [2] 164 (String)
+  EmailType: string// [3] 94 (String)
+  OrigTime?: Date// [4] 42 (UtcTimestamp)
+  Subject: string// [5] 147 (String)
+  EncodedSubjectLen?: number// [6] 356 (Int)
+  EncodedSubject?: Buffer// [7] 357 (RawData)
+  RoutingGrp?: IRoutingGrp[]// [8] RoutingType.216, RoutingID.217
+  InstrmtGrp?: IInstrmtGrp[]// [9] Symbol.55, SymbolSfx.65 .. InterestAccrualDate.874
+  UndInstrmtGrp?: IUndInstrmtGrp[]// [10] UnderlyingSymbol.311, UnderlyingSymbolSfx.312 .. UnderlyingStipValue.889
+  InstrmtLegGrp?: IInstrmtLegGrp[]// [11] LegSymbol.600, LegSymbolSfx.601 .. LegInterestAccrualDate.956
+  OrderID?: string// [12] 37 (String)
+  ClOrdID?: string// [13] 11 (String)
+  LinesOfTextGrp: ILinesOfTextGrp[]// [14] Text.58, EncodedTextLen.354, EncodedText.355
+  RawDataLength?: number// [15] 95 (Int)
+  RawData?: Buffer// [16] 96 (RawData)
+  StandardTrailer: IStandardTrailer// [17] SignatureLength.93, Signature.89, CheckSum.10
+ */
+test('message check Email', () => {
+  const email = definitions.message.get('Email')
+  expect(email).toBeTruthy()
+  let index = 0
+  setHelper.isComponent(email, index++, 'StandardHeader', true)
+  setHelper.isSimple(email, index++, 'EmailThreadID', true)
+  setHelper.isSimple(email, index++, 'EmailType', true)
+  setHelper.isSimple(email, index++, 'OrigTime', false)
+  setHelper.isSimple(email, index++, 'Subject', true)
+  setHelper.isSimple(email, index++, 'EncodedSubjectLen', false)
+  setHelper.isSimple(email, index++, 'EncodedSubject', false)
+  setHelper.isGroup(email, index++, 'RoutingGrp', false)
+  setHelper.isGroup(email, index++, 'InstrmtGrp', false)
+  setHelper.isGroup(email, index++, 'UndInstrmtGrp', false)
+  setHelper.isGroup(email, index++, 'InstrmtLegGrp', false)
+  setHelper.isSimple(email, index++, 'OrderID', false)
+  setHelper.isSimple(email, index++, 'ClOrdID', false)
+  setHelper.isGroup(email, index++, 'LinesOfTextGrp', true)
+  setHelper.isSimple(email, index++, 'RawDataLength', false)
+  setHelper.isSimple(email, index++, 'RawData', false)
+  setHelper.isComponent(email, index++, 'StandardTrailer', true)
+})
+
+test('message check Email rawfields', () => {
+  const email = definitions.message.get('Email')
+  expect(email).toBeTruthy()
+  isRaw(email, 'RawDataLength')
+  isRaw(email, 'EncodedSubjectLen')
+})
+
+function isRaw (set: (ContainedFieldSet | null), name: string): void {
+  const field = set?.simple.get(name)
+  expect(field).toBeTruthy()
+  expect(set?.containsRaw).toBeTruthy()
+  const masterDef = definitions.simple.get(name)
+  expect(set?.containedLength[masterDef?.tag ?? -1]).toBeTruthy()
+}
