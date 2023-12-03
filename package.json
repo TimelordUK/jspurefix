@@ -1,6 +1,6 @@
 {
   "name": "jspurefix",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "pure node js fix engine",
   "keywords": [
     "typescript",
@@ -30,8 +30,8 @@
     "cmd": "node dist/jsfix-cmd",
     "trim44": "node dist/jsfix-cmd  --dict=qf44 --trim --type=\"0,1,2,3,4,5,AE\"",
     "repo44": "node dist/jsfix-cmd --dict=repo44",
-    "repo44-unit": "node dist/jsfix-cmd --dict=repo44 --generate --density=0.8 --unit --delimiter=\"|\" --session=data/session/test-initiator.json",
-    "repo44-script": "node dist/jsfix-cmd --dict=repo44 --generate --density=0.8 --script --delimiter=\"|\" --session=data/session/test-initiator.json",
+    "repo44-unit": "node dist/jsfix-cmd --dict=repo44 --generate --density=0.8 --unit --delimiter=\"|\" --type=\"AE\" --session=\"data/session/test-initiator.json\"",
+    "repo44-script": "node dist/jsfix-cmd --dict=repo44 --generate --density=0.8 --script --delimiter=\"|\" --repeats=50 --session=\"data/session/test-initiator.json\"",
     "repo44-replay": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/fix.txt --delimiter=\"|\" --stats--delimiter=\"|\" --objects",
     "repo44-repscr": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/fix.txt --delimiter=\"|\" --stats--delimiter=\"|\" --stats",
     "repo44-bench": "node dist/jsfix-cmd --dict=repo44 --benchmark --delimiter=\"|\"",
@@ -41,7 +41,7 @@
     "qf50sp2-bench-md-inc": "node dist/jsfix-cmd  --dict=qf50sp2 --fix=data/examples/FIX.5.0SP2/quickfix/md-data-inc-snapshot/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
     "qf50sp2-bench-md": "node dist/jsfix-cmd  --dict=qf50sp2 --fix=data/examples/FIX.5.0SP2/quickfix/md-data-snapshot/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
     "repo44-bench-er": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/execution-report/fix.txt --benchmark --delimiter=\"|\" --repeats=80000",
-    "repo44-bench-tc": "node dist/jsfix-cmd jsfix-cmd ---dict=repo44 --fix=data/examples/FIX.4.4/repo/trade-capture/fix.txt --benchmark --delimiter=\"|\" --repeats=30000",
+    "repo44-bench-tc": "node dist/jsfix-cmd jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/trade-capture/fix.txt --benchmark --delimiter=\"|\" --repeats=30000",
     "repo44-bench-sd": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/security-definition/fix.txt --benchmark --delimiter=\"|\" --repeats=150000",
     "repo44-bench-lo": "node dist/jsfix-cmd --dict=repo44 --fix=data/examples/FIX.4.4/repo/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",
     "qf-bench-lo": "node dist/jsfix-cmd --session=data/session/test-initiator.json --fix=data/examples/FIX.4.4/quickfix/logon/fix.txt --benchmark --delimiter=\"|\" --repeats=250000",

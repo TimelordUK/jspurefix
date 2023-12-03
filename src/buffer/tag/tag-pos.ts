@@ -2,7 +2,7 @@ export class TagPos {
   constructor (public position: number, public tag: number, public start: number, public len: number) {
   }
 
-  public static compare (lhs: TagPos, rhs: TagPos): number {
+  public static compare = (lhs: TagPos, rhs: TagPos): number => {
     if (lhs.tag < rhs.tag) {
       return -1
     }

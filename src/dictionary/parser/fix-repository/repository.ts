@@ -166,7 +166,7 @@ export class Repository {
     const nativeType = Repository.isNative(f)
     let type = f.Type
     const mapped = !nativeType && types.get(type)
-    if (mapped) {
+    if (f.Type !== 'Length' && mapped) {
       type = mapped.BaseType ?? type
     }
     return type
