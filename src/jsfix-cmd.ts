@@ -42,6 +42,11 @@ const options = buildOptions({
     default: 'data/FIX44.xml'
   },
 
+  session: {
+    type: 'string',
+    alias: 's'
+  },
+
   delimiter: {
     type: 'string',
     alias: 'l',
@@ -68,7 +73,7 @@ const options = buildOptions({
 
   stats: {
     type: 'boolean',
-    alias: ['s'],
+    alias: ['st'],
     default: false
   },
 
@@ -87,6 +92,12 @@ const options = buildOptions({
   structures: {
     type: 'boolean',
     alias: ['r'],
+    default: false
+  },
+
+  script: {
+    type: 'boolean',
+    alias: ['i'],
     default: false
   },
 
@@ -653,7 +664,9 @@ export class JsfixCmd {
           resolve(summary)
         }
       })
-      asciiParser.on('error', e => { reject(e) })
+      asciiParser.on('error', e => {
+        reject(e)
+      })
     })
   }
 

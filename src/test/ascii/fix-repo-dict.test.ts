@@ -215,7 +215,7 @@ test('field check tag 95', () => {
   expect(simple).toBeTruthy()
   expect(simple?.tag).toEqual(95)
   expect(simple?.name).toEqual('RawDataLength')
-  expect(simple?.type.toLowerCase()).toEqual('int')
+  expect(simple?.type.toLowerCase()).toEqual('length')
 })
 
 /*

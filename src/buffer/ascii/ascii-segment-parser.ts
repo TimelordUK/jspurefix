@@ -14,8 +14,8 @@ import {
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
-import { AsciiSegmentParserSummary } from './ascii-segment-parser-summary'
 import { AsciiParserError } from './ascii-segment-parser-error'
+import { AsciiSegmentParserSummary } from './ascii-segment-parser-summary'
 
 // this takes linear time i.e. it constantly makes forward progress
 // one tag at a time
