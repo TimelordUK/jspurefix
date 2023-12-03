@@ -25,7 +25,7 @@ export abstract class MsgView {
   protected constructor (public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
   }
 
-  protected static asVerbose (field: SimpleFieldDefinition, val: string, i: number, count: number, tp: TagPos): string {
+  protected static asVerbose = (field: SimpleFieldDefinition, val: string, i: number, count: number, tp: TagPos): string => {
     const newLine = require('os').EOL
     let desc: string
     let name: string
@@ -43,7 +43,7 @@ export abstract class MsgView {
     return `[${i}] ${tp.tag} (${name}) = ${desc}`
   }
 
-  protected static asToken (field: SimpleFieldDefinition, val: string, i: number, count: number, tp: TagPos): string {
+  protected static asToken = (field: SimpleFieldDefinition, val: string, i: number, count: number, tp: TagPos): string => {
     const perLine: number = 2
     const newLine = require('os').EOL
     // [280] 814 (ApplQueueResolution) = 2[OverlayLast][281] 10 (CheckSum) = 80
