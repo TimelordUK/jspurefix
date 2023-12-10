@@ -72,23 +72,88 @@ test('end to end logon', async () => {
 test('session send resendRequest when logged on', async () => {
   const runner: SkeletonRunner = new SkeletonRunner(experiment, 2)
   const factory = experiment.client.config.factory
-  const resend = factory?.resendRequest(1, 2)
+  const resend = factory?.resendRequest(1, 1)
   expect(resend).toBeTruthy()
   if (!resend) return
   runner.sendMsg(MsgType.ResendRequest, resend)
-  try {
-    const cViews = experiment.client.views
-    const sViews = experiment.server.views
-    await runner.wait()
-    const last = experiment.client.views[experiment.client.views.length - 1]
-    expect(last).toBeTruthy()
-    const clientResets = countOfType('SequenceReset', cViews)
-    const serverResets = countOfType('SequenceReset', sViews)
-    expect(clientResets).toEqual(1)
-    expect(serverResets).toEqual(0)
-  } catch (e) {
-    expect(true).toEqual(false)
-  }
+
+  const cViews = experiment.client.views
+  const sViews = experiment.server.views
+  await runner.wait()
+
+  expect(cViews).toHaveLength(3)
+  expect(sViews).toHaveLength(3)
+
+  const resendRequestView = sViews[1]
+  expect(resendRequestView.segment.name).toBe('ResendRequest')
+  expect(resendRequestView.getTyped('MsgSeqNum')).toBe(2)
+  expect(resendRequestView.getTyped('BeginSeqNo')).toBe(1)
+  expect(resendRequestView.getTyped('EndSeqNo')).toBe(1)
+
+  const seqResetView = cViews[1]
+  expect(seqResetView.segment.name).toBe('SequenceReset')
+  expect(seqResetView.getTyped('MsgSeqNum')).toBe(1)
+  expect(seqResetView.getTyped('NewSeqNo')).toBe(2)
+  expect(seqResetView.getTyped('GapFillFlag')).toBe(true)
+  expect(seqResetView.getTyped('PossDupFlag')).toBe(true)
+
+  const logoutSView = sViews[2]
+  expect(logoutSView.segment.name).toBe('Logout')
+  expect(logoutSView.getTyped('MsgSeqNum')).toBe(3)
+
+  const logoutCView = cViews[2]
+  expect(logoutCView.segment.name).toBe('Logout')
+  expect(logoutCView.getTyped('MsgSeqNum')).toBe(2)
+
+  const clientResets = countOfType('SequenceReset', cViews)
+  const serverResets = countOfType('SequenceReset', sViews)
+  console.log('SERVER VIEWS', sViews.map((a => a.toJson())));
+  console.log('CLIENT VIEWS', cViews.map((a => a.toJson())));
+  expect(clientResets).toEqual(1)
+  expect(serverResets).toEqual(0)
+})
+
+test('session send resendRequest with endSeqNo = 0 when logged on', async () => {
+  const runner: SkeletonRunner = new SkeletonRunner(experiment, 2)
+  const factory = experiment.client.config.factory
+
+  const resend = factory?.resendRequest(1, 0)
+  expect(resend).toBeTruthy()
+  if (!resend) return
+  runner.sendMsg(MsgType.ResendRequest, resend)
+
+  const cViews = experiment.client.views
+  const sViews = experiment.server.views
+  await runner.wait()
+
+  expect(cViews).toHaveLength(3)
+  expect(sViews).toHaveLength(3)
+
+  const resendRequestView = sViews[1]
+  expect(resendRequestView.segment.name).toBe('ResendRequest')
+  expect(resendRequestView.getTyped('MsgSeqNum')).toBe(2)
+  expect(resendRequestView.getTyped('BeginSeqNo')).toBe(1)
+  expect(resendRequestView.getTyped('EndSeqNo')).toBe(0)
+
+  const seqResetView = cViews[1]
+  expect(seqResetView.segment.name).toBe('SequenceReset')
+  expect(seqResetView.getTyped('MsgSeqNum')).toBe(1)
+  expect(seqResetView.getTyped('NewSeqNo')).toBe(2)
+  expect(seqResetView.getTyped('GapFillFlag')).toBe(true)
+  expect(seqResetView.getTyped('PossDupFlag')).toBe(true)
+
+  const logoutSView = sViews[2]
+  expect(logoutSView.segment.name).toBe('Logout')
+  expect(logoutSView.getTyped('MsgSeqNum')).toBe(3)
+
+  const logoutCView = cViews[2]
+  expect(logoutCView.segment.name).toBe('Logout')
+  expect(logoutCView.getTyped('MsgSeqNum')).toBe(2)
+
+  const clientResets = countOfType('SequenceReset', cViews)
+  const serverResets = countOfType('SequenceReset', sViews)
+  expect(clientResets).toEqual(1)
+  expect(serverResets).toEqual(0)
 })
 
 test('session send logon when logged on', async () => {

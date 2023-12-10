@@ -120,7 +120,8 @@ function checkSeqReset (rec: IFixMsgStoreRecord, from: number, to: number): void
   const reset: ISequenceReset = rec.obj as ISequenceReset
   expect(rec.msgType).toEqual(MsgType.SequenceReset)
   expect(rec.obj).toBeTruthy()
-  expect(rec.seqNum).toEqual(to)
+  expect(rec.seqNum).toEqual(from)
+  expect(reset.NewSeqNo).toEqual(to)
   expect(reset.GapFillFlag).toBeTruthy()
   expect(reset.StandardHeader.MsgType).toEqual(MsgType.SequenceReset)
   expect(reset.StandardHeader.PossDupFlag).toBeTruthy()

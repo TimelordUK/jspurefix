@@ -28,6 +28,12 @@ export class FixMsgAsciiStoreResend {
 
   private inflateRange (startSeq: number, endSeq: number, input: IFixMsgStoreRecord[]): IFixMsgStoreRecord[] {
     const toResend: IFixMsgStoreRecord[] = []
+    // If no records for this given sequence number range, returns a single gap fill
+    if (input.length === 0) {
+      this.gap(startSeq, endSeq + 1, toResend)
+      return toResend
+    }
+
     let expected = startSeq
     for (let i = 0; i < input.length; ++i) {
       const record = this.prepareRecordForRetransmission(input[i])
@@ -48,16 +54,16 @@ export class FixMsgAsciiStoreResend {
     return toResend
   }
 
-  public gap (beginGap: number, seqNum: number, arr: IFixMsgStoreRecord[]): void {
+  private gap (beginGap: number, newSeq: number, arr: IFixMsgStoreRecord[]): void {
     if (beginGap > 0) {
-      arr.push(this.sequenceResetGap(beginGap, seqNum))
+      arr.push(this.sequenceResetGap(beginGap, newSeq))
     }
   }
 
   // if records were sent as encoded text then inflate back to object
   // so can be resent or examined
 
-  public inflate (record: IFixMsgStoreRecord): void {
+  private inflate (record: IFixMsgStoreRecord): void {
     if (record.obj) return
     if (!record.encoded) return
     const parser = this.parser
@@ -71,18 +77,26 @@ export class FixMsgAsciiStoreResend {
     parser.parseText(record.encoded)
   }
 
-  public sequenceResetGap (startGap: number, newSeq: number): IFixMsgStoreRecord {
+  /**
+   * A continuous sequence of messages not being retransmitted should be skipped over using a
+   * single SequenceReset(35=4) message with GapFillFlag(123) set to “Y” and MsgSeqNum(34) set
+   * to the sequence number of the first skipped message and NewSeqNo(36) must always be set
+   * to the value of the next sequence number to be expected by the peer immediately following
+   * the messages being skipped.
+   */
+  private sequenceResetGap (startGap: number, newSeq: number): IFixMsgStoreRecord {
     const factory = this.config.factory
     const gapFill: ISequenceReset = factory?.sequenceReset(newSeq, true) as ISequenceReset
     gapFill.StandardHeader = factory?.header(MsgType.SequenceReset, startGap) as IStandardHeader
     gapFill.StandardHeader.PossDupFlag = true
-    gapFill.NewSeqNo = newSeq
+
     return new FixMsgStoreRecord(
       MsgType.SequenceReset,
       new Date(),
-      newSeq,
+      startGap,
       gapFill,
-      null)
+      null,
+    )
   }
 
   /**

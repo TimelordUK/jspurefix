@@ -160,7 +160,11 @@ export abstract class AsciiSession extends FixSession {
   protected onResendRequest (view: MsgView): void {
     // if no records are in store then send a gap fill for entire sequence
     this.setState(SessionState.HandleResendRequest)
-    const [beginSeqNo, endSeqNo] = view.getTypedTags([MsgTag.BeginSeqNo, MsgTag.EndSeqNo])
+    const [beginSeqNo, requestedEndSeqNo] = view.getTypedTags([MsgTag.BeginSeqNo, MsgTag.EndSeqNo])
+    const endSeqNo = requestedEndSeqNo === 0
+      ? this.sessionState.lastSentSeqNum()
+      : requestedEndSeqNo
+
     this.sessionLogger.info(`onResendRequest getResendRequest beginSeqNo = ${beginSeqNo}, endSeqNo = ${endSeqNo}`)
     this.resender.getResendRequest(beginSeqNo as number, endSeqNo as number).then((records: IFixMsgStoreRecord[]) => {
       const validRecords = records.filter(rec => rec.obj !== null)
