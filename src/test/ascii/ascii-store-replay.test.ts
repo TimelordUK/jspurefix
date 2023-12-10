@@ -77,18 +77,26 @@ test('server replay request from seq=1 to seq=10', async () => {
 
   expect(vec[1].msgType).toEqual(MsgType.TradeCaptureReportRequestAck)
   expect(vec[1].seqNum).toEqual(2)
+  expect(vec[1].obj?.StandardHeader?.PossDupFlag).toBeTruthy()
+  expect(vec[1].obj?.StandardHeader?.OrigSendingTime).toBeDefined()
 
   for (let i = 2; i <= 6; ++i) {
     expect(vec[i].msgType).toEqual(MsgType.TradeCaptureReport)
     expect(vec[i].seqNum).toEqual(i + 1)
+    expect(vec[i].obj?.StandardHeader?.PossDupFlag).toBeTruthy()
+    expect(vec[i].obj?.StandardHeader?.OrigSendingTime).toBeDefined()
   }
 
   expect(vec[7].msgType).toEqual(MsgType.TradeCaptureReportRequestAck)
   expect(vec[7].seqNum).toEqual(8)
+  expect(vec[7].obj?.StandardHeader?.PossDupFlag).toBeTruthy()
+  expect(vec[7].obj?.StandardHeader?.OrigSendingTime).toBeDefined()
 
   for (let i = 8; i < 10; ++i) {
     expect(vec[i].msgType).toEqual(MsgType.TradeCaptureReport)
     expect(vec[i].seqNum).toEqual(i + 1)
+    expect(vec[1].obj?.StandardHeader?.PossDupFlag).toBeTruthy()
+    expect(vec[i].obj?.StandardHeader?.OrigSendingTime).toBeDefined()
   }
 })
 
@@ -102,6 +110,8 @@ test('client replay request from seq=1 to seq=10', async () => {
 
   expect(vec[1].msgType).toEqual(MsgType.TradeCaptureReportRequest)
   expect(vec[1].seqNum).toEqual(2)
+  expect(vec[1].obj?.StandardHeader?.PossDupFlag).toBeTruthy()
+  expect(vec[1].obj?.StandardHeader?.OrigSendingTime).toBeDefined()
 
   checkSeqReset(vec[2], 3, 11)
 })

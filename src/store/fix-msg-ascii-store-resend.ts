@@ -30,7 +30,7 @@ export class FixMsgAsciiStoreResend {
     const toResend: IFixMsgStoreRecord[] = []
     let expected = startSeq
     for (let i = 0; i < input.length; ++i) {
-      const record = input[i].clone()
+      const record = this.prepareRecordForRetransmission(input[i])
       const seqNum = record.seqNum
       const toGap = seqNum - expected
       if (toGap > 0) {
@@ -83,5 +83,45 @@ export class FixMsgAsciiStoreResend {
       newSeq,
       gapFill,
       null)
+  }
+
+  /**
+   * Prepares the FIX message as response to ResendRequest (2).
+   *
+   * The FIX session processor retransmitting a message with the PossDupFlag(43) set to "Y" must modify the following fields:
+   *
+   * SendingTime(52) set to the current sending time
+   * OrigSendingTime(122) set to the SendingTime(52) from the original message
+   * Recalculate the BodyLength(9)
+   * Recalculate the CheckSum(10)
+   *
+   * If the message is encrypted, SecureDataLen(90) and SecureData(91) may also require re-encryption and re-encoding
+   *
+   * @see https://www.fixtrading.org/standards/fix-session-layer-online/#message-recovery
+   *
+   * @param originalRecord the FIX message to be retransmitted as possible duplicate
+   * @returns the FIX message ready to be retransmitted
+   */
+  private prepareRecordForRetransmission (originalRecord: IFixMsgStoreRecord): IFixMsgStoreRecord {
+    const retransmitted = originalRecord.clone() // We don't want to accidently change any fields of the original record
+
+    const factory = this.config.factory
+    if (!retransmitted.obj) return retransmitted
+
+    // Rebuilds header with the updated fields
+    const header = factory?.header(
+      retransmitted.msgType,
+      retransmitted.seqNum,
+      new Date(), // SendingTime(52)
+      {
+        PossDupFlag: true,
+        OrigSendingTime: retransmitted.timestamp
+      }
+    )
+    retransmitted.obj = {
+      ...retransmitted.obj,
+      StandardHeader: header
+    }
+    return retransmitted
   }
 }
