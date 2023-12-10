@@ -106,7 +106,9 @@ export class FixMsgAsciiStoreResend {
     const retransmitted = originalRecord.clone() // We don't want to accidently change any fields of the original record
 
     const factory = this.config.factory
-    if (!retransmitted.obj) return retransmitted
+    if (!retransmitted.obj) {
+      retransmitted.obj = {}
+    }
 
     // Rebuilds header with the updated fields
     const header = factory?.header(
