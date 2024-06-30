@@ -27,6 +27,7 @@ export class MsgTransport {
 
     this.transmitter = sessionContainer.resolve<MsgTransmitter>(DITokens.MsgTransmitter)
     this.receiver = sessionContainer.resolve<MsgParser>(DITokens.MsgParser)
+    this.transmitter.init(this.id)
 
     // pipe the encoder to say a socket.
     if (duplex.writable) {

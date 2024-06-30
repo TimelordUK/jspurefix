@@ -8,8 +8,13 @@ import { ISequenceReset, IStandardHeader } from '../types/FIX4.4/repo'
 
 export class FixMsgAsciiStoreResend {
   parser: AsciiParser
+  transportId: number = -1
   constructor (public readonly store: IFixMsgStore, public readonly config: IJsFixConfig) {
     this.parser = new AsciiParser(this.config, null, new ElasticBuffer(160 * 1024))
+  }
+
+  public init (transportId: number): void {
+    this.transportId = transportId
   }
 
   public async getResendRequest (startSeq: number, endSeq: number): Promise<IFixMsgStoreRecord[]> {
@@ -87,7 +92,7 @@ export class FixMsgAsciiStoreResend {
   private sequenceResetGap (startGap: number, newSeq: number): IFixMsgStoreRecord {
     const factory = this.config.factory
     const gapFill: ISequenceReset = factory?.sequenceReset(newSeq, true) as ISequenceReset
-    gapFill.StandardHeader = factory?.header(MsgType.SequenceReset, startGap) as IStandardHeader
+    gapFill.StandardHeader = factory?.header(this.transportId, MsgType.SequenceReset, startGap) as IStandardHeader
     gapFill.StandardHeader.PossDupFlag = true
 
     return new FixMsgStoreRecord(
@@ -95,7 +100,7 @@ export class FixMsgAsciiStoreResend {
       new Date(),
       startGap,
       gapFill,
-      null,
+      null
     )
   }
 
@@ -126,6 +131,7 @@ export class FixMsgAsciiStoreResend {
 
     // Rebuilds header with the updated fields
     const header = factory?.header(
+      this.transportId,
       retransmitted.msgType,
       retransmitted.seqNum,
       new Date(), // SendingTime(52)

@@ -31,8 +31,8 @@ export class TradeCaptureServer extends AsciiSession {
       }
 
       default: {
-        const seqNum = view.getTyped(MsgTag.MsgSeqNum)
-        const msg = this.config.factory?.reject(msgType, seqNum as number, `${this.me}: unexpected msg type '${msgType}'`, SessionRejectReason.InvalidMsgType)
+        const seqNum = view.getTyped(MsgTag.MsgSeqNum) as number
+        const msg = this.config.factory?.reject(msgType, seqNum, `${this.me}: unexpected msg type '${msgType}'`, SessionRejectReason.InvalidMsgType)
         if (msg) {
           this.send(msgType, msg)
         }
@@ -54,6 +54,10 @@ export class TradeCaptureServer extends AsciiSession {
   }
 
   protected onLogon (view: MsgView, user: string, password: string): boolean {
+    const senderCompId = view.getTyped(MsgTag.SenderCompID) as string
+    const id = this.transport?.id ?? -1
+    this.logger.info(`transport id ${id} will use targetCompId ${senderCompId} from client login`)
+    this.config.factory?.addCompIdMapping(id, senderCompId)
     return true
   }
 

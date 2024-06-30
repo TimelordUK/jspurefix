@@ -24,7 +24,10 @@ export class FixmlSessionMsgFactory extends ASessionMsgFactory {
     return this.fixmlLogout(msgType, msgType !== 'UserReq')
   }
 
-  public header (msgType: string, seqNum: number = 0, time: Date = new Date(), overrideData?: Partial<IStandardHeader>): ILooseObject {
+  public addCompIdMapping (transportId: number, targetCompId: string): void {
+  }
+
+  public header (transportId: number, msgType: string, seqNum: number = 0, time: Date = new Date(), overrideData?: Partial<IStandardHeader>): ILooseObject {
     const description = this.description
     const o: IStandardHeader = {
       SenderCompID: description.SenderCompId,

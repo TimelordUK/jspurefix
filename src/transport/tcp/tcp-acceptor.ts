@@ -54,8 +54,8 @@ export class TcpAcceptor extends FixAcceptor {
           this.logger.info('no transport created on tls with no authorized connection')
         }
       })
-    } catch (e) {
-      this.logger.error(e)
+    } catch (e: any) {
+      this.logger.error(e as Error)
       throw e
     }
   }
@@ -71,7 +71,7 @@ export class TcpAcceptor extends FixAcceptor {
         this.onSocket(id, socket, config)
       })
     } catch (e) {
-      this.logger.error(e)
+      this.logger.error(e as Error)
       throw e
     }
   }

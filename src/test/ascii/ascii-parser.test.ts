@@ -5,6 +5,7 @@ import { MsgType } from '../../index'
 import { Setup } from '../env/setup'
 import { SegmentType } from '../../buffer/segment/segment-type'
 import { ParsingResult } from '../env/parsing-result'
+import { IStandardHeader } from '../../types/FIX4.4/repo'
 
 const logon: string = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|57=sub-a|52=20180610-10:39:01.621|98=2|108=62441|95=20|96=VgfoSqo56NqSVI1fLdlI|141=Y|789=4886|383=20|384=1|372=ipsum|385=R|464=N|553=sit|554=consectetur|10=49|'
 const expectedTagPos = [
@@ -36,6 +37,15 @@ beforeAll(async () => {
   setup = new Setup('session/test-initiator-tls.json', 'session/test-acceptor-tls.json')
   await setup.init()
 }, 45000)
+
+test('override a header field', async () => {
+  const senderCompId = 'test-override-comp1'
+  const override: Partial<IStandardHeader> = {
+    SenderCompID: senderCompId
+  }
+  const header: IStandardHeader = setup.client.sessionMsgFactory.header(-1, 'AE', 1, new Date(), override) as IStandardHeader
+  expect(header.SenderCompID).toEqual(senderCompId)
+})
 
 test('begin string incorrectly placed', async () => {
   await expect(setup.client.parseText('8=FIX4.4|8=FIX4.4|')).rejects.toEqual(

@@ -9,6 +9,7 @@ import * as events from 'events'
 export abstract class MsgTransmitter extends events.EventEmitter {
   public readonly encodeStream: Transform
   public encoder: MsgEncoder
+  protected transportId: number
 
   protected constructor (public readonly buffer: ElasticBuffer,
     public readonly definitions: FixDefinitions,
@@ -21,6 +22,10 @@ export abstract class MsgTransmitter extends events.EventEmitter {
     this.encodeStream.on('done', () => {
       this.emit('done')
     })
+  }
+
+  public init (transportId: number): void {
+    this.transportId = transportId
   }
 
   // messages at front, byte stream at back

@@ -5,7 +5,7 @@ import { TradeCaptureServer } from './trade-capture-server'
 
 export class AppLauncher extends SessionLauncher {
   public constructor (client: string = 'data/session/test-initiator.json',
-    server: string = 'data/session/test-acceptor.json') {
+    server: string = 'data/session/test-dynamic-acceptor.json') {
     super(
       client,
       server)

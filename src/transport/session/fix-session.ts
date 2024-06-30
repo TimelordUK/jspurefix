@@ -123,6 +123,7 @@ export abstract class FixSession extends events.EventEmitter {
       this.reset()
     }
     this.transport = transport
+    this.onTransport(transport)
     this.subscribe()
     return await this.waitPromise()
   }
@@ -207,7 +208,7 @@ export abstract class FixSession extends events.EventEmitter {
     const rx = transport?.receiver
     const tx = transport?.transmitter
 
-    rx?.removeListener('msg', this.rxOnMsg)
+    rx?.removeListener('msg', (msgType: string, view: MsgView) => { this.rxOnMsg(msgType, view) })
     rx?.removeListener('error', this.rxOnError)
     rx?.removeListener('done', this.rxOnDone)
     rx?.removeListener('end', this.rxOnEnd)
@@ -405,6 +406,8 @@ export abstract class FixSession extends events.EventEmitter {
     this.onStopped(error ?? undefined)
     this.transport = null
   }
+
+  protected abstract onTransport (transport: MsgTransport): void
 
   /**
    * dispatches a message into the subclass that inherits from FixSession. The view contains

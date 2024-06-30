@@ -1,0 +1,21 @@
+{
+  "application": {
+    "type": "acceptor",
+    "name": "test_server",
+    "tcp": {
+      "host" : "localhost",
+      "port": 2344
+    },
+    "protocol": "ascii",
+    "dictionary": "repo44"
+  },
+  "Username": "js-server",
+  "Password": "pwd-server",
+  "EncryptMethod": 0,
+  "ResetSeqNumFlag": true,
+  "HeartBtInt": 30,
+  "SenderCompId": "accept-comp",
+  "TargetCompID": "*",
+  "TargetSubID": "fix",
+  "BeginString": "FIX.4.4"
+}

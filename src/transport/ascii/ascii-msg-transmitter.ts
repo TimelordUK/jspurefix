@@ -56,7 +56,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
 
     const msgSeqNum = this.msgSeqNum
     const sendingTime = this.time || new Date()
-    const hdr: ILooseObject | null = factory?.header(msgType, msgSeqNum, sendingTime, headerProps) ?? null
+    const hdr: ILooseObject | null = factory?.header(this.transportId, msgType, msgSeqNum, sendingTime, headerProps) ?? null
     // Only increment sequence number if this is not a duplicate message.
     if (!hdr) return null
     if (!headerProps.PossDupFlag) {

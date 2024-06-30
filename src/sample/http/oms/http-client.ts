@@ -5,6 +5,7 @@ import { OmsFactory } from './oms-factory'
 import { IExecutionReport, Side } from '../../../types/FIXML50SP2'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../../runtime'
+import { MsgTransport } from '../../../transport/factory'
 
 @injectable()
 export class HttpClient extends FixmlSession {
@@ -17,6 +18,9 @@ export class HttpClient extends FixmlSession {
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}`)
+  }
+
+  protected onTransport (transport: MsgTransport): void {
   }
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {

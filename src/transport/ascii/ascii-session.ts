@@ -7,6 +7,7 @@ import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'
 import { IMsgApplication } from '../msg-application'
 import { SegmentType } from '../../buffer/segment/segment-type'
+import { MsgTransport } from '../factory'
 
 export abstract class AsciiSession extends FixSession {
   public heartbeat: boolean = true
@@ -21,6 +22,11 @@ export abstract class AsciiSession extends FixSession {
     this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
   }
 
+  public onTransport (transport: MsgTransport): void {
+    this.sessionLogger.info(`onTransport installing transport id ${transport.id} onto resender`)
+    this.resender.init(transport.id)
+  }
+
   private checkSeqNo (msgType: string, view: MsgView): boolean {
     switch (msgType) {
       case MsgType.SequenceReset: {
@@ -30,7 +36,7 @@ export abstract class AsciiSession extends FixSession {
       default: {
         const state = this.sessionState
         const lastSeq: number = state.lastPeerMsgSeqNum
-        const seqNo: number = view.getTyped(MsgTag.MsgSeqNum) as number
+        const seqNo: number = view.getTyped(MsgTag.MsgSeqNum)
         let ret: boolean = false
         const seqDelta: number = seqNo - lastSeq
         if (seqDelta <= 0) {
@@ -89,7 +95,7 @@ export abstract class AsciiSession extends FixSession {
 
   private checkIntegrity (msgType: string, view: MsgView): boolean {
     const state = this.sessionState
-    const seqNum = view.getTyped(MsgTag.MsgSeqNum) as number
+    const seqNum: number = view.getTyped(MsgTag.MsgSeqNum)
 
     const received: number = parseInt(view.getString(MsgTag.CheckSum) ?? '', 10)
     const computed = view.checksum()
@@ -175,8 +181,8 @@ export abstract class AsciiSession extends FixSession {
         }
       })
       this.setState(SessionState.ActiveNormalSession)
-    }).catch((e: Error) => {
-      this.sessionLogger.error(e)
+    }).catch(e => {
+      this.sessionLogger.error(e as Error)
     })
   }
 
@@ -229,7 +235,7 @@ export abstract class AsciiSession extends FixSession {
       }
 
       case MsgType.SequenceReset: {
-        const newSeqNo: number = view.getTyped(MsgTag.NewSeqNo) as number
+        const newSeqNo: number = view.getTyped(MsgTag.NewSeqNo)
         logger.info(`peer sends '${msgType}' sequence reset. newSeqNo = ${newSeqNo}`)
         // expect  newSeqNo to be the next message's sequence number.
         this.sessionState.lastPeerMsgSeqNum = newSeqNo - 1
@@ -293,8 +299,8 @@ export abstract class AsciiSession extends FixSession {
     const [heartBtInt, peerCompId, userName, password] = view.getTypedTags([MsgTag.HeartBtInt, MsgTag.SenderCompID, MsgTag.Username, MsgTag.Password])
     logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, userName = ${userName}`)
     const state = this.sessionState
-    state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt) as number
-    state.peerCompId = view.getTyped(MsgTag.SenderCompID) as string
+    state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt)
+    state.peerCompId = view.getTyped(MsgTag.SenderCompID)
     const res = this.onLogon(view, userName as string, password as string)
     // currently not using this.
     logger.info(`peerLogon onLogon returns ${res}`)

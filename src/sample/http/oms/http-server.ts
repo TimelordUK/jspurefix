@@ -5,9 +5,11 @@ import { INewOrderSingle, IExecutionReport } from '../../../types/FIXML50SP2'
 import { OmsFactory } from './oms-factory'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../../runtime'
+import { MsgTransport } from '../../../transport/factory'
 
 @injectable()
 export class HttpServer extends FixmlSession {
+
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
   private readonly factory: OmsFactory = new OmsFactory('server')
@@ -17,6 +19,9 @@ export class HttpServer extends FixmlSession {
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}`)
+  }
+
+  protected onTransport (transport: MsgTransport): void {
   }
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {

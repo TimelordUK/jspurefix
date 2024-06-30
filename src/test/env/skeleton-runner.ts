@@ -24,11 +24,11 @@ export class SkeletonRunner {
       this.watchdog()
     })
 
-    this.clientSkeleton.on('error', e => {
+    this.clientSkeleton.on('error', (e: Error) => {
       experiment.client.errors.push(e)
     })
 
-    this.serverSkeleton.on('error', e => {
+    this.serverSkeleton.on('error', (e: Error) => {
       experiment.server.errors.push(e)
     })
   }
