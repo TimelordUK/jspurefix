@@ -20,7 +20,7 @@ import { SetReduce } from '../set-reduce'
 import { ContainedSetType } from '../contained-set-type'
 import { TagType } from '../../buffer/tag/tag-type'
 
-const newLine = require('os').EOL
+const newLine: string = require('os').EOL
 const justifiedWidth: number = 50
 
 export class MsgCompiler {
@@ -137,7 +137,7 @@ export class MsgCompiler {
     const snippets = this.snippets
     const settings = this.settings
     const buffer = this.buffer
-    const len = buffer.writeString(snippets.simple(simple.name, Tags.toJSType(simple), simple.required, 1))
+    const len = buffer.writeString(snippets.simple(simple.name, Tags.toJSType(simple.definition.tagType), simple.required, 1))
     if (settings.tags) {
       buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
     }
@@ -206,7 +206,7 @@ export class MsgCompiler {
     const snippets = this.snippets
     const buffer = this.buffer
     compilerType.set.localAttribute.forEach((simple: ContainedSimpleField) => {
-      const len = buffer.writeString(snippets.simple(simple.definition.name, Tags.toJSType(simple), simple.required, 1))
+      const len = buffer.writeString(snippets.simple(simple.definition.name, Tags.toJSType(simple.definition.tagType), simple.required, 1))
       if (settings.tags) {
         buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
       }

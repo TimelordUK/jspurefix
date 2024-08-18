@@ -26,7 +26,7 @@ export class AsciiEncoder extends MsgEncoder {
     public readonly delimiter: number = AsciiChars.Soh,
     public readonly logDelimiter: number = AsciiChars.Pipe) {
     super(definitions)
-    this.tags = new Tags(definitions)
+    this.tags = new Tags()
   }
 
   public trim (): Buffer {

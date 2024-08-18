@@ -1,4 +1,4 @@
-import { SegmentDescription } from '../segment/segment-description'
+   import { SegmentDescription } from '../segment/segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tag/tags'
 import {

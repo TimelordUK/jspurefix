@@ -1,4 +1,4 @@
-import { ComponentFieldDefinition } from '../definition'
+import { ComponentFieldDefinition } from '../definition/component-field-definition'
 import { ContainedField } from './contained-field'
 import { ContainedFieldType } from './contained-field-type'
 

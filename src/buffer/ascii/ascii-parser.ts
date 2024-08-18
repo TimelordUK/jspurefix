@@ -10,7 +10,7 @@ import { Readable } from 'stream'
 import { ElasticBuffer } from '../elastic-buffer'
 import { SegmentDescription } from '../segment/segment-description'
 import { ParseState } from './parse-state'
-import { IJsFixConfig } from '../../config'
+import { IJsFixConfig } from '../../config/js-fix-config'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
@@ -35,11 +35,10 @@ export class AsciiParser extends MsgParser {
 
     this.delimiter = config.delimiter ?? AsciiChars.Soh
     this.writeDelimiter = config.logDelimiter ?? AsciiChars.Pipe
-    const definitions = config.definitions
     this.id = AsciiParser.nextId++
     this.segmentParser = config.sessionContainer.resolve<AsciiSegmentParser>(AsciiSegmentParser)
     this.state = config.sessionContainer.resolve<AsciiParserState>(AsciiParserState)
-    this.state.locations = new Tags(definitions, this.receivingBuffer.size / 10)
+    this.state.locations = new Tags(this.receivingBuffer.size / 10)
     this.state.beginMessage()
     if (readStream !== null) {
       this.subscribe()
