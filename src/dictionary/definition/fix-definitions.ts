@@ -8,6 +8,7 @@ import { CategorySimpleSet } from './category-simple-set'
 import { ContainedFieldSet } from '../contained'
 import { FixDefinitionSource } from '../fix-definition-source'
 import { FixVersionParser } from './fix-version-parser'
+import { IContainedSet } from '../contained/contained-set'
 
 export class FixDefinitions {
   /**
@@ -66,7 +67,7 @@ export class FixDefinitions {
    * 'SecurityList.SecListGrp.NoRelatedSym.SecurityTradingRules'
    * @param path dot denoted path too field set nested from root
    */
-  public getSet (path: string): ContainedFieldSet | null {
+  public getSet (path: string): IContainedSet | null {
     const idx = path.indexOf('.')
     let name: string = path
     if (idx > 0) {
