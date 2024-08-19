@@ -1,4 +1,4 @@
-   import { SegmentDescription } from '../segment/segment-description'
+import { SegmentDescription } from '../segment/segment-description'
 import { Structure } from '../structure'
 import { Tags } from '../tag/tags'
 import {
@@ -58,7 +58,7 @@ export class AsciiSegmentParser {
       }
     }
 
-    function summarise (): any {
+    function summarise (): AsciiSegmentParserSummary {
       return <AsciiSegmentParserSummary>{
         msgType,
         tags: tags.clone().tagPos,
