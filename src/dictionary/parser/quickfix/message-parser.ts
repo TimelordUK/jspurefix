@@ -15,7 +15,7 @@ export class MessageParser extends NodeParser {
     switch (node.name) {
       case 'message': {
         const att: ILooseObject = node.attributes
-        const msg: MessageDefinition = new MessageDefinition(att.name, att.name, att.msgtype, att.msgcat, null)
+        const msg: MessageDefinition = new MessageDefinition(att.name as string, att.name as string, att.msgtype as string, att.msgcat as string, null)
         const context: ParseContext = new ParseContext(msg.name, true, msg)
         this.header(msg, context)
         break
@@ -28,7 +28,7 @@ export class MessageParser extends NodeParser {
 
       case 'component': {
         if (node.isSelfClosing) {
-          this.addComponentField(node.attributes.name, node)
+          this.addComponentField(node.attributes.name as string, node)
         }
         break
       }

@@ -96,11 +96,11 @@ export class ContainedSetBuilder {
   }
 
   private addGroupFieldDef (groupField: ContainedGroupField): void {
-    if (this.set.groups.containsKey(groupField.name)) {
+    if (this.set.groups.has(groupField.name)) {
       return
     }
     const definition = groupField.definition
-    this.set.groups.add(groupField.name, definition)
+    this.set.groups.set(groupField.name, definition)
     const nof = definition.noOfField
     if (nof) {
       const tag = nof.tag
@@ -113,11 +113,11 @@ export class ContainedSetBuilder {
 
   private addComponentFieldDef (componentField: ContainedComponentField): void {
     const components = this.set.components
-    if (components.containsKey(componentField.name)) {
+    if (components.has(componentField.name)) {
       return
     }
     const definition = componentField.definition
-    components.add(componentField.name, definition)
+    components.set(componentField.name, definition)
     this.addAllFields(definition)
     this.mapAllBelow(definition, componentField)
   }
@@ -131,7 +131,7 @@ export class ContainedSetBuilder {
   }
 
   private addSimpleFieldDef (parent: IContainedSet, field: ContainedSimpleField): void {
-    if (this.set.simple.containsKey(field.name)) {
+    if (this.set.simple.has(field.name)) {
       return
     }
     if (!this.set.firstSimple) {
@@ -150,7 +150,7 @@ export class ContainedSetBuilder {
         break
     }
     const tag = field.definition.tag
-    this.set.simple.add(field.name, field)
+    this.set.simple.set(field.name, field)
     this.set.containedTag[tag] = true
     this.set.flattenedTag.push(tag)
     this.set.tagToSimple[tag] = field

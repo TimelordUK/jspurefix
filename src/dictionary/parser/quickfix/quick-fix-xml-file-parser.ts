@@ -158,7 +158,7 @@ export class QuickFixXmlFileParser extends FixParser {
       const message: (MessageDefinition | null) = messages.get(k)
       const builder = new ContainedSetBuilder(message as IContainedSet)
       const trailer = this.state.definitions.component.get(trailerName)
-      if (trailer && !message?.components.containsKey(trailerName)) {
+      if (trailer && !message?.components.has(trailerName)) {
         const contained = new ContainedComponentField(trailer, message?.fields?.length ?? 0, true)
         this.state.newAdds++
         builder?.add(contained)

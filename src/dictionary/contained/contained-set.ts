@@ -5,9 +5,9 @@ import { INumericKeyed } from '../../collections/collection'
 import { ContainedSetType } from '../contained-set-type'
 
 export interface IContainedSet {
-  readonly groups: Dictionary<IContainedSet>
-  readonly components: Dictionary<IContainedSet>
-  readonly simple: Dictionary<ContainedSimpleField>
+  readonly groups: Map<string, IContainedSet>
+  readonly components: Map<string, IContainedSet>
+  readonly simple: Map<string, ContainedSimpleField>
   readonly fields: ContainedField[]
   readonly containedTag: INumericKeyed<boolean>
   readonly flattenedTag: number[]
@@ -19,14 +19,14 @@ export interface IContainedSet {
   readonly localNameToField: Dictionary<ContainedField>
   readonly nameToLocalAttribute: Dictionary<ContainedSimpleField>
   readonly localAttribute: ContainedSimpleField[]
-  firstSimple: (ContainedSimpleField | null)
-  containsRaw: boolean
   readonly type: ContainedSetType
   readonly name: string
   readonly category: string | null
   readonly abbreviation: string | null
   readonly description: string | null
 
+  firstSimple: (ContainedSimpleField | null)
+  containsRaw: boolean
   /**
    * not for generral usage, this partially resets the set such it can be used on a second
    * pass of the xml parser

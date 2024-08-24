@@ -10,15 +10,15 @@ export abstract class ContainedFieldSet implements IContainedSet {
   /**
    * index of name to any group that may be present within the field list
    */
-  public readonly groups: Dictionary<IContainedSet> = new Dictionary<IContainedSet>()
+  public readonly groups: Map<string, IContainedSet> = new Map<string, IContainedSet>()
   /**
    * index of name to any component that may be present within the field list
    */
-  public readonly components: Dictionary<IContainedSet> = new Dictionary<IContainedSet>()
+  public readonly components: Map<string, IContainedSet> = new Map<string, IContainedSet>()
   /**
    * index of name to any simple field that may be present within the field list
    */
-  public readonly simple: Dictionary<ContainedSimpleField> = new Dictionary<ContainedSimpleField>()
+  public readonly simple: Map<string, ContainedSimpleField> = new Map<string, ContainedSimpleField>()
   /**
    *  sequence of fields representing this type - can be simple, group or component
    */
@@ -123,7 +123,7 @@ export abstract class ContainedFieldSet implements IContainedSet {
   public getFieldName (tag: number): string {
     const s = this.tagToSimple[tag]
     if (s == null) {
-      const gf: ContainedField = this.tagToField[tag] as ContainedField
+      const gf: ContainedField = this.tagToField[tag]
       if (gf !== null) {
         return `${gf.name}`
       }
