@@ -3,7 +3,7 @@ import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dic
 import {
   ContainedComponentField,
   ContainedField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedFieldType,
   ContainedGroupField,
   ContainedSimpleField
@@ -106,7 +106,7 @@ export class EncodeProxy {
     }
   }
 
-  private static handler (set: ContainedFieldSet): Object {
+  private static handler (set: IContainedSet): Object {
     return {
       set (target: ILooseObject, prop: string, val: any): boolean {
         const field: ContainedField | null = set.localNameToField.get(prop)

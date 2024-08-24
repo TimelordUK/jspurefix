@@ -180,7 +180,7 @@ export class FiXmlParser extends MsgParser {
   private getView (): MsgView {
     const structure: Structure = new Structure(this.locations, this.segments)
     const last = structure.segments[structure.segments.length - 1]
-    return new FixmlView(last, this.values, structure)
+    return new FixmlView(this.definitions, last, this.values, structure)
   }
 
   private pop (name: string): SegmentDescription | null {

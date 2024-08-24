@@ -5,6 +5,7 @@ import { ContainedSimpleField } from './contained-simple-field'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
 import { ContainedSetType } from '../contained-set-type'
 import { IContainedSet } from './contained-set'
+import { ContainedGroupField } from './contained-group-field'
 
 export abstract class ContainedFieldSet implements IContainedSet {
   /**
@@ -123,7 +124,7 @@ export abstract class ContainedFieldSet implements IContainedSet {
   public getFieldName (tag: number): string {
     const s = this.tagToSimple[tag]
     if (s == null) {
-      const gf: ContainedField = this.tagToField[tag] as ContainedField
+      const gf: ContainedGroupField = this.tagToField[tag] as ContainedGroupField
       if (gf !== null) {
         return `${gf.definition.name}`
       }

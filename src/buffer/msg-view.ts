@@ -13,7 +13,7 @@ import {
 import { SetReduce } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
-import { GroupFieldDefinition, SimpleFieldDefinition } from '../dictionary/definition'
+import { FixDefinitions, GroupFieldDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import { ITypeDispatcher } from '../dictionary/type-dispatcher'
 import { ContainedSetType } from '../dictionary/contained-set-type'
 
@@ -22,7 +22,7 @@ export abstract class MsgView {
   protected sortedTagPosBackwards: TagPos[]
   private readonly reducer: SetReduce<ILooseObject> = new SetReduce<ILooseObject>()
 
-  protected constructor (public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
+  protected constructor (public readonly definitions: FixDefinitions, public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
   }
 
   protected static asVerbose = (field: SimpleFieldDefinition, val: string, i: number, count: number, tp: TagPos): string => {
@@ -190,7 +190,7 @@ export abstract class MsgView {
     if (tag == null) {
       return null
     }
-    const field: SimpleFieldDefinition | null = this.structure?.tags.definitions.tagToSimple[tag] ?? null
+    const field: SimpleFieldDefinition | null = this.definitions.tagToSimple[tag] ?? null
     if (field == null) {
       return null
     }
@@ -304,7 +304,7 @@ export abstract class MsgView {
     if (typeof (tagOrName) === 'string') {
       if (this.segment.set == null) return 0
       const cf = this.segment.set.simple.get(tagOrName)
-      const f: SimpleFieldDefinition | null = cf ? cf.definition : this.structure?.tags.definitions.simple.get(tagOrName) ?? null
+      const f: SimpleFieldDefinition | null = cf ? cf.definition : this.definitions.simple.get(tagOrName) ?? null
       if (f == null) {
         return -1
       }
@@ -483,7 +483,7 @@ export abstract class MsgView {
     if (structure == null) return ''
     const tags: Tags = structure.tags
     const count: number = segment.endPosition - segment.startPosition
-    const simple: Dictionary<SimpleFieldDefinition> = tags.definitions.simple
+    const simple: Dictionary<SimpleFieldDefinition> = this.definitions.simple
 
     for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
       const tagPos: TagPos = tags.tagPos[i]

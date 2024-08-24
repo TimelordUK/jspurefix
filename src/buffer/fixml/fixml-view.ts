@@ -1,5 +1,5 @@
 import { MsgView } from '../msg-view'
-import { SimpleFieldDefinition } from '../../dictionary/definition'
+import { FixDefinitions, SimpleFieldDefinition } from '../../dictionary/definition'
 import { Structure } from '../structure'
 import { SegmentDescription } from '../segment/segment-description'
 import { AsciiChars } from '../ascii/'
@@ -7,10 +7,10 @@ import * as moment from 'moment'
 import { TagType } from '../tag/tag-type'
 
 export class FixmlView extends MsgView {
-  constructor (public readonly segment: SegmentDescription,
+  constructor (public definitions: FixDefinitions, public readonly segment: SegmentDescription,
     public readonly values: string[],
     public readonly structure: Structure) {
-    super(segment, structure)
+    super(definitions, segment, structure)
   }
 
   private static getTimestamp (s: string, useUtc: boolean): Date {
@@ -37,7 +37,7 @@ export class FixmlView extends MsgView {
 
   // if the view is to be kept beyond the event on which it arrives, must be cloned
   public clone (): MsgView {
-    return new FixmlView(this.segment, this.values, new Structure(this.structure.tags.clone(), this.structure.segments))
+    return new FixmlView(this.definitions, this.segment, this.values, new Structure(this.structure.tags.clone(), this.structure.segments))
   }
 
   public checksum (): number {
@@ -45,7 +45,7 @@ export class FixmlView extends MsgView {
   }
 
   protected create (singleton: SegmentDescription): FixmlView {
-    return new FixmlView(singleton,
+    return new FixmlView(this.definitions, singleton,
       this.values,
       this.structure)
   }

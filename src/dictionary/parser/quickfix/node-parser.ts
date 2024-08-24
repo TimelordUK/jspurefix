@@ -1,4 +1,10 @@
-import { ContainedComponentField, ContainedField, ContainedGroupField, ContainedSimpleField } from '../../contained'
+import {
+  ContainedComponentField,
+  ContainedField,
+  ContainedGroupField,
+  ContainedSetBuilder,
+  ContainedSimpleField
+} from '../../contained'
 import { ComponentFieldDefinition, GroupFieldDefinition, SimpleFieldDefinition } from '../../definition'
 import { ParseContext } from './parse-context'
 import { ISaxNode } from '../../sax-node'
@@ -17,7 +23,8 @@ export abstract class NodeParser {
   protected addto (context: ParseContext, containedField: ContainedField): void {
     if (context.set != null) {
       this.progress.newAdds++
-      context.set.add(containedField)
+      const builder = new ContainedSetBuilder(context.set)
+      builder.add(containedField)
     } else {
       this.progress.cacheMisses++
     }

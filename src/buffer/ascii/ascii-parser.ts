@@ -181,6 +181,7 @@ export class AsciiParser extends MsgParser {
     const locations = state.locations
     const source = this.receivingBuffer
     const delimiter = this.delimiter
+    const definitions = this.config.definitions
     const replace = this.writeDelimiter
     const msgType = state.msgType ?? null
     if (!msgType) return null
@@ -189,7 +190,7 @@ export class AsciiParser extends MsgParser {
         const structure: Structure | null = this.segmentParser.parse(msgType, locations,
           locations.nextTagPos - 1)
         if (!structure) return null
-        return new AsciiView(structure.msg(),
+        return new AsciiView(definitions, structure.msg(),
           source,
           structure,
           ptr,
@@ -207,6 +208,6 @@ export class AsciiParser extends MsgParser {
     const structure = new Structure(locations, [])
     const segment = new SegmentDescription('unknown', locations.tagPos[0].tag, null, 0, 1, SegmentType.Unknown)
     segment.endPosition = locations.nextTagPos - 1
-    return new AsciiView(segment, source, structure, ptr, delimiter, replace)
+    return new AsciiView(this.config.definitions, segment, source, structure, ptr, delimiter, replace)
   }
 }
