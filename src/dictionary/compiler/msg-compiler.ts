@@ -4,7 +4,7 @@ import { ICompilerSettings } from './compiler-settings'
 import { FixDefinitions } from '../definition'
 import {
   ContainedComponentField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedGroupField,
   ContainedSimpleField,
   FieldsDispatch
@@ -155,7 +155,7 @@ export class MsgCompiler {
     buffer.writeString(newLine)
   }
 
-  private tagSummary (definition: ContainedFieldSet, max: number = 3): string {
+  private tagSummary (definition: IContainedSet, max: number = 3): string {
     function tagTxt (tag: number): string {
       const name = definition.getFieldName(tag)
       return `${name}.${tag}`
@@ -174,7 +174,7 @@ export class MsgCompiler {
     return `${front} .. ${tagTxt(flattened[flattened.length - 1])}`
   }
 
-  private setComment (set: ContainedFieldSet, position: number, len: number): void {
+  private setComment (set: IContainedSet, position: number, len: number): void {
     if (this.settings.tags) {
       const tagTxt = this.tagSummary(set)
       const buffer = this.buffer

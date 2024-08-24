@@ -1,6 +1,6 @@
 import { ILooseObject } from '../../collections/collection'
 import {
-  ContainedFieldSet, ContainedField, ContainedGroupField,
+  IContainedSet, ContainedField, ContainedGroupField,
   ContainedComponentField, ContainedSimpleField, FieldsDispatch
 } from '../../dictionary/contained'
 import { AsciiChars } from '../ascii'
@@ -66,7 +66,7 @@ export class FixmlEncoder extends MsgEncoder {
     return ''
   }
 
-  public encodeSet (o: ILooseObject, set: ContainedFieldSet): void {
+  public encodeSet (o: ILooseObject, set: IContainedSet): void {
     const batch: ILooseObject[] = o.Batch
     const toWrite: ILooseObject[] = batch || [o]
     const depth = batch ? 1 : 0
@@ -91,11 +91,11 @@ export class FixmlEncoder extends MsgEncoder {
     buffer.writeString(this.endDoc)
   }
 
-  private batchStart (o: ILooseObject, set: ContainedFieldSet, depth: number): void {
+  private batchStart (o: ILooseObject, set: IContainedSet, depth: number): void {
     const buffer = this.buffer
     const indent: string = '\t'
     const beginBatch = this.beginBatch
-    const hdr = o.StandardHeader
+    const hdr: ILooseObject = o.StandardHeader
     const eol = this.eol
     buffer.writeString(`${indent}${beginBatch}`)
     if (hdr) {
@@ -105,7 +105,7 @@ export class FixmlEncoder extends MsgEncoder {
     }
   }
 
-  private toXml (o: ILooseObject, name: string, set: ContainedFieldSet, depth: number): void {
+  private toXml (o: ILooseObject, name: string, set: IContainedSet, depth: number): void {
     const buffer = this.buffer
     const selfClose: string = '/>'
     const close: string = '>'
@@ -128,7 +128,7 @@ export class FixmlEncoder extends MsgEncoder {
     }
   }
 
-  private getPopulatedFields (set: ContainedFieldSet, o: ILooseObject): ContainedField[] {
+  private getPopulatedFields (set: IContainedSet, o: ILooseObject): ContainedField[] {
     const keys: string[] = Object.keys(o)
     const fields: ContainedField[] = keys.reduce((a: ContainedField[], current: string) => {
       const field: ContainedField | null = set.localNameToField.get(current)
@@ -153,7 +153,7 @@ export class FixmlEncoder extends MsgEncoder {
     buffer.writeChar(AsciiChars.Dq)
   }
 
-  private attributes (o: ILooseObject, set: ContainedFieldSet, depth: number, attributePerLine: boolean): void {
+  private attributes (o: ILooseObject, set: IContainedSet, depth: number, attributePerLine: boolean): void {
     const newLine = this.eol
     const indent: string = '\t'.repeat(depth + 1)
     const attributes = set.localAttribute

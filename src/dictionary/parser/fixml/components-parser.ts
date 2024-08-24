@@ -3,7 +3,8 @@ import { Dictionary } from '../../../collections'
 import { XsdParser } from './xsd-parser'
 import {
   ContainedGroupField,
-  ContainedFieldSet,
+  IContainedSet,
+  ContainedSetBuilder,
   ContainedComponentField,
   ContainedSimpleField,
   ContainedField
@@ -242,11 +243,12 @@ export class ComponentsParser extends XsdParser {
     }
   }
 
-  private addElement (set: ContainedFieldSet, element: IElement): void {
+  private addElement (set: IContainedSet, element: IElement): void {
     const minOccurs: number = parseInt(element.minOccurs, 10)
     const isGroup: boolean = element.maxOccurs === 'unbounded'
     const isComponent: boolean = element.maxOccurs === '1' || !isGroup
     const key = element.type || element.ref || element.name
+    const builder = new ContainedSetBuilder(set)
     const containedType: IComplexType | null = this.complexTypes.get(key)
     if (containedType) {
       if (isComponent) {
@@ -256,7 +258,7 @@ export class ComponentsParser extends XsdParser {
             set.fields.length,
             minOccurs > 0,
             element.name)
-        set.add(containedField)
+        builder.add(containedField)
       } else if (isGroup) {
         const containedDefinition: GroupFieldDefinition = this.getGroup(containedType)
         const containedField: ContainedGroupField =
@@ -264,7 +266,7 @@ export class ComponentsParser extends XsdParser {
             set.fields.length,
             minOccurs > 0,
             element.name)
-        set.add(containedField)
+        builder.add(containedField)
       }
     } else {
       if (key !== 'Message') {
@@ -273,7 +275,7 @@ export class ComponentsParser extends XsdParser {
     }
   }
 
-  private addElements (set: ContainedFieldSet, elements: IElement[]): void {
+  private addElements (set: IContainedSet, elements: IElement[]): void {
     if (elements) {
       elements.forEach((element: IElement) => {
         switch (element.type) {
@@ -295,7 +297,7 @@ export class ComponentsParser extends XsdParser {
     }
   }
 
-  private addSimpleAttribute (set: ContainedFieldSet, attribute: IAttribute): void {
+  private addSimpleAttribute (set: IContainedSet, attribute: IAttribute): void {
     let sf = this.definitions.getSimple(attribute.type)
     if (!sf) {
       sf = this.definitions.getSimple(attribute.name, set.category)
@@ -306,13 +308,14 @@ export class ComponentsParser extends XsdParser {
         attribute.use !== 'optional',
         true,
         attribute.name)
-      set.add(contained)
+      const builder = new ContainedSetBuilder(set)
+      builder.add(contained)
     } else if (set.name !== 'FixmlAttributes') {
       throw new Error(`unable to resolve simple attribute ${attribute.name}`)
     }
   }
 
-  private addAttributes (set: ContainedFieldSet, attributes: IAttribute[]): void {
+  private addAttributes (set: IContainedSet, attributes: IAttribute[]): void {
     attributes.forEach((attribute: IAttribute) => {
       switch (attribute.type) {
         case 'xs:attributeGroup': {
@@ -375,9 +378,10 @@ export class ComponentsParser extends XsdParser {
       type.appInfo.MsgID,
       type.appInfo.Category,
       type.annotation.documentation)
+    const builder = new ContainedSetBuilder(message)
     const abstractMessage: ComponentFieldDefinition | null = definitions.component.get('Message')
     abstractMessage?.fields.forEach((f: ContainedField) => {
-      message.add(f)
+      builder.add(f)
     })
     this.populateSet(type, message)
     messages.addUpdate(message.name, message)
@@ -401,7 +405,7 @@ export class ComponentsParser extends XsdParser {
     return null
   }
 
-  private populateSet (type: IComplexType, set: ContainedFieldSet): void {
+  private populateSet (type: IComplexType, set: IContainedSet): void {
     const group: IGroup | null = this.groups.get(type.group)
     const elements: IElement[] = group ? group.elements : type.element
     const attributeGroups = this.attributeGroups

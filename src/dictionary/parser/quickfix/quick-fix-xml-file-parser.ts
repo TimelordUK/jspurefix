@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import { SAXParser } from 'sax'
 import { IDictDoneCb, SAXStream } from '../../dict-primitive'
-import { FixDefinitions } from '../../definition'
+import { FixDefinitions, MessageDefinition } from '../../definition'
 import { FieldDefinitionParser } from './field-definition-parser'
 import { FieldSetParser } from './field-set-parser'
 import { MessageParser } from './message-parser'
@@ -9,7 +9,7 @@ import { NodeParser } from './node-parser'
 import { FixParser } from '../../fix-parser'
 import { GetJsFixLogger } from '../../../config'
 import { promisify } from 'util'
-import { ContainedComponentField } from '../../contained'
+import { ContainedComponentField, ContainedSetBuilder, IContainedSet } from '../../contained'
 import { ISaxNode } from '../../sax-node'
 import { FixDefinitionSource } from '../../fix-definition-source'
 import { VersionUtil } from '../../version-util'
@@ -33,7 +33,7 @@ export class QuickFixXmlFileParser extends FixParser {
       done(e, null)
     })
 
-    saxStream.on('closetag', (name) => {
+    saxStream.on('closetag', (name: string) => {
       if (parser != null) {
         parser.close(saxParser.line, name)
       }
@@ -49,9 +49,7 @@ export class QuickFixXmlFileParser extends FixParser {
       }
     })
 
-    saxStream.on('opentag', (node) => {
-      const saxNode: ISaxNode = node as ISaxNode
-
+    saxStream.on('opentag', (saxNode: ISaxNode) => {
       switch (saxNode.name) {
         case 'fix': {
           switch (progress.parseState) {
@@ -135,7 +133,7 @@ export class QuickFixXmlFileParser extends FixParser {
           switch (progress.parseState) {
             case ParseState.Messages: {
               parser = new FieldSetParser(progress)
-              parser.open(saxParser.line, node)
+              parser.open(saxParser.line, saxNode)
               break
             }
           }
@@ -157,12 +155,13 @@ export class QuickFixXmlFileParser extends FixParser {
     const keys = messages.keys()
     const trailerName = 'StandardTrailer'
     keys.forEach(k => {
-      const message = messages.get(k)
+      const message: (MessageDefinition | null) = messages.get(k)
+      const builder = new ContainedSetBuilder(message as IContainedSet)
       const trailer = this.state.definitions.component.get(trailerName)
       if (trailer && !message?.components.containsKey(trailerName)) {
         const contained = new ContainedComponentField(trailer, message?.fields?.length ?? 0, true)
         this.state.newAdds++
-        message?.add(contained)
+        builder?.add(contained)
       }
     })
   }

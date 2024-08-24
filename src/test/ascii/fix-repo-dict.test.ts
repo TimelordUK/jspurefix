@@ -4,7 +4,7 @@ import * as path from 'path'
 import { FixDefinitions } from '../../dictionary/definition'
 import { ISessionDescription } from '../../transport'
 import { DefinitionFactory } from '../../util'
-import { ContainedFieldSet, ContainedFieldType } from '../../dictionary/contained'
+import { IContainedSet, ContainedFieldType } from '../../dictionary/contained'
 import { SetConstraintHelper } from '../env/set-constraint-helper'
 
 const root: string = path.join(__dirname, '../../../data')
@@ -323,7 +323,7 @@ test('message check Email rawfields', () => {
   isRaw(email, 'EncodedSubjectLen')
 })
 
-function isRaw (set: (ContainedFieldSet | null), name: string): void {
+function isRaw (set: (IContainedSet | null), name: string): void {
   const field = set?.simple.get(name)
   expect(field).toBeTruthy()
   expect(set?.containsRaw).toBeTruthy()

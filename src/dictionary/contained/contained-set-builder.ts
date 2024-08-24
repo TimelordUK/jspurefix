@@ -5,9 +5,10 @@ import { ContainedSimpleField } from './contained-simple-field'
 import { ContainedComponentField } from './contained-component-field'
 import { ContainedGroupField } from './contained-group-field'
 import { TagType } from '../../buffer/tag/tag-type'
+import { IContainedSet } from './contained-set'
 
 export class ContainedSetBuilder {
-  public constructor (public set: ContainedFieldSet) {
+  public constructor (public set: IContainedSet) {
   }
 
   /**
@@ -72,7 +73,7 @@ export class ContainedSetBuilder {
     }
   }
 
-  private addContained (parent: ContainedFieldSet, field: ContainedField): void {
+  private addContained (parent: IContainedSet, field: ContainedField): void {
     switch (field.type) {
       case ContainedFieldType.Group: {
         this.addGroupFieldDef(field as ContainedGroupField)
@@ -129,7 +130,7 @@ export class ContainedSetBuilder {
     }
   }
 
-  private addSimpleFieldDef (parent: ContainedFieldSet, field: ContainedSimpleField): void {
+  private addSimpleFieldDef (parent: IContainedSet, field: ContainedSimpleField): void {
     if (this.set.simple.containsKey(field.name)) {
       return
     }

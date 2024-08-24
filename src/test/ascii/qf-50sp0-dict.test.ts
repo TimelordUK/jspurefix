@@ -3,7 +3,7 @@ import 'reflect-metadata'
 import * as path from 'path'
 import { FixDefinitions } from '../../dictionary/definition'
 import { DefinitionFactory } from '../../util'
-import { ContainedFieldSet } from '../../dictionary/contained'
+import { IContainedSet } from '../../dictionary/contained'
 import { SetConstraintHelper } from '../env/set-constraint-helper'
 
 const root: string = path.join(__dirname, '../env/data')
@@ -44,33 +44,33 @@ beforeAll(async () => {
 
 class SecDefHelper {
   constructor (public definitions: FixDefinitions) {}
-  public getSecListGrp (): (ContainedFieldSet | null) {
+  public getSecListGrp (): (IContainedSet | null) {
     return this.definitions.getSet('SecurityList.SecListGrp')
   }
 
-  public getNumRelatedSym (): (ContainedFieldSet | null) {
+  public getNumRelatedSym (): (IContainedSet | null) {
     return this.getSecListGrp()?.getSet('NoRelatedSym') ?? null
   }
 
-  public getSecurityTradingRules (): (ContainedFieldSet | null) {
+  public getSecurityTradingRules (): (IContainedSet | null) {
     return this.getNumRelatedSym()?.getSet('SecurityTradingRules') ?? null
   }
 
-  public getBaseTradingRules (): (ContainedFieldSet | null) {
+  public getBaseTradingRules (): (IContainedSet | null) {
     return this.getSecurityTradingRules()?.getSet('BaseTradingRules') ?? null
   }
 
-  public getTickRules (): (ContainedFieldSet | null) {
+  public getTickRules (): (IContainedSet | null) {
     return this.getBaseTradingRules()?.getSet('TickRules') ?? null
   }
 
-  public getNoTickRules (): (ContainedFieldSet | null) {
+  public getNoTickRules (): (IContainedSet | null) {
     return this.getTickRules()?.getSet('NoTickRules') ?? null
   }
 }
 
 test('check message SecurityList', () => {
-  const securityList: (ContainedFieldSet | null) = definitions?.getSet('SecurityList') ?? null
+  const securityList: (IContainedSet | null) = definitions?.getSet('SecurityList') ?? null
   expect(securityList).toBeTruthy()
   let index = 0
   setHelper.isComponent(securityList, index++, 'StandardHeader', true)

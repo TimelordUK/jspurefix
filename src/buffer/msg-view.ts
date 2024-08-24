@@ -6,7 +6,7 @@ import { Tags } from './tag/tags'
 import {
   ContainedComponentField,
   ContainedField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedGroupField,
   ContainedSimpleField
 } from '../dictionary/contained'
@@ -382,7 +382,7 @@ export abstract class MsgView {
     return groupArray
   }
 
-  private asLoose (def: ContainedFieldSet): ILooseObject {
+  private asLoose (def: IContainedSet): ILooseObject {
     // eslint-disable-next-line
     return this.reducer.reduce(def, {
       group: (a: ILooseObject, field: ContainedGroupField) => { this.asLooseGroup(a, field) },
@@ -398,7 +398,7 @@ export abstract class MsgView {
     }, {}))
   }
 
-  private missingRequired (def: ContainedFieldSet, tags: number []): number[] {
+  private missingRequired (def: IContainedSet, tags: number []): number[] {
     const reducer = new SetReduce<number[]>()
     const dispatcher: ITypeDispatcher<number[]> = {
       group: (a: number[], field: ContainedGroupField) => { this.missingGroup(def, field, a) },
@@ -421,7 +421,7 @@ export abstract class MsgView {
     }
   }
 
-  private missingGroup (def: ContainedFieldSet, gf: ContainedGroupField, tags: number []): void {
+  private missingGroup (def: IContainedSet, gf: ContainedGroupField, tags: number []): void {
     const name = gf.definition.noOfField ? gf.definition.noOfField.name : def.name
     const groupView: MsgView | null = this.getView(name) ?? this.getView(gf.definition.name)
     if (groupView == null) {

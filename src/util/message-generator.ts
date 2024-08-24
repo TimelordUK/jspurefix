@@ -1,5 +1,5 @@
 import { ILooseObject } from '../collections/collection'
-import { ContainedComponentField, ContainedGroupField, ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
+import { ContainedComponentField, ContainedGroupField, IContainedSet, ContainedSimpleField } from '../dictionary/contained'
 import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import { SetReduce } from '../dictionary'
 import { TagType } from '../buffer/tag/tag-type'
@@ -63,7 +63,7 @@ export class MessageGenerator {
     return this.toObject(def, density, repeatGroups)
   }
 
-  private toObject (set: ContainedFieldSet, density: number, repeatGroups: boolean): ILooseObject {
+  private toObject (set: IContainedSet, density: number, repeatGroups: boolean): ILooseObject {
     const reducer = new SetReduce<ILooseObject>()
     return reducer.reduce(set, {
       simple: (a: ILooseObject, sf: ContainedSimpleField) => {

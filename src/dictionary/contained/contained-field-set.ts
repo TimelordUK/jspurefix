@@ -123,7 +123,7 @@ export abstract class ContainedFieldSet implements IContainedSet {
   public getFieldName (tag: number): string {
     const s = this.tagToSimple[tag]
     if (s == null) {
-      const gf = this.tagToField[tag] as ContainedField
+      const gf: ContainedField = this.tagToField[tag] as ContainedField
       if (gf !== null) {
         return `${gf.definition.name}`
       }

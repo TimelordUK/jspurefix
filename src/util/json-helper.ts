@@ -1,7 +1,7 @@
 import { ILooseObject } from '../collections/collection'
 import {
   ContainedSimpleField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedGroupField,
   ContainedComponentField,
   FieldsDispatch
@@ -89,7 +89,7 @@ export class JsonHelper {
     return msg
   }
 
-  public patchJsonFields (set: ContainedFieldSet, object: ILooseObject): void {
+  public patchJsonFields (set: IContainedSet, object: ILooseObject): void {
     if (!object) {
       return
     }

@@ -1,7 +1,7 @@
 import { AsciiChars, AsciiEncoder, TimeFormatter } from '../../buffer/ascii'
 import { MsgTransmitter } from '../msg-transmitter'
 import { ILooseObject } from '../../collections/collection'
-import { ContainedFieldSet } from '../../dictionary/contained'
+import { IContainedSet } from '../../dictionary/contained'
 import { MessageDefinition } from '../../dictionary/definition'
 import { IJsFixConfig } from '../../config'
 import { IStandardHeader } from '../../types/FIX4.4/repo'
@@ -14,8 +14,8 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   public msgSeqNum: number
   public time: Date
 
-  private readonly header: ContainedFieldSet | null
-  private readonly trailer: ContainedFieldSet | null
+  private readonly header: IContainedSet | null
+  private readonly trailer: IContainedSet | null
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config.sessionContainer.resolve<ElasticBuffer>(DITokens.TransmitBuffer), config.definitions, config.description)
@@ -70,8 +70,8 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
       this.emit('error', new Error(`ascii transmitter cannot find definition for ${msgType}`))
       return null
     }
-    const headerName = this.header?.name ?? 'header'
-    const trailerName = this.trailer?.name ?? 'trailer'
+    const headerName: string = this.header?.name ?? 'header'
+    const trailerName: string = this.trailer?.name ?? 'trailer'
     encoder.encode(hdr, headerName)
     encoder.encode(bodyProps, msgDef.name)
     const lenPos = encoder.bodyLengthPos

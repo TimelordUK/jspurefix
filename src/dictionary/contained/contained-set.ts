@@ -19,8 +19,8 @@ export interface IContainedSet {
   readonly localNameToField: Dictionary<ContainedField>
   readonly nameToLocalAttribute: Dictionary<ContainedSimpleField>
   readonly localAttribute: ContainedSimpleField[]
-  readonly firstSimple: (ContainedSimpleField | null)
-  readonly containsRaw: boolean
+  firstSimple: (ContainedSimpleField | null)
+  containsRaw: boolean
   readonly type: ContainedSetType
   readonly name: string
   readonly category: string | null

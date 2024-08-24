@@ -5,7 +5,6 @@ import { MessageDefinition } from './message-definition'
 import { SimpleFieldDefinition } from './simple-field-definition'
 import { FixVersion } from '../fix-versions'
 import { CategorySimpleSet } from './category-simple-set'
-import { ContainedFieldSet } from '../contained'
 import { FixDefinitionSource } from '../fix-definition-source'
 import { FixVersionParser } from './fix-version-parser'
 import { IContainedSet } from '../contained/contained-set'
@@ -57,7 +56,7 @@ export class FixDefinitions {
     return JSON.stringify(strs, null, 4)
   }
 
-  public containedSet (type: string): ContainedFieldSet | null {
+  public containedSet (type: string): IContainedSet | null {
     return this.message.get(type) ?? this.component.get(type)
   }
 

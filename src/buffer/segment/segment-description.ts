@@ -1,5 +1,5 @@
 import { INumericKeyed } from '../../collections/collection'
-import { ContainedField, ContainedFieldSet } from '../../dictionary/contained'
+import { ContainedField, IContainedSet } from '../../dictionary/contained'
 import { GroupFieldDefinition } from '../../dictionary/definition'
 import { SegmentType } from './segment-type'
 import { ElasticBuffer } from '../elastic-buffer'
@@ -16,7 +16,7 @@ export class SegmentDescription {
   constructor (
     public name: string,
     public startTag: number,
-    public set: ContainedFieldSet | null,
+    public set: IContainedSet | null,
     public startPosition: number,
     public readonly depth: number,
     public readonly type: SegmentType) {

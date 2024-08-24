@@ -39,6 +39,7 @@ export class AsciiParser extends MsgParser {
     this.segmentParser = config.sessionContainer.resolve<AsciiSegmentParser>(AsciiSegmentParser)
     this.state = config.sessionContainer.resolve<AsciiParserState>(AsciiParserState)
     this.state.locations = new Tags(this.receivingBuffer.size / 10)
+    this.state.definitions = this.config.definitions
     this.state.beginMessage()
     if (readStream !== null) {
       this.subscribe()

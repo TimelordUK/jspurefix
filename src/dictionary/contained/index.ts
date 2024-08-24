@@ -5,4 +5,5 @@ export * from './contained-field-dispatch'
 export * from './contained-set'
 export * from './contained-group-field'
 export * from './contained-simple-field'
-
+export * from './fields-dispatch'
+export * from './contained-set-builder'

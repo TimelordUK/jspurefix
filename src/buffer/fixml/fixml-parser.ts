@@ -5,7 +5,7 @@ import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
 import {
   ContainedField, ContainedComponentField,
   ContainedFieldType, ContainedGroupField,
-  ContainedSimpleField, ContainedFieldSet
+  ContainedSimpleField, IContainedSet
 } from '../../dictionary/contained'
 import { SegmentDescription } from '../segment/segment-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
@@ -347,7 +347,7 @@ export class FiXmlParser extends MsgParser {
     }
   }
 
-  private parseAttributes (name: string, set: ContainedFieldSet, saxNode: ISaxNode, type: SegmentType): SegmentDescription | null {
+  private parseAttributes (name: string, set: IContainedSet, saxNode: ISaxNode, type: SegmentType): SegmentDescription | null {
     const locations = this.locations
     const attributes = saxNode.attributes
     const values = this.values

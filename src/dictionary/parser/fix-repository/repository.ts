@@ -4,7 +4,13 @@ import {
   MessageDefinition, FixDefinitions
 } from '../../definition'
 import { Dictionary } from '../../../collections'
-import { ContainedFieldSet, ContainedComponentField, ContainedGroupField, ContainedSimpleField } from '../../contained'
+import {
+  IContainedSet,
+  ContainedComponentField,
+  ContainedGroupField,
+  ContainedSimpleField,
+  ContainedSetBuilder
+} from '../../contained'
 import { FixVersion } from '../../fix-versions'
 import { GetJsFixLogger, IJsFixLogger } from '../../../config'
 import { FixDefinitionSource } from '../../fix-definition-source'
@@ -210,18 +216,19 @@ export class Repository {
     }, new Dictionary<IRepositoryMsgContent[]>())
   }
 
-  private resolveToFieldSet (content: IRepositoryMsgContent[], parentSet: ContainedFieldSet): void {
+  private resolveToFieldSet (content: IRepositoryMsgContent[], parentSet: IContainedSet): void {
+    const builder = new ContainedSetBuilder(parentSet)
     content.forEach((current: IRepositoryMsgContent) => {
       const required: boolean = current.Reqd === '1'
       const tag: number = parseInt(current.TagText, 10)
       if (!isNaN(tag)) {
         const sf: SimpleFieldDefinition = this.definitions.tagToSimple[tag]
         if (sf) {
-          parentSet.add(new ContainedSimpleField(sf, parentSet.fields.length, required, false))
+          builder.add(new ContainedSimpleField(sf, parentSet.fields.length, required, false))
         }
       } else {
         // is there a definition for this type yet create.
-        let childSet: ContainedFieldSet | null = this.definitions.component.get(current.TagText)
+        let childSet: IContainedSet | null = this.definitions.component.get(current.TagText)
         if (!childSet) {
           const cl: IRepositoryComponent | null = this.componentLookup.get(current.TagText)
           if (cl) {
@@ -231,12 +238,12 @@ export class Repository {
         if (childSet) {
           switch (childSet.type) {
             case ContainedSetType.Component: {
-              parentSet.add(new ContainedComponentField(childSet as ComponentFieldDefinition, parentSet.fields.length, required))
+              builder.add(new ContainedComponentField(childSet as ComponentFieldDefinition, parentSet.fields.length, required))
               break
             }
 
             case ContainedSetType.Group: {
-              parentSet.add(new ContainedGroupField(childSet as GroupFieldDefinition, parentSet.fields.length, required))
+              builder.add(new ContainedGroupField(childSet as GroupFieldDefinition, parentSet.fields.length, required))
               break
             }
 
@@ -250,7 +257,7 @@ export class Repository {
     })
   }
 
-  private resolve (c: IRepositoryComponent): ContainedFieldSet {
+  private resolve (c: IRepositoryComponent): IContainedSet {
     switch (c.ComponentType) {
       case 'ImplicitBlockRepeating':
       case 'BlockRepeating': {

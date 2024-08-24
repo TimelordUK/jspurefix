@@ -1,5 +1,5 @@
 import {
-  ContainedField, ContainedFieldSet,
+  ContainedField, IContainedSet,
   ContainedGroupField, ContainedSimpleField, ContainedComponentField, ContainedFieldType
 } from './contained'
 import { ITypeDispatcher } from './type-dispatcher'
@@ -33,8 +33,8 @@ export class SetReduce<T> {
     }
   }
 
-  reduce (def: ContainedFieldSet, dispatcher: ITypeDispatcher<T>, init: T): T {
-    return def.fields.reduce((a: any, field: ContainedField) => {
+  reduce (def: IContainedSet, dispatcher: ITypeDispatcher<T>, init: T): T {
+    return def.fields.reduce((a: T, field: ContainedField) => {
       this.reduceField(a, field, dispatcher)
       return a
     }, init)

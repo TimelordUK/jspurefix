@@ -1,6 +1,6 @@
 import { ILooseObject } from '../collections/collection'
 import { FixDefinitions } from '../dictionary/definition'
-import { ContainedFieldSet } from '../dictionary/contained'
+import { IContainedSet } from '../dictionary/contained'
 import * as events from 'events'
 
 export abstract class MsgEncoder extends events.EventEmitter {
@@ -9,7 +9,7 @@ export abstract class MsgEncoder extends events.EventEmitter {
   }
 
   public encode (o: ILooseObject, name: string): void {
-    const set: ContainedFieldSet | null = this.definitions.message.get(name) ??
+    const set: IContainedSet | null = this.definitions.message.get(name) ??
       this.definitions.component.get(name)
     if (!set) {
       return
@@ -19,5 +19,5 @@ export abstract class MsgEncoder extends events.EventEmitter {
 
   public abstract reset (): void
   public abstract trim (): Buffer
-  public abstract encodeSet (o: ILooseObject, set: ContainedFieldSet): void
+  public abstract encodeSet (o: ILooseObject, set: IContainedSet): void
 }
