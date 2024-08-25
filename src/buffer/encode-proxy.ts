@@ -140,7 +140,7 @@ export class EncodeProxy {
   }
 
   public wrap (msgName: string): ILooseObject {
-    const msg: MessageDefinition | null = this.definitions.message.get(msgName)
+    const msg: MessageDefinition | undefined = this.definitions.message.get(msgName)
     if (!msg) {
       throw new Error(`no message defined for type ${msgName}`)
     }

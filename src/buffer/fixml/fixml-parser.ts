@@ -333,7 +333,7 @@ export class FiXmlParser extends MsgParser {
   private msg (saxNode: ISaxNode, inBatch: boolean = false): void {
     this.logger.debug(`${saxNode.name}: begin parse msg`)
     const type: string = saxNode.name
-    const def: MessageDefinition | null = this.definitions.message.get(type)
+    const def: MessageDefinition | undefined = this.definitions.message.get(type)
     if (!def) {
       throw new Error(`unknown message type ${type}`)
     }

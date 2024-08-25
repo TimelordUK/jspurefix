@@ -3,7 +3,7 @@ import { FixDefinitions } from '../../dictionary/definition'
 
 export class SetConstraintHelper {
   constructor (public definitions: FixDefinitions) {}
-  public isComponent (set: (IContainedSet | null), index: number, name: string, expected: boolean): void {
+  public isComponent (set: (IContainedSet | undefined), index: number, name: string, expected: boolean): void {
     expect(set).toBeTruthy()
     const field = set?.fields[index]
     expect(field?.type).toEqual(ContainedFieldType.Component)
@@ -12,7 +12,7 @@ export class SetConstraintHelper {
     expect(set?.components.get(name)).toBeTruthy()
   }
 
-  public isGroup (set: (IContainedSet | null), index: number, name: string, expected: boolean): void {
+  public isGroup (set: (IContainedSet | undefined), index: number, name: string, expected: boolean): void {
     expect(set).toBeTruthy()
     const field = set?.fields[index]
     expect(field?.type).toEqual(ContainedFieldType.Group)
@@ -21,7 +21,7 @@ export class SetConstraintHelper {
     expect(set?.groups.get(name)).toBeTruthy()
   }
 
-  public isSimple (set: (IContainedSet | null), index: number, name: string, expected: boolean): void {
+  public isSimple (set: (IContainedSet | undefined), index: number, name: string, expected: boolean): void {
     expect(set).toBeTruthy()
     const field = set?.fields[index]
     expect(field?.type).toEqual(ContainedFieldType.Simple)

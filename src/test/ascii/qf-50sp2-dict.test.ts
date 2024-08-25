@@ -24,7 +24,7 @@ use notepad++ replace with regular expression
 setHelper.isComponent\(tc, index++, '\1', false\)
  */
 
-function checkTradeCapture (tc: (MessageDefinition | null)): void {
+function checkTradeCapture (tc: (MessageDefinition | undefined)): void {
   expect(tc).toBeTruthy()
   let index = 0
   setHelper.isComponent(tc, index++, 'StandardHeader', true)

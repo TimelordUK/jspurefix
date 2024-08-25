@@ -14,8 +14,8 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
   public msgSeqNum: number
   public time: Date
 
-  private readonly header: IContainedSet | null
-  private readonly trailer: IContainedSet | null
+  private readonly header: IContainedSet | undefined
+  private readonly trailer: IContainedSet | undefined
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config.sessionContainer.resolve<ElasticBuffer>(DITokens.TransmitBuffer), config.definitions, config.description)
@@ -65,7 +65,7 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
 
     const buffer = this.buffer
     buffer.reset()
-    const msgDef: MessageDefinition | null = this.definitions.message.get(msgType)
+    const msgDef: MessageDefinition | undefined = this.definitions.message.get(msgType)
     if (!msgDef) {
       this.emit('error', new Error(`ascii transmitter cannot find definition for ${msgType}`))
       return null

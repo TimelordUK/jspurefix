@@ -1,4 +1,3 @@
-import * as fs from 'fs'
 import { SAXParser } from 'sax'
 import { IDictDoneCb, SAXStream } from '../../dict-primitive'
 import { FixDefinitions, MessageDefinition } from '../../definition'
@@ -152,10 +151,10 @@ export class QuickFixXmlFileParser extends FixParser {
 
   private encloseMessages (): void {
     const messages = this.state.definitions.message
-    const keys = messages.keys()
+    const keys = Array.from(messages.keys())
     const trailerName = 'StandardTrailer'
     keys.forEach(k => {
-      const message: (MessageDefinition | null) = messages.get(k)
+      const message: (MessageDefinition | undefined) = messages.get(k)
       const builder = new ContainedSetBuilder(message as IContainedSet)
       const trailer = this.state.definitions.component.get(trailerName)
       if (trailer && !message?.components.has(trailerName)) {

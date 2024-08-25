@@ -75,7 +75,7 @@ export class JsonHelper {
 
   public fromJson (fileName: string, msgType: string): ILooseObject {
     const msg: ILooseObject = require(fileName)
-    const def: MessageDefinition | null = this.definitions.message.get(msgType)
+    const def: MessageDefinition | undefined = this.definitions.message.get(msgType)
     if (!def) {
       return msg
     }

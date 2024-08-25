@@ -9,7 +9,7 @@ export class EncoderTest {
   public definitions: FixDefinitions
   public session: AsciiMsgTransmitter
   public encoder: AsciiEncoder
-  public nos: MessageDefinition | null
+  public nos: MessageDefinition | undefined
   public er: MessageDefinition
 
   public localDate: Date = new Date(2018, 6, 25)

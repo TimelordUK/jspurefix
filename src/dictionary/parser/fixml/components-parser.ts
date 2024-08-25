@@ -350,7 +350,7 @@ export class ComponentsParser extends XsdParser {
     const group: IGroup | null = this.groups.get(type.group)
     const attributeGroup: IAttributeGroup | null = this.attributeGroups.get(type.attributeGroup)
     let name: string = ComponentsParser.getName(group, attributeGroup, type)
-    const cached: ComponentFieldDefinition | null = definitions.component.get(name)
+    const cached: ComponentFieldDefinition | undefined = definitions.component.get(name)
     if (cached) {
       return cached
     }
@@ -364,8 +364,8 @@ export class ComponentsParser extends XsdParser {
     }
     const component: ComponentFieldDefinition = new ComponentFieldDefinition(name, name, category, null)
     this.populateSet(type, component)
-    definitions.component.addUpdate(component.name, component)
-    definitions.component.addUpdate(type.name, component)
+    definitions.component.set(component.name, component)
+    definitions.component.set(type.name, component)
     return component
   }
 
@@ -379,14 +379,14 @@ export class ComponentsParser extends XsdParser {
       type.appInfo.Category,
       type.annotation.documentation)
     const builder = new ContainedSetBuilder(message)
-    const abstractMessage: ComponentFieldDefinition | null = definitions.component.get('Message')
+    const abstractMessage: ComponentFieldDefinition | undefined = definitions.component.get('Message')
     abstractMessage?.fields.forEach((f: ContainedField) => {
       builder.add(f)
     })
     this.populateSet(type, message)
-    messages.addUpdate(message.name, message)
+    messages.set(message.name, message)
     if (type.messageName && type.messageName !== name) {
-      messages.addUpdate(type.messageName, message)
+      messages.set(type.messageName, message)
     }
 
     return message
@@ -459,9 +459,9 @@ export class ComponentsParser extends XsdParser {
     })
     this.unboundElements.forEach((e: IElement) => {
       const definitions = this.definitions
-      const component: ComponentFieldDefinition | null = definitions.component.get(e.type)
+      const component: ComponentFieldDefinition | undefined = definitions.component.get(e.type)
       if (component) {
-        definitions.component.addUpdate(e.name, component)
+        definitions.component.set(e.name, component)
       }
     })
   }

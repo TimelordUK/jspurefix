@@ -9,7 +9,7 @@ export abstract class MsgEncoder extends events.EventEmitter {
   }
 
   public encode (o: ILooseObject, name: string): void {
-    const set: IContainedSet | null = this.definitions.message.get(name) ??
+    const set: IContainedSet | undefined = this.definitions.message.get(name) ??
       this.definitions.component.get(name)
     if (!set) {
       return

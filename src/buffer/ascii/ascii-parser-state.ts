@@ -7,7 +7,7 @@ import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class AsciiParserState {
-  public message: MessageDefinition | null
+  public message: MessageDefinition | undefined
   public locations: Tags
   public parseState: ParseState
   public bodyLen: number
@@ -182,7 +182,6 @@ export class AsciiParserState {
     this.rawDataRead = 0
     this.rawDataLen = 0
     this.bodyLen = 0
-    this.message = null
     this.msgType = null
   }
 }

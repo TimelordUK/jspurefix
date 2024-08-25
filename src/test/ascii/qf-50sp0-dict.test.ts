@@ -44,33 +44,33 @@ beforeAll(async () => {
 
 class SecDefHelper {
   constructor (public definitions: FixDefinitions) {}
-  public getSecListGrp (): (IContainedSet | null) {
+  public getSecListGrp (): (IContainedSet | undefined) {
     return this.definitions.getSet('SecurityList.SecListGrp')
   }
 
-  public getNumRelatedSym (): (IContainedSet | null) {
-    return this.getSecListGrp()?.getSet('NoRelatedSym') ?? null
+  public getNumRelatedSym (): (IContainedSet | undefined) {
+    return this.getSecListGrp()?.getSet('NoRelatedSym') ?? undefined
   }
 
-  public getSecurityTradingRules (): (IContainedSet | null) {
-    return this.getNumRelatedSym()?.getSet('SecurityTradingRules') ?? null
+  public getSecurityTradingRules (): (IContainedSet | undefined) {
+    return this.getNumRelatedSym()?.getSet('SecurityTradingRules') ?? undefined
   }
 
-  public getBaseTradingRules (): (IContainedSet | null) {
-    return this.getSecurityTradingRules()?.getSet('BaseTradingRules') ?? null
+  public getBaseTradingRules (): (IContainedSet | undefined) {
+    return this.getSecurityTradingRules()?.getSet('BaseTradingRules') ?? undefined
   }
 
-  public getTickRules (): (IContainedSet | null) {
-    return this.getBaseTradingRules()?.getSet('TickRules') ?? null
+  public getTickRules (): (IContainedSet | undefined) {
+    return this.getBaseTradingRules()?.getSet('TickRules') ?? undefined
   }
 
-  public getNoTickRules (): (IContainedSet | null) {
-    return this.getTickRules()?.getSet('NoTickRules') ?? null
+  public getNoTickRules (): (IContainedSet | undefined) {
+    return this.getTickRules()?.getSet('NoTickRules') ?? undefined
   }
 }
 
 test('check message SecurityList', () => {
-  const securityList: (IContainedSet | null) = definitions?.getSet('SecurityList') ?? null
+  const securityList: (IContainedSet | undefined) = definitions?.getSet('SecurityList') ?? undefined
   expect(securityList).toBeTruthy()
   let index = 0
   setHelper.isComponent(securityList, index++, 'StandardHeader', true)
@@ -123,7 +123,7 @@ test('check SecListGrp', () => {
   const secListGrp = secHelper.getSecListGrp()
   expect(secListGrp).toBeTruthy()
   expect(secListGrp?.fields?.length).toEqual(1)
-  setHelper.isGroup(secListGrp ?? null, 0, 'NoRelatedSym', false)
+  setHelper.isGroup(secListGrp ?? undefined, 0, 'NoRelatedSym', false)
 })
 
 test('check NoRelatedSym', () => {

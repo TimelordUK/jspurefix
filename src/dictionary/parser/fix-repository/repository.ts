@@ -110,9 +110,9 @@ export class Repository {
   private summarise (): void {
     const logger = this.logger
     const definitions = this.definitions
-    logger.info(`definitions: ${definitions.simple.count()} fields`)
-    logger.info(`definitions: ${definitions.component.count()} components`)
-    logger.info(`definitions: ${definitions.message.count()} messages`)
+    logger.info(`definitions: ${definitions.simple.size} fields`)
+    logger.info(`definitions: ${definitions.component.size} components`)
+    logger.info(`definitions: ${definitions.message.size} messages`)
   }
 
   private toDefinitions (): void {
@@ -135,16 +135,16 @@ export class Repository {
   }
 
   private header (): void {
-    const h: ComponentFieldDefinition | null = this.definitions.component.get('StandardHeader')
+    const h: ComponentFieldDefinition | undefined = this.definitions.component.get('StandardHeader')
     if (h) {
-      this.definitions.component.add('header', h)
+      this.definitions.component.set('header', h)
     }
   }
 
   private trailer (): void {
-    const t: ComponentFieldDefinition | null = this.definitions.component.get('StandardTrailer')
+    const t: ComponentFieldDefinition | undefined = this.definitions.component.get('StandardTrailer')
     if (t) {
-      this.definitions.component.add('trailer', t)
+      this.definitions.component.set('trailer', t)
     }
   }
 
@@ -228,7 +228,7 @@ export class Repository {
         }
       } else {
         // is there a definition for this type yet create.
-        let childSet: IContainedSet | null = this.definitions.component.get(current.TagText)
+        let childSet: IContainedSet | undefined = this.definitions.component.get(current.TagText)
         if (!childSet) {
           const cl: IRepositoryComponent | null = this.componentLookup.get(current.TagText)
           if (cl) {
@@ -274,7 +274,7 @@ export class Repository {
 
       default: {
         const content: IRepositoryMsgContent[] | null = this.contentLookup.get(c.ComponentID) ?? []
-        let def: ComponentFieldDefinition | null = this.definitions.component.get(c.Name)
+        let def: ComponentFieldDefinition | undefined = this.definitions.component.get(c.Name)
         if (!def) {
           def = new ComponentFieldDefinition(c.Name, c.AbbrName, c.CategoryID, c.Description)
           this.resolveToFieldSet(content, def)
@@ -288,7 +288,7 @@ export class Repository {
   private message (m: IRepositoryMessage): MessageDefinition {
     const definitions = this.definitions
     const content: IRepositoryMsgContent[] = this.contentLookup.get(m.ComponentID) ?? []
-    let def: MessageDefinition | null = definitions.message.get(m.Name)
+    let def: MessageDefinition | undefined = definitions.message.get(m.Name)
     if (!def) {
       def = new MessageDefinition(m.Name, m.AbbrName, m.MsgType, m.CategoryID, m.Description)
       this.resolveToFieldSet(content, def)

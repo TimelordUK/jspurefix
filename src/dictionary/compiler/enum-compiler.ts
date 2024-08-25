@@ -120,7 +120,7 @@ export class EnumCompiler {
 
   private toDo (): SimpleFieldDefinition[] {
     const done: ILooseObject = {}
-    return this.definitions.simple.values().reduce((a: SimpleFieldDefinition[], latest: SimpleFieldDefinition) => {
+    return Array.from(this.definitions.simple.values()).reduce((a: SimpleFieldDefinition[], latest: SimpleFieldDefinition) => {
       if (latest.isEnum() && !done[latest.name]) {
         done[latest.name] = true
         a.push(latest)

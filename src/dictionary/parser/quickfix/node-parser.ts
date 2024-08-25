@@ -41,7 +41,7 @@ export abstract class NodeParser {
         throw new Error(`simple field ${node.name} has no parent on which to add.`)
       }
       const fieldName: string = node.attributes.name
-      const fieldDefinition: SimpleFieldDefinition | null = this.progress.definitions.simple.get(fieldName)
+      const fieldDefinition: SimpleFieldDefinition | undefined = this.progress.definitions.simple.get(fieldName)
       if (!fieldDefinition) {
         throw new Error(`simple field ${fieldName} has no declaration in dictionary.`)
       }
@@ -67,7 +67,7 @@ export abstract class NodeParser {
     if (!parent) {
       throw new Error(`component ${node.name} has no parent on which to add.`)
     }
-    const fieldDef: ComponentFieldDefinition | null = this.progress.definitions.component.get(componentName)
+    const fieldDef: ComponentFieldDefinition | undefined = this.progress.definitions.component.get(componentName)
     if (fieldDef) {
       const containedField: ContainedComponentField = this.makeContainedComponent(fieldDef, parent)
       this.addto(parent, containedField)

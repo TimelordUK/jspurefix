@@ -35,7 +35,7 @@ export class MsgCompiler {
   }
 
   public async generate (): Promise<void> {
-    const types: string[] = this.settings.types ?? this.definitions.message.keys()
+    const types: string[] = this.settings.types ?? Array.from(this.definitions.message.keys())
     await this.createTypes(types)
   }
 

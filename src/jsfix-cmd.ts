@@ -425,7 +425,7 @@ export class JsfixCmd {
   }
 
   private field (): void {
-    let sf: SimpleFieldDefinition | null
+    let sf: SimpleFieldDefinition | undefined
     const tag: number = parseInt(argv.field, 10)
     const definitions = this.definitions
     if (!isNaN(tag)) {

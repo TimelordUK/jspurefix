@@ -27,7 +27,7 @@ test('expect 50 messages in log', () => {
 
 test('expect 50 messages of specific types in log', () => {
   const layout = views.reduce<ILooseObject>((a: ILooseObject, latest: MsgView) => {
-    const def: MessageDefinition | null = definitions.message.get(latest.segment.name)
+    const def: MessageDefinition | undefined = definitions.message.get(latest.segment.name)
     if (def) {
       let lookup = a[def.msgType]
       if (!lookup) {

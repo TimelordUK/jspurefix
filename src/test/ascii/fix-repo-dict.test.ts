@@ -323,7 +323,7 @@ test('message check Email rawfields', () => {
   isRaw(email, 'EncodedSubjectLen')
 })
 
-function isRaw (set: (IContainedSet | null), name: string): void {
+function isRaw (set: (IContainedSet | undefined), name: string): void {
   const field = set?.simple.get(name)
   expect(field).toBeTruthy()
   expect(set?.containsRaw).toBeTruthy()

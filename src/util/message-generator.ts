@@ -56,7 +56,7 @@ export class MessageGenerator {
     }
     density = Math.max(0.2, density)
     density = Math.min(1.0, density)
-    const def: MessageDefinition | null = this.definitions.message.get(msgType)
+    const def: MessageDefinition | undefined = this.definitions.message.get(msgType)
     if (!def) {
       throw new Error(`definitions do not contain type ${msgType}`)
     }

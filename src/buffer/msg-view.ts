@@ -483,11 +483,11 @@ export abstract class MsgView {
     if (structure == null) return ''
     const tags: Tags = structure.tags
     const count: number = segment.endPosition - segment.startPosition
-    const simple: Dictionary<SimpleFieldDefinition> = this.definitions.simple
+    const simple: Map<string, SimpleFieldDefinition> = this.definitions.simple
 
     for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
       const tagPos: TagPos = tags.tagPos[i]
-      const field: SimpleFieldDefinition | null = simple.get(tagPos.tag.toString())
+      const field: SimpleFieldDefinition | undefined = simple.get(tagPos.tag.toString())
       const val: string | null = this.stringAtPosition(i) ?? ''
       // [0] 8 (BeginString) = FIX4.4
       const token = field ? getToken(field, val, i - segment.startPosition, count, tagPos) : `[${i}] ${tagPos.tag} (unknown) = ${val}, `
