@@ -6,18 +6,17 @@ import {
   ITradeCaptureReportRequestAck
 } from '../../../types/FIX4.4/repo'
 import { IJsFixLogger, IJsFixConfig } from '../../../config'
-import { Dictionary } from '../../../collections'
 import { TradeFactory } from './trade-factory'
 
 export class TradeCaptureClient extends AsciiSession {
   private readonly logger: IJsFixLogger
   private readonly fixLog: IJsFixLogger
-  private readonly reports: Dictionary<ITradeCaptureReport>
+  private readonly reports: Map<string, ITradeCaptureReport>
 
   constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
-    this.reports = new Dictionary<ITradeCaptureReport>()
+    this.reports = new Map<string, ITradeCaptureReport>()
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
     this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`)
   }
@@ -28,8 +27,8 @@ export class TradeCaptureClient extends AsciiSession {
       case MsgType.TradeCaptureReport: {
         // create an object and cast to the interface
         const tc: ITradeCaptureReport = view.toObject() as ITradeCaptureReport
-        this.reports.addUpdate(tc.TradeReportID, tc)
-        this.logger.info(`[reports: ${this.reports.count()}] received tc ExecID = ${tc.ExecID} TradeReportID  = ${tc.TradeReportID} Symbol = ${tc.Instrument.Symbol} ${tc.LastQty} @ ${tc.LastPx}`)
+        this.reports.set(tc.TradeReportID, tc)
+        this.logger.info(`[reports: ${this.reports.size}] received tc ExecID = ${tc.ExecID} TradeReportID  = ${tc.TradeReportID} Symbol = ${tc.Instrument.Symbol} ${tc.LastQty} @ ${tc.LastPx}`)
         break
       }
 

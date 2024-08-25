@@ -1,6 +1,5 @@
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { HttpTransaction } from './http-transaction'
-import { Dictionary } from '../../collections'
 import { IHttpAdapter } from './http-adapter'
 import { IHtmlRoute } from './html-route'
 import { IHtmlOptions } from './html-options'
@@ -12,7 +11,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
   private readonly logger: IJsFixLogger
   private readonly queue: HttpTransaction[] = []
   private token: string | null = null
-  private readonly routes: Dictionary<IHtmlRoute> = new Dictionary<IHtmlRoute>()
+  private readonly routes: Map<string, IHtmlRoute> = new Map<string, IHtmlRoute>()
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     this.logger = config.logFactory.logger('http.adapter')
     const routes = this.routes
@@ -21,9 +20,9 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
       return
     }
     options.forEach((o: IHtmlRoute) => {
-      routes.addUpdate(o.name, o)
+      routes.set(o.name, o)
     })
-    this.logger.info(`instance created routes ${routes.count()}`)
+    this.logger.info(`instance created routes ${routes.size}`)
   }
 
   public getOptions (data: Buffer): IHtmlOptions | null {

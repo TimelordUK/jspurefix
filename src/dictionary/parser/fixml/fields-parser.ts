@@ -1,5 +1,4 @@
 import { ILooseObject } from '../../../collections/collection'
-import { Dictionary } from '../../../collections'
 import { SimpleFieldDefinition, FixDefinitions } from '../../definition'
 import { XsdParser } from './xsd-parser'
 import { ISaxNode } from '../../sax-node'
@@ -16,7 +15,7 @@ interface ISimpleField extends ILooseObject {
   AbbrName: string
   Category: string
   CategoryAbbrName: string
-  enums: Dictionary<string>
+  enums: Map<string, string>
   currentEnum: string
 }
 
@@ -35,7 +34,7 @@ export class FieldsParser extends XsdParser {
     const current: ISimpleField = this.current as ISimpleField
     switch (n) {
       case 'fm:EnumDoc': {
-        current.enums.add(current.currentEnum, v)
+        current.enums.set(current.currentEnum, v)
         break
       }
       case 'xs:documentation': {
@@ -81,7 +80,7 @@ export class FieldsParser extends XsdParser {
 
       case 'fm:EnumDoc': {
         if (!this.current.enums) {
-          this.current.enums = new Dictionary<string>()
+          this.current.enums = new Map<string, string>()
         }
         this.current.currentEnum = node.attributes.value
         this.pending = node.name

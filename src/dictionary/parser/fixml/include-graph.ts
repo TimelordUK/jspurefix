@@ -1,5 +1,4 @@
 import { SAXStream } from '../../dict-primitive'
-import { Dictionary } from '../../../collections'
 import { INumericKeyed } from '../../../collections/collection'
 import * as path from 'path'
 import * as fs from 'fs'
@@ -21,7 +20,7 @@ export interface IGraphNode {
  */
 
 export class IncludeGraph {
-  private nodes: Dictionary<number>
+  private nodes: Map<string, number>
   private includes: IInclude[]
   private graph: INumericKeyed<IGraphNode>
   constructor (public readonly root: string, public readonly main: string) {
@@ -34,7 +33,7 @@ export class IncludeGraph {
   }
 
   public resolve (file: string): string[] | null {
-    const label: number | null = this.nodes.get(file)
+    const label: number | undefined = this.nodes.get(file)
     if (label == null) {
       return null
     }
@@ -60,7 +59,7 @@ export class IncludeGraph {
   private getGraph (): void {
     const nodes = this.nodes
     this.graph = this.includes.reduce<INumericKeyed<IGraphNode>>((a: INumericKeyed<IGraphNode>, current: IInclude) => {
-      const parent: number | null = nodes.get(current.parent)
+      const parent: number | undefined = nodes.get(current.parent)
       if (parent == null) return a
       let parentNode = a[parent]
       if (!parentNode) {
@@ -71,7 +70,7 @@ export class IncludeGraph {
         } as IGraphNode
       }
       current.children.forEach((s: string) => {
-        const child: number | null = nodes.get(s)
+        const child: number | undefined = nodes.get(s)
         if (child) {
           if (!parentNode.edges.includes(child)) {
             parentNode.edges.push(child)
@@ -84,17 +83,17 @@ export class IncludeGraph {
 
   private assignNodes (): void {
     let next: number = 0
-    this.nodes = this.includes.reduce((a: Dictionary<number>, current: IInclude) => {
-      if (!a.containsKey(current.parent)) {
-        a.add(current.parent, next++)
+    this.nodes = this.includes.reduce((a: Map<string, number>, current: IInclude) => {
+      if (!a.has(current.parent)) {
+        a.set(current.parent, next++)
       }
       current.children.forEach((c: string) => {
-        if (!a.containsKey(c)) {
-          a.add(c, next++)
+        if (!a.has(c)) {
+          a.set(c, next++)
         }
       })
       return a
-    }, new Dictionary<number>())
+    }, new Map<string, number>())
   }
 
   private async scanIncludes (file: string): Promise<string[]> {
@@ -125,16 +124,16 @@ export class IncludeGraph {
     const q: any[] = []
     q.push([main])
     const ordered: IInclude[] = []
-    const seen: Dictionary<boolean> = new Dictionary<boolean>()
+    const seen: Map<string, boolean> = new Map<string, boolean>()
     return await new Promise<IInclude[]>(async (resolve, reject) => {
       try {
         while (q.length > 0) {
           const batch: string[] = q.pop()
           for (const next of batch) {
-            if (seen.containsKey(next)) {
+            if (seen.has(next)) {
               continue
             }
-            seen.add(next, true)
+            seen.set(next, true)
             const includes: string[] = await this.scanIncludes(next)
             ordered.push({
               parent: next,

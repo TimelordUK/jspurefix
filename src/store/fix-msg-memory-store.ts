@@ -1,7 +1,6 @@
 import { IFixMsgStore } from './fix-msg-store'
 import { IJsFixConfig, IJsFixLogger } from '../config'
 import { IFixMsgStoreRecord } from './fix-msg-store-record'
-import { Dictionary } from '../collections'
 import { MsgType } from '../types'
 import { IFixMsgStoreState } from './fix-msg-store-state'
 
@@ -9,7 +8,7 @@ export class FixMsgMemoryStore implements IFixMsgStore {
   protected readonly logger: IJsFixLogger
   public heartbeat: boolean = true
   private sortedBySeqNum: IFixMsgStoreRecord[] = []
-  private readonly excluded: Dictionary<boolean> = new Dictionary<boolean>()
+  private readonly excluded: Map<string, boolean> = new Map<string, boolean>()
   public length: number = 0
   private readonly sessionMessages: string[] = [
     MsgType.Logon,
@@ -131,7 +130,7 @@ export class FixMsgMemoryStore implements IFixMsgStore {
 
   public async put (record: IFixMsgStoreRecord): Promise<IFixMsgStoreState> {
     return await new Promise((resolve, reject) => {
-      if (this.excluded.containsKey(record.msgType)) {
+      if (this.excluded.has(record.msgType)) {
         resolve(this.buildState())
       } else {
         const arr = this.sortedBySeqNum
@@ -154,7 +153,7 @@ export class FixMsgMemoryStore implements IFixMsgStore {
 
   private excludeRange (exclude: string[]): void {
     exclude.forEach(s => {
-      this.excluded.add(s, true)
+      this.excluded.set(s, true)
     })
   }
 

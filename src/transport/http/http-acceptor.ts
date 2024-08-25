@@ -3,7 +3,6 @@ import { FixAcceptor } from '../fix-acceptor'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { IFixmlRequest } from '../fixml'
 import { FixDuplex, StringDuplex, StringDuplexTraits } from '../duplex'
-import { Dictionary } from '../../collections'
 
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
@@ -19,7 +18,7 @@ export class HttpAcceptor extends FixAcceptor {
   private readonly logger: IJsFixLogger
   private readonly router: express.Router
   private nextId: number = 0
-  private readonly keys: Dictionary<MsgTransport> = new Dictionary<MsgTransport>()
+  private readonly keys: Map<string, MsgTransport> = new Map<string, MsgTransport>()
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config?.description?.application ?? null)
@@ -56,7 +55,7 @@ export class HttpAcceptor extends FixAcceptor {
     this.transports[tid] = transport
     const keys: string[] = Object.keys(this.transports)
     const a = uuidv4()
-    this.keys.addUpdate(a, transport)
+    this.keys.set(a, transport)
     this.logger.info(`new transport id = ${tid} token = ${a} created total transports = ${keys.length}`)
     this.emit('transport', transport)
     return a
@@ -64,7 +63,7 @@ export class HttpAcceptor extends FixAcceptor {
 
   private harvestTransport (token: string, tid: number): void {
     delete this.transports[tid]
-    this.keys.remove(token)
+    this.keys.delete(token)
     const keys: string[] = Object.keys(this.transports)
     this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
   }
@@ -114,7 +113,7 @@ export class HttpAcceptor extends FixAcceptor {
   private async logout (req: express.Request, res: express.Response): Promise<void> {
     const headers = req.headers
     const body: IFixmlRequest = req.body
-    const t: MsgTransport | null = this.keys.get(headers?.authorization ?? '')
+    const t: MsgTransport | undefined = this.keys.get(headers?.authorization ?? '')
     if (t) {
       const token = req.headers.authorization
       if (token) {

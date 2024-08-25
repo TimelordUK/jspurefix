@@ -153,10 +153,10 @@ export abstract class NodeParser {
       throw new Error(msg)
     }
     const fullQualifiedName = `${this.fullContextName()}.${groupName}`
-    let cached: (GroupFieldDefinition | null) = this.progress.groupDefinitionCache.get(fullQualifiedName)
+    let cached: (GroupFieldDefinition | undefined) = this.progress.groupDefinitionCache.get(fullQualifiedName)
     if (!cached) {
       cached = new GroupFieldDefinition(groupName, groupName, null, noOfField, null)
-      this.progress.groupDefinitionCache.add(fullQualifiedName, cached)
+      this.progress.groupDefinitionCache.set(fullQualifiedName, cached)
     } else {
       cached.reset()
     }
