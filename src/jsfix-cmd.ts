@@ -19,7 +19,6 @@ import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 import { SessionContainer } from './runtime'
 import { DITokens } from './runtime/di-tokens'
 import buildOptions from 'minimist-options'
-import { Dictionary } from './collections'
 import { QuickFixXmlFileBuilder } from './dictionary/parser/quickfix/quick-fix-xml-file-builder'
 
 const fs = require('node-fs-extra')

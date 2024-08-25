@@ -1,7 +1,6 @@
 import { TagPos } from './tag/tag-pos'
 import { SegmentDescription } from './segment/segment-description'
 import { Structure } from './structure'
-import { Dictionary } from '../collections'
 import { Tags } from './tag/tags'
 import {
   ContainedComponentField,
