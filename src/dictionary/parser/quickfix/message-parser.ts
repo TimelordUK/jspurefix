@@ -1,9 +1,10 @@
 import { MessageDefinition } from '../../definition'
 import { NodeParser } from './node-parser'
 import { ParseContext } from './parse-context'
-import { ContainedComponentField } from '../../contained'
+import { ContainedComponentField, ContainedSetBuilder } from '../../contained'
 import { ISaxNode } from '../../sax-node'
 import { ParseProgress } from './parse-progress'
+import { ILooseObject } from '../../../collections/collection'
 
 export class MessageParser extends NodeParser {
   constructor (protected readonly progress: ParseProgress) {
@@ -13,8 +14,8 @@ export class MessageParser extends NodeParser {
   public open (line: number, node: ISaxNode): void {
     switch (node.name) {
       case 'message': {
-        const att: any = node.attributes
-        const msg: MessageDefinition = new MessageDefinition(att.name, att.name, att.msgtype, att.msgcat, null)
+        const att: ILooseObject = node.attributes
+        const msg: MessageDefinition = new MessageDefinition(att.name as string, att.name as string, att.msgtype as string, att.msgcat as string, null)
         const context: ParseContext = new ParseContext(msg.name, true, msg)
         this.header(msg, context)
         break
@@ -27,7 +28,7 @@ export class MessageParser extends NodeParser {
 
       case 'component': {
         if (node.isSelfClosing) {
-          this.addComponentField(node.attributes.name, node)
+          this.addComponentField(node.attributes.name as string, node)
         }
         break
       }
@@ -43,12 +44,13 @@ export class MessageParser extends NodeParser {
 
   private header (msg: MessageDefinition, context: ParseContext): void {
     const hdr = this.progress.definitions.component.get('StandardHeader')
+    const builder = new ContainedSetBuilder(msg)
     const contained = hdr
       ? new ContainedComponentField(hdr, msg.fields.length, true)
       : null
     if (contained) {
       this.progress.newAdds++
-      msg.add(contained)
+      builder.add(contained)
       this.startContext(context)
     }
   }

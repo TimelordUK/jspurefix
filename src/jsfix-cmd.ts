@@ -19,7 +19,6 @@ import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 import { SessionContainer } from './runtime'
 import { DITokens } from './runtime/di-tokens'
 import buildOptions from 'minimist-options'
-import { Dictionary } from './collections'
 import { QuickFixXmlFileBuilder } from './dictionary/parser/quickfix/quick-fix-xml-file-builder'
 
 const fs = require('node-fs-extra')
@@ -202,7 +201,7 @@ export class JsfixCmd {
   private sessionDescription: ISessionDescription
   private delimiter: number = AsciiChars.Soh
   private stats: ILooseObject = {}
-  private readonly filter: Dictionary<boolean> = new Dictionary<boolean>()
+  private readonly filter: Map<string, boolean> = new Map<string, boolean>()
   private messages: number = 0
   private print: boolean = true
 
@@ -425,7 +424,7 @@ export class JsfixCmd {
   }
 
   private field (): void {
-    let sf: SimpleFieldDefinition | null
+    let sf: SimpleFieldDefinition | undefined
     const tag: number = parseInt(argv.field, 10)
     const definitions = this.definitions
     if (!isNaN(tag)) {
@@ -465,7 +464,7 @@ export class JsfixCmd {
 
   private trim (): string {
     this.setFilter()
-    const types = this.filter.count() > 0 ? this.filter.keys() : this.definitions.simple.get('MsgType')?.enums.keys() ?? []
+    const types = this.filter.size > 0 ? Array.from(this.filter.keys()) : Array.from(this.definitions.simple.get('MsgType')?.enums.keys() ?? [])
     const qfb = new QuickFixXmlFileBuilder(this.definitions)
     qfb.write(types)
     return qfb.elasticBuffer.toString()
@@ -524,7 +523,7 @@ export class JsfixCmd {
         })
       }
       types.forEach((mt: any) => {
-        this.filter.add(mt, true)
+        this.filter.set(mt, true)
       })
     }
   }
@@ -555,7 +554,7 @@ export class JsfixCmd {
     // the receiver is message parser which is piped from an input stream - file, socket
     ft.receiver.on('msg', (msgType: string, m: AsciiView) => {
       if (filter) {
-        if (filter.containsKey(msgType)) {
+        if (filter.has(msgType)) {
           return
         }
       }

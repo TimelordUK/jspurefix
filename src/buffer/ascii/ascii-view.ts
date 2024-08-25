@@ -1,4 +1,4 @@
-import { SimpleFieldDefinition } from '../../dictionary/definition'
+import { FixDefinitions, SimpleFieldDefinition } from '../../dictionary/definition'
 import { SegmentDescription } from '../segment/segment-description'
 import { Structure } from '../structure'
 import { MsgView } from '../msg-view'
@@ -11,13 +11,13 @@ import { TagType } from '../tag/tag-type'
 
 export class AsciiView extends MsgView {
   private readonly timeFormatter: ITimeFormatter = new TimeFormatter(this.buffer)
-  constructor (public readonly segment: SegmentDescription,
+  constructor (public readonly definitions: FixDefinitions, public readonly segment: SegmentDescription,
     public readonly buffer: ElasticBuffer,
     public readonly structure: Structure | null,
     public readonly ptr: number,
     public readonly delimiter: number,
     public readonly writeDelimiter: number) {
-    super(segment, structure)
+    super(definitions, segment, structure)
   }
 
   // if the view is to be kept beyond the event on which it arrives, must be cloned
@@ -26,11 +26,12 @@ export class AsciiView extends MsgView {
     const buffer = this.buffer.clone()
     const segment = this.segment
     const delimiter = this.delimiter
+    const definitions = this.definitions
     const writeDelimiter = this.writeDelimiter
     if (structure) {
-      return new AsciiView(segment, buffer, new Structure(structure.tags.clone(), structure.segments), this.ptr, delimiter, writeDelimiter)
+      return new AsciiView(definitions, segment, buffer, new Structure(structure.tags.clone(), structure.segments), this.ptr, delimiter, writeDelimiter)
     }
-    return new AsciiView(segment, buffer, null, this.ptr, delimiter, writeDelimiter)
+    return new AsciiView(definitions, segment, buffer, null, this.ptr, delimiter, writeDelimiter)
   }
 
   private replaceDelimiter (viewBuffer: Buffer, replaceDelimiter?: number): void {
@@ -71,7 +72,7 @@ export class AsciiView extends MsgView {
     return cs % 256
   }
 
-  protected toTyped (field: SimpleFieldDefinition): any {
+  protected toTyped (field: SimpleFieldDefinition): (boolean | string | number | Date | Buffer | null) {
     const position: number = this.getPosition(field.tag)
     if (position >= 0) {
       switch (field.tagType) {
@@ -117,10 +118,11 @@ export class AsciiView extends MsgView {
         }
       }
     }
+    return null
   }
 
   protected create (singleton: SegmentDescription): MsgView {
-    return new AsciiView(singleton,
+    return new AsciiView(this.definitions, singleton,
       this.buffer,
       this.structure,
       this.ptr,

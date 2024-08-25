@@ -73,7 +73,7 @@ export class EnumCompiler {
     }
     return this.create(field.name, field.description, () => {
       const newLine = require('os').EOL
-      return field.enums.keys().reduce((a: number, latest: string, i: number, arr: string[]) => {
+      return Array.from(field.enums.keys()).reduce((a: number, latest: string, i: number, arr: string[]) => {
         const k = field.resolveEnum(latest)
         let v: any = latest
         switch (field.tagType) {
@@ -120,7 +120,7 @@ export class EnumCompiler {
 
   private toDo (): SimpleFieldDefinition[] {
     const done: ILooseObject = {}
-    return this.definitions.simple.values().reduce((a: SimpleFieldDefinition[], latest: SimpleFieldDefinition) => {
+    return Array.from(this.definitions.simple.values()).reduce((a: SimpleFieldDefinition[], latest: SimpleFieldDefinition) => {
       if (latest.isEnum() && !done[latest.name]) {
         done[latest.name] = true
         a.push(latest)

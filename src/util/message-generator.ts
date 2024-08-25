@@ -1,5 +1,5 @@
 import { ILooseObject } from '../collections/collection'
-import { ContainedComponentField, ContainedGroupField, ContainedFieldSet, ContainedSimpleField } from '../dictionary/contained'
+import { ContainedComponentField, ContainedGroupField, IContainedSet, ContainedSimpleField } from '../dictionary/contained'
 import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import { SetReduce } from '../dictionary'
 import { TagType } from '../buffer/tag/tag-type'
@@ -13,7 +13,7 @@ export class MessageGenerator {
 
   public static getRandomEnum (field: SimpleFieldDefinition): any {
     const tagType: TagType = field.tagType
-    const keys: string[] = field.enums.keys()
+    const keys: string[] = Array.from(field.enums.keys())
     const choice: string = keys[Math.floor(Math.random() * keys.length)]
     switch (tagType) {
       case TagType.Int: {
@@ -56,14 +56,14 @@ export class MessageGenerator {
     }
     density = Math.max(0.2, density)
     density = Math.min(1.0, density)
-    const def: MessageDefinition | null = this.definitions.message.get(msgType)
+    const def: MessageDefinition | undefined = this.definitions.message.get(msgType)
     if (!def) {
       throw new Error(`definitions do not contain type ${msgType}`)
     }
     return this.toObject(def, density, repeatGroups)
   }
 
-  private toObject (set: ContainedFieldSet, density: number, repeatGroups: boolean): ILooseObject {
+  private toObject (set: IContainedSet, density: number, repeatGroups: boolean): ILooseObject {
     const reducer = new SetReduce<ILooseObject>()
     return reducer.reduce(set, {
       simple: (a: ILooseObject, sf: ContainedSimpleField) => {

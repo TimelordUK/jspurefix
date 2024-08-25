@@ -10,7 +10,7 @@ import { Readable } from 'stream'
 import { ElasticBuffer } from '../elastic-buffer'
 import { SegmentDescription } from '../segment/segment-description'
 import { ParseState } from './parse-state'
-import { IJsFixConfig } from '../../config'
+import { IJsFixConfig } from '../../config/js-fix-config'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
@@ -35,11 +35,11 @@ export class AsciiParser extends MsgParser {
 
     this.delimiter = config.delimiter ?? AsciiChars.Soh
     this.writeDelimiter = config.logDelimiter ?? AsciiChars.Pipe
-    const definitions = config.definitions
     this.id = AsciiParser.nextId++
     this.segmentParser = config.sessionContainer.resolve<AsciiSegmentParser>(AsciiSegmentParser)
     this.state = config.sessionContainer.resolve<AsciiParserState>(AsciiParserState)
-    this.state.locations = new Tags(definitions, this.receivingBuffer.size / 10)
+    this.state.locations = new Tags(this.receivingBuffer.size / 10)
+    this.state.definitions = this.config.definitions
     this.state.beginMessage()
     if (readStream !== null) {
       this.subscribe()
@@ -181,6 +181,7 @@ export class AsciiParser extends MsgParser {
     const locations = state.locations
     const source = this.receivingBuffer
     const delimiter = this.delimiter
+    const definitions = this.config.definitions
     const replace = this.writeDelimiter
     const msgType = state.msgType ?? null
     if (!msgType) return null
@@ -189,7 +190,7 @@ export class AsciiParser extends MsgParser {
         const structure: Structure | null = this.segmentParser.parse(msgType, locations,
           locations.nextTagPos - 1)
         if (!structure) return null
-        return new AsciiView(structure.msg(),
+        return new AsciiView(definitions, structure.msg(),
           source,
           structure,
           ptr,
@@ -207,6 +208,6 @@ export class AsciiParser extends MsgParser {
     const structure = new Structure(locations, [])
     const segment = new SegmentDescription('unknown', locations.tagPos[0].tag, null, 0, 1, SegmentType.Unknown)
     segment.endPosition = locations.nextTagPos - 1
-    return new AsciiView(segment, source, structure, ptr, delimiter, replace)
+    return new AsciiView(this.config.definitions, segment, source, structure, ptr, delimiter, replace)
   }
 }

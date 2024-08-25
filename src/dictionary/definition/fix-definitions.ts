@@ -1,30 +1,29 @@
 import { INumericKeyed } from '../../collections/collection'
-import { Dictionary } from '../../collections'
 import { ComponentFieldDefinition } from './component-field-definition'
 import { MessageDefinition } from './message-definition'
 import { SimpleFieldDefinition } from './simple-field-definition'
 import { FixVersion } from '../fix-versions'
 import { CategorySimpleSet } from './category-simple-set'
-import { ContainedFieldSet } from '../contained'
 import { FixDefinitionSource } from '../fix-definition-source'
 import { FixVersionParser } from './fix-version-parser'
+import { IContainedSet } from '../contained/contained-set'
 
 export class FixDefinitions {
   /**
    * all simple fields defined from source definition indexed via name
    * e.g. 'BeginString'
    */
-  public readonly simple: Dictionary<SimpleFieldDefinition> = new Dictionary<SimpleFieldDefinition>()
+  public readonly simple: Map<string, SimpleFieldDefinition> = new Map<string, SimpleFieldDefinition>()
   /**
    * all components defined from source definition indexed via name
    * e.g. 'Instrument'
    */
-  public readonly component: Dictionary<ComponentFieldDefinition> = new Dictionary<ComponentFieldDefinition>()
+  public readonly component: Map<string, ComponentFieldDefinition> = new Map<string, ComponentFieldDefinition>()
   /**
    * all messages defined from source definition indexed via name
    * e.g. 'Logon'
    */
-  public readonly message: Dictionary<MessageDefinition> = new Dictionary<MessageDefinition>()
+  public readonly message: Map<string, MessageDefinition> = new Map<string, MessageDefinition>()
   /**
    * all messages defined from source definition indexed via tag id
    * e.g. 8
@@ -33,7 +32,7 @@ export class FixDefinitions {
   /**
    * all fields within a category indexed via name used for FIXML
    */
-  public readonly categorySimple: Dictionary<CategorySimpleSet> = new Dictionary<CategorySimpleSet>()
+  public readonly categorySimple: Map<string, CategorySimpleSet> = new Map<string, CategorySimpleSet>()
 
   constructor (public readonly source: FixDefinitionSource, public readonly version: FixVersion) {
   }
@@ -52,11 +51,14 @@ export class FixDefinitions {
 
   public toString (): string {
     const msgs = this.message.values()
-    const strs: String[] = msgs.map(m => m.toString())
+    const strs: String[] = []
+    for (const message of msgs) {
+      strs.push(message.toString())
+    }
     return JSON.stringify(strs, null, 4)
   }
 
-  public containedSet (type: string): ContainedFieldSet | null {
+  public containedSet (type: string): IContainedSet | undefined {
     return this.message.get(type) ?? this.component.get(type)
   }
 
@@ -66,7 +68,7 @@ export class FixDefinitions {
    * 'SecurityList.SecListGrp.NoRelatedSym.SecurityTradingRules'
    * @param path dot denoted path too field set nested from root
    */
-  public getSet (path: string): ContainedFieldSet | null {
+  public getSet (path: string): IContainedSet | undefined {
     const idx = path.indexOf('.')
     let name: string = path
     if (idx > 0) {
@@ -74,7 +76,7 @@ export class FixDefinitions {
     } else {
       return this.message.get(name)
     }
-    return this.message.get(name)?.getSet(path.substring(idx + 1)) ?? null
+    return this.message.get(name)?.getSet(path.substring(idx + 1)) ?? undefined
   }
 
   /**
@@ -84,13 +86,13 @@ export class FixDefinitions {
    */
   public addMessage (message: MessageDefinition): void {
     const messages = this.message
-    messages.addUpdate(message.name, message)
+    messages.set(message.name, message)
     if (message.msgType && message.msgType !== message.name) {
-      messages.addUpdate(message.msgType, message)
+      messages.set(message.msgType, message)
     }
     if (message.abbreviation) {
       if (message.abbreviation !== message.name) {
-        messages.addUpdate(message.abbreviation, message)
+        messages.set(message.abbreviation, message)
       }
     }
   }
@@ -100,7 +102,7 @@ export class FixDefinitions {
    * @param field
    */
   public addComponentFieldDef (field: ComponentFieldDefinition): void {
-    this.component.addUpdate(field.name, field)
+    this.component.set(field.name, field)
   }
 
   /**
@@ -109,10 +111,10 @@ export class FixDefinitions {
    * @param name of the field to fetch
    * @param cat optional category from which field belongs
    */
-  public getSimple (name: string, cat?: string | null): SimpleFieldDefinition | null {
-    let sf: SimpleFieldDefinition | null = null
+  public getSimple (name: string, cat?: string | null): SimpleFieldDefinition | undefined {
+    let sf: SimpleFieldDefinition | undefined
     if (cat) {
-      const category: CategorySimpleSet | null = this.categorySimple.get(cat)
+      const category = this.categorySimple.get(cat)
       if (category) {
         sf = category.simple.get(name)
       }
@@ -131,7 +133,7 @@ export class FixDefinitions {
   public addSimpleAlias (from: string, to: string): void {
     const simple = this.simple.get(from)
     if (simple) {
-      this.simple.addUpdate(to, simple)
+      this.simple.set(to, simple)
     }
   }
 
@@ -144,27 +146,27 @@ export class FixDefinitions {
   public addSimpleFieldDef (field: SimpleFieldDefinition, typeName: string | null = null): void {
     this.assignCategory(field)
     const simple = this.simple
-    simple.addUpdate(field.num, field)
-    simple.addUpdate(field.name, field)
+    simple.set(field.num, field)
+    simple.set(field.name, field)
     this.tagToSimple[field.tag] = field
     if (field.abbreviation && field.abbreviation !== field.name) {
-      if (!simple.containsKey(field.abbreviation)) {
-        simple.addUpdate(field.abbreviation, field)
+      if (!simple.has(field.abbreviation)) {
+        simple.set(field.abbreviation, field)
       }
     }
     if (typeName && typeName !== field.name && field.name && field.type) {
-      simple.addUpdate(typeName, field)
+      simple.set(typeName, field)
     }
   }
 
   private assignCategory (field: SimpleFieldDefinition): void {
     if (field.baseCategory && field.baseCategoryAbbreviation) {
-      let category: CategorySimpleSet | null = this.categorySimple.get(field.baseCategory)
+      let category = this.categorySimple.get(field.baseCategory)
       if (!category) {
         category = new CategorySimpleSet(field.baseCategory)
-        this.categorySimple.add(field.baseCategory, category)
+        this.categorySimple.set(field.baseCategory, category)
       }
-      category.simple.addUpdate(field.baseCategoryAbbreviation, field)
+      category.simple.set(field.baseCategoryAbbreviation, field)
     }
   }
 }

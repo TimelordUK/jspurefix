@@ -9,13 +9,12 @@ import {
   FieldsDispatch
 } from '../../contained'
 import { keys } from 'lodash'
-import { Dictionary } from '../../../collections'
 import { QuickFixXmlFormatter } from './quick-fix-xml-formatter'
 
 export class QuickFixXmlFileBuilder {
   private readonly usedTags: INumericKeyed<string> = {}
   private readonly requiredComponents: string[] = []
-  private readonly seenComponents: Dictionary<boolean> = new Dictionary<boolean>()
+  private readonly seenComponents: Map<string, boolean> = new Map<string, boolean>()
   private readonly indent: number = 2
   private readonly dispatcher: FieldsDispatch = new FieldsDispatch()
   public readonly elasticBuffer: ElasticBuffer = new ElasticBuffer(10 * 1024)
@@ -121,7 +120,7 @@ export class QuickFixXmlFileBuilder {
    */
   private writeEnumDefinition (sf: SimpleFieldDefinition, leadingIndent: number): string {
     const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
-    const keys = sf.enums.keys()
+    const keys = Array.from(sf.enums.keys())
     keys.sort()
     keys.forEach(k => {
       eb.writeString(QuickFixXmlFormatter.addEnum(sf.enums.get(k), leadingIndent))
@@ -146,8 +145,8 @@ export class QuickFixXmlFileBuilder {
 
   private writeComponentField (cf: ContainedComponentField, eb: ElasticBuffer, leadingIndent: number): void {
     eb.writeString(QuickFixXmlFormatter.addComponent(cf, leadingIndent))
-    if (!this.seenComponents.containsKey(cf.name)) {
-      this.seenComponents.add(cf.name, true)
+    if (!this.seenComponents.has(cf.name)) {
+      this.seenComponents.set(cf.name, true)
       this.requiredComponents.push(cf.name)
     }
   }

@@ -5,7 +5,7 @@ import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
 import {
   ContainedField, ContainedComponentField,
   ContainedFieldType, ContainedGroupField,
-  ContainedSimpleField, ContainedFieldSet
+  ContainedSimpleField, IContainedSet
 } from '../../dictionary/contained'
 import { SegmentDescription } from '../segment/segment-description'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
@@ -39,7 +39,7 @@ export class FiXmlParser extends MsgParser {
     const me = description?.application?.name
     this.logger = config.logFactory.logger(`${me}:FiXmlParser`)
     this.saxStream = require('sax').createStream(true, {})
-    this.locations = new Tags(this.definitions, maxMessageLocations)
+    this.locations = new Tags(maxMessageLocations)
     this.logger.info('subscribe to stream')
     this.subscribe()
   }
@@ -180,7 +180,7 @@ export class FiXmlParser extends MsgParser {
   private getView (): MsgView {
     const structure: Structure = new Structure(this.locations, this.segments)
     const last = structure.segments[structure.segments.length - 1]
-    return new FixmlView(last, this.values, structure)
+    return new FixmlView(this.definitions, last, this.values, structure)
   }
 
   private pop (name: string): SegmentDescription | null {
@@ -333,7 +333,7 @@ export class FiXmlParser extends MsgParser {
   private msg (saxNode: ISaxNode, inBatch: boolean = false): void {
     this.logger.debug(`${saxNode.name}: begin parse msg`)
     const type: string = saxNode.name
-    const def: MessageDefinition | null = this.definitions.message.get(type)
+    const def: MessageDefinition | undefined = this.definitions.message.get(type)
     if (!def) {
       throw new Error(`unknown message type ${type}`)
     }
@@ -347,7 +347,7 @@ export class FiXmlParser extends MsgParser {
     }
   }
 
-  private parseAttributes (name: string, set: ContainedFieldSet, saxNode: ISaxNode, type: SegmentType): SegmentDescription | null {
+  private parseAttributes (name: string, set: IContainedSet, saxNode: ISaxNode, type: SegmentType): SegmentDescription | null {
     const locations = this.locations
     const attributes = saxNode.attributes
     const values = this.values

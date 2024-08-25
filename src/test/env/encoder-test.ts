@@ -1,5 +1,5 @@
 import { ILooseObject } from '../../collections/collection'
-import { ContainedFieldSet } from '../../dictionary/contained'
+import { IContainedSet } from '../../dictionary/contained'
 import { AsciiEncoder } from '../../buffer/ascii'
 import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
 import { AsciiMsgTransmitter } from '../../transport/ascii/ascii-msg-transmitter'
@@ -9,7 +9,7 @@ export class EncoderTest {
   public definitions: FixDefinitions
   public session: AsciiMsgTransmitter
   public encoder: AsciiEncoder
-  public nos: MessageDefinition | null
+  public nos: MessageDefinition | undefined
   public er: MessageDefinition
 
   public localDate: Date = new Date(2018, 6, 25)
@@ -33,7 +33,7 @@ export class EncoderTest {
     }
   }
 
-  public toFix (o: ILooseObject, set?: ContainedFieldSet, enc?: AsciiEncoder): string {
+  public toFix (o: ILooseObject, set?: IContainedSet, enc?: AsciiEncoder): string {
     const theEncode = enc ?? this.encoder
     this.session.buffer.reset()
     if (set) {

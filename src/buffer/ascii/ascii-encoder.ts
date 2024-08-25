@@ -1,7 +1,7 @@
 import { ILooseObject } from '../../collections/collection'
 import {
   ContainedGroupField, ContainedSimpleField,
-  ContainedFieldSet, ContainedField,
+  IContainedSet, ContainedField,
   ContainedComponentField, FieldsDispatch
 } from '../../dictionary/contained'
 import { SimpleFieldDefinition, FixDefinitions } from '../../dictionary/definition'
@@ -26,7 +26,7 @@ export class AsciiEncoder extends MsgEncoder {
     public readonly delimiter: number = AsciiChars.Soh,
     public readonly logDelimiter: number = AsciiChars.Pipe) {
     super(definitions)
-    this.tags = new Tags(definitions)
+    this.tags = new Tags()
   }
 
   public trim (): Buffer {
@@ -51,12 +51,12 @@ export class AsciiEncoder extends MsgEncoder {
     this.tags.reset()
   }
 
-  public encodeSet (objectToEncode: ILooseObject, set: ContainedFieldSet): void {
+  public encodeSet (objectToEncode: ILooseObject, set: IContainedSet): void {
     const summary: AsciiEncodeSetSummary = new AsciiEncodeSetSummary()
     this.encodeObject(objectToEncode, set, summary)
   }
 
-  private encodeObject (objectToEncode: ILooseObject, set: ContainedFieldSet, state: AsciiEncodeSetSummary): void {
+  private encodeObject (objectToEncode: ILooseObject, set: IContainedSet, state: AsciiEncodeSetSummary): void {
     const fields: ContainedField[] = this.getFields(set, objectToEncode)
     this.dispatcher.dispatchFields(fields, {
       simple: (sf: ContainedSimpleField) => {
@@ -83,11 +83,11 @@ export class AsciiEncoder extends MsgEncoder {
     })
   }
 
-  private getFields (set: ContainedFieldSet, o: ILooseObject): ContainedField[] {
+  private getFields (set: IContainedSet, o: ILooseObject): ContainedField[] {
     const keys: string[] = Object.keys(o)
     let j: number = 0
     const fields: ContainedField[] = keys.reduce((a: ContainedField[], current: string) => {
-      const field: ContainedField | null = set.localNameToField.get(current)
+      const field = set.localNameToField.get(current)
       if (field) {
         a[j++] = field
       }
@@ -140,7 +140,7 @@ export class AsciiEncoder extends MsgEncoder {
     buffer.writeChar(delimiter)
   }
 
-  private encodeSimple (o: ILooseObject, set: ContainedFieldSet, sf: ContainedSimpleField, val: any): void {
+  private encodeSimple (o: ILooseObject, set: IContainedSet, sf: ContainedSimpleField, val: any): void {
     const definition = sf.definition
     const tag: number = definition.tag
     const buffer = this.buffer

@@ -1,4 +1,10 @@
-import { ContainedComponentField, ContainedField, ContainedGroupField, ContainedSimpleField } from '../../contained'
+import {
+  ContainedComponentField,
+  ContainedField,
+  ContainedGroupField,
+  ContainedSetBuilder,
+  ContainedSimpleField
+} from '../../contained'
 import { ComponentFieldDefinition, GroupFieldDefinition, SimpleFieldDefinition } from '../../definition'
 import { ParseContext } from './parse-context'
 import { ISaxNode } from '../../sax-node'
@@ -17,7 +23,8 @@ export abstract class NodeParser {
   protected addto (context: ParseContext, containedField: ContainedField): void {
     if (context.set != null) {
       this.progress.newAdds++
-      context.set.add(containedField)
+      const builder = new ContainedSetBuilder(context.set)
+      builder.add(containedField)
     } else {
       this.progress.cacheMisses++
     }
@@ -34,7 +41,7 @@ export abstract class NodeParser {
         throw new Error(`simple field ${node.name} has no parent on which to add.`)
       }
       const fieldName: string = node.attributes.name
-      const fieldDefinition: SimpleFieldDefinition | null = this.progress.definitions.simple.get(fieldName)
+      const fieldDefinition: SimpleFieldDefinition | undefined = this.progress.definitions.simple.get(fieldName)
       if (!fieldDefinition) {
         throw new Error(`simple field ${fieldName} has no declaration in dictionary.`)
       }
@@ -60,7 +67,7 @@ export abstract class NodeParser {
     if (!parent) {
       throw new Error(`component ${node.name} has no parent on which to add.`)
     }
-    const fieldDef: ComponentFieldDefinition | null = this.progress.definitions.component.get(componentName)
+    const fieldDef: ComponentFieldDefinition | undefined = this.progress.definitions.component.get(componentName)
     if (fieldDef) {
       const containedField: ContainedComponentField = this.makeContainedComponent(fieldDef, parent)
       this.addto(parent, containedField)
@@ -146,10 +153,10 @@ export abstract class NodeParser {
       throw new Error(msg)
     }
     const fullQualifiedName = `${this.fullContextName()}.${groupName}`
-    let cached: (GroupFieldDefinition | null) = this.progress.groupDefinitionCache.get(fullQualifiedName)
+    let cached: (GroupFieldDefinition | undefined) = this.progress.groupDefinitionCache.get(fullQualifiedName)
     if (!cached) {
       cached = new GroupFieldDefinition(groupName, groupName, null, noOfField, null)
-      this.progress.groupDefinitionCache.add(fullQualifiedName, cached)
+      this.progress.groupDefinitionCache.set(fullQualifiedName, cached)
     } else {
       cached.reset()
     }

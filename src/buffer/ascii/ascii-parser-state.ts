@@ -1,5 +1,5 @@
 import { Tags } from '../tag/tags'
-import { MessageDefinition } from '../../dictionary/definition'
+import { FixDefinitions, MessageDefinition } from '../../dictionary/definition'
 import { ElasticBuffer } from '../elastic-buffer'
 import { ParseState } from './parse-state'
 import { inject, injectable } from 'tsyringe'
@@ -7,7 +7,7 @@ import { DITokens } from '../../runtime/di-tokens'
 
 @injectable()
 export class AsciiParserState {
-  public message: MessageDefinition | null
+  public message: MessageDefinition | undefined
   public locations: Tags
   public parseState: ParseState
   public bodyLen: number
@@ -19,6 +19,7 @@ export class AsciiParserState {
   public currentTag: number
   public rawDataLen: number
   public rawDataRead: number
+  public definitions: FixDefinitions
   public msgType: string | null
 
   constructor (@inject(DITokens.ParseBuffer) public readonly elasticBuffer: ElasticBuffer) {
@@ -126,7 +127,7 @@ export class AsciiParserState {
           throw new Error(`MsgTag: not expected at position [${nextTagPos}]`)
         }
         this.msgType = buffer.getString(equalPos + 1, valueEndPos)
-        this.message = locations.definitions.message.get(this.msgType)
+        this.message = this.definitions.message.get(this.msgType)
         break
       }
 
@@ -181,7 +182,6 @@ export class AsciiParserState {
     this.rawDataRead = 0
     this.rawDataLen = 0
     this.bodyLen = 0
-    this.message = null
     this.msgType = null
   }
 }

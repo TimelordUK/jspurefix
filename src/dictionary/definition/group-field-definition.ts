@@ -1,4 +1,4 @@
-import { ContainedFieldSet } from '../contained'
+import { ContainedFieldSet } from '../contained/contained-field-set'
 import { SimpleFieldDefinition } from './simple-field-definition'
 import { ContainedSetType } from '../contained-set-type'
 

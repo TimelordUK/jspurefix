@@ -1,16 +1,16 @@
-import { ContainedFieldSet } from '../contained'
+import { ContainedFieldSet } from '../contained/contained-field-set'
 import { ContainedSetType } from '../contained-set-type'
 
 export class MessageDefinition extends ContainedFieldSet {
-  constructor (public readonly name: string,
-    public readonly abbreviation: string,
+  constructor (readonly name: string,
+    readonly abbreviation: string,
     public readonly msgType: string,
-    public readonly category: string,
-    public readonly description: string | null) {
+    readonly category: string,
+    readonly description: string | null) {
     super(ContainedSetType.Msg, name, category, abbreviation, description)
   }
 
-  public getPrefix (): string {
+  getPrefix (): string {
     return `M.${this.msgType}`
   }
 }

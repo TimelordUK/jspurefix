@@ -13,12 +13,12 @@ export class FieldDefinitionParser extends NodeParser {
     switch (node.name) {
       case 'field': {
         this.currentField = new SimpleFieldDefinition(
-          node.attributes.number,
-          node.attributes.name,
-          node.attributes.name,
+          node.attributes.number as string,
+          node.attributes.name as string,
+          node.attributes.name as string,
           null,
           null,
-          node.attributes.type,
+          node.attributes.type as string,
           null)
         this.progress.newDefines++
         this.progress.definitions.addSimpleFieldDef(this.currentField)
@@ -26,7 +26,7 @@ export class FieldDefinitionParser extends NodeParser {
       }
 
       case 'value': {
-        this.currentField.addEnum(node.attributes.enum, node.attributes.description)
+        this.currentField.addEnum(node.attributes.enum as string, node.attributes.description as string)
         break
       }
     }

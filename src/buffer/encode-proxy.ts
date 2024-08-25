@@ -3,7 +3,7 @@ import { FixDefinitions, MessageDefinition, SimpleFieldDefinition } from '../dic
 import {
   ContainedComponentField,
   ContainedField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedFieldType,
   ContainedGroupField,
   ContainedSimpleField
@@ -17,7 +17,7 @@ export class EncodeProxy {
   private static SimpleFieldCheck (field: ContainedSimpleField, val: any): void {
     const definition: SimpleFieldDefinition = field.definition
     if (definition.isEnum()) {
-      const resolved: boolean = definition.containsEnum(val)
+      const resolved: boolean = definition.containsEnum(String(val))
       if (!resolved) {
         throw new Error(`enum field ${field.name} does not support "${val}"`)
       }
@@ -59,7 +59,7 @@ export class EncodeProxy {
       case TagType.Int:
       case TagType.Float:
       case TagType.Length: {
-        if (isNaN(val)) {
+        if (isNaN(val as number)) {
           throw new Error(`field ${field.name} expects number but receives "${typeof val}"`)
         }
         break
@@ -80,17 +80,17 @@ export class EncodeProxy {
     if (!isComplex) {
       throw new Error(`type ${field.name} is a component but is given type "${typeof val}"`)
     }
-    return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(field.definition)), val)
+    return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(field.definition)), val as ILooseObject)
   }
 
   private static GroupFieldCheck (field: ContainedGroupField, val: any): object {
-    const accepted: boolean = Array.isArray(val) || !isNaN(val)
+    const accepted: boolean = Array.isArray(val) || !isNaN(val as number)
     if (!accepted) {
       throw new Error(`type ${field.name} is a group and needs array or number, not "${typeof val}"`)
     }
     const gf: ContainedComponentField = field as ContainedComponentField
     const j: number = val
-    const isNumber: boolean = !isNaN(val)
+    const isNumber: boolean = !isNaN(val as number)
     if (isNumber) {
       const arr: ILooseObject[] = new Array(j)
       for (let i: number = 0; i < j; ++i) {
@@ -106,10 +106,10 @@ export class EncodeProxy {
     }
   }
 
-  private static handler (set: ContainedFieldSet): Object {
+  private static handler (set: IContainedSet): Object {
     return {
       set (target: ILooseObject, prop: string, val: any): boolean {
-        const field: ContainedField | null = set.localNameToField.get(prop)
+        const field: ContainedField | undefined = set.localNameToField.get(prop)
         if (!field) {
           throw new Error(`type ${set.name} has no field named ${prop}`)
         }
@@ -140,7 +140,7 @@ export class EncodeProxy {
   }
 
   public wrap (msgName: string): ILooseObject {
-    const msg: MessageDefinition | null = this.definitions.message.get(msgName)
+    const msg: MessageDefinition | undefined = this.definitions.message.get(msgName)
     if (!msg) {
       throw new Error(`no message defined for type ${msgName}`)
     }

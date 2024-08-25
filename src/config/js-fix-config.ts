@@ -1,8 +1,9 @@
 import { FixDefinitions } from '../dictionary/definition'
-import { ISessionDescription, ISessionMsgFactory } from '../transport'
+import { ISessionDescription } from '../transport/session/session-description'
+import { ISessionMsgFactory } from '../transport/session/session-msg-factory'
 import { JsFixLoggerFactory } from './js-fix-logger-factory'
 import { EmptyLogFactory } from './empty-log-factory'
-import { AsciiChars } from '../buffer/ascii'
+import { AsciiChars } from '../buffer/ascii/ascii-chars'
 import { DependencyContainer } from 'tsyringe'
 
 export interface IJsFixConfig {

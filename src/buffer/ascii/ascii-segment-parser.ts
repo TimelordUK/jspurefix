@@ -28,7 +28,7 @@ export class AsciiSegmentParser {
   public parse (msgType: string, tags: Tags, last: number): Structure | null {
     // completed segments in that they are fully parsed
     const segments: SegmentDescription[] = []
-    const msgDefinition: MessageDefinition | null = this.definitions.message.get(msgType)
+    const msgDefinition: MessageDefinition | undefined = this.definitions.message.get(msgType)
     if (!msgDefinition) {
       return null
     }
@@ -58,7 +58,7 @@ export class AsciiSegmentParser {
       }
     }
 
-    function summarise (): any {
+    function summarise (): AsciiSegmentParserSummary {
       return <AsciiSegmentParserSummary>{
         msgType,
         tags: tags.clone().tagPos,

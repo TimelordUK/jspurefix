@@ -1,27 +1,23 @@
 import { INumericKeyed } from '../../collections/collection'
-import { Dictionary } from '../../collections'
-import { ContainedComponentField } from './contained-component-field'
 import { ContainedField } from './contained-field'
-import { ContainedGroupField } from './contained-group-field'
 import { ContainedSimpleField } from './contained-simple-field'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
-import { ContainedFieldType } from './contained-field-type'
-import { TagType } from '../../buffer/tag/tag-type'
 import { ContainedSetType } from '../contained-set-type'
+import { IContainedSet } from './contained-set'
 
-export abstract class ContainedFieldSet {
+export abstract class ContainedFieldSet implements IContainedSet {
   /**
    * index of name to any group that may be present within the field list
    */
-  public readonly groups: Dictionary<ContainedGroupField> = new Dictionary<ContainedGroupField>()
+  public readonly groups: Map<string, IContainedSet> = new Map<string, IContainedSet>()
   /**
    * index of name to any component that may be present within the field list
    */
-  public readonly components: Dictionary<ContainedComponentField> = new Dictionary<ContainedComponentField>()
+  public readonly components: Map<string, IContainedSet> = new Map<string, IContainedSet>()
   /**
    * index of name to any simple field that may be present within the field list
    */
-  public readonly simple: Dictionary<ContainedSimpleField> = new Dictionary<ContainedSimpleField>()
+  public readonly simple: Map<string, ContainedSimpleField> = new Map<string, ContainedSimpleField>()
   /**
    *  sequence of fields representing this type - can be simple, group or component
    */
@@ -57,11 +53,11 @@ export abstract class ContainedFieldSet {
   /**
    * only repository directly in this set indexed by name
    */
-  public readonly localNameToField: Dictionary<ContainedField> = new Dictionary<ContainedField>()
+  public readonly localNameToField: Map<string, ContainedField> = new Map<string, ContainedField>()
   /**
    * for FixMl notation this set of fields appear as attributes i.e. <Pty ID="323" R="38">
    */
-  public readonly nameToLocalAttribute: Dictionary<ContainedSimpleField> = new Dictionary<ContainedSimpleField>()
+  public readonly nameToLocalAttribute: Map<string, ContainedSimpleField> = new Map<string, ContainedSimpleField>()
   /**
    * all attributes in order of being declared
    */
@@ -114,147 +110,6 @@ export abstract class ContainedFieldSet {
 
   public abstract getPrefix (): string
 
-  public getFieldName (tag: number): string {
-    const s = this.tagToSimple[tag]
-    if (s == null) {
-      const gf = this.tagToField[tag] as ContainedGroupField
-      if (gf !== null) {
-        return `${gf.definition.name}`
-      }
-      return `${tag}`
-    }
-    return s.name
-  }
-
-  /**
-   * adds a field to this set - simple, component or group
-   * @param field
-   */
-  public add (field: ContainedField): void {
-    this.fields.push(field)
-    this.localNameToField.addUpdate(field.name, field)
-    this.addUpdate(field)
-    this.addContained(this, field)
-  }
-
-  /**
-   * recurses down a path to return nested set definitiom of a group or component
-   * given in dot notation 'SecListGrp.NoRelatedSym.SecurityTradingRules.BaseTradingRules'
-   * @param path in dot notation
-   */
-  public getSet (path: string): (ContainedFieldSet | null) {
-    if (!path) return null
-    return path.split('.').reduce((set: ContainedFieldSet, next: string): (ContainedFieldSet | null) => {
-      return set.groups.get(next)?.definition ?? set.components.get(next)?.definition ?? null
-    }, this)
-  }
-
-  private addUpdate (field: ContainedField): void {
-    switch (field.type) {
-      case ContainedFieldType.Simple: {
-        this.addLocalSimple(field as ContainedSimpleField)
-        break
-      }
-
-      case ContainedFieldType.Component: {
-        const cf = field as ContainedComponentField
-        const definition = cf.definition
-        if (definition.abbreviation && definition.abbreviation !== field.name) {
-          this.localNameToField.addUpdate(definition.abbreviation, field)
-        }
-        break
-      }
-
-      case ContainedFieldType.Group: {
-        const gf = field as ContainedComponentField
-        const definition = gf.definition
-        if (definition.abbreviation && definition.abbreviation !== field.name) {
-          this.localNameToField.addUpdate(definition.abbreviation, field)
-        }
-        break
-      }
-
-      default:
-        throw new Error(`unknown field type ${field.type}`)
-    }
-  }
-
-  private addLocalSimple (field: ContainedSimpleField): void {
-    const definition = field.definition
-    if (definition.abbreviation && definition.abbreviation !== definition.name) {
-      this.localNameToField.addUpdate(definition.abbreviation, field)
-    }
-    if (definition.baseCategoryAbbreviation && definition.baseCategory === this.category) {
-      this.localNameToField.addUpdate(definition.baseCategoryAbbreviation, field)
-    }
-    if (field.attribute) {
-      this.nameToLocalAttribute.addUpdate(definition.abbreviation, field)
-      this.localAttribute.push(field)
-      // an attribute for FixMl lives in attribute set not fields - in this case xml sub elements
-      this.fields.pop()
-    }
-    const tag = definition.tag
-    this.localTag[tag] = field
-    if (field.required) {
-      this.localRequired[tag] = field
-    }
-  }
-
-  private addContained (parent: ContainedFieldSet, field: ContainedField): void {
-    switch (field.type) {
-      case ContainedFieldType.Group: {
-        this.addGroupFieldDef(field as ContainedGroupField)
-        break
-      }
-
-      case ContainedFieldType.Component: {
-        this.addComponentFieldDef(field as ContainedComponentField)
-        break
-      }
-
-      case ContainedFieldType.Simple: {
-        this.addSimpleFieldDef(parent, field as ContainedSimpleField)
-        break
-      }
-
-      default:
-        throw new Error(`unknown field type ${field.type}`)
-    }
-  }
-
-  private addAllFields (containedField: ContainedFieldSet): void {
-    containedField.fields.forEach((f: ContainedField) => {
-      this.addContained(containedField, f)
-    })
-  }
-
-  private addGroupFieldDef (groupField: ContainedGroupField): void {
-    if (this.groups.containsKey(groupField.name)) {
-      return
-    }
-    const definition = groupField.definition
-    this.groups.add(groupField.name, groupField)
-    const nof = definition.noOfField
-    if (nof) {
-      const tag = nof.tag
-      this.containedTag[tag] = true
-      this.flattenedTag.push(tag)
-    }
-    this.addAllFields(definition)
-    this.mapAllBelow(definition, groupField)
-  }
-
-  private addComponentFieldDef (componentField: ContainedComponentField): void {
-    const components = this.components
-    if (components.containsKey(componentField.name)) {
-      return
-    }
-    const definition = componentField.definition
-    components.add(componentField.name, componentField)
-    this.addAllFields(definition)
-    this.mapAllBelow(definition, componentField)
-  }
-
   public keys (): number[] {
     const keys: string[] = Object.keys(this.containedTag)
     const nums: number[] = new Array(keys.length)
@@ -264,37 +119,27 @@ export abstract class ContainedFieldSet {
     return nums
   }
 
-  private mapAllBelow (set: ContainedFieldSet, field: ContainedField): void {
-    // point all tags in this component to this field.
-    const tagsBelow: number[] = set.keys()
-    for (const t of tagsBelow) {
-      this.tagToField[t] = field
+  public getFieldName (tag: number): string {
+    const s = this.tagToSimple[tag]
+    if (s == null) {
+      const gf: ContainedField = this.tagToField[tag]
+      if (gf !== null) {
+        return `${gf.name}`
+      }
+      return `${tag}`
     }
+    return s.name
   }
 
-  private addSimpleFieldDef (parent: ContainedFieldSet, field: ContainedSimpleField): void {
-    if (this.simple.containsKey(field.name)) {
-      return
-    }
-    if (!this.firstSimple) {
-      this.firstSimple = field
-    }
-    switch (field.definition.tagType) {
-      case TagType.RawData: {
-        const dataLengthField: ContainedSimpleField = parent.fields[field.position - 1] as ContainedSimpleField
-        if (dataLengthField && dataLengthField.definition.tagType === TagType.Length) {
-          this.containedLength[dataLengthField.definition.tag] = true
-          this.containsRaw = true
-        }
-        break
-      }
-      default:
-        break
-    }
-    const tag = field.definition.tag
-    this.simple.add(field.name, field)
-    this.containedTag[tag] = true
-    this.flattenedTag.push(tag)
-    this.tagToSimple[tag] = field
+  /**
+   * recurses down a path to return nested set definitiom of a group or component
+   * given in dot notation 'SecListGrp.NoRelatedSym.SecurityTradingRules.BaseTradingRules'
+   * @param path in dot notation
+   */
+  public getSet (path: string): (IContainedSet | null) {
+    if (!path) return null
+    return path.split('.').reduce((set: IContainedSet, next: string): (IContainedSet | null) => {
+      return set.groups.get(next) ?? set.components.get(next) ?? null
+    }, this)
   }
 }

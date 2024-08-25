@@ -3,8 +3,14 @@ import {
   SimpleFieldDefinition, GroupFieldDefinition, ComponentFieldDefinition,
   MessageDefinition, FixDefinitions
 } from '../../definition'
-import { Dictionary } from '../../../collections'
-import { ContainedFieldSet, ContainedComponentField, ContainedGroupField, ContainedSimpleField } from '../../contained'
+
+import {
+  IContainedSet,
+  ContainedComponentField,
+  ContainedGroupField,
+  ContainedSimpleField,
+  ContainedSetBuilder
+} from '../../contained'
 import { FixVersion } from '../../fix-versions'
 import { GetJsFixLogger, IJsFixLogger } from '../../../config'
 import { FixDefinitionSource } from '../../fix-definition-source'
@@ -28,10 +34,10 @@ export class Repository {
   public includesAbbreviations: boolean
   // derived from above
   public readonly definitions: FixDefinitions
-  private readonly groupLookup: Dictionary<GroupFieldDefinition> = new Dictionary<GroupFieldDefinition>()
-  private contentLookup: Dictionary<IRepositoryMsgContent[]>
-  private componentLookup: Dictionary<IRepositoryComponent>
-  private dataTypeLookup: Dictionary<IRepositoryDataType>
+  private readonly groupLookup: Map<string, GroupFieldDefinition> = new Map<string, GroupFieldDefinition>()
+  private contentLookup: Map<string, IRepositoryMsgContent[]>
+  private componentLookup: Map<string, IRepositoryComponent>
+  private dataTypeLookup: Map<string, IRepositoryDataType>
   private readonly logger: IJsFixLogger
 
   constructor (public readonly version: FixVersion, public readonly getLogger: GetJsFixLogger) {
@@ -104,9 +110,9 @@ export class Repository {
   private summarise (): void {
     const logger = this.logger
     const definitions = this.definitions
-    logger.info(`definitions: ${definitions.simple.count()} fields`)
-    logger.info(`definitions: ${definitions.component.count()} components`)
-    logger.info(`definitions: ${definitions.message.count()} messages`)
+    logger.info(`definitions: ${definitions.simple.size} fields`)
+    logger.info(`definitions: ${definitions.component.size} components`)
+    logger.info(`definitions: ${definitions.message.size} messages`)
   }
 
   private toDefinitions (): void {
@@ -129,16 +135,16 @@ export class Repository {
   }
 
   private header (): void {
-    const h: ComponentFieldDefinition | null = this.definitions.component.get('StandardHeader')
+    const h: ComponentFieldDefinition | undefined = this.definitions.component.get('StandardHeader')
     if (h) {
-      this.definitions.component.add('header', h)
+      this.definitions.component.set('header', h)
     }
   }
 
   private trailer (): void {
-    const t: ComponentFieldDefinition | null = this.definitions.component.get('StandardTrailer')
+    const t: ComponentFieldDefinition | undefined = this.definitions.component.get('StandardTrailer')
     if (t) {
-      this.definitions.component.add('trailer', t)
+      this.definitions.component.set('trailer', t)
     }
   }
 
@@ -189,8 +195,8 @@ export class Repository {
     this.dataTypeLookup = this.types()
     const definitions = this.definitions
     const types = this.dataTypeLookup
-    types.remove('boolean')
-    types.remove('data')
+    types.delete('boolean')
+    types.delete('data')
     this.Fields.forEach((f: IRepositoryField) => {
       const type = this.getType(f)
       definitions.addSimpleFieldDef(Repository.makeSimple(f, type))
@@ -198,32 +204,33 @@ export class Repository {
     this.fieldEnums()
   }
 
-  private contents (): Dictionary<IRepositoryMsgContent[]> {
+  private contents (): Map<string, IRepositoryMsgContent[]> {
     return this.MsgContents.reduce((a, current) => {
-      let content: IRepositoryMsgContent[] | null = a.get(current.ComponentID)
+      let content: IRepositoryMsgContent[] | undefined = a.get(current.ComponentID)
       if (!content) {
         content = []
-        a.add(current.ComponentID, content)
+        a.set(current.ComponentID, content)
       }
       content[content.length] = current
       return a
-    }, new Dictionary<IRepositoryMsgContent[]>())
+    }, new Map<string, IRepositoryMsgContent[]>())
   }
 
-  private resolveToFieldSet (content: IRepositoryMsgContent[], parentSet: ContainedFieldSet): void {
+  private resolveToFieldSet (content: IRepositoryMsgContent[], parentSet: IContainedSet): void {
+    const builder = new ContainedSetBuilder(parentSet)
     content.forEach((current: IRepositoryMsgContent) => {
       const required: boolean = current.Reqd === '1'
       const tag: number = parseInt(current.TagText, 10)
       if (!isNaN(tag)) {
         const sf: SimpleFieldDefinition = this.definitions.tagToSimple[tag]
         if (sf) {
-          parentSet.add(new ContainedSimpleField(sf, parentSet.fields.length, required, false))
+          builder.add(new ContainedSimpleField(sf, parentSet.fields.length, required, false))
         }
       } else {
         // is there a definition for this type yet create.
-        let childSet: ContainedFieldSet | null = this.definitions.component.get(current.TagText)
+        let childSet: IContainedSet | undefined = this.definitions.component.get(current.TagText)
         if (!childSet) {
-          const cl: IRepositoryComponent | null = this.componentLookup.get(current.TagText)
+          const cl: IRepositoryComponent | undefined = this.componentLookup.get(current.TagText)
           if (cl) {
             childSet = this.resolve(cl)
           }
@@ -231,12 +238,12 @@ export class Repository {
         if (childSet) {
           switch (childSet.type) {
             case ContainedSetType.Component: {
-              parentSet.add(new ContainedComponentField(childSet as ComponentFieldDefinition, parentSet.fields.length, required))
+              builder.add(new ContainedComponentField(childSet as ComponentFieldDefinition, parentSet.fields.length, required))
               break
             }
 
             case ContainedSetType.Group: {
-              parentSet.add(new ContainedGroupField(childSet as GroupFieldDefinition, parentSet.fields.length, required))
+              builder.add(new ContainedGroupField(childSet as GroupFieldDefinition, parentSet.fields.length, required))
               break
             }
 
@@ -250,24 +257,24 @@ export class Repository {
     })
   }
 
-  private resolve (c: IRepositoryComponent): ContainedFieldSet {
+  private resolve (c: IRepositoryComponent): IContainedSet {
     switch (c.ComponentType) {
       case 'ImplicitBlockRepeating':
       case 'BlockRepeating': {
-        const content: IRepositoryMsgContent[] | null = this.contentLookup.get(c.ComponentID) ?? []
+        const content: IRepositoryMsgContent[] | undefined = this.contentLookup.get(c.ComponentID) ?? []
         const noField: SimpleFieldDefinition = this.definitions.tagToSimple[parseInt(content[0].TagText, 10)]
-        let def: GroupFieldDefinition | null = this.groupLookup.get(c.ComponentID)
+        let def: GroupFieldDefinition | undefined = this.groupLookup.get(c.ComponentID)
         if (!def) {
           def = new GroupFieldDefinition(c.Name, c.AbbrName, c.CategoryID, noField, c.Description)
           this.resolveToFieldSet(content.slice(1), def)
-          this.groupLookup.add(c.ComponentID, def)
+          this.groupLookup.set(c.ComponentID, def)
         }
         return def
       }
 
       default: {
         const content: IRepositoryMsgContent[] | null = this.contentLookup.get(c.ComponentID) ?? []
-        let def: ComponentFieldDefinition | null = this.definitions.component.get(c.Name)
+        let def: ComponentFieldDefinition | undefined = this.definitions.component.get(c.Name)
         if (!def) {
           def = new ComponentFieldDefinition(c.Name, c.AbbrName, c.CategoryID, c.Description)
           this.resolveToFieldSet(content, def)
@@ -281,7 +288,7 @@ export class Repository {
   private message (m: IRepositoryMessage): MessageDefinition {
     const definitions = this.definitions
     const content: IRepositoryMsgContent[] = this.contentLookup.get(m.ComponentID) ?? []
-    let def: MessageDefinition | null = definitions.message.get(m.Name)
+    let def: MessageDefinition | undefined = definitions.message.get(m.Name)
     if (!def) {
       def = new MessageDefinition(m.Name, m.AbbrName, m.MsgType, m.CategoryID, m.Description)
       this.resolveToFieldSet(content, def)
@@ -290,18 +297,18 @@ export class Repository {
     return def
   }
 
-  private components (): Dictionary<IRepositoryComponent> {
-    return this.Components.reduce((a: Dictionary<IRepositoryComponent>, current: IRepositoryComponent) => {
-      a.add(current.Name, current)
-      a.add(current.ComponentID, current)
+  private components (): Map<string, IRepositoryComponent> {
+    return this.Components.reduce((a: Map<string, IRepositoryComponent>, current: IRepositoryComponent) => {
+      a.set(current.Name, current)
+      a.set(current.ComponentID, current)
       return a
-    }, new Dictionary<IRepositoryComponent>())
+    }, new Map<string, IRepositoryComponent>())
   }
 
-  private types (): Dictionary<IRepositoryDataType> {
-    return this.DataTypes.reduce((a: Dictionary<IRepositoryDataType>, current: IRepositoryDataType) => {
-      a.add(current.Name, current)
+  private types (): Map<string, IRepositoryDataType> {
+    return this.DataTypes.reduce((a: Map<string, IRepositoryDataType>, current: IRepositoryDataType) => {
+      a.set(current.Name, current)
       return a
-    }, new Dictionary<IRepositoryDataType>())
+    }, new Map<string, IRepositoryDataType>())
   }
 }

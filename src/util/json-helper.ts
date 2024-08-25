@@ -1,7 +1,7 @@
 import { ILooseObject } from '../collections/collection'
 import {
   ContainedSimpleField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedGroupField,
   ContainedComponentField,
   FieldsDispatch
@@ -75,7 +75,7 @@ export class JsonHelper {
 
   public fromJson (fileName: string, msgType: string): ILooseObject {
     const msg: ILooseObject = require(fileName)
-    const def: MessageDefinition | null = this.definitions.message.get(msgType)
+    const def: MessageDefinition | undefined = this.definitions.message.get(msgType)
     if (!def) {
       return msg
     }
@@ -89,7 +89,7 @@ export class JsonHelper {
     return msg
   }
 
-  public patchJsonFields (set: ContainedFieldSet, object: ILooseObject): void {
+  public patchJsonFields (set: IContainedSet, object: ILooseObject): void {
     if (!object) {
       return
     }

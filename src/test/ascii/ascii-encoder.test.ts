@@ -159,7 +159,7 @@ test('encode UTCTIMESTAMP ExpireTime - check padding', () => {
 })
 
 test('encode UTCDATEONLY MDEntryDate', () => {
-  const mdGrp: ComponentFieldDefinition | null = encoderTester.definitions.component.get('MDFullGrp')
+  const mdGrp: ComponentFieldDefinition | undefined = encoderTester.definitions.component.get('MDFullGrp')
   expect(mdGrp).toBeTruthy()
   if (!mdGrp) return
   const grp: ILooseObject = {
@@ -175,7 +175,7 @@ test('encode UTCDATEONLY MDEntryDate', () => {
 })
 
 test('encode UTCTIMEONLY MDEntryTime', () => {
-  const mdGrp: ComponentFieldDefinition | null = encoderTester.definitions.component.get('MDFullGrp')
+  const mdGrp: ComponentFieldDefinition | undefined = encoderTester.definitions.component.get('MDFullGrp')
   expect(mdGrp).toBeTruthy()
   const grp: ILooseObject = {
     NoMDEntries: [

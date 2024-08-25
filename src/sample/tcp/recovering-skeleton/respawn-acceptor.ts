@@ -2,7 +2,6 @@ import { IJsFixConfig, IJsFixLogger } from '../../../config'
 import { TcpAcceptorListener } from '../../../transport/tcp'
 import { inject, injectable } from 'tsyringe'
 import { FixEntity, FixSession } from '../../../transport'
-import { Dictionary } from '../../../collections'
 import { MsgView } from '../../../buffer'
 import { MsgTransport } from '../../../transport/factory'
 import { ILooseObject } from '../../../collections/collection'
@@ -10,7 +9,7 @@ import { ILooseObject } from '../../../collections/collection'
 @injectable()
 export class RespawnAcceptor extends FixEntity {
   private readonly logger: IJsFixLogger
-  private readonly sessions: Dictionary<FixSession> = new Dictionary<FixSession>()
+  private readonly sessions: Map<string, FixSession> = new Map<string, FixSession>()
 
   constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
     super(config)
@@ -28,27 +27,27 @@ export class RespawnAcceptor extends FixEntity {
     this.logger.info(`rxOnMsg msgType = ${msgType}`)
     const o: ILooseObject = view.toObject() as ILooseObject
     const key: string = o.StandardHeader.SenderCompID
-    if (!this.sessions.containsKey(key)) {
-      this.logger.info(`onSession: new session acceptor SenderCompID = ${key} created, count = ${this.sessions.count()}}`)
-      this.sessions.add(key, session)
+    if (!this.sessions.has(key)) {
+      this.logger.info(`onSession: new session acceptor SenderCompID = ${key} created, count = ${this.sessions.size}}`)
+      this.sessions.set(key, session)
     }
   }
 
   private resetSessionSeqNo (session: FixSession): void {
     const key = this.config.description.TargetCompID
-    if (this.sessions.containsKey(key)) {
+    if (this.sessions.has(key)) {
       const lastSession = this.sessions.get(key)
       const lastPeerSeqNum = lastSession?.lastPeerSeqNum() ?? 0
       this.logger.info(`resetSessionSeqNo: set lastPeerSeqNum ${lastPeerSeqNum} for key ${key}`)
       session.reset(lastPeerSeqNum)
-      this.sessions.remove(key)
+      this.sessions.delete(key)
     }
   }
 
   private resetLastSentSeqNo (): void {
     if (!this.resetSeqNo()) {
       const key = this.config.description.TargetCompID
-      if (this.sessions.containsKey(key)) {
+      if (this.sessions.has(key)) {
         const lastSession = this.sessions.get(key)
         const lastSentSeqNum = lastSession?.lastSentSeqNum() ?? 0
         this.logger.info(`resetLastSentSeqNo: set seqNo ${lastSentSeqNum} for key ${key}`)

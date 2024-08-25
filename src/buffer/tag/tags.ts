@@ -1,5 +1,3 @@
-import { FixDefinitions } from '../../dictionary/definition'
-import { ContainedSimpleField } from '../../dictionary/contained'
 import { TagPos } from './tag-pos'
 import { MsgTag } from '../../types'
 import { TagType } from './tag-type'
@@ -13,11 +11,11 @@ export class Tags {
   public tagPos: TagPos[] = new Array(this.startingLength)
   public nextTagPos: number = 0
 
-  constructor (public readonly definitions: FixDefinitions, public readonly startingLength: number = 30 * 1000) {
+  constructor (public readonly startingLength: number = 30 * 1000) {
   }
 
-  public static toJSType (simple: ContainedSimpleField): string {
-    switch (simple.definition.tagType) {
+  public static toJSType (tagType: TagType): string {
+    switch (tagType) {
       case TagType.String:
         return 'string'
 
@@ -103,7 +101,7 @@ export class Tags {
 
   public clone (): Tags {
     const next: number = this.nextTagPos
-    const cloned: Tags = new Tags(this.definitions, next)
+    const cloned: Tags = new Tags(next)
     cloned.nextTagPos = next
     for (let i = 0; i < next; ++i) {
       cloned.tagPos[i] = this.tagPos[i].clone()

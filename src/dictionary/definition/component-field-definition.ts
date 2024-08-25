@@ -1,4 +1,4 @@
-import { ContainedFieldSet } from '../contained'
+import { ContainedFieldSet } from '../contained/contained-field-set'
 import { ContainedSetType } from '../contained-set-type'
 
 export class ComponentFieldDefinition extends ContainedFieldSet {

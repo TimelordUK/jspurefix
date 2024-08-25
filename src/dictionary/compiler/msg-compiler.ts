@@ -4,14 +4,13 @@ import { ICompilerSettings } from './compiler-settings'
 import { FixDefinitions } from '../definition'
 import {
   ContainedComponentField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedGroupField,
   ContainedSimpleField,
   FieldsDispatch
 } from '../contained'
 import { StandardSnippet } from './standard-snippet'
 import { CompilerType } from './compiler-type'
-import { Dictionary } from '../../collections'
 
 import * as fs from 'fs'
 import * as Util from 'util'
@@ -20,22 +19,22 @@ import { SetReduce } from '../set-reduce'
 import { ContainedSetType } from '../contained-set-type'
 import { TagType } from '../../buffer/tag/tag-type'
 
-const newLine = require('os').EOL
+const newLine: string = require('os').EOL
 const justifiedWidth: number = 50
 
 export class MsgCompiler {
   readonly queue: CompilerType[] = []
   readonly snippets: StandardSnippet
   readonly buffer: ElasticBuffer = new ElasticBuffer()
-  readonly completed: Dictionary<CompilerType>
+  readonly completed: Map<string, CompilerType>
 
   constructor (public readonly definitions: FixDefinitions, public readonly settings: ICompilerSettings) {
-    this.completed = new Dictionary<CompilerType>()
+    this.completed = new Map<string, CompilerType>()
     this.snippets = new StandardSnippet(this.settings)
   }
 
   public async generate (): Promise<void> {
-    const types: string[] = this.settings.types ?? this.definitions.message.keys()
+    const types: string[] = this.settings.types ?? Array.from(this.definitions.message.keys())
     await this.createTypes(types)
   }
 
@@ -76,7 +75,7 @@ export class MsgCompiler {
     const writeFile = Util.promisify(fs.writeFile)
     const settings = this.settings
     const fileName = 'index.ts'
-    const done = this.completed.values()
+    const done = Array.from(this.completed.values())
     const exports: string[] = done.reduce<string[]>((prev: string[], current: CompilerType) => {
       prev.push(`export * from '${current.snaked}'`)
       return prev
@@ -126,7 +125,7 @@ export class MsgCompiler {
       return
     }
     this.queue.push(ct)
-    completed.addUpdate(fullName, ct)
+    completed.set(fullName, ct)
   }
 
   private simpleComment (simple: ContainedSimpleField): string {
@@ -137,7 +136,7 @@ export class MsgCompiler {
     const snippets = this.snippets
     const settings = this.settings
     const buffer = this.buffer
-    const len = buffer.writeString(snippets.simple(simple.name, Tags.toJSType(simple), simple.required, 1))
+    const len = buffer.writeString(snippets.simple(simple.name, Tags.toJSType(simple.definition.tagType), simple.required, 1))
     if (settings.tags) {
       buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
     }
@@ -155,7 +154,7 @@ export class MsgCompiler {
     buffer.writeString(newLine)
   }
 
-  private tagSummary (definition: ContainedFieldSet, max: number = 3): string {
+  private tagSummary (definition: IContainedSet, max: number = 3): string {
     function tagTxt (tag: number): string {
       const name = definition.getFieldName(tag)
       return `${name}.${tag}`
@@ -174,7 +173,7 @@ export class MsgCompiler {
     return `${front} .. ${tagTxt(flattened[flattened.length - 1])}`
   }
 
-  private setComment (set: ContainedFieldSet, position: number, len: number): void {
+  private setComment (set: IContainedSet, position: number, len: number): void {
     if (this.settings.tags) {
       const tagTxt = this.tagSummary(set)
       const buffer = this.buffer
@@ -206,7 +205,7 @@ export class MsgCompiler {
     const snippets = this.snippets
     const buffer = this.buffer
     compilerType.set.localAttribute.forEach((simple: ContainedSimpleField) => {
-      const len = buffer.writeString(snippets.simple(simple.definition.name, Tags.toJSType(simple), simple.required, 1))
+      const len = buffer.writeString(snippets.simple(simple.definition.name, Tags.toJSType(simple.definition.tagType), simple.required, 1))
       if (settings.tags) {
         buffer.writeString(snippets.commentLine(this.simpleComment(simple), justifiedWidth - len))
       }

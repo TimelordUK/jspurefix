@@ -1,10 +1,10 @@
-import { ContainedFieldSet } from '../../contained'
+import { IContainedSet } from '../../contained'
 import { ComponentFieldDefinition, GroupFieldDefinition, MessageDefinition } from '../../definition'
 
 export class ParseContext {
   public required: boolean
 
-  constructor (public name: string, public defining: boolean, public set: ContainedFieldSet | null) {
+  constructor (public name: string, public defining: boolean, public set: IContainedSet | null) {
     this.required = false
   }
 

@@ -1,19 +1,18 @@
 import { TagPos } from './tag/tag-pos'
 import { SegmentDescription } from './segment/segment-description'
 import { Structure } from './structure'
-import { Dictionary } from '../collections'
 import { Tags } from './tag/tags'
 import {
   ContainedComponentField,
   ContainedField,
-  ContainedFieldSet,
+  IContainedSet,
   ContainedGroupField,
   ContainedSimpleField
 } from '../dictionary/contained'
 import { SetReduce } from '../dictionary'
 import { ILooseObject } from '../collections/collection'
 import { ElasticBuffer } from './elastic-buffer'
-import { GroupFieldDefinition, SimpleFieldDefinition } from '../dictionary/definition'
+import { FixDefinitions, GroupFieldDefinition, SimpleFieldDefinition } from '../dictionary/definition'
 import { ITypeDispatcher } from '../dictionary/type-dispatcher'
 import { ContainedSetType } from '../dictionary/contained-set-type'
 
@@ -22,7 +21,7 @@ export abstract class MsgView {
   protected sortedTagPosBackwards: TagPos[]
   private readonly reducer: SetReduce<ILooseObject> = new SetReduce<ILooseObject>()
 
-  protected constructor (public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
+  protected constructor (public readonly definitions: FixDefinitions, public readonly segment: SegmentDescription, public readonly structure: Structure | null) {
   }
 
   protected static asVerbose = (field: SimpleFieldDefinition, val: string, i: number, count: number, tp: TagPos): string => {
@@ -185,12 +184,12 @@ export abstract class MsgView {
    * returns typed value of a sinple field within this view
    * @param tagOrName the name or tag of required field e.g. 8, BeginString
    */
-  public getTyped (tagOrName: number | string): any {
+  public getTyped (tagOrName: number | string): (boolean | string | number | Date | Buffer | null) {
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
       return null
     }
-    const field: SimpleFieldDefinition | null = this.structure?.tags.definitions.tagToSimple[tag] ?? null
+    const field: SimpleFieldDefinition | null = this.definitions.tagToSimple[tag] ?? null
     if (field == null) {
       return null
     }
@@ -201,7 +200,7 @@ export abstract class MsgView {
    * use a varargs list of tags or tag names to fetch typed values for those fields within this view.
    * @param tagOrNames list of tags e.g. 'BeginString', 'BodyLength', ...
    */
-  public getTypedList (...tagOrNames: Array<number | string>): Array<boolean | string | number | Date | null> {
+  public getTypedList (...tagOrNames: Array<number | string>): Array<boolean | string | number | Date | Buffer | null> {
     return tagOrNames.map((s) => this.getTyped(s))
   }
 
@@ -209,7 +208,7 @@ export abstract class MsgView {
    * use an array of tags or tag names to fetch typed values for those fields within this view.
    * @param tagOrName the list of params as array ['BeginString','BodyLength', 'MsgType']
    */
-  public getTypedTags (tagOrName: Array<string | number>): Array<boolean | string | number | Date | null> {
+  public getTypedTags (tagOrName: Array<string | number>): Array<boolean | string | number | Date | Buffer | null> {
     return tagOrName.map((s) => this.getTyped(s))
   }
 
@@ -297,14 +296,15 @@ export abstract class MsgView {
 
   protected abstract stringAtPosition (position: number): string | null
 
-  protected abstract toTyped (field: SimpleFieldDefinition): boolean | string | number | Date
+  protected abstract toTyped (field: SimpleFieldDefinition): boolean | string | number | Date | Buffer | null
 
   protected resolveTag (tagOrName: number | string): number {
     let tag: number
+    const set = this.segment.set
     if (typeof (tagOrName) === 'string') {
-      if (this.segment.set == null) return 0
-      const cf = this.segment.set.simple.get(tagOrName)
-      const f: SimpleFieldDefinition | null = cf ? cf.definition : this.structure?.tags.definitions.simple.get(tagOrName) ?? null
+      if (set == null) return 0
+      const cf = set.simple.get(tagOrName)
+      const f: SimpleFieldDefinition | null = cf ? cf.definition : this.definitions.simple.get(tagOrName) ?? null
       if (f == null) {
         return -1
       }
@@ -382,7 +382,7 @@ export abstract class MsgView {
     return groupArray
   }
 
-  private asLoose (def: ContainedFieldSet): ILooseObject {
+  private asLoose (def: IContainedSet): ILooseObject {
     // eslint-disable-next-line
     return this.reducer.reduce(def, {
       group: (a: ILooseObject, field: ContainedGroupField) => { this.asLooseGroup(a, field) },
@@ -398,7 +398,7 @@ export abstract class MsgView {
     }, {}))
   }
 
-  private missingRequired (def: ContainedFieldSet, tags: number []): number[] {
+  private missingRequired (def: IContainedSet, tags: number []): number[] {
     const reducer = new SetReduce<number[]>()
     const dispatcher: ITypeDispatcher<number[]> = {
       group: (a: number[], field: ContainedGroupField) => { this.missingGroup(def, field, a) },
@@ -421,7 +421,7 @@ export abstract class MsgView {
     }
   }
 
-  private missingGroup (def: ContainedFieldSet, gf: ContainedGroupField, tags: number []): void {
+  private missingGroup (def: IContainedSet, gf: ContainedGroupField, tags: number []): void {
     const name = gf.definition.noOfField ? gf.definition.noOfField.name : def.name
     const groupView: MsgView | null = this.getView(name) ?? this.getView(gf.definition.name)
     if (groupView == null) {
@@ -448,7 +448,7 @@ export abstract class MsgView {
     const def = sf.definition
     const position: number = this.getPosition(def.tag)
     if (position >= 0) {
-      const asSimple: boolean | string | number | Date = this.toTyped(def)
+      const asSimple: boolean | string | number | Date | Buffer | null = this.toTyped(def)
       if (asSimple != null) { // beware, may be false value
         a[sf.name] = asSimple
       }
@@ -483,11 +483,11 @@ export abstract class MsgView {
     if (structure == null) return ''
     const tags: Tags = structure.tags
     const count: number = segment.endPosition - segment.startPosition
-    const simple: Dictionary<SimpleFieldDefinition> = tags.definitions.simple
+    const simple: Map<string, SimpleFieldDefinition> = this.definitions.simple
 
     for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
       const tagPos: TagPos = tags.tagPos[i]
-      const field: SimpleFieldDefinition | null = simple.get(tagPos.tag.toString())
+      const field: SimpleFieldDefinition | undefined = simple.get(tagPos.tag.toString())
       const val: string | null = this.stringAtPosition(i) ?? ''
       // [0] 8 (BeginString) = FIX4.4
       const token = field ? getToken(field, val, i - segment.startPosition, count, tagPos) : `[${i}] ${tagPos.tag} (unknown) = ${val}, `

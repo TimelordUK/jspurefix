@@ -1,18 +1,21 @@
 import { IMsgApplication } from '../msg-application'
 
-export interface ISessionDescription {
-  readonly application?: IMsgApplication
+export interface IDynamicSessionParams {
   readonly Name: string
-  readonly Username: string
-  readonly Password: string
-  HeartBtInt: number
   readonly SenderCompId: string
   readonly TargetCompID: string
   readonly ResetSeqNumFlag: boolean
-  LastSentSeqNum?: number
-  readonly LastReceivedSeqNum?: number
   readonly SenderSubID: string
   readonly TargetSubID: string
   readonly BeginString: string
+  readonly Username: string
+  readonly Password: string
+}
+
+export interface ISessionDescription extends IDynamicSessionParams {
+  readonly application?: IMsgApplication
+  HeartBtInt: number
+  LastSentSeqNum?: number
+  readonly LastReceivedSeqNum?: number
   readonly BodyLengthChars?: number
 }

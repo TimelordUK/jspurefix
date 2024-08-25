@@ -1,6 +1,5 @@
 import { ParseState } from './parse-state'
 import { FixDefinitions, GroupFieldDefinition } from '../../definition'
-import { Dictionary } from '../../../collections'
 
 export class ParseProgress {
   public definitions: FixDefinitions
@@ -13,10 +12,10 @@ export class ParseProgress {
   public previousDelta: number = 0
   public componentPasses: number = 0
   public readonly maxIterations: number = 5
-  public groupDefinitionCache: Dictionary<GroupFieldDefinition> = new Dictionary<GroupFieldDefinition>()
+  public groupDefinitionCache: Map<string, GroupFieldDefinition> = new Map<string, GroupFieldDefinition>()
 
   public toString (): string {
-    return `parseState = ${this.parseState}, numberPasses = ${this.numberPasses}, componentPasses = ${this.componentPasses}, groupCount = ${this.groupDefinitionCache.count()}, cacheMisses = ${this.cacheMisses}, newContexts = ${this.newContexts}, newDefines = ${this.newDefines}, newAdds = ${this.newAdds}, previousDelta = ${this.previousDelta}, delta = ${this.delta()}, changed = ${this.changed()}`
+    return `parseState = ${this.parseState}, numberPasses = ${this.numberPasses}, componentPasses = ${this.componentPasses}, groupCount = ${this.groupDefinitionCache.size}, cacheMisses = ${this.cacheMisses}, newContexts = ${this.newContexts}, newDefines = ${this.newDefines}, newAdds = ${this.newAdds}, previousDelta = ${this.previousDelta}, delta = ${this.delta()}, changed = ${this.changed()}`
   }
 
   public delta (): number {
