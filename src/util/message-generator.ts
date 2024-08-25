@@ -13,7 +13,7 @@ export class MessageGenerator {
 
   public static getRandomEnum (field: SimpleFieldDefinition): any {
     const tagType: TagType = field.tagType
-    const keys: string[] = field.enums.keys()
+    const keys: string[] = Array.from(field.enums.keys())
     const choice: string = keys[Math.floor(Math.random() * keys.length)]
     switch (tagType) {
       case TagType.Int: {

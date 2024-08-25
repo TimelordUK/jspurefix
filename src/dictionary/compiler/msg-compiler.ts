@@ -11,7 +11,6 @@ import {
 } from '../contained'
 import { StandardSnippet } from './standard-snippet'
 import { CompilerType } from './compiler-type'
-import { Dictionary } from '../../collections'
 
 import * as fs from 'fs'
 import * as Util from 'util'
@@ -27,10 +26,10 @@ export class MsgCompiler {
   readonly queue: CompilerType[] = []
   readonly snippets: StandardSnippet
   readonly buffer: ElasticBuffer = new ElasticBuffer()
-  readonly completed: Dictionary<CompilerType>
+  readonly completed: Map<string, CompilerType>
 
   constructor (public readonly definitions: FixDefinitions, public readonly settings: ICompilerSettings) {
-    this.completed = new Dictionary<CompilerType>()
+    this.completed = new Map<string, CompilerType>()
     this.snippets = new StandardSnippet(this.settings)
   }
 
@@ -76,7 +75,7 @@ export class MsgCompiler {
     const writeFile = Util.promisify(fs.writeFile)
     const settings = this.settings
     const fileName = 'index.ts'
-    const done = this.completed.values()
+    const done = Array.from(this.completed.values())
     const exports: string[] = done.reduce<string[]>((prev: string[], current: CompilerType) => {
       prev.push(`export * from '${current.snaked}'`)
       return prev
@@ -126,7 +125,7 @@ export class MsgCompiler {
       return
     }
     this.queue.push(ct)
-    completed.addUpdate(fullName, ct)
+    completed.set(fullName, ct)
   }
 
   private simpleComment (simple: ContainedSimpleField): string {

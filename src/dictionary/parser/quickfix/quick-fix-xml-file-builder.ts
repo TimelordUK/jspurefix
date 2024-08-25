@@ -120,7 +120,7 @@ export class QuickFixXmlFileBuilder {
    */
   private writeEnumDefinition (sf: SimpleFieldDefinition, leadingIndent: number): string {
     const eb: ElasticBuffer = new ElasticBuffer(2 * 1024)
-    const keys = sf.enums.keys()
+    const keys = Array.from(sf.enums.keys())
     keys.sort()
     keys.forEach(k => {
       eb.writeString(QuickFixXmlFormatter.addEnum(sf.enums.get(k), leadingIndent))

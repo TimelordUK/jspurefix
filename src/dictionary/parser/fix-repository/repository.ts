@@ -3,7 +3,7 @@ import {
   SimpleFieldDefinition, GroupFieldDefinition, ComponentFieldDefinition,
   MessageDefinition, FixDefinitions
 } from '../../definition'
-import { Dictionary } from '../../../collections'
+
 import {
   IContainedSet,
   ContainedComponentField,
@@ -34,10 +34,10 @@ export class Repository {
   public includesAbbreviations: boolean
   // derived from above
   public readonly definitions: FixDefinitions
-  private readonly groupLookup: Dictionary<GroupFieldDefinition> = new Dictionary<GroupFieldDefinition>()
-  private contentLookup: Dictionary<IRepositoryMsgContent[]>
-  private componentLookup: Dictionary<IRepositoryComponent>
-  private dataTypeLookup: Dictionary<IRepositoryDataType>
+  private readonly groupLookup: Map<string, GroupFieldDefinition> = new Map<string, GroupFieldDefinition>()
+  private contentLookup: Map<string, IRepositoryMsgContent[]>
+  private componentLookup: Map<string, IRepositoryComponent>
+  private dataTypeLookup: Map<string, IRepositoryDataType>
   private readonly logger: IJsFixLogger
 
   constructor (public readonly version: FixVersion, public readonly getLogger: GetJsFixLogger) {
@@ -195,8 +195,8 @@ export class Repository {
     this.dataTypeLookup = this.types()
     const definitions = this.definitions
     const types = this.dataTypeLookup
-    types.remove('boolean')
-    types.remove('data')
+    types.delete('boolean')
+    types.delete('data')
     this.Fields.forEach((f: IRepositoryField) => {
       const type = this.getType(f)
       definitions.addSimpleFieldDef(Repository.makeSimple(f, type))
@@ -204,16 +204,16 @@ export class Repository {
     this.fieldEnums()
   }
 
-  private contents (): Dictionary<IRepositoryMsgContent[]> {
+  private contents (): Map<string, IRepositoryMsgContent[]> {
     return this.MsgContents.reduce((a, current) => {
-      let content: IRepositoryMsgContent[] | null = a.get(current.ComponentID)
+      let content: IRepositoryMsgContent[] | undefined = a.get(current.ComponentID)
       if (!content) {
         content = []
-        a.add(current.ComponentID, content)
+        a.set(current.ComponentID, content)
       }
       content[content.length] = current
       return a
-    }, new Dictionary<IRepositoryMsgContent[]>())
+    }, new Map<string, IRepositoryMsgContent[]>())
   }
 
   private resolveToFieldSet (content: IRepositoryMsgContent[], parentSet: IContainedSet): void {
@@ -230,7 +230,7 @@ export class Repository {
         // is there a definition for this type yet create.
         let childSet: IContainedSet | undefined = this.definitions.component.get(current.TagText)
         if (!childSet) {
-          const cl: IRepositoryComponent | null = this.componentLookup.get(current.TagText)
+          const cl: IRepositoryComponent | undefined = this.componentLookup.get(current.TagText)
           if (cl) {
             childSet = this.resolve(cl)
           }
@@ -261,13 +261,13 @@ export class Repository {
     switch (c.ComponentType) {
       case 'ImplicitBlockRepeating':
       case 'BlockRepeating': {
-        const content: IRepositoryMsgContent[] | null = this.contentLookup.get(c.ComponentID) ?? []
+        const content: IRepositoryMsgContent[] | undefined = this.contentLookup.get(c.ComponentID) ?? []
         const noField: SimpleFieldDefinition = this.definitions.tagToSimple[parseInt(content[0].TagText, 10)]
-        let def: GroupFieldDefinition | null = this.groupLookup.get(c.ComponentID)
+        let def: GroupFieldDefinition | undefined = this.groupLookup.get(c.ComponentID)
         if (!def) {
           def = new GroupFieldDefinition(c.Name, c.AbbrName, c.CategoryID, noField, c.Description)
           this.resolveToFieldSet(content.slice(1), def)
-          this.groupLookup.add(c.ComponentID, def)
+          this.groupLookup.set(c.ComponentID, def)
         }
         return def
       }
@@ -297,18 +297,18 @@ export class Repository {
     return def
   }
 
-  private components (): Dictionary<IRepositoryComponent> {
-    return this.Components.reduce((a: Dictionary<IRepositoryComponent>, current: IRepositoryComponent) => {
-      a.add(current.Name, current)
-      a.add(current.ComponentID, current)
+  private components (): Map<string, IRepositoryComponent> {
+    return this.Components.reduce((a: Map<string, IRepositoryComponent>, current: IRepositoryComponent) => {
+      a.set(current.Name, current)
+      a.set(current.ComponentID, current)
       return a
-    }, new Dictionary<IRepositoryComponent>())
+    }, new Map<string, IRepositoryComponent>())
   }
 
-  private types (): Dictionary<IRepositoryDataType> {
-    return this.DataTypes.reduce((a: Dictionary<IRepositoryDataType>, current: IRepositoryDataType) => {
-      a.add(current.Name, current)
+  private types (): Map<string, IRepositoryDataType> {
+    return this.DataTypes.reduce((a: Map<string, IRepositoryDataType>, current: IRepositoryDataType) => {
+      a.set(current.Name, current)
       return a
-    }, new Dictionary<IRepositoryDataType>())
+    }, new Map<string, IRepositoryDataType>())
   }
 }

@@ -52,7 +52,7 @@ export class QuickFixXmlFormatter {
     return `${QuickFixXmlFormatter.whitespace(ws)}</group>${newLine}`
   }
 
-  public static addEnum (fe: (FieldEnum | null), ws: number): string {
+  public static addEnum (fe: (FieldEnum | undefined), ws: number): string {
     return `${QuickFixXmlFormatter.whitespace(ws)}<value enum='${fe?.key}' description='${fe?.description ?? fe?.val}'/>${newLine}`
   }
 

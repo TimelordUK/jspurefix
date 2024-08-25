@@ -17,7 +17,7 @@ export class EncodeProxy {
   private static SimpleFieldCheck (field: ContainedSimpleField, val: any): void {
     const definition: SimpleFieldDefinition = field.definition
     if (definition.isEnum()) {
-      const resolved: boolean = definition.containsEnum(val)
+      const resolved: boolean = definition.containsEnum(String(val))
       if (!resolved) {
         throw new Error(`enum field ${field.name} does not support "${val}"`)
       }

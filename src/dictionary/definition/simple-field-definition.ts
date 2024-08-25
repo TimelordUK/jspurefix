@@ -1,4 +1,3 @@
-import { Dictionary } from '../../collections'
 import { FieldEnum } from '../field-enum'
 import { Tags } from '../../buffer/tag/tags'
 import { AsciiChars } from '../../buffer/ascii/ascii-chars'
@@ -8,8 +7,8 @@ import { TagType } from '../../buffer/tag/tag-type'
 export class SimpleFieldDefinition {
   public readonly tag: number
   public readonly tagType: TagType
-  public enums: Dictionary<FieldEnum>
-  public enumVals: Dictionary<boolean>
+  public enums: Map<string, FieldEnum>
+  public enumVals: Map<string, boolean>
 
   constructor (public readonly num: string,
     public readonly name: string,
@@ -31,7 +30,7 @@ export class SimpleFieldDefinition {
     if (!enums) {
       return false
     }
-    return enums.get(key) != null
+    return enums.has(key)
   }
 
   public resolveEnum (key: string): string {
@@ -39,7 +38,7 @@ export class SimpleFieldDefinition {
     if (!enums) {
       return key
     }
-    const e: FieldEnum | null = enums.get(key)
+    const e: FieldEnum | undefined = enums.get(key)
     if (e) {
       return e.val
     }
@@ -55,7 +54,7 @@ export class SimpleFieldDefinition {
     if (atDigit) {
       converted = `E${converted}`
     }
-    if (this.enumVals.containsKey(converted)) {
+    if (this.enumVals.has(converted)) {
       converted = `${converted}2`
     }
     return converted
@@ -65,13 +64,13 @@ export class SimpleFieldDefinition {
     let enums = this.enums
     let enumVals = this.enumVals
     if (enums == null) {
-      this.enums = enums = new Dictionary<FieldEnum>()
-      this.enumVals = enumVals = new Dictionary<boolean>()
+      this.enums = enums = new Map<string, FieldEnum>()
+      this.enumVals = enumVals = new Map<string, boolean>()
     }
     if (!description) description = val
     val = this.patchEnumValue(val)
-    enums.add(key, new FieldEnum(key, val, description ?? ''))
-    enumVals.add(val, true)
+    enums.set(key, new FieldEnum(key, val, description ?? ''))
+    enumVals.set(val, true)
   }
 
   public toString (): string {

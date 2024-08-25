@@ -5,7 +5,6 @@ import { DefinitionFactory } from '../../util'
 import { SetConstraintHelper } from '../env/set-constraint-helper'
 import { QuickFixXmlFileBuilder } from '../../dictionary/parser/quickfix/quick-fix-xml-file-builder'
 import { FieldEnum, FixVersion } from '../../dictionary'
-import { Dictionary } from '../../collections'
 import { QuickFixXmlFileParser } from '../../dictionary/parser'
 import { StringDuplex } from '../../transport'
 import { EmptyLogger } from '../../config'
@@ -273,7 +272,7 @@ test('field fetch by name 4', () => {
   expect(def?.name).toEqual('AdvSide')
 })
 
-function checkEnum (enums: (Dictionary<FieldEnum> | undefined), key: string, expectedVal: string, expectedDescription: string): void {
+function checkEnum (enums: (Map<string, FieldEnum> | undefined), key: string, expectedVal: string, expectedDescription: string): void {
   expect(enums).toBeTruthy()
   const en = enums?.get(key)
   expect(en).toBeTruthy()
@@ -292,11 +291,12 @@ function checkSimple (name: string, tag: number, type: string): void {
 
 test('field check AdvSide', () => {
   const def = definitions.simple.get('AdvSide')
+  const keys = Array.from(def?.enumVals.keys() ?? [])
   expect(def).toBeTruthy()
   checkSimple('AdvSide', 4, 'CHAR')
   expect(def?.isEnum()).toBeTruthy()
   expect(def?.enumVals).toBeTruthy()
-  expect(def?.enumVals.keys().length).toEqual(4)
+  expect(keys.length).toEqual(4)
   checkEnum(def?.enums, 'B', 'Buy', 'BUY')
   checkEnum(def?.enums, 'S', 'Sell', 'SELL')
   checkEnum(def?.enums, 'X', 'Cross', 'CROSS')
@@ -404,7 +404,7 @@ test('check message existance', () => {
   expect(mt?.isEnum()).toBeTruthy()
   expect(mt?.enums.get('0')).toBeTruthy()
   expect(mt?.enums.get('1')).toBeTruthy()
-  mt?.enums.keys().forEach(k => {
+  Array.from(mt?.enums.keys() ?? []).forEach(k => {
     if (k === 'n') return
     const m = definitions.message.get(k)
     expect(k).toBeTruthy()

@@ -73,7 +73,7 @@ export class EnumCompiler {
     }
     return this.create(field.name, field.description, () => {
       const newLine = require('os').EOL
-      return field.enums.keys().reduce((a: number, latest: string, i: number, arr: string[]) => {
+      return Array.from(field.enums.keys()).reduce((a: number, latest: string, i: number, arr: string[]) => {
         const k = field.resolveEnum(latest)
         let v: any = latest
         switch (field.tagType) {
