@@ -31,7 +31,7 @@ export abstract class FixmlSession extends FixSession {
   protected onSessionMsg (msgType: string, view: MsgView): void {
     switch (msgType) {
       case 'UserReq': {
-        const reqType: number = view.getTyped('UserReqTyp')
+        const reqType: number = view.getTyped('UserReqTyp') as number
         switch (reqType) {
           case UserRequestType.LogOnUser: {
             this.peerLogon(view)
@@ -47,7 +47,7 @@ export abstract class FixmlSession extends FixSession {
       }
 
       case 'UserRsp': {
-        const userStatus: number = view.getTyped('UserStatus')
+        const userStatus: number = view.getTyped('UserStatus') as number
         switch (userStatus) {
           case UserStatus.LoggedIn: {
             this.peerLogon(view)
@@ -68,7 +68,7 @@ export abstract class FixmlSession extends FixSession {
     const logger = this.sessionLogger
     const state = this.sessionState
     state.state = SessionState.InitiationLogonReceived
-    state.peerCompId = view.getTyped(MsgTag.SenderCompID)
+    state.peerCompId = view.getTyped(MsgTag.SenderCompID) as string
     if (this.acceptor) {
       const reqId: string = view.getString('UserReqID') ?? 'req'
       const o = this?.config?.factory?.logon(reqId, true)

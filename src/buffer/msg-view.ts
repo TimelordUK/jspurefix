@@ -184,7 +184,7 @@ export abstract class MsgView {
    * returns typed value of a sinple field within this view
    * @param tagOrName the name or tag of required field e.g. 8, BeginString
    */
-  public getTyped (tagOrName: number | string): any {
+  public getTyped (tagOrName: number | string): (boolean | string | number | Date | Buffer | null) {
     const tag: number = this.resolveTag(tagOrName)
     if (tag == null) {
       return null
@@ -200,7 +200,7 @@ export abstract class MsgView {
    * use a varargs list of tags or tag names to fetch typed values for those fields within this view.
    * @param tagOrNames list of tags e.g. 'BeginString', 'BodyLength', ...
    */
-  public getTypedList (...tagOrNames: Array<number | string>): Array<boolean | string | number | Date | null> {
+  public getTypedList (...tagOrNames: Array<number | string>): Array<boolean | string | number | Date | Buffer | null> {
     return tagOrNames.map((s) => this.getTyped(s))
   }
 
@@ -208,7 +208,7 @@ export abstract class MsgView {
    * use an array of tags or tag names to fetch typed values for those fields within this view.
    * @param tagOrName the list of params as array ['BeginString','BodyLength', 'MsgType']
    */
-  public getTypedTags (tagOrName: Array<string | number>): Array<boolean | string | number | Date | null> {
+  public getTypedTags (tagOrName: Array<string | number>): Array<boolean | string | number | Date | Buffer | null> {
     return tagOrName.map((s) => this.getTyped(s))
   }
 
@@ -296,13 +296,14 @@ export abstract class MsgView {
 
   protected abstract stringAtPosition (position: number): string | null
 
-  protected abstract toTyped (field: SimpleFieldDefinition): boolean | string | number | Date
+  protected abstract toTyped (field: SimpleFieldDefinition): boolean | string | number | Date | Buffer | null
 
   protected resolveTag (tagOrName: number | string): number {
     let tag: number
+    const set = this.segment.set
     if (typeof (tagOrName) === 'string') {
-      if (this.segment.set == null) return 0
-      const cf = this.segment.set.simple.get(tagOrName)
+      if (set == null) return 0
+      const cf = set.simple.get(tagOrName)
       const f: SimpleFieldDefinition | null = cf ? cf.definition : this.definitions.simple.get(tagOrName) ?? null
       if (f == null) {
         return -1
@@ -447,7 +448,7 @@ export abstract class MsgView {
     const def = sf.definition
     const position: number = this.getPosition(def.tag)
     if (position >= 0) {
-      const asSimple: boolean | string | number | Date = this.toTyped(def)
+      const asSimple: boolean | string | number | Date | Buffer | null = this.toTyped(def)
       if (asSimple != null) { // beware, may be false value
         a[sf.name] = asSimple
       }

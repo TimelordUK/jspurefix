@@ -32,7 +32,7 @@ export class TradeCaptureServer extends AsciiSession {
 
       default: {
         const seqNum = view.getTyped(MsgTag.MsgSeqNum)
-        const msg = this.config.factory?.reject(msgType, seqNum, `${this.me}: unexpected msg type '${msgType}'`, SessionRejectReason.InvalidMsgType)
+        const msg = this.config.factory?.reject(msgType, seqNum as number, `${this.me}: unexpected msg type '${msgType}'`, SessionRejectReason.InvalidMsgType)
         if (msg) {
           this.send(msgType, msg)
         }

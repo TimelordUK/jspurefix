@@ -59,7 +59,7 @@ export class EncodeProxy {
       case TagType.Int:
       case TagType.Float:
       case TagType.Length: {
-        if (isNaN(val)) {
+        if (isNaN(val as number)) {
           throw new Error(`field ${field.name} expects number but receives "${typeof val}"`)
         }
         break
@@ -80,17 +80,17 @@ export class EncodeProxy {
     if (!isComplex) {
       throw new Error(`type ${field.name} is a component but is given type "${typeof val}"`)
     }
-    return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(field.definition)), val)
+    return EncodeProxy.checkProperties(new Proxy({}, EncodeProxy.handler(field.definition)), val as ILooseObject)
   }
 
   private static GroupFieldCheck (field: ContainedGroupField, val: any): object {
-    const accepted: boolean = Array.isArray(val) || !isNaN(val)
+    const accepted: boolean = Array.isArray(val) || !isNaN(val as number)
     if (!accepted) {
       throw new Error(`type ${field.name} is a group and needs array or number, not "${typeof val}"`)
     }
     const gf: ContainedComponentField = field as ContainedComponentField
     const j: number = val
-    const isNumber: boolean = !isNaN(val)
+    const isNumber: boolean = !isNaN(val as number)
     if (isNumber) {
       const arr: ILooseObject[] = new Array(j)
       for (let i: number = 0; i < j; ++i) {

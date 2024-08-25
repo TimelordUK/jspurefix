@@ -72,7 +72,7 @@ export class AsciiView extends MsgView {
     return cs % 256
   }
 
-  protected toTyped (field: SimpleFieldDefinition): any {
+  protected toTyped (field: SimpleFieldDefinition): (boolean | string | number | Date | Buffer | null) {
     const position: number = this.getPosition(field.tag)
     if (position >= 0) {
       switch (field.tagType) {
@@ -118,6 +118,7 @@ export class AsciiView extends MsgView {
         }
       }
     }
+    return null
   }
 
   protected create (singleton: SegmentDescription): MsgView {
