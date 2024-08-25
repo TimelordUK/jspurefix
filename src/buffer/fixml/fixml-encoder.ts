@@ -1,7 +1,11 @@
 import { ILooseObject } from '../../collections/collection'
 import {
-  IContainedSet, ContainedField, ContainedGroupField,
-  ContainedComponentField, ContainedSimpleField, FieldsDispatch
+  IContainedSet,
+  ContainedField,
+  ContainedGroupField,
+  ContainedComponentField,
+  ContainedSimpleField,
+  FieldsDispatch
 } from '../../dictionary/contained'
 import { AsciiChars } from '../ascii'
 import { MsgEncoder } from '../msg-encoder'
@@ -131,8 +135,8 @@ export class FixmlEncoder extends MsgEncoder {
   private getPopulatedFields (set: IContainedSet, o: ILooseObject): ContainedField[] {
     const keys: string[] = Object.keys(o)
     const fields: ContainedField[] = keys.reduce((a: ContainedField[], current: string) => {
-      const field: ContainedField | null = set.localNameToField.get(current)
-      if (field && !set.nameToLocalAttribute.containsKey(current)) {
+      const field: ContainedField | undefined = set.localNameToField.get(current)
+      if (field && !set.nameToLocalAttribute.has(current)) {
         a.push(field)
       }
       return a

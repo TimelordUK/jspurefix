@@ -1,5 +1,4 @@
 import { INumericKeyed } from '../../collections/collection'
-import { Dictionary } from '../../collections'
 import { ContainedField } from './contained-field'
 import { ContainedSimpleField } from './contained-simple-field'
 import { ElasticBuffer } from '../../buffer/elastic-buffer'
@@ -54,11 +53,11 @@ export abstract class ContainedFieldSet implements IContainedSet {
   /**
    * only repository directly in this set indexed by name
    */
-  public readonly localNameToField: Dictionary<ContainedField> = new Dictionary<ContainedField>()
+  public readonly localNameToField: Map<string, ContainedField> = new Map<string, ContainedField>()
   /**
    * for FixMl notation this set of fields appear as attributes i.e. <Pty ID="323" R="38">
    */
-  public readonly nameToLocalAttribute: Dictionary<ContainedSimpleField> = new Dictionary<ContainedSimpleField>()
+  public readonly nameToLocalAttribute: Map<string, ContainedSimpleField> = new Map<string, ContainedSimpleField>()
   /**
    * all attributes in order of being declared
    */

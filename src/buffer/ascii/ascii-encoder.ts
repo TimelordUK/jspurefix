@@ -87,7 +87,7 @@ export class AsciiEncoder extends MsgEncoder {
     const keys: string[] = Object.keys(o)
     let j: number = 0
     const fields: ContainedField[] = keys.reduce((a: ContainedField[], current: string) => {
-      const field: ContainedField | null = set.localNameToField.get(current)
+      const field = set.localNameToField.get(current)
       if (field) {
         a[j++] = field
       }

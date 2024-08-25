@@ -17,7 +17,7 @@ export class ContainedSetBuilder {
    */
   public add (field: ContainedField): void {
     this.set.fields.push(field)
-    this.set.localNameToField.addUpdate(field.name, field)
+    this.set.localNameToField.set(field.name, field)
     this.addUpdate(field)
     this.addContained(this.set, field)
   }
@@ -33,7 +33,7 @@ export class ContainedSetBuilder {
         const cf = field as ContainedComponentField
         const definition = cf.definition
         if (definition.abbreviation && definition.abbreviation !== field.name) {
-          this.set.localNameToField.addUpdate(definition.abbreviation, field)
+          this.set.localNameToField.set(definition.abbreviation, field)
         }
         break
       }
@@ -42,7 +42,7 @@ export class ContainedSetBuilder {
         const gf = field as ContainedComponentField
         const definition = gf.definition
         if (definition.abbreviation && definition.abbreviation !== field.name) {
-          this.set.localNameToField.addUpdate(definition.abbreviation, field)
+          this.set.localNameToField.set(definition.abbreviation, field)
         }
         break
       }
@@ -55,13 +55,13 @@ export class ContainedSetBuilder {
   private addLocalSimple (field: ContainedSimpleField): void {
     const definition = field.definition
     if (definition.abbreviation && definition.abbreviation !== definition.name) {
-      this.set.localNameToField.addUpdate(definition.abbreviation, field)
+      this.set.localNameToField.set(definition.abbreviation, field)
     }
     if (definition.baseCategoryAbbreviation && definition.baseCategory === this.set.category) {
-      this.set.localNameToField.addUpdate(definition.baseCategoryAbbreviation, field)
+      this.set.localNameToField.set(definition.baseCategoryAbbreviation, field)
     }
     if (field.attribute) {
-      this.set.nameToLocalAttribute.addUpdate(definition.abbreviation, field)
+      this.set.nameToLocalAttribute.set(definition.abbreviation, field)
       this.set.localAttribute.push(field)
       // an attribute for FixMl lives in attribute set not fields - in this case xml sub elements
       this.set.fields.pop()

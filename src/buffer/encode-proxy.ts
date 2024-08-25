@@ -109,7 +109,7 @@ export class EncodeProxy {
   private static handler (set: IContainedSet): Object {
     return {
       set (target: ILooseObject, prop: string, val: any): boolean {
-        const field: ContainedField | null = set.localNameToField.get(prop)
+        const field: ContainedField | undefined = set.localNameToField.get(prop)
         if (!field) {
           throw new Error(`type ${set.name} has no field named ${prop}`)
         }
