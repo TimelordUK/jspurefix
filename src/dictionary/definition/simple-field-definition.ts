@@ -46,7 +46,7 @@ export class SimpleFieldDefinition {
   }
 
   public patchEnumValue (v: string): string {
-    let converted = _.upperFirst(_.camelCase(v))
+    let converted = _.upperFirst(_.camelCase(v)).toString()
     const charAtPos = converted.charCodeAt(0)
     const zero: number = AsciiChars.Zero
     const nine: number = AsciiChars.Nine

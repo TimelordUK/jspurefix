@@ -13,7 +13,7 @@ let secHelper: SecDefHelper
 let setHelper: SetConstraintHelper
 
 beforeAll(async () => {
-  definitions = await new DefinitionFactory().getDefinitions(`${root}/fix5-mod.xml` ?? '')
+  definitions = await new DefinitionFactory().getDefinitions(`${root}/fix5-mod.xml`)
   secHelper = new SecDefHelper(definitions)
   setHelper = new SetConstraintHelper(definitions)
 }, 45000)

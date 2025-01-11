@@ -117,9 +117,9 @@ if ($GK_unstructuredName.Length -gt 0) {
 
 $OTHER_FIELDS = ""
 $ADD_OTHER_FIELD = "Y"
-while ($ADD_OTHER_FIELD -eq "y" || $ADD_OTHER_FIELD -eq "Y") {
+while ($ADD_OTHER_FIELD -eq "y" -or $ADD_OTHER_FIELD -eq "Y") {
     $ADD_OTHER_FIELD = read-or-default "Add other field [y/N]" "N"
-    if ($ADD_OTHER_FIELD -eq "y" || $ADD_OTHER_FIELD -eq "Y") {
+    if ($ADD_OTHER_FIELD -eq "y" -or $ADD_OTHER_FIELD -eq "Y") {
         $OTHER_FIELD_NAME = Read-Host "Field name: "
         $OTHER_FIELD_VALUE = Read-Host "Field value: "
         if ($OTHER_FIELD_VALUE.Length -eq 0) {
