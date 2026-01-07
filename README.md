@@ -4,6 +4,16 @@
 [![Build Status](https://travis-ci.org/TimelordUK/jspurefix.svg?branch=master)](https://travis-ci.org/TimelordUK/jspurefix)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## C# Port Available
+
+This TypeScript FIX engine has been ported to C#:
+
+- **Codebase**: [cspurefix](https://github.com/TimelordUK/cspurefix)
+- **Demo**: [purefix-standalone-demo](https://github.com/TimelordUK/purefix-standalone-demo)
+- **NuGet**: [PureFix.Types.Core](https://www.nuget.org/packages/PureFix.Types.Core/)
+
+---
+
 1. fast 100% native clean fix engine for Node JS
 1. supports tls encrypted sessions over tcp
 1. represent data dictionary as quickfix or repo notation
