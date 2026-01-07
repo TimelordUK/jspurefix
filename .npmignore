@@ -1,11 +1,36 @@
-data/session/certs
-data/examples/FIXML
+# Tests
+src/test
+dist/test
+
+# Unzipped repo (postinstall extracts from fix_repo.zip)
 data/fix_repo
+
+# Large example files
+data/examples/FIXML
 data/examples/FIX.4.4/quickfix
 data/examples/FIX.4.4/repo
-datax/examples/FIX.4.4/fix.txt
+data/examples/FIX.4.4/fix.txt
 data/examples/FIX.4.4/fix.json
-src/dict-parser.ts
-src/test
-dist
+data/examples/FIX.4.3
+data/examples/FIX.5.0SP2
+
+# IDE and editor configs
+.idea
+.vscode
+.claude
+*.iml
+
+# CI configs (not needed in package)
+.travis.yml
+appveyor.yml
+.github
+
+# Build/test artifacts
+coverage
 jest.config.js
+*.log
+
+# Dev files
+src/dict-parser.ts
+tsconfig.json
+.eslintrc.cjs
