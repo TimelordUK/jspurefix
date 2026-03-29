@@ -95,7 +95,7 @@ export class FixMsgAsciiStoreResend {
       new Date(),
       startGap,
       gapFill,
-      null,
+      null
     )
   }
 

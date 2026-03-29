@@ -26,5 +26,5 @@ export interface IQuoteCancel {
   StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
   Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
   TargetParties?: ITargetParties[]// [3] ID.1462, Src.1463 .. Qual.1818
-  QuotCxlEntriesGrp?: IQuotCxlEntriesGrp[]// [4] 
+  QuotCxlEntriesGrp?: IQuotCxlEntriesGrp[]// [4]
 }

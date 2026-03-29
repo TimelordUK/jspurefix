@@ -6,5 +6,5 @@ export interface IPartyRiskLimitsGrp {
   RiskLimitCheckModelType?: number// [1] 2339 (Int)
   PartyRiskLimitStatus?: number// [1] 2355 (Int)
   PartyDetailGrp?: IPartyDetailGrp[]// [1] ID.1691, Src.1692 .. Stat.1672
-  RiskLimitsGrp?: IRiskLimitsGrp[]// [2] 
+  RiskLimitsGrp?: IRiskLimitsGrp[]// [2]
 }

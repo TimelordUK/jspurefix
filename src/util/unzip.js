@@ -75,7 +75,6 @@ if (offsetArg != null || lenArg != null || endArg != null) {
   yauzl.open(zipFilePath, { lazyEntries: true }, handleZipFile)
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function openMiddleOfFile (zipFilePath, options, offsetArg, lenArg, endArg, handleZipFile) {
   fs.open(zipFilePath, 'r', function (err, fd) {
     if (err != null) throw err

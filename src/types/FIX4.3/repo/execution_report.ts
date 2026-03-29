@@ -31,7 +31,7 @@ export interface IExecutionReport {
   SecondaryOrderID?: string// [3] 198 (String)
   ClOrdID?: string// [4] 11 (String)
   OrigClOrdID?: string// [5] 41 (String)
-  Parties?: IParties[]// [6] 
+  Parties?: IParties[]// [6]
   NoContraBrokers?: number// [7] 382 (Int)
   ContraBroker?: string// [8] 375 (String)
   ContraTrader?: string// [9] 337 (String)
@@ -49,7 +49,7 @@ export interface IExecutionReport {
   FutSettDate?: Date// [21] 64 (LocalDate)
   Instrument: IInstrument// [22] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   Side: string// [23] 54 (String)
-  Stipulations?: IStipulations[]// [24] 
+  Stipulations?: IStipulations[]// [24]
   OrderQtyData: IOrderQtyData// [25] OrderQty.38, CashOrderQty.152
   OrdType?: string// [26] 40 (String)
   PriceType?: number// [27] 423 (Int)
@@ -86,7 +86,7 @@ export interface IExecutionReport {
   ReportToExch?: boolean// [58] 113 (Boolean)
   CommissionData?: ICommissionData// [59] Commission.12, CommType.13
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [60] SpreadToBenchmark.218
-  YieldData?: IYieldData// [61] 
+  YieldData?: IYieldData// [61]
   GrossTradeAmt?: number// [62] 381 (Float)
   NumDaysInterest?: number// [63] 157 (Int)
   AccruedInterestRate?: number// [64] 158 (Float)
@@ -107,7 +107,7 @@ export interface IExecutionReport {
   FutSettDate2?: Date// [79] 193 (LocalDate)
   OrderQty2?: number// [80] 192 (Float)
   MultiLegReportingType?: string// [81] 442 (String)
-  InstrumentLeg?: IInstrumentLeg// [82] 
-  NestedParties?: INestedParties[]// [83] 
+  InstrumentLeg?: IInstrumentLeg// [82]
+  NestedParties?: INestedParties[]// [83]
   StandardTrailer: IStandardTrailer// [84] SignatureLength.93, Signature.89, CheckSum.10
 }

@@ -19,11 +19,11 @@ import { IStandardTrailer } from './set/standard_trailer'
 export interface INewOrderSingle {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
   ClOrdID: string// [2] 11 (String)
-  Parties?: IParties[]// [3] 
+  Parties?: IParties[]// [3]
   Account?: string// [4] 1 (String)
   NoAllocs?: number// [5] 78 (Int)
   AllocAccount?: string// [6] 79 (String)
-  NestedParties?: INestedParties[]// [7] 
+  NestedParties?: INestedParties[]// [7]
   AllocShares?: number// [8] 80 (Float)
   SettlmntTyp?: string// [9] 63 (String)
   FutSettDate?: Date// [10] 64 (LocalDate)
@@ -40,14 +40,14 @@ export interface INewOrderSingle {
   Side: string// [21] 54 (String)
   LocateReqd?: boolean// [22] 114 (Boolean)
   TransactTime: Date// [23] 60 (UtcTimestamp)
-  Stipulations?: IStipulations[]// [24] 
+  Stipulations?: IStipulations[]// [24]
   OrderQtyData: IOrderQtyData// [25] OrderQty.38, CashOrderQty.152
   OrdType: string// [26] 40 (String)
   PriceType?: number// [27] 423 (Int)
   Price?: number// [28] 44 (Float)
   StopPx?: number// [29] 99 (Float)
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [30] SpreadToBenchmark.218
-  YieldData?: IYieldData// [31] 
+  YieldData?: IYieldData// [31]
   Currency?: string// [32] 15 (String)
   ComplianceID?: string// [33] 376 (String)
   SolicitedFlag?: boolean// [34] 377 (Boolean)

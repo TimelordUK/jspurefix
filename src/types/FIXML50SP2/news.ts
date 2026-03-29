@@ -32,7 +32,7 @@ export interface INews {
   ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
   NewsRefGrp?: INewsRefGrp[]// [3] RefID.1476, RefTyp.1477
   RoutingGrp?: IRoutingGrp[]// [4] RtgTyp.216, RtgID.217
-  InstrmtGrp?: IInstrmtGrp[]// [5] 
+  InstrmtGrp?: IInstrmtGrp[]// [5]
   InstrmtLegGrp?: IInstrmtLegGrp[]// [6] Sym.600, Sfx.601 .. ExchLookAlike.2607
   UndInstrmtGrp?: IUndInstrmtGrp[]// [7] Sym.311, Sfx.312 .. XID.2631
   LinesOfTextGrp?: ILinesOfTextGrp[]// [8] Txt.58, EncTxtLen.354, EncTxt.355

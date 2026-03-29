@@ -17,7 +17,7 @@ export interface IOrderCancelRequest {
   ClOrdID: string// [4] 11 (String)
   ListID?: string// [5] 66 (String)
   Account?: string// [6] 1 (String)
-  Parties?: IParties[]// [7] 
+  Parties?: IParties[]// [7]
   Instrument: IInstrument// [8] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   Side: string// [9] 54 (String)
   TransactTime: Date// [10] 60 (UtcTimestamp)

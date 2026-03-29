@@ -19,7 +19,7 @@ export interface IQuoteRequestReject {
   PrevClosePx?: number// [5] 140 (Float)
   QuoteRequestType?: number// [6] 303 (Int)
   TradingSessionID?: string// [7] 336 (String)
-  Stipulations?: IStipulations[]// [8] 
+  Stipulations?: IStipulations[]// [8]
   Side?: string// [9] 54 (String)
   OrderQty?: number// [10] 38 (Float)
   CashOrderQty?: number// [11] 152 (Float)
@@ -34,7 +34,7 @@ export interface IQuoteRequestReject {
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [20] SpreadToBenchmark.218
   PriceType?: number// [21] 423 (Int)
   Price?: number// [22] 44 (Float)
-  YieldData?: IYieldData// [23] 
+  YieldData?: IYieldData// [23]
   Text?: string// [24] 58 (String)
   EncodedTextLen?: number// [25] 354 (Int)
   EncodedText?: Buffer// [26] 355 (RawData)

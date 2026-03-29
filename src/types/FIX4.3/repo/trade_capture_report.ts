@@ -34,7 +34,7 @@ export interface ITradeCaptureReport {
   OrderID: string// [17] 37 (String)
   SecondaryOrderID?: string// [18] 198 (String)
   ClOrdID?: string// [19] 11 (String)
-  Parties?: IParties[]// [20] 
+  Parties?: IParties[]// [20]
   Account?: string// [21] 1 (String)
   ProcessCode?: string// [22] 81 (String)
   Currency?: string// [23] 15 (String)

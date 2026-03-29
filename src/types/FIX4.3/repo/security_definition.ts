@@ -26,6 +26,6 @@ export interface ISecurityDefinition {
   Text?: string// [8] 58 (String)
   EncodedTextLen?: number// [9] 354 (Int)
   EncodedText?: Buffer// [10] 355 (RawData)
-  InstrumentLeg?: IInstrumentLeg// [11] 
+  InstrumentLeg?: IInstrumentLeg// [11]
   StandardTrailer: IStandardTrailer// [12] SignatureLength.93, Signature.89, CheckSum.10
 }

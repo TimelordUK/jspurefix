@@ -801,4 +801,3 @@ export enum AllocHandlInst {
   Forward = 2,
   ForwardAndMatch = 3
 }
-

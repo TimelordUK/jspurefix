@@ -15,7 +15,7 @@ export interface IQuoteCancel {
   QuoteID: string// [3] 117 (String)
   QuoteCancelType: number// [4] 298 (Int)
   QuoteResponseLevel?: number// [5] 301 (Int)
-  Parties?: IParties[]// [6] 
+  Parties?: IParties[]// [6]
   Account?: string// [7] 1 (String)
   TradingSessionID?: string// [8] 336 (String)
   NoQuoteEntries?: number// [9] 295 (Int)

@@ -571,4 +571,3 @@ export enum MiscFeeType {
   Levy = '6',
   Other = '7'
 }
-

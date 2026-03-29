@@ -17,14 +17,14 @@ import { IStandardTrailer } from './set/standard_trailer'
 export interface IOrderCancelReplaceRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
   OrderID?: string// [2] 37 (String)
-  Parties?: IParties[]// [3] 
+  Parties?: IParties[]// [3]
   OrigClOrdID: string// [4] 41 (String)
   ClOrdID: string// [5] 11 (String)
   ListID?: string// [6] 66 (String)
   Account?: string// [7] 1 (String)
   NoAllocs?: number// [8] 78 (Int)
   AllocAccount?: string// [9] 79 (String)
-  NestedParties?: INestedParties[]// [10] 
+  NestedParties?: INestedParties[]// [10]
   AllocShares?: number// [11] 80 (Float)
   SettlmntTyp?: string// [12] 63 (String)
   FutSettDate?: Date// [13] 64 (LocalDate)
@@ -44,7 +44,7 @@ export interface IOrderCancelReplaceRequest {
   Price?: number// [27] 44 (Float)
   StopPx?: number// [28] 99 (Float)
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [29] SpreadToBenchmark.218
-  YieldData?: IYieldData// [30] 
+  YieldData?: IYieldData// [30]
   PegDifference?: number// [31] 211 (Float)
   DiscretionInst?: string// [32] 388 (String)
   DiscretionOffset?: number// [33] 389 (Float)

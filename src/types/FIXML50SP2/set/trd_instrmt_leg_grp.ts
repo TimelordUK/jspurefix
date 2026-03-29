@@ -42,5 +42,5 @@ export interface ITrdInstrmtLegGrp {
   LegPositionAmountData?: ILegPositionAmountData[]// [3] Amt.1587, Typ.1588 .. Rsn.1583
   LegStipulations?: ILegStipulations[]// [4] StipTyp.688, StipVal.689
   NestedParties?: INestedParties[]// [5] ID.524, Src.525 .. Qual.2384
-  TradeCapLegUnderlyingsGrp?: ITradeCapLegUnderlyingsGrp[]// [6] 
+  TradeCapLegUnderlyingsGrp?: ITradeCapLegUnderlyingsGrp[]// [6]
 }

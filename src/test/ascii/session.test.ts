@@ -107,8 +107,8 @@ test('session send resendRequest when logged on', async () => {
 
   const clientResets = countOfType('SequenceReset', cViews)
   const serverResets = countOfType('SequenceReset', sViews)
-  console.log('SERVER VIEWS', sViews.map((a => a.toJson())));
-  console.log('CLIENT VIEWS', cViews.map((a => a.toJson())));
+  console.log('SERVER VIEWS', sViews.map((a => a.toJson())))
+  console.log('CLIENT VIEWS', cViews.map((a => a.toJson())))
   expect(clientResets).toEqual(1)
   expect(serverResets).toEqual(0)
 })

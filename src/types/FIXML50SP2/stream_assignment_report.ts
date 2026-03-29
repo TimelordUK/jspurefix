@@ -13,5 +13,5 @@ export interface IStreamAssignmentReport {
   StreamAsgnReqType?: number// [2] 1498 (Int)
   StreamAsgnReqID?: string// [2] 1497 (String)
   StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
-  StrmAsgnRptGrp?: IStrmAsgnRptGrp[]// [2] 
+  StrmAsgnRptGrp?: IStrmAsgnRptGrp[]// [2]
 }
