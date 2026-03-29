@@ -16,6 +16,7 @@ import { DITokens } from '../../runtime/di-tokens'
 import { SegmentType } from '../segment/segment-type'
 import { AsciiParserError } from './ascii-segment-parser-error'
 import { AsciiSegmentParserSummary } from './ascii-segment-parser-summary'
+import { TagIndex } from './tag-index'
 
 // this takes linear time i.e. it constantly makes forward progress
 // one tag at a time
@@ -39,6 +40,10 @@ export class AsciiSegmentParser {
     let currentTagPosition: number = 0
     let peek: SegmentDescription
 
+    // track depth-1 components that have been exited for fragmentation detection
+    const exitedDepth1Components: Set<string> = new Set()
+    const fragmentedComponents: Set<string> = new Set()
+
     // having finished one segments keep unwinding until tag matches further up stack
     function unwind (tag: number): void {
       while (structureStack.length > 1) {
@@ -46,6 +51,12 @@ export class AsciiSegmentParser {
         if (!done) continue
         done.end(segments.length, currentTagPosition - 1, tags.tagPos[currentTagPosition - 1].tag)
         segments.push(done)
+
+        // track when we exit depth-1 components for fragmentation detection
+        if (done.depth === 1 && done.name) {
+          exitedDepth1Components.add(done.name)
+        }
+
         peek = structureStack[structureStack.length - 1]
         if (peek.set?.containedTag[tag]) {
           // unwound to point this tag lives in this set.
@@ -86,6 +97,10 @@ export class AsciiSegmentParser {
         // moving deeper into structure, start a new context
         case ContainedFieldType.Component: {
           const cf: ContainedComponentField = currentField as ContainedComponentField
+          // detect fragmentation: re-entering a depth-1 component we already exited
+          if (structureStack.length === 1 && exitedDepth1Components.has(cf.name)) {
+            fragmentedComponents.add(cf.name)
+          }
           structure = new SegmentDescription(cf.name, tag, cf.definition,
             currentTagPosition, structureStack.length, SegmentType.Component)
           break
@@ -170,11 +185,33 @@ export class AsciiSegmentParser {
       segments[m2] = tmp
     }
 
+    function fragments (): void {
+      // only build SegmentViews for components detected as fragmented during discover
+      // non-fragmented components use their position ranges directly (zero overhead)
+      if (fragmentedComponents.size === 0) return
+      const ti = new TagIndex(msgDefinition!, tags, last + 1)
+      const seen: Set<string> = new Set()
+      for (let i = 1; i < segments.length - 1; i++) {
+        const seg = segments[i]
+        if (seg.depth !== 1) continue
+        if (!seg.name) continue
+        if (seg.segmentView) continue
+        if (seen.has(seg.name)) continue
+        if (!fragmentedComponents.has(seg.name)) continue
+        if (ti.isComponentGroupWrapper(seg.name)) continue
+        const v = ti.getInstance(seg.name)
+        if (!v) continue
+        seen.add(seg.name)
+        seg.addSegmentView(v)
+      }
+    }
+
     const msgStructure = new SegmentDescription(msgDefinition.name, tags.tagPos[0].tag, msgDefinition,
       currentTagPosition, structureStack.length, SegmentType.Msg)
     structureStack.push(msgStructure)
     discover()
     clean()
+    fragments()
 
     // now know where all components and groups are positioned within message
     return new Structure(tags, segments)

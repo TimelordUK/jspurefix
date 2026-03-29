@@ -2,6 +2,7 @@ import { INumericKeyed } from '../../collections/collection'
 import { ContainedField, IContainedSet } from '../../dictionary/contained'
 import { GroupFieldDefinition } from '../../dictionary/definition'
 import { SegmentType } from './segment-type'
+import { SegmentView } from './segment-view'
 import { ElasticBuffer } from '../elastic-buffer'
 
 export class SegmentDescription {
@@ -12,6 +13,7 @@ export class SegmentDescription {
   public delimiterPositions: number[]
   public currentField: ContainedField | null
   public containedDelimiterPositions: INumericKeyed<boolean>
+  public segmentView: SegmentView | null = null
 
   constructor (
     public name: string,
@@ -89,6 +91,14 @@ export class SegmentDescription {
       }
     }
     return delimiter
+  }
+
+  public addSegmentView (view: SegmentView): void {
+    this.segmentView = view
+    this.endPosition = view.endPosition
+    this.startPosition = view.startPosition
+    this.endTag = view.endTag
+    this.startTag = view.startTag
   }
 
   public end (i: number, pos: number, endTag: number): void {

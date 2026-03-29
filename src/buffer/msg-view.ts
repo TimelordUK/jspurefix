@@ -362,8 +362,14 @@ export abstract class MsgView {
   private allStrings (): Array<(string | null)> {
     const segment: SegmentDescription = this.segment
     const range: number[] = []
-    for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
-      range[range.length] = i
+    if (segment.segmentView) {
+      for (const tp of segment.segmentView.tags) {
+        range[range.length] = tp.position
+      }
+    } else {
+      for (let i: number = segment.startPosition; i <= segment.endPosition; ++i) {
+        range[range.length] = i
+      }
     }
     return range.map((i: number) => this.stringAtPosition(i))
   }
@@ -469,8 +475,14 @@ export abstract class MsgView {
     let forwards = this.sortedTagPosForwards
     if (!forwards) {
       const segment = this.segment
-      forwards = this.sortedTagPosForwards = this.structure.tags.tagPos.slice(segment.startPosition, segment.endPosition + 1)
-      forwards.sort(TagPos.compare)
+      if (segment.segmentView) {
+        // fragmented component: use the collected tags from SegmentView
+        forwards = this.sortedTagPosForwards = segment.segmentView.tags.slice()
+        forwards.sort(TagPos.compare)
+      } else {
+        forwards = this.sortedTagPosForwards = this.structure.tags.tagPos.slice(segment.startPosition, segment.endPosition + 1)
+        forwards.sort(TagPos.compare)
+      }
       this.sortedTagPosBackwards = forwards.slice().reverse()
     }
     return TagPos.binarySearch(forwards, tag)
