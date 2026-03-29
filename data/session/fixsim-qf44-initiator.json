@@ -1,0 +1,21 @@
+{
+  "application": {
+    "type": "initiator",
+    "name": "test_client",
+    "tcp": {
+      "host": "localhost",
+      "port": 2344
+    },
+    "protocol": "ascii",
+    "dictionary": "data/FIX44.xml"
+  },
+  "Username": "",
+  "Password": "",
+  "EncryptMethod": 0,
+  "ResetSeqNumFlag": true,
+  "HeartBtInt": 30,
+  "SenderCompId": "sjames8888@gmail_com",
+  "TargetCompID": "FIXSIMDEMO",
+  "TargetSubID": "",
+  "BeginString": "FIX.4.4"
+}
