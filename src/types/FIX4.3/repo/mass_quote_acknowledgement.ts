@@ -17,7 +17,7 @@ export interface IMassQuoteAcknowledgement {
   QuoteAckStatus: number// [4] 297 (Int)
   QuoteRejectReason?: number// [5] 300 (Int)
   QuoteResponseLevel?: number// [6] 301 (Int)
-  Parties?: IParties[]// [7] 
+  Parties?: IParties[]// [7]
   Account?: string// [8] 1 (String)
   Text?: string// [9] 58 (String)
   NoQuoteSets?: number// [10] 296 (Int)

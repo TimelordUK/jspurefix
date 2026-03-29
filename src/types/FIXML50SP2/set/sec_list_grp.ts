@@ -23,7 +23,7 @@ export interface ISecListGrp {
   InstrumentExtension?: IInstrumentExtension// [2] DlvryForm.668, PctAtRisk.869
   SecurityClassificationGrp?: ISecurityClassificationGrp[]// [3] Rsn.1583, Val.1584
   FinancingDetails?: IFinancingDetails// [4] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
-  SecurityTradingRules?: ISecurityTradingRules// [5] 
+  SecurityTradingRules?: ISecurityTradingRules// [5]
   StrikeRules?: IStrikeRules[]// [6] StrkRule.1223, StartStrkPxRng.1202 .. StrkExrStyle.1304
   UndInstrmtGrp?: IUndInstrmtGrp[]// [7] Sym.311, Sfx.312 .. XID.2631
   Stipulations?: IStipulations[]// [8] Typ.233, Val.234
@@ -31,5 +31,5 @@ export interface ISecListGrp {
   RelatedInstrumentGrp?: IRelatedInstrumentGrp[]// [10] InstrmtTyp.1648, Sym.1649 .. XIDRef.2417
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [11] Spread.218, Ccy.220 .. SecIDSrc.761
   YieldData?: IYieldData// [12] Typ.235, Yld.236 .. RedPxTyp.698
-  PriceMovementGrp?: IPriceMovementGrp[]// [13] 
+  PriceMovementGrp?: IPriceMovementGrp[]// [13]
 }

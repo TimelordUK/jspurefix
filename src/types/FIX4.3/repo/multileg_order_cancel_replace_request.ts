@@ -18,7 +18,7 @@ export interface IMultilegOrderCancelReplaceRequest {
   OrderID?: string// [2] 37 (String)
   OrigClOrdID: string// [3] 41 (String)
   ClOrdID: string// [4] 11 (String)
-  Parties?: IParties[]// [5] 
+  Parties?: IParties[]// [5]
   Account?: string// [6] 1 (String)
   NoAllocs?: number// [7] 78 (Int)
   AllocAccount?: string// [8] 79 (String)
@@ -36,8 +36,8 @@ export interface IMultilegOrderCancelReplaceRequest {
   Side: string// [20] 54 (String)
   Instrument: IInstrument// [21] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   PrevClosePx?: number// [22] 140 (Float)
-  InstrumentLeg?: IInstrumentLeg// [23] 
-  NestedParties?: INestedParties[]// [24] 
+  InstrumentLeg?: IInstrumentLeg// [23]
+  NestedParties?: INestedParties[]// [24]
   LocateReqd?: boolean// [25] 114 (Boolean)
   TransactTime: Date// [26] 60 (UtcTimestamp)
   OrderQtyData: IOrderQtyData// [27] OrderQty.38, CashOrderQty.152

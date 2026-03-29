@@ -1731,4 +1731,3 @@ export enum MultiLegReportingType {
   IndividualLegOfAMultiLegSecurity = '2',
   MultiLegSecurity = '3'
 }
-

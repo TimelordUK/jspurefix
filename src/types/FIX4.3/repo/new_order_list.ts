@@ -32,11 +32,11 @@ export interface INewOrderList {
   ClOrdID: string// [14] 11 (String)
   ListSeqNo: number// [15] 67 (Int)
   SettlInstMode?: string// [16] 160 (String)
-  Parties?: IParties[]// [17] 
+  Parties?: IParties[]// [17]
   Account?: string// [18] 1 (String)
   NoAllocs?: number// [19] 78 (Int)
   AllocAccount?: string// [20] 79 (String)
-  NestedParties?: INestedParties[]// [21] 
+  NestedParties?: INestedParties[]// [21]
   AllocShares?: number// [22] 80 (Float)
   SettlmntTyp?: string// [23] 63 (String)
   FutSettDate?: Date// [24] 64 (LocalDate)
@@ -54,14 +54,14 @@ export interface INewOrderList {
   SideValueInd?: number// [36] 401 (Int)
   LocateReqd?: boolean// [37] 114 (Boolean)
   TransactTime?: Date// [38] 60 (UtcTimestamp)
-  Stipulations?: IStipulations[]// [39] 
+  Stipulations?: IStipulations[]// [39]
   OrderQtyData: IOrderQtyData// [40] OrderQty.38, CashOrderQty.152
   OrdType?: string// [41] 40 (String)
   PriceType?: number// [42] 423 (Int)
   Price?: number// [43] 44 (Float)
   StopPx?: number// [44] 99 (Float)
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [45] SpreadToBenchmark.218
-  YieldData?: IYieldData// [46] 
+  YieldData?: IYieldData// [46]
   Currency?: string// [47] 15 (String)
   ComplianceID?: string// [48] 376 (String)
   SolicitedFlag?: boolean// [49] 377 (Boolean)

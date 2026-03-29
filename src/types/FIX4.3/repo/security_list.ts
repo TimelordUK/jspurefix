@@ -18,7 +18,7 @@ export interface ISecurityList {
   NoRelatedSym?: number// [5] 146 (Int)
   Instrument?: IInstrument// [6] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   Currency?: string// [7] 15 (String)
-  InstrumentLeg?: IInstrumentLeg// [8] 
+  InstrumentLeg?: IInstrumentLeg// [8]
   TradingSessionID?: string// [9] 336 (String)
   Text?: string// [10] 58 (String)
   EncodedTextLen?: number// [11] 354 (Int)

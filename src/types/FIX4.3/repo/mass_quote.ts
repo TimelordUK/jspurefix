@@ -16,7 +16,7 @@ export interface IMassQuote {
   QuoteReqID?: string// [2] 131 (String)
   QuoteID: string// [3] 117 (String)
   QuoteResponseLevel?: number// [4] 301 (Int)
-  Parties?: IParties[]// [5] 
+  Parties?: IParties[]// [5]
   Account?: string// [6] 1 (String)
   DefBidSize?: number// [7] 293 (Float)
   DefOfferSize?: number// [8] 294 (Float)

@@ -20,7 +20,7 @@ export interface ISecLstUpdRelSymGrp {
   Instrument?: IInstrument// [1] Sym.55, Sfx.65 .. ExchLookAlike.2603
   InstrumentExtension?: IInstrumentExtension// [2] DlvryForm.668, PctAtRisk.869
   FinancingDetails?: IFinancingDetails// [3] AgmtDesc.913, AgmtID.914 .. MgnRatio.898
-  SecurityTradingRules?: ISecurityTradingRules// [4] 
+  SecurityTradingRules?: ISecurityTradingRules// [4]
   StrikeRules?: IStrikeRules[]// [5] StrkRule.1223, StartStrkPxRng.1202 .. StrkExrStyle.1304
   UndInstrmtGrp?: IUndInstrmtGrp[]// [6] Sym.311, Sfx.312 .. XID.2631
   Stipulations?: IStipulations[]// [7] Typ.233, Val.234

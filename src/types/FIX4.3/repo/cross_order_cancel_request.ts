@@ -16,7 +16,7 @@ export interface ICrossOrderCancelRequest {
   Side: string// [3] 54 (String)
   OrigClOrdID: string// [4] 41 (String)
   ClOrdID: string// [5] 11 (String)
-  Parties?: IParties[]// [6] 
+  Parties?: IParties[]// [6]
   OrderQtyData: IOrderQtyData// [7] OrderQty.38, CashOrderQty.152
   ComplianceID?: string// [8] 376 (String)
   Text?: string// [9] 58 (String)

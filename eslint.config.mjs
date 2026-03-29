@@ -1,11 +1,37 @@
 import love from 'eslint-config-love'
+import stylistic from '@stylistic/eslint-plugin'
 
 export default [
   {
     ...love,
     files: ['src/**/*.ts'],
+    plugins: {
+      ...love.plugins,
+      '@stylistic': stylistic
+    },
     rules: {
       ...love.rules,
+
+      // style rules (replaces what standard-with-typescript used to enforce)
+      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/no-trailing-spaces': 'error',
+      '@stylistic/eol-last': ['error', 'always'],
+      '@stylistic/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+      // indent rule skipped - generated enum files have block comments at col 0
+      '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
+      '@stylistic/comma-dangle': ['error', 'never'],
+      '@stylistic/space-before-function-paren': ['error', 'always'],
+      '@stylistic/keyword-spacing': 'error',
+      '@stylistic/space-infix-ops': 'error',
+      '@stylistic/comma-spacing': 'error',
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      '@stylistic/block-spacing': 'error',
+      '@stylistic/key-spacing': 'error',
+      '@stylistic/space-before-blocks': 'error',
+      '@stylistic/no-multi-spaces': 'error',
+      '@stylistic/object-curly-spacing': ['error', 'always'],
+      '@stylistic/array-bracket-spacing': ['error', 'never'],
+      '@stylistic/spaced-comment': ['error', 'always'],
 
       // rules carried over from old .eslintrc.cjs
       '@typescript-eslint/no-explicit-any': 'off',

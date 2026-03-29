@@ -38,7 +38,7 @@ export interface IAllocation {
   AvgPx: number// [23] 6 (Float)
   Currency?: string// [24] 15 (String)
   AvgPrxPrecision?: number// [25] 74 (Int)
-  Parties?: IParties[]// [26] 
+  Parties?: IParties[]// [26]
   TradeDate: Date// [27] 75 (LocalDate)
   TransactTime?: Date// [28] 60 (UtcTimestamp)
   SettlmntTyp?: string// [29] 63 (String)
@@ -56,7 +56,7 @@ export interface IAllocation {
   AllocPrice?: number// [41] 366 (Float)
   AllocShares?: number// [42] 80 (Float)
   ProcessCode?: string// [43] 81 (String)
-  NestedParties?: INestedParties[]// [44] 
+  NestedParties?: INestedParties[]// [44]
   NotifyBrokerOfCredit?: boolean// [45] 208 (Boolean)
   AllocHandlInst?: number// [46] 209 (Int)
   AllocText?: string// [47] 161 (String)

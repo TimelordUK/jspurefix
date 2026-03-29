@@ -276,7 +276,7 @@ export abstract class MsgView {
       }
       // is this a full name where abbreviation exists
       const component: ContainedField | null = a.segment.set?.localNameToField.get(current) ?? null
-       
+
       if (component) {
         const abbreviated: SegmentDescription | null = structure?.firstContainedWithin(component.name, a.segment) ?? null
         if (abbreviated) {
@@ -383,7 +383,7 @@ export abstract class MsgView {
   }
 
   private asLoose (def: IContainedSet): ILooseObject {
-     
+
     return this.reducer.reduce(def, {
       group: (a: ILooseObject, field: ContainedGroupField) => { this.asLooseGroup(a, field) },
       simple: (a: ILooseObject, field: ContainedSimpleField) => { this.asLooseSimple(a, field) },

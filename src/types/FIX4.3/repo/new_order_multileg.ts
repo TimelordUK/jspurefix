@@ -17,7 +17,7 @@ import { IStandardTrailer } from './set/standard_trailer'
 export interface INewOrderMultileg {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
   ClOrdID: string// [2] 11 (String)
-  Parties?: IParties[]// [3] 
+  Parties?: IParties[]// [3]
   Account?: string// [4] 1 (String)
   NoAllocs?: number// [5] 78 (Int)
   AllocAccount?: string// [6] 79 (String)
@@ -35,8 +35,8 @@ export interface INewOrderMultileg {
   Side: string// [18] 54 (String)
   Instrument: IInstrument// [19] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   PrevClosePx?: number// [20] 140 (Float)
-  InstrumentLeg?: IInstrumentLeg// [21] 
-  NestedParties?: INestedParties[]// [22] 
+  InstrumentLeg?: IInstrumentLeg// [21]
+  NestedParties?: INestedParties[]// [22]
   LocateReqd?: boolean// [23] 114 (Boolean)
   TransactTime: Date// [24] 60 (UtcTimestamp)
   OrderQtyData: IOrderQtyData// [25] OrderQty.38, CashOrderQty.152

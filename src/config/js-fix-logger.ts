@@ -21,7 +21,6 @@ export class EmptyLogger implements IJsFixLogger {
     // nothing
   }
 
-   
   public error (_: Error): void {
     // nothing
   }

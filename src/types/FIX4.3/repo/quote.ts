@@ -15,7 +15,7 @@ export interface IQuote {
   QuoteReqID?: string// [2] 131 (String)
   QuoteID: string// [3] 117 (String)
   QuoteResponseLevel?: number// [4] 301 (Int)
-  Parties?: IParties[]// [5] 
+  Parties?: IParties[]// [5]
   Account?: string// [6] 1 (String)
   TradingSessionID?: string// [7] 336 (String)
   Instrument: IInstrument// [8] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351

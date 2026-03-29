@@ -6085,4 +6085,3 @@ export enum StreamAsgnType {
   Rejected = 2,
   Terminate = 3
 }
-

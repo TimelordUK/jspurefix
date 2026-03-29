@@ -10,7 +10,7 @@ import { IStandardTrailer } from './set/standard_trailer'
 */
 export interface IAllocationAck {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
-  Parties?: IParties[]// [2] 
+  Parties?: IParties[]// [2]
   AllocID: string// [3] 70 (String)
   TradeDate: Date// [4] 75 (LocalDate)
   TransactTime?: Date// [5] 60 (UtcTimestamp)

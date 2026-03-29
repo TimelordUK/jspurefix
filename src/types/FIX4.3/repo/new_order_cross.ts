@@ -18,11 +18,11 @@ export interface INewOrderCross {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
   Side: string// [2] 54 (String)
   ClOrdID: string// [3] 11 (String)
-  Parties?: IParties[]// [4] 
+  Parties?: IParties[]// [4]
   Account?: string// [5] 1 (String)
   NoAllocs?: number// [6] 78 (Int)
   AllocAccount?: string// [7] 79 (String)
-  NestedParties?: INestedParties[]// [8] 
+  NestedParties?: INestedParties[]// [8]
   AllocShares?: number// [9] 80 (Float)
   OrderQtyData: IOrderQtyData// [10] OrderQty.38, CashOrderQty.152
   CommissionData?: ICommissionData// [11] Commission.12, CommType.13
@@ -48,13 +48,13 @@ export interface INewOrderCross {
   PrevClosePx?: number// [31] 140 (Float)
   LocateReqd?: boolean// [32] 114 (Boolean)
   TransactTime: Date// [33] 60 (UtcTimestamp)
-  Stipulations?: IStipulations[]// [34] 
+  Stipulations?: IStipulations[]// [34]
   OrdType: string// [35] 40 (String)
   PriceType?: number// [36] 423 (Int)
   Price?: number// [37] 44 (Float)
   StopPx?: number// [38] 99 (Float)
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [39] SpreadToBenchmark.218
-  YieldData?: IYieldData// [40] 
+  YieldData?: IYieldData// [40]
   Currency?: string// [41] 15 (String)
   ComplianceID?: string// [42] 376 (String)
   IOIid?: string// [43] 23 (String)

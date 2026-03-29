@@ -22,7 +22,7 @@ export interface ISecurityDefinitionRequest {
   EncodedTextLen?: number// [7] 354 (Int)
   EncodedText?: Buffer// [8] 355 (RawData)
   TradingSessionID?: string// [9] 336 (String)
-  InstrumentLeg?: IInstrumentLeg// [10] 
+  InstrumentLeg?: IInstrumentLeg// [10]
   SubscriptionRequestType?: string// [11] 263 (String)
   StandardTrailer: IStandardTrailer// [12] SignatureLength.93, Signature.89, CheckSum.10
 }

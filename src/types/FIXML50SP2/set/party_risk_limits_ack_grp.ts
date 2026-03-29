@@ -12,5 +12,5 @@ export interface IPartyRiskLimitsAckGrp {
   EncodedRejectText?: Buffer// [1] 1665 (RawData)
   PartyRiskLimitStatus?: number// [1] 2355 (Int)
   PartyDetailGrp?: IPartyDetailGrp[]// [1] ID.1691, Src.1692 .. Stat.1672
-  RiskLimitsGrp?: IRiskLimitsGrp[]// [2] 
+  RiskLimitsGrp?: IRiskLimitsGrp[]// [2]
 }

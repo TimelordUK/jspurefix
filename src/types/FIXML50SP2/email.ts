@@ -26,7 +26,7 @@ export interface IEmail {
   RawData?: Buffer// [2] 96 (RawData)
   StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
   RoutingGrp?: IRoutingGrp[]// [2] RtgTyp.216, RtgID.217
-  InstrmtGrp?: IInstrmtGrp[]// [3] 
+  InstrmtGrp?: IInstrmtGrp[]// [3]
   UndInstrmtGrp?: IUndInstrmtGrp[]// [4] Sym.311, Sfx.312 .. XID.2631
   InstrmtLegGrp?: IInstrmtLegGrp[]// [5] Sym.600, Sfx.601 .. ExchLookAlike.2607
   LinesOfTextGrp?: ILinesOfTextGrp[]// [6] Txt.58, EncTxtLen.354, EncTxt.355

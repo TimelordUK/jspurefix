@@ -19,7 +19,7 @@ export interface IQuoteStatusRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
   QuoteID?: string// [2] 117 (String)
   Instrument: IInstrument// [3] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
-  Parties?: IParties[]// [4] 
+  Parties?: IParties[]// [4]
   Account?: string// [5] 1 (String)
   TradingSessionID?: string// [6] 336 (String)
   SubscriptionRequestType?: string// [7] 263 (String)

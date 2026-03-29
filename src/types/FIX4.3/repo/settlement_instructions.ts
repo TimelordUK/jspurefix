@@ -26,7 +26,7 @@ export interface ISettlementInstructions {
   SecurityType?: string// [14] 167 (String)
   EffectiveTime?: Date// [15] 168 (UtcTimestamp)
   TransactTime: Date// [16] 60 (UtcTimestamp)
-  Parties?: IParties[]// [17] 
+  Parties?: IParties[]// [17]
   StandInstDbType?: number// [18] 169 (Int)
   StandInstDbName?: string// [19] 170 (String)
   StandInstDbID?: string// [20] 171 (String)

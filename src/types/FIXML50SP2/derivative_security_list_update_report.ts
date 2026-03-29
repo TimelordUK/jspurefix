@@ -24,6 +24,6 @@ export interface IDerivativeSecurityListUpdateReport {
   StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
   ApplicationSequenceControl?: IApplicationSequenceControl// [2] ApplID.1180, ApplSeqNum.1181 .. ApplResendFlag.1352
   UnderlyingInstrument?: IUnderlyingInstrument// [3] Sym.311, Sfx.312 .. XID.2631
-  DerivativeSecurityDefinition?: IDerivativeSecurityDefinition// [4] 
+  DerivativeSecurityDefinition?: IDerivativeSecurityDefinition// [4]
   RelSymDerivSecUpdGrp?: IRelSymDerivSecUpdGrp[]// [5] ListUpdActn.1324, CorpActn.292 .. EncTxt.355
 }

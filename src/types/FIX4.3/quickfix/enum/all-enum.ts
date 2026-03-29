@@ -1672,4 +1672,3 @@ export enum QuoteRequestRejectReason {
   InvalidPrice = 5,
   NotAuthorizedToRequestQuote = 6
 }
-

@@ -12,7 +12,7 @@ import { IStandardTrailer } from './set/standard_trailer'
 */
 export interface IOrderMassStatusRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
-  Parties?: IParties[]// [2] 
+  Parties?: IParties[]// [2]
   Account?: string// [3] 1 (String)
   TradingSessionID?: string// [4] 336 (String)
   Instrument?: IInstrument// [5] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351

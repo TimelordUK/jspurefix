@@ -13,7 +13,7 @@ export interface IOrderStatusRequest {
   StandardHeader: IStandardHeader// [1] BeginString.8, BodyLength.9 .. OnBehalfOfSendingTime.370
   OrderID?: string// [2] 37 (String)
   ClOrdID: string// [3] 11 (String)
-  Parties?: IParties[]// [4] 
+  Parties?: IParties[]// [4]
   Account?: string// [5] 1 (String)
   Instrument: IInstrument// [6] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   Side: string// [7] 54 (String)

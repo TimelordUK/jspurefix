@@ -21,11 +21,11 @@ export interface ICrossOrderCancelReplaceRequest {
   Side: string// [3] 54 (String)
   OrigClOrdID: string// [4] 41 (String)
   ClOrdID: string// [5] 11 (String)
-  Parties?: IParties[]// [6] 
+  Parties?: IParties[]// [6]
   Account?: string// [7] 1 (String)
   NoAllocs?: number// [8] 78 (Int)
   AllocAccount?: string// [9] 79 (String)
-  NestedParties?: INestedParties[]// [10] 
+  NestedParties?: INestedParties[]// [10]
   AllocShares?: number// [11] 80 (Float)
   OrderQtyData: IOrderQtyData// [12] OrderQty.38, CashOrderQty.152
   CommissionData?: ICommissionData// [13] Commission.12, CommType.13
@@ -51,13 +51,13 @@ export interface ICrossOrderCancelReplaceRequest {
   PrevClosePx?: number// [33] 140 (Float)
   LocateReqd?: boolean// [34] 114 (Boolean)
   TransactTime: Date// [35] 60 (UtcTimestamp)
-  Stipulations?: IStipulations[]// [36] 
+  Stipulations?: IStipulations[]// [36]
   OrdType: string// [37] 40 (String)
   PriceType?: number// [38] 423 (Int)
   Price?: number// [39] 44 (Float)
   StopPx?: number// [40] 99 (Float)
   SpreadOrBenchmarkCurveData?: ISpreadOrBenchmarkCurveData// [41] SpreadToBenchmark.218
-  YieldData?: IYieldData// [42] 
+  YieldData?: IYieldData// [42]
   Currency?: string// [43] 15 (String)
   ComplianceID?: string// [44] 376 (String)
   IOIid?: string// [45] 23 (String)

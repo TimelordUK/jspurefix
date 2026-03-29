@@ -19,7 +19,7 @@ export interface ITradeCaptureReportRequest {
   ExecID?: string// [3] 17 (String)
   OrderID?: string// [4] 37 (String)
   ClOrdID?: string// [5] 11 (String)
-  Parties?: IParties[]// [6] 
+  Parties?: IParties[]// [6]
   Instrument?: IInstrument// [7] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   TradeDate?: Date// [8] 75 (LocalDate)
   TransactTime?: Date// [9] 60 (UtcTimestamp)

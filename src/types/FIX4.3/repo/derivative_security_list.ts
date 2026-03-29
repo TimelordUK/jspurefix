@@ -20,7 +20,7 @@ export interface IDerivativeSecurityList {
   NoRelatedSym?: number// [6] 146 (Int)
   Instrument?: IInstrument// [7] Symbol.55, SymbolSfx.65 .. EncodedSecurityDesc.351
   Currency?: string// [8] 15 (String)
-  InstrumentLeg?: IInstrumentLeg// [9] 
+  InstrumentLeg?: IInstrumentLeg// [9]
   TradingSessionID?: string// [10] 336 (String)
   Text?: string// [11] 58 (String)
   EncodedTextLen?: number// [12] 354 (Int)

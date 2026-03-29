@@ -21,5 +21,5 @@ export interface IAdjustedPositionReport {
   StandardHeader?: IStandardHeader// [1] MsgTyp.35, ApplVerID.1128 .. MsgEncd.347
   Parties?: IParties[]// [2] ID.448, Src.447 .. Qual.2376
   PositionQty?: IPositionQty[]// [3] Typ.703, Long.704 .. UOMCcy.1835
-  InstrmtGrp?: IInstrmtGrp[]// [4] 
+  InstrmtGrp?: IInstrmtGrp[]// [4]
 }
