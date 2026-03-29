@@ -21,7 +21,7 @@ export class EmptyLogger implements IJsFixLogger {
     // nothing
   }
 
-  // eslint-disable-next-line n/handle-callback-err
+   
   public error (_: Error): void {
     // nothing
   }

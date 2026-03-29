@@ -14,7 +14,7 @@ export class TcpInitiatorConnector extends FixEntity {
   }
 
   async start (reconnectTimeout: number = 0): Promise<any> {
-    // eslint-disable-next-line no-async-promise-executor
+     
     return await new Promise<any>(async (resolve, reject) => {
       const logger = this.config.logFactory.logger('initiator')
       const sessionContainer = this.config.sessionContainer
