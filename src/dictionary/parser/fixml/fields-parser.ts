@@ -93,8 +93,8 @@ export class FieldsParser extends XsdParser {
   }
 
   private insertFields (): void {
-    const alias = this.alias
-    this.data.forEach((f: ISimpleField) => {
+    const alias = this.alias;
+    (this.data as ISimpleField[]).forEach((f: ISimpleField) => {
       const sf: SimpleFieldDefinition = new SimpleFieldDefinition(f.Tag,
         f.name,
         f.AbbrName,

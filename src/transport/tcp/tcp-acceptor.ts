@@ -55,7 +55,7 @@ export class TcpAcceptor extends FixAcceptor {
         }
       })
     } catch (e) {
-      this.logger.error(e)
+      this.logger.error(e as Error)
       throw e
     }
   }
@@ -71,7 +71,7 @@ export class TcpAcceptor extends FixAcceptor {
         this.onSocket(id, socket, config)
       })
     } catch (e) {
-      this.logger.error(e)
+      this.logger.error(e as Error)
       throw e
     }
   }

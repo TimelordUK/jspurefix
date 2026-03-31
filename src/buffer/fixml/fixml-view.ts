@@ -3,7 +3,7 @@ import { FixDefinitions, SimpleFieldDefinition } from '../../dictionary/definiti
 import { Structure } from '../structure'
 import { SegmentDescription } from '../segment/segment-description'
 import { AsciiChars } from '../ascii/'
-import * as moment from 'moment'
+import moment = require('moment')
 import { TagType } from '../tag/tag-type'
 
 export class FixmlView extends MsgView {

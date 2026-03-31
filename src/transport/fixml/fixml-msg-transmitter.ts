@@ -22,7 +22,7 @@ export class FixmlMsgTransmitter extends MsgTransmitter {
     }
     const fe = this.encoder as FixmlEncoder
     const factory = this.config.factory
-    obj.StandardHeader = factory?.header()
+    obj.StandardHeader = factory?.header(msgType, 0, new Date())
     fe.encode(obj, msgType)
     return obj.StandardHeader
   }

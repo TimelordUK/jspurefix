@@ -11,6 +11,6 @@ export interface ISessionMsgFactory {
   resendRequest: (from: number, to: number) => ILooseObject
   sequenceReset: (newSeq: number, gapFill?: boolean) => ILooseObject
   heartbeat: (testReqId: string) => ILooseObject
-  header: (msgType?: string, seqNum?: number, time?: Date, overrideData?: Partial<IStandardHeader>) => ILooseObject
+  header: (msgType: string, seqNum: number, time: Date, overrideData?: Partial<IStandardHeader>) => ILooseObject
   trailer: (checksum: number) => ILooseObject
 }

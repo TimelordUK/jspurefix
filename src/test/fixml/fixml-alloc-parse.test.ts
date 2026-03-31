@@ -9,7 +9,7 @@ import {
 } from '../../types/FIXML50SP2'
 
 import { ToViews } from '../env/to-views'
-import * as moment from 'moment'
+import moment = require('moment')
 
 const testFolder: string = 'examples/FIXML/cme/alloc/Clearing System Notifies Allocation to the Claiming Firm - Cross-Exchange'
 const toViews: ToViews = new ToViews(testFolder)

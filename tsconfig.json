@@ -13,7 +13,9 @@
     "inlineSources": true,
     "pretty": true,
     "strictNullChecks": true,
-    "outDir": "./dist"
+    "strictPropertyInitialization": false,
+    "outDir": "./dist",
+    "types": ["node", "jest"]
   },
   "compileOnSave": true,
   "include": [

@@ -4,7 +4,7 @@ import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { IFixmlRequest } from '../fixml'
 import { FixDuplex, StringDuplex, StringDuplexTraits } from '../duplex'
 
-import * as express from 'express'
+import express = require('express')
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
 import { v4 as uuidv4 } from 'uuid'

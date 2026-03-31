@@ -7,7 +7,6 @@ import {
 } from '../../store'
 import { MsgView } from '../../buffer'
 import { IJsFixConfig } from '../../config'
-import { AsciiView } from '../../buffer/ascii'
 import { MsgTag } from '../../types'
 
 export class TestRecovery {
@@ -30,7 +29,7 @@ export class TestRecovery {
   }
 
   getRecords (comp: string): IFixMsgStoreRecord[] {
-    return this.views.reduce((agg: IFixMsgStoreRecord[], v: AsciiView) => {
+    return this.views.reduce((agg: IFixMsgStoreRecord[], v: MsgView) => {
       if (v.getString(MsgTag.SenderCompID) === comp) {
         agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
       }
