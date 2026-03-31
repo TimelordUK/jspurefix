@@ -83,7 +83,6 @@ export class AsciiParserState {
     const tag: number = this.currentTag
     const locations: Tags = this.locations
     const buffer = this.elasticBuffer
-    const terminates = this.checksumExpectedPos
 
     switch (this.parseState) {
       case ParseState.ParsingValue:
@@ -132,17 +131,15 @@ export class AsciiParserState {
       }
 
       case Tags.CheckSumTag: {
-        if (valueEndPos < this.bodyLen) {
-          throw new Error(`CheckSumTag: [${valueEndPos}] expected after ${this.bodyLen}`)
-        }
+        // do not enforce body length constraint - manually edited messages
+        // may have mismatched body length but are otherwise valid
         this.parseState = ParseState.MsgComplete
         break
       }
 
       default: {
-        if (terminates && valueEndPos > terminates) {
-          throw new Error(`Tag: [${tag}] cant be after ${terminates}`)
-        }
+        // do not enforce body length boundary - manually edited messages
+        // may have fields added or modified beyond the original body length
         break
       }
     }

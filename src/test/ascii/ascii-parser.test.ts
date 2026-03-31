@@ -102,12 +102,10 @@ test('logon parsers to correct tag set', async () => {
   expect(res?.view?.structure?.tags.tagPos).toEqual(expectedTagPos)
 })
 
-test('tags other than 10 past body length', async () => {
-  const begin = '8=FIX4.4|9=0000208|'
-  const changed = logon.replace('10=49|', '555=you know nothin|10=49')
-  await expect(setup.client.parseText(changed)).rejects.toEqual(
-    new Error(`Tag: [555] cant be after ${208 + begin.length - 1}`)
-  )
+test('tags past body length are accepted for manually edited messages', async () => {
+  const changed = logon.replace('10=49|', '555=you know nothin|10=49|')
+  const res = await setup.client.parseText(changed)
+  expect(res.msgType).toEqual(MsgType.Logon)
 })
 
 test('unknown message type', async () => {
