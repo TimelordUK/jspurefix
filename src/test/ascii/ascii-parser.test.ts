@@ -115,6 +115,15 @@ test('unknown message type', async () => {
   expect(res?.view?.segment.type).toEqual(SegmentType.Unknown)
 })
 
+test('raw data with undershooting length is accepted for replayed messages', async () => {
+  // EncodedTextLen=20 but actual content before delimiter is 20 chars + 3 extra trailing bytes
+  // This happens with replayed messages from databases where pretty-printed XML
+  // causes the stored length to undershoot the actual content
+  const changed = logon.replace('95=20|96=VgfoSqo56NqSVI1fLdlI|', '95=17|96=VgfoSqo56NqSVI1fLdlI|')
+  const res = await setup.client.parseText(changed)
+  expect(res.msgType).toEqual(MsgType.Logon)
+})
+
 test('reset clears partial parse state allowing clean re-parse', async () => {
   // simulate a partial message (truncated mid-parse) followed by reset and a full message
   const partial = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|'

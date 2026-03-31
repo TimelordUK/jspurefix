@@ -140,15 +140,22 @@ export class AsciiParser extends MsgParser {
         case ParseState.ParsingRawData: {
           // keep skipping until length read, regardless of delimiter or not
           if (state.incRaw()) {
-            // having consumed the raw field expecting delimiter
+            // having consumed the declared raw data length, expect delimiter.
+            // if not found (e.g. replayed messages with pretty-printed XML where
+            // the stored length undershoots), keep scanning forward to the actual
+            // delimiter rather than throwing.
             if (charAtPos === delimiter) {
               if (switchDelimiter) {
                 receivingBuffer.switchChar(writeDelimiter)
               }
               state.store()
-            } else {
-              throw new Error(`delimiter (${delimiter}) expected at position ${readPtr} when value is ${charAtPos}`)
             }
+          } else if (charAtPos === delimiter) {
+            // hit delimiter before declared length exhausted — store what we have
+            if (switchDelimiter) {
+              receivingBuffer.switchChar(writeDelimiter)
+            }
+            state.store()
           }
           break
         }
