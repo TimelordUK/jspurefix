@@ -97,31 +97,44 @@ Also resets transient coordinator state (logon retry count, timeout recovery att
 
 The TS version has sequence state scattered across `fix-session-state.ts` and `ascii-session.ts` with no single source of truth. This makes it hard to reason about recovery, reset, and reconnect behaviour. The C# version centralises all of this.
 
-### C# Solution
+### Delivery: 3 PRs
 
-| File | Purpose |
-|------|---------|
-| `PureFix.Transport/Session/SessionSequenceCoordinator.cs` | Single source of truth for sender/target sequences |
+#### PR 3A: Coordinator + Minimal Interfaces (new files only, zero risk)
 
-**Key capabilities missing from TS:**
-
-- `PrepareForReconnect()` — resets transient state, preserves sequences
-- `HandlePeerReset()` — coordinates ResetSeqNumFlag=Y from peer
-- `ResetAsAcceptor()` — acceptor-initiated reset
-- `PossDupFlag` handling — messages with PossDupFlag=Y bypass normal sequence checks
-- Logon retry with `MaxLogonRetries=100`
-- Timeout recovery with `MaxTimeoutRecoveryAttempts=3` (handles sleep/wake scenarios)
-- `ResendRequestManager` integration — storm protection, pending request tracking
-- Delayed message acceptance — out-of-order messages that fill pending gap ranges
-
-### TS Files to Modify
-
-| File | Change |
+| File | Action |
 |------|--------|
-| New: `src/transport/session/session-sequence-coordinator.ts` | Port coordinator |
-| `src/transport/session/fix-session.ts` | Integrate coordinator as sequence authority |
-| `src/transport/ascii/ascii-session.ts` | Replace inline sequence logic with coordinator calls |
-| `src/transport/session/fix-session-state.ts` | May reduce scope — coordinator takes over sequence tracking |
+| New: `src/transport/session/session-sequence-coordinator.ts` | Port from `SessionSequenceCoordinator.cs` — single source of truth for sender/target sequences, logon retry, timeout recovery |
+| New: `src/transport/session/session-sequence-store.ts` | Minimal `ISessionSequenceStore` interface (senderSeqNum, targetSeqNum, setSenderSeqNum, setTargetSeqNum, reset) |
+| New: `src/transport/session/fix-clock.ts` | `IFixClock` interface (just `now(): Date`) |
+| New: `src/transport/session/resend-manager-config.ts` | Config options with defaults |
+| New: `src/test/session/session-sequence-coordinator.test.ts` | ~20 unit tests: init, sender/target tracking, gap detection, reset, logon retry, timeout recovery |
+
+**Key design:** No threading in TS (unlike C# locks), so coordinator is plain synchronous code. Async only for store calls. The `ISessionSequenceStore` interface is intentionally minimal — both `FixMsgMemoryStore` (adapted) and future `IFixSessionStore` will implement it.
+
+#### PR 3B: ResendRequestManager (new files only, zero risk)
+
+| File | Action |
+|------|--------|
+| New: `src/transport/session/resend-request-manager.ts` | Port `ResendRequestManager`, `PendingResendRange`, `ResendAction`, `ResendActionType` |
+| New: `src/test/session/resend-request-manager.test.ts` | ~10 unit tests: storm protection, pending tracking, overlap detection, timeout cleanup |
+
+PRs 3A and 3B can be done **in parallel** — no dependencies between them.
+
+#### PR 3C: Integrate coordinator into AsciiSession (HIGHEST RISK PR)
+
+| File | Action |
+|------|--------|
+| `src/transport/ascii/ascii-session.ts` | Replace inline `checkSeqNo` logic with coordinator calls; replace naive "always send resend request" with coordinator-mediated gap detection |
+| `src/transport/session/fix-session.ts` | Add coordinator as member, delegate `lastPeerSeqNum()` |
+| `src/transport/session/fix-session-state.ts` | `lastPeerMsgSeqNum` becomes pass-through getter/setter to coordinator (backward compat) |
+| `src/config/js-fix-config.ts` | Add optional `IFixClock` |
+
+**Risk areas:**
+- `checkSeqNo` is the core message acceptance path — any mistake breaks all session tests
+- `FixSessionState.lastPeerMsgSeqNum` is read by tests directly — must remain as pass-through
+- `AsciiMsgTransmitter.msgSeqNum` owns outgoing sequence — leave as-is for now, keep coordinator in sync
+
+**Validation:** All 306 existing tests must pass with zero changes.
 
 ---
 
@@ -133,65 +146,108 @@ The TS version has sequence state scattered across `fix-session-state.ts` and `a
 
 The TS version only has `FixMsgMemoryStore` — all message history and sequence state is lost on process restart. The C# version has a QuickFix-compatible file store that persists across restarts.
 
-### C# Solution
+### Delivery: 4 PRs
 
-| File | Purpose |
-|------|---------|
-| `PureFix.Transport/Store/IFixSessionStore.cs` | Unified persistence interface |
-| `PureFix.Transport/Store/FileSessionStore.cs` | QuickFix-compatible file storage |
-| `PureFix.Transport/Store/MemorySessionStore.cs` | In-memory implementation |
-| `PureFix.Transport/Store/FileSessionStoreFactory.cs` | Factory pattern for store creation |
-| `PureFix.Transport/Store/FixMsgStoreRecord.cs` | Persisted message record |
+#### PR 4A: IFixSessionStore interface + MemorySessionStore (new files only, zero risk)
 
-**QuickFix file format:**
-- `.seqnums` — 20-char padded sender:target sequence numbers
-- `.session` — creation timestamp
-- `.header` — seqnum,offset,length index
-- `.body` — raw FIX message bytes
-
-### Key Integration Points
-
-- `StoreEncodedMessage()` — persist every sent message
-- `InitializeSessionStore()` — load state on startup
-- Store factory in config — deferred creation
-- Store reset on `ResetSeqNumFlag=Y`
-- Resender recreation after reset
-
-### TS Files to Modify
-
-| File | Change |
+| File | Action |
 |------|--------|
-| New: `src/store/fix-session-store.ts` | Port IFixSessionStore interface |
-| New: `src/store/file-session-store.ts` | Port FileSessionStore |
-| New: `src/store/file-session-store-factory.ts` | Port factory |
-| `src/store/fix-msg-memory-store.ts` | Align with IFixSessionStore interface |
-| `src/transport/ascii/ascii-session.ts` | Integrate store lifecycle |
-| `src/config/js-fix-config.ts` | Add SessionStoreFactory to config |
+| New: `src/store/fix-session-store.ts` | Port `IFixSessionStore` — unified interface combining message storage and sequence management |
+| New: `src/store/session-id.ts` | Port `SessionId` record |
+| New: `src/store/memory-session-store.ts` | Port `MemorySessionStore` implementing `IFixSessionStore` |
+| New: `src/store/fix-session-store-factory.ts` | `IFixSessionStoreFactory`, `MemorySessionStoreFactory` |
+| New: `src/test/store/memory-session-store.test.ts` | ~10 unit tests |
+
+Old `IFixMsgStore` and `FixMsgMemoryStore` remain untouched.
+
+#### PR 4B: Stream Providers for file I/O (new files only, zero risk)
+
+| File | Action |
+|------|--------|
+| New: `src/store/session-stream-provider.ts` | `ISessionStreamProvider` interface — adapted for Node.js `fs.promises` |
+| New: `src/store/file-session-stream-provider.ts` | Node.js file implementation using `fs.open()` for random-access read/write |
+| New: `src/store/memory-session-stream-provider.ts` | In-memory implementation for testing |
+| New: `src/test/store/memory-session-stream-provider.test.ts` | ~5 tests |
+
+PRs 4A and 4B can be done **in parallel**.
+
+#### PR 4C: FileSessionStore (new files only, low risk)
+
+| File | Action |
+|------|--------|
+| New: `src/store/file-session-store.ts` | Port QuickFix-compatible file store (`.seqnums`, `.session`, `.header`, `.body` files) |
+| New: `src/store/file-session-store-factory.ts` | `FileSessionStoreFactory` |
+| New: `src/test/store/file-session-store.test.ts` | ~10 tests (using MemorySessionStreamProvider + 1 integration test with real files) |
+
+Depends on 4A + 4B.
+
+#### PR 4D: Wire store into AsciiSession (medium risk)
+
+| File | Action |
+|------|--------|
+| `src/config/js-fix-config.ts` | Add optional `sessionStoreFactory?: IFixSessionStoreFactory` |
+| `src/transport/ascii/ascii-session.ts` | Create store from factory; store messages on `txOnEncoded` |
+| `src/store/fix-msg-ascii-store-resend.ts` | Accept `IFixSessionStore` (add overload, keep old constructor) |
+| `src/store/index.ts` | Export new types |
+
+**Risk area:** Storing messages in the send path — must handle store errors gracefully (log and continue, never block sends).
+
+**Validation:** All existing tests pass (default MemorySessionStoreFactory is the fallback).
 
 ---
 
 ## Phase 5: Resend Request Improvements
 
-**Priority: Medium | Risk: Low-Medium | Scope: Small**
+**Priority: Medium | Risk: Low | Scope: Small**
 
-### Problem
+### Delivery: 2 PRs
 
-The TS version sends a simple ResendRequest on gap detection with no protection against request storms or tracking of pending requests.
+#### PR 5A: Storm protection wiring (low risk)
 
-### C# Solution
-
-`ResendRequestManager` in the coordinator provides:
-- Pending request tracking (`PendingResendRequests` collection)
-- Storm protection — after N requests without response, accepts the gap
-- Delayed message detection — clears pending requests when gap-filling messages arrive
-- `ResendGapFillOnly` mode — sends GapFill instead of replaying stored messages (prevents duplicate executions)
-
-### TS Files to Modify
-
-| File | Change |
+| File | Action |
 |------|--------|
-| New: `src/transport/session/resend-request-manager.ts` | Port manager |
-| `src/transport/ascii/ascii-session.ts` | Integrate with gap detection |
+| `src/transport/ascii/ascii-session.ts` | Use `ResendAction` from coordinator to decide between sending ResendRequest, waiting, or gap-filling |
+| New: `src/test/session/resend-storm-protection.test.ts` | ~5 tests |
+
+Mostly already done if 3A-3C are complete — this PR wires the `ResendActionType` responses into session control flow.
+
+#### PR 5B: ResendGapFillOnly mode (zero risk, independent)
+
+| File | Action |
+|------|--------|
+| `src/config/js-fix-config.ts` | Add optional `resendGapFillOnly?: boolean` |
+| `src/store/fix-msg-ascii-store-resend.ts` | Early return path when enabled — always GapFill instead of replaying |
+| New: `src/test/store/resend-gap-fill-only.test.ts` | ~3 tests |
+
+Can be done at **any time** — independent of all other PRs.
+
+---
+
+## Dependency Graph
+
+```
+PR 3A (Coordinator) ────────────┐
+                                 ├─→ PR 3C (Integration) ──→ PR 5A (Storm wiring)
+PR 3B (ResendRequestManager) ──┘
+
+PR 4A (IFixSessionStore) ──────┐
+                                 ├─→ PR 4C (FileSessionStore) ──→ PR 4D (Wire into session)
+PR 4B (StreamProviders) ───────┘
+
+PR 5B (ResendGapFillOnly) ──── independent, can be done anytime
+```
+
+## Risk Summary
+
+| PR | Risk | Reason |
+|----|------|--------|
+| 3A, 3B | None | New files only |
+| **3C** | **HIGH** | Refactors `checkSeqNo` — core message acceptance path |
+| 4A, 4B | None | New files only |
+| 4C | Low | New file, tested with mocks |
+| 4D | Medium | Changes send path, store errors must not block sends |
+| 5A | Low | Wiring only, coordinator makes decisions |
+| 5B | None | Additive config option |
 
 ---
 
