@@ -1,13 +1,12 @@
 import { Setup } from './setup'
 import { FixMsgMemoryStore, FixMsgStoreRecord, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
-import { AsciiView } from '../../buffer/ascii'
 import { MsgTag } from '../../types'
 import { MsgView } from '../../buffer'
 
 export class ReplayResult {
   public readonly records: IFixMsgStoreRecord[]
   constructor (public readonly views: MsgView[], public readonly store: IFixMsgStore) {
-    this.records = this.views.reduce((agg: IFixMsgStoreRecord[], v: AsciiView) => {
+    this.records = this.views.reduce((agg: IFixMsgStoreRecord[], v: MsgView) => {
       if (v.getString(MsgTag.SenderCompID) === 'accept-comp') {
         agg.push(FixMsgStoreRecord.toMsgStoreRecord(v))
       }

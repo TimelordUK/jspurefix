@@ -68,13 +68,13 @@ export class WinstonLogger {
       },
 
       info: function (msg: string): void {
-        this.log(msg)
+        (this as any).log(msg)
       },
       debug: function (msg: string): void {
-        this.log(msg)
+        (this as any).log(msg)
       },
       warning: function (msg: string): void {
-        this.log(msg)
+        (this as any).log(msg)
       },
       error: function (): void {
         // nothing

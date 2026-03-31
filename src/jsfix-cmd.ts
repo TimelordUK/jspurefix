@@ -11,7 +11,7 @@ import { MsgTag } from './types'
 import { IJsFixConfig } from './config'
 
 import * as util from 'util'
-import * as minimist from 'minimist'
+import minimist = require('minimist')
 import * as path from 'path'
 import { MsgTransport } from './transport/factory'
 import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'

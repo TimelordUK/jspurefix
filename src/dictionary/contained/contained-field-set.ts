@@ -138,7 +138,8 @@ export abstract class ContainedFieldSet implements IContainedSet {
    */
   public getSet (path: string): (IContainedSet | null) {
     if (!path) return null
-    return path.split('.').reduce((set: IContainedSet, next: string): (IContainedSet | null) => {
+    return path.split('.').reduce<IContainedSet | null>((set: IContainedSet | null, next: string): (IContainedSet | null) => {
+      if (!set) return null
       return set.groups.get(next) ?? set.components.get(next) ?? null
     }, this)
   }

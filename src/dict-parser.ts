@@ -10,7 +10,7 @@ import { FixDefinitions } from './dictionary/definition'
 import { MsgType } from './types'
 import { JsFixWinstonLogFactory, JsFixConfig, WinstonLogger, IJsFixConfig } from './config'
 import { BusinessRejectReason, IBusinessMessageReject } from './types/FIXML50SP2'
-import * as rp from 'request-promise-native'
+import rp = require('request-promise-native')
 import { EnumCompiler, ICompilerSettings, MsgCompiler } from './dictionary/compiler'
 import { AsciiMsgTransmitter } from './transport/ascii/ascii-msg-transmitter'
 
@@ -135,7 +135,7 @@ async function runTest (): Promise<any> {
     try {
       const res: any = await testGenerator()
       resolve(res)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e.message)
       reject(e)
     }
@@ -206,7 +206,7 @@ async function http (): Promise<any> {
       fixml: xml
     },
     json: true // Automatically stringifies the body to JSON
-  }).then(function (parsedBody) {
+  }).then(function (parsedBody: any) {
     console.log(parsedBody)
     // POST succeeded...
   })

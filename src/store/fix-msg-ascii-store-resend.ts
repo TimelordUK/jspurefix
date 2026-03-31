@@ -87,7 +87,7 @@ export class FixMsgAsciiStoreResend {
   private sequenceResetGap (startGap: number, newSeq: number): IFixMsgStoreRecord {
     const factory = this.config.factory
     const gapFill: ISequenceReset = factory?.sequenceReset(newSeq, true) as ISequenceReset
-    gapFill.StandardHeader = factory?.header(MsgType.SequenceReset, startGap) as IStandardHeader
+    gapFill.StandardHeader = factory?.header(MsgType.SequenceReset, startGap, new Date()) as IStandardHeader
     gapFill.StandardHeader.PossDupFlag = true
 
     return new FixMsgStoreRecord(

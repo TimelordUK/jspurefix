@@ -265,7 +265,7 @@ export abstract class MsgView {
 
   public getView (name: string): MsgView | null {
     const parts: string[] = name.split('.')
-    const reducer = (a: MsgView, current: string): MsgView | null => {
+    const reducer = (a: MsgView | null, current: string): MsgView | null => {
       if (!a) {
         return a
       }
