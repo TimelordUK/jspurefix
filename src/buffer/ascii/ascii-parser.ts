@@ -77,6 +77,10 @@ export class AsciiParser extends MsgParser {
     })
   }
 
+  public reset (): void {
+    this.state.beginMessage()
+  }
+
   private msg (ptr: number): void {
     const receivingBuffer: ElasticBuffer = this.receivingBuffer
     const state = this.state
