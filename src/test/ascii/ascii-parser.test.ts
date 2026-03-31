@@ -102,12 +102,10 @@ test('logon parsers to correct tag set', async () => {
   expect(res?.view?.structure?.tags.tagPos).toEqual(expectedTagPos)
 })
 
-test('tags other than 10 past body length', async () => {
-  const begin = '8=FIX4.4|9=0000208|'
-  const changed = logon.replace('10=49|', '555=you know nothin|10=49')
-  await expect(setup.client.parseText(changed)).rejects.toEqual(
-    new Error(`Tag: [555] cant be after ${208 + begin.length - 1}`)
-  )
+test('tags past body length are accepted for manually edited messages', async () => {
+  const changed = logon.replace('10=49|', '555=you know nothin|10=49|')
+  const res = await setup.client.parseText(changed)
+  expect(res.msgType).toEqual(MsgType.Logon)
 })
 
 test('unknown message type', async () => {
@@ -115,6 +113,36 @@ test('unknown message type', async () => {
   const res = await setup.client.parseText(changed)
   expect(res.view).toBeTruthy()
   expect(res?.view?.segment.type).toEqual(SegmentType.Unknown)
+})
+
+test('raw data with undershooting length is accepted for replayed messages', async () => {
+  // EncodedTextLen=20 but actual content before delimiter is 20 chars + 3 extra trailing bytes
+  // This happens with replayed messages from databases where pretty-printed XML
+  // causes the stored length to undershoot the actual content
+  const changed = logon.replace('95=20|96=VgfoSqo56NqSVI1fLdlI|', '95=17|96=VgfoSqo56NqSVI1fLdlI|')
+  const res = await setup.client.parseText(changed)
+  expect(res.msgType).toEqual(MsgType.Logon)
+})
+
+test('reset clears partial parse state allowing clean re-parse', async () => {
+  // simulate a partial message (truncated mid-parse) followed by reset and a full message
+  const partial = '8=FIX4.4|9=0000208|35=A|49=sender-10|56=target-20|34=1|'
+  const parser = setup.client.getAsciiParser(partial)
+  // feed partial data - the parser will have incomplete state
+  parser.parseText(partial)
+  // verify parser is mid-message (not in BeginField state)
+  expect(parser.state.parseState).not.toEqual(0) // not BeginField
+  expect(parser.state.count).toBeGreaterThan(0)
+  // reset the parser as would happen on reconnect
+  parser.reset()
+  // verify all state is cleared
+  expect(parser.state.count).toEqual(0)
+  expect(parser.state.currentTag).toEqual(0)
+  expect(parser.state.bodyLen).toEqual(0)
+  expect(parser.state.msgType).toBeNull()
+  // now parse a complete message - should succeed without corruption
+  const res = await setup.client.parseText(logon)
+  expect(res.msgType).toEqual(MsgType.Logon)
 })
 
 test('missing 1 required tag', async () => {

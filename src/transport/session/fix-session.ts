@@ -379,6 +379,13 @@ export abstract class FixSession extends events.EventEmitter {
 
   public reset (resetSeqNum?: number | null): void {
     this.stopTimer()
+    // unsubscribe from old transport before clearing reference
+    this.unsubscribe()
+    // reset parser to clear any partial message state from dropped connection
+    const receiver: any = this.transport?.receiver
+    if (receiver?.reset) {
+      receiver.reset()
+    }
     this.transport = null
     const resetFlag = this.config.description.ResetSeqNumFlag
     const seqNum = resetFlag ? 0 : resetSeqNum ?? this.sessionState.lastPeerMsgSeqNum

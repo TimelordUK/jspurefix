@@ -1,7 +1,6 @@
 # jspurefix
 
-[![Build status](https://ci.appveyor.com/api/projects/status/2w2eag4trnijg5d3?svg=true)](https://ci.appveyor.com/project/TimelordUK/jsfix)
-[![Build Status](https://travis-ci.org/TimelordUK/jspurefix.svg?branch=master)](https://travis-ci.org/TimelordUK/jspurefix)
+[![CI](https://github.com/TimelordUK/jspurefix/actions/workflows/ci.yml/badge.svg)](https://github.com/TimelordUK/jspurefix/actions/workflows/ci.yml)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## C# Port Available
