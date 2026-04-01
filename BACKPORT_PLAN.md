@@ -120,12 +120,15 @@ The TS version has sequence state scattered across `fix-session-state.ts` and `a
 
 PRs 3A and 3B can be done **in parallel** — no dependencies between them.
 
-#### PR 3C: Integrate coordinator into AsciiSession (HIGHEST RISK PR)
+#### PR 3C: Integrate coordinator into AsciiSession — pure refactor (HIGH RISK)
+
+**Approach:** Same behaviour, same tests pass, just routing through the coordinator. No new features.
+This makes it reviewable and safe despite touching `checkSeqNo`.
 
 | File | Action |
 |------|--------|
-| `src/transport/ascii/ascii-session.ts` | Replace inline `checkSeqNo` logic with coordinator calls; replace naive "always send resend request" with coordinator-mediated gap detection |
-| `src/transport/session/fix-session.ts` | Add coordinator as member, delegate `lastPeerSeqNum()` |
+| `src/transport/ascii/ascii-session.ts` | Refactor `checkSeqNo` to delegate to coordinator; `onSessionMsg` SequenceReset uses `coordinator.onGapFillReceived()`; `sendResendRequest` uses coordinator gap detection + `recordResendRequestSent()`; `tick` TerminateOnError uses `coordinator.incrementTimeoutRecovery()`; `peerLogon` calls `coordinator.resetLogonRetryCount()` |
+| `src/transport/session/fix-session.ts` | Add coordinator as member |
 | `src/transport/session/fix-session-state.ts` | `lastPeerMsgSeqNum` becomes pass-through getter/setter to coordinator (backward compat) |
 | `src/config/js-fix-config.ts` | Add optional `IFixClock` |
 
@@ -134,7 +137,20 @@ PRs 3A and 3B can be done **in parallel** — no dependencies between them.
 - `FixSessionState.lastPeerMsgSeqNum` is read by tests directly — must remain as pass-through
 - `AsciiMsgTransmitter.msgSeqNum` owns outgoing sequence — leave as-is for now, keep coordinator in sync
 
-**Validation:** All 306 existing tests must pass with zero changes.
+**Validation:** All existing tests must pass with zero changes.
+
+#### PR 3D: New coordinator capabilities (MEDIUM RISK)
+
+Add new features that the C# version has, one at a time with new tests for each:
+
+| Feature | Method | What it does |
+|---------|--------|-------------|
+| **Logon retry** | `handleLogonRejected()` | Uses `coordinator.onLogonRejectedForSequence()` — retries failed logons when sequence numbers mismatch |
+| **PossDupFlag handling** | in `checkSeqNo` | Messages with PossDupFlag=Y bypass normal sequence checks — they are replays we may have already seen |
+| **ResetSeqNumFlag coordination** | in `peerLogon` | Comprehensive reset handling: `coordinator.handlePeerReset()` when peer sends reset, `coordinator.resetAsAcceptor()` when we initiate |
+| **PrepareForReconnect** | new method | Calls `coordinator.prepareForReconnect()` to reset transient state while preserving sequences |
+
+Each capability has a clear C# reference implementation and can be tested independently.
 
 ---
 
@@ -227,7 +243,7 @@ Can be done at **any time** — independent of all other PRs.
 
 ```
 PR 3A (Coordinator) ────────────┐
-                                 ├─→ PR 3C (Integration) ──→ PR 5A (Storm wiring)
+                                 ├─→ PR 3C (Pure refactor) ──→ PR 3D (New capabilities) ──→ PR 5A (Storm wiring)
 PR 3B (ResendRequestManager) ──┘
 
 PR 4A (IFixSessionStore) ──────┐
@@ -241,8 +257,9 @@ PR 5B (ResendGapFillOnly) ──── independent, can be done anytime
 
 | PR | Risk | Reason |
 |----|------|--------|
-| 3A, 3B | None | New files only |
-| **3C** | **HIGH** | Refactors `checkSeqNo` — core message acceptance path |
+| 3A, 3B | None | New files only — **DONE** |
+| **3C** | **HIGH** | Refactors `checkSeqNo` — pure refactor, same behaviour, but core message path |
+| 3D | Medium | Adds new capabilities (logon retry, PossDupFlag, ResetSeqNum) — new behaviour with new tests |
 | 4A, 4B | None | New files only |
 | 4C | Low | New file, tested with mocks |
 | 4D | Medium | Changes send path, store errors must not block sends |
