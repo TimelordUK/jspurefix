@@ -51,10 +51,13 @@ export abstract class AsciiSession extends FixSession {
 
       case MsgType.Logon: {
         // If peer sends ResetSeqNumFlag=Y, accept regardless of sequence — peerLogon handles the reset.
-        // Don't update lastPeerMsgSeqNum here; peerLogon does it after integrity checks pass.
+        // Must update lastPeerMsgSeqNum to prevent a duplicate logon (same seqNo) from
+        // bypassing the seqDelta<=0 check during the synchronous processing chain.
         const resetFlag = view.getTyped(MsgTag.ResetSeqNumFlag) as boolean | undefined
         if (resetFlag === true) {
           this.sessionLogger.info('logon with ResetSeqNumFlag=Y, accepting regardless of sequence')
+          const seqNo = view.getTyped(MsgTag.MsgSeqNum) as number
+          this.sessionState.lastPeerMsgSeqNum = seqNo
           return true
         }
         // Otherwise fall through to normal sequence check
