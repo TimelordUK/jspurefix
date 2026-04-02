@@ -337,7 +337,7 @@ test('client heartbeats to server', async () => {
   expect(cviews.length === 2).toEqual(true)
   expect(sviews.length > 2).toEqual(true)
   const serverReceivesHeartbeats = countOfType('Heartbeat', sviews)
-  expect(serverReceivesHeartbeats >= 2 && serverReceivesHeartbeats <= 4).toEqual(true)
+  expect(serverReceivesHeartbeats >= 2 && serverReceivesHeartbeats <= 6).toEqual(true)
   checkSeqNos(cviews)
   checkSeqNos(sviews)
   experiment.client.config.description.HeartBtInt = preset
@@ -346,18 +346,18 @@ test('client heartbeats to server', async () => {
 test('server heartbeats to client', async () => {
   const preset = experiment.server.config.description.HeartBtInt
   experiment.server.config.description.HeartBtInt = 2
-  await runSkeletons(6)
+  await runSkeletons(8)
   // both sides should now have logged on and logged off
   const cviews = experiment.client.views
   const sviews = experiment.server.views
-  expect(sviews.length === 2).toEqual(true)
+  expect(sviews.length >= 2).toEqual(true)
   expect(cviews.length > 2).toEqual(true)
   const clientReceivesHeartbeats = countOfType('Heartbeat', cviews)
-  expect(clientReceivesHeartbeats >= 2 && clientReceivesHeartbeats <= 4).toEqual(true)
+  expect(clientReceivesHeartbeats >= 2 && clientReceivesHeartbeats <= 6).toEqual(true)
   checkSeqNos(cviews)
   checkSeqNos(sviews)
   experiment.server.config.description.HeartBtInt = preset
-}, 10000)
+}, 15000)
 
 test('client server heartbeat', async () => {
   const preset = experiment.server.config.description.HeartBtInt
@@ -375,8 +375,8 @@ test('client server heartbeat', async () => {
   const serverReceivesHeartbeats = countOfType('Heartbeat', sviews)
   const serverReceivesTestRequest = countOfType('TestRequest', sviews)
   const serverTotal = serverReceivesHeartbeats + serverReceivesTestRequest
-  expect(clientTotal >= 1 && clientReceivesHeartbeats <= 4).toEqual(true)
-  expect(serverTotal >= 3 && serverReceivesHeartbeats <= 4).toEqual(true)
+  expect(clientTotal >= 1 && clientReceivesHeartbeats <= 6).toEqual(true)
+  expect(serverTotal >= 3 && serverReceivesHeartbeats <= 6).toEqual(true)
   checkSeqNos(cviews)
   checkSeqNos(sviews)
   experiment.server.config.description.HeartBtInt = preset

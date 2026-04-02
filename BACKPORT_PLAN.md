@@ -259,7 +259,7 @@ PR 5B (ResendGapFillOnly) ──── independent, can be done anytime
 |----|------|--------|
 | 3A, 3B | None | New files only — **DONE** |
 | 3C | HIGH | Refactors `checkSeqNo` — pure refactor, same behaviour, but core message path — **DONE** |
-| 3D | Medium | Adds new capabilities (logon retry, PossDupFlag, ResetSeqNum, timeout recovery) — new behaviour with new tests |
+| 3D | Medium | Adds new capabilities (logon retry, PossDupFlag, ResetSeqNum, timeout recovery) — **DONE** |
 | 4A, 4B | None | New files only |
 | 4C | Low | New file, tested with mocks |
 | 4D | Medium | Changes send path, store errors must not block sends |
