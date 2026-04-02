@@ -34,33 +34,21 @@ export abstract class AsciiSession extends FixSession {
   }
 
   private checkSeqNo (msgType: string, view: MsgView): boolean {
-    // Messages with PossDupFlag=Y are resent messages (gap fill responses).
-    // They have "old" sequence numbers and should bypass normal sequence checking.
-    const possDupFlag = view.getTyped(MsgTag.PossDupFlag) as boolean | undefined
-    if (possDupFlag === true) {
-      this.sessionLogger.debug(`message '${msgType}' has PossDupFlag=Y, bypassing sequence check`)
-      const seqNo = view.getTyped(MsgTag.MsgSeqNum) as number
-      this.coordinator.onMessageReceived(seqNo, true)
-      return true
-    }
-
     switch (msgType) {
       case MsgType.SequenceReset: {
         return true
       }
 
       case MsgType.Logon: {
-        // If peer sends ResetSeqNumFlag=Y, accept regardless of sequence — peerLogon handles the reset.
-        // Must update lastPeerMsgSeqNum to prevent a duplicate logon (same seqNo) from
-        // bypassing the seqDelta<=0 check during the synchronous processing chain.
-        const resetFlag = view.getTyped(MsgTag.ResetSeqNumFlag) as boolean | undefined
-        if (resetFlag === true) {
+        // If peer sends ResetSeqNumFlag=Y, accept any sequence number.
+        // PeerLogon handles the full sequence reset.
+        if (view.getTyped(MsgTag.ResetSeqNumFlag) === true) {
           this.sessionLogger.info('logon with ResetSeqNumFlag=Y, accepting regardless of sequence')
           const seqNo = view.getTyped(MsgTag.MsgSeqNum) as number
           this.sessionState.lastPeerMsgSeqNum = seqNo
+          this.coordinator.onMessageReceived(seqNo, false)
           return true
         }
-        // Otherwise fall through to normal sequence check
       }
       // falls through
 
@@ -71,6 +59,14 @@ export abstract class AsciiSession extends FixSession {
         let ret: boolean = false
         const seqDelta: number = seqNo - lastSeq
         if (seqDelta <= 0) {
+          // Check if this is a PossDupFlag=Y message (resend replay) before rejecting.
+          // PossDupFlag messages have old sequence numbers and bypass normal checks.
+          const possDupFlag = view.getTyped(MsgTag.PossDupFlag) as boolean | undefined
+          if (possDupFlag === true) {
+            this.sessionLogger.debug(`message '${msgType}' has PossDupFlag=Y, bypassing sequence check`)
+            this.coordinator.onMessageReceived(seqNo, true)
+            return true
+          }
           // serious problem ... drop immediately
           this.sessionLogger.warning(`terminate as seqDelta (${seqDelta}) < 0 lastSeq = ${lastSeq} seqNo = ${seqNo}`)
           this.stop()
@@ -255,7 +251,7 @@ export abstract class AsciiSession extends FixSession {
   }
 
   private static readonly MaxLogonRetries = 100
-  private static readonly MaxTimeoutRecoveryAttempts = 1
+  private static readonly MaxTimeoutRecoveryAttempts = 0
 
   private handleLogonRejected (text: string | null): void {
     if (!this.coordinator.onLogonRejectedForSequence(AsciiSession.MaxLogonRetries)) {
