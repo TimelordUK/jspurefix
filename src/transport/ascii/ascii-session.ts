@@ -11,6 +11,7 @@ import { SessionSequenceCoordinator } from '../session/session-sequence-coordina
 import { MemorySequenceStore } from '../session/session-sequence-store'
 import { DefaultFixClock } from '../session/fix-clock'
 import { ResendActionType } from '../session/resend-request-manager'
+import { AsciiMsgTransmitter } from './ascii-msg-transmitter'
 
 export abstract class AsciiSession extends FixSession {
   public heartbeat: boolean = true
@@ -33,10 +34,32 @@ export abstract class AsciiSession extends FixSession {
   }
 
   private checkSeqNo (msgType: string, view: MsgView): boolean {
+    // Messages with PossDupFlag=Y are resent messages (gap fill responses).
+    // They have "old" sequence numbers and should bypass normal sequence checking.
+    const possDupFlag = view.getTyped(MsgTag.PossDupFlag) as boolean | undefined
+    if (possDupFlag === true) {
+      this.sessionLogger.debug(`message '${msgType}' has PossDupFlag=Y, bypassing sequence check`)
+      const seqNo = view.getTyped(MsgTag.MsgSeqNum) as number
+      this.coordinator.onMessageReceived(seqNo, true)
+      return true
+    }
+
     switch (msgType) {
       case MsgType.SequenceReset: {
         return true
       }
+
+      case MsgType.Logon: {
+        // If peer sends ResetSeqNumFlag=Y, accept regardless of sequence — peerLogon handles the reset.
+        // Don't update lastPeerMsgSeqNum here; peerLogon does it after integrity checks pass.
+        const resetFlag = view.getTyped(MsgTag.ResetSeqNumFlag) as boolean | undefined
+        if (resetFlag === true) {
+          this.sessionLogger.info('logon with ResetSeqNumFlag=Y, accepting regardless of sequence')
+          return true
+        }
+        // Otherwise fall through to normal sequence check
+      }
+      // falls through
 
       default: {
         const state = this.sessionState
@@ -228,6 +251,23 @@ export abstract class AsciiSession extends FixSession {
     this.sessionLogger.info('coordinator reset transient state for reconnect')
   }
 
+  private static readonly MaxLogonRetries = 100
+  private static readonly MaxTimeoutRecoveryAttempts = 1
+
+  private handleLogonRejected (text: string | null): void {
+    if (!this.coordinator.onLogonRejectedForSequence(AsciiSession.MaxLogonRetries)) {
+      this.sessionLogger.warning(`max logon retries (${AsciiSession.MaxLogonRetries}) exceeded, giving up. Text='${text}'`)
+      this.setState(SessionState.PeerLogonRejected)
+      this.stop()
+      return
+    }
+
+    // The encoder's msgSeqNum is already incremented after each message is sent,
+    // so we just need to retry the logon. The next logon will use the next sequence number.
+    this.sessionLogger.info(`LOGON_SEQ_RETRY: attempt=${this.coordinator.logonRetryCount}/${AsciiSession.MaxLogonRetries}, reason='${text}'`)
+    this.sendLogon()
+  }
+
   okForLogon (): boolean {
     const state = this.sessionState.state
     if (this.acceptor) {
@@ -288,7 +328,19 @@ export abstract class AsciiSession extends FixSession {
       }
 
       case MsgType.Reject: {
-        logger.info(`peer rejects type '${msgType}' with text '${view.getTyped(MsgTag.Text)}'`)
+        const refMsgType = view.getString(MsgTag.RefMsgType)
+        const text = view.getString(MsgTag.Text)
+        const reason = view.getTyped(MsgTag.SessionRejectReason) as number | undefined
+        logger.info(`peer rejects RefMsgType='${refMsgType}', reason=${reason}, text='${text}'`)
+
+        // Check if this is a logon rejection due to sequence mismatch while we're waiting for logon response.
+        // Only retry for ValueIsIncorrect (sequence too low) — structural rejections (RequiredTagMissing etc.)
+        // indicate a config problem that retrying won't fix.
+        if (refMsgType === MsgType.Logon &&
+            this.sessionState.state === SessionState.InitiationLogonSent &&
+            reason === SessionRejectReason.ValueIsIncorrect) {
+          this.handleLogonRejected(text)
+        }
         break
       }
     }
@@ -342,7 +394,34 @@ export abstract class AsciiSession extends FixSession {
   private peerLogon (view: MsgView): void {
     const logger = this.sessionLogger
     const [heartBtInt, peerCompId, userName, password] = view.getTypedTags([MsgTag.HeartBtInt, MsgTag.SenderCompID, MsgTag.Username, MsgTag.Password])
-    logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, userName = ${userName}`)
+    const resetSeqNumFlag = view.getTyped(MsgTag.ResetSeqNumFlag) as boolean | undefined
+    logger.info(`peerLogon Username = ${userName}, heartBtInt = ${heartBtInt}, peerCompId = ${peerCompId}, resetSeqNumFlag = ${resetSeqNumFlag}`)
+
+    // Handle ResetSeqNumFlag from peer's logon
+    if (resetSeqNumFlag === true) {
+      const peerSeqNum = (view.getTyped(MsgTag.MsgSeqNum) as number) ?? 1
+      const weAlsoReset = this.config.description.ResetSeqNumFlag
+      logger.info(`peer sent ResetSeqNumFlag=Y with seqNum=${peerSeqNum}, weAlsoReset=${weAlsoReset}`)
+
+      const transmitter = this.transport?.transmitter as AsciiMsgTransmitter | undefined
+      const savedEncoderSeqNum = weAlsoReset && transmitter ? transmitter.msgSeqNum : null
+
+      // Fire-and-forget the async coordinator call (store updates resolve on next microtask)
+      // but compute the expected values synchronously since we know the reset outcome
+      this.coordinator.handlePeerReset(peerSeqNum, weAlsoReset)
+      if (transmitter) {
+        transmitter.msgSeqNum = savedEncoderSeqNum ?? 1
+      }
+      this.sessionState.lastPeerMsgSeqNum = peerSeqNum
+
+      // Recreate resender with empty store
+      if (this.store) {
+        this.store.clear()
+        this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
+      }
+      logger.info(`reset complete: encoderSeqNum=${transmitter?.msgSeqNum}, lastPeerMsgSeqNum=${peerSeqNum}`)
+    }
+
     const state = this.sessionState
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt) as number
     state.peerCompId = view.getTyped(MsgTag.SenderCompID) as string
@@ -352,6 +431,26 @@ export abstract class AsciiSession extends FixSession {
     if (this.acceptor) {
       this.setState(SessionState.InitiationLogonResponse)
       logger.info('acceptor responds to logon request')
+
+      // If WE (acceptor) are sending ResetSeqNumFlag=Y but peer didn't request it,
+      // reset our sequences before sending our logon response.
+      // This handles the broker-reset pattern where client sends N, we respond with Y.
+      const weReset = this.config.description.ResetSeqNumFlag
+      if (weReset && resetSeqNumFlag !== true) {
+        logger.info('acceptor sending ResetSeqNumFlag=Y (peer sent N), resetting sequences')
+        // Fire-and-forget async coordinator call, set values synchronously
+        this.coordinator.resetAsAcceptor()
+        const transmitter = this.transport?.transmitter as AsciiMsgTransmitter | undefined
+        if (transmitter) {
+          transmitter.msgSeqNum = 1
+        }
+        this.sessionState.lastPeerMsgSeqNum = 0
+        if (this.store) {
+          this.store.clear()
+          this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
+        }
+      }
+
       this.sendLogon() // if res send response else reject, terminate
     } else { // as an initiator the acceptor has responded
       logger.info('initiator receives logon response')
@@ -410,8 +509,17 @@ export abstract class AsciiSession extends FixSession {
       }
 
       case TickAction.TerminateOnError: {
-        logger.info(sessionState.toString())
-        this.terminate(new Error(`${application?.name}: peer not responding`))
+        if (this.coordinator.incrementTimeoutRecovery(AsciiSession.MaxTimeoutRecoveryAttempts)) {
+          // Try to recover — reset timeout state to give session a fresh window.
+          // This helps survive sleep/wake scenarios where TCP connection may still be alive.
+          logger.info(`timeout recovery attempt ${this.coordinator.timeoutRecoveryAttempts}, resetting timeout state`)
+          sessionState.lastTestRequestAt = null
+          sessionState.lastReceivedAt = new Date()
+          this.setState(SessionState.ActiveNormalSession)
+        } else {
+          logger.info(sessionState.toString())
+          this.terminate(new Error(`${application?.name}: peer not responding`))
+        }
         break
       }
 
