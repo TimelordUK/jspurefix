@@ -390,7 +390,12 @@ export abstract class FixSession extends events.EventEmitter {
     const resetFlag = this.config.description.ResetSeqNumFlag
     const seqNum = resetFlag ? 0 : resetSeqNum ?? this.sessionState.lastPeerMsgSeqNum
     this.sessionState.reset(seqNum) // from header def ... eventually
+    this.onPrepareForReconnect()
     this.setState(SessionState.NetworkConnectionEstablished)
+  }
+
+  protected onPrepareForReconnect (): void {
+    // Override in subclass to reset coordinator/transient state
   }
 
   protected stop (error: Error | null = null): void {

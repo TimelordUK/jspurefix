@@ -7,11 +7,16 @@ import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'
 import { IMsgApplication } from '../msg-application'
 import { SegmentType } from '../../buffer/segment/segment-type'
+import { SessionSequenceCoordinator } from '../session/session-sequence-coordinator'
+import { MemorySequenceStore } from '../session/session-sequence-store'
+import { DefaultFixClock } from '../session/fix-clock'
+import { ResendActionType } from '../session/resend-request-manager'
 
 export abstract class AsciiSession extends FixSession {
   public heartbeat: boolean = true
   protected store: IFixMsgStore | null = null
   protected resender: FixMsgAsciiStoreResend
+  protected readonly coordinator: SessionSequenceCoordinator
 
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
@@ -19,6 +24,12 @@ export abstract class AsciiSession extends FixSession {
     this.requestLogonType = MsgType.Logon
     this.store = new FixMsgMemoryStore(this.config.description.SenderCompId, this.config)
     this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
+
+    const sequenceStore = new MemorySequenceStore()
+    const clock = new DefaultFixClock()
+    this.coordinator = new SessionSequenceCoordinator(sequenceStore, clock)
+    const lastReceivedSeqNum = config.description.LastReceivedSeqNum ?? 0
+    this.coordinator.initializeFromConfig(undefined, lastReceivedSeqNum + 1)
   }
 
   private checkSeqNo (msgType: string, view: MsgView): boolean {
@@ -39,6 +50,7 @@ export abstract class AsciiSession extends FixSession {
           this.stop()
         } else if (seqDelta > 1) {
           // resend request required as have missed messages.
+          const expectedSeq = lastSeq + 1
 
           // We process a Logon beforehand to confirm the connection even we out of sync
           if (msgType === MsgType.Logon) {
@@ -49,10 +61,41 @@ export abstract class AsciiSession extends FixSession {
           if (msgType === MsgType.ResendRequest) {
             this.onResendRequest(view)
           }
-          this.sendResendRequest(lastSeq, seqNo)
+
+          // Use coordinator to determine what action to take for the gap
+          const action = this.coordinator.onGapDetected(expectedSeq, seqNo)
+          this.sessionLogger.info(`gap action: ${action}`)
+
+          switch (action.type) {
+            case ResendActionType.SendResendRequest: {
+              if (action.begin != null && action.end != null) {
+                this.sendResendRequest(lastSeq, seqNo)
+                this.coordinator.recordResendRequestSent(action.begin, action.end)
+              }
+              break
+            }
+            case ResendActionType.Wait: {
+              this.sessionLogger.info(`waiting for existing resend request: ${action.reason}`)
+              break
+            }
+            case ResendActionType.SendGapFill: {
+              this.sessionLogger.warning(`gap recovery abandoned (storm protection): ${action.reason}`)
+              break
+            }
+          }
+
+          // Gap message is not forwarded to application — wait for resend to fill
+          // (C# accepts and forwards, but that's a PR 3D behaviour change)
+          this.coordinator.onMessageReceived(seqNo, false)
         } else {
           ret = true
           state.lastPeerMsgSeqNum = seqNo
+          this.coordinator.onMessageReceived(seqNo, false)
+        }
+
+        // Reset timeout recovery on successful message receipt
+        if (ret) {
+          this.coordinator.resetTimeoutRecovery()
         }
         return ret
       }
@@ -180,6 +223,11 @@ export abstract class AsciiSession extends FixSession {
     })
   }
 
+  protected override onPrepareForReconnect (): void {
+    this.coordinator.prepareForReconnect()
+    this.sessionLogger.info('coordinator reset transient state for reconnect')
+  }
+
   okForLogon (): boolean {
     const state = this.sessionState.state
     if (this.acceptor) {
@@ -230,9 +278,12 @@ export abstract class AsciiSession extends FixSession {
 
       case MsgType.SequenceReset: {
         const newSeqNo: number = view.getTyped(MsgTag.NewSeqNo) as number
+        const gapFillSeq: number = view.getTyped(MsgTag.MsgSeqNum) as number
         logger.info(`peer sends '${msgType}' sequence reset. newSeqNo = ${newSeqNo}`)
         // expect  newSeqNo to be the next message's sequence number.
         this.sessionState.lastPeerMsgSeqNum = newSeqNo - 1
+        // Notify coordinator to update expected target and clear pending resend requests
+        this.coordinator.onGapFillReceived(gapFillSeq, newSeqNo)
         break
       }
 
@@ -306,6 +357,9 @@ export abstract class AsciiSession extends FixSession {
       logger.info('initiator receives logon response')
       this.setState(SessionState.InitiationLogonReceived)
     }
+    // Reset logon retry counter on successful logon
+    this.coordinator.resetLogonRetryCount()
+
     if (this.heartbeat) {
       this.startTimer()
     }
