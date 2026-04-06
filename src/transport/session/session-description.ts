@@ -1,4 +1,5 @@
 import { IMsgApplication } from '../msg-application'
+import { StoreConfig } from '../../store/store-config'
 
 export interface IDynamicSessionParams {
   readonly Name: string
@@ -18,4 +19,5 @@ export interface ISessionDescription extends IDynamicSessionParams {
   LastSentSeqNum?: number
   readonly LastReceivedSeqNum?: number
   readonly BodyLengthChars?: number
+  readonly store?: StoreConfig
 }

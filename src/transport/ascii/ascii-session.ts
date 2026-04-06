@@ -2,22 +2,29 @@ import { MsgView } from '../../buffer'
 import { MsgTag, MsgType, SessionRejectReason } from '../../types'
 import { IJsFixConfig } from '../../config'
 import { FixSession } from '../session/fix-session'
-import { FixMsgAsciiStoreResend, FixMsgMemoryStore, IFixMsgStore, IFixMsgStoreRecord } from '../../store'
+import {
+  FixMsgAsciiStoreResend, FixMsgMemoryStore, FixMsgStoreRecord,
+  IFixMsgStore, IFixMsgStoreRecord,
+  IFixSessionStore, IFixSessionStoreFactory,
+  MemorySessionStoreFactory, FileSessionStoreFactory, SessionId
+} from '../../store'
 import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'
 import { IMsgApplication } from '../msg-application'
 import { SegmentType } from '../../buffer/segment/segment-type'
 import { SessionSequenceCoordinator } from '../session/session-sequence-coordinator'
-import { MemorySequenceStore } from '../session/session-sequence-store'
 import { DefaultFixClock } from '../session/fix-clock'
 import { ResendActionType } from '../session/resend-request-manager'
 import { AsciiMsgTransmitter } from './ascii-msg-transmitter'
+import { ILooseObject } from '../../collections/collection'
 
 export abstract class AsciiSession extends FixSession {
   public heartbeat: boolean = true
   protected store: IFixMsgStore | null = null
   protected resender: FixMsgAsciiStoreResend
   protected readonly coordinator: SessionSequenceCoordinator
+  protected readonly sessionStore: IFixSessionStore
+  protected readonly sessionId: SessionId
 
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
@@ -26,9 +33,18 @@ export abstract class AsciiSession extends FixSession {
     this.store = new FixMsgMemoryStore(this.config.description.SenderCompId, this.config)
     this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
 
-    const sequenceStore = new MemorySequenceStore()
+    // Create session store from factory.
+    // Priority: programmatic config > JSON store config > default in-memory
+    const storeFactory = config.sessionStoreFactory ?? AsciiSession.createStoreFactory(config.description.store)
+    this.sessionId = new SessionId(
+      config.description.BeginString,
+      config.description.SenderCompId,
+      config.description.TargetCompID
+    )
+    this.sessionStore = storeFactory.create(this.sessionId)
+
     const clock = new DefaultFixClock()
-    this.coordinator = new SessionSequenceCoordinator(sequenceStore, clock)
+    this.coordinator = new SessionSequenceCoordinator(this.sessionStore, clock)
     const lastReceivedSeqNum = config.description.LastReceivedSeqNum ?? 0
     this.coordinator.initializeFromConfig(undefined, lastReceivedSeqNum + 1)
   }
@@ -250,8 +266,31 @@ export abstract class AsciiSession extends FixSession {
     this.sessionLogger.info('coordinator reset transient state for reconnect')
   }
 
+  protected override txOnEncoded (msgType: string, data: string, hdr: ILooseObject): void {
+    super.txOnEncoded(msgType, data, hdr)
+    // Store the encoded message in the session store for recovery/resend
+    const seqNum = hdr?.MsgSeqNum as number | undefined
+    if (seqNum != null) {
+      const record = new FixMsgStoreRecord(msgType, new Date(), seqNum, undefined, data)
+      this.sessionStore.put(record).catch((e: Error) => {
+        // Never block sends on store errors
+        this.sessionLogger.warning(`failed to store message seq=${seqNum}: ${e.message}`)
+      })
+    }
+  }
+
   private static readonly MaxLogonRetries = 100
   private static readonly MaxTimeoutRecoveryAttempts = 0
+
+  private static createStoreFactory (storeConfig?: { type: string, directory?: string }): IFixSessionStoreFactory {
+    if (!storeConfig) return new MemorySessionStoreFactory()
+    switch (storeConfig.type?.toLowerCase()) {
+      case 'file':
+        return new FileSessionStoreFactory(storeConfig.directory ?? 'store')
+      default:
+        return new MemorySessionStoreFactory()
+    }
+  }
 
   private handleLogonRejected (text: string | null): void {
     if (!this.coordinator.onLogonRejectedForSequence(AsciiSession.MaxLogonRetries)) {

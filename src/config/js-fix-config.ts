@@ -5,6 +5,7 @@ import { JsFixLoggerFactory } from './js-fix-logger-factory'
 import { EmptyLogFactory } from './empty-log-factory'
 import { AsciiChars } from '../buffer/ascii/ascii-chars'
 import { DependencyContainer } from 'tsyringe'
+import { IFixSessionStoreFactory } from '../store/fix-session-store-factory'
 
 export interface IJsFixConfig {
   factory: ISessionMsgFactory | null
@@ -14,6 +15,7 @@ export interface IJsFixConfig {
   logDelimiter?: number
   logFactory: JsFixLoggerFactory
   sessionContainer: DependencyContainer
+  sessionStoreFactory?: IFixSessionStoreFactory
 }
 
 export class JsFixConfig implements IJsFixConfig {
