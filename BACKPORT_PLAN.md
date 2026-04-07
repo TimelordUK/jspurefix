@@ -215,11 +215,9 @@ Storm protection was largely wired during PR 3C/3D. Remaining gaps completed:
 
 | File | Action |
 |------|--------|
-| `src/config/js-fix-config.ts` | Add optional `resendGapFillOnly?: boolean` |
-| `src/store/fix-msg-ascii-store-resend.ts` | Early return path when enabled — always GapFill instead of replaying |
-| New: `src/test/store/resend-gap-fill-only.test.ts` | ~3 tests |
+### Status: **DONE**
 
-Can be done at **any time** — independent of all other PRs.
+Added `resendGapFillOnly` option to `StoreConfig`. When enabled, `FixMsgAsciiStoreResend` always returns a single GapFill instead of replaying stored messages — prevents accidental duplicate order execution for client/initiator sessions. 5 tests added.
 
 ---
 
@@ -250,7 +248,7 @@ PR 5B (ResendGapFillOnly) ──── independent, can be done anytime
 | 4C | Low | New file, tested with mocks — **DONE** (PR #120) |
 | 4D | Medium | Changes send path, store errors must not block sends — **DONE** |
 | 5A | Low | Wiring only, coordinator makes decisions — **DONE** |
-| 5B | None | Additive config option |
+| 5B | None | Additive config option — **DONE** |
 
 ---
 

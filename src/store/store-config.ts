@@ -12,4 +12,5 @@
 export interface StoreConfig {
   readonly type: 'memory' | 'file'
   readonly directory?: string
+  readonly resendGapFillOnly?: boolean
 }

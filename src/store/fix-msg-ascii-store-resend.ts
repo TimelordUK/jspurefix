@@ -13,6 +13,14 @@ export class FixMsgAsciiStoreResend {
   }
 
   public async getResendRequest (startSeq: number, endSeq: number): Promise<IFixMsgStoreRecord[]> {
+    // Safety feature: If ResendGapFillOnly is enabled, ALWAYS send GapFill instead of
+    // replaying stored messages. This prevents accidental duplicate order execution.
+    if (this.config.description.store?.resendGapFillOnly === true) {
+      const gapFillOnly: IFixMsgStoreRecord[] = []
+      this.gap(startSeq, endSeq + 1, gapFillOnly)
+      return gapFillOnly
+    }
+
     // need to cover request from start to end where any missing numbers are
     // included as gaps to allow vector of messages to be sent by the session
     // on a request
