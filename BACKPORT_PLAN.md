@@ -44,22 +44,9 @@ Instrument tags (15, 22, 48, 55) are scattered among order tags (21, 38, 40, 44,
 2. **Fragment Detection**: If a tag belonging to an already-exited depth-1 component is encountered, that component is added to `FragmentedComponents`.
 3. **Optimised Access**: Only fragmented components get expensive `SegmentView` construction via `TagIndex`. Non-fragmented components use simple position ranges (no overhead).
 
-### TS Files to Modify
+### Status: **DONE**
 
-| File | Change |
-|------|--------|
-| `src/buffer/ascii/ascii-segment-parser.ts` | Add fragment detection (ExitedDepth1Components, FragmentedComponents tracking) |
-| `src/buffer/segment/segment-description.ts` | May need SegmentView reference for fragmented components |
-| New: `src/buffer/segment/segment-view.ts` | Port SegmentView for non-contiguous tag access |
-| New: `src/buffer/ascii/tag-index.ts` | Port TagIndex for tag span indexing |
-
-### Test Data
-
-Port from `~/dev/cs/cspurefix/PureFix.Test.ModularTypes/Data/examples/FIX.4.4/fixsim-examples.txt` — 46 real FIX messages including fragmented Instrument components. Write a failing test first to prove the problem, then fix.
-
-### C# Test Reference
-
-`~/dev/cs/cspurefix/PureFix.Test.ModularTypes/FixSimTest.cs` — parses all 46 messages, verifies type counts, deserialises ExecutionReport to strongly-typed object.
+Completed in PR #110 (commits `17bcf9b`, `9223192`). Tag index, fragment detection, and segment view ported. Also includes `d660460` (relax body length constraint) and `4197ce0` (relax raw data length constraint for replayed messages).
 
 ---
 
@@ -80,12 +67,9 @@ m_parser.Reset();
 
 Also resets transient coordinator state (logon retry count, timeout recovery attempts) while preserving sequence numbers.
 
-### TS Files to Modify
+### Status: **DONE**
 
-| File | Change |
-|------|--------|
-| `src/transport/session/fix-session.ts` | Add parser reset in reconnection path |
-| `src/buffer/ascii/ascii-parser.ts` | Ensure `reset()` method clears all partial state |
+Completed in PR #111 (commit `deaccc3`). Parser state reset on disconnect to prevent buffer corruption.
 
 ---
 
@@ -220,12 +204,12 @@ Depends on 4A + 4B.
 
 #### PR 5A: Storm protection wiring (low risk)
 
-| File | Action |
-|------|--------|
-| `src/transport/ascii/ascii-session.ts` | Use `ResendAction` from coordinator to decide between sending ResendRequest, waiting, or gap-filling |
-| New: `src/test/session/resend-storm-protection.test.ts` | ~5 tests |
+### Status: **DONE**
 
-Mostly already done if 3A-3C are complete — this PR wires the `ResendActionType` responses into session control flow.
+Storm protection was largely wired during PR 3C/3D. Remaining gaps completed:
+- Accept gap-triggering message instead of dropping it (match C# behaviour)
+- Add pending gap range check for delayed messages with `seqDelta <= 0`
+- Add `coordinator.tick()` to session tick loop for resend request timeout cleanup
 
 #### PR 5B: ResendGapFillOnly mode (zero risk, independent)
 
@@ -257,13 +241,15 @@ PR 5B (ResendGapFillOnly) ──── independent, can be done anytime
 
 | PR | Risk | Reason |
 |----|------|--------|
+| 1 | Medium | Non-contiguous tag parsing — **DONE** (PR #110) |
+| 2 | Low | Parser reset on disconnect — **DONE** (PR #111) |
 | 3A, 3B | None | New files only — **DONE** |
 | 3C | HIGH | Refactors `checkSeqNo` — pure refactor, same behaviour, but core message path — **DONE** |
 | 3D | Medium | Adds new capabilities (logon retry, PossDupFlag, ResetSeqNum, timeout recovery) — **DONE** |
-| 4A, 4B | None | New files only |
-| 4C | Low | New file, tested with mocks |
-| 4D | Medium | Changes send path, store errors must not block sends |
-| 5A | Low | Wiring only, coordinator makes decisions |
+| 4A, 4B | None | New files only — **DONE** |
+| 4C | Low | New file, tested with mocks — **DONE** (PR #120) |
+| 4D | Medium | Changes send path, store errors must not block sends — **DONE** |
+| 5A | Low | Wiring only, coordinator makes decisions — **DONE** |
 | 5B | None | Additive config option |
 
 ---

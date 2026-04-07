@@ -83,6 +83,14 @@ export abstract class AsciiSession extends FixSession {
             this.coordinator.onMessageReceived(seqNo, true)
             return true
           }
+          // Check if this is a delayed message that fills a pending gap range.
+          const pendingRequests = this.coordinator.pendingResendRequests
+          const inPendingGapRange = pendingRequests.some(p => seqNo >= p.begin && seqNo <= p.end)
+          if (inPendingGapRange) {
+            this.sessionLogger.info(`accepting delayed message seq ${seqNo} (in pending gap range)`)
+            this.coordinator.onMessageReceived(seqNo, false)
+            return true
+          }
           // serious problem ... drop immediately
           this.sessionLogger.warning(`terminate as seqDelta (${seqDelta}) < 0 lastSeq = ${lastSeq} seqNo = ${seqNo}`)
           this.stop()
@@ -122,8 +130,10 @@ export abstract class AsciiSession extends FixSession {
             }
           }
 
-          // Gap message is not forwarded to application — wait for resend to fill
-          // (C# accepts and forwards, but that's a PR 3D behaviour change)
+          // Accept the current message — don't block waiting for gap fill.
+          // The gap will be filled by the resend response, but this message is valid.
+          ret = true
+          state.lastPeerMsgSeqNum = seqNo
           this.coordinator.onMessageReceived(seqNo, false)
         } else {
           ret = true
@@ -527,6 +537,8 @@ export abstract class AsciiSession extends FixSession {
     const action: TickAction = sessionState.calcAction(new Date())
     const application: IMsgApplication | null = this.transport.config.description.application ?? null
     const logger = this.sessionLogger
+    // Clean up timed-out resend requests
+    this.coordinator.tick()
 
     switch (action) {
       case TickAction.Nothing: {
