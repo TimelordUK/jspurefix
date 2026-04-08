@@ -252,13 +252,139 @@ PR 5B (ResendGapFillOnly) ──── independent, can be done anytime
 
 ---
 
-## Phase 6: Message Generator / XML Parser (Future)
+## Phase 6: QuickFix XML Parser Rework
 
-**Priority: Low | Risk: Medium | Scope: Large**
+**Priority: Medium | Risk: HIGH | Scope: Large (multi-session)**
 
-- C# uses nested types for groups (sub-types) in generated code
-- QuickFix XML parser has improved design with better error tracking
-- Nice to align for maintenance but not critical
+### Background
+
+The C# QuickFix XML parser (`QuickFixXmlFileParser.cs`) is architecturally superior:
+- **DOM-based**: parses XML once into `XDocument`, then walks the tree
+- **Graph-based resolution**: nodes + edges + work queue, deterministic single logical pass
+- **Post-processor**: `IndexVisitor` + `ContainedFieldCollector` with memoisation ensures every `ContainedFieldSet` knows all tags below it
+- **Pre-parse validation**: `DictionaryValidator` catches missing fields, duplicates, undefined references with Levenshtein typo suggestions
+
+The TS parser uses SAX streaming with iterative N-pass (up to 5x) forward reference resolution. This works but is fragile, hard to reason about, and diverges from C#.
+
+**Scope**: Only the QuickFix parser chain needs rework. FIXML (XSD, already has include graph) and Repository (sequential file parsing) are fine as-is.
+
+### Strategy: SAX → In-Memory Tree → Graph Resolution
+
+Rather than replacing SAX with a new XML library, wrap SAX to build a lightweight in-memory element tree on a single pass. This tree then provides DOM-like random access for the graph resolver, without introducing new dependencies.
+
+```typescript
+interface XElement {
+  name: string
+  attributes: Record<string, string>
+  children: XElement[]
+  line?: number
+}
+```
+
+### Delivery: 6 PRs
+
+#### PR 6A: XElement tree builder (new files only, zero risk)
+
+| File | Action |
+|------|--------|
+| New: `src/dictionary/parser/quickfix/x-element.ts` | `XElement` interface + `XDocument` wrapper with query methods (`descendants()`, `elements()`, `attribute()`) |
+| New: `src/dictionary/parser/quickfix/sax-tree-builder.ts` | Single SAX pass builds `XElement` tree from XML text/stream |
+| New: `src/test/dictionary/sax-tree-builder.test.ts` | Tests: parse FIX44.xml into tree, verify structure, query elements |
+
+Query API should mirror C# `XDocument`/`XElement` for easy porting:
+- `descendants(name)` — all descendants with given tag name
+- `elements(name)` — direct children with given tag name  
+- `attribute(name)` — attribute value by name
+
+#### PR 6B: DictionaryValidator (new files only, zero risk)
+
+| File | Action |
+|------|--------|
+| New: `src/dictionary/parser/quickfix/dictionary-validator.ts` | Port from C# — three-pass validation (collect, validate refs, check unused) |
+| New: `src/test/dictionary/dictionary-validator.test.ts` | Tests with valid and deliberately broken XML dictionaries |
+
+Independent of 6A. Works against `XElement` tree (depends on 6A's `XDocument`).
+
+PRs 6A and 6B can be done **in parallel** once `XElement` interface is agreed.
+
+#### PR 6C: Graph-based parser — new implementation (medium risk)
+
+| File | Action |
+|------|--------|
+| New: `src/dictionary/parser/quickfix/quick-fix-graph-parser.ts` | Port C# graph-based parser: `Node`, `Edge`, `ElementType`, work queue, field/component/group/message resolution |
+| New: `src/test/dictionary/quick-fix-graph-parser.test.ts` | Parse all FIX versions (4.2–5.0SP2), compare output against existing parser |
+
+Key design decisions:
+- Takes `XDocument` (from 6A) as input, not SAX stream
+- Produces `FixDefinitions` — same output type as existing parser
+- **Validation gate**: run 6B validator before parsing (optional, configurable)
+- New parser sits alongside old one — both available, switchable
+
+**Critical test**: parse every FIX XML dictionary with both old and new parser, assert identical `FixDefinitions` output. This is the safety net.
+
+#### PR 6D: IndexVisitor + ContainedFieldCollector with memoisation (medium risk)
+
+| File | Action |
+|------|--------|
+| New: `src/dictionary/contained/contained-field-collector.ts` | Port memoised tree collector from C# |
+| New or modify: `src/dictionary/contained/contained-set-builder.ts` | Add `Index()` method to `ContainedFieldSet` — recomputes aggregated tag sets from children |
+| New: `src/dictionary/parser/quickfix/index-visitor.ts` | Port breadth-first tree walker that calls `Index()` on each set |
+| New: `src/test/dictionary/index-visitor.test.ts` | Verify tag aggregation matches expected results |
+
+This changes how parent tag awareness is computed. Currently `ContainedSetBuilder.add()` does eager indexing during construction. The C# approach separates construction from indexing — build the tree first, then run the indexer as a post-process step.
+
+**Risk**: `ContainedSetBuilder` is used by all three parser types (QuickFix, FIXML, Repository). Changes here must not break FIXML or Repository output.
+
+#### PR 6E: Switch default parser (HIGH risk)
+
+| File | Action |
+|------|--------|
+| `src/dictionary/definition-factory.ts` (or equivalent) | Default to graph-based parser for QuickFix XML |
+| `src/dictionary/parser/quickfix/quick-fix-xml-file-parser.ts` | Mark as deprecated / legacy fallback |
+| Remove: `parse-progress.ts`, `parse-state.ts` | No longer needed (old multi-pass state machine) |
+
+Only after extensive testing across all FIX versions and trim round-trips.
+
+#### PR 6F: Fix Trim function (medium risk)
+
+| File | Action |
+|------|--------|
+| `src/dictionary/parser/quickfix/quick-fix-xml-file-builder.ts` | Fix known bugs from C# port — dependency collection, field completeness |
+| `src/test/dictionary/trim-round-trip.test.ts` | Parse → trim → reparse, verify definitions match for all message types |
+
+Can be done at any point after 6C is stable. The trim function produces XML that must be parseable by the new parser.
+
+### Dependency Graph
+
+```
+PR 6A (XElement tree) ──────────┐
+                                 ├──→ PR 6C (Graph parser) ──→ PR 6E (Switch default)
+PR 6B (DictionaryValidator) ───┘                │
+                                                 ↓
+                                      PR 6D (IndexVisitor) ──→ PR 6E
+                                      
+PR 6F (Fix Trim) ──── after 6C is stable
+```
+
+### Risk Summary
+
+| PR | Risk | Reason |
+|----|------|--------|
+| 6A | None | New files only, SAX wrapper |
+| 6B | None | New files only, validation |
+| 6C | Medium | New parser, but sits alongside old one — switchable |
+| 6D | Medium | Changes `ContainedSetBuilder` shared by all parsers |
+| 6E | HIGH | Switches default parser — must pass all tests across all FIX versions |
+| 6F | Medium | Changes trim output — must round-trip correctly |
+
+### Test Strategy
+
+The parser is the foundation of the entire system. Test strategy must be comprehensive:
+
+1. **Comparison tests**: parse every FIX XML dictionary (4.2, 4.3, 4.4, 5.0SP2) with both old and new parser, diff the resulting `FixDefinitions`
+2. **Round-trip tests**: parse → trim → reparse, verify definitions match
+3. **Micro-dictionary tests** (future hardening): use Trim to create single-message dictionaries, then mutate them (remove fields, duplicate tags, etc.) to test validator edge cases
+4. **Regression anchor**: snapshot the `FixDefinitions` output for each FIX version before any changes — tests assert against snapshots
 
 ---
 
