@@ -285,27 +285,15 @@ interface XElement {
 
 #### PR 6A: XElement tree builder (new files only, zero risk)
 
-| File | Action |
-|------|--------|
-| New: `src/dictionary/parser/quickfix/x-element.ts` | `XElement` interface + `XDocument` wrapper with query methods (`descendants()`, `elements()`, `attribute()`) |
-| New: `src/dictionary/parser/quickfix/sax-tree-builder.ts` | Single SAX pass builds `XElement` tree from XML text/stream |
-| New: `src/test/dictionary/sax-tree-builder.test.ts` | Tests: parse FIX44.xml into tree, verify structure, query elements |
+### Status: **DONE** (PR #124)
 
-Query API should mirror C# `XDocument`/`XElement` for easy porting:
-- `descendants(name)` — all descendants with given tag name
-- `elements(name)` — direct children with given tag name  
-- `attribute(name)` — attribute value by name
+`XElement` interface + `XDocument`/`XNode` query wrappers + `SaxTreeBuilder` (single SAX pass → in-memory tree). 51 tests across all FIX dictionaries.
 
 #### PR 6B: DictionaryValidator (new files only, zero risk)
 
-| File | Action |
-|------|--------|
-| New: `src/dictionary/parser/quickfix/dictionary-validator.ts` | Port from C# — three-pass validation (collect, validate refs, check unused) |
-| New: `src/test/dictionary/dictionary-validator.test.ts` | Tests with valid and deliberately broken XML dictionaries |
+### Status: **DONE**
 
-Independent of 6A. Works against `XElement` tree (depends on 6A's `XDocument`).
-
-PRs 6A and 6B can be done **in parallel** once `XElement` interface is agreed.
+Three-pass validator ported from C#: collect definitions, validate references (with Levenshtein "did you mean" suggestions), check unused definitions. 40 tests including validation against all real FIX dictionaries.
 
 #### PR 6C: Graph-based parser — new implementation (medium risk)
 
@@ -370,8 +358,8 @@ PR 6F (Fix Trim) ──── after 6C is stable
 
 | PR | Risk | Reason |
 |----|------|--------|
-| 6A | None | New files only, SAX wrapper |
-| 6B | None | New files only, validation |
+| 6A | None | New files only, SAX wrapper — **DONE** (PR #124) |
+| 6B | None | New files only, validation — **DONE** |
 | 6C | Medium | New parser, but sits alongside old one — switchable |
 | 6D | Medium | Changes `ContainedSetBuilder` shared by all parsers |
 | 6E | HIGH | Switches default parser — must pass all tests across all FIX versions |
