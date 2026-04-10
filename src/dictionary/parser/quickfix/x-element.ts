@@ -99,13 +99,17 @@ export class XDocument {
     this.root = new XNode(rootElement)
   }
 
-  /** All descendants of the root with the given tag name. */
+  /** All descendants of the root with the given tag name (including the root itself if it matches). */
   descendants (name: string): XNode[] {
-    return this.root.descendants(name)
+    const result: XNode[] = []
+    if (this.root.name === name) result.push(this.root)
+    result.push(...this.root.descendants(name))
+    return result
   }
 
-  /** First descendant of the root with the given tag name. */
+  /** First descendant of the root with the given tag name (including the root itself if it matches). */
   firstDescendant (name: string): XNode | undefined {
+    if (this.root.name === name) return this.root
     return this.root.firstDescendant(name)
   }
 }
