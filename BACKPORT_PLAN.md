@@ -319,12 +319,19 @@ Only after extensive testing across all FIX versions and trim round-trips.
 
 #### PR 6F: Fix Trim function (medium risk)
 
-| File | Action |
-|------|--------|
-| `src/dictionary/parser/quickfix/quick-fix-xml-file-builder.ts` | Fix known bugs from C# port — dependency collection, field completeness |
-| `src/test/dictionary/trim-round-trip.test.ts` | Parse → trim → reparse, verify definitions match for all message types |
+### Status: **DONE — TS trim was already correct**
 
-Can be done at any point after 6C is stable. The trim function produces XML that must be parseable by the new parser.
+After investigation: the TS trim function (`QuickFixXmlFileBuilder`) is correct. The "bug" we suspected was actually introduced during the C# port — see C# commit `2ee4620c`. The original C# `WriteComponents` used a `foreach` over a snapshot of `_seenComponents`, dropping any components discovered during iteration. The C# fix added `ProcessComponentFields` for eager recursive collection.
+
+The TS version uses `while (components.length > 0) { components.pop() }` — a proper iterative discovery loop where newly-pushed components are processed in subsequent iterations. This pattern doesn't have the bug.
+
+**Added** comprehensive round-trip tests in `src/test/dictionary/trim-round-trip.test.ts`:
+- Trim → reparse with strict graph parser validation
+- Compare flattened tag sets at the message level
+- Deep nested-set comparison (every component/group in every message)
+- Worst case: trim ALL 116 FIX50SP2 messages and deep-compare every one
+
+All 9 tests pass. No code changes needed to `quick-fix-xml-file-builder.ts`.
 
 ### Dependency Graph
 
@@ -347,7 +354,7 @@ PR 6F (Fix Trim) ──── after 6C is stable
 | 6C | Medium | Graph parser + IndexVisitor — sits alongside legacy parser — **DONE** |
 | 6D | (merged into 6C) | IndexVisitor was needed for 6C to work correctly |
 | 6E | HIGH | Switches default parser — must pass all tests across all FIX versions |
-| 6F | Medium | Changes trim output — must round-trip correctly |
+| 6F | None | TS trim already correct — round-trip tests added — **DONE** |
 
 ### Test Strategy
 
