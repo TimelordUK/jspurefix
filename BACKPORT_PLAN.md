@@ -295,33 +295,17 @@ interface XElement {
 
 Three-pass validator ported from C#: collect definitions, validate references (with Levenshtein "did you mean" suggestions), check unused definitions. 40 tests including validation against all real FIX dictionaries.
 
-#### PR 6C: Graph-based parser — new implementation (medium risk)
+#### PR 6C: Graph-based parser + IndexVisitor (medium risk)
 
-| File | Action |
-|------|--------|
-| New: `src/dictionary/parser/quickfix/quick-fix-graph-parser.ts` | Port C# graph-based parser: `Node`, `Edge`, `ElementType`, work queue, field/component/group/message resolution |
-| New: `src/test/dictionary/quick-fix-graph-parser.test.ts` | Parse all FIX versions (4.2–5.0SP2), compare output against existing parser |
+### Status: **DONE**
 
-Key design decisions:
-- Takes `XDocument` (from 6A) as input, not SAX stream
-- Produces `FixDefinitions` — same output type as existing parser
-- **Validation gate**: run 6B validator before parsing (optional, configurable)
-- New parser sits alongside old one — both available, switchable
+Verbatim port of C# `QuickFixXmlFileParser`: `GraphNode`/`Edge`/`NodeElementType` + work queue + field/component/group/message resolution. New parser sits alongside legacy parser for safe comparison testing.
 
-**Critical test**: parse every FIX XML dictionary with both old and new parser, assert identical `FixDefinitions` output. This is the safety net.
+Includes `IndexVisitor` post-processor (originally PR 6D, merged into 6C because the parser doesn't work without it). Walks every message in post-order, clears aggregated tag indices on each set, and re-adds direct fields via `ContainedSetBuilder` so parents correctly know all descendant tags.
 
-#### PR 6D: IndexVisitor + ContainedFieldCollector with memoisation (medium risk)
+**Comparison test results:** Graph parser produces a **superset** of legacy parser output for FIX50SP2 — correctly resolves deeply nested forward references (e.g., DividendFXTriggerDateBusinessCenter chain) that the legacy 5-pass iterative parser truncates. This is a correctness improvement.
 
-| File | Action |
-|------|--------|
-| New: `src/dictionary/contained/contained-field-collector.ts` | Port memoised tree collector from C# |
-| New or modify: `src/dictionary/contained/contained-set-builder.ts` | Add `Index()` method to `ContainedFieldSet` — recomputes aggregated tag sets from children |
-| New: `src/dictionary/parser/quickfix/index-visitor.ts` | Port breadth-first tree walker that calls `Index()` on each set |
-| New: `src/test/dictionary/index-visitor.test.ts` | Verify tag aggregation matches expected results |
-
-This changes how parent tag awareness is computed. Currently `ContainedSetBuilder.add()` does eager indexing during construction. The C# approach separates construction from indexing — build the tree first, then run the indexer as a post-process step.
-
-**Risk**: `ContainedSetBuilder` is used by all three parser types (QuickFix, FIXML, Repository). Changes here must not break FIXML or Repository output.
+41 new tests including comparison against legacy parser for FIX 4.2, 4.3, 4.4, and 5.0SP2.
 
 #### PR 6E: Switch default parser (HIGH risk)
 
@@ -360,8 +344,8 @@ PR 6F (Fix Trim) ──── after 6C is stable
 |----|------|--------|
 | 6A | None | New files only, SAX wrapper — **DONE** (PR #124) |
 | 6B | None | New files only, validation — **DONE** |
-| 6C | Medium | New parser, but sits alongside old one — switchable |
-| 6D | Medium | Changes `ContainedSetBuilder` shared by all parsers |
+| 6C | Medium | Graph parser + IndexVisitor — sits alongside legacy parser — **DONE** |
+| 6D | (merged into 6C) | IndexVisitor was needed for 6C to work correctly |
 | 6E | HIGH | Switches default parser — must pass all tests across all FIX versions |
 | 6F | Medium | Changes trim output — must round-trip correctly |
 
