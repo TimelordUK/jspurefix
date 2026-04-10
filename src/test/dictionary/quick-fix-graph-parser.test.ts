@@ -77,6 +77,13 @@ describe('QuickFixGraphParser — comparison with existing parser', () => {
     if (!fs.existsSync(filePath)) return
 
     describe(file, () => {
+      // Pre-load both parsers in beforeAll so the slow legacy parse cost
+      // (especially FIX50SP2) doesn't get absorbed by whichever test runs
+      // first and exceed the default 5s timeout.
+      beforeAll(async () => {
+        await loadBoth(file)
+      }, 60000)
+
       test('same number of simple field definitions (by tag)', async () => {
         const { graph, legacy } = await loadBoth(file)
         // simple map has many aliases — compare unique tag count
