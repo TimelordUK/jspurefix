@@ -309,13 +309,20 @@ Includes `IndexVisitor` post-processor (originally PR 6D, merged into 6C because
 
 #### PR 6E: Switch default parser (HIGH risk)
 
-| File | Action |
-|------|--------|
-| `src/dictionary/definition-factory.ts` (or equivalent) | Default to graph-based parser for QuickFix XML |
-| `src/dictionary/parser/quickfix/quick-fix-xml-file-parser.ts` | Mark as deprecated / legacy fallback |
-| Remove: `parse-progress.ts`, `parse-state.ts` | No longer needed (old multi-pass state machine) |
+### Status: **DONE**
 
-Only after extensive testing across all FIX versions and trim round-trips.
+Added `QuickFixGraphFileParser` adapter that extends `FixParser` and matches the legacy parser's `(MakeDuplex, GetJsFixLogger)` constructor signature. `DefinitionFactory.getParser()` now instantiates the graph parser for QuickFix XML — all dictionary loading goes through the graph parser by default.
+
+The legacy `QuickFixXmlFileParser` remains exported for backward compatibility (anyone importing it directly still gets the old behaviour), but no production code in the project uses it.
+
+**Test fallout fixed:**
+- `src/test/env/data/fix5-mod.xml` had a redundant 215-line "admin fields" section that duplicated 62 fields already present in the canonical fields section. Plus the `HopGrp` and `MsgTypeGrp` components were defined twice. The legacy parser silently swallowed both classes of duplicate; the graph parser's validator correctly flags them as errors. Removed the redundant admin section (kept the unique `OTP` custom tag) and the duplicate component definitions.
+- `src/test/ascii/qf-50sp2-dict.test.ts` had two assertions where `Instrument` and `TrdCapRptSideGrp` were expected as `required=false` for TradeCaptureReport. The dictionary clearly says `required='Y'` for both. The legacy parser was producing `required=false` (a real bug); the graph parser correctly returns `true`. Updated the assertions.
+- Updated `getTrimDefinitions` in the same file to use `QuickFixGraphFileParser` instead of the legacy parser for consistency.
+
+All 533 tests pass with the graph parser as the default.
+
+Note: `parse-progress.ts`, `parse-state.ts`, and the legacy parser itself are NOT yet deleted — that's deferred to a follow-up cleanup PR after a release cycle to give downstream consumers time to migrate.
 
 #### PR 6F: Fix Trim function (medium risk)
 
@@ -353,7 +360,7 @@ PR 6F (Fix Trim) ──── after 6C is stable
 | 6B | None | New files only, validation — **DONE** |
 | 6C | Medium | Graph parser + IndexVisitor — sits alongside legacy parser — **DONE** |
 | 6D | (merged into 6C) | IndexVisitor was needed for 6C to work correctly |
-| 6E | HIGH | Switches default parser — must pass all tests across all FIX versions |
+| 6E | HIGH | Switches default parser — exposed 2 legacy parser bugs (now fixed) — **DONE** |
 | 6F | None | TS trim already correct — round-trip tests added — **DONE** |
 
 ### Test Strategy

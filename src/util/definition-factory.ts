@@ -3,7 +3,7 @@ import { FixDefinitions } from '../dictionary/definition'
 import { GetJsFixLogger, makeEmptyLogger } from '../config'
 import * as path from 'path'
 import * as fs from 'fs'
-import { FixXsdParser, QuickFixXmlFileParser, RepositoryXmlParser } from '../dictionary/parser'
+import { FixXsdParser, QuickFixGraphFileParser, RepositoryXmlParser } from '../dictionary/parser'
 import { IDictionaryPath } from './dictionary-path'
 import { FileDuplex } from '../transport'
 
@@ -32,7 +32,7 @@ export class DefinitionFactory {
     } else if (fs.lstatSync(path).isDirectory()) {
       parser = new RepositoryXmlParser(path, getLogger)
     } else {
-      parser = new QuickFixXmlFileParser(() => new FileDuplex(path), getLogger)
+      parser = new QuickFixGraphFileParser(() => new FileDuplex(path), getLogger)
     }
     return parser
   }
