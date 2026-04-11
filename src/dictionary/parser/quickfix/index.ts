@@ -1,5 +1,6 @@
 export * from './quick-fix-xml-file-parser'
 export * from './quick-fix-graph-parser'
+export * from './quick-fix-graph-file-parser'
 export * from './x-element'
 export * from './sax-tree-builder'
 export * from './dictionary-validator'

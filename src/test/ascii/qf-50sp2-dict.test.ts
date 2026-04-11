@@ -5,7 +5,7 @@ import { DefinitionFactory } from '../../util'
 import { SetConstraintHelper } from '../env/set-constraint-helper'
 import { QuickFixXmlFileBuilder } from '../../dictionary/parser/quickfix/quick-fix-xml-file-builder'
 import { FieldEnum, FixVersion } from '../../dictionary'
-import { QuickFixXmlFileParser } from '../../dictionary/parser'
+import { QuickFixGraphFileParser } from '../../dictionary/parser'
 import { StringDuplex } from '../../transport'
 import { EmptyLogger } from '../../config'
 
@@ -82,7 +82,7 @@ function checkTradeCapture (tc: (MessageDefinition | undefined)): void {
   setHelper.isSimple(tc, index++, 'MarketSegmentID', false)
   setHelper.isSimple(tc, index++, 'MarketID', false)
   setHelper.isSimple(tc, index++, 'TaxonomyType', false)
-  setHelper.isComponent(tc, index++, 'Instrument', false)
+  setHelper.isComponent(tc, index++, 'Instrument', true)
   setHelper.isComponent(tc, index++, 'InstrumentExtension', false)
   setHelper.isComponent(tc, index++, 'FinancingDetails', false)
   setHelper.isComponent(tc, index++, 'PaymentGrp', false)
@@ -147,7 +147,7 @@ function checkTradeCapture (tc: (MessageDefinition | undefined)): void {
   setHelper.isSimple(tc, index++, 'ExecMethod', false)
   setHelper.isSimple(tc, index++, 'MatchType', false)
   setHelper.isComponent(tc, index++, 'TradeQtyGrp', false)
-  setHelper.isComponent(tc, index++, 'TrdCapRptSideGrp', false)
+  setHelper.isComponent(tc, index++, 'TrdCapRptSideGrp', true)
   setHelper.isSimple(tc, index++, 'Volatility', false)
   setHelper.isSimple(tc, index++, 'TimeToExpiration', false)
   setHelper.isSimple(tc, index++, 'DividendYield', false)
@@ -223,7 +223,7 @@ async function getTrimDefinitions (types: string[]): Promise<FixDefinitions> {
   const builder = new QuickFixXmlFileBuilder(definitions)
   builder.write(types)
   const d = builder.elasticBuffer.toString()
-  const parser = new QuickFixXmlFileParser(() => new StringDuplex(d), () => new EmptyLogger())
+  const parser = new QuickFixGraphFileParser(() => new StringDuplex(d), () => new EmptyLogger())
   return await parser.parse()
 }
 
