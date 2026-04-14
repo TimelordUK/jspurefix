@@ -286,6 +286,10 @@ export abstract class AsciiSession extends FixSession {
         // Never block sends on store errors
         this.sessionLogger.warning(`failed to store message seq=${seqNum}: ${e.message}`)
       })
+      // Update store's sender sequence number (next outgoing seq = seqNum + 1)
+      this.sessionStore.setSenderSeqNum(seqNum + 1).catch((e: Error) => {
+        this.sessionLogger.warning(`failed to update sender seq: ${e.message}`)
+      })
     }
   }
 
