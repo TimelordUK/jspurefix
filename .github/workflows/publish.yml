@@ -2,16 +2,33 @@ name: Publish to npm
 
 on:
   workflow_dispatch:
-  release:
-    types: [published]
+    inputs:
+      bump:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      dry_run:
+        description: 'Dry run (skip npm publish and GitHub release)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -19,6 +36,21 @@ jobs:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version
+        id: version
+        run: |
+          OLD_VERSION=$(node -p "require('./package.json').version")
+          npm version ${{ inputs.bump }} --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "old=$OLD_VERSION" >> "$GITHUB_OUTPUT"
+          echo "new=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Bumped $OLD_VERSION → $NEW_VERSION (${{ inputs.bump }})"
 
       - name: Install dependencies
         run: npm ci
@@ -29,7 +61,38 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Commit version bump
+        run: |
+          git add package.json package-lock.json
+          git commit -m "${{ steps.version.outputs.new }}"
+          git push origin master
+
+      - name: Tag and create GitHub release
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git tag ${{ steps.version.outputs.new }}
+          git push origin ${{ steps.version.outputs.new }}
+
+      - name: Create GitHub release
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create ${{ steps.version.outputs.new }} \
+            --title "${{ steps.version.outputs.new }}" \
+            --generate-notes
+
       - name: Publish to npm
+        if: ${{ !inputs.dry_run }}
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "### Published ${{ steps.version.outputs.new }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Bump: ${{ inputs.bump }} (${{ steps.version.outputs.old }} → ${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
+          echo "- Dry run: ${{ inputs.dry_run }}" >> $GITHUB_STEP_SUMMARY
+          echo "- [npm](https://www.npmjs.com/package/jspurefix/v/${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
+          echo "- [Release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.version.outputs.new }})" >> $GITHUB_STEP_SUMMARY
