@@ -16,6 +16,7 @@ import { SessionSequenceCoordinator } from '../session/session-sequence-coordina
 import { DefaultFixClock } from '../session/fix-clock'
 import { ResendActionType } from '../session/resend-request-manager'
 import { AsciiMsgTransmitter } from './ascii-msg-transmitter'
+import { MsgTransport } from '../factory'
 import { ILooseObject } from '../../collections/collection'
 
 export abstract class AsciiSession extends FixSession {
@@ -47,6 +48,44 @@ export abstract class AsciiSession extends FixSession {
     this.coordinator = new SessionSequenceCoordinator(this.sessionStore, clock)
     const lastReceivedSeqNum = config.description.LastReceivedSeqNum ?? 0
     this.coordinator.initializeFromConfig(undefined, lastReceivedSeqNum + 1)
+  }
+
+  /**
+   * Initialize the session store (reads persisted sequences from file if using FileSessionStore),
+   * sync the coordinator and transmitter from the store, then start the session.
+   *
+   * The transport's readable stream is paused during async store initialization to prevent
+   * the AsciiParser (which starts reading immediately in its constructor) from consuming
+   * and emitting messages before subscribe() hooks up the message handler.
+   */
+  public async run (transport: MsgTransport): Promise<number> {
+    // Pause the readable stream to prevent data loss during async init.
+    // The AsciiParser starts reading from the socket in its constructor,
+    // but FixSession.subscribe() hasn't been called yet. Without pausing,
+    // the client's Logon can arrive and be parsed into the void.
+    transport.duplex.readable?.pause()
+
+    // Initialize store — reads persisted .seqnums file if using FileSessionStore.
+    // For MemorySessionStore this is a no-op.
+    await this.sessionStore.initialize()
+
+    // Coordinator becomes the source of truth for sequences
+    this.coordinator.initializeFromStore()
+
+    // Sync encoder's outgoing sequence from the store
+    const transmitter = transport.transmitter as AsciiMsgTransmitter
+    transmitter.msgSeqNum = this.coordinator.nextSenderSeqNum
+
+    // Sync session state's last received sequence from the store
+    this.sessionState.lastPeerMsgSeqNum = this.coordinator.lastProcessedPeerSeqNum
+
+    this.sessionLogger.info(`store initialized: nextSender=${this.coordinator.nextSenderSeqNum}, expectedTarget=${this.coordinator.expectedTargetSeqNum}`)
+
+    // Resume the stream — super.run() will call subscribe() to hook up the message handler,
+    // then the buffered data (including the client's Logon) will be delivered.
+    transport.duplex.readable?.resume()
+
+    return await super.run(transport)
   }
 
   private checkSeqNo (msgType: string, view: MsgView): boolean {
