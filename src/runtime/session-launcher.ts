@@ -39,9 +39,12 @@ export abstract class SessionLauncher {
     })
   }
 
+  private acceptorEntity: FixEntity | null = null
+
   protected async getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
     if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
       const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
+      this.acceptorEntity = entity
       return entity.start()
     } else {
       return this.empty()
@@ -159,7 +162,22 @@ export abstract class SessionLauncher {
     const server = this.serverOrEmpty()
     const client = this.clientOrEmpty()
     this.logger.info('launching ....')
+    if (this.acceptorConfig && this.initiatorConfig) {
+      // Both mode: client drives the lifecycle. When client finishes,
+      // stop the acceptor so the process can exit cleanly.
+      await client
+      this.logger.info('client finished, stopping acceptor')
+      this.stopAcceptor()
+      return true
+    }
     return await Promise.all([server, client])
+  }
+
+  private stopAcceptor (): void {
+    const entity = this.acceptorEntity as any
+    if (entity && typeof entity.stop === 'function') {
+      entity.stop()
+    }
   }
 
   private loadConfig (config: string | ISessionDescription): ISessionDescription {
