@@ -234,6 +234,34 @@ test('out of seq logout', async () => {
   expect(sviews[1].segment.name).toEqual('Logout')
 })
 
+// Regression test for #134: initiator receives Logon-with-gap should not crash.
+// Simulates peer responding to Logon with a high sequence number (gap in received sequence).
+// Before fix: checkSeqNo called peerLogon (advancing state), returned true, then onSessionMsg
+// tried peerLogon again → "state InitiationLogonReceived is illegal for Logon" → terminate.
+function mutateServerLogonSeqToCreateGap (_: ISessionDescription, type: string, o: ILooseObject): ILooseObject {
+  switch (type) {
+    case 'StandardHeader': {
+      const hdr = o as IStandardHeader
+      // Bump the server's Logon response seq to 5, creating a gap for the client (expects 1)
+      if (hdr.MsgSeqNum === 1 && hdr.MsgType === MsgType.Logon) {
+        hdr.MsgSeqNum = 5
+      }
+      break
+    }
+  }
+  return o
+}
+
+test('logon with sequence gap should not crash (issue #134)', async () => {
+  experiment.serverFactory.mutator = mutateServerLogonSeqToCreateGap
+  await runSkeletons()
+  const cviews = experiment.client.views
+  // Client should have received at least the logon (seq=5) without crashing.
+  // The session should establish and eventually logout normally.
+  expect(cviews.length).toBeGreaterThanOrEqual(1)
+  expect(cviews[0].segment.name).toEqual('Logon')
+})
+
 function countOfType (type: string, views: MsgView[]): number {
   return views.reduce((c: number, v: MsgView) => {
     return v.segment.name === type ? c + 1 : c
