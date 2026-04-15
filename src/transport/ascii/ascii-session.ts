@@ -130,11 +130,16 @@ export abstract class AsciiSession extends FixSession {
             }
           }
 
-          // Accept the current message — don't block waiting for gap fill.
-          // The gap will be filled by the resend response, but this message is valid.
-          ret = true
+          // Update sequence state regardless — the gap-triggering message is valid.
           state.lastPeerMsgSeqNum = seqNo
           this.coordinator.onMessageReceived(seqNo, false)
+
+          // Logon and ResendRequest were already fully handled above (peerLogon / onResendRequest).
+          // Don't return true for them — they must not be dispatched to onSessionMsg again.
+          // Application messages (and everything else) should be forwarded normally.
+          if (msgType !== MsgType.Logon && msgType !== MsgType.ResendRequest) {
+            ret = true
+          }
         } else {
           ret = true
           state.lastPeerMsgSeqNum = seqNo
