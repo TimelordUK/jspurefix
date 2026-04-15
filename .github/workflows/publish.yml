@@ -29,7 +29,6 @@ jobs:
         with:
           ref: master
           fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
