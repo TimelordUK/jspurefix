@@ -87,7 +87,7 @@
     "reflect-metadata": "^0.2.2",
     "sax": "^1.6.0",
     "tsyringe": "^4.10.0",
-    "uuid": "^9.0.1",
+    "uuid": "^14.0.0",
     "winston": "^3.19.0",
     "word-wrap": "^1.2.5",
     "yauzl": "^3.3.0"
