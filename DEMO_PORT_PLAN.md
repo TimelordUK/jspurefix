@@ -76,7 +76,7 @@ The good news: many of the underlying engine bugs are already fixed in jspurefix
 |------|--------|
 | `package.json` | Bump `jspurefix` dependency to `^5.5.0`. Remove unused deps (`request`, `typings`). Add a real `test` script. |
 | `README.md` | Replace 3-line badge-only README with a basic intro that says what the demo does. Add "build / run" section. |
-| `.travis.yml` | Remove (Travis is gone, AppVeyor + GitHub Actions cover us). Keep `appveyor.yml`. |
+| `.travis.yml` | Remove (Travis and AppVeyor are gone, GitHub Actions covers CI). Drop `appveyor.yml` too if present. |
 | `tslint.json` | Remove (eslint is the canonical linter now). |
 
 **Risk**: None. New deps and docs only.
