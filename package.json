@@ -87,7 +87,6 @@
     "reflect-metadata": "^0.2.2",
     "sax": "^1.6.0",
     "tsyringe": "^4.10.0",
-    "uuid": "^9.0.1",
     "winston": "^3.19.0",
     "word-wrap": "^1.2.5",
     "yauzl": "^3.3.0"
@@ -103,7 +102,6 @@
     "@types/node": "^25.5.2",
     "@types/request-promise-native": "^1.0.21",
     "@types/sax": "^1.2.7",
-    "@types/uuid": "^9.0.8",
     "@types/winston": "^2.4.4",
     "eslint": "^9.39.4",
     "eslint-config-love": "^151.0.0",

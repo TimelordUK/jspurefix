@@ -7,7 +7,7 @@ import { FixDuplex, StringDuplex, StringDuplexTraits } from '../duplex'
 import express = require('express')
 import * as bodyParser from 'body-parser'
 import * as http from 'http'
-import { v4 as uuidv4 } from 'uuid'
+import { randomUUID } from 'crypto'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 
@@ -54,7 +54,7 @@ export class HttpAcceptor extends FixAcceptor {
   private saveTransport (tid: number, transport: MsgTransport): string {
     this.transports[tid] = transport
     const keys: string[] = Object.keys(this.transports)
-    const a = uuidv4()
+    const a = randomUUID()
     this.keys.set(a, transport)
     this.logger.info(`new transport id = ${tid} token = ${a} created total transports = ${keys.length}`)
     this.emit('transport', transport)
