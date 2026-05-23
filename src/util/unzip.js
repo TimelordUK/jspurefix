@@ -11,6 +11,12 @@ const { pipeline } = require('stream/promises')
 // non-TTY environment (eg. GitHub Actions) the backspaces produced
 // unreadable output; worse, if any stream errored silently the script
 // hung forever and CI runs were cancelled at the workflow timeout.
+//
+// Follows the canonical yauzl lazyEntries pattern: install 'entry' /
+// 'end' / 'error' handlers once on the zipfile, drive the next read
+// with zipfile.readEntry() at the end of each entry's work.
+// NB: requires yauzl >= 3.3.1 — 3.3.0 truncates inflated streams on
+// Node 26+ (the next entry's readStream stalls without emitting 'end').
 
 const zipFilePath = process.argv[2]
 if (!zipFilePath) {
@@ -18,67 +24,46 @@ if (!zipFilePath) {
   process.exit(1)
 }
 
-function openZip (zipFilePath) {
+function extract (zipFilePath) {
   return new Promise((resolve, reject) => {
-    yauzl.open(zipFilePath, { lazyEntries: true }, (err, zf) => {
-      if (err) reject(err)
-      else resolve(zf)
-    })
-  })
-}
-
-function openEntryStream (zipfile, entry) {
-  return new Promise((resolve, reject) => {
-    zipfile.openReadStream(entry, (err, rs) => {
-      if (err) reject(err)
-      else resolve(rs)
-    })
-  })
-}
-
-async function extract (zipFilePath) {
-  const zipfile = await openZip(zipFilePath)
-
-  // `end` and `error` fire at most once for the lifetime of the zipfile —
-  // register them once and reuse, otherwise per-iteration `once()` listeners
-  // accumulate and trip MaxListenersExceededWarning.
-  let lifecycleError = null
-  let ended = false
-  zipfile.on('error', (err) => { lifecycleError = err })
-  zipfile.on('end', () => { ended = true })
-
-  try {
-    while (!ended && !lifecycleError) {
-      const entry = await new Promise((resolve, reject) => {
-        const onEntry = (e) => { cleanup(); resolve(e) }
-        const onEnd = () => { cleanup(); resolve(null) }
-        const onError = (err) => { cleanup(); reject(err) }
-        function cleanup () {
-          zipfile.off('entry', onEntry)
-          zipfile.off('end', onEnd)
-          zipfile.off('error', onError)
-        }
-        zipfile.once('entry', onEntry)
-        zipfile.once('end', onEnd)
-        zipfile.once('error', onError)
-        zipfile.readEntry()
-      })
-      if (entry == null) break
-
-      if (/\/$/.test(entry.fileName)) {
-        await fs.promises.mkdir(entry.fileName, { recursive: true })
-        continue
+    yauzl.open(zipFilePath, { lazyEntries: true }, (err, zipfile) => {
+      if (err) {
+        reject(err)
+        return
       }
 
-      await fs.promises.mkdir(path.dirname(entry.fileName), { recursive: true })
-      const readStream = await openEntryStream(zipfile, entry)
-      await pipeline(readStream, fs.createWriteStream(entry.fileName))
-      console.log(`${entry.fileName} (${entry.uncompressedSize} bytes)`)
-    }
-    if (lifecycleError) throw lifecycleError
-  } finally {
-    zipfile.close()
-  }
+      zipfile.on('error', reject)
+      zipfile.on('end', resolve)
+
+      zipfile.on('entry', (entry) => {
+        const next = () => zipfile.readEntry()
+
+        if (/\/$/.test(entry.fileName)) {
+          fs.promises.mkdir(entry.fileName, { recursive: true })
+            .then(next, reject)
+          return
+        }
+
+        fs.promises.mkdir(path.dirname(entry.fileName), { recursive: true })
+          .then(() => new Promise((res, rej) => {
+            zipfile.openReadStream(entry, (err, readStream) => {
+              if (err) {
+                rej(err)
+                return
+              }
+              pipeline(readStream, fs.createWriteStream(entry.fileName))
+                .then(() => {
+                  console.log(`${entry.fileName} (${entry.uncompressedSize} bytes)`)
+                  res()
+                }, rej)
+            })
+          }))
+          .then(next, reject)
+      })
+
+      zipfile.readEntry()
+    })
+  })
 }
 
 extract(zipFilePath).catch((err) => {
