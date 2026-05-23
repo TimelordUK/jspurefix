@@ -440,14 +440,15 @@ npm run cmd -- --dict=repo44 --fix=data/examples/FIX.4.4/jsfix.test_client.txt -
 
 Numbers below are illustrative — generated messages, single-threaded, parser-only (no I/O). Run them yourself with the corresponding `npm run` script.
 
-| Benchmark | Script | Fields/msg | Length (chars) | I7-4770 @ 3.5 GHz | i7-12700H @ 2.3 GHz |
-| --- | --- | --- | --- | --- | --- |
-| Heartbeat | `npm run qf-bench-hb` | 10 | 131 | 3.8 µs/msg | 1.9 µs/msg |
-| Logon | `npm run qf-bench-lo` | 22 | 214 | 5.9 µs/msg | 2.8 µs/msg |
-| Execution Report | `npm run repo44-bench-er` | 58 | 604 | 14.6 µs/msg | — |
-| Execution Report (large) | `npm run repo44-bench-er` | 646 | 6 572 | 206.2 µs/msg | 93.5 µs/msg |
-| Security Definition | `npm run repo44-bench-sd` | 229 | 2 466 | 57.8 µs/msg | 30.9 µs/msg |
-| Trade Capture | `npm run repo44-bench-tc` | 578 | 5 741 | 174.8 µs/msg | 90.8 µs/msg |
+| Benchmark | Script | Fields/msg | Length (chars) | I7-4770 @ 3.5 GHz | i7-12700H @ 2.3 GHz | Ryzen 9 7950X @ 4.5 GHz |
+| --- | --- | --- | --- | --- | --- | --- |
+| Heartbeat | `npm run qf-bench-hb` | 10 | 131 | 3.8 µs/msg | 1.9 µs/msg | 1.7 µs/msg |
+| Logon | `npm run qf-bench-lo` | 22 | 214 | 5.9 µs/msg | 2.8 µs/msg | 2.5 µs/msg |
+| Execution Report (large) | `npm run repo44-bench-er` | 646 | 6 571 | 206.2 µs/msg | 93.5 µs/msg | 72.9 µs/msg |
+| Security Definition † | `npm run repo44-bench-sd` | 52 | 557 | — | — | 5.6 µs/msg |
+| Trade Capture † | `npm run repo44-bench-tc` | 112 | 1 137 | — | — | 9.3 µs/msg |
+
+† The SD and TC fixtures have shrunk since the older measurements were taken (SD was 229 fields / 2 466 chars, TC was 578 fields / 5 741 chars), so the prior numbers aren't comparable with the current fixture and have been dropped from the row. Re-running them on the older hardware would produce a clean third column. Ryzen measurements taken on Node 24 LTS, WSL2.
 
 ## Developing on jspurefix
 
