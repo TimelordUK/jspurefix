@@ -442,8 +442,8 @@ Numbers below are illustrative — generated messages, single-threaded, parser-o
 
 | Benchmark | Script | Fields/msg | Length (chars) | I7-4770 @ 3.5 GHz | i7-12700H @ 2.3 GHz | Ryzen 9 7950X @ 4.5 GHz |
 | --- | --- | --- | --- | --- | --- | --- |
-| Heartbeat | `npm run qf-bench-hb` | 10 | 131 | 3.8 µs/msg | 1.9 µs/msg | 1.7 µs/msg |
-| Logon | `npm run qf-bench-lo` | 22 | 214 | 5.9 µs/msg | 2.8 µs/msg | 2.5 µs/msg |
+| Heartbeat | `npm run qf-bench-hb` | 10 | 131 | 3.8 µs/msg | 1.9 µs/msg | 1.6 µs/msg |
+| Logon | `npm run qf-bench-lo` | 22 | 214 | 5.9 µs/msg | 2.8 µs/msg | 2.3 µs/msg |
 | Execution Report (large) | `npm run repo44-bench-er` | 646 | 6 571 | 206.2 µs/msg | 93.5 µs/msg | 72.9 µs/msg |
 | Security Definition † | `npm run repo44-bench-sd` | 52 | 557 | — | — | 5.6 µs/msg |
 | Trade Capture † | `npm run repo44-bench-tc` | 112 | 1 137 | — | — | 9.3 µs/msg |
