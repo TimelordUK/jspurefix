@@ -320,6 +320,26 @@ export abstract class AsciiSession extends FixSession {
     this.sessionLogger.info('coordinator reset transient state for reconnect')
   }
 
+  protected override async onPreLogon (): Promise<void> {
+    if (!this.config.description.ResetSeqNumFlag) return
+
+    this.sessionLogger.info('initiator has ResetSeqNumFlag=Y, resetting sequences before logon')
+    await this.coordinator.resetSession('initiator ResetSeqNumFlag=Y')
+
+    const transmitter = this.transport?.transmitter as AsciiMsgTransmitter | undefined
+    if (transmitter) {
+      transmitter.msgSeqNum = this.coordinator.nextSenderSeqNum
+    }
+    this.sessionState.lastPeerMsgSeqNum = this.coordinator.lastProcessedPeerSeqNum
+
+    if (this.store) {
+      this.store.clear()
+      this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
+    }
+
+    this.sessionLogger.info(`pre-logon reset complete: encoderSeqNum=${transmitter?.msgSeqNum}`)
+  }
+
   protected override txOnEncoded (msgType: string, data: string, hdr: ILooseObject): void {
     super.txOnEncoded(msgType, data, hdr)
     // Store the encoded message in the session store for recovery/resend

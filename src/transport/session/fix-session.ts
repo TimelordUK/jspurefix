@@ -95,6 +95,11 @@ export abstract class FixSession extends events.EventEmitter {
 
   private async waitPromise (): Promise<number> {
     const logger = this.sessionLogger
+    if (this.initiator) {
+      // Hook for subclasses to reset sequences when ResetSeqNumFlag=Y is configured —
+      // must run after the store is loaded, before sendLogon stamps a seq num.
+      await this.onPreLogon()
+    }
     return await new Promise<any>((resolve, reject) => {
       if (this.initiator) {
         logger.debug(`initiator sending logon state = ${this.stateString()}`)
@@ -396,6 +401,15 @@ export abstract class FixSession extends events.EventEmitter {
 
   protected onPrepareForReconnect (): void {
     // Override in subclass to reset coordinator/transient state
+  }
+
+  /**
+   * Called for initiators after the store is loaded but before the Logon is sent.
+   * Override to reset sequences/store when ResetSeqNumFlag=Y so the Logon goes out
+   * with MsgSeqNum=1 instead of the recovered sender seq num.
+   */
+  protected async onPreLogon (): Promise<void> {
+    // Default no-op
   }
 
   protected stop (error: Error | null = null): void {
