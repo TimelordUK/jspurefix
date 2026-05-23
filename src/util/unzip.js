@@ -1,202 +1,87 @@
 const yauzl = require('yauzl')
 const path = require('path')
 const fs = require('fs')
-const util = require('util')
-const Transform = require('stream').Transform
+const { pipeline } = require('stream/promises')
 
-// thanks to https://github.com/thejoshwolfe/yauzl/blob/master/examples/unzip.js
+// Extracts a zip file into the current working directory.
+//
+// Replaces an older copy of the yauzl example unzip script. The previous
+// version drove a 60Hz progress interval via terminal backspaces and did
+// not attach error handlers to any of the streams in its pipeline. In a
+// non-TTY environment (eg. GitHub Actions) the backspaces produced
+// unreadable output; worse, if any stream errored silently the script
+// hung forever and CI runs were cancelled at the workflow timeout.
 
-let zipFilePath = null
-let offsetArg
-let lenArg
-let endArg
-const args = process.argv.slice(2)
-for (let i = 0; i < args.length; i++) {
-  const arg = args[i]
-  if (arg === '--offset') {
-    i += 1
-    offsetArg = parseInt(args[i])
-    if (isNaN(offsetArg)) throw new Error('--offset argument not parsable as an int')
-  } else if (arg === '--len') {
-    i += 1
-    lenArg = parseInt(args[i])
-    if (isNaN(lenArg)) throw new Error('--len argument not parsable as an int')
-  } else if (arg === '--end') {
-    i += 1
-    endArg = parseInt(args[i])
-    if (isNaN(endArg)) throw new Error('--end argument not parsable as an int')
-  } else if (['-h', '--help'].includes(arg)) {
-    // print help
-    zipFilePath = null
-    break
-  } else if (/^--/.test(arg)) {
-    throw new Error('unrecognized option: ' + arg)
-  } else {
-    if (zipFilePath != null) throw new Error('too many arguments')
-    zipFilePath = arg
-  }
-}
-if (zipFilePath == null || /^-/.test(zipFilePath) || (lenArg != null && endArg != null)) {
-  console.log(
-    'usage: node unzip.js [options] path/to/file.zip\n' +
-    '\n' +
-    'unzips the specified zip file into the current directory\n' +
-    '\n' +
-    'options:\n' +
-    '  --offset START\n' +
-    '  --len LEN\n' +
-    '  --end END\n' +
-    '    interprets the middle of the specified file as a zipfile.\n' +
-    '    starting START number of bytes in from the beginning (default 0).\n' +
-    '    end with length of LEN (default is all the way to the end of the file).\n' +
-    '    or end at byte offset END (exclusive) (default is the end of the file).\n' +
-    '    end can be negative to count backwards from the end of the file\n' +
-    '    (example, `--end -1` excludes the last byte of the file).\n' +
-    '')
+const zipFilePath = process.argv[2]
+if (!zipFilePath) {
+  console.error('usage: node unzip.js path/to/file.zip')
   process.exit(1)
 }
 
-function mkdirp (dir, cb) {
-  if (dir === '.') return cb()
-  fs.stat(dir, function (err) {
-    if (err == null) return cb() // already exists
-
-    const parent = path.dirname(dir)
-    mkdirp(parent, function () {
-      process.stdout.write(dir.replace(/\/$/, '') + '/\n')
-      fs.mkdir(dir, cb)
+function openZip (zipFilePath) {
+  return new Promise((resolve, reject) => {
+    yauzl.open(zipFilePath, { lazyEntries: true }, (err, zf) => {
+      if (err) reject(err)
+      else resolve(zf)
     })
   })
 }
 
-if (offsetArg != null || lenArg != null || endArg != null) {
-  openMiddleOfFile(zipFilePath, { lazyEntries: true }, offsetArg, lenArg, endArg, handleZipFile)
-} else {
-  yauzl.open(zipFilePath, { lazyEntries: true }, handleZipFile)
-}
-
-function openMiddleOfFile (zipFilePath, options, offsetArg, lenArg, endArg, handleZipFile) {
-  fs.open(zipFilePath, 'r', function (err, fd) {
-    if (err != null) throw err
-    fs.fstat(fd, function (err, stats) {
-      if (err) {
-        console.log(err)
-      }
-      // resolve optional parameters
-      if (offsetArg == null) offsetArg = 0
-      if (lenArg == null && endArg == null) endArg = stats.size
-      if (endArg == null) endArg = lenArg + offsetArg
-      else if (endArg < 0) endArg = stats.size + endArg
-      // validate parameters
-      if (offsetArg < 0) throw new Error('--offset < 0')
-      if (lenArg < 0) throw new Error('--len < 0')
-      if (offsetArg > endArg) throw new Error('--offset > --end')
-      if (endArg > stats.size) throw new Error('--end/--len goes past EOF')
-
-      // extend RandomAccessReader
-      function MiddleOfFileReader () {
-        yauzl.RandomAccessReader.call(this)
-      }
-      util.inherits(MiddleOfFileReader, yauzl.RandomAccessReader)
-      // implement required and option methods
-      MiddleOfFileReader.prototype._readStreamForRange = function (start, end) {
-        return fs.createReadStream(null, {
-          fd,
-          // shift the start and end offsets
-          start: start + offsetArg,
-          end: end + offsetArg - 1, // the -1 is because fs.createReadStream()'s end option is inclusive
-          autoClose: false
-        })
-      }
-      MiddleOfFileReader.prototype.read = function (buffer, offset, length, position, callback) {
-        // shift the position
-        fs.read(fd, buffer, offset, length, position + offsetArg, callback)
-      }
-      MiddleOfFileReader.prototype.close = function (callback) {
-        fs.close(fd, callback)
-      }
-
-      yauzl.fromRandomAccessReader(new MiddleOfFileReader(), endArg - offsetArg, options, handleZipFile)
+function openEntryStream (zipfile, entry) {
+  return new Promise((resolve, reject) => {
+    zipfile.openReadStream(entry, (err, rs) => {
+      if (err) reject(err)
+      else resolve(rs)
     })
   })
 }
 
-function handleZipFile (err, zipfile) {
-  if (err) throw err
+async function extract (zipFilePath) {
+  const zipfile = await openZip(zipFilePath)
 
-  // track when we've closed all our file handles
-  let handleCount = 0
+  // `end` and `error` fire at most once for the lifetime of the zipfile —
+  // register them once and reuse, otherwise per-iteration `once()` listeners
+  // accumulate and trip MaxListenersExceededWarning.
+  let lifecycleError = null
+  let ended = false
+  zipfile.on('error', (err) => { lifecycleError = err })
+  zipfile.on('end', () => { ended = true })
 
-  function incrementHandleCount () {
-    handleCount++
-  }
-  function decrementHandleCount () {
-    handleCount--
-    if (handleCount === 0) {
-      console.log('all input and output handles closed')
-    }
-  }
-
-  incrementHandleCount()
-  zipfile.on('close', function () {
-    console.log('closed input file')
-    decrementHandleCount()
-  })
-
-  zipfile.readEntry()
-  zipfile.on('entry', function (entry) {
-    if (/\/$/.test(entry.fileName)) {
-      // directory file names end with '/'
-      mkdirp(entry.fileName, function () {
-        if (err) throw err
+  try {
+    while (!ended && !lifecycleError) {
+      const entry = await new Promise((resolve, reject) => {
+        const onEntry = (e) => { cleanup(); resolve(e) }
+        const onEnd = () => { cleanup(); resolve(null) }
+        const onError = (err) => { cleanup(); reject(err) }
+        function cleanup () {
+          zipfile.off('entry', onEntry)
+          zipfile.off('end', onEnd)
+          zipfile.off('error', onError)
+        }
+        zipfile.once('entry', onEntry)
+        zipfile.once('end', onEnd)
+        zipfile.once('error', onError)
         zipfile.readEntry()
       })
-    } else {
-      // ensure parent directory exists
-      mkdirp(path.dirname(entry.fileName), function () {
-        zipfile.openReadStream(entry, function (err, readStream) {
-          if (err) throw err
-          // report progress through large files
-          let byteCount = 0
-          const totalBytes = entry.uncompressedSize
-          let lastReportedString = byteCount + '/' + totalBytes + '  0%'
-          process.stdout.write(entry.fileName + '...' + lastReportedString)
-          function reportString (msg) {
-            let clearString = ''
-            for (let i = 0; i < lastReportedString.length; i++) {
-              clearString += '\b'
-              if (i >= msg.length) {
-                clearString += ' \b'
-              }
-            }
-            process.stdout.write(clearString + msg)
-            lastReportedString = msg
-          }
-          // report progress at 60Hz
-          const progressInterval = setInterval(function () {
-            reportString(byteCount + '/' + totalBytes + '  ' + ((byteCount / totalBytes * 100) | 0) + '%')
-          }, 1000 / 60)
-          const filter = new Transform()
-          filter._transform = function (chunk, encoding, cb) {
-            byteCount += chunk.length
-            cb(null, chunk)
-          }
-          filter._flush = function (cb) {
-            clearInterval(progressInterval)
-            reportString('')
-            // delete the "..."
-            process.stdout.write('\b \b\b \b\b \b\n')
-            cb()
-            zipfile.readEntry()
-          }
+      if (entry == null) break
 
-          // pump file contents
-          const writeStream = fs.createWriteStream(entry.fileName)
-          incrementHandleCount()
-          writeStream.on('close', decrementHandleCount)
-          readStream.pipe(filter).pipe(writeStream)
-        })
-      })
+      if (/\/$/.test(entry.fileName)) {
+        await fs.promises.mkdir(entry.fileName, { recursive: true })
+        continue
+      }
+
+      await fs.promises.mkdir(path.dirname(entry.fileName), { recursive: true })
+      const readStream = await openEntryStream(zipfile, entry)
+      await pipeline(readStream, fs.createWriteStream(entry.fileName))
+      console.log(`${entry.fileName} (${entry.uncompressedSize} bytes)`)
     }
-  })
+    if (lifecycleError) throw lifecycleError
+  } finally {
+    zipfile.close()
+  }
 }
+
+extract(zipFilePath).catch((err) => {
+  console.error(`unzip failed: ${err.message}`)
+  process.exit(1)
+})
