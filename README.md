@@ -9,6 +9,7 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
 
 - [Features](#features)
 - [Installation](#installation)
+- [Examples](#examples)
 - [Quickstart](#quickstart)
 - [Session Configuration](#session-configuration)
   - [TLS](#tls)
@@ -49,6 +50,14 @@ cd node_modules/jspurefix && npm run unzip-repo
 `unzip-repo` extracts the bundled FIX dictionaries. The `postinstall` hook will normally do this for you, but the command is exposed in case you need to re-run it.
 
 A standalone demo project lives at [TimelordUK/jspf-demo](https://github.com/TimelordUK/jspf-demo) — the fastest way to see a working initiator/acceptor.
+
+## Examples
+
+| description  |  link |
+|---|---|
+|  a good start point showing FIX 4 and 5 market data  request/snapshot and custom generated types. |  [jspf-md-demo](https://github.com/TimelordUK/jspf-md-demo) |
+| simple example with a custom dictionary that targets cserver  | [jspf-cserver](https://github.com/TimelordUK/jspf-cserver)  |
+| example trade capture applicaton | [jspf-demo](https://github.com/TimelordUK/jspf-demo)  |
 
 ## Quickstart
 
