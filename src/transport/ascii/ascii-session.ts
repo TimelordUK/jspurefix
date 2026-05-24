@@ -101,7 +101,9 @@ export abstract class AsciiSession extends FixSession {
           this.sessionLogger.info('logon with ResetSeqNumFlag=Y, accepting regardless of sequence')
           const seqNo = view.getTyped(MsgTag.MsgSeqNum) as number
           this.sessionState.lastPeerMsgSeqNum = seqNo
-          this.coordinator.onMessageReceived(seqNo, false)
+          this.coordinator.onMessageReceived(seqNo, false).catch((e: Error) => {
+            this.sessionLogger.warning(`coordinator.onMessageReceived store persist failed: ${e.message}`)
+          })
           return true
         }
       }
@@ -119,7 +121,9 @@ export abstract class AsciiSession extends FixSession {
           const possDupFlag = view.getTyped(MsgTag.PossDupFlag) as boolean | undefined
           if (possDupFlag === true) {
             this.sessionLogger.debug(`message '${msgType}' has PossDupFlag=Y, bypassing sequence check`)
-            this.coordinator.onMessageReceived(seqNo, true)
+            this.coordinator.onMessageReceived(seqNo, true).catch((e: Error) => {
+              this.sessionLogger.warning(`coordinator.onMessageReceived store persist failed: ${e.message}`)
+            })
             return true
           }
           // Check if this is a delayed message that fills a pending gap range.
@@ -127,7 +131,9 @@ export abstract class AsciiSession extends FixSession {
           const inPendingGapRange = pendingRequests.some(p => seqNo >= p.begin && seqNo <= p.end)
           if (inPendingGapRange) {
             this.sessionLogger.info(`accepting delayed message seq ${seqNo} (in pending gap range)`)
-            this.coordinator.onMessageReceived(seqNo, false)
+            this.coordinator.onMessageReceived(seqNo, false).catch((e: Error) => {
+              this.sessionLogger.warning(`coordinator.onMessageReceived store persist failed: ${e.message}`)
+            })
             return true
           }
           // serious problem ... drop immediately
@@ -171,7 +177,9 @@ export abstract class AsciiSession extends FixSession {
 
           // Update sequence state regardless — the gap-triggering message is valid.
           state.lastPeerMsgSeqNum = seqNo
-          this.coordinator.onMessageReceived(seqNo, false)
+          this.coordinator.onMessageReceived(seqNo, false).catch((e: Error) => {
+            this.sessionLogger.warning(`coordinator.onMessageReceived store persist failed: ${e.message}`)
+          })
 
           // Logon and ResendRequest were already fully handled above (peerLogon / onResendRequest).
           // Don't return true for them — they must not be dispatched to onSessionMsg again.
@@ -182,7 +190,9 @@ export abstract class AsciiSession extends FixSession {
         } else {
           ret = true
           state.lastPeerMsgSeqNum = seqNo
-          this.coordinator.onMessageReceived(seqNo, false)
+          this.coordinator.onMessageReceived(seqNo, false).catch((e: Error) => {
+            this.sessionLogger.warning(`coordinator.onMessageReceived store persist failed: ${e.message}`)
+          })
         }
 
         // Reset timeout recovery on successful message receipt
@@ -333,7 +343,9 @@ export abstract class AsciiSession extends FixSession {
     this.sessionState.lastPeerMsgSeqNum = this.coordinator.lastProcessedPeerSeqNum
 
     if (this.store) {
-      this.store.clear()
+      this.store.clear().catch((e: Error) => {
+        this.sessionLogger.warning(`store.clear failed: ${e.message}`)
+      })
       this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
     }
 
@@ -439,7 +451,9 @@ export abstract class AsciiSession extends FixSession {
         // expect  newSeqNo to be the next message's sequence number.
         this.sessionState.lastPeerMsgSeqNum = newSeqNo - 1
         // Notify coordinator to update expected target and clear pending resend requests
-        this.coordinator.onGapFillReceived(gapFillSeq, newSeqNo)
+        this.coordinator.onGapFillReceived(gapFillSeq, newSeqNo).catch((e: Error) => {
+          this.sessionLogger.warning(`coordinator.onGapFillReceived store persist failed: ${e.message}`)
+        })
         break
       }
 
@@ -524,7 +538,9 @@ export abstract class AsciiSession extends FixSession {
 
       // Fire-and-forget the async coordinator call (store updates resolve on next microtask)
       // but compute the expected values synchronously since we know the reset outcome
-      this.coordinator.handlePeerReset(peerSeqNum, weAlsoReset)
+      this.coordinator.handlePeerReset(peerSeqNum, weAlsoReset).catch((e: Error) => {
+        this.sessionLogger.warning(`coordinator.handlePeerReset store persist failed: ${e.message}`)
+      })
       if (transmitter) {
         transmitter.msgSeqNum = savedEncoderSeqNum ?? 1
       }
@@ -532,7 +548,9 @@ export abstract class AsciiSession extends FixSession {
 
       // Recreate resender with empty store
       if (this.store) {
-        this.store.clear()
+        this.store.clear().catch((e: Error) => {
+          this.sessionLogger.warning(`store.clear failed: ${e.message}`)
+        })
         this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
       }
       logger.info(`reset complete: encoderSeqNum=${transmitter?.msgSeqNum}, lastPeerMsgSeqNum=${peerSeqNum}`)
@@ -555,14 +573,18 @@ export abstract class AsciiSession extends FixSession {
       if (weReset && resetSeqNumFlag !== true) {
         logger.info('acceptor sending ResetSeqNumFlag=Y (peer sent N), resetting sequences')
         // Fire-and-forget async coordinator call, set values synchronously
-        this.coordinator.resetAsAcceptor()
+        this.coordinator.resetAsAcceptor().catch((e: Error) => {
+          this.sessionLogger.warning(`coordinator.resetAsAcceptor store persist failed: ${e.message}`)
+        })
         const transmitter = this.transport?.transmitter as AsciiMsgTransmitter | undefined
         if (transmitter) {
           transmitter.msgSeqNum = 1
         }
         this.sessionState.lastPeerMsgSeqNum = 0
         if (this.store) {
-          this.store.clear()
+          this.store.clear().catch((e: Error) => {
+            this.sessionLogger.warning(`store.clear failed: ${e.message}`)
+          })
           this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
         }
       }
