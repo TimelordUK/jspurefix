@@ -30,7 +30,8 @@ export class AsciiParser extends MsgParser {
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig,
     @inject(DITokens.readStream) public readonly readStream: Readable | null,
-    @inject(DITokens.ParseBuffer) protected readonly receivingBuffer: ElasticBuffer) {
+    @inject(DITokens.ParseBuffer) protected readonly receivingBuffer: ElasticBuffer,
+    @inject(DITokens.maxMessageLen) public readonly maxMessageLen: number = 160 * 1024) {
     super()
 
     this.delimiter = config.delimiter ?? AsciiChars.Soh
@@ -38,7 +39,7 @@ export class AsciiParser extends MsgParser {
     this.id = AsciiParser.nextId++
     this.segmentParser = config.sessionContainer.resolve<AsciiSegmentParser>(AsciiSegmentParser)
     this.state = config.sessionContainer.resolve<AsciiParserState>(AsciiParserState)
-    this.state.locations = new Tags(this.receivingBuffer.size / 10)
+    this.state.locations = new Tags(this.receivingBuffer.size / 10, this.maxMessageLen)
     this.state.definitions = this.config.definitions
     this.state.beginMessage()
     if (readStream !== null) {

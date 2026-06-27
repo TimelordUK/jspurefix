@@ -8,10 +8,11 @@ export class Tags {
   public static readonly CheckSumTag: number = MsgTag.CheckSum
   public static readonly MsgTag: number = MsgTag.MsgType
 
-  public tagPos: TagPos[] = new Array(this.startingLength)
+  public tagPos: TagPos[] = new Array(Math.min(this.startingLength, this.maxLength))
   public nextTagPos: number = 0
 
-  constructor (public readonly startingLength: number = 30 * 1000) {
+  constructor (public readonly startingLength: number = 30 * 1000,
+    public readonly maxLength: number = 1024 * 1024) {
   }
 
   public static toJSType (tagType: TagType): string {
@@ -128,7 +129,10 @@ export class Tags {
   }
 
   private expand (): void {
-    const size = this.tagPos.length * 2
+    if (this.tagPos.length >= this.maxLength) {
+      throw new Error(`tag count exceeds maximum of ${this.maxLength} - message too large or stream misaligned`)
+    }
+    const size = Math.min(this.tagPos.length * 2, this.maxLength)
     const tagPos = new Array(size)
     for (let i = 0; i < this.tagPos.length; ++i) {
       tagPos[i] = this.tagPos[i]
