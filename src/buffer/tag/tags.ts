@@ -102,7 +102,7 @@ export class Tags {
 
   public clone (): Tags {
     const next: number = this.nextTagPos
-    const cloned: Tags = new Tags(next)
+    const cloned: Tags = new Tags(next, this.maxLength)
     cloned.nextTagPos = next
     for (let i = 0; i < next; ++i) {
       cloned.tagPos[i] = this.tagPos[i].clone()

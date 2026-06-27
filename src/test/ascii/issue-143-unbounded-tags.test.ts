@@ -49,3 +49,19 @@ test('a normal message within the maximum still parses', async () => {
   const res = await setup.client.parseText('8=FIX4.4|9=101|35=A|')
   expect(res.event).toEqual('done')
 })
+
+test('initial allocation is clamped to the maximum when starting length is larger', () => {
+  const tags = new Tags(1000, 4)
+  expect(tags.tagPos.length).toEqual(4)
+})
+
+test('clone preserves the maximum so a clone cannot grow unbounded either', () => {
+  const tags = new Tags(2, 4)
+  for (let i = 0; i < 3; ++i) {
+    tags.store(0, 1, i)
+  }
+  const cloned = tags.clone()
+  expect(cloned.maxLength).toEqual(4)
+  cloned.store(0, 1, 3)
+  expect(() => { cloned.store(0, 1, 4) }).toThrow(/exceeds maximum/)
+})
