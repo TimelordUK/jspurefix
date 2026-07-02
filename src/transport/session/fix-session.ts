@@ -110,14 +110,26 @@ export abstract class FixSession extends events.EventEmitter {
         this.setState(SessionState.WaitingForALogon)
       }
 
-      this.on('error', (e: Error) => {
+      // Use named handlers and detach BOTH when the promise settles.  Only one of
+      // 'error'/'done' fires per run; without removing the sibling the unfired
+      // listener would leak on every reconnect (issue #146).  `once` alone is not
+      // enough for the same reason — the sibling never fires, so never self-detaches.
+      const cleanup = (): void => {
+        this.removeListener('error', onError)
+        this.removeListener('done', onDone)
+      }
+      const onError = (e: Error): void => {
+        cleanup()
         logger.error(e)
         reject(e)
-      })
-
-      this.on('done', () => {
+      }
+      const onDone = (): void => {
+        cleanup()
         resolve(this.transport?.id)
-      })
+      }
+
+      this.on('error', onError)
+      this.on('done', onDone)
     })
   }
 
