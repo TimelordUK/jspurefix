@@ -123,12 +123,20 @@ export class TcpInitiator extends FixInitiator {
           tlsSocket = tlsConnect(connectionOptions, () => {
             if (!tlsSocket) return null
             this.logger.info(`client connected ${tlsSocket.authorized ? 'authorized' : 'unauthorized'}`)
-            if (!tlsSocket.authorized) {
+            // https://github.com/TimelordUK/jspurefix/issues/94 - honour rejectUnauthorized:
+            // false rather than always rejecting on an unauthorized cert. Node's tls.connect()
+            // never throws for an unauthorized peer by itself; it's the caller's job to decide
+            // what to do with tlsSocket.authorized, and rejectUnauthorized is how a caller opts
+            // out of that check - so only reject here when the caller didn't opt out.
+            if (!tlsSocket.authorized && connectionOptions.rejectUnauthorized !== false) {
               const error = tlsSocket.authorizationError
               this.logger.warning(`rejecting from state ${this.state} authorizationError ${error}`)
               tlsSocket.end()
               reject(error)
             } else {
+              if (!tlsSocket.authorized) {
+                this.logger.warning(`proceeding despite unauthorized TLS peer (rejectUnauthorized: false): ${tlsSocket.authorizationError}`)
+              }
               tlsSocket.setEncoding('utf8')
               const tlsDuplex = new TcpDuplex(tlsSocket)
               if (tcp?.tls?.enableTrace) {
