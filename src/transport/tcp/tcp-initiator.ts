@@ -9,6 +9,7 @@ import { connect as tlsConnect, ConnectionOptions, TLSSocket } from 'tls'
 import { createConnection } from 'net'
 import Timeout = NodeJS.Timeout
 import { TlsOptionsFactory } from './tls-options-factory'
+import { describeConnectionOptions, describeNegotiated, describePeerCertificate } from './tls-diagnostics'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { ITcpTransportDescription } from './tcp-transport-description'
@@ -67,8 +68,13 @@ export class TcpInitiator extends FixInitiator {
           this.logger.info(`connecting with timeout ${timeoutSeconds}`)
           this.tryConnect()
             .then((t: MsgTransport) => { resolve(t) })
-            .catch((_: Error) => {
-              this.repeatConnect(timeoutSeconds)
+            .catch((first: Error) => {
+              // carry the first failure into repeatConnect.  it used to be discarded, so a
+              // connect() whose timeout expires before the first retry interval fires - the
+              // default case, timeout and reconnectSeconds are both 5 - reported a generic
+              // "timeout whilst connecting" and threw away the reason.  see #94.
+              this.logger.info(`first connect attempt failed: ${first.message}`)
+              this.repeatConnect(timeoutSeconds, first)
                 .then((t: MsgTransport) => { resolve(t) })
                 .catch((e: Error) => { reject(e) })
             })
@@ -120,9 +126,12 @@ export class TcpInitiator extends FixInitiator {
       const connectionOptions: ConnectionOptions | null = tcp ? TlsOptionsFactory.getTlsConnectionOptions(tcp) : null
       if (connectionOptions) {
         try {
+          this.logger.info(`tls connect with ${describeConnectionOptions(connectionOptions)}`)
           tlsSocket = tlsConnect(connectionOptions, () => {
             if (!tlsSocket) return null
             this.logger.info(`client connected ${tlsSocket.authorized ? 'authorized' : 'unauthorized'}`)
+            this.logger.info(`tls negotiated ${describeNegotiated(tlsSocket)}`)
+            this.logger.info(`tls peer certificate ${describePeerCertificate(tlsSocket)}`)
             // https://github.com/TimelordUK/jspurefix/issues/94 - honour rejectUnauthorized:
             // false rather than always rejecting on an unauthorized cert. Node's tls.connect()
             // never throws for an unauthorized peer by itself; it's the caller's job to decide
@@ -148,6 +157,9 @@ export class TcpInitiator extends FixInitiator {
             }
           })
           tlsSocket.on('error', (err) => {
+            // previously silent - the socket error is the real reason a tls session failed,
+            // and without it the caller only ever sees repeatConnect's generic timeout.
+            this.logger.warning(`tls socket error from state ${this.state}: ${err.message}`)
             reject(err)
           })
         } catch (e) {
@@ -179,14 +191,14 @@ export class TcpInitiator extends FixInitiator {
     }
   }
 
-  private async repeatConnect (timeoutSeconds: number): Promise < MsgTransport > {
+  private async repeatConnect (timeoutSeconds: number, initialError?: Error): Promise < MsgTransport > {
     return await new Promise<MsgTransport>(async (resolve, reject) => {
       const application = this.application
       const promisify = util.promisify
       const timeoutPromise = promisify(setTimeout)
       const reconnectSeconds = application?.reconnectSeconds ?? 5
       let retries = 0
-      let lastError: Error
+      let lastError: Error = initialError as Error
       const name = application?.name ?? 'initiator'
       this.th = setInterval(() => {
         ++retries
@@ -204,6 +216,7 @@ export class TcpInitiator extends FixInitiator {
         this.clearTimer()
         this.state = InitiatorState.Stopped
         const e = lastError ?? new Error(`${name}: timeout of ${timeoutSeconds} whilst connecting`)
+        this.logger.warning(`${name}: giving up after ${timeoutSeconds}s and ${retries} retries, last error: ${e.message}`)
         reject(e)
       }).catch(e => {
         reject(e)

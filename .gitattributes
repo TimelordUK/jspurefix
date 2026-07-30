@@ -1,0 +1,4 @@
+# pem encoded test fixtures - keep byte for byte identical on every platform rather than
+# letting eol normalisation rewrite them on checkout.
+*.crt -text
+*.key -text
