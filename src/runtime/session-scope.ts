@@ -63,9 +63,19 @@ function cloneBuffer (parent: DependencyContainer, token: DITokens): ElasticBuff
   return new ElasticBuffer(existing.size)
 }
 
+/**
+ * The scope needs a factory bound to *its* description, because the outbound header
+ * carries this session's comp ids.  Applications may supply their own factory (by
+ * overriding SessionContainer.makeSessionFactory), and that must survive into the
+ * per-session scope - building a stock one here would silently drop custom header
+ * handling on the acceptor path.  See issue #87.
+ */
 function makeSessionMsgFactory (
   description: ISessionDescription,
   current: ISessionMsgFactory | null): ISessionMsgFactory {
+  if (current?.cloneFor) {
+    return current.cloneFor(description)
+  }
   const ascii = description.application?.protocol === 'ascii'
   const mutator = (current as any)?.mutator ?? null
   return ascii

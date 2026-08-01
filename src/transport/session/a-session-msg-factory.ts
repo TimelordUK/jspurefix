@@ -20,6 +20,24 @@ export abstract class ASessionMsgFactory implements ISessionMsgFactory {
   protected constructor (public readonly description: ISessionDescription, public mutator: ObjectMutator | null = null) {
   }
 
+  /**
+   * Rebuild this factory against another session description, preserving the
+   * concrete type.  An acceptor needs one factory per accepted connection so that
+   * outbound headers carry that session's comp ids; without preserving the type, an
+   * application's own factory would be silently replaced by the stock one.
+   *
+   * Reconstructing through `this.constructor` covers any subclass whose constructor
+   * takes (description, mutator) - the shape every factory in this library uses.
+   * Override this if yours takes anything else.
+   */
+  public cloneFor (description: ISessionDescription): ISessionMsgFactory {
+    const Ctor = this.constructor as new (
+      description: ISessionDescription,
+      mutator: ObjectMutator | null
+    ) => ISessionMsgFactory
+    return new Ctor(description, this.mutator)
+  }
+
   public reject (msgType: string, seqNo: number, msg: string, reason: number): ILooseObject {
     const o: IReject = {
       RefMsgType: msgType,

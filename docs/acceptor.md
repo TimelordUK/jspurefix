@@ -61,6 +61,30 @@ Writing `makeSession: () => new MyServer(config)` closes over the launcher's con
 and opts the application out of per-session isolation. It still works for a single
 counterparty; it does not work for several.
 
+### Custom session message factories
+
+If you supply your own `ISessionMsgFactory` — usually by overriding
+`SessionContainer.makeSessionFactory` to stamp extra header fields — the scope needs
+a copy of *your* factory bound to that session's description, not a stock one.
+
+Extending `ASessionMsgFactory` (or `AsciiSessionMsgFactory` / `FixmlSessionMsgFactory`)
+gets this for free: the default `cloneFor` reconstructs through the concrete
+constructor, so a subclass taking `(description, mutator)` needs no extra work.
+Override `cloneFor` if your constructor takes anything else:
+
+```ts
+class BrokerMsgFactory extends AsciiSessionMsgFactory {
+  constructor (description: ISessionDescription, private readonly desk: string) {
+    super(description)
+  }
+
+  // the default clone would not know about `desk`
+  public override cloneFor (description: ISessionDescription): ISessionMsgFactory {
+    return new BrokerMsgFactory(description, this.desk)
+  }
+}
+```
+
 ## The session registry
 
 FIX permits exactly one active session per `SessionId`. `SessionRegistry` enforces
