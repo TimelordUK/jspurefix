@@ -435,13 +435,26 @@ Note this supersedes phase D6 of `DEMO_PORT_PLAN.md`, which had placed the regis
 and wildcard handling in the demo. Issue #153 showed they belong in the engine - the
 reporter hit them without writing a demo.
 
-### Follow-up found while testing
+### Follow-up found while testing — resolved, and the first diagnosis was wrong
 
-The demo's `server-bounce` scenario does not pass, on this branch or on published
-5.8.5. The acceptor's persisted sender sequence lags what it actually sent, because
-`AsciiSession.txOnEncoded` writes to the store fire-and-forget; if the process exits
-first the store is behind, and on restart the client sees a sequence below what it
-has already recorded and drops the session. Needs its own phase.
+This originally recorded the demo's `server-bounce` scenario as failing because
+`AsciiSession.txOnEncoded` writes to the session store fire-and-forget, leaving the
+acceptor's persisted sender sequence behind what it had actually sent.
+
+**That was wrong.** Reproducing the run by hand: after phase 1 the two stores agree
+exactly (client `4 : 14`, server `14 : 4`), and a second session started against them
+recovers and trades normally, including under the scenario's tight 5-second client
+budget. There is no store flush bug.
+
+The real cause was in the scenario harness. `run_quiet_bg` published its pid via
+command substitution, so `$!` belonged to a subshell and `wait` on it failed
+instantly with "not a child of this shell" rather than blocking. "Wait for the server
+to time out" was therefore a no-op, and the first server was still bound to the port
+when the next step started a second one. A `2>/dev/null || true` kept it silent.
+
+Fixed in jspf-demo; all six scenarios pass. Kept here as a reminder that a failing
+end-to-end scenario is not evidence of an engine bug until the engine has been
+driven directly.
 
 ---
 
