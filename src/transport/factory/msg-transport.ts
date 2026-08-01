@@ -34,9 +34,29 @@ export class MsgTransport {
     }
   }
 
+  /**
+   * Milliseconds to wait after a graceful end before dropping the connection.  A
+   * half open socket never answers the FIN, so without this the handle - and the
+   * memory behind its session - is held for the life of the process (issue #153).
+   */
+  public static lingerMs: number = 5000
+
   public end (): void {
+    if (this.ended) return
+    this.ended = true
     this.duplex.end()
+    if (MsgTransport.lingerMs <= 0) {
+      this.duplex.destroy()
+      return
+    }
+    const linger = setTimeout(() => {
+      this.duplex.destroy()
+    }, MsgTransport.lingerMs)
+    // never keep the process alive purely to time out a dead socket
+    linger.unref?.()
   }
+
+  private ended: boolean = false
 
   public async wait (): Promise<any> {
     return await new Promise<any>((resolve, reject) => {

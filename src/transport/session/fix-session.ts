@@ -9,17 +9,44 @@ import * as events from 'events'
 import { SessionState } from './session-state'
 import { SegmentType } from '../../buffer/segment/segment-type'
 
+/**
+ * The set of listeners this session attached to one specific transport.
+ *
+ * The handlers must be kept as stable references - `EventEmitter.removeListener`
+ * matches on identity, so subscribing with a fresh closure and unsubscribing with
+ * a method reference silently leaves the listener attached (issue #153).  Holding
+ * the transport alongside the handlers also lets `unsubscribe` detach from the
+ * transport it actually subscribed to, even when `this.transport` has already
+ * moved on to a newer connection.
+ */
+interface ITransportSubscription {
+  readonly transport: MsgTransport
+  readonly rxOnMsg: (msgType: string, view: MsgView) => void
+  readonly rxOnError: (e: Error) => void
+  readonly rxOnDone: () => void
+  readonly rxOnEnd: () => void
+  readonly rxOnDecoded: (msgType: string, data: ElasticBuffer, ptr: number) => void
+  readonly txOnError: (e: Error) => void
+  readonly txOnEncoded: (msgType: string, data: string, hdr: ILooseObject) => void
+}
+
 export abstract class FixSession extends events.EventEmitter {
   public logReceivedMsgs: boolean = false
   protected timer: NodeJS.Timeout | null = null
   protected transport: MsgTransport | null = null
+  private subscription: ITransportSubscription | null = null
   public manageSession: boolean = true
   public checkMsgIntegrity: boolean = false
   protected readonly me: string
   protected readonly initiator: boolean
   protected readonly acceptor: boolean
   protected readonly sessionState: FixSessionState
-  protected readonly sessionLogger: IJsFixLogger
+  /**
+   * Not readonly: a wildcard acceptor does not know which counterparty it is
+   * serving until the Logon arrives, and every session on that listener would
+   * otherwise log under the same name.  Rebound once the identity is known.
+   */
+  protected sessionLogger: IJsFixLogger
   protected requestLogoutType: string
   protected respondLogoutType: string
   protected requestLogonType: string
@@ -120,7 +147,9 @@ export abstract class FixSession extends events.EventEmitter {
       }
       const onError = (e: Error): void => {
         cleanup()
-        logger.error(e)
+        // read the logger now, not the one captured when the run started - a
+        // wildcard acceptor rebinds it once it knows which peer it is serving
+        this.sessionLogger.error(e)
         reject(e)
       }
       const onDone = (): void => {
@@ -217,35 +246,90 @@ export abstract class FixSession extends events.EventEmitter {
     this.onEncoded(msgType, data)
   }
 
+  /**
+   * true when the event which has just fired came from the transport this session
+   * is currently running.  A half open socket can keep emitting long after the peer
+   * has reconnected on a fresh connection - those events must not be allowed to drive
+   * the live session (issue #153).
+   */
+  private isCurrentTransport (transport: MsgTransport, event: string): boolean {
+    if (this.subscription?.transport === transport && this.transport === transport) {
+      return true
+    }
+    const current = this.transport?.id ?? 'none'
+    this.sessionLogger.warning(`ignoring '${event}' from stale transport ${transport.id} - current transport is ${current}`)
+    return false
+  }
+
   protected unsubscribe (): void {
     const logger = this.sessionLogger
-    logger.info(`unsubscribe sessionState = [${this.sessionState.toString()}]`)
-    const transport = this.transport
-    const rx = transport?.receiver
-    const tx = transport?.transmitter
+    const subscription = this.subscription
+    if (!subscription) {
+      logger.debug('unsubscribe called with no active subscription')
+      return
+    }
+    const transport = subscription.transport
+    logger.info(`unsubscribe transport ${transport.id} sessionState = [${this.sessionState.toString()}]`)
+    const rx = transport.receiver
+    const tx = transport.transmitter
 
-    rx?.removeListener('msg', this.rxOnMsg)
-    rx?.removeListener('error', this.rxOnError)
-    rx?.removeListener('done', this.rxOnDone)
-    rx?.removeListener('end', this.rxOnEnd)
-    rx?.removeListener('decoded', this.rxOnDecoded)
-    tx?.removeListener('error', this.txOnError)
-    tx?.removeListener('encoded', this.txOnEncoded)
+    rx?.removeListener('msg', subscription.rxOnMsg)
+    rx?.removeListener('error', subscription.rxOnError)
+    rx?.removeListener('done', subscription.rxOnDone)
+    rx?.removeListener('end', subscription.rxOnEnd)
+    rx?.removeListener('decoded', subscription.rxOnDecoded)
+    tx?.removeListener('error', subscription.txOnError)
+    tx?.removeListener('encoded', subscription.txOnEncoded)
+    this.subscription = null
+    logger.debug(`unsubscribe complete - rx listeners now ${rx?.listenerCount('msg') ?? 0} msg, ${rx?.listenerCount('end') ?? 0} end`)
   }
 
   protected subscribe (): void {
     const transport = this.transport
-
-    const rx = transport?.receiver
-    const tx = transport?.transmitter
+    if (!transport) {
+      this.sessionLogger.warning('subscribe called with no transport')
+      return
+    }
+    // detach from any previous transport before attaching to this one
+    if (this.subscription) {
+      this.unsubscribe()
+    }
     const inst = this
-    rx?.on('msg', (msgType: string, view: MsgView) => { inst.rxOnMsg(msgType, view) })
-    rx?.on('error', (e: Error) => { inst.rxOnError(e) })
-    rx?.on('done', () => { inst.rxOnDone() })
-    rx?.on('end', () => { inst.rxOnEnd() })
-    rx?.on('decoded', (msgType: string, data: ElasticBuffer, ptr: number) => { inst.rxOnDecoded(msgType, data, ptr) })
-    tx?.on('error', (e: Error) => { inst.txOnError(e) })
-    tx?.on('encoded', (msgType: string, data: string, hdr: ILooseObject) => { inst.txOnEncoded(msgType, data, hdr) })
+    const subscription: ITransportSubscription = {
+      transport,
+      rxOnMsg: (msgType: string, view: MsgView) => {
+        if (inst.isCurrentTransport(transport, 'msg')) inst.rxOnMsg(msgType, view)
+      },
+      rxOnError: (e: Error) => {
+        if (inst.isCurrentTransport(transport, 'error')) inst.rxOnError(e)
+      },
+      rxOnDone: () => {
+        if (inst.isCurrentTransport(transport, 'done')) inst.rxOnDone()
+      },
+      rxOnEnd: () => {
+        if (inst.isCurrentTransport(transport, 'end')) inst.rxOnEnd()
+      },
+      rxOnDecoded: (msgType: string, data: ElasticBuffer, ptr: number) => {
+        if (inst.isCurrentTransport(transport, 'decoded')) inst.rxOnDecoded(msgType, data, ptr)
+      },
+      txOnError: (e: Error) => {
+        if (inst.isCurrentTransport(transport, 'tx error')) inst.txOnError(e)
+      },
+      txOnEncoded: (msgType: string, data: string, hdr: ILooseObject) => {
+        if (inst.isCurrentTransport(transport, 'encoded')) inst.txOnEncoded(msgType, data, hdr)
+      }
+    }
+    const rx = transport.receiver
+    const tx = transport.transmitter
+    rx?.on('msg', subscription.rxOnMsg)
+    rx?.on('error', subscription.rxOnError)
+    rx?.on('done', subscription.rxOnDone)
+    rx?.on('end', subscription.rxOnEnd)
+    rx?.on('decoded', subscription.rxOnDecoded)
+    tx?.on('error', subscription.txOnError)
+    tx?.on('encoded', subscription.txOnEncoded)
+    this.subscription = subscription
+    this.sessionLogger.info(`subscribed to transport ${transport.id}`)
   }
 
   protected validStateApplicationMsg (): boolean {
@@ -285,12 +369,16 @@ export abstract class FixSession extends events.EventEmitter {
     if (this.sessionState.state === SessionState.Stopped) return
     this.sessionLogger.error(error)
     this.stopTimer()
+    this.unsubscribe()
     if (this.transport) {
+      this.sessionLogger.info(`terminate: kill transport ${this.transport.id}`)
       this.transport.end()
     }
     this.transport = null
     this.setState(SessionState.Stopped)
+    this.onSessionStopping()
     this.emit('error', error)
+    this.onStopped(error)
   }
 
   protected peerLogout (view: MsgView): void {
@@ -416,6 +504,16 @@ export abstract class FixSession extends events.EventEmitter {
   }
 
   /**
+   * Called once as the session moves to Stopped, before the application is informed
+   * via onStopped.  Override to release session scoped resources - the ascii session
+   * uses this to remove itself from the session registry.  Mirrors cspurefix
+   * FixSession.OnSessionStopping.
+   */
+  protected onSessionStopping (): void {
+    // Default no-op
+  }
+
+  /**
    * Called for initiators after the store is loaded but before the Logon is sent.
    * Override to reset sequences/store when ResetSeqNumFlag=Y so the Logon goes out
    * with MsgSeqNum=1 instead of the recovered sender seq num.
@@ -424,13 +522,26 @@ export abstract class FixSession extends events.EventEmitter {
     // Default no-op
   }
 
+  /**
+   * Stop this session on behalf of an external caller - typically the session registry
+   * when a new connection for the same SessionId replaces this one, but equally an
+   * application which has decided the peer is gone.  Mirrors cspurefix
+   * FixSession.RequestStop.
+   * @param reason recorded in the session log and carried on the emitted error
+   */
+  public requestStop (reason: string): void {
+    this.sessionLogger.info(`requestStop: ${reason}`)
+    this.stop(new Error(reason))
+  }
+
   protected stop (error: Error | null = null): void {
     if (this.sessionState.state === SessionState.Stopped) {
       return
     }
     this.stopTimer()
     this.unsubscribe()
-    this.sessionLogger.info('stop: kill transport')
+    this.sessionLogger.info(`stop: kill transport ${this.transport?.id ?? 'none'}`)
+    this.onSessionStopping()
     this.transport?.end()
     if (error) {
       this.sessionLogger.info(`stop: emit error ${error.message}`)

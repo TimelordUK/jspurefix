@@ -14,4 +14,14 @@ export class TcpDuplex extends FixDuplex {
   end (): void {
     this.socket.end()
   }
+
+  /**
+   * A socket whose peer has gone without FIN or RST will never complete the
+   * graceful end() above - the FIN is sent and no answer ever comes, so the handle
+   * stays open indefinitely.  destroy() drops it regardless.
+   */
+  destroy (): void {
+    if (this.socket.destroyed) return
+    this.socket.destroy()
+  }
 }

@@ -1,4 +1,4 @@
-import { IJsFixConfig } from '../../config'
+import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { FixAcceptor } from '../fix-acceptor'
 import { TcpAcceptor } from './tcp-acceptor'
 import { MsgTransport } from '../factory'
@@ -6,14 +6,23 @@ import { inject, injectable } from 'tsyringe'
 import { FixSession } from '../session/fix-session'
 import { DITokens } from '../../runtime/di-tokens'
 import { FixEntity } from '../fix-entity'
+import { ISessionRegistry, SessionRegistry } from '../session/session-registry'
 
 @injectable()
 export class TcpAcceptorListener extends FixEntity {
   private acceptor: FixAcceptor | null = null
   private resolveStart: ((value: any) => void) | null = null
+  /**
+   * One registry per listener, so a counterparty reconnecting onto a fresh socket
+   * replaces its previous session instead of running alongside it (issue #153).
+   * An application may supply its own via config.sessionRegistry.
+   */
+  public readonly sessionRegistry: ISessionRegistry
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
+    this.sessionRegistry = config.sessionRegistry ?? new SessionRegistry(config.logFactory)
+    config.sessionRegistry = this.sessionRegistry
   }
 
   async start (): Promise<any> {
@@ -29,22 +38,51 @@ export class TcpAcceptorListener extends FixEntity {
       this.acceptor = acceptor
 
       acceptor.on('transport', (t: MsgTransport) => {
-        logger.info(`creates new transport using DI token ${DITokens.FixSession}.`)
-        const acceptorSession = sessionContainer.resolve<FixSession>(DITokens.FixSession)
+        // resolve from the transport's own scope, not the listener's container, so
+        // this session gets the per-connection description, buffers and message
+        // factory created by TcpAcceptor.  Falls back to the listener container for
+        // transports created outside the acceptor (tests, custom entities).
+        const scope = t.config?.sessionContainer ?? sessionContainer
+        const description = t.config?.description
+        logger.info(`transport ${t.id}: creating session via DI token ${DITokens.FixSession} ` +
+          `[${description?.SenderCompId ?? '?'} -> ${description?.TargetCompID ?? '?'}]`)
+        const acceptorSession = scope.resolve<FixSession>(DITokens.FixSession)
         this.emit('session', acceptorSession, t)
+        // a wildcard acceptor has not claimed its SessionId yet - report again once
+        // the session ends, by which time the registry line is meaningful
+        this.census(logger)
         // Run the session but do NOT close the listener when it ends.
         // The acceptor keeps listening for new connections (reconnects).
         // This matches the C# TcpAcceptorListener accept-loop pattern.
         acceptorSession.run(t).then(() => {
-          logger.info('session ended normally, acceptor continues listening')
+          logger.info(`transport ${t.id}: session ended normally, acceptor continues listening`)
+          this.census(logger)
         }).catch((e: Error) => {
-          logger.warning(`session ended with error: ${e.message}, acceptor continues listening`)
+          logger.warning(`transport ${t.id}: session ended with error: ${e.message}, acceptor continues listening`)
+          this.census(logger)
         })
+      })
+
+      acceptor.on('harvested', (tid: number, reason: string) => {
+        logger.info(`transport ${tid} harvested (${reason})`)
+        this.census(logger)
       })
 
       this.resolveStart = resolve
       acceptor.listen()
     })
+  }
+
+  /**
+   * What is actually connected, and which SessionIds are claimed.  Emitted whenever
+   * the population changes so "how many clients do I have, and who are they" is
+   * answerable from the server log alone.
+   */
+  private census (logger: IJsFixLogger): void {
+    const acceptor = this.acceptor as TcpAcceptor | null
+    const transports = acceptor?.liveTransports() ?? []
+    logger.info(`acceptor census: transports=${transports.length} [${transports.join(', ')}] ` +
+      `sessions=${this.sessionRegistry.count} [${this.sessionRegistry.keys().join(', ')}]`)
   }
 
   /**

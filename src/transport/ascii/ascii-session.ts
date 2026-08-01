@@ -6,8 +6,9 @@ import {
   FixMsgAsciiStoreResend, FixMsgMemoryStore, FixMsgStoreRecord,
   IFixMsgStore, IFixMsgStoreRecord,
   IFixSessionStore, IFixSessionStoreFactory,
-  MemorySessionStoreFactory, FileSessionStoreFactory, SessionId
+  MemorySessionStore, MemorySessionStoreFactory, FileSessionStoreFactory, SessionId
 } from '../../store'
+import { asMutable } from '../session/clone-session-description'
 import { SessionState } from '../tcp'
 import { TickAction } from '../tick-action'
 import { IMsgApplication } from '../msg-application'
@@ -20,12 +21,24 @@ import { MsgTransport } from '../factory'
 import { ILooseObject } from '../../collections/collection'
 
 export abstract class AsciiSession extends FixSession {
+  /**
+   * TargetCompID value which tells an acceptor to take its target from whichever
+   * counterparty logs on, rather than from static configuration.
+   */
+  public static readonly WildcardCompId = '*'
   public heartbeat: boolean = true
   protected store: IFixMsgStore | null = null
   protected resender: FixMsgAsciiStoreResend
-  protected readonly coordinator: SessionSequenceCoordinator
-  protected readonly sessionStore: IFixSessionStore
-  protected readonly sessionId: SessionId
+  protected coordinator: SessionSequenceCoordinator
+  protected sessionStore: IFixSessionStore
+  protected sessionId: SessionId
+  private registered: boolean = false
+  /** acceptor configured with TargetCompID '*' - identity comes from the peer Logon */
+  protected readonly wildcardTarget: boolean
+  private identityBound: boolean
+  private bindInProgress: boolean = false
+  private readonly pendingRx: Array<{ msgType: string, view: MsgView }> = []
+  private readonly clock: DefaultFixClock = new DefaultFixClock()
 
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
@@ -34,20 +47,36 @@ export abstract class AsciiSession extends FixSession {
     this.store = new FixMsgMemoryStore(this.config.description.SenderCompId, this.config)
     this.resender = new FixMsgAsciiStoreResend(this.store, this.config)
 
-    // Create session store from factory.
-    // Priority: programmatic config > JSON store config > default in-memory
-    const storeFactory = config.sessionStoreFactory ?? AsciiSession.createStoreFactory(config.description.store)
+    // A wildcard TargetCompID lets one acceptor serve counterparties it was not
+    // statically configured for - the peer's SenderCompID becomes our target, and
+    // therefore our SessionId and store, once the Logon arrives.  An initiator has
+    // to know who it is calling, so '*' is meaningless there.
+    this.wildcardTarget = config.description.TargetCompID === AsciiSession.WildcardCompId
+    if (this.wildcardTarget && this.initiator) {
+      throw new Error(`TargetCompID '${AsciiSession.WildcardCompId}' is only valid for acceptors, not initiators`)
+    }
+    this.identityBound = !this.wildcardTarget
+
     this.sessionId = new SessionId(
       config.description.BeginString,
       config.description.SenderCompId,
       config.description.TargetCompID
     )
-    this.sessionStore = storeFactory.create(this.sessionId)
+    // Until the peer identifies itself there is nothing worth persisting, so a
+    // wildcard session starts on a throwaway in-memory store.  The real store -
+    // keyed on the peer's comp id - is created by bindIdentity.
+    this.sessionStore = this.wildcardTarget
+      ? new MemorySessionStore(this.sessionId)
+      : this.storeFactory().create(this.sessionId)
 
-    const clock = new DefaultFixClock()
-    this.coordinator = new SessionSequenceCoordinator(this.sessionStore, clock)
+    this.coordinator = new SessionSequenceCoordinator(this.sessionStore, this.clock)
     const lastReceivedSeqNum = config.description.LastReceivedSeqNum ?? 0
     this.coordinator.initializeFromConfig(undefined, lastReceivedSeqNum + 1)
+  }
+
+  private storeFactory (): IFixSessionStoreFactory {
+    // Priority: programmatic config > JSON store config > default in-memory
+    return this.config.sessionStoreFactory ?? AsciiSession.createStoreFactory(this.config.description.store)
   }
 
   /**
@@ -65,6 +94,15 @@ export abstract class AsciiSession extends FixSession {
     // the client's Logon can arrive and be parsed into the void.
     transport.duplex.readable?.pause()
 
+    if (this.wildcardTarget && !this.identityBound) {
+      // Nothing to recover yet - the SessionId is not known until the peer logs on,
+      // so store initialisation, sequence sync and registry claim all happen in
+      // bindIdentity.  Resume and wait for the Logon.
+      this.sessionLogger.info('wildcard acceptor: awaiting peer Logon to establish session identity')
+      transport.duplex.readable?.resume()
+      return await super.run(transport)
+    }
+
     // Initialize store — reads persisted .seqnums file if using FileSessionStore.
     // For MemorySessionStore this is a no-op.
     await this.sessionStore.initialize()
@@ -80,6 +118,11 @@ export abstract class AsciiSession extends FixSession {
     this.sessionState.lastPeerMsgSeqNum = this.coordinator.lastProcessedPeerSeqNum
 
     this.sessionLogger.info(`store initialized: nextSender=${this.coordinator.nextSenderSeqNum}, expectedTarget=${this.coordinator.expectedTargetSeqNum}`)
+
+    // Claim this SessionId.  A counterparty which reconnected before its previous
+    // socket was detected as dead would otherwise leave two live sessions writing
+    // to one store - see issue #153.
+    this.claimSessionId()
 
     // Resume the stream — super.run() will call subscribe() to hook up the message handler,
     // then the buffered data (including the client's Logon) will be delivered.
@@ -330,6 +373,30 @@ export abstract class AsciiSession extends FixSession {
     this.sessionLogger.info('coordinator reset transient state for reconnect')
   }
 
+  /**
+   * Take ownership of this SessionId in the registry, stopping whatever session
+   * held it before.  Idempotent - a session reused across reconnects (the
+   * RecoveringTcpInitiator pattern) simply re-registers itself.
+   */
+  private claimSessionId (): void {
+    const registry = this.config.sessionRegistry
+    if (!registry) return
+    const stoppedOld = registry.register(this.sessionId, this)
+    if (stoppedOld) {
+      this.sessionLogger.info(`session registry stopped previous session for ${this.sessionId.toString()}`)
+    }
+    this.registered = true
+  }
+
+  protected override onSessionStopping (): void {
+    super.onSessionStopping()
+    const registry = this.config.sessionRegistry
+    if (!registry || !this.registered) return
+    this.registered = false
+    this.sessionLogger.info(`session stopping - unregistering from registry: ${this.sessionId.toString()}`)
+    registry.unregister(this.sessionId, this)
+  }
+
   protected override async onPreLogon (): Promise<void> {
     if (!this.config.description.ResetSeqNumFlag) return
 
@@ -477,6 +544,114 @@ export abstract class AsciiSession extends FixSession {
   }
 
   protected onMsg (msgType: string, view: MsgView): void {
+    if (this.wildcardTarget && !this.identityBound) {
+      this.onMsgBeforeIdentity(msgType, view)
+      return
+    }
+    this.dispatchMsg(msgType, view)
+  }
+
+  /**
+   * Message handling for a wildcard acceptor which has not yet learned who it is
+   * talking to.  The first message must be a Logon; it carries the peer's
+   * SenderCompID, which becomes our TargetCompID and hence our SessionId and store.
+   *
+   * Binding is asynchronous (the store may have to be read from disk) while message
+   * delivery is not: the parser emits every message it finds in a TCP segment in one
+   * synchronous burst, and a view is only valid for the duration of its own event -
+   * AsciiParser recycles the tag index and buffer immediately afterwards.  So each
+   * message that arrives mid-bind is cloned and queued, then replayed in order.
+   */
+  private onMsgBeforeIdentity (msgType: string, view: MsgView): void {
+    if (this.bindInProgress) {
+      this.sessionLogger.info(`queueing '${msgType}' received while binding session identity`)
+      this.pendingRx.push({ msgType, view: view.clone() })
+      return
+    }
+
+    if (msgType !== MsgType.Logon) {
+      this.terminate(new Error(`wildcard acceptor expects Logon as the first message, received '${msgType}'`))
+      return
+    }
+
+    const peerCompId = view.getString(MsgTag.SenderCompID)
+    if (!peerCompId) {
+      this.terminate(new Error('Logon has no SenderCompID - cannot establish session identity'))
+      return
+    }
+
+    this.bindInProgress = true
+    const logon = view.clone()
+    this.transport?.duplex.readable?.pause()
+
+    this.bindIdentity(peerCompId).then(() => {
+      this.bindInProgress = false
+      this.identityBound = true
+      this.dispatchMsg(MsgType.Logon, logon)
+      this.drainPendingRx()
+      this.transport?.duplex.readable?.resume()
+    }).catch((e: Error) => {
+      this.bindInProgress = false
+      this.pendingRx.length = 0
+      this.terminate(new Error(`failed to bind session identity for peer '${peerCompId}': ${e.message}`))
+    })
+  }
+
+  private drainPendingRx (): void {
+    while (this.pendingRx.length > 0) {
+      const queued = this.pendingRx.shift()
+      if (!queued) break
+      if (this.sessionState.state === SessionState.Stopped) {
+        this.sessionLogger.info(`dropping queued '${queued.msgType}' - session stopped during bind`)
+        continue
+      }
+      this.dispatchMsg(queued.msgType, queued.view)
+    }
+  }
+
+  /**
+   * Adopt the peer's comp id as our TargetCompID, then build the identity derived
+   * state: SessionId, message store, sequence coordinator, registry claim.  This is
+   * the wildcard equivalent of the work run() does up front for a statically
+   * configured session.
+   */
+  private async bindIdentity (peerCompId: string): Promise<void> {
+    const logger = this.sessionLogger
+    logger.info(`wildcard acceptor: binding session identity to peer SenderCompID '${peerCompId}'`)
+
+    // the description is this session's own clone (see makeSessionScope), and the
+    // session message factory holds the same object, so outbound headers pick the
+    // new target up immediately
+    asMutable(this.config.description).TargetCompID = peerCompId
+
+    // every session on a wildcard listener shared one logger name until now, which
+    // makes a multi-client server log impossible to follow
+    this.sessionLogger = this.config.logFactory.logger(`${this.me}:${peerCompId}:FixSession`)
+
+    this.sessionId = new SessionId(
+      this.config.description.BeginString,
+      this.config.description.SenderCompId,
+      peerCompId
+    )
+    this.sessionStore = this.storeFactory().create(this.sessionId)
+    await this.sessionStore.initialize()
+
+    this.coordinator = new SessionSequenceCoordinator(this.sessionStore, this.clock)
+    this.coordinator.initializeFromStore()
+
+    const transmitter = this.transport?.transmitter as AsciiMsgTransmitter | undefined
+    if (transmitter) {
+      transmitter.msgSeqNum = this.coordinator.nextSenderSeqNum
+    }
+    this.sessionState.lastPeerMsgSeqNum = this.coordinator.lastProcessedPeerSeqNum
+
+    logger.info(`session identity bound: ${this.sessionId.toString()} ` +
+      `nextSender=${this.coordinator.nextSenderSeqNum}, expectedTarget=${this.coordinator.expectedTargetSeqNum}`)
+
+    this.claimSessionId()
+  }
+
+  private dispatchMsg (msgType: string, view: MsgView): void {
     if (!this.checkSeqNo(msgType, view)) {
       this.sessionLogger.info(`message '${msgType}' failed checkSeqNo.`)
       return

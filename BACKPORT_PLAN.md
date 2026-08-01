@@ -372,6 +372,77 @@ The parser is the foundation of the entire system. Test strategy must be compreh
 3. **Micro-dictionary tests** (future hardening): use Trim to create single-message dictionaries, then mutate them (remove fields, duplicate tags, etc.) to test validator edge cases
 4. **Regression anchor**: snapshot the `FixDefinitions` output for each FIX version before any changes — tests assert against snapshots
 
+
+---
+
+## Phase 7: Acceptor Hardening (issue #153)
+
+**Priority: High | Risk: Medium | Scope: `src/transport/`, `src/runtime/`**
+
+### Problem
+
+The acceptor was written as a smoke-test harness for the initiator and was never
+multi-client safe. [Issue #153](https://github.com/TimelordUK/jspurefix/issues/153)
+reported the visible symptom - a counterparty's socket went half open (no FIN, no
+RST), the counterparty reconnected, and the library had no coherent answer for what
+should happen to the first session - and correctly identified a concrete bug behind
+it: `FixSession.subscribe()` attached closures while `unsubscribe()` removed method
+references, so unsubscribe removed nothing.
+
+Underneath that sat four more:
+
+| Defect | Consequence |
+|--------|-------------|
+| `ParseBuffer` / `TransmitBuffer` are registerInstance singletons | concurrent clients interleave bytes in one buffer |
+| one shared `ISessionDescription` per listener | every accepted session computes the same `SessionId`, so one store |
+| no session registry | a reconnect runs alongside its own stale session |
+| no wildcard `TargetCompID` | an acceptor can only serve statically configured counterparties |
+
+### C# Solution
+
+| File | Purpose |
+|------|---------|
+| `PureFix.Transport/Session/SessionRegistry.cs` | one live session per SessionId, stop the old on reconnect |
+| `PureFix.Transport/Session/FixSession.cs` | `RequestStop`, `OnSessionStopping` |
+| `PureFix.Transport/Ascii/AsciiSession.cs` | wildcard TargetCompID adopted from the peer Logon |
+| `purefix-standalone-demo/Infrastructure/TradeCaptureSessionFactory.cs` | per-session config, parser and encoder |
+
+### TypeScript Solution
+
+1. **Transport subscription** — bound handlers held in an `ITransportSubscription`
+   alongside the transport they attached to; events from a superseded transport are
+   ignored and logged. `terminate()` also informs the application via `onStopped`,
+   which it never did, so application timers leaked on every broken connection.
+2. **Session scopes** — `makeSessionScope` builds a tsyringe child container per
+   connection with fresh buffers, a cloned description and a matching message
+   factory. `SessionLauncher` passes the resolving container's config to
+   `EngineFactory.makeSession`.
+3. **SessionRegistry** — ported, with identity-checked unregister so a displaced
+   session cannot evict its successor.
+4. **Wildcard TargetCompID** — bound *after* the Logon rather than at construction,
+   so each counterparty gets its own store file. cspurefix binds in the constructor
+   and therefore keys a wildcard store on the literal `*`; this is the one place the
+   TS version deliberately improves on the C#.
+5. **Transport lifecycle** — TCP keep-alive, `FixDuplex.destroy()`, linger-then-destroy
+   on `end()`, harvest on socket `close`, and a census line whenever the connected
+   population changes.
+
+See [`docs/acceptor.md`](docs/acceptor.md) for the resulting model.
+
+### Status: **DONE**
+
+Note this supersedes phase D6 of `DEMO_PORT_PLAN.md`, which had placed the registry
+and wildcard handling in the demo. Issue #153 showed they belong in the engine - the
+reporter hit them without writing a demo.
+
+### Follow-up found while testing
+
+The demo's `server-bounce` scenario does not pass, on this branch or on published
+5.8.5. The acceptor's persisted sender sequence lags what it actually sent, because
+`AsciiSession.txOnEncoded` writes to the store fire-and-forget; if the process exits
+first the store is behind, and on restart the client sees a sequence below what it
+has already recorded and drops the session. Needs its own phase.
+
 ---
 
 ## General Principles
