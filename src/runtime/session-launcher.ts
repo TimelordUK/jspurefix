@@ -126,8 +126,12 @@ export abstract class SessionLauncher {
       this.registerApplication(container)
     } else {
       if (factory.makeSession) {
+        // resolve the config from the container doing the resolving, not the one
+        // captured here.  An acceptor resolves each session from a per-connection
+        // child scope which re-registers IJsFixConfig, so this is how an application
+        // receives that session's own description, store and message factory.
         container.register<FixSession>(DITokens.FixSession, {
-          useFactory: () => factory.makeSession(config)
+          useFactory: (c) => factory.makeSession(c.resolve<IJsFixConfig>(DITokens.IJsFixConfig))
         })
       }
     }

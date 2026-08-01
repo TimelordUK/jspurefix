@@ -19,9 +19,9 @@ class AppLauncher extends SessionLauncher {
   protected override makeFactory (config: IJsFixConfig): EngineFactory {
     const isInitiator = this.isInitiator(config.description)
     return {
-      makeSession: () => isInitiator
-        ? new HttpClient(config)
-        : new HttpServer(config)
+      makeSession: (sessionConfig: IJsFixConfig) => isInitiator
+        ? new HttpClient(sessionConfig)
+        : new HttpServer(sessionConfig)
     } as EngineFactory
   }
 

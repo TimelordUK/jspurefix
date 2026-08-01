@@ -21,6 +21,7 @@ export interface IJsFixConfig {
 export class JsFixConfig implements IJsFixConfig {
   public logDelimiter: number = AsciiChars.Pipe
   public sessionContainer: DependencyContainer
+  public sessionStoreFactory?: IFixSessionStoreFactory
   constructor (
     public readonly factory: ISessionMsgFactory | null,
     public readonly definitions: FixDefinitions,

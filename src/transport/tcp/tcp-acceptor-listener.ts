@@ -29,8 +29,15 @@ export class TcpAcceptorListener extends FixEntity {
       this.acceptor = acceptor
 
       acceptor.on('transport', (t: MsgTransport) => {
-        logger.info(`creates new transport using DI token ${DITokens.FixSession}.`)
-        const acceptorSession = sessionContainer.resolve<FixSession>(DITokens.FixSession)
+        // resolve from the transport's own scope, not the listener's container, so
+        // this session gets the per-connection description, buffers and message
+        // factory created by TcpAcceptor.  Falls back to the listener container for
+        // transports created outside the acceptor (tests, custom entities).
+        const scope = t.config?.sessionContainer ?? sessionContainer
+        const description = t.config?.description
+        logger.info(`transport ${t.id}: creating session via DI token ${DITokens.FixSession} ` +
+          `[${description?.SenderCompId ?? '?'} -> ${description?.TargetCompID ?? '?'}]`)
+        const acceptorSession = scope.resolve<FixSession>(DITokens.FixSession)
         this.emit('session', acceptorSession, t)
         // Run the session but do NOT close the listener when it ends.
         // The acceptor keeps listening for new connections (reconnects).

@@ -14,9 +14,9 @@ export class AppLauncher extends SessionLauncher {
   protected override makeFactory (config: IJsFixConfig): EngineFactory {
     const isInitiator = this.isInitiator(config.description)
     return {
-      makeSession: () => isInitiator
-        ? new TradeCaptureClient(config)
-        : new TradeCaptureServer(config)
+      makeSession: (sessionConfig: IJsFixConfig) => isInitiator
+        ? new TradeCaptureClient(sessionConfig)
+        : new TradeCaptureServer(sessionConfig)
     } as EngineFactory
   }
 }

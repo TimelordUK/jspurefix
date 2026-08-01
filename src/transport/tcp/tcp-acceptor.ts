@@ -8,6 +8,7 @@ import { TlsOptionsFactory } from './tls-options-factory'
 import { describeNegotiated, describePeerCertificate, describeServerOptions } from './tls-diagnostics'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
+import { makeSessionScope } from '../../runtime/session-scope'
 
 @injectable()
 export class TcpAcceptor extends FixAcceptor {
@@ -93,7 +94,14 @@ export class TcpAcceptor extends FixAcceptor {
   }
 
   private onSocket (id: number, socket: Socket, config: IJsFixConfig): void {
-    const transport: MsgTransport = new MsgTransport(id, config, new TcpDuplex(socket))
+    // Every accepted connection gets its own DI scope: its own parse and transmit
+    // buffers, its own session description (hence its own SessionId and message
+    // store) and its own session message factory.  Without this, concurrent clients
+    // on one listener share buffers and collide on a single store.
+    const sessionConfig = makeSessionScope(config)
+    const remote = `${socket.remoteAddress ?? '?'}:${socket.remotePort ?? 0}`
+    this.logger.info(`transport ${id} from ${remote} given its own session scope`)
+    const transport: MsgTransport = new MsgTransport(id, sessionConfig, new TcpDuplex(socket))
     this.saveTransport(id, transport)
     transport.receiver.on('end', () => {
       this.harvestTransport(id)
