@@ -5,6 +5,7 @@ import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { createServer as netCreateServer, Server, Socket } from 'net'
 import { createServer as tlsCreateServer, TlsOptions, TLSSocket } from 'tls'
 import { TlsOptionsFactory } from './tls-options-factory'
+import { describeNegotiated, describePeerCertificate, describeServerOptions } from './tls-diagnostics'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 
@@ -40,19 +41,29 @@ export class TcpAcceptor extends FixAcceptor {
       const tlsOptions: TlsOptions | null = tcp?.tls ? TlsOptionsFactory.getTlsOptions(tcp.tls) : null
       this.logger.info('create tls server')
       if (!tlsOptions) return
+      this.logger.info(`tls server options ${describeServerOptions(tlsOptions)}`)
       this.server = tlsCreateServer(tlsOptions, (tlsSocket: TLSSocket) => {
         if (tcp?.tls?.enableTrace) {
           this.logger.info('enabling tls session trace')
           tlsSocket.enableTrace()
         }
-        if (tlsSocket.authorized) {
-          tlsSocket.setEncoding('utf8')
-          const id: number = this.getId()
-          this.logger.info(`tls creates session ${id} ${tlsSocket.authorized}`)
-          this.onSocket(id, tlsSocket, config)
-        } else {
-          this.logger.info('no transport created on tls with no authorized connection')
+        this.logger.info(`tls negotiated ${describeNegotiated(tlsSocket)}`)
+        this.logger.info(`tls peer certificate ${describePeerCertificate(tlsSocket)}`)
+        // mirrors the initiator fix for #94 - an unauthorized peer is only fatal when the
+        // caller has not explicitly opted out.  the default stays secure: rejectUnauthorized
+        // undefined means reject, exactly as before.
+        if (!tlsSocket.authorized && tlsOptions.rejectUnauthorized !== false) {
+          this.logger.warning(`no transport created, unauthorized tls connection: ${String(tlsSocket.authorizationError)}`)
+          tlsSocket.end()
+          return
         }
+        if (!tlsSocket.authorized) {
+          this.logger.warning(`accepting unauthorized tls peer (rejectUnauthorized: false): ${String(tlsSocket.authorizationError)}`)
+        }
+        tlsSocket.setEncoding('utf8')
+        const id: number = this.getId()
+        this.logger.info(`tls creates session ${id} authorized ${tlsSocket.authorized}`)
+        this.onSocket(id, tlsSocket, config)
       })
     } catch (e) {
       this.logger.error(e as Error)

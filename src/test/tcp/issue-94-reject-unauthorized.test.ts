@@ -1,9 +1,7 @@
 import 'reflect-metadata'
 import * as fs from 'fs'
-import * as os from 'os'
 import * as path from 'path'
 import * as tls from 'tls'
-import { execFileSync } from 'child_process'
 import { SessionContainer } from '../../runtime'
 import { DITokens } from '../../runtime/di-tokens'
 import { IJsFixConfig } from '../../config'
@@ -13,35 +11,21 @@ import { TcpInitiator } from '../../transport/tcp/tcp-initiator'
 /**
  * Reproduction for https://github.com/TimelordUK/jspurefix/issues/94
  *
- * TcpInitiator.tlsDuplex() unconditionally rejects the connection whenever
- * `tlsSocket.authorized` is false - regardless of what `rejectUnauthorized` was set to in the
- * caller's TLS connection options. This makes `rejectUnauthorized: false` a no-op: there is no
+ * TcpInitiator.tlsDuplex() unconditionally rejected the connection whenever
+ * `tlsSocket.authorized` was false - regardless of what `rejectUnauthorized` was set to in the
+ * caller's TLS connection options. This made `rejectUnauthorized: false` a no-op: there was no
  * way to connect to a counterparty presenting a self-signed / privately-issued certificate we
  * can't otherwise verify, even though that is exactly what `rejectUnauthorized: false` is for.
  *
- * (Encountered for real connecting to a FIX counterparty whose certificate is issued by their own
- * private CA, whose root we don't have - `fixparser`, by contrast, sets `rejectUnauthorized:
- * false` and simply proceeds, which is the behaviour this test asserts jspurefix should match.)
+ * Also covers https://github.com/TimelordUK/jspurefix/issues/151 - the same flag set under
+ * `tls` rather than `tls.nodeTlsConnectionOptions` used to be dropped by the options factory.
  */
 
-// Generated fresh into a temp dir rather than checked in, so no key material lives in the repo.
-const certDir = fs.mkdtempSync(path.join(os.tmpdir(), 'jspurefix-issue-94-'))
-const selfSignedKeyPath = path.join(certDir, 'self-signed.key')
-const selfSignedCertPath = path.join(certDir, 'self-signed.crt')
-execFileSync('openssl', [
-  'req', '-x509', '-newkey', 'rsa:2048',
-  '-keyout', selfSignedKeyPath,
-  '-out', selfSignedCertPath,
-  '-days', '1',
-  '-nodes',
-  '-subj', '/CN=localhost'
-])
-const selfSignedKey = fs.readFileSync(selfSignedKeyPath)
-const selfSignedCert = fs.readFileSync(selfSignedCertPath)
+const fixtures = path.join(__dirname, 'fixtures')
+const selfSignedKey = fs.readFileSync(path.join(fixtures, 'self-signed.key'))
+const selfSignedCert = fs.readFileSync(path.join(fixtures, 'self-signed.crt'))
 
-afterAll(() => {
-  fs.rmSync(certDir, { recursive: true, force: true })
-})
+type Placement = 'nodeTlsConnectionOptions' | 'tls'
 
 async function withSelfSignedTlsServer<T> (fn: (port: number) => Promise<T>): Promise<T> {
   const server = tls.createServer({ key: selfSignedKey, cert: selfSignedCert }, (socket) => {
@@ -57,7 +41,10 @@ async function withSelfSignedTlsServer<T> (fn: (port: number) => Promise<T>): Pr
   }
 }
 
-async function makeConfig (port: number, rejectUnauthorized: boolean): Promise<IJsFixConfig> {
+async function makeConfig (port: number, rejectUnauthorized: any, placement: Placement): Promise<IJsFixConfig> {
+  const tlsSection = placement === 'tls'
+    ? { rejectUnauthorized }
+    : { nodeTlsConnectionOptions: { rejectUnauthorized } }
   const description: ISessionDescription = {
     application: {
       type: 'initiator',
@@ -67,11 +54,7 @@ async function makeConfig (port: number, rejectUnauthorized: boolean): Promise<I
       tcp: {
         host: '127.0.0.1',
         port,
-        tls: {
-          nodeTlsConnectionOptions: {
-            rejectUnauthorized
-          }
-        }
+        tls: tlsSection
       }
     },
     EncryptMethod: 0,
@@ -88,23 +71,56 @@ async function makeConfig (port: number, rejectUnauthorized: boolean): Promise<I
   return sessionContainer.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
 }
 
+async function connectExpectingSuccess (rejectUnauthorized: any, placement: Placement): Promise<void> {
+  await withSelfSignedTlsServer(async (port) => {
+    const config = await makeConfig(port, rejectUnauthorized, placement)
+    const initiator = new TcpInitiator(config)
+    await expect(initiator.connect(5)).resolves.toBeDefined()
+    initiator.end()
+  })
+}
+
+async function connectExpectingCertRejection (rejectUnauthorized: any, placement: Placement): Promise<void> {
+  await withSelfSignedTlsServer(async (port) => {
+    const config = await makeConfig(port, rejectUnauthorized, placement)
+    const initiator = new TcpInitiator(config)
+    // assert on the certificate error specifically - `rejects.toBeDefined()` would also be
+    // satisfied by repeatConnect's generic timeout, which is precisely the failure mode that
+    // made #94 hard to diagnose in the first place.
+    await expect(initiator.connect(1)).rejects.toEqual(
+      expect.objectContaining({
+        message: expect.stringMatching(/SELF_SIGNED_CERT|SELF-SIGNED|UNABLE_TO_VERIFY/i)
+      })
+    )
+  })
+}
+
 describe('issue #94 - TcpInitiator ignores rejectUnauthorized: false', () => {
   it('connects to a self-signed-cert peer when rejectUnauthorized is false', async () => {
-    await withSelfSignedTlsServer(async (port) => {
-      const config = await makeConfig(port, false)
-      const initiator = new TcpInitiator(config)
-      // Before the fix: this rejects with DEPTH_ZERO_SELF_SIGNED_CERT despite
-      // rejectUnauthorized: false. After the fix: it resolves normally.
-      await expect(initiator.connect(5)).resolves.toBeDefined()
-      initiator.end()
-    })
-  }, 8000)
+    await connectExpectingSuccess(false, 'nodeTlsConnectionOptions')
+  }, 20000)
 
   it('still rejects a self-signed-cert peer when rejectUnauthorized is true (default security preserved)', async () => {
-    await withSelfSignedTlsServer(async (port) => {
-      const config = await makeConfig(port, true)
-      const initiator = new TcpInitiator(config)
-      await expect(initiator.connect(1)).rejects.toBeDefined()
-    })
-  })
+    await connectExpectingCertRejection(true, 'nodeTlsConnectionOptions')
+  }, 20000)
+
+  it('still rejects a self-signed-cert peer when rejectUnauthorized is not set at all', async () => {
+    await connectExpectingCertRejection(undefined, 'nodeTlsConnectionOptions')
+  }, 20000)
+})
+
+describe('issue #151 - rejectUnauthorized under tls{} is honoured for initiators', () => {
+  it('connects when rejectUnauthorized false is set directly under tls', async () => {
+    await connectExpectingSuccess(false, 'tls')
+  }, 20000)
+
+  it('still rejects when rejectUnauthorized true is set directly under tls', async () => {
+    await connectExpectingCertRejection(true, 'tls')
+  }, 20000)
+
+  it('treats a quoted "false" from hand written json as false', async () => {
+    // the config suggested in the #94 thread quoted the flag; node would treat the string as
+    // truthy and enforce verification, i.e. silently the opposite of what was asked for.
+    await connectExpectingSuccess('false', 'tls')
+  }, 20000)
 })
