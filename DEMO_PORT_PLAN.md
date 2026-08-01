@@ -154,6 +154,16 @@ The good news: many of the underlying engine bugs are already fixed in jspurefix
 
 ### PR D6: Multi-client + session registry (medium-high risk)
 
+> **Superseded, and re-scoped.** Everything below assumed the session registry, the
+> wildcard `TargetCompID` handling and the per-session parser were application-level
+> concerns. Issue [#153](https://github.com/TimelordUK/jspurefix/issues/153) showed
+> otherwise: the reporter hit all of them without writing a demo at all. They now
+> live in jspurefix itself - see Phase 7 of `BACKPORT_PLAN.md` and
+> `docs/acceptor.md`. What remains for the demo is configuration and demonstration:
+> a `multi-client` mode with a `TargetCompID: "*"` acceptor config, `--clients <n>`
+> to spawn suffixed initiators, and the `multi-client` and `stale-transport`
+> scenarios. **Done** in jspf-demo.
+
 **Goal**: Support multiple concurrent clients to the same acceptor without state corruption. This is where the hardest soak-test bugs lived in C#.
 
 **Note**: the C# `SessionRegistry` is itself work-in-progress (lost when leaving the hedge fund where the original was written). The broader vision is loading ~20 broker dictionaries and using first-message metadata to dispatch — that's a future expansion. For D6 we're building the **minimum viable registry** to fix the stale-transport bug.

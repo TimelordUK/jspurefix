@@ -48,6 +48,9 @@ export class TcpAcceptorListener extends FixEntity {
           `[${description?.SenderCompId ?? '?'} -> ${description?.TargetCompID ?? '?'}]`)
         const acceptorSession = scope.resolve<FixSession>(DITokens.FixSession)
         this.emit('session', acceptorSession, t)
+        // a wildcard acceptor has not claimed its SessionId yet - report again once
+        // the session ends, by which time the registry line is meaningful
+        this.census(logger)
         // Run the session but do NOT close the listener when it ends.
         // The acceptor keeps listening for new connections (reconnects).
         // This matches the C# TcpAcceptorListener accept-loop pattern.

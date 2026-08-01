@@ -624,6 +624,10 @@ export abstract class AsciiSession extends FixSession {
     // new target up immediately
     asMutable(this.config.description).TargetCompID = peerCompId
 
+    // every session on a wildcard listener shared one logger name until now, which
+    // makes a multi-client server log impossible to follow
+    this.sessionLogger = this.config.logFactory.logger(`${this.me}:${peerCompId}:FixSession`)
+
     this.sessionId = new SessionId(
       this.config.description.BeginString,
       this.config.description.SenderCompId,

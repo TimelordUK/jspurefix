@@ -41,7 +41,12 @@ export abstract class FixSession extends events.EventEmitter {
   protected readonly initiator: boolean
   protected readonly acceptor: boolean
   protected readonly sessionState: FixSessionState
-  protected readonly sessionLogger: IJsFixLogger
+  /**
+   * Not readonly: a wildcard acceptor does not know which counterparty it is
+   * serving until the Logon arrives, and every session on that listener would
+   * otherwise log under the same name.  Rebound once the identity is known.
+   */
+  protected sessionLogger: IJsFixLogger
   protected requestLogoutType: string
   protected respondLogoutType: string
   protected requestLogonType: string
@@ -142,7 +147,9 @@ export abstract class FixSession extends events.EventEmitter {
       }
       const onError = (e: Error): void => {
         cleanup()
-        logger.error(e)
+        // read the logger now, not the one captured when the run started - a
+        // wildcard acceptor rebinds it once it knows which peer it is serving
+        this.sessionLogger.error(e)
         reject(e)
       }
       const onDone = (): void => {

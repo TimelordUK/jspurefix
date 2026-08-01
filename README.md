@@ -34,6 +34,7 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
 - Repeating groups, components, nested structures and raw data fields
 - Dictionary-driven: load QuickFIX XML or FIX repository definitions, compile typed interfaces
 - Full session lifecycle: logon, heartbeats, test requests, resend requests, logout
+- Multi-client acceptor: per-connection isolation, one session per SessionId, wildcard `TargetCompID` — see [docs/acceptor.md](docs/acceptor.md)
 - TLS-encrypted sessions over TCP
 - Pluggable persistent message store (in-memory or file) with sequence recovery
 - HTTP initiator/acceptor for FIXML
@@ -50,6 +51,8 @@ cd node_modules/jspurefix && npm run unzip-repo
 `unzip-repo` extracts the bundled FIX dictionaries. The `postinstall` hook will normally do this for you, but the command is exposed in case you need to re-run it.
 
 A standalone demo project lives at [TimelordUK/jspf-demo](https://github.com/TimelordUK/jspf-demo) — the fastest way to see a working initiator/acceptor.
+
+To try an unpublished build of this library in your own project, `npm run pack:local` builds and packs a tarball you can `npm install` directly.
 
 ## Examples
 
