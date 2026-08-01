@@ -26,6 +26,7 @@ export abstract class AsciiSession extends FixSession {
   protected readonly coordinator: SessionSequenceCoordinator
   protected readonly sessionStore: IFixSessionStore
   protected readonly sessionId: SessionId
+  private registered: boolean = false
 
   protected constructor (public readonly config: IJsFixConfig) {
     super(config)
@@ -80,6 +81,11 @@ export abstract class AsciiSession extends FixSession {
     this.sessionState.lastPeerMsgSeqNum = this.coordinator.lastProcessedPeerSeqNum
 
     this.sessionLogger.info(`store initialized: nextSender=${this.coordinator.nextSenderSeqNum}, expectedTarget=${this.coordinator.expectedTargetSeqNum}`)
+
+    // Claim this SessionId.  A counterparty which reconnected before its previous
+    // socket was detected as dead would otherwise leave two live sessions writing
+    // to one store - see issue #153.
+    this.claimSessionId()
 
     // Resume the stream — super.run() will call subscribe() to hook up the message handler,
     // then the buffered data (including the client's Logon) will be delivered.
@@ -328,6 +334,30 @@ export abstract class AsciiSession extends FixSession {
   protected override onPrepareForReconnect (): void {
     this.coordinator.prepareForReconnect()
     this.sessionLogger.info('coordinator reset transient state for reconnect')
+  }
+
+  /**
+   * Take ownership of this SessionId in the registry, stopping whatever session
+   * held it before.  Idempotent - a session reused across reconnects (the
+   * RecoveringTcpInitiator pattern) simply re-registers itself.
+   */
+  private claimSessionId (): void {
+    const registry = this.config.sessionRegistry
+    if (!registry) return
+    const stoppedOld = registry.register(this.sessionId, this)
+    if (stoppedOld) {
+      this.sessionLogger.info(`session registry stopped previous session for ${this.sessionId.toString()}`)
+    }
+    this.registered = true
+  }
+
+  protected override onSessionStopping (): void {
+    super.onSessionStopping()
+    const registry = this.config.sessionRegistry
+    if (!registry || !this.registered) return
+    this.registered = false
+    this.sessionLogger.info(`session stopping - unregistering from registry: ${this.sessionId.toString()}`)
+    registry.unregister(this.sessionId, this)
   }
 
   protected override async onPreLogon (): Promise<void> {

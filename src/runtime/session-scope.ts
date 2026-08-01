@@ -42,6 +42,7 @@ export function makeSessionScope (
   const scoped = new JsFixConfig(factory, config.definitions, description, config.delimiter, config.logFactory)
   scoped.logDelimiter = config.logDelimiter ?? scoped.logDelimiter
   scoped.sessionStoreFactory = config.sessionStoreFactory
+  scoped.sessionRegistry = config.sessionRegistry
   scoped.sessionContainer = scope
   scope.registerInstance(DITokens.IJsFixConfig, scoped)
   scope.registerInstance(DITokens.Definitions, config.definitions)

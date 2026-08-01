@@ -6,14 +6,23 @@ import { inject, injectable } from 'tsyringe'
 import { FixSession } from '../session/fix-session'
 import { DITokens } from '../../runtime/di-tokens'
 import { FixEntity } from '../fix-entity'
+import { ISessionRegistry, SessionRegistry } from '../session/session-registry'
 
 @injectable()
 export class TcpAcceptorListener extends FixEntity {
   private acceptor: FixAcceptor | null = null
   private resolveStart: ((value: any) => void) | null = null
+  /**
+   * One registry per listener, so a counterparty reconnecting onto a fresh socket
+   * replaces its previous session instead of running alongside it (issue #153).
+   * An application may supply its own via config.sessionRegistry.
+   */
+  public readonly sessionRegistry: ISessionRegistry
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
+    this.sessionRegistry = config.sessionRegistry ?? new SessionRegistry(config.logFactory)
+    config.sessionRegistry = this.sessionRegistry
   }
 
   async start (): Promise<any> {

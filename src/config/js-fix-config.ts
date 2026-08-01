@@ -6,6 +6,7 @@ import { EmptyLogFactory } from './empty-log-factory'
 import { AsciiChars } from '../buffer/ascii/ascii-chars'
 import { DependencyContainer } from 'tsyringe'
 import { IFixSessionStoreFactory } from '../store/fix-session-store-factory'
+import { ISessionRegistry } from '../transport/session/session-registry'
 
 export interface IJsFixConfig {
   factory: ISessionMsgFactory | null
@@ -16,12 +17,18 @@ export interface IJsFixConfig {
   logFactory: JsFixLoggerFactory
   sessionContainer: DependencyContainer
   sessionStoreFactory?: IFixSessionStoreFactory
+  /**
+   * Tracks the live session per SessionId.  Set by the acceptor listener so a
+   * reconnecting counterparty replaces - rather than duplicates - its session.
+   */
+  sessionRegistry?: ISessionRegistry
 }
 
 export class JsFixConfig implements IJsFixConfig {
   public logDelimiter: number = AsciiChars.Pipe
   public sessionContainer: DependencyContainer
   public sessionStoreFactory?: IFixSessionStoreFactory
+  public sessionRegistry?: ISessionRegistry
   constructor (
     public readonly factory: ISessionMsgFactory | null,
     public readonly definitions: FixDefinitions,
