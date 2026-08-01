@@ -1,4 +1,4 @@
-import { IJsFixConfig } from '../../config'
+import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { FixAcceptor } from '../fix-acceptor'
 import { TcpAcceptor } from './tcp-acceptor'
 import { MsgTransport } from '../factory'
@@ -52,15 +52,34 @@ export class TcpAcceptorListener extends FixEntity {
         // The acceptor keeps listening for new connections (reconnects).
         // This matches the C# TcpAcceptorListener accept-loop pattern.
         acceptorSession.run(t).then(() => {
-          logger.info('session ended normally, acceptor continues listening')
+          logger.info(`transport ${t.id}: session ended normally, acceptor continues listening`)
+          this.census(logger)
         }).catch((e: Error) => {
-          logger.warning(`session ended with error: ${e.message}, acceptor continues listening`)
+          logger.warning(`transport ${t.id}: session ended with error: ${e.message}, acceptor continues listening`)
+          this.census(logger)
         })
+      })
+
+      acceptor.on('harvested', (tid: number, reason: string) => {
+        logger.info(`transport ${tid} harvested (${reason})`)
+        this.census(logger)
       })
 
       this.resolveStart = resolve
       acceptor.listen()
     })
+  }
+
+  /**
+   * What is actually connected, and which SessionIds are claimed.  Emitted whenever
+   * the population changes so "how many clients do I have, and who are they" is
+   * answerable from the server log alone.
+   */
+  private census (logger: IJsFixLogger): void {
+    const acceptor = this.acceptor as TcpAcceptor | null
+    const transports = acceptor?.liveTransports() ?? []
+    logger.info(`acceptor census: transports=${transports.length} [${transports.join(', ')}] ` +
+      `sessions=${this.sessionRegistry.count} [${this.sessionRegistry.keys().join(', ')}]`)
   }
 
   /**

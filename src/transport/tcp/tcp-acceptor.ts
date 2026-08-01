@@ -100,17 +100,43 @@ export class TcpAcceptor extends FixAcceptor {
     // on one listener share buffers and collide on a single store.
     const sessionConfig = makeSessionScope(config)
     const remote = `${socket.remoteAddress ?? '?'}:${socket.remotePort ?? 0}`
+    this.applyKeepAlive(id, socket)
     this.logger.info(`transport ${id} from ${remote} given its own session scope`)
     const transport: MsgTransport = new MsgTransport(id, sessionConfig, new TcpDuplex(socket))
-    this.saveTransport(id, transport)
+    this.saveTransport(id, transport, remote)
     transport.receiver.on('end', () => {
-      this.harvestTransport(id)
+      this.harvestTransport(id, 'peer ended the connection')
     })
     transport.receiver.on('error', (e: Error) => {
       this.logger.error(e)
-      this.harvestTransport(id)
+      this.harvestTransport(id, `receiver error: ${e.message}`)
+    })
+    // 'end' only fires on a clean FIN.  A socket dropped by a firewall, or one this
+    // side destroyed after a failed graceful close, arrives here instead - without
+    // it the transport would sit in the map forever.
+    socket.on('close', (hadError: boolean) => {
+      this.harvestTransport(id, hadError ? 'socket closed after error' : 'socket closed')
     })
   }
+
+  /**
+   * TCP keep-alive is the only mechanism that detects a peer which has vanished
+   * without sending FIN or RST - the half open socket described in issue #153.  The
+   * session level TestRequest timeout is the protocol level backstop; this is the
+   * transport level one.
+   */
+  private applyKeepAlive (id: number, socket: Socket): void {
+    const configured = this.config.description.application?.tcp?.keepAliveMs
+    const keepAliveMs = configured ?? TcpAcceptor.defaultKeepAliveMs
+    if (keepAliveMs <= 0) {
+      this.logger.info(`transport ${id} keep-alive disabled`)
+      return
+    }
+    socket.setKeepAlive(true, keepAliveMs)
+    this.logger.info(`transport ${id} keep-alive enabled, initial delay ${keepAliveMs}ms`)
+  }
+
+  public static defaultKeepAliveMs: number = 30000
 
   public listen (): void {
     const port = this.config.description.application?.tcp?.port
@@ -126,20 +152,49 @@ export class TcpAcceptor extends FixAcceptor {
 
   public close (callback?: (err?: Error) => void): void {
     const port = this.config.description.application?.tcp?.port ?? -1
-    this.logger.info(`close listener on port ${port}`)
+    this.logger.info(`close listener on port ${port} with ${this.transportCount} live transport(s)`)
+    // Server.close only stops accepting - it waits for existing connections to go.
+    // Release them, otherwise a shutdown blocks on whichever counterparty happens to
+    // be connected (and forever on one that is half open).
+    Object.keys(this.transports).forEach(id => {
+      const tid = Number(id)
+      this.logger.info(`close: releasing transport ${tid}`)
+      this.transports[tid]?.end()
+    })
     this.server.close(callback)
   }
 
-  private saveTransport (tid: number, transport: MsgTransport): void {
+  /** how many connections this listener currently holds */
+  public get transportCount (): number {
+    return Object.keys(this.transports).length
+  }
+
+  /** ids of the live transports, for a periodic census in the application log */
+  public liveTransports (): string[] {
+    return Object.keys(this.transports).map(id => {
+      const meta = this.accepted[id as any]
+      const age = meta ? Math.round((Date.now() - meta.at) / 1000) : -1
+      return `${id}@${meta?.remote ?? '?'} up ${age}s`
+    })
+  }
+
+  private readonly accepted: Record<number, { remote: string, at: number }> = {}
+
+  private saveTransport (tid: number, transport: MsgTransport, remote: string): void {
     this.transports[tid] = transport
-    const keys: string[] = Object.keys(this.transports)
-    this.logger.info(`new transport id = ${tid} created total transports = ${keys.length}`)
+    this.accepted[tid] = { remote, at: Date.now() }
+    this.logger.info(`new transport id = ${tid} from ${remote} created total transports = ${this.transportCount}`)
     this.emit('transport', transport)
   }
 
-  private harvestTransport (tid: number): void {
+  private harvestTransport (tid: number, reason: string): void {
+    if (!this.transports[tid]) return
+    const meta = this.accepted[tid]
+    const lifetime = meta ? Math.round((Date.now() - meta.at) / 1000) : -1
     delete this.transports[tid]
-    const keys: string[] = Object.keys(this.transports)
-    this.logger.info(`transport ${tid} ends total transports = ${keys.length}`)
+    delete this.accepted[tid]
+    this.logger.info(`transport ${tid} from ${meta?.remote ?? '?'} harvested after ${lifetime}s ` +
+      `(${reason}) total transports = ${this.transportCount}`)
+    this.emit('harvested', tid, reason)
   }
 }
