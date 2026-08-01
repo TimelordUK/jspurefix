@@ -23,6 +23,7 @@
     "url": "git+https://github.com/TimelordUK/jspurefix.git"
   },
   "scripts": {
+    "pack:local": "node script/pack-local.js",
     "circular": "madge --circular --extensions js dist && madge --circular --extensions ts src",
     "test": "jest --maxWorkers=1 --coverage",
     "build": "tsc",
