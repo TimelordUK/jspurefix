@@ -29,10 +29,13 @@ export class AsciiSegmentParser {
   public parse (msgType: string, tags: Tags, last: number): Structure | null {
     // completed segments in that they are fully parsed
     const segments: SegmentDescription[] = []
-    const msgDefinition: MessageDefinition | undefined = this.definitions.message.get(msgType)
-    if (!msgDefinition) {
+    const resolved: MessageDefinition | undefined = this.definitions.message.get(msgType)
+    if (!resolved) {
       return null
     }
+    // narrowing of resolved is not visible inside the hoisted helpers below, so
+    // carry the definition on a const the compiler already sees as non-optional
+    const msgDefinition: MessageDefinition = resolved
     // in process of being discovered and may have any amount of depth
     // i.e. a component containing a repeated group of components
     // with sub-groups of components
@@ -189,7 +192,7 @@ export class AsciiSegmentParser {
       // only build SegmentViews for components detected as fragmented during discover
       // non-fragmented components use their position ranges directly (zero overhead)
       if (fragmentedComponents.size === 0) return
-      const ti = new TagIndex(msgDefinition!, tags, last + 1)
+      const ti = new TagIndex(msgDefinition, tags, last + 1)
       const seen = new Set<string>()
       for (let i = 1; i < segments.length - 1; i++) {
         const seg = segments[i]

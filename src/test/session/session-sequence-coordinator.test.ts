@@ -15,7 +15,11 @@ class TestClock implements IFixClock {
   }
 }
 
-function createCoordinator (store?: MemorySequenceStore, clock?: TestClock) {
+function createCoordinator (store?: MemorySequenceStore, clock?: TestClock): {
+  coordinator: SessionSequenceCoordinator
+  store: MemorySequenceStore
+  clock: TestClock
+} {
   const s = store ?? new MemorySequenceStore()
   const c = clock ?? new TestClock()
   return { coordinator: new SessionSequenceCoordinator(s, c), store: s, clock: c }

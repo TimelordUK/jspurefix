@@ -74,13 +74,13 @@ async function listen (config: IJsFixConfig): Promise<IRunningAcceptor> {
     acceptor,
     port,
     transports,
-    close: async () => await new Promise<void>(resolve => { acceptor.close(() => resolve()) })
+    close: async () => { await new Promise<void>(resolve => { acceptor.close(() => { resolve() }) }) }
   }
 }
 
 async function connectClient (port: number): Promise<net.Socket> {
   return await new Promise<net.Socket>((resolve, reject) => {
-    const socket = net.connect(port, '127.0.0.1', () => resolve(socket))
+    const socket = net.connect(port, '127.0.0.1', () => { resolve(socket) })
     socket.on('error', reject)
   })
 }

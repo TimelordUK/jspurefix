@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { SaxTreeBuilder } from '../../dictionary/parser/quickfix/sax-tree-builder'
 import { DictionaryValidator } from '../../dictionary/parser/quickfix/dictionary-validator'
-import { ValidationSeverity, DictionaryValidationException } from '../../dictionary/parser/quickfix/validation-error'
+import { ValidationSeverity, DictionaryValidationException, ValidationError } from '../../dictionary/parser/quickfix/validation-error'
 
 const dataRoot = path.join(__dirname, '../../../data')
 
@@ -13,7 +13,7 @@ function validate (xml: string): DictionaryValidator {
   return validator
 }
 
-function errorsWithCode (validator: DictionaryValidator, code: string) {
+function errorsWithCode (validator: DictionaryValidator, code: string): ValidationError[] {
   return validator.errors.filter(e => e.code === code)
 }
 
@@ -364,13 +364,13 @@ describe('DictionaryValidator — throwIfErrors', () => {
   test('throws DictionaryValidationException on errors', () => {
     const v = validate('<fix></fix>')
     expect(v.hasErrors).toBe(true)
-    expect(() => v.throwIfErrors()).toThrow(DictionaryValidationException)
+    expect(() => { v.throwIfErrors() }).toThrow(DictionaryValidationException)
   })
 
   test('does not throw when only warnings', () => {
     const v = validate(validMinimalXml)
     expect(v.hasErrors).toBe(false)
-    expect(() => v.throwIfErrors()).not.toThrow()
+    expect(() => { v.throwIfErrors() }).not.toThrow()
   })
 })
 

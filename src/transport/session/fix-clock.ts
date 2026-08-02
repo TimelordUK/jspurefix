@@ -1,5 +1,5 @@
 export interface IFixClock {
-  now (): Date
+  now: () => Date
 }
 
 export class DefaultFixClock implements IFixClock {

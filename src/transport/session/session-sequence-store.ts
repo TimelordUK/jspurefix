@@ -6,9 +6,9 @@
 export interface ISessionSequenceStore {
   senderSeqNum: number
   targetSeqNum: number
-  setSenderSeqNum (value: number): Promise<void>
-  setTargetSeqNum (value: number): Promise<void>
-  reset (): Promise<void>
+  setSenderSeqNum: (value: number) => Promise<void>
+  setTargetSeqNum: (value: number) => Promise<void>
+  reset: () => Promise<void>
 }
 
 /**

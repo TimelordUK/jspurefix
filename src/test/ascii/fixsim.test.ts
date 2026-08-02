@@ -31,14 +31,14 @@ test('expect correct message type counts', () => {
     }
     return a
   }, {})
-  expect(counts['A']).toEqual(2)   // Logon
-  expect(counts['0']).toEqual(38)  // Heartbeat
-  expect(counts['6']).toEqual(1)   // IOI
-  expect(counts['1']).toEqual(1)   // TestRequest
-  expect(counts['V']).toEqual(1)   // MarketDataRequest
-  expect(counts['D']).toEqual(1)   // NewOrderSingle
-  expect(counts['8']).toEqual(1)   // ExecutionReport
-  expect(counts['R']).toEqual(1)   // QuoteRequest
+  expect(counts.A).toEqual(2) // Logon
+  expect(counts['0']).toEqual(38) // Heartbeat
+  expect(counts['6']).toEqual(1) // IOI
+  expect(counts['1']).toEqual(1) // TestRequest
+  expect(counts.V).toEqual(1) // MarketDataRequest
+  expect(counts.D).toEqual(1) // NewOrderSingle
+  expect(counts['8']).toEqual(1) // ExecutionReport
+  expect(counts.R).toEqual(1) // QuoteRequest
 })
 
 /*

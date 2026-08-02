@@ -46,7 +46,7 @@ export class ResendAction {
 }
 
 export class PendingResendRange {
-  private readonly receivedSeqs: Set<number> = new Set()
+  private readonly receivedSeqs = new Set<number>()
 
   constructor (
     public readonly begin: number,
@@ -190,11 +190,11 @@ export class ResendRequestManager {
     // keep requestHistory for debugging
   }
 
-  get pending (): ReadonlyArray<PendingResendRange> {
+  get pending (): readonly PendingResendRange[] {
     return this.pendingRequests.slice()
   }
 
-  get history (): ReadonlyArray<ResendRequestRecord> {
+  get history (): readonly ResendRequestRecord[] {
     return this.requestHistory.slice()
   }
 
@@ -240,7 +240,7 @@ export class ResendRequestManager {
       return { begin: gapBegin, end: gapEnd }
     }
 
-    const covered: Set<number> = new Set()
+    const covered = new Set<number>()
     for (const pending of this.pendingRequests) {
       for (let seq = pending.begin; seq <= pending.end; seq++) {
         covered.add(seq)
