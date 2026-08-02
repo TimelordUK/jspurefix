@@ -263,29 +263,46 @@ export abstract class MsgView {
     return JSON.stringify(this.toObject(), null, 4)
   }
 
+  /**
+   * fetch a nested view, either by a single name - getView('Instrument') - or by a
+   * dotted path walked a step at a time - getView('Parties.PtysSubGrp')
+   */
   public getView (name: string): MsgView | null {
-    const parts: string[] = name.split('.')
-    const reducer = (a: MsgView | null, current: string): MsgView | null => {
-      if (!a) {
-        return a
-      }
-      const structure = a.structure
-      const singleton: SegmentDescription | null = structure?.firstContainedWithin(current, a.segment) ?? null
-      if (singleton) {
-        return a.create(singleton)
-      }
-      // is this a full name where abbreviation exists
-      const component: ContainedField | null = a.segment.set?.localNameToField.get(current) ?? null
-
-      if (component) {
-        const abbreviated: SegmentDescription | null = structure?.firstContainedWithin(component.name, a.segment) ?? null
-        if (abbreviated) {
-          return a.create(abbreviated)
-        }
-      }
-      return null
+    // the dotted form is the exception. resolve a plain name without paying for
+    // the parts array and the closure a split and reduce would allocate - the
+    // component walk in toObject and validate comes through here per component.
+    if (!name.includes('.')) {
+      return this.resolveChild(name)
     }
-    return parts.reduce<MsgView | null>(reducer, this)
+    let view: MsgView | null = this
+    for (const part of name.split('.')) {
+      view = view.resolveChild(part)
+      if (!view) {
+        return null
+      }
+    }
+    return view
+  }
+
+  /**
+   * resolve one step of a view path against this view
+   */
+  private resolveChild (name: string): MsgView | null {
+    const structure = this.structure
+    const singleton: SegmentDescription | null = structure?.firstContainedWithin(name, this.segment) ?? null
+    if (singleton) {
+      return this.create(singleton)
+    }
+    // is this a full name where abbreviation exists
+    const component: ContainedField | null = this.segment.set?.localNameToField.get(name) ?? null
+
+    if (component) {
+      const abbreviated: SegmentDescription | null = structure?.firstContainedWithin(component.name, this.segment) ?? null
+      if (abbreviated) {
+        return this.create(abbreviated)
+      }
+    }
+    return null
   }
 
   public abstract checksum (): number
