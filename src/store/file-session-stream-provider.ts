@@ -32,28 +32,34 @@ export class FileSessionStreamProvider implements ISessionStreamProvider {
   }
 
   openBody (): void {
-    if (this.bodyFd !== null) return
-    this.bodyFd = fs.openSync(this.bodyPath, 'a+')
-    const stat = fs.fstatSync(this.bodyFd)
-    this.bodySize = stat.size
+    this.openBodyFd()
+  }
+
+  /**
+   * open the body file on first use and hand back the descriptor - returning it
+   * keeps callers free of a null check the compiler cannot see through.
+   */
+  private openBodyFd (): number {
+    if (this.bodyFd === null) {
+      this.bodyFd = fs.openSync(this.bodyPath, 'a+')
+      const stat = fs.fstatSync(this.bodyFd)
+      this.bodySize = stat.size
+    }
+    return this.bodyFd
   }
 
   async appendBody (data: Buffer): Promise<number> {
-    if (this.bodyFd === null) {
-      this.openBody()
-    }
+    const fd = this.openBodyFd()
     const offset = this.bodySize
-    fs.writeSync(this.bodyFd!, data, 0, data.length, offset)
+    fs.writeSync(fd, data, 0, data.length, offset)
     this.bodySize += data.length
     return offset
   }
 
   async readBody (offset: number, length: number): Promise<Buffer> {
-    if (this.bodyFd === null) {
-      this.openBody()
-    }
+    const fd = this.openBodyFd()
     const buf = Buffer.alloc(length)
-    fs.readSync(this.bodyFd!, buf, 0, length, offset)
+    fs.readSync(fd, buf, 0, length, offset)
     return buf
   }
 

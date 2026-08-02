@@ -90,8 +90,8 @@ test('listeners do not accumulate on the transport across reconnects', async () 
   }
 
   // exactly one live subscription at any time
-  expect(transportListenerCount(last as MsgTransport)).toBeGreaterThan(0)
-  expect((last as MsgTransport).receiver.listenerCount('msg')).toBe(1)
+  expect(transportListenerCount(last!)).toBeGreaterThan(0)
+  expect((last!).receiver.listenerCount('msg')).toBe(1)
 })
 
 test('an end from a replaced transport does not terminate the live session', async () => {

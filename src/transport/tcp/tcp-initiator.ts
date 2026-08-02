@@ -198,7 +198,7 @@ export class TcpInitiator extends FixInitiator {
       const timeoutPromise = promisify(setTimeout)
       const reconnectSeconds = application?.reconnectSeconds ?? 5
       let retries = 0
-      let lastError: Error = initialError as Error
+      let lastError: Error | undefined = initialError
       const name = application?.name ?? 'initiator'
       this.th = setInterval(() => {
         ++retries

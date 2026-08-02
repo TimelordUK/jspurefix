@@ -97,12 +97,12 @@ describe('tls diagnostics', () => {
 
   it('describes a live handshake and the peer certificate identity', async () => {
     const server = tls.createServer({ key: selfSignedKey, cert: selfSignedCert }, (s) => s.end())
-    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve))
+    await new Promise<void>((resolve) => { server.listen(0, '127.0.0.1', resolve) })
     const address = server.address()
     const port = typeof address === 'object' && address !== null ? address.port : 0
     try {
       const socket = await new Promise<tls.TLSSocket>((resolve, reject) => {
-        const s = tls.connect({ host: '127.0.0.1', port, rejectUnauthorized: false }, () => resolve(s))
+        const s = tls.connect({ host: '127.0.0.1', port, rejectUnauthorized: false }, () => { resolve(s) })
         s.on('error', reject)
       })
       const negotiated = describeNegotiated(socket)
@@ -117,7 +117,7 @@ describe('tls diagnostics', () => {
       expect(peer).not.toContain('BEGIN CERTIFICATE')
       socket.end()
     } finally {
-      await new Promise<void>((resolve) => server.close(() => resolve()))
+      await new Promise<void>((resolve) => { server.close(() => { resolve() }) })
     }
   }, 20000)
 })

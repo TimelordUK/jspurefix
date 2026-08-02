@@ -160,7 +160,7 @@ export class SessionSequenceCoordinator {
     this.resendManager.recordRequestSent(begin, end, now)
   }
 
-  get pendingResendRequests (): ReadonlyArray<PendingResendRange> {
+  get pendingResendRequests (): readonly PendingResendRange[] {
     return this.resendManager.pending
   }
 

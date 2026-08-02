@@ -31,13 +31,13 @@ async function withSelfSignedTlsServer<T> (fn: (port: number) => Promise<T>): Pr
   const server = tls.createServer({ key: selfSignedKey, cert: selfSignedCert }, (socket) => {
     socket.end()
   })
-  await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve))
+  await new Promise<void>((resolve) => { server.listen(0, '127.0.0.1', resolve) })
   const address = server.address()
   const port = typeof address === 'object' && address !== null ? address.port : 0
   try {
     return await fn(port)
   } finally {
-    await new Promise<void>((resolve) => server.close(() => resolve()))
+    await new Promise<void>((resolve) => { server.close(() => { resolve() }) })
   }
 }
 

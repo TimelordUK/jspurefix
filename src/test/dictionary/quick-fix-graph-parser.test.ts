@@ -186,7 +186,7 @@ describe('QuickFixGraphParser — comparison with existing parser', () => {
   })
 })
 
-function collectGroupNames (set: any, acc: Set<string> = new Set(), visited: Set<any> = new Set()): Set<string> {
+function collectGroupNames (set: any, acc = new Set<string>(), visited = new Set<any>()): Set<string> {
   if (visited.has(set)) return acc
   visited.add(set)
   for (const f of set.fields) {

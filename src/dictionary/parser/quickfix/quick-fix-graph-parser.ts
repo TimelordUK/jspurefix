@@ -118,8 +118,7 @@ export class QuickFixGraphParser {
     this.parseTrailer(doc)
     this.parseMessages(doc)
 
-    while (this.queue.length > 0) {
-      const node = this.queue.shift()!
+    for (let node = this.queue.shift(); node !== undefined; node = this.queue.shift()) {
       this.work(node)
     }
 

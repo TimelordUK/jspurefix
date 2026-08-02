@@ -43,7 +43,7 @@ function compareMessageFully (original: FixDefinitions, trimmed: FixDefinitions,
   const tTags = new Set(Object.keys(t.containedTag).map(Number))
   const missing = [...oTags].filter(tag => !tTags.has(tag))
   if (missing.length > 0) {
-    const lookup = (tag: number) => {
+    const lookup = (tag: number): string => {
       for (const sd of original.simple.values()) {
         if (sd.tag === tag) return sd.name
       }

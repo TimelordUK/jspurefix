@@ -106,6 +106,8 @@ export default [
       'prefer-template': 'off',
       'radix': 'off',
       'require-unicode-regexp': 'off',
+      // named capture groups need a target of es2018, this package emits es6
+      'prefer-named-capture-group': 'off',
       'promise/avoid-new': 'off',
       'promise/no-multiple-resolved': 'off',
       'import/enforce-node-protocol-usage': 'off',
@@ -114,6 +116,18 @@ export default [
     }
   },
   {
-    ignores: ['dist/**', 'node_modules/**']
+    files: ['src/test/**/*.ts'],
+    rules: {
+      // tests assert a value is present with expect(x).toBeDefined() and then use x!.
+      // the compiler cannot follow that, and rewriting each site as an explicit throw
+      // buries the assertion the test is actually about.
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      // save/restore of a static around an awaited body is not a race in a jest file,
+      // which runs its tests serially.
+      'require-atomic-updates': 'off'
+    }
+  },
+  {
+    ignores: ['dist/**', 'node_modules/**', 'coverage/**']
   }
 ]
