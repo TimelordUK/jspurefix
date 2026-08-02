@@ -49,7 +49,7 @@ export class DictionaryValidator {
   private readonly allFieldNames: string[] = []
   private readonly allComponentNames: string[] = []
 
-  get errors (): ReadonlyArray<ValidationError> {
+  get errors (): readonly ValidationError[] {
     return this._errors
   }
 

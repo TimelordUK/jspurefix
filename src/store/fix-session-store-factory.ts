@@ -7,7 +7,7 @@ import { FileSessionStore } from './file-session-store'
  * Factory for creating session stores.
  */
 export interface IFixSessionStoreFactory {
-  create (sessionId: SessionId): IFixSessionStore
+  create: (sessionId: SessionId) => IFixSessionStore
 }
 
 /**
