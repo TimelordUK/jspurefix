@@ -39,7 +39,9 @@ export class AsciiParser extends MsgParser {
     this.id = AsciiParser.nextId++
     this.segmentParser = config.sessionContainer.resolve<AsciiSegmentParser>(AsciiSegmentParser)
     this.state = config.sessionContainer.resolve<AsciiParserState>(AsciiParserState)
-    this.state.locations = new Tags(this.receivingBuffer.size / 10, this.maxMessageLen)
+    // floored - Tags hands the starting length to new Array, which rejects a
+    // fraction, so any buffer size not divisible by 10 threw from here
+    this.state.locations = new Tags(Math.floor(this.receivingBuffer.size / 10), this.maxMessageLen)
     this.state.definitions = this.config.definitions
     this.state.beginMessage()
     if (readStream !== null) {
@@ -99,6 +101,19 @@ export class AsciiParser extends MsgParser {
   public parseText (text: string): void {
     const buff = Buffer.from(text)
     this.parse(buff, buff.length)
+  }
+
+  /**
+   * feed bytes as though they had arrived from the transport. This is the path
+   * the socket takes - subscribe hands each chunk it receives straight to parse -
+   * so a caller driving the parser directly, a benchmark or a replay harness,
+   * measures the real thing rather than a copy of it.
+   *
+   * @param buff bytes to parse
+   * @param end how much of buff to consume, all of it by default
+   */
+  public parseBuffer (buff: Buffer, end: number = buff.length): void {
+    this.parse(buff, end)
   }
 
   private parse (readBuffer: Buffer, end: number): void {
