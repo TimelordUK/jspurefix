@@ -91,3 +91,6 @@ script/certs/client/client.crt
 script/certs/client/client.key
 script/certs/server/server.crt
 script/certs/server/server.key
+
+# benchmark baselines are specific to the machine that took them
+benchmarks/
