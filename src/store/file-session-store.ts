@@ -22,7 +22,7 @@ export class FileSessionStore implements IFixSessionStore {
   private creationTimeValue: Date = new Date()
 
   // In-memory index: seqnum -> { offset, length }
-  private readonly headerIndex: Map<number, { offset: number, length: number }> = new Map()
+  private readonly headerIndex = new Map<number, { offset: number, length: number }>()
 
   /**
    * Creates a FileSessionStore with the default file-based stream provider.
@@ -285,7 +285,7 @@ export class FileSessionStore implements IFixSessionStore {
    */
   static parseSessionTime (str: string): Date | null {
     // Format: YYYYMMDD-HH:MM:SS.ffffff
-    const match = str.match(/^(\d{4})(\d{2})(\d{2})-(\d{2}):(\d{2}):(\d{2})\.(\d{3,6})$/)
+    const match = /^(\d{4})(\d{2})(\d{2})-(\d{2}):(\d{2}):(\d{2})\.(\d{3,6})$/.exec(str)
     if (!match) return null
     const [, y, M, d, h, m, s, frac] = match
     const ms = parseInt(frac.substring(0, 3), 10)

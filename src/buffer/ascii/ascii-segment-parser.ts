@@ -41,8 +41,8 @@ export class AsciiSegmentParser {
     let peek: SegmentDescription
 
     // track depth-1 components that have been exited for fragmentation detection
-    const exitedDepth1Components: Set<string> = new Set()
-    const fragmentedComponents: Set<string> = new Set()
+    const exitedDepth1Components = new Set<string>()
+    const fragmentedComponents = new Set<string>()
 
     // having finished one segments keep unwinding until tag matches further up stack
     function unwind (tag: number): void {
@@ -190,7 +190,7 @@ export class AsciiSegmentParser {
       // non-fragmented components use their position ranges directly (zero overhead)
       if (fragmentedComponents.size === 0) return
       const ti = new TagIndex(msgDefinition!, tags, last + 1)
-      const seen: Set<string> = new Set()
+      const seen = new Set<string>()
       for (let i = 1; i < segments.length - 1; i++) {
         const seg = segments[i]
         if (seg.depth !== 1) continue

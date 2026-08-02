@@ -14,24 +14,24 @@ export interface IFixSessionStore {
   readonly sessionId: SessionId
 
   // Message Operations
-  put (record: IFixMsgStoreRecord): Promise<void>
-  get (seqNum: number): Promise<IFixMsgStoreRecord | null>
-  getRange (fromSeqNum: number, toSeqNum: number): Promise<IFixMsgStoreRecord[]>
+  put: (record: IFixMsgStoreRecord) => Promise<void>
+  get: (seqNum: number) => Promise<IFixMsgStoreRecord | null>
+  getRange: (fromSeqNum: number, toSeqNum: number) => Promise<IFixMsgStoreRecord[]>
 
   // Sequence Number Operations
   senderSeqNum: number
   targetSeqNum: number
-  setSenderSeqNum (value: number): Promise<void>
-  setTargetSeqNum (value: number): Promise<void>
-  nextSenderSeqNum (): Promise<number>
-  nextTargetSeqNum (): Promise<number>
+  setSenderSeqNum: (value: number) => Promise<void>
+  setTargetSeqNum: (value: number) => Promise<void>
+  nextSenderSeqNum: () => Promise<number>
+  nextTargetSeqNum: () => Promise<number>
 
   // Session Operations
   readonly creationTime: Date
-  reset (): Promise<void>
+  reset: () => Promise<void>
 
   // Lifecycle
-  initialize (): Promise<void>
-  flush (): Promise<void>
-  dispose (): Promise<void>
+  initialize: () => Promise<void>
+  flush: () => Promise<void>
+  dispose: () => Promise<void>
 }

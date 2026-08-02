@@ -7,7 +7,7 @@ import { IFixMsgStoreRecord } from './fix-msg-store-record'
  * Not persistent - all data lost on dispose.
  */
 export class MemorySessionStore implements IFixSessionStore {
-  private readonly messages: Map<number, IFixMsgStoreRecord> = new Map()
+  private readonly messages = new Map<number, IFixMsgStoreRecord>()
   private senderSeqNumValue: number = 1
   private targetSeqNumValue: number = 1
   private creationTimeValue: Date = new Date()

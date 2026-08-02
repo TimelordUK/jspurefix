@@ -14,7 +14,7 @@ export interface ValidationError {
 }
 
 export class DictionaryValidationException extends Error {
-  constructor (public readonly errors: ReadonlyArray<ValidationError>) {
+  constructor (public readonly errors: readonly ValidationError[]) {
     const errorCount = errors.filter(e => e.severity === ValidationSeverity.Error).length
     const warningCount = errors.filter(e => e.severity === ValidationSeverity.Warning).length
     const header = `FIX dictionary validation failed with ${errorCount} error(s) and ${warningCount} warning(s):`

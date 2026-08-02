@@ -10,9 +10,9 @@ export interface TagSpan {
 
 export class TagIndex {
   private readonly sortedTagPos: TagPos[]
-  private readonly tagSpans: Map<number, TagSpan> = new Map()
-  private readonly componentGroupWrappers: Set<string> = new Set()
-  private readonly cache: Map<string, SegmentView | null> = new Map()
+  private readonly tagSpans = new Map<number, TagSpan>()
+  private readonly componentGroupWrappers = new Set<string>()
+  private readonly cache = new Map<string, SegmentView | null>()
 
   constructor (
     public readonly set: IContainedSet,

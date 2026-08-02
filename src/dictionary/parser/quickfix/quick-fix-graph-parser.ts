@@ -51,7 +51,7 @@ export class GraphNode {
     public readonly element: XNode
   ) {}
 
-  get edges (): ReadonlyArray<Edge> {
+  get edges (): readonly Edge[] {
     return this._edges
   }
 
