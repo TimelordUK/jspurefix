@@ -199,6 +199,38 @@ asks for a resend, the stored bodies are replayed with `PossDupFlag=Y`.
 Because the store is keyed on `SessionId`, a wildcard acceptor recovers each
 counterparty independently.
 
+## Closing the listener
+
+An acceptor outlives its counterparties. A session ending closes nothing: the
+listener stays up, waiting for the next connection, which is the whole point of a
+venue and why `TcpAcceptorListener` never stops itself.
+
+The consequence is worth stating plainly, because it does not look like a decision
+from the outside — **a listening socket keeps node alive on its own**. Every session
+can log out, every transport can be harvested, the census can read `transports=0
+sessions=0`, and the process still will not exit. Nothing is stuck; there is simply
+one handle left, and only the application knows when it no longer wants it.
+
+`SessionLauncher.stop()` closes it:
+
+```ts
+const venue = new MyLauncher(null, acceptorDescription)
+const run = venue.run()          // resolves when the listener closes, not before
+
+process.once('SIGINT', () => { venue.stop() })
+await run                        // ... and now the process can end
+```
+
+`stop()` releases any live transports rather than waiting on them — `net.Server.close`
+alone would block on whichever counterparty happened to be connected, and forever on
+a half-open one. It is safe before the listener has opened (the request is remembered
+and it never opens) and safe to call twice.
+
+A launcher given *both* roles calls this for you when its client finishes, which is
+why a single-launcher sample exits by itself. An application that gives its acceptor a
+launcher of its own — the usual arrangement once more than one client is involved —
+owns that decision, and must say when.
+
 ## See also
 
 - [`src/transport/tcp/tcp-acceptor.ts`](../src/transport/tcp/tcp-acceptor.ts) — listener, transport lifecycle

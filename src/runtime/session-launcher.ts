@@ -57,11 +57,18 @@ export abstract class SessionLauncher {
   }
 
   private acceptorEntity: FixEntity | null = null
+  private stopRequested: boolean = false
 
   protected async getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
     if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
       const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
       this.acceptorEntity = entity
+      // a stop can arrive while the container is still being built - the listener has
+      // no existence yet to close, so honour the request by never opening it
+      if (this.stopRequested) {
+        this.logger.info('stop requested before the acceptor started - not listening')
+        return this.empty()
+      }
       return entity.start()
     } else {
       return this.empty()
@@ -85,6 +92,27 @@ export abstract class SessionLauncher {
    */
   protected makeFactory (config: IJsFixConfig): EngineFactory | null {
     return null
+  }
+
+  /**
+   * Stop what this launcher started - in practice, close the acceptor's listener.
+   *
+   * An acceptor is meant to outlive any one counterparty, so nothing closes its
+   * listener on its own.  That is right for a venue and wrong for an application
+   * which knows it is finished: the listening socket alone keeps node alive, long
+   * after every session has logged out and every transport has been harvested.
+   *
+   * Until now the only caller was the both-roles branch of setup() below, which an
+   * application cannot reach once it gives the acceptor a launcher of its own - the
+   * usual arrangement as soon as more than one client is involved.  There was then
+   * no way to shut a listener down short of killing the process.
+   *
+   * Safe before start (the request is remembered and the listener never opens), and
+   * safe to call twice.  run() resolves once the listener has closed.
+   */
+  public stop (): void {
+    this.stopRequested = true
+    this.stopAcceptor()
   }
 
   public async run (): Promise<boolean> {
@@ -188,7 +216,7 @@ export abstract class SessionLauncher {
       // stop the acceptor so the process can exit cleanly.
       await client
       this.logger.info('client finished, stopping acceptor')
-      this.stopAcceptor()
+      this.stop()
       return true
     }
     return await Promise.all([server, client])

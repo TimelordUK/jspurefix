@@ -6,6 +6,38 @@ jspurefix) and `DEMO_PORT_PLAN.md` (the jspf-demo reference app).
 
 ---
 
+## 2026-08-08 — closing the acceptor's listener
+
+Reported from jspf-demo: `npm run custom-logon` never exits. The logs say everything
+shut down — sessions logged out, transports harvested, registry empty, `.. done` —
+and the node process sits there.
+
+Diagnosed by dumping `process._getActiveHandles()` after the run. Session and
+transport teardown is complete; the only handle left is the listening `net.Server`.
+A listening socket keeps node alive by itself, and nothing ever closed it.
+
+`TcpAcceptorListener.stop()` has always existed and does the right thing. What was
+missing was any way to *call* it: `SessionLauncher.stopAcceptor()` was private and
+reached only from the branch where one launcher holds both roles. An application that
+gives its acceptor a launcher of its own — which jspf-demo started doing on 2026-08-01
+so the acceptor would survive any one client — could not close its listener at all.
+
+**Changed:** `SessionLauncher.stop()`, public. Remembers a stop that arrives before
+the acceptor has started (`makeSystem` is async, so that window is real) and never
+opens the listener in that case. `run()` resolves once the listener has closed.
+Pinned by `src/test/session/launcher-stop.test.ts`.
+
+Worth checking against
+[#72](https://github.com/TimelordUK/jspurefix/issues/72) ("`session-launcher.run()`
+never resolves when connection established") before that issue is next looked at —
+for an acceptor, run() not resolving was the designed behaviour with no way out, and
+now there is one.
+
+`docs/acceptor.md` gained a "Closing the listener" section, because from the outside
+this reads as a hang rather than as a decision.
+
+---
+
 ## 2026-08-01 — acceptor hardening, released as 5.9.1
 
 Started from [#153](https://github.com/TimelordUK/jspurefix/issues/153) and ended up
