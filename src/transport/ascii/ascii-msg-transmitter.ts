@@ -28,6 +28,26 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
     const components = config.definitions.component
     this.header = components.get('StandardHeader')
     this.trailer = components.get('StandardTrailer')
+    this.reportUnknownFields(config)
+  }
+
+  /**
+   * A field the dictionary does not declare on the message being encoded has no tag,
+   * so it cannot be written and is dropped.  Say so once per offending field - the
+   * alternative, and what this library did for years, is that a bespoke Logon tag
+   * simply never appears on the wire and nothing anywhere explains why.
+   */
+  private reportUnknownFields (config: IJsFixConfig): void {
+    const name = config.description.application?.name ?? 'na'
+    const logger = config.logFactory.logger(`${name}:encoder`)
+    const reported = new Set<string>()
+    this.encoder.onUnknownField = (fieldName: string, setName: string) => {
+      const key = `${setName}.${fieldName}`
+      if (reported.has(key)) return
+      reported.add(key)
+      logger.warning(`field '${fieldName}' is not declared on ${setName} in this dictionary - it will not be sent`)
+      this.emit('unknown-field', fieldName, setName)
+    }
   }
 
   private checksum (): number {

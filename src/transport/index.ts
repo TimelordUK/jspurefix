@@ -7,4 +7,8 @@ export * from './msg-payload'
 export * from './tick-action'
 export * from './msg-application'
 export * from './ascii/ascii-session'
+// the factory an application extends to customise its Logon or header - it belongs
+// at the root alongside ASessionMsgFactory, not behind a dist/ path
+export * from './ascii/ascii-session-msg-factory'
+export * from './fixml/fixml-session-msg-factory'
 export * from './session'

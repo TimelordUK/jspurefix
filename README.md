@@ -12,6 +12,7 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
 - [Examples](#examples)
 - [Quickstart](#quickstart)
 - [Session Configuration](#session-configuration)
+  - [Customising the Logon](#customising-the-logon)
   - [TLS](#tls)
   - [Body length padding](#body-length-padding)
 - [Persistence & Recovery](#persistence--recovery)
@@ -150,6 +151,21 @@ A session is described by a JSON file (or any object matching `ISessionDescripti
   "BeginString": "FIX.4.4"
 }
 ```
+
+### Customising the Logon
+
+Most counterparties want a tag on the Logon the standard message does not carry. Name the extra fields under a `Logon` block — they are merged over the ones the engine derives, and a `null` suppresses one you do not want sent:
+
+```json
+{
+  "Logon": {
+    "Account": "TVKD_001",
+    "DefaultApplVerID": "9"
+  }
+}
+```
+
+A field named here must also be declared on `Logon` in the dictionary the session loads, or the encoder has no tag to write it to and will say so in the log. For values computed at run time, or for a header a counterparty stamps differently, supply your own session message factory. See [docs/custom-logon.md](docs/custom-logon.md) for the whole picture.
 
 ### TLS
 
