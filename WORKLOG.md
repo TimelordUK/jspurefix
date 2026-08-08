@@ -2,7 +2,8 @@
 
 Running notes on what has been done and what is worth doing next, so a session can
 be resumed cold. The long-form plans live in `BACKPORT_PLAN.md` (engine, cspurefix →
-jspurefix) and `DEMO_PORT_PLAN.md` (the jspf-demo reference app).
+jspurefix), `DEMO_PORT_PLAN.md` (the jspf-demo reference app) and `ATDL_PLAN.md` (a
+FIXatdl renderer and test harness — a prospective sibling project, not engine work).
 
 ---
 
@@ -37,6 +38,62 @@ confirmation — see below).
 
 ---
 
+## 2026-08-08 — customising the Logon, and making silent drops visible, released as 5.10.0
+
+Started from [#93](https://github.com/TimelordUK/jspurefix/issues/93), open since
+December 2024, and ended up somewhere broader. Two issues that look unrelated turned
+out to share a theme: **the engine failed quietly in several places, and nobody could
+see it.**
+
+**Merged (PR #164):**
+
+- a `Logon` block in the session description, merged over the fields the engine
+  derives. `AsciiSessionMsgFactory.logon()` had read exactly five values off the
+  description and ignored everything else, so an `"Account"` in the config was never
+  looked at. A null in the block suppresses a field.
+- `AsciiEncoder` now reports a key it cannot resolve, via
+  `MsgEncoder.onUnknownField`. This was the real cause of the confusion: `Account` is
+  tag 1 but is not a field of FIX 4.4 `Logon`, so it was discarded with no error and
+  no log line. Only runs on the miss path — a key that resolves costs nothing.
+- `SessionContainer(provider)` and `SessionLauncher.makeSessionMsgFactory()`, so
+  supplying a factory no longer needs a `SessionContainer` subclass
+- `AsciiSessionMsgFactory` / `FixmlSessionMsgFactory` exported from the package root.
+  Extending the ascii factory — the thing every previous answer to these issues told
+  people to do — used to require importing through `dist/transport/ascii/...`.
+- an optional callback on `send`, giving back the stamped `StandardHeader` (and so
+  the sequence number) or an error. Writing it exposed three drops that told nobody:
+  `encodeMessage` returning null for an unknown msgType, a session in state
+  `Stopped`, and no transport at all. All three still reach the error channel; the
+  callback is additive.
+
+**Issues resolved:** #93, #86, #39, #96 (all commented with the full explanation).
+#69 verified fixed — `SenderSubID` has been in the header since `dd9a540` — and left
+open pending the reporter, since their actual complaint was "no response from the
+server".
+
+**Docs:** `docs/custom-logon.md`, plus README sections on the `Logon` block and on
+send callbacks.
+
+**Perf:** flat. Parse benchmarks moved inside the noise floor; Logon encode 2.26
+µs/msg against the 2.3 in the README table. The encoder change is genuinely off the
+hot path.
+
+**Demos:** `jspf-demo` gained a `custom-logon` mode (config block + generated
+dictionary + run-time factory, and one field deliberately left undeclared so the new
+warning is visible). `jspf-md-demo`'s `Msg44Fact` had a `logon()` that was a verbatim
+copy of the stock one — it showed the hook and never the point — and now sends a real
+bespoke tag; its generated types were regenerated in a separate commit, having
+drifted a long way behind the generator.
+
+**Found along the way:** jspf-demo had been sending every `TradeCaptureReportRequest`
+without its dates for as long as the demo has existed. `TrdCapDtGrp` was built as a
+flat array, which is how the FIX repository models it, but those sessions load the
+QuickFIX dictionary where it is a component wrapping `NoDates`. The encoder dropped
+it silently. The new warning is what caught it, about an hour after it existed — a
+fair advertisement for the feature.
+
+---
+
 ## Next up
 
 ### 1. Toolchain major bumps
@@ -49,10 +106,9 @@ acceptor work:
 - `eslint-config-love` 151 → 154
 - `@types/node` 25 → 26
 
-Expect lint churn. There are 17 pre-existing lint errors on master (`fix-clock`,
-`resend-request-manager`, `session-sequence-*`, `tcp-initiator`) — worth clearing in
-the same pass, since they make it hard to tell new problems from old. `npm audit` is
-currently clean.
+Expect lint churn. The 17 pre-existing lint errors noted here were cleared in
+`1d2f267` — `npx eslint src/` is clean on master as of 5.10.0, so any churn from the
+bump is genuinely new and worth reading. `npm audit` is clean.
 
 ### 2. #77 — confirm or close
 
@@ -76,14 +132,21 @@ reproduced.
 
 ### 3. Other open issues worth a look
 
-Several are old and may already be fixed, in the way #140 turned out to be — worth
-verifying against 5.9.1 rather than reading the thread:
+Most of this list was cleared in 5.10.0. What remains:
 
-- #96 / #69 — `DefaultApplVerID` / `SenderSubID` missing during login
-- #93 — customising the Logon message
-- #86 — make `encoderStream` protected
-- #85 — `ASessionMsgFactory` types patch (may be superseded by `cloneFor`)
-- #72 — `session-launcher.run()` never resolves when connection established
+- **#69** — verified fixed and commented; awaiting the reporter before closing. Their
+  literal question (`SenderSubID`) works; their real complaint was silence from
+  cServer, which is a different problem.
+- **#85** — `ASessionMsgFactory` types patch. Possibly superseded twice over now, by
+  `cloneFor` and by the root exports added in 5.10.0. Worth reading the patch against
+  current master before doing anything.
+- **#72** — `session-launcher.run()` never resolves when the connection is
+  established. Not looked at. Given how #140 and #77 went, verify against 5.10.0
+  before trusting the thread.
+
+The lesson from this batch, worth repeating: **several of these were already fixed,
+or were one line plus a docs gap.** Reading the thread is a poor substitute for
+running the reporter's config.
 
 ### 4. Small things noticed, none urgent
 
