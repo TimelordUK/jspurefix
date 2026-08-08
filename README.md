@@ -20,6 +20,7 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
   - [`ResetSeqNumFlag` semantics](#resetseqnumflag-semantics)
   - [Resending messages](#resending-messages)
 - [Working with Messages](#working-with-messages)
+  - [Knowing what a send did](#knowing-what-a-send-did)
 - [FIXML over HTTP](#fixml-over-http)
 - [Data Dictionaries](#data-dictionaries)
 - [`jsfix` CLI — log parsing & stats](#jsfix-cli--log-parsing--stats)
@@ -292,6 +293,24 @@ A `MsgView` is a zero-copy view over the parse buffer. The view is only valid in
 import { ITradeCaptureReport } from 'jspurefix/dist/types/FIX4.4/repo'
 const tc: ITradeCaptureReport = view.toObject()
 ```
+
+### Knowing what a send did
+
+`send` writes into an encode stream and returns, so on its own it tells you nothing: not the sequence number your message went out under, and not whether it went out at all. Pass a callback when you need to know ([issue #86](https://github.com/TimelordUK/jspurefix/issues/86)):
+
+```typescript
+this.send(MsgType.NewOrderSingle, order, (err, result) => {
+  if (err) {
+    this.logger.error(err)          // dropped - session down, or it would not encode
+    return
+  }
+  this.pending.set(result.header?.MsgSeqNum, order)
+})
+```
+
+`result` carries the `msgType`, the `StandardHeader` the engine stamped (sequence number, sending time, comp ids) and the encoded bytes. It fires when the message has been encoded and handed to the transport — the FIX session layer has no acknowledgement of the socket flushing, so neither does this.
+
+An error is reported for a session that has stopped, a missing transport, a `msgType` the dictionary does not define, and anything thrown during encoding. All of those still reach the session's error channel exactly as before; the callback is additional, never a replacement.
 
 Read a single tag by name or number:
 
