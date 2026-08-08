@@ -12,6 +12,7 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
 - [Examples](#examples)
 - [Quickstart](#quickstart)
 - [Session Configuration](#session-configuration)
+  - [Customising the Logon](#customising-the-logon)
   - [TLS](#tls)
   - [Body length padding](#body-length-padding)
 - [Persistence & Recovery](#persistence--recovery)
@@ -19,6 +20,7 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
   - [`ResetSeqNumFlag` semantics](#resetseqnumflag-semantics)
   - [Resending messages](#resending-messages)
 - [Working with Messages](#working-with-messages)
+  - [Knowing what a send did](#knowing-what-a-send-did)
 - [FIXML over HTTP](#fixml-over-http)
 - [Data Dictionaries](#data-dictionaries)
 - [`jsfix` CLI — log parsing & stats](#jsfix-cli--log-parsing--stats)
@@ -151,6 +153,21 @@ A session is described by a JSON file (or any object matching `ISessionDescripti
 }
 ```
 
+### Customising the Logon
+
+Most counterparties want a tag on the Logon the standard message does not carry. Name the extra fields under a `Logon` block — they are merged over the ones the engine derives, and a `null` suppresses one you do not want sent:
+
+```json
+{
+  "Logon": {
+    "Account": "TVKD_001",
+    "DefaultApplVerID": "9"
+  }
+}
+```
+
+A field named here must also be declared on `Logon` in the dictionary the session loads, or the encoder has no tag to write it to and will say so in the log. For values computed at run time, or for a header a counterparty stamps differently, supply your own session message factory. See [docs/custom-logon.md](docs/custom-logon.md) for the whole picture.
+
 ### TLS
 
 Add a `tls` block under `application.tcp`. The `ca` field is only needed for self-signed certificates; commercial vendors will supply this for you. `script/getKey.ps1` will generate a self-signed CA + client/server pair (requires `openssl` on the path).
@@ -276,6 +293,24 @@ A `MsgView` is a zero-copy view over the parse buffer. The view is only valid in
 import { ITradeCaptureReport } from 'jspurefix/dist/types/FIX4.4/repo'
 const tc: ITradeCaptureReport = view.toObject()
 ```
+
+### Knowing what a send did
+
+`send` writes into an encode stream and returns, so on its own it tells you nothing: not the sequence number your message went out under, and not whether it went out at all. Pass a callback when you need to know ([issue #86](https://github.com/TimelordUK/jspurefix/issues/86)):
+
+```typescript
+this.send(MsgType.NewOrderSingle, order, (err, result) => {
+  if (err) {
+    this.logger.error(err)          // dropped - session down, or it would not encode
+    return
+  }
+  this.pending.set(result.header?.MsgSeqNum, order)
+})
+```
+
+`result` carries the `msgType`, the `StandardHeader` the engine stamped (sequence number, sending time, comp ids) and the encoded bytes. It fires when the message has been encoded and handed to the transport — the FIX session layer has no acknowledgement of the socket flushing, so neither does this.
+
+An error is reported for a session that has stopped, a missing transport, a `msgType` the dictionary does not define, and anything thrown during encoding. All of those still reach the session's error channel exactly as before; the callback is additional, never a replacement.
 
 Read a single tag by name or number:
 

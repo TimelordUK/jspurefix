@@ -42,7 +42,9 @@ export class FixmlSessionMsgFactory extends ASessionMsgFactory {
         Username: description.Username,
         Password: description.Password,
         UserRequestID: userRequestId,
-        UserRequestType: UserRequestType.LogOnUser
+        UserRequestType: UserRequestType.LogOnUser,
+        // same escape hatch as the ascii factory - see ISessionDescription.Logon
+        ...description.Logon
       } as IUserRequest
       return this.mutate(o, MsgType.Logon)
     } else {

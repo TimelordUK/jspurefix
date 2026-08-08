@@ -1,6 +1,6 @@
 import * as path from 'path'
 import { IJsFixConfig, IJsFixLogger, JsFixLoggerFactory, JsFixWinstonLogFactory, WinstonLogger } from '../config'
-import { FixEntity, FixSession, ISessionDescription } from '../transport'
+import { FixEntity, FixSession, ISessionDescription, ISessionMsgFactory } from '../transport'
 import { DependencyContainer } from 'tsyringe'
 import { EngineFactory } from './engine-factory'
 import { SessionContainer } from './session-container'
@@ -24,7 +24,24 @@ export abstract class SessionLauncher {
     this.acceptorConfig = acceptorConfig ? this.loadConfig(acceptorConfig) : null
   }
 
-  protected sessionContainer: SessionContainer = new SessionContainer()
+  // the arrow defers to makeSessionMsgFactory at resolve time, so a subclass need
+  // only override that one method - no SessionContainer subclass required
+  protected sessionContainer: SessionContainer =
+    new SessionContainer((d: ISessionDescription) => this.makeSessionMsgFactory(d))
+
+  /**
+   * Override to supply this application's own session message factory - the place to
+   * put a Logon carrying tags the standard message does not, or a header a
+   * counterparty stamps differently.  Return null (the default) for the stock
+   * factory.
+   *
+   * For a Logon that only needs extra fields, prefer the "Logon" block in the session
+   * description - it needs no code at all.  Reach for a factory when the values are
+   * computed at run time (a signature, a nonce, a token fetched at start up).
+   */
+  protected makeSessionMsgFactory (_description: ISessionDescription): ISessionMsgFactory | null {
+    return null
+  }
 
   private async empty (): Promise<any> {
     return await new Promise((resolve, reject) => {

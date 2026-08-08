@@ -4,6 +4,7 @@ import { Transform } from 'stream'
 import { MsgPayload } from './msg-payload'
 import { ILooseObject } from '../collections/collection'
 import { ISessionDescription } from './session/session-description'
+import { SendCallback } from './send-callback'
 import * as events from 'events'
 
 export abstract class MsgTransmitter extends events.EventEmitter {
@@ -24,8 +25,23 @@ export abstract class MsgTransmitter extends events.EventEmitter {
   }
 
   // messages at front, byte stream at back
-  public send (msgType: string, obj: ILooseObject): void {
-    this.encodeStream.write(new MsgPayload(msgType, obj))
+  public send (msgType: string, obj: ILooseObject, callback: SendCallback | null = null): void {
+    this.encodeStream.write(new MsgPayload(msgType, obj, callback))
+  }
+
+  /**
+   * Report a send outcome to whoever asked for one, without letting their code break
+   * the encode stream - a throwing callback would otherwise surface as a transform
+   * failure and be indistinguishable from an encoding fault.
+   */
+  protected settle (payload: MsgPayload, error: Error | null, header: ILooseObject | null): void {
+    const callback = payload.callback
+    if (!callback) return
+    try {
+      callback(error, { msgType: payload.msgType, header, encoded: payload.encoded ?? null })
+    } catch (e) {
+      this.emit('error', e)
+    }
   }
 
   public abstract encodeMessage (msgType: string, obj: ILooseObject): (ILooseObject | null)
@@ -46,8 +62,21 @@ export abstract class MsgTransmitter extends events.EventEmitter {
           this.push(payload.encoded)
           const encodedTxt = transmitter.buffer.toString()
           transmitter.emit('encoded', msgType, encodedTxt, state)
+          // encodeMessage returns null when it could not build the message - an
+          // unknown msgType, or a factory that produced no header.  It reports that
+          // on the error channel and carries on, so without this the callback would
+          // announce success for a message that never formed.
+          state
+            ? transmitter.settle(payload, null, state)
+            : transmitter.settle(payload, new Error(`could not encode ${msgType}`), null)
+          // note: the second argument to a Transform callback is *pushed to the
+          // readable side*, and this readable side is piped to the socket - so a
+          // result cannot be returned that way without corrupting the byte stream.
+          // Hence the per-payload callback above.
           done()
         } catch (e) {
+          transmitter.settle(payload, e as Error, null)
+          // still fail the stream, so the session's error handling is unchanged
           done(e)
         }
       }

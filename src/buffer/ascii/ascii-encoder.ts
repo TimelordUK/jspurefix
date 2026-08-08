@@ -90,11 +90,31 @@ export class AsciiEncoder extends MsgEncoder {
       const field = set.localNameToField.get(current)
       if (field) {
         a[j++] = field
+      } else if (this.onUnknownField && !AsciiEncoder.expectedMiss(set, current)) {
+        this.onUnknownField(current, set.name)
       }
       return a
     }, new Array(keys.length))
     fields.sort((a: ContainedField, b: ContainedField) => a.position - b.position)
     return fields
+  }
+
+  /**
+   * Keys that legitimately fail to resolve against this set, so reporting them would
+   * be noise: the header and trailer are encoded separately by the transmitter, and
+   * a repeating group may be keyed by its count field rather than the group name -
+   * encodeInstances accepts either.
+   */
+  private static expectedMiss (set: IContainedSet, name: string): boolean {
+    if (name === 'StandardHeader' || name === 'StandardTrailer') {
+      return true
+    }
+    for (const group of set.groups.values()) {
+      if ((group as any).noOfField?.name === name) {
+        return true
+      }
+    }
+    return false
   }
 
   private encodeInstances (o: ILooseObject, gf: ContainedGroupField): void {

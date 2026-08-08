@@ -23,7 +23,12 @@ export class AsciiSessionMsgFactory extends ASessionMsgFactory {
       Password: description.Password,
       HeartBtInt: description.HeartBtInt,
       ResetSeqNumFlag: description.ResetSeqNumFlag,
-      EncryptMethod: EncryptMethod.None
+      EncryptMethod: EncryptMethod.None,
+      // a counterparty demanding a tag the standard Logon does not carry needs no
+      // code at all - name it under "Logon" in the session description.  Spread last
+      // so an application can also override what the engine derived, or null out a
+      // field it does not want sent.  See issue #93.
+      ...description.Logon
     } as ILogon
     return this.mutate(o, MsgType.Logon)
   }

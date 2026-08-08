@@ -20,7 +20,23 @@ import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
 import { FixEntity } from '../transport/fix-entity'
 import { IHttpAdapter } from '../transport/http/http-adapter'
 
+/**
+ * Supplies the session message factory for a description.  Return null to accept the
+ * stock factory for the protocol.
+ */
+export type SessionMsgFactoryProvider = (description: ISessionDescription) => ISessionMsgFactory | null
+
 export class SessionContainer {
+  /**
+   * @param msgFactoryProvider an application that needs its own session messages -
+   * typically a Logon carrying tags the standard message does not - can pass one
+   * here rather than subclassing to override makeSessionFactory:
+   *
+   *   new SessionContainer(d => new MyFactory(d))
+   */
+  constructor (public readonly msgFactoryProvider: SessionMsgFactoryProvider | null = null) {
+  }
+
   public reset (): void {
     container.reset()
   }
@@ -45,6 +61,10 @@ export class SessionContainer {
   }
 
   protected makeSessionFactory (description: ISessionDescription): ISessionMsgFactory {
+    const supplied = this.msgFactoryProvider?.(description)
+    if (supplied) {
+      return supplied
+    }
     const fixml = !this.isAscii(description)
     return fixml
       ? new FixmlSessionMsgFactory(description)

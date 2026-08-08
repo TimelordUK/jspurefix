@@ -4,6 +4,7 @@ import { FixSessionState } from './fix-session-state'
 import { MsgTransport } from '../factory'
 import { MsgTag } from '../../types'
 import { ILooseObject } from '../../collections/collection'
+import { SendCallback } from '../send-callback'
 
 import * as events from 'events'
 import { SessionState } from './session-state'
@@ -401,17 +402,35 @@ export abstract class FixSession extends events.EventEmitter {
     }
   }
 
-  protected send (msgType: string, obj: ILooseObject): void {
+  /**
+   * @param callback optional, invoked once the message has been encoded and handed to
+   * the transport, or as soon as that fails.  Without it a send is fire and forget:
+   * nothing tells the caller which sequence number the message went out under, and a
+   * message dropped because the session is down, or refused by the encoder, goes
+   * unanswered.  See https://github.com/TimelordUK/jspurefix/issues/86
+   */
+  protected send (msgType: string, obj: ILooseObject, callback: SendCallback | null = null): void {
     const state = this.sessionState.state
     switch (state) {
       case SessionState.Stopped: {
-        this.sessionLogger.warning(`can't send in state ${this.stateString()}`)
+        const msg = `can't send in state ${this.stateString()}`
+        this.sessionLogger.warning(msg)
+        // the message is dropped either way - but a caller that asked to be told is
+        // now told, instead of watching for a log line
+        callback?.(new Error(msg), { msgType, header: null, encoded: null })
         break
       }
 
       default: {
         this.sessionState.LastSentAt = new Date()
-        this.transport?.transmitter.send(msgType, obj)
+        const transmitter = this.transport?.transmitter
+        if (!transmitter) {
+          const msg = `no transport to send ${msgType} on`
+          this.sessionLogger.warning(msg)
+          callback?.(new Error(msg), { msgType, header: null, encoded: null })
+          break
+        }
+        transmitter.send(msgType, obj, callback)
         break
       }
     }
