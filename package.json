@@ -83,7 +83,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "align-text": "^1.0.2",
     "axios": "^1.19.0",
     "express": "^5.2.1",
     "lodash": "^4.18.1",
@@ -91,7 +90,6 @@
     "minimist": "^1.2.8",
     "minimist-options": "^4.1.0",
     "moment": "^2.30.1",
-    "node-fs-extra": "^0.8.2",
     "reflect-metadata": "^0.2.2",
     "sax": "^1.6.1",
     "tsyringe": "^4.10.0",

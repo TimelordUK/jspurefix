@@ -6,8 +6,8 @@ export class StandardSnippet {
   }
 
   private static rhsJustify (txt: string, width: number): string {
-    const align = require('align-text')
-    return align(txt, width)
+    const pad = ' '.repeat(Math.max(0, width))
+    return txt.split(/\r\n|\n/).map(line => pad + line).join('\n')
   }
 
   // import { camelName } from './component/name_underscore'

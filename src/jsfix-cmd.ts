@@ -21,7 +21,7 @@ import { DITokens } from './runtime/di-tokens'
 import buildOptions from 'minimist-options'
 import { QuickFixXmlFileBuilder } from './dictionary/parser/quickfix/quick-fix-xml-file-builder'
 
-const fs = require('node-fs-extra')
+const fs = require('fs')
 
 const options = buildOptions({
   dict: {
@@ -439,7 +439,7 @@ export class JsfixCmd {
 
   async ensureExists (path: string): Promise<any> {
     return await new Promise<any>((resolve, reject) => {
-      fs.mkdirp(path, (err: Error) => {
+      fs.mkdir(path, { recursive: true }, (err: Error) => {
         if (err) {
           reject(err)
         } else {
