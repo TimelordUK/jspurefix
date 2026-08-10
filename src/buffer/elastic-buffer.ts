@@ -9,8 +9,18 @@ export class ElasticBuffer {
   private ptr: number = 0
   private stretched: number
 
+  /**
+   * A buffer grown to serve a large message keeps that capacity across reset, so a
+   * steady stream of similarly sized messages does not re-grow (and re-allocate) on
+   * every single message.  Only a buffer that has ballooned past returnTo is handed
+   * back, so one pathological message cannot pin a large allocation for the life of
+   * the session.  Unlike cspurefix - where the discarded array goes to a shared
+   * ArrayPool - the retained bytes are held by this instance, so an acceptor with
+   * many connections holds up to this much per connection.  Tune with
+   * DITokens.elasticBufferReturnSize.
+   */
   constructor (@inject(DITokens.elasticBufferSize) public readonly size: number = 6 * 1024,
-    @inject(DITokens.elasticBufferReturnSize) public readonly returnTo: number = 6 * 1024) {
+    @inject(DITokens.elasticBufferReturnSize) public readonly returnTo: number = 64 * 1024) {
     this.size = Math.max(1, this.size)
     this.buffer = Buffer.allocUnsafe(this.size)
     this.returnTo = Math.max(this.size, this.returnTo)
@@ -43,7 +53,7 @@ export class ElasticBuffer {
 
   public setPos (ptr: number): number {
     const r = this.ptr
-    if (ptr >= 0 && ptr <= this.size) {
+    if (ptr >= 0 && ptr <= this.buffer.length) {
       this.ptr = ptr
     }
     return r
@@ -134,7 +144,7 @@ export class ElasticBuffer {
     const shrink = this.stretched > this.returnTo
     if (shrink) {
       this.buffer = Buffer.allocUnsafe(this.returnTo)
-      this.stretched = this.size
+      this.stretched = this.returnTo
     }
     return shrink
   }

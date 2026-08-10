@@ -213,14 +213,29 @@ test('write buffer', () => {
   expect(fetched).toEqual(b)
 })
 
-test('buffer shrinks', () => {
+test('buffer shrinks when grown past retain bound', () => {
+  // a buffer that balloons past returnTo is released on reset so a single
+  // pathological message cannot pin a large allocation for the session's life
   const buffer = new ElasticBuffer(1)
-  const s = '.'.repeat(60 * 1024)
+  const s = '.'.repeat(2 * buffer.returnTo)
   buffer.writeString(s)
   expect(buffer.getPos()).toEqual(s.length)
   expect(buffer.toString()).toEqual(s)
-  expect(buffer.currentSize()).toEqual(65536)
+  expect(buffer.currentSize() > buffer.returnTo).toBe(true)
   expect(buffer.reset()).toBe(true)
   expect(buffer.getPos()).toEqual(0)
-  expect(buffer.currentSize() < 60 * 1024).toBe(true)
+  expect(buffer.currentSize()).toEqual(buffer.returnTo)
+})
+
+test('buffer retains capacity within retain bound', () => {
+  // capacity below the bound is kept across reset - a steady stream of similarly
+  // sized messages must not re-grow (and re-allocate) on every single message
+  const buffer = new ElasticBuffer(1)
+  buffer.writeString('.'.repeat(8 * 1024))
+  const grown = buffer.currentSize()
+  expect(grown >= 8 * 1024).toBe(true)
+  expect(grown <= buffer.returnTo).toBe(true)
+  expect(buffer.reset()).toBe(false)
+  expect(buffer.getPos()).toEqual(0)
+  expect(buffer.currentSize()).toEqual(grown)
 })
