@@ -110,7 +110,7 @@
     "@types/request-promise-native": "^1.0.21",
     "@types/sax": "^1.2.7",
     "@types/winston": "^2.4.4",
-    "eslint": "^9.39.5",
+    "eslint": "^10.8.0",
     "eslint-config-love": "^151.0.0",
     "jest": "^30.4.2",
     "madge": "^8.0.0",
