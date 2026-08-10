@@ -17,6 +17,17 @@ updates:
         update-types:
           - minor
           - patch
+    ignore:
+      # TypeScript 7 is the native port and does not expose the JavaScript compiler
+      # API ts-jest needs - ts-jest peers on ">=4.3 <7". Revisit when it ships TS 7
+      # support. See #171.
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
+      # eslint-config-love still peers on eslint ^9. Lift together with it, not alone.
+      - dependency-name: eslint
+        update-types:
+          - version-update:semver-major
 
   - package-ecosystem: github-actions
     directory: /
