@@ -47,7 +47,7 @@ class AcceptorLauncher extends SessionLauncher {
   protected override makeFactory (_config: IJsFixConfig): EngineFactory {
     return {
       makeSession: (sessionConfig: IJsFixConfig) => new QuietSession(sessionConfig)
-    } as EngineFactory
+    }
   }
 }
 

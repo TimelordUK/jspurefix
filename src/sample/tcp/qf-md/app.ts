@@ -18,7 +18,7 @@ class AppLauncher extends SessionLauncher {
       makeSession: (sessionConfig: IJsFixConfig) => isInitiator
         ? new MDClient(sessionConfig)
         : new MDServer(sessionConfig)
-    } as EngineFactory
+    }
   }
 }
 

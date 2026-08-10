@@ -88,7 +88,7 @@ export class EncodeProxy {
     if (!accepted) {
       throw new Error(`type ${field.name} is a group and needs array or number, not "${typeof val}"`)
     }
-    const gf: ContainedComponentField = field as ContainedComponentField
+    const gf: ContainedComponentField = field
     const j: number = val
     const isNumber: boolean = !isNaN(val as number)
     if (isNumber) {

@@ -27,12 +27,12 @@ export class OmsFactory {
       OrdType: OrdType.Limit,
       OrderQtyData: {
         OrderQty: qty
-      } as IOrderQtyData,
+      },
       Instrument: {
         Symbol: symbol,
         SecurityID: '459200101',
         SecurityIDSource: SecurityIDSource.IsinNumber
-      } as IInstrument,
+      },
       TimeInForce: TimeInForce.GoodTillCancelGtc
     } as INewOrderSingle
   }
@@ -53,12 +53,12 @@ export class OmsFactory {
       Price: order.Price,
       OrderQtyData: {
         OrderQty: order?.OrderQtyData?.OrderQty
-      } as IOrderQtyData,
+      },
       Instrument: {
         Symbol: order?.Instrument?.Symbol,
         SecurityID: order?.Instrument?.SecurityID,
         SecurityIDSource: SecurityIDSource.IsinNumber
-      } as IInstrument
+      }
     } as IExecutionReport
   }
 }

@@ -14,7 +14,7 @@ class AppLauncher extends SessionLauncher {
   protected override makeFactory (config: IJsFixConfig): EngineFactory {
     return {
       makeSession: (sessionConfig: IJsFixConfig) => new SkeletonSession(sessionConfig, 45, false)
-    } as EngineFactory
+    }
   }
 }
 

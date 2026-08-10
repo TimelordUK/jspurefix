@@ -17,6 +17,6 @@ export class AppLauncher extends SessionLauncher {
       makeSession: (sessionConfig: IJsFixConfig) => isInitiator
         ? new TradeCaptureClient(sessionConfig)
         : new TradeCaptureServer(sessionConfig)
-    } as EngineFactory
+    }
   }
 }

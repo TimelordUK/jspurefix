@@ -36,7 +36,7 @@ export class TlsOptionsFactory {
       tlsOptions = {
         requestCert: TlsOptionsFactory.asBoolean(tls.requestCert),
         rejectUnauthorized: TlsOptionsFactory.asBoolean(tls.rejectUnauthorized)
-      } as TlsOptions
+      }
 
       if (tls.key) {
         tlsOptions.key = TlsOptionsFactory.read(tls.key)
@@ -64,7 +64,7 @@ export class TlsOptionsFactory {
       connectionOptions = {
         port: tcp.port,
         host: tcp.host
-      } as ConnectionOptions
+      }
       if (tls.key) {
         connectionOptions.key = TlsOptionsFactory.read(tcp.tls?.key ?? '')
         connectionOptions.cert = tcp.tls?.cert ? TlsOptionsFactory.read(tcp?.tls?.cert) : undefined

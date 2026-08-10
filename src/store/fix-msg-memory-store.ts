@@ -104,7 +104,7 @@ export class FixMsgMemoryStore implements IFixMsgStore {
       lastSeq: arr.length > 0 ? arr[arr.length - 1].seqNum : 0,
       id: this.id,
       length: arr.length
-    } as IFixMsgStoreState
+    }
   }
 
   public async getState (): Promise<IFixMsgStoreState> {

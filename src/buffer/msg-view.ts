@@ -411,7 +411,7 @@ export abstract class MsgView {
       group: (a: ILooseObject, field: ContainedGroupField) => { this.asLooseGroup(a, field) },
       simple: (a: ILooseObject, field: ContainedSimpleField) => { this.asLooseSimple(a, field) },
       component: (a: ILooseObject, field: ContainedComponentField) => { this.asLooseComponent(a, field) }
-    } as ITypeDispatcher<ILooseObject>, def.localAttribute.reduce<ILooseObject>((a: ILooseObject, sf: ContainedSimpleField) => {
+    }, def.localAttribute.reduce<ILooseObject>((a: ILooseObject, sf: ContainedSimpleField) => {
       const def = sf.definition
       const position: number = this.getPosition(def.tag)
       if (position >= 0) {

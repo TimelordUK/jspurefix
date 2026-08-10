@@ -138,7 +138,7 @@ export class IncludeGraph {
             ordered.push({
               parent: next,
               children: includes
-            } as IInclude)
+            })
             q.push(includes)
           }
         }

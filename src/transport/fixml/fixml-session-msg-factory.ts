@@ -31,7 +31,7 @@ export class FixmlSessionMsgFactory extends ASessionMsgFactory {
       TargetCompID: description.TargetCompID,
       SenderSubID: description.SenderSubID,
       TargetSubID: description.TargetSubID
-    } as IStandardHeader
+    }
     return this.mutate(o, 'StandardHeader')
   }
 
@@ -45,14 +45,14 @@ export class FixmlSessionMsgFactory extends ASessionMsgFactory {
         UserRequestType: UserRequestType.LogOnUser,
         // same escape hatch as the ascii factory - see ISessionDescription.Logon
         ...description.Logon
-      } as IUserRequest
+      }
       return this.mutate(o, MsgType.Logon)
     } else {
       const o: IUserResponse = {
         Username: description.Username,
         UserRequestID: userRequestId,
         UserStatus: UserStatus.LoggedIn
-      } as IUserResponse
+      }
       return this.mutate(o, MsgType.Logon)
     }
   }
@@ -63,14 +63,14 @@ export class FixmlSessionMsgFactory extends ASessionMsgFactory {
         Username: this.description.Username,
         UserRequestID: userRequestId,
         UserRequestType: UserRequestType.LogOffUser
-      } as IUserRequest
+      }
       return this.mutate(o, MsgType.Logout)
     } else {
       const o: IUserResponse = {
         Username: this.description.Username,
         UserRequestID: userRequestId,
         UserStatus: UserStatus.NotLoggedIn
-      } as IUserResponse
+      }
       return this.mutate(o, MsgType.Logout)
     }
   }
