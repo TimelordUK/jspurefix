@@ -16,7 +16,7 @@ const selfSignedKey = fs.readFileSync(path.join(fixtures, 'self-signed.key'))
 const selfSignedCert = fs.readFileSync(path.join(fixtures, 'self-signed.crt'))
 
 function tcpWith (tlsSection: any): ITcpTransportDescription {
-  return { host: '127.0.0.1', port: 1234, tls: tlsSection } as unknown as ITcpTransportDescription
+  return { host: '127.0.0.1', port: 1234, tls: tlsSection }
 }
 
 describe('TlsOptionsFactory connection options', () => {

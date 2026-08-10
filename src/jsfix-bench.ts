@@ -178,7 +178,7 @@ async function main (): Promise<void> {
   }
 
   console.log(`${path.relative(root, fixPath)}  ${perInvocation} msg/pass  dict ${argv.dict}`)
-  const suite = await new BenchRunner(benchOptions).runAll(argv.label, cases as IBenchCase[])
+  const suite = await new BenchRunner(benchOptions).runAll(argv.label, cases)
 
   if (argv.json) {
     console.log(JSON.stringify(suite, null, 2))

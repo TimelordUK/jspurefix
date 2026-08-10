@@ -476,13 +476,13 @@ function createOrder (id: number, symbol: string, securityType: SecurityType, si
     OrdType: OrdType.Limit,
     OrderQtyData: {
       OrderQty: qty
-    } as IOrderQtyData,
+    },
     Instrument: {
       SecurityType: securityType,
       Symbol: symbol,
       SecurityID: '459200101',
       SecurityIDSource: SecurityIDSource.IsinNumber
-    } as IInstrument,
+    },
     TimeInForce: TimeInForce.Day
   } as INewOrderSingle
 }

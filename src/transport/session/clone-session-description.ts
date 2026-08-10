@@ -37,5 +37,5 @@ export function cloneSessionDescription (
  * late binding - i.e. wildcard TargetCompID resolved from the peer's Logon.
  */
 export function asMutable (description: ISessionDescription): MutableSessionDescription {
-  return description as MutableSessionDescription
+  return description
 }

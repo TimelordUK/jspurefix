@@ -184,7 +184,7 @@ export class ComponentsParser extends XsdParser {
       this.currentGroup = {
         name: node.attributes.name,
         elements: [] as IElement[]
-      } as IGroup
+      }
     } else if (node.attributes.ref) {
       if (this.currentComplexType) {
         this.currentComplexType.group = node.attributes.ref
@@ -205,7 +205,7 @@ export class ComponentsParser extends XsdParser {
       attributeStack.push({
         name: node.attributes.name,
         attributes: [] as IAttribute[]
-      } as IAttributeGroup)
+      })
     } else if (node.attributes.ref) {
       if (this.currentComplexType) {
         this.currentComplexType.attributeGroup = node.attributes.ref

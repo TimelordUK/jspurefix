@@ -22,7 +22,7 @@ class AppLauncher extends SessionLauncher {
       makeSession: (sessionConfig: IJsFixConfig) => isInitiator
         ? new HttpClient(sessionConfig)
         : new HttpServer(sessionConfig)
-    } as EngineFactory
+    }
   }
 
   async waitFor (ms: number): Promise<any> {

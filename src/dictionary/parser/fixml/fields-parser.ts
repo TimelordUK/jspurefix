@@ -64,7 +64,7 @@ export class FieldsParser extends XsdParser {
       case 'xs:simpleType': {
         this.current = {
           simpleTypeName: node.attributes.name
-        } as ISimpleField
+        }
         break
       }
 

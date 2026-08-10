@@ -109,6 +109,6 @@ export class WinstonLogger {
           message: `${e.message} : ${e.stack}`
         })
       }
-    } as IJsFixLogger
+    }
   }
 }
