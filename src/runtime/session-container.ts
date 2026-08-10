@@ -8,7 +8,6 @@ import {
   TcpAcceptorListener, RecoveringTcpInitiator,
   TcpInitiatorConnector, TcpInitiator
 } from '../transport/tcp'
-import { HttpInitiator, HttpAcceptorListener, HttpJsonSampleAdapter } from '../transport/http'
 import { ISessionMsgFactory, MsgTransmitter, ISessionDescription } from '../transport'
 import { AsciiMsgTransmitter } from '../transport/ascii/ascii-msg-transmitter'
 import { FixmlMsgTransmitter } from '../transport/fixml/fixml-msg-transmitter'
@@ -18,7 +17,15 @@ import { ElasticBuffer, MsgEncoder, MsgParser } from '../buffer'
 import { AsciiParser, AsciiParserState, AsciiSegmentParser } from '../buffer/ascii'
 import { FixmlEncoder, FiXmlParser } from '../buffer/fixml'
 import { FixEntity } from '../transport/fix-entity'
-import { IHttpAdapter } from '../transport/http/http-adapter'
+import type { IHttpAdapter } from '../transport/http/http-adapter'
+
+/**
+ * The http transport pulls in express.  Only a fixml session registers it, so resolve
+ * it on demand - an ascii application should neither load that tree nor inherit it.
+ */
+function httpTransport (): typeof import('../transport/http') {
+  return require('../transport/http')
+}
 
 /**
  * Supplies the session message factory for a description.  Return null to accept the
@@ -165,10 +172,11 @@ export class SessionContainer {
       useClass: FixmlEncoder
     })
     sessionContainer.registerInstance<ElasticBuffer>(DITokens.TransmitBuffer, new ElasticBuffer(sendSize))
-    sessionContainer.register<HttpAcceptorListener>(HttpAcceptorListener, {
+    const { HttpInitiator, HttpAcceptorListener, HttpJsonSampleAdapter } = httpTransport()
+    sessionContainer.register(HttpAcceptorListener, {
       useClass: HttpAcceptorListener
     })
-    sessionContainer.register<HttpInitiator>(HttpInitiator, {
+    sessionContainer.register(HttpInitiator, {
       useClass: HttpInitiator
     })
     if (this.isInitiator(description)) {

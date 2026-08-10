@@ -33,3 +33,27 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Gate on what consumers actually inherit. Dev-only toolchain advisories are
+      # reported below but do not fail the build.
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Audit all dependencies (report only)
+        run: npm audit || true

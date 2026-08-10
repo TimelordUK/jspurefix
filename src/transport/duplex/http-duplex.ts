@@ -1,7 +1,6 @@
 import { FixDuplex } from './fix-duplex'
 import { Readable, Writable } from 'stream'
-import axios from 'axios'
-import { IHttpAdapter } from '../http/http-adapter'
+import type { IHttpAdapter } from '../http/http-adapter'
 
 export class HttpDuplex extends FixDuplex {
   public constructor (public readonly adapter: IHttpAdapter) {
@@ -29,6 +28,9 @@ export class HttpDuplex extends FixDuplex {
           const adapter = this.adapter
           const options = adapter.getOptions(data)
           if (options) {
+            // resolved here rather than at module scope - this file is on the barrel
+            // export, and an ascii application should not load axios to reach it
+            const axios = require('axios').default
             axios(options).then((message: any) => {
               const body = adapter.endMessage(message)
               forward.push(body)
