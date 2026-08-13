@@ -37,6 +37,7 @@ export abstract class AsciiSession extends FixSession {
   protected readonly wildcardTarget: boolean
   private identityBound: boolean
   private bindInProgress: boolean = false
+  private logonVerdictPending: boolean = false
   private readonly pendingRx: Array<{ msgType: string, view: MsgView }> = []
   private readonly clock: DefaultFixClock = new DefaultFixClock()
 
@@ -548,6 +549,13 @@ export abstract class AsciiSession extends FixSession {
       this.onMsgBeforeIdentity(msgType, view)
       return
     }
+    if (this.logonVerdictPending) {
+      // the application is still deciding whether to accept this peer - hold anything
+      // it sends in the meantime rather than acting on it (see awaitLogonVerdict)
+      this.sessionLogger.info(`queueing '${msgType}' received while awaiting logon verdict`)
+      this.pendingRx.push({ msgType, view: view.clone() })
+      return
+    }
     this.dispatchMsg(msgType, view)
   }
 
@@ -587,9 +595,11 @@ export abstract class AsciiSession extends FixSession {
     this.bindIdentity(peerCompId).then(() => {
       this.bindInProgress = false
       this.identityBound = true
+      // dispatching the logon can itself open a second gate - an application whose
+      // onLogon returns a promise is now deciding - so let resumeRx work out whether
+      // it is actually safe to let the socket run again
       this.dispatchMsg(MsgType.Logon, logon)
-      this.drainPendingRx()
-      this.transport?.duplex.readable?.resume()
+      this.resumeRx()
     }).catch((e: Error) => {
       this.bindInProgress = false
       this.pendingRx.length = 0
@@ -597,8 +607,34 @@ export abstract class AsciiSession extends FixSession {
     })
   }
 
+  /**
+   * True while an asynchronous step in the logon handshake is still running and no
+   * received message may be acted on: either the identity bind of a wildcard acceptor
+   * or an application still deciding the logon verdict.
+   */
+  private rxGated (): boolean {
+    return this.bindInProgress || this.logonVerdictPending
+  }
+
+  /**
+   * Let the socket run again now a gate has opened - but only if no other gate is
+   * still shut.  Draining can re-gate (a replayed message could start another async
+   * step) so the check is repeated after the queue is played out; whichever gate
+   * closes last is the one that resumes.
+   */
+  private resumeRx (): void {
+    if (this.rxGated()) return
+    this.drainPendingRx()
+    if (this.rxGated()) return
+    this.transport?.duplex.readable?.resume()
+  }
+
   private drainPendingRx (): void {
     while (this.pendingRx.length > 0) {
+      if (this.rxGated()) {
+        this.sessionLogger.info('suspending replay - logon handshake gated again')
+        return
+      }
       const queued = this.pendingRx.shift()
       if (!queued) break
       if (this.sessionState.state === SessionState.Stopped) {
@@ -734,9 +770,66 @@ export abstract class AsciiSession extends FixSession {
     const state = this.sessionState
     state.peerHeartBeatSecs = view.getTyped(MsgTag.HeartBtInt) as number
     state.peerCompId = view.getTyped(MsgTag.SenderCompID) as string
-    const res = this.onLogon(view, userName as string, password as string)
-    // currently not using this.
-    logger.info(`peerLogon onLogon returns ${res}`)
+
+    const verdict = this.onLogon(view, userName as string, password as string)
+    if (typeof verdict === 'boolean') {
+      // the common case - finish the handshake in this same event, so an application
+      // with a synchronous onLogon sees exactly the timing it always has
+      this.completePeerLogon(view, verdict, resetSeqNumFlag)
+      return
+    }
+    this.awaitLogonVerdict(view, verdict, resetSeqNumFlag)
+  }
+
+  /**
+   * onLogon handed back a promise - the application is checking the credentials
+   * against something asynchronous.  Nothing may be sent or acted on until it
+   * answers, so pause the socket and queue whatever the peer says in the meantime.
+   *
+   * The view has to be cloned: AsciiParser recycles its tag index and buffer as soon
+   * as the current event returns, so the original is meaningless by the time the
+   * promise settles.  Anything already read off it - peerReset here - is carried
+   * across as a value rather than read again from the clone.
+   */
+  private awaitLogonVerdict (view: MsgView, verdict: Promise<boolean>, peerReset: boolean | undefined): void {
+    const logger = this.sessionLogger
+    logger.info('onLogon returned a promise - awaiting logon verdict')
+    this.logonVerdictPending = true
+    const logon = view.clone()
+    this.transport?.duplex.readable?.pause()
+
+    verdict.then((accepted: boolean) => {
+      this.logonVerdictPending = false
+      if (this.sessionState.state === SessionState.Stopped) {
+        logger.info('session stopped while awaiting logon verdict - discarding')
+        this.pendingRx.length = 0
+        return
+      }
+      this.completePeerLogon(logon, accepted, peerReset)
+      if (!accepted) {
+        // completePeerLogon has torn the session down - nothing queued can be acted on
+        this.pendingRx.length = 0
+        return
+      }
+      this.resumeRx()
+    }).catch((e: Error) => {
+      this.logonVerdictPending = false
+      this.pendingRx.length = 0
+      // a credential check that throws is a refusal, not a reason to let the peer in
+      this.rejectLogon(`onLogon failed: ${e.message}`)
+    })
+  }
+
+  /**
+   * The application has accepted or refused the peer - finish the handshake either way.
+   */
+  private completePeerLogon (view: MsgView, accepted: boolean, peerReset: boolean | undefined): void {
+    const logger = this.sessionLogger
+    logger.info(`peerLogon onLogon returns ${accepted}`)
+    if (!accepted) {
+      this.rejectLogon('logon rejected by application')
+      return
+    }
     if (this.acceptor) {
       this.setState(SessionState.InitiationLogonResponse)
       logger.info('acceptor responds to logon request')
@@ -745,7 +838,7 @@ export abstract class AsciiSession extends FixSession {
       // reset our sequences before sending our logon response.
       // This handles the broker-reset pattern where client sends N, we respond with Y.
       const weReset = this.config.description.ResetSeqNumFlag
-      if (weReset && resetSeqNumFlag !== true) {
+      if (weReset && peerReset !== true) {
         logger.info('acceptor sending ResetSeqNumFlag=Y (peer sent N), resetting sequences')
         // Fire-and-forget async coordinator call, set values synchronously
         this.coordinator.resetAsAcceptor().catch((e: Error) => {
@@ -764,7 +857,7 @@ export abstract class AsciiSession extends FixSession {
         }
       }
 
-      this.sendLogon() // if res send response else reject, terminate
+      this.sendLogon()
     } else { // as an initiator the acceptor has responded
       logger.info('initiator receives logon response')
       this.setState(SessionState.InitiationLogonReceived)
@@ -777,6 +870,21 @@ export abstract class AsciiSession extends FixSession {
     }
     logger.info('system ready, inform app')
     this.onReady(view)
+  }
+
+  /**
+   * The application refused this peer.  FIX expects the refusing side to say why and
+   * then hang up rather than simply going quiet, so send a Logout carrying the reason
+   * before dropping the transport - the order matters, send() discards anything
+   * offered once the session has stopped.
+   *
+   * onReady is never reached and no heartbeat timer starts; the application learns the
+   * outcome through onStopped(error).
+   */
+  private rejectLogon (reason: string): void {
+    this.sessionLogger.warning(`refusing peer logon: ${reason}`)
+    this.sendLogout(reason)
+    this.terminate(new Error(reason))
   }
 
   private sendTestRequest (): void {

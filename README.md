@@ -13,6 +13,7 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
 - [Quickstart](#quickstart)
 - [Session Configuration](#session-configuration)
   - [Customising the Logon](#customising-the-logon)
+  - [Accepting or refusing a logon](#accepting-or-refusing-a-logon)
   - [TLS](#tls)
   - [Body length padding](#body-length-padding)
 - [Persistence & Recovery](#persistence--recovery)
@@ -167,6 +168,29 @@ Most counterparties want a tag on the Logon the standard message does not carry.
 ```
 
 A field named here must also be declared on `Logon` in the dictionary the session loads, or the encoder has no tag to write it to and will say so in the log. For values computed at run time, or for a header a counterparty stamps differently, supply your own session message factory. See [docs/custom-logon.md](docs/custom-logon.md) for the whole picture.
+
+### Accepting or refusing a logon
+
+`onLogon` is where an acceptor decides who gets a session. Return `true` to let the handshake finish; return `false` and the peer is sent a `Logout` explaining why and then disconnected — `onReady` is never reached and no heartbeat starts. The application learns the outcome through `onStopped(error)`.
+
+```ts
+protected onLogon (view: MsgView, user: string, password: string): boolean {
+  return user === 'js-client' && password === this.expectedPassword
+}
+```
+
+Credentials usually have to be checked against something the engine cannot wait on synchronously — an http api, a database, a secrets store. Return a promise and the session waits for it:
+
+```ts
+protected async onLogon (view: MsgView, user: string, password: string): Promise<boolean> {
+  const account = await this.directory.lookup(user)
+  return account?.enabled === true && await account.verify(password)
+}
+```
+
+While that promise is pending the transport is paused and anything the peer sends is queued, then replayed in order once the verdict arrives — a counterparty that pipelines messages behind its Logon will not have them dropped or reordered. If the promise rejects, the logon is refused rather than allowed through, and the rejection message is carried to the peer.
+
+An initiator can use the same hook: there `onLogon` fires on the acceptor's logon response, so returning `false` refuses the counterparty that answered.
 
 ### TLS
 
