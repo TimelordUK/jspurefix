@@ -33,11 +33,17 @@ export class AsciiSessionMsgFactory extends ASessionMsgFactory {
     return this.mutate(o, MsgType.Logon)
   }
 
-  public logout (text: string): ILooseObject {
+  /**
+   * ISessionMsgFactory declares logout (msgType, text) and FixSession calls it that
+   * way.  This override used to take the text alone, so it silently bound the msg
+   * type to Text and every Logout jspurefix sent carried '58=5' in place of the
+   * reason - the caller's message was dropped on the floor.
+   */
+  public logout (msgType: string, text: string): ILooseObject {
     const o: ILogout = {
       Text: text
     } as ILogout
-    return this.mutate(o, MsgType.Logout)
+    return this.mutate(o, msgType ?? MsgType.Logout)
   }
 
   public header (msgType: string, seqNum: number, time: Date, overrideData?: Partial<IStandardHeader>): ILooseObject {

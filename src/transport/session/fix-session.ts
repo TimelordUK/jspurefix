@@ -631,11 +631,21 @@ export abstract class FixSession extends events.EventEmitter {
    */
   protected abstract onStopped (error?: Error): void
   /**
-   * Placeholder infomring the application of a peer login attempt.
+   * Inform the application of a peer login attempt and ask it to accept or reject.
+   *
+   * Return true to let the session continue.  Return false to refuse the peer: a
+   * Logout carrying a Text reason is sent and the transport is dropped, so onReady
+   * is never reached and no heartbeat is started.
+   *
+   * The verdict may be returned as a promise, for applications that must check the
+   * credentials against an async source such as an http api or a database.  While
+   * that promise is pending the transport is paused and any message the peer sends
+   * is queued, then replayed in order once the verdict arrives.
+   *
    * @param view the login message
    * @param user extracted user from message
    * @param password extracted password from the message.
    * @protected
    */
-  protected abstract onLogon (view: MsgView, user: string, password: string): boolean
+  protected abstract onLogon (view: MsgView, user: string, password: string): boolean | Promise<boolean>
 }
