@@ -25,8 +25,14 @@ export class RecoveringTcpInitiator extends FixEntity {
   private initiator: TcpInitiator
   private transport: MsgTransport
   private th: Timeout | null = null
-  public recoveryAttemptSecs: number = 5
-  public backoffFailConnectSecs: number = 30
+  private stopRequested: boolean = false
+  public static readonly DefaultRecoveryAttemptSecs = 5
+  public static readonly DefaultBackoffFailConnectSecs = 30
+  public static readonly DefaultConnectTimeoutSecs = 60
+
+  public recoveryAttemptSecs: number = RecoveringTcpInitiator.DefaultRecoveryAttemptSecs
+  public backoffFailConnectSecs: number = RecoveringTcpInitiator.DefaultBackoffFailConnectSecs
+  public connectTimeoutSecs: number = RecoveringTcpInitiator.DefaultConnectTimeoutSecs
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
     super(jsFixConfig)
@@ -40,6 +46,14 @@ export class RecoveringTcpInitiator extends FixEntity {
     if (!this.tcp) {
       throw new Error('no tcp in session description need tcp { host: hostname, port: port }')
     }
+    // the retry policy used to live only in these fields, which nothing set - an
+    // application could not change how hard or how long the engine tried to get its
+    // transport back without subclassing the launcher.  See issue #72.
+    this.recoveryAttemptSecs = this.application.recoveryAttemptSeconds ?? this.recoveryAttemptSecs
+    this.backoffFailConnectSecs = this.application.backoffFailConnectSeconds ?? this.backoffFailConnectSecs
+    this.connectTimeoutSecs = this.application.connectTimeoutSeconds ?? this.connectTimeoutSecs
+    this.logger.info(`recovery policy: connectTimeout=${this.connectTimeoutSecs}s, ` +
+      `recoveryAttempt=${this.recoveryAttemptSecs}s, backoffFailConnect=${this.backoffFailConnectSecs}s`)
     this.createSession(jsFixConfig)
   }
 
@@ -53,6 +67,13 @@ export class RecoveringTcpInitiator extends FixEntity {
     this.session.on('end', () => {
       this.logger.info('session has permanently ended')
       this.emit('end', this)
+    })
+    // A lost transport is this initiator's normal course of events, and recovery is
+    // driven by session.run() rejecting rather than by this event.  But whilst waiting
+    // between attempts there is no run in flight to carry a listener, so a stop landing
+    // then would emit 'error' to nobody - which node treats as fatal.
+    this.session.on('error', (e: Error) => {
+      this.logger.info(`session error: ${e.message}`)
     })
     this.session.setState(SessionState.DisconnectedNoConnectionToday)
   }
@@ -104,7 +125,31 @@ export class RecoveringTcpInitiator extends FixEntity {
   // succeed in which case can restart session or fails in which case wait and
   // restart an attempt to connect
 
+  /**
+   * Give up recovering and end the session for good.
+   *
+   * Without this a resilient initiator could not be shut down: losing the transport
+   * schedules another attempt, and nothing cancelled that timer, so the process stayed
+   * alive retrying a counterparty the application had finished with.  Safe to call
+   * twice, and safe whilst waiting between attempts with no transport at all.
+   */
+  public stop (): void {
+    if (this.stopRequested) return
+    this.stopRequested = true
+    this.logger.info('stop requested - cancelling recovery')
+    this.clearTimer()
+    if (this.session.getState() !== SessionState.Stopped) {
+      this.session.requestStop('initiator stopped')
+    }
+    this.emit('end', this)
+  }
+
   private recover (): void {
+    if (this.stopRequested) {
+      this.logger.info('transport lost after a stop was requested - not recovering')
+      this.emit('end', this)
+      return
+    }
     this.session.setState(SessionState.DetectBrokenNetworkConnection)
     this.logger.info(`recover session transport - attempt in ${this.recoveryAttemptSecs} secs`)
     if (!this.resetSeq()) {
@@ -115,7 +160,7 @@ export class RecoveringTcpInitiator extends FixEntity {
       }
     }
     this.th = setTimeout(() => {
-      this.connect(60).then(t => {
+      this.connect(this.connectTimeoutSecs).then(t => {
         this.logger.info(`new transport ${t.id}`)
       }).catch((e) => {
         this.logger.info(`failed to re-connect ${e.message} - backoff for ${this.backoffFailConnectSecs}`)
@@ -135,18 +180,34 @@ export class RecoveringTcpInitiator extends FixEntity {
 
   // for first connection - reject if no initial connection established within timeout
   // once connection established, will not resolve until session is ended - i.e. lost
-  // connections are re-established using the same session instance.
+  // connections are re-established using the same session instance.  So this promise
+  // is the lifetime of the application, not a signal that the session is up: for that,
+  // use onReady on the session.  See issue #72.
 
-  public async run (initialTimeout: number = 60): Promise<any> {
+  public async run (initialTimeout: number = this.connectTimeoutSecs): Promise<any> {
     return await new Promise<any>((resolve, reject) => {
-      this.connect(initialTimeout).then(() => {
-        this.on('end', () => {
-          this.clearTimer()
-          this.initiator.end()
-          this.logger.info(`run: transport ${this.transport.id} gracefully ends ${initialTimeout} - resolving`)
-          resolve(null)
-        })
-      }).catch(e => {
+      // 'end' can arrive more than once - a stop both ends the session and calls off
+      // recovery, and each path announces itself - so settle only on the first.  The
+      // listener goes on before connecting, not after: a stop landing whilst the first
+      // connection is still being attempted has to be able to end this too, and until
+      // now there was nothing listening that early to hear it.
+      let ended = false
+      const finish = (): void => {
+        if (ended) return
+        ended = true
+        this.clearTimer()
+        this.initiator?.end()
+        this.logger.info(`run: transport ${this.transport?.id ?? 'none'} ends - resolving`)
+        resolve(null)
+      }
+      this.on('end', finish)
+
+      this.connect(initialTimeout).catch(e => {
+        if (this.stopRequested) {
+          this.logger.info('run: first connection abandoned on stop - resolving')
+          finish()
+          return
+        }
         this.logger.info(`run: failed to connect to first transport ${initialTimeout} - rejecting`)
         reject(e)
       })
