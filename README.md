@@ -567,6 +567,8 @@ Numbers below are illustrative — generated messages, single-threaded, parser-o
 
 † The SD and TC fixtures have shrunk since the older measurements were taken (SD was 229 fields / 2 466 chars, TC was 578 fields / 5 741 chars), so the prior numbers aren't comparable with the current fixture and have been dropped from the row. Re-running them on the older hardware would produce a clean third column. Ryzen measurements taken on Node 24 LTS, WSL2.
 
+To measure a change to a hot path rather than the engine as a whole, see [docs/benchmarking.md](docs/benchmarking.md). Measuring a *live* session — throughput, sequence health, session state, at a cost low enough to leave switched on — is not yet possible; the design for it is in [docs/instrumentation.md](docs/instrumentation.md).
+
 ## Developing on jspurefix
 
 Clone and build:
