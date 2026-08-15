@@ -9,6 +9,7 @@ import { DITokens } from '../../runtime/di-tokens'
 import { ITcpTransportDescription } from './tcp-transport-description'
 import { IMsgApplication } from '../msg-application'
 import { FixEntity } from '../fix-entity'
+import { describeConnectError } from './connect-error'
 
 /*
    create one application session instance - and recover a lost transport.  Hence, the application
@@ -163,7 +164,7 @@ export class RecoveringTcpInitiator extends FixEntity {
       this.connect(this.connectTimeoutSecs).then(t => {
         this.logger.info(`new transport ${t.id}`)
       }).catch((e) => {
-        this.logger.info(`failed to re-connect ${e.message} - backoff for ${this.backoffFailConnectSecs}`)
+        this.logger.info(`failed to re-connect: ${describeConnectError(e)} - backoff for ${this.backoffFailConnectSecs}`)
         this.th = setTimeout(() => {
           this.logger.info('returning to recover()')
           setImmediate(() => {

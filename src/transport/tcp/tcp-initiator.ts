@@ -4,12 +4,12 @@ import { MsgTransport } from '../factory'
 import { IJsFixConfig, IJsFixLogger } from '../../config'
 import { TcpDuplex, FixDuplex } from '../duplex'
 
-import * as util from 'util'
 import { connect as tlsConnect, ConnectionOptions, TLSSocket } from 'tls'
 import { createConnection } from 'net'
 import Timeout = NodeJS.Timeout
 import { TlsOptionsFactory } from './tls-options-factory'
 import { describeConnectionOptions, describeNegotiated, describePeerCertificate } from './tls-diagnostics'
+import { describeConnectError, withConnectReason } from './connect-error'
 import { inject, injectable } from 'tsyringe'
 import { DITokens } from '../../runtime/di-tokens'
 import { ITcpTransportDescription } from './tcp-transport-description'
@@ -74,7 +74,7 @@ export class TcpInitiator extends FixInitiator {
               // connect() whose timeout expires before the first retry interval fires - the
               // default case, timeout and reconnectSeconds are both 5 - reported a generic
               // "timeout whilst connecting" and threw away the reason.  see #94.
-              this.logger.info(`first connect attempt failed: ${first.message}`)
+              this.logger.info(`first connect attempt failed: ${describeConnectError(first)}`)
               this.repeatConnect(timeoutSeconds, first)
                 .then((t: MsgTransport) => { resolve(t) })
                 .catch((e: Error) => { reject(e) })
@@ -212,7 +212,7 @@ export class TcpInitiator extends FixInitiator {
             resolve(t)
           }).catch((e: Error) => {
             lastError = e
-            this.logger.info(`${name}: retries ${retries} ${e.message}`)
+            this.logger.info(`${name}: retries ${retries} ${describeConnectError(e)}`)
           })
       }, reconnectSeconds * 1000)
       // a plain timer, not a promisified one: promisify(setTimeout) hands back no
@@ -223,7 +223,10 @@ export class TcpInitiator extends FixInitiator {
       this.timeoutTh = setTimeout(() => {
         this.clearTimer()
         this.state = InitiatorState.Stopped
-        const e = lastError ?? new Error(`${name}: timeout of ${timeoutSeconds} whilst connecting`)
+        // this error is what the application catches from run() - so give it a message
+        // it can print.  An AggregateError arrives with none at all, which meant a
+        // caller handling a failed connect had nothing to report but an empty string.
+        const e = withConnectReason(lastError ?? new Error(`${name}: timeout of ${timeoutSeconds} whilst connecting`))
         this.logger.warning(`${name}: giving up after ${timeoutSeconds}s and ${retries} retries, last error: ${e.message}`)
         reject(e)
       }, timeoutSeconds * 1000)
