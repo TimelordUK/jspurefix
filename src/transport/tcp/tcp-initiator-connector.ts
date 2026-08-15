@@ -9,8 +9,13 @@ import { FixEntity } from '../fix-entity'
 
 @injectable()
 export class TcpInitiatorConnector extends FixEntity {
+  public static readonly DefaultConnectTimeoutSecs = 22
+
+  public connectTimeoutSecs: number = TcpInitiatorConnector.DefaultConnectTimeoutSecs
+
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
+    this.connectTimeoutSecs = config.description.application?.connectTimeoutSeconds ?? this.connectTimeoutSecs
   }
 
   async start (reconnectTimeout: number = 0): Promise<any> {
@@ -62,7 +67,7 @@ export class TcpInitiatorConnector extends FixEntity {
     const logger = this.config.logFactory.logger('initiator')
     const initiator: FixInitiator = this.config.sessionContainer.resolve<FixInitiator>(TcpInitiator)
     logger.info('connecting ...')
-    const initiatorTransport: MsgTransport = await initiator.connect(22)
+    const initiatorTransport: MsgTransport = await initiator.connect(this.connectTimeoutSecs)
     logger.info('... connected, run session')
     await initiatorSession.run(initiatorTransport)
     logger.info('ends')

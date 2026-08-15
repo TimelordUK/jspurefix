@@ -57,6 +57,7 @@ export abstract class SessionLauncher {
   }
 
   private acceptorEntity: FixEntity | null = null
+  private initiatorEntity: FixEntity | null = null
   private stopRequested: boolean = false
 
   protected async getAcceptor (sessionContainer: DependencyContainer): Promise<any> {
@@ -78,6 +79,11 @@ export abstract class SessionLauncher {
   protected async getInitiator (sessionContainer: DependencyContainer): Promise<any> {
     if (sessionContainer.isRegistered<FixEntity>(DITokens.FixEntity)) {
       const entity = sessionContainer.resolve<FixEntity>(DITokens.FixEntity)
+      this.initiatorEntity = entity
+      if (this.stopRequested) {
+        this.logger.info('stop requested before the initiator started - not connecting')
+        return this.empty()
+      }
       return entity.start()
     } else {
       return this.empty()
@@ -95,7 +101,8 @@ export abstract class SessionLauncher {
   }
 
   /**
-   * Stop what this launcher started - in practice, close the acceptor's listener.
+   * Stop what this launcher started - close the acceptor's listener, and give up a
+   * resilient initiator's attempts to get its transport back.
    *
    * An acceptor is meant to outlive any one counterparty, so nothing closes its
    * listener on its own.  That is right for a venue and wrong for an application
@@ -107,12 +114,18 @@ export abstract class SessionLauncher {
    * usual arrangement as soon as more than one client is involved.  There was then
    * no way to shut a listener down short of killing the process.
    *
-   * Safe before start (the request is remembered and the listener never opens), and
-   * safe to call twice.  run() resolves once the listener has closed.
+   * A resilient initiator had the same problem from the other side: losing the
+   * transport schedules another attempt, so it too kept the process alive with no way
+   * to call it off.  See issue #72.
+   *
+   * Safe before start (the request is remembered and neither is opened), and safe to
+   * call twice.  run() resolves once the listener has closed and the initiator has
+   * given up.
    */
   public stop (): void {
     this.stopRequested = true
     this.stopAcceptor()
+    this.stopInitiator()
   }
 
   public async run (): Promise<boolean> {
@@ -224,6 +237,15 @@ export abstract class SessionLauncher {
 
   private stopAcceptor (): void {
     const entity = this.acceptorEntity as any
+    if (entity && typeof entity.stop === 'function') {
+      entity.stop()
+    }
+  }
+
+  // only a resilient initiator has anything to call off - a plain one ends with its
+  // session, so it has no stop to find here
+  private stopInitiator (): void {
+    const entity = this.initiatorEntity as any
     if (entity && typeof entity.stop === 'function') {
       entity.stop()
     }

@@ -13,6 +13,8 @@ A fast, fully native TypeScript [FIX protocol](https://www.fixtrading.org/) engi
 - [Quickstart](#quickstart)
 - [Session Configuration](#session-configuration)
   - [Customising the Logon](#customising-the-logon)
+  - [Reconnecting initiators](#reconnecting-initiators)
+  - [Knowing when the session is up](#knowing-when-the-session-is-up)
   - [Accepting or refusing a logon](#accepting-or-refusing-a-logon)
   - [TLS](#tls)
   - [Body length padding](#body-length-padding)
@@ -168,6 +170,50 @@ Most counterparties want a tag on the Logon the standard message does not carry.
 ```
 
 A field named here must also be declared on `Logon` in the dictionary the session loads, or the encoder has no tag to write it to and will say so in the log. For values computed at run time, or for a header a counterparty stamps differently, supply your own session message factory. See [docs/custom-logon.md](docs/custom-logon.md) for the whole picture.
+
+### Reconnecting initiators
+
+By default an initiator makes one connection and its `run()` ends when that session does. Set `resilient` and it keeps the same session across transports instead — losing the connection schedules another attempt, and the session resumes with the recovery policy configured on the description (replay from the last sequence number, or a reset).
+
+```json
+{
+  "application": {
+    "type": "initiator",
+    "name": "test_client",
+    "resilient": true,
+    "reconnectSeconds": 10,
+    "connectTimeoutSeconds": 60,
+    "recoveryAttemptSeconds": 5,
+    "backoffFailConnectSeconds": 30,
+    "tcp": { "host": "localhost", "port": 2344 },
+    "protocol": "ascii",
+    "dictionary": "repo44"
+  }
+}
+```
+
+| field | applies to | meaning | default |
+| --- | --- | --- | --- |
+| `resilient` | initiator | re-establish a lost transport and resume the same session | `false` |
+| `reconnectSeconds` | initiator | wait between attempts whilst trying to establish a connection | `5` |
+| `connectTimeoutSeconds` | initiator | how long to keep attempting before giving up | `60` resilient, `22` otherwise |
+| `recoveryAttemptSeconds` | resilient only | wait after losing the transport before trying to get it back | `5` |
+| `backoffFailConnectSeconds` | resilient only | wait after a failed recovery before trying again | `30` |
+
+Call `stop()` on the launcher to give up: it cancels any pending recovery and ends the session, which is what lets the process exit. Without it a resilient initiator keeps trying for as long as it is running.
+
+### Knowing when the session is up
+
+`SessionLauncher.run()` is the lifetime of the application, not a signal that the session is ready. For an initiator it resolves when the session **ends**; it rejects if the first connection cannot be established within `connectTimeoutSeconds`. A resilient initiator does not resolve on a dropped connection at all — getting it back is the whole point — so it resolves only once you `stop()` it or the session ends for good.
+
+To act when the session comes up, use `onReady` on your session class:
+
+```ts
+protected onReady (_view: MsgView): void {
+  // logged on - safe to send
+  this.send(MsgType.MarketDataRequest, this.subscription())
+}
+```
 
 ### Accepting or refusing a logon
 
