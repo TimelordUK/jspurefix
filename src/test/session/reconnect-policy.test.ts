@@ -219,8 +219,9 @@ test('a resilient initiator gets its transport back on the configured schedule',
 
   const acceptor = new CountingAcceptorLauncher(acceptorDescription(port))
   const acceptorRun = acceptor.run().catch((e: Error) => e)
-  await waitFor(() => acceptor.sessions.length >= 0, 'acceptor start')
 
+  // no need to wait for the listener - reconnectSeconds paces the initiator's attempts
+  // inside its connect timeout, so it simply retries until the acceptor is up
   const initiator = new RealInitiatorLauncher(initiatorDescription({
     resilient: true,
     connectTimeoutSeconds: 10,
@@ -230,27 +231,36 @@ test('a resilient initiator gets its transport back on the configured schedule',
   }))
   const initiatorRun = initiator.run().catch((e: Error) => e)
 
-  await waitFor(() => acceptor.sessions.length === 1 && acceptor.sessions[0].readyCount === 1,
-    'first session logged on')
+  try {
+    await waitFor(() => acceptor.sessions.length === 1 && acceptor.sessions[0].readyCount === 1,
+      'first session logged on')
 
-  // the counterparty vanishes - the sort of thing resilient exists for
-  acceptor.sessions[0].requestStop('simulating a dropped connection')
+    // the counterparty vanishes - the sort of thing resilient exists for
+    acceptor.sessions[0].requestStop('simulating a dropped connection')
 
-  // recoveryAttemptSeconds is 1, so a second connection should be accepted well inside
-  // the default 5 this test would otherwise have had to wait for
-  await waitFor(() => acceptor.sessions.length === 2 && acceptor.sessions[1].readyCount === 1,
-    'reconnect and second logon')
+    // recoveryAttemptSeconds is 1, so a second connection should be accepted well
+    // inside the default 5 this test would otherwise have had to wait for.
+    //
+    // Wait on the initiator, not the acceptor.  An acceptor is ready the moment it has
+    // sent its logon response, whilst the initiator is ready only once that response
+    // has crossed back and been processed - so the two are never ready in the same
+    // turn, and asserting the initiator's count off the acceptor's readiness is a race
+    // that loopback hides on a quiet machine and a loaded CI runner does not.
+    await waitFor(() => initiator.sessions[0]?.readyCount === 2,
+      'initiator logged on again over a new transport')
 
-  // and it is the same session object throughout - the point of a resilient initiator
-  // is that the session survives the transport
-  expect(initiator.sessions.length).toBe(1)
-  expect(initiator.sessions[0].readyCount).toBe(2)
-
-  // and it can be called off - before this, losing the transport always scheduled
-  // another attempt, so a resilient initiator held the process open for good
-  initiator.stop()
-  acceptor.stop()
-  await Promise.all([acceptorRun, initiatorRun])
+    // it is the same session object throughout - the point of a resilient initiator is
+    // that the session survives the transport
+    expect(initiator.sessions.length).toBe(1)
+    expect(acceptor.sessions.length).toBe(2)
+  } finally {
+    // in a finally so a failed assertion still releases the listener and the recovery
+    // timer.  Leaking those does not just affect this test - jest cannot exit, and the
+    // whole run hangs on a runner that has no terminal to interrupt it
+    initiator.stop()
+    acceptor.stop()
+    await Promise.all([acceptorRun, initiatorRun])
+  }
 }, 40000)
 
 test('a resilient initiator gives up when the launcher is stopped', async () => {
@@ -272,9 +282,19 @@ test('a resilient initiator gives up when the launcher is stopped', async () => 
     return r
   })
 
-  await new Promise<void>(resolve => { setTimeout(resolve, 500) })
-  expect(settled).toBe(false)
+  try {
+    await new Promise<void>(resolve => { setTimeout(resolve, 500) })
+    // still retrying - nothing is listening, and the 5s connect timeout has not run out
+    const settledBeforeStop = settled
 
-  initiator.stop()
-  await waitFor(() => settled, 'run to settle after stop', 10000)
+    initiator.stop()
+    await waitFor(() => settled, 'run to settle after stop', 10000)
+
+    // asserted after the stop rather than before it, so a failure here cannot skip the
+    // stop and leave the retry loop running for the rest of the suite
+    expect(settledBeforeStop).toBe(false)
+  } finally {
+    initiator.stop()
+    await run
+  }
 }, 30000)

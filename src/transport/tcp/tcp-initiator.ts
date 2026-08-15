@@ -28,6 +28,7 @@ export class TcpInitiator extends FixInitiator {
   private readonly logger: IJsFixLogger
   private duplex: FixDuplex
   private th: Timeout | null = null
+  private timeoutTh: Timeout | null = null
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
     super(jsFixConfig.description.application ?? null)
@@ -189,13 +190,15 @@ export class TcpInitiator extends FixInitiator {
       clearInterval(this.th)
       this.th = null
     }
+    if (this.timeoutTh) {
+      clearTimeout(this.timeoutTh)
+      this.timeoutTh = null
+    }
   }
 
   private async repeatConnect (timeoutSeconds: number, initialError?: Error): Promise < MsgTransport > {
     return await new Promise<MsgTransport>(async (resolve, reject) => {
       const application = this.application
-      const promisify = util.promisify
-      const timeoutPromise = promisify(setTimeout)
       const reconnectSeconds = application?.reconnectSeconds ?? 5
       let retries = 0
       let lastError: Error | undefined = initialError
@@ -212,15 +215,18 @@ export class TcpInitiator extends FixInitiator {
             this.logger.info(`${name}: retries ${retries} ${e.message}`)
           })
       }, reconnectSeconds * 1000)
-      timeoutPromise(timeoutSeconds * 1000).then(() => {
+      // a plain timer, not a promisified one: promisify(setTimeout) hands back no
+      // handle, so this deadline could never be cancelled.  Connecting successfully
+      // cleared the retry interval and left this one running to its full term - up to
+      // the 60s an initiator allows - holding the event loop open long after the
+      // session was up, and stopping a process (or a test runner) from exiting.
+      this.timeoutTh = setTimeout(() => {
         this.clearTimer()
         this.state = InitiatorState.Stopped
         const e = lastError ?? new Error(`${name}: timeout of ${timeoutSeconds} whilst connecting`)
         this.logger.warning(`${name}: giving up after ${timeoutSeconds}s and ${retries} retries, last error: ${e.message}`)
         reject(e)
-      }).catch(e => {
-        reject(e)
-      })
+      }, timeoutSeconds * 1000)
     })
   }
 }
