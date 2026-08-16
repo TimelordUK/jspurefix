@@ -167,24 +167,42 @@ before building on it.
 message, component and group instance body in a dictionary and reports sibling tag
 collisions. It is exported, so anyone with a house dictionary can run it against their own.
 
-What it found in what ships here:
+The QuickFIX rendering is the one that matters. A broker onboarding pack is now almost
+always a prepared QuickFIX XML rather than a reference to a spec version, so that is the
+flavour the engine actually meets. Every QuickFIX dictionary shipped here is covered, plus
+the repository renderings for comparison:
 
-| Dictionary | Collisions |
-| --- | --- |
-| `qf42`, `qf43`, `qf44` | 0 |
-| `repo44`, `repo50sp2` | 0 |
-| `qf50sp2` | **57** |
+| Dictionary | Form | Collisions |
+| --- | --- | --- |
+| `qf42`, `qf43`, `qf44` | QuickFIX | 0 |
+| `fix5-mod` (modified test dialect) | QuickFIX | 0 |
+| `repo44`, `repo50sp2` | repository | 0 |
+| `qf50sp2` | QuickFIX | **57** |
+
+(`data/FIX44-MD.xml` is byte-identical to `data/FIX44.xml`, so it is not a separate sample.)
 
 Every one of the 57 is the same root cause: the QuickFIX `FIX50SP2.xml` dictionary puts
 `Currency(15)` inside `Instrument` *and* declares it again beside the component, in
-`NewOrderSingle`, `ExecutionReport`, `Quote` and 54 other places. The repository rendering
-of the same FIX version does not.
+`NewOrderSingle`, `ExecutionReport`, `Quote` and 54 other places. 14 of the 57 are inside
+group instance bodies rather than at message level — `NewOrderList.ListOrdGrp.NoOrders` and
+the like — which is exactly where a recursive repair would be working. The repository
+rendering of the same FIX version does not do it, so this is an authoring difference rather
+than a property of FIX 5.0.
 
-This is a genuine constraint rather than a curiosity. The positional parser is untroubled —
-whichever `15` falls within `Instrument`'s span is `Instrument`'s. A repair attributing by
-tag identity cannot tell. So `Instrument` has to be refused for repair in those sets
-specifically, which is an argument for the collision map being consulted per set at repair
-time rather than being a whole-dictionary yes/no.
+Two conclusions, and the second is the uncomfortable one.
+
+The positional parser is untroubled by any of this — whichever `15` falls within
+`Instrument`'s span is `Instrument`'s. A repair attributing by tag identity cannot tell. So
+`Instrument` has to be refused for repair in those sets specifically, which argues for the
+collision map being consulted per set at repair time rather than being a whole-dictionary
+yes/no.
+
+And the pattern that produced it — a field declared at message level that a component
+already carries — is ordinary dictionary authoring, not an exotic mistake. A broker adding
+fields to a message to suit their own flow is *more* likely to write it than a spec
+committee is, and the broker dialects are the ones most likely to also send the scattered
+messages this whole exercise is about. On the evidence here the collision map is not a
+defensive nicety at the edge of the design; it is load-bearing.
 
 ### Phase 1 — the accessor seam
 
@@ -247,12 +265,16 @@ protocol errors into wrong objects.
 ## Open decisions
 
 1. Should a collision found by phase 0 refuse repair for the colliding pair only, or for
-   the whole set containing them?
+   the whole set containing them? The `qf50sp2` result argues for the pair — refusing all
+   of `NewOrderSingle` over one contended tag would give up a great deal for very little.
 2. Should the collision map be computed once at dictionary load, or lazily on first repair?
-3. Does a repaired segment report its hull or its true extent through `SegmentSummary`,
+3. Should a dictionary with collisions say so at load time? An operator onboarding a broker
+   dialect would want to know before a live session does, and phase 0 is cheap enough to
+   run eagerly — but it is only meaningful to anyone who has read this note.
+4. Does a repaired segment report its hull or its true extent through `SegmentSummary`,
    which is a diagnostic surface people read?
-4. Should scattering be *reported* at all — a counterparty emitting non-adjacent components
+5. Should scattering be *reported* at all — a counterparty emitting non-adjacent components
    is worth knowing about even when the repair succeeds, and today it is silent.
-5. Is `stringify` on a scattered segment supposed to render wire order or claimed order?
-6. Does cspurefix take the same phase split, or land phases 1 and 2 together given its
+6. Is `stringify` on a scattered segment supposed to render wire order or claimed order?
+7. Does cspurefix take the same phase split, or land phases 1 and 2 together given its
    different `MsgView`?

@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 
+import * as path from 'path'
 import { QuickFixGraphParser } from '../../dictionary/parser/quickfix/quick-fix-graph-parser'
 import { DefinitionFactory } from '../../util'
 import {
@@ -146,30 +147,29 @@ describe('FragmentSafety — synthetic dictionaries', () => {
   })
 })
 
-describe('FragmentSafety — dictionaries as shipped', () => {
-  /**
-   * FIX 4.4 is clean in both the QuickFIX and repository renderings, which is what makes
-   * the tag identity repair viable at all
-   */
-  test('qf44 has no sibling tag collisions', async () => {
-    const definitions = await new DefinitionFactory().getDefinitions('qf44')
-    expect(collisions(FragmentSafety.analyse(definitions))).toEqual([])
-  })
-
-  test('repo44 has no sibling tag collisions', async () => {
-    const definitions = await new DefinitionFactory().getDefinitions('repo44')
+/**
+ * The QuickFIX rendering matters more than the repository one in practice, because a
+ * broker onboarding pack is now almost always a prepared QuickFIX XML rather than a
+ * reference to a spec version.  So these cover every QuickFIX flavour shipped here.
+ */
+describe('FragmentSafety — QuickFIX dictionaries as shipped', () => {
+  test.each(['qf42', 'qf43', 'qf44'])('%s has no sibling tag collisions', async (dict) => {
+    const definitions = await new DefinitionFactory().getDefinitions(dict)
     expect(collisions(FragmentSafety.analyse(definitions))).toEqual([])
   })
 
   /**
-   * the one real violation found in anything shipped here.  The QuickFIX FIX50SP2
-   * dictionary puts Currency(15) inside Instrument *and* declares it again beside the
-   * component, in 57 places - NewOrderSingle, ExecutionReport, Quote and the rest.
+   * the one real violation in anything shipped here.  The QuickFIX FIX50SP2 dictionary
+   * puts Currency(15) inside Instrument *and* declares it again beside the component, in
+   * NewOrderSingle, ExecutionReport, Quote and 54 other places.
    *
    * The positional parser is untroubled by it: whichever 15 falls within Instrument's
    * span is Instrument's.  A repair attributing by tag identity cannot tell, so this is
-   * the concrete case that has to be refused rather than guessed.  The repository
-   * rendering of the same version does not have it.
+   * the concrete case that has to be refused rather than guessed.
+   *
+   * Worth noting what produced it - a field declared at message level that a component
+   * already carries.  That is ordinary dictionary authoring rather than anything exotic,
+   * and a broker adding fields to a message is more likely to do it than a spec is.
    */
   test('qf50sp2 collides on Currency, and only on Currency', async () => {
     const definitions = await new DefinitionFactory().getDefinitions('qf50sp2')
@@ -182,8 +182,35 @@ describe('FragmentSafety — dictionaries as shipped', () => {
     expect(describeFinding(found[0])).toContain('tag 15 is claimed by')
   })
 
-  test('repo50sp2 does not share the QuickFIX Currency collision', async () => {
-    const definitions = await new DefinitionFactory().getDefinitions('repo50sp2')
+  /**
+   * and it is not confined to the top level of a message - the same pair collides inside
+   * group instance bodies, which is where a repair would be recursing to
+   */
+  test('the qf50sp2 collision reaches inside group instance bodies', async () => {
+    const definitions = await new DefinitionFactory().getDefinitions('qf50sp2')
+    const found = collisions(FragmentSafety.analyse(definitions))
+    const nested = found.filter(f => f.path.includes('.'))
+    expect(nested.length).toBeGreaterThan(0)
+    expect(found.map(f => f.path)).toContain('NewOrderList.ListOrdGrp.NoOrders')
+  })
+
+  /**
+   * a dialect modified away from the spec, which is the shape a broker actually hands over
+   */
+  test('the modified FIX5 test dialect has no sibling tag collisions', async () => {
+    const dict = path.join(__dirname, '../env/data/fix5-mod.xml')
+    const definitions = await new DefinitionFactory().getDefinitions(dict)
+    expect(collisions(FragmentSafety.analyse(definitions))).toEqual([])
+  })
+})
+
+describe('FragmentSafety — repository dictionaries as shipped', () => {
+  /**
+   * the repository renderings are clean throughout, including the version whose QuickFIX
+   * rendering is not - so this is an authoring difference, not a property of FIX 5.0
+   */
+  test.each(['repo44', 'repo50sp2'])('%s has no sibling tag collisions', async (dict) => {
+    const definitions = await new DefinitionFactory().getDefinitions(dict)
     expect(collisions(FragmentSafety.analyse(definitions))).toEqual([])
   })
 })
