@@ -1,4 +1,4 @@
-import { IJsFixLogger } from './js-fix-logger'
+import { IJsFixLogger, JsFixLogFields } from './js-fix-logger'
 import { WinstonLogger } from './winston-logger'
 import { JsFixLoggerFactory } from './js-fix-logger-factory'
 
@@ -10,8 +10,8 @@ export class JsFixWinstonLogFactory extends JsFixLoggerFactory {
     this.wl = new WinstonLogger(options)
   }
 
-  public logger (type: string): IJsFixLogger {
-    return this.wl.make(type)
+  public logger (type: string, context?: JsFixLogFields): IJsFixLogger {
+    return this.wl.make(type, context)
   }
 
   public plain (fileName: string, maxSize?: number): IJsFixLogger {

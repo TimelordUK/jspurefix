@@ -93,13 +93,16 @@ import {
 
 A minimal session subclasses `AsciiSession` and implements two callbacks: `onReady` (connection up, logon confirmed) and `onApplicationMsg` (a non-session message arrived).
 
+The second argument to `logger()` binds structured fields to every line that logger writes, and `info`/`warning`/`debug`/`error` each take an optional bag of per-call fields. Both are optional and additive — the default console format renders exactly as it always has, and installing `WinstonLogger.ecsOptions()` instead emits one ECS-style JSON object per line for Filebeat. See [docs/instrumentation.md](docs/instrumentation.md).
+
 ```typescript
 class TradeCaptureClient extends AsciiSession {
   constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config.description.application.name}.txt`)
-    this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`)
+    this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`,
+      { component: 'TradeCaptureClient', app: this.me })
   }
 
   protected onReady (view: MsgView): void {

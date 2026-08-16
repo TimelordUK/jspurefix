@@ -19,7 +19,7 @@ export abstract class SessionLauncher {
     acceptorConfig: string | ISessionDescription | null = null,
     private readonly loggerFactory: JsFixLoggerFactory = defaultLoggerFactory
   ) {
-    this.logger = this.loggerFactory.logger('launcher')
+    this.logger = this.loggerFactory.logger('launcher', { component: 'SessionLauncher' })
     this.initiatorConfig = initiatorConfig ? this.loadConfig(initiatorConfig) : null
     this.acceptorConfig = acceptorConfig ? this.loadConfig(acceptorConfig) : null
   }

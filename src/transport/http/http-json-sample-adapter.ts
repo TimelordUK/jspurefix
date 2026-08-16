@@ -13,7 +13,7 @@ export class HttpJsonSampleAdapter implements IHttpAdapter {
   private token: string | null = null
   private readonly routes: Map<string, IHtmlRoute> = new Map<string, IHtmlRoute>()
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
-    this.logger = config.logFactory.logger('http.adapter')
+    this.logger = config.logFactory.logger('http.adapter', { component: 'HttpJsonSampleAdapter' })
     const routes = this.routes
     const options = config?.description?.application?.http?.options
     if (!options) {

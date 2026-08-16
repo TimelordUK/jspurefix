@@ -20,7 +20,8 @@ export class FixMsgMemoryStore implements IFixMsgStore {
   ]
 
   public constructor (public readonly id: string, public readonly config: IJsFixConfig) {
-    this.logger = config.logFactory.logger(`${this.id}:FixMsgMemoryStore`)
+    this.logger = config.logFactory.logger(`${this.id}:FixMsgMemoryStore`,
+      { component: 'FixMsgMemoryStore', store: this.id })
     this.setExcMsgType([])
   }
 

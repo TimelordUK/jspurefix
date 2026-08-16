@@ -61,7 +61,8 @@ export abstract class FixSession extends events.EventEmitter {
         heartBeat: config.description.HeartBtInt,
         lastPeerMsgSeqNum: config.description.LastReceivedSeqNum
       })
-    this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`)
+    this.sessionLogger = config.logFactory.logger(`${this.me}:FixSession`,
+      { component: 'FixSession', app: this.me, role: description?.application?.type })
     this.initiator = description?.application?.type === 'initiator'
     this.acceptor = !this.initiator
     this.checkMsgIntegrity = this.acceptor

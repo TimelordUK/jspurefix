@@ -18,7 +18,8 @@ export class TradeCaptureServer extends AsciiSession {
   constructor (public readonly config: IJsFixConfig) {
     super(config)
     this.logReceivedMsgs = true
-    this.logger = config.logFactory.logger(`${this.me}:TradeCaptureServer`)
+    this.logger = config.logFactory.logger(`${this.me}:TradeCaptureServer`,
+      { component: 'TradeCaptureServer', app: this.me })
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
   }
 

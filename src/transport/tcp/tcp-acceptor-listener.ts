@@ -27,7 +27,8 @@ export class TcpAcceptorListener extends FixEntity {
 
   async start (): Promise<any> {
     return await new Promise<any>(async (resolve, reject) => {
-      const logger = this.config.logFactory.logger('acceptor')
+      const logger = this.config.logFactory.logger('acceptor',
+        { component: 'TcpAcceptorListener', role: 'acceptor' })
       const sessionContainer = this.config.sessionContainer
       if (!sessionContainer.isRegistered(DITokens.FixSession)) {
         reject(new Error(`application must register a DI token '${DITokens.FixSession}' - see src/sample`))
@@ -93,7 +94,8 @@ export class TcpAcceptorListener extends FixEntity {
    */
   stop (): void {
     if (this.acceptor) {
-      const logger = this.config.logFactory.logger('acceptor')
+      const logger = this.config.logFactory.logger('acceptor',
+        { component: 'TcpAcceptorListener', role: 'acceptor' })
       logger.info('acceptor stopping')
       this.acceptor.close(() => {
         logger.info('acceptor closed.')

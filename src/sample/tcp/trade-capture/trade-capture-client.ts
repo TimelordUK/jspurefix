@@ -18,7 +18,8 @@ export class TradeCaptureClient extends AsciiSession {
     this.logReceivedMsgs = true
     this.reports = new Map<string, ITradeCaptureReport>()
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
-    this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`)
+    this.logger = config.logFactory.logger(`${this.me}:TradeCaptureClient`,
+      { component: 'TradeCaptureClient', app: this.me })
   }
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {

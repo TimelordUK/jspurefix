@@ -135,31 +135,160 @@ someone's Prometheus falls over.
 
 ## Structured logging
 
-Filebeat wants fields, not prose, and today `IJsFixLogger` cannot carry any:
+**This lands first, on its own.** Not because it is smaller — because it delivers the
+whole Elastic story by itself, and because the pass that adds fields is the pass that
+locates every future counter site.
+
+Worth separating two consumers that want opposite things:
+
+- **Filebeat and Elastic are push.** The engine writes JSON lines, Filebeat harvests,
+  Kibana does the drill-down. No server in the engine at all.
+- **A live diagnostics endpoint is pull.** For when there is no Elastic stack, or when
+  someone wants the state of a process now rather than after a harvest cycle.
+
+The click-through-and-drill-down picture is entirely the first of those. That makes the
+web server in [packaging](#packaging-boundary) an independent, later, optional thing
+rather than a prerequisite.
+
+### The leverage is bound context, not the call sites
+
+The engine has **307 logger call sites** (239 `info`, 39 `warning`, 15 `error`, 14 `debug`)
+but only **29 places a logger is constructed**. And the identity is already at those 29:
 
 ```ts
+this.sessionLogger = config.logFactory.logger(`${this.me}:${peerCompId}:FixSession`)
+```
+
+That is the session identity, built once, and completely opaque downstream — the "regex
+over English" problem, except it is not even English, it is punctuation. So the first move
+is not widening 307 call sites, it is widening the 29. Bound context makes every one of the
+307 filterable without touching any of them.
+
+Per-call fields then matter only where a line carries a *value* worth aggregating —
+`msgType`, seq nums, byte counts, state transitions, gap ranges. Perhaps 25 lines, chosen
+deliberately. They are the same chokepoints [layer 1](#layer-1--chokepoints) lists, which
+is why doing this first leaves the metrics work half-located.
+
+### The interface
+
+```ts
+export type JsFixLogFields = Record<string, unknown>
+
 export interface IJsFixLogger {
-  info: (message: string) => void
-  warning: (message: string) => void
-  debug: (message: string) => void
-  error: (e: Error) => void
+  info: (message: string, fields?: JsFixLogFields) => void
+  warning: (message: string, fields?: JsFixLogFields) => void
+  debug: (message: string, fields?: JsFixLogFields) => void
+  error: (e: Error, fields?: JsFixLogFields) => void
+}
+
+export abstract class JsFixLoggerFactory {
+  public abstract logger (type: string, context?: JsFixLogFields): IJsFixLogger
 }
 ```
 
-Every line arrives pre-formatted, so nothing downstream can filter by `sessionId` or
-`msgType` without regex over English. Making the engine log-shippable means widening
-this — an optional second argument keeps every existing implementation compiling:
+Non-breaking, and worth being precise about why: TypeScript lets an implementation declare
+*fewer* parameters than the interface, so a client's existing `info(message: string)` still
+satisfies it, and their `JsFixLoggerFactory` subclass keeps working while ignoring the new
+argument. Callers are unaffected either way.
 
-```ts
-info: (message: string, fields?: Record<string, unknown>) => void
+`error` gains fields as well as the others. It currently takes only an `Error` — no
+message, no context — and those 15 sites are the ones most wanted at 3am.
+
+**Bound context, not a `child()` logger.** It fits the 29 construction sites, and it ports:
+a `child()` would put an object lifecycle in the contract. See
+[porting](#porting-to-cspurefix).
+
+### Not breaking the existing line
+
+The engine has been live for years; people have grep and scrapers built on the current
+output. That output must not move.
+
+```
+2026-08-16T14:14:56.102Z [skeleton_server:skeleton-client:FixSession] info: peer sent ...
 ```
 
-winston is already the default factory and emits JSON without further work, so most of
-the cost is deciding which fields belong on which line, and doing it consistently enough
-to be worth filtering on.
+The shipped format names exactly four fields:
 
-This is separable from metrics and could land first — it is smaller, and it is the half
-that helps someone debugging a live session at 3am.
+```ts
+printf(info => `${info.timestamp} [${info.type}] ${info.level}: ${info.message}`)
+```
+
+So as long as context and per-call fields go into the winston info object as **separate
+keys**, that printf never sees them. Verified: the same call with and without the new keys
+renders byte-identically apart from the millisecond.
+
+Three rules follow, and each has bitten already:
+
+1. **`type` stays verbatim at all 29 sites.** It cannot be composed from the fields — the
+   sites have no single rule between them (bare literals `'acceptor'`, one-part
+   `` `${this.me}` ``, two-part `` `${name}:TcpInitiator` ``, three-part
+   `` `${me}:${peer}:FixSession` ``, and one dotted `` `${type}.${t}` ``). Deriving it
+   means per-site rules, which is the same edit with more ways to get a string subtly
+   wrong. The resulting duplication between `type` and the fields is the price of not
+   breaking grep, and it is cheap. In a JSON rendering `type` is simply dropped, because
+   `component` and `app` carry it properly.
+2. **Fields are namespaced, never spread.** They travel under `context` and `fields` keys
+   and the *formatter* decides how to flatten. Spreading at the top level lets a caller's
+   `{ message: … }` clobber the real message. It also keeps the contract
+   transport-agnostic, which is what makes it port.
+3. **A winston format function must mutate `info`, not return a new object.** Returning a
+   fresh object drops `Symbol.for('level')` and winston discards the record silently — no
+   output, no error. Found the hard way while proving the above.
+
+### The default does not change
+
+`WinstonLogger.consoleOptions()` does **not** emit JSON today — it is a `printf` rendering
+prose, so "winston gives JSON for free" is not true as things stand. JSON arrives as a new
+opt-in `ecsOptions()`, and the console default stays exactly as it is. Not only for this
+release: changing a default log format is a major-version event at best and probably never
+worth it.
+
+`WinstonLogger.plain()` is message-only and used for FIX wire logs. That is a replay
+artifact, not structured-log material, and stays as it is.
+
+Two things make "same output after upgrade" a guarantee rather than a promise:
+
+- **A golden-output test** rendering lines through `consoleOptions()` with and without
+  context and fields, asserting the strings are identical. Anyone later improving
+  `appFormat` then fails a test instead of breaking a customer's scraper.
+- **The fields commit rewords no messages.** Mixing the two makes a before/after log diff
+  unreadable. Keep them separate so the diff at a given level is genuinely empty.
+
+### Field names
+
+ECS names where they exist — `service.name`, `log.level`, `error.message`,
+`error.stack_trace` — and everything engine-specific under `fix.*`. Context keys are plain
+words; the formatter applies the prefix.
+
+| context key | rendered | meaning |
+| --- | --- | --- |
+| `component` | `fix.component` | the class, e.g. `FixSession`, `TcpAcceptor` |
+| `app` | `fix.app` | application name from the session description |
+| `peer` | `fix.peer` | counterparty comp id, once known |
+| `role` | `fix.role` | `initiator` or `acceptor` |
+
+This is the metric prefix decision applied to logs: `fix.msg_type` in a log line,
+`fix_messages_total{msg_type}` in a metric — same words, each in its own convention's
+punctuation, so one dashboard serves both engines.
+
+`fix.session` in the canonical `BeginString-Sender-Target` form is deliberately **not** in
+the table above. A wildcard acceptor does not know its peer until bind time, so the field
+would be absent or wrong on exactly the sessions that need it most. It arrives with the
+metrics work, where `SessionId` is properly to hand — `AsciiSession` already rebuilds its
+logger at bind for this reason, so the seam is there.
+
+Rendered, one call site gives either:
+
+```
+2026-08-16T14:17:31.864Z [skeleton_server:skeleton-client:FixSession] info: peer sent ResetSeqNumFlag=Y with seqNum=1, weAlsoReset=true
+```
+
+```json
+{"@timestamp":"2026-08-16T14:17:59.278Z","log.level":"info","service.name":"jspurefix",
+ "message":"peer sent ResetSeqNumFlag=Y with seqNum=1, weAlsoReset=true",
+ "fix.component":"FixSession","fix.app":"skeleton_server","fix.peer":"skeleton-client",
+ "fix.reset_seq_num_flag":true,"fix.seq_num":1,"fix.we_also_reset":true}
+```
 
 ## Packaging boundary
 
@@ -188,6 +317,13 @@ differ, and the spec should not pretend otherwise:
   hold two panels.
 - **Sink interface.** A plain interface with a no-op implementation in both; no
   `EventEmitter` in the contract, since that would not port.
+- **Logging shape.** .NET expresses this differently: bound context is `BeginScope`, and
+  per-call fields come from message templates (`"session {SessionId} up"`) rather than a
+  separate object. Both can emit identical JSON, but they are not the same API. The
+  portable contract is *bound fields plus per-call fields*, and each engine renders it
+  idiomatically — forcing the TypeScript shape onto `Microsoft.Extensions.Logging` would
+  produce something unidiomatic that nobody on that side would want to use. What must
+  match is the emitted field names, not the call signature.
 - **Histograms.** Prometheus histograms need fixed buckets. Agree the bucket boundaries
   here so latency panels are comparable between engines rather than merely similar.
 
@@ -195,8 +331,16 @@ differ, and the spec should not pretend otherwise:
 
 1. Per-session snapshot with registry rollup, or one flat structure?
 2. Is `session` a metric label, and if so how is cardinality bounded?
-3. Does structured logging land first, on its own?
+3. ~~Does structured logging land first, on its own?~~ **Yes** — see
+   [structured logging](#structured-logging). Bound context on the factory rather than a
+   `child()` logger, `type` kept verbatim, console format unchanged.
 4. Histogram buckets for parse and encode duration.
-5. Does the diagnostics endpoint live in this repository at all, or its own package?
+5. Does the diagnostics endpoint live in this repository at all, or its own package? It
+   needs no framework — `node:http` and about a hundred lines — which is what stops
+   `express` being reached for a second time.
 6. Sampling: are parse timings measured on every message, or 1-in-N once throughput is
    high enough for the measurement itself to show up in the measurement?
+7. Does the engine own the ECS field names, or hand people a formatter to remap? Someone
+   with an existing Splunk convention will want the latter.
+8. When per-call fields land, do the ~25 chosen lines also get their message text left
+   alone permanently, so the prose and the fields never drift apart?

@@ -13,7 +13,8 @@ export class RespawnAcceptor extends FixEntity {
 
   constructor (@inject('IJsFixConfig') public readonly config: IJsFixConfig) {
     super(config)
-    this.logger = config.logFactory.logger('RespawnAcceptor')
+    this.logger = config.logFactory.logger('RespawnAcceptor',
+      { component: 'RespawnAcceptor', role: 'acceptor' })
   }
 
   // if acceptor errors e.g. via a forced connection drop, then respawn

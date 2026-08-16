@@ -39,7 +39,8 @@ export class RecoveringTcpInitiator extends FixEntity {
     super(jsFixConfig)
     this.application = this.jsFixConfig.description.application ?? null
     const name = this.application?.name ?? 'na'
-    this.logger = jsFixConfig.logFactory.logger(`${name}:RecoveringTcpInitiator`)
+    this.logger = jsFixConfig.logFactory.logger(`${name}:RecoveringTcpInitiator`,
+      { component: 'RecoveringTcpInitiator', app: name, role: 'initiator' })
     if (!this.application) {
       throw new Error('no application in session description.')
     }

@@ -39,7 +39,8 @@ export class AsciiMsgTransmitter extends MsgTransmitter {
    */
   private reportUnknownFields (config: IJsFixConfig): void {
     const name = config.description.application?.name ?? 'na'
-    const logger = config.logFactory.logger(`${name}:encoder`)
+    const logger = config.logFactory.logger(`${name}:encoder`,
+      { component: 'AsciiMsgTransmitter', app: name })
     const reported = new Set<string>()
     this.encoder.onUnknownField = (fieldName: string, setName: string) => {
       const key = `${setName}.${fieldName}`

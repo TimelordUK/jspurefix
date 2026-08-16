@@ -53,7 +53,7 @@ export class SessionRegistry implements ISessionRegistry {
   private readonly logger: IJsFixLogger | null
 
   constructor (logFactory?: JsFixLoggerFactory) {
-    this.logger = logFactory?.logger('SessionRegistry') ?? null
+    this.logger = logFactory?.logger('SessionRegistry', { component: 'SessionRegistry' }) ?? null
   }
 
   public get count (): number {

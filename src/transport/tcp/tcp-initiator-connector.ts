@@ -21,7 +21,8 @@ export class TcpInitiatorConnector extends FixEntity {
   async start (reconnectTimeout: number = 0): Promise<any> {
 
     return await new Promise<any>(async (resolve, reject) => {
-      const logger = this.config.logFactory.logger('initiator')
+      const logger = this.config.logFactory.logger('initiator',
+      { component: 'TcpInitiatorConnector', role: 'initiator' })
       const sessionContainer = this.config.sessionContainer
       if (!sessionContainer.isRegistered(DITokens.FixSession)) {
         reject(new Error(`application must register a DI token '${DITokens.FixSession}' - see src/sample`))
@@ -64,7 +65,8 @@ export class TcpInitiatorConnector extends FixEntity {
   }
 
   async connect (initiatorSession: FixSession): Promise<any> {
-    const logger = this.config.logFactory.logger('initiator')
+    const logger = this.config.logFactory.logger('initiator',
+      { component: 'TcpInitiatorConnector', role: 'initiator' })
     const initiator: FixInitiator = this.config.sessionContainer.resolve<FixInitiator>(TcpInitiator)
     logger.info('connecting ...')
     const initiatorTransport: MsgTransport = await initiator.connect(this.connectTimeoutSecs)
