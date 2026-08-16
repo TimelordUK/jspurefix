@@ -22,7 +22,8 @@ export class HttpAcceptor extends FixAcceptor {
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config?.description?.application ?? null)
-    this.logger = config.logFactory.logger(`${config?.description?.application?.name}:HttpAcceptor`)
+    this.logger = config.logFactory.logger(`${config?.description?.application?.name}:HttpAcceptor`,
+      { component: 'HttpAcceptor', app: config?.description?.application?.name, role: 'acceptor' })
     this.logger.info('creating http server')
     this.router = express.Router()
     this.router.use(bodyParser.json())

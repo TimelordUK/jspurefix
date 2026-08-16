@@ -11,7 +11,8 @@ export class HttpInitiator extends FixEntity {
   logger: IJsFixLogger
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config)
-    this.logger = config.logFactory.logger('initiator')
+    this.logger = config.logFactory.logger('initiator',
+      { component: 'HttpInitiator', role: 'initiator' })
   }
 
   async start (): Promise<any> {

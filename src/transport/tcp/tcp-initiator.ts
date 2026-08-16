@@ -33,7 +33,8 @@ export class TcpInitiator extends FixInitiator {
   constructor (@inject(DITokens.IJsFixConfig) public readonly jsFixConfig: IJsFixConfig) {
     super(jsFixConfig.description.application ?? null)
     const name = this.application?.name ?? 'initiator'
-    this.logger = jsFixConfig.logFactory.logger(`${name}:TcpInitiator`)
+    this.logger = jsFixConfig.logFactory.logger(`${name}:TcpInitiator`,
+      { component: 'TcpInitiator', app: name, role: 'initiator' })
     if (!this.application) {
       throw new Error('no application in session description.')
     }

@@ -16,7 +16,7 @@ export class HttpClient extends FixmlSession {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
-    this.logger = config.logFactory.logger(`${this.me}`)
+    this.logger = config.logFactory.logger(`${this.me}`, { component: 'HttpClient', app: this.me })
   }
 
   protected onApplicationMsg (msgType: string, view: MsgView): void {

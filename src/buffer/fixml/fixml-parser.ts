@@ -37,7 +37,7 @@ export class FiXmlParser extends MsgParser {
     this.definitions = this.config.definitions
     const description = config.description
     const me = description?.application?.name
-    this.logger = config.logFactory.logger(`${me}:FiXmlParser`)
+    this.logger = config.logFactory.logger(`${me}:FiXmlParser`, { component: 'FixmlParser', app: me })
     this.saxStream = require('sax').createStream(true, {})
     this.locations = new Tags(maxMessageLocations)
     this.logger.info('subscribe to stream')

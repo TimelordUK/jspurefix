@@ -15,7 +15,8 @@ export class HttpAcceptorListener extends FixEntity {
 
   async start (): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
-      const logger = this.config.logFactory.logger('acceptor')
+      const logger = this.config.logFactory.logger('acceptor',
+        { component: 'HttpAcceptorListener', role: 'acceptor' })
       const sessionContainer = this.config.sessionContainer
       if (!sessionContainer.isRegistered(DITokens.FixSession)) {
         reject(new Error(`application must register a DI token '${DITokens.FixSession}' - see src/sample`))

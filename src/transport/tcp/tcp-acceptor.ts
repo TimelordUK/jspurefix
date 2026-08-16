@@ -18,7 +18,8 @@ export class TcpAcceptor extends FixAcceptor {
 
   constructor (@inject(DITokens.IJsFixConfig) public readonly config: IJsFixConfig) {
     super(config.description.application ?? null)
-    this.logger = config.logFactory.logger(`${config.description.application?.name}:TcpAcceptor`)
+    this.logger = config.logFactory.logger(`${config.description.application?.name}:TcpAcceptor`,
+      { component: 'TcpAcceptor', app: config.description.application?.name, role: 'acceptor' })
     const tlsOptions: TlsOptions | null = this.tlsOptions()
     if (tlsOptions) {
       this.tlsServer()

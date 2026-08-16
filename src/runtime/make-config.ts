@@ -25,7 +25,7 @@ export class RuntimeFactory {
         if (!type) reject(new Error('no application type in application object'))
         this.definitionFactory.getDefinitions(path,
           (t: string) => {
-            return this.logFactory.logger(`${type}.${t}`)
+            return this.logFactory.logger(`${type}.${t}`, { component: t, role: type })
           }).then((definitions: FixDefinitions) => {
           const config = new JsFixConfig(this.msgFactory, definitions, description, AsciiChars.Soh, this.logFactory)
           resolve(config)

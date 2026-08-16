@@ -13,7 +13,7 @@ export class SkeletonServer extends AsciiSession {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
-    this.logger = config.logFactory.logger(`${this.me}`)
+    this.logger = config.logFactory.logger(`${this.me}`, { component: 'SkeletonServer', app: this.me })
   }
 
   protected onApplicationMsg (msgType: string, _: MsgView): void {

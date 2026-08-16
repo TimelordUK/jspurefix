@@ -16,7 +16,7 @@ export class MDClient extends AsciiSession {
     super(config)
     this.logReceivedMsgs = true
     this.fixLog = config.logFactory.plain(`jsfix.${config?.description?.application?.name}.txt`)
-    this.logger = config.logFactory.logger(`${this.me}:MDClient`)
+    this.logger = config.logFactory.logger(`${this.me}:MDClient`, { component: 'MDClient', app: this.me })
   }
 
   protected onApplicationMsg (_: string, view: MsgView): void {
