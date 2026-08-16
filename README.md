@@ -508,6 +508,13 @@ To add a custom dialect:
 
 See [jspf-md-demo](https://github.com/TimelordUK/jspf-md-demo) for a worked example.
 
+A counterparty that emits a component's tags non-adjacently defeats the parser's positional
+model, and the engine repairs the common case by describing such a component with its tags
+rather than a range. `FragmentSafety.analyse(definitions)` reports whether a dictionary
+lets that repair stay unambiguous — worth running against a house dialect. The
+generalisation to arbitrarily nested scattering, and what it would cost, is in
+[docs/scattered-components.md](docs/scattered-components.md).
+
 ## `jsfix` CLI — log parsing & stats
 
 The `jsfix-cmd` tool parses any FIX log given an appropriate dictionary.
