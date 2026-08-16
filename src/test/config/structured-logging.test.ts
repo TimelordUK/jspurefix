@@ -114,6 +114,40 @@ describe('ecs format carries the structure', () => {
   })
 
   /**
+   * the console record composes the stack into the message because that is what has
+   * always been rendered there.  here it has a field of its own, so repeating it would
+   * only double the line - errors are the largest thing a log pipeline carries
+   */
+  test('an error message does not repeat the stack it already has a field for', () => {
+    const e = new Error('boom')
+    const lines = render(WinstonLogger.ecsOptions(), l => { l.error(e) }, TYPE, CONTEXT)
+    const o = parse(lines[0])
+    expect(o.message).toEqual('boom')
+    expect(o.message).not.toContain('at ')
+  })
+
+  /**
+   * winston keeps its own level property, and emitting it beside the ECS name puts the
+   * same value on every line twice.  the transport filters on Symbol.for('level'), so
+   * dropping it does not affect what gets logged - covered by the level test below
+   */
+  test('the winston level is not emitted beside log.level', () => {
+    const lines = render(WinstonLogger.ecsOptions(), l => { l.info(MESSAGE) }, TYPE, CONTEXT)
+    const o = parse(lines[0])
+    expect(o['log.level']).toEqual('info')
+    expect(o.level).toBeUndefined()
+  })
+
+  test('level filtering still applies once level has been dropped', () => {
+    const lines = render(WinstonLogger.ecsOptions('warn'), l => {
+      l.info('below the threshold')
+      l.warning('at the threshold')
+    }, TYPE, CONTEXT)
+    expect(lines.length).toEqual(1)
+    expect(parse(lines[0]).message).toEqual('at the threshold')
+  })
+
+  /**
    * a caller cannot clobber the record by naming a reserved key, because the bags are
    * nested rather than spread
    */

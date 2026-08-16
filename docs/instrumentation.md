@@ -260,6 +260,20 @@ ECS names where they exist — `service.name`, `log.level`, `error.message`,
 `error.stack_trace` — and everything engine-specific under `fix.*`. Context keys are plain
 words; the formatter applies the prefix.
 
+Two things the ECS format does that the console one must not, both found by reading real
+output rather than by design:
+
+- **winston's own `level` is dropped.** It would otherwise sit beside `log.level` carrying
+  the same value on every line. Transports filter on `Symbol.for('level')`, not the
+  property, so removing it changes nothing about what gets logged.
+- **an error's message is the bare `Error.message`.** The console record composes
+  `message : stack` because that is what has always been rendered there; in JSON the stack
+  has `error.stack_trace` of its own, and repeating it doubles the largest line a pipeline
+  carries.
+
+Neither touches how the record is built, only how the ECS format reads it — so a caller who
+supplied their own format via `fileOptions` still sees exactly what they saw before.
+
 | context key | rendered | meaning |
 | --- | --- | --- |
 | `component` | `fix.component` | the class, e.g. `FixSession`, `TcpAcceptor` |

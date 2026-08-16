@@ -37,9 +37,17 @@ export class WinstonLogger {
     info['log.level'] = info.level
     info['service.name'] = 'jspurefix'
     delete info.timestamp
+    // winston sets its own level, and emitting it beside the ECS name puts the same
+    // value on every line twice.  the transport filters on Symbol.for('level'), not
+    // this property, so dropping it changes nothing about what gets logged
+    delete info.level
     if (err) {
       info['error.message'] = err.message
       info['error.stack_trace'] = err.stack
+      // the record composed for the console carries the stack inside the message,
+      // because that is what has always been rendered there.  here the stack has a
+      // field of its own, so repeating it in the message only doubles the line
+      info.message = err.message
     }
     for (const key of Object.keys(context)) {
       info[`fix.${key}`] = context[key]
