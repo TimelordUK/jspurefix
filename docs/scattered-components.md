@@ -1,12 +1,18 @@
 # Scattered components — analysis and plan of attack
 
-**Status: analysis, with phase 0 landed.** Nothing in the parser has changed. This note
-sets out a generalisation of the fragmented component repair already shipped, why it is
-believed tractable, what it would cost, and the order the work would land in. It is
+**Status: analysis, with phases 0 and 0b landed.** Nothing in the parser has changed. This
+note sets out a generalisation of the fragmented component repair already shipped, why it
+is believed tractable, what it would cost, and the order the work would land in. It is
 written to port — the same shape applies to cspurefix.
 
-There is no urgency behind it. The library has been in use for eight years and exactly one
-counterparty has produced the shape that motivated the existing repair. This is the
+Phase 0b has since measured the problem rather than reasoning about it, and turned up one
+thing this note did not expect: **the repair that already shipped mis-attributes a
+contended tag on the `qf50sp2` dictionary**, inventing an `Instrument.Currency` the
+counterparty never sent. That is a live defect rather than a generalisation, and open
+decision 1 below is really its fix. See [`generated-cases.md`](generated-cases.md).
+
+There is still no urgency behind it. The library has been in use for eight years and
+exactly one counterparty has produced the shape that motivated the existing repair. This is the
 argument being written down while it is fresh, not a queue-jumping defect.
 
 ## Where this starts
@@ -204,6 +210,52 @@ committee is, and the broker dialects are the ones most likely to also send the 
 messages this whole exercise is about. On the evidence here the collision map is not a
 defensive nicety at the edge of the design; it is load-bearing.
 
+### Phase 0b — how bad is it, measured *(landed)*
+
+Phase 0 asked whether the dictionary permits a repair. This asks what the engine does
+today when it meets the shape, which until now was reasoned about rather than observed.
+
+`src/generator/` builds a message that reads like traffic, encodes it canonically, then
+permutes the body tokens into a legal but scattered ordering. The canonical parse is the
+oracle, so no expectation is hand written. Two dictionaries, ~2,000 cases, three findings —
+and the first one is not about this plan at all.
+
+**1. The shipped repair is already wrong on `qf50sp2`, and phase 0 said why.** That
+dictionary declares `Currency(15)` inside `Instrument` and again beside it at message
+level. When `Instrument` arrives scattered, the repair claims the *sibling's* tag:
+`Instrument.Currency` appears in the parsed object carrying a value the counterparty sent
+at message level. 145 of 500 message-body cases. This is not a failure of the
+generalisation; it is a defect in the code that shipped, on a dictionary this library
+distributes, and it moves open decision 1 from a design preference to a bug fix.
+
+**2. At depth 1 nothing survives, and nothing is rejected.** On `repo44`, 749 of 749
+message-body cases round trip exactly, and 0 of 238 cases one level down. Every one of the
+238 parsed cleanly, reported no missing or invalid fields, and handed the application a
+component with fields dropped. Silently wrong data, exactly as feared.
+
+**3. The literal russian doll is a FIX 5.0 shape, not a 4.4 one.** Standard FIX 4.4 has
+essentially no component nested inside another component where both own two or more tags —
+the components inside `Instrument` are group wrappers owning one `NoXXX`. FIX 5.0SP2 does:
+`Instrument.PricingDateTime`, `Instrument.OptionExercise`. Every case scattering one of
+those inside a scattered `Instrument` produced a wrong object, at structure depth 0.
+
+So phase 3 has two separable obligations with a dictionary to test each against — recursion
+into nested components (`qf50sp2`) and repair below the message body (either) — and phase 0
+has produced a defect that need not wait for either.
+
+See [`generated-cases.md`](generated-cases.md) for method, tables and worked examples.
+
+Nine of these cases are frozen as bytes in `data/corpus/`, each recording not just whether
+the engine copes but *how* it fails — `round-trips`, `loses-fields` or `mis-attributes`,
+down to the leaf paths involved. Four are cases the engine gets right, four where it drops
+data, one where it invents it. The corpus is meant to grow: `--corpus-add` on the generator
+keeps whatever the tool turns up next.
+
+Three tests: `corpus.test.ts` walks the frozen cases, `generated-scatter.test.ts` sweeps
+400 fresh ones each run and asserts the rule over counted populations, and
+`fragment-contention.test.ts` shows the `Currency` mis-attribution is systemic. The
+non-round-trip groups are written to be inverted, not deleted, when the repair lands.
+
 ### Phase 1 — the accessor seam
 
 Give `SegmentDescription` `owns(pos)` and `forEachPosition(cb)`; move the four `msg-view`
@@ -267,6 +319,9 @@ protocol errors into wrong objects.
 1. Should a collision found by phase 0 refuse repair for the colliding pair only, or for
    the whole set containing them? The `qf50sp2` result argues for the pair — refusing all
    of `NewOrderSingle` over one contended tag would give up a great deal for very little.
+   **No longer hypothetical:** phase 0b showed the shipped repair claiming the contended
+   `Currency` in 145 of 500 cases, so whichever answer is chosen has to be applied to the
+   existing repair and not only to the generalisation.
 2. Should the collision map be computed once at dictionary load, or lazily on first repair?
 3. Should a dictionary with collisions say so at load time? An operator onboarding a broker
    dialect would want to know before a live session does, and phase 0 is cheap enough to
