@@ -1,0 +1,5 @@
+# currency-inside-instrument - canonical - dictionary order, contiguous, the oracle
+# control for currency-claimed-by-sibling - same collision declared, but the message carries tag 15 inside Instrument, so there is nothing to mis-attribute
+# dictionary qf50sp2, expected round-trips
+# scattered: TradeCaptureReport.Instrument at structure depth 0, 2 runs
+8=FIX.5.0SP2|9=0000734|35=AE|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:54:10.430|571=TRD-20260115-5399|1907=2|1903=RTID-30153|1903=RTID-68004|48=BRN JAN26-FEB26|460=2|461=FMEPSX|15=USD|1450=SD|1451=984.26|1580=SRIL-78579|1146=340|2906=PUOM-92444|207=IFEU|2714=FIFN-86220|2736=0|822=UTSI-80402|32=1|15=USD|2899=SCCS-50000|1071=633.17|2349=393|555=2|600=BRN|609=FUT|764=3|2147=1|2172=252|1436=279|2755=73|2205=157|623=1|624=1|600=BRN|603=8|610=202602|2157=321|2194=340|566=71.4|2211=2|687=1|64=20260119|2405=1|552=2|54=2|1428=343|430=1|453=1|448=CHASGB2L|336=ELECTRONIC|58=client instruction on file|54=1|1155=JPY|453=1|448=CHASGB2L|452=4|1=ACCT-00417|336=REG|591=1|2334=RRLC-90000|2369=340|1926=N|1931=0|1932=0|2387=0|2374=worked over the close|10=073|

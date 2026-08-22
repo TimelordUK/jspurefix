@@ -1,0 +1,38 @@
+{
+  "name": "md-entry-instrument-scattered",
+  "note": "Instrument scattered inside a market data entry - the message body has no component to scatter, so the only site the planner can find is one level down",
+  "dictionary": "repo44",
+  "session": "session/test-initiator.json",
+  "delimiter": "|",
+  "expected": "loses-fields",
+  "missing": [
+    ".MDIncGrp.0.Instrument.MaturityMonthYear",
+    ".MDIncGrp.0.Instrument.SecurityDesc",
+    ".MDIncGrp.0.Instrument.SecurityIDSource"
+  ],
+  "origin": {
+    "scenario": "md-incremental",
+    "seed": 53,
+    "depth": 1,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 1,
+    "sites": [
+      {
+        "level": "MarketDataIncrementalRefresh.MDIncGrp[0]",
+        "component": "MarketDataIncrementalRefresh.MDIncGrp[0].Instrument",
+        "containment": "deeper",
+        "structureDepth": 1,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          55,
+          22,
+          200,
+          107
+        ]
+      }
+    ]
+  }
+}

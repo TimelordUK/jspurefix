@@ -1,0 +1,6 @@
+# nested-component-in-instrument - canonical - dictionary order, contiguous, the oracle
+# a component of Instrument scattered among Instrument own tags while Instrument is itself scattered - the literal russian doll, which exists in 5.0SP2 but not in 4.4
+# dictionary qf50sp2, expected loses-fields
+# scattered: TradeCaptureReport.Instrument at structure depth 0, 2 runs
+# scattered: TradeCaptureReport.Instrument.OptionExercise at structure depth 0, 2 runs
+8=FIX.5.0SP2|9=0000679|35=AE|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:54:13.043|1838=2|1839=1|1839=8|17=EXE-9344608-1|19=ERID-49095|378=3|423=1|55=BRN|167=MLEG|15=USD|969=481.57|996=kW-h|2907=PQCC-31102|207=IFEU|41106=cross with house book|41115=N|2871=1|2872=0|32=10|31=0.34|2762=948.96|195=580.31|6=0.34|555=2|600=BRN|601=LSS-36025|603=8|2893=LUPI-7801|609=FUT|764=2|2739=1|2070=LSC-51902|1440=3|2196=0|2717=LFIF-15743|623=1|624=1|566=71.75|600=BRN|602=BRN FMG0026!|2152=886.37|2718=24|2719=ELFI:TRD-20260115-9284:1|1075=3400|1379=34.01|60=20260115-10:29:56.000|64=20260119|552=1|54=2|453=1|448=ABNANL2A|1=ACCT-01925|376=CID-20457|230=20260115|119=3400|77=O|1031=A|1980=0|29=1|381=3400|10=027|

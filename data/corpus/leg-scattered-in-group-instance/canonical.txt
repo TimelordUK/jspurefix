@@ -1,0 +1,6 @@
+# leg-scattered-in-group-instance - canonical - dictionary order, contiguous, the oracle
+# InstrumentLeg scattered inside a leg group instance - structure depth 1, where detection never fires
+# dictionary repo44, expected loses-fields
+# scattered: TradeCaptureReport.Instrument at structure depth 0, 2 runs
+# scattered: TradeCaptureReport.TrdInstrmtLegGrp[0].InstrumentLeg at structure depth 1, 2 runs
+8=FIX.4.4|9=0000814|35=AE|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:54:00.474|571=TRD-20260115-5399|572=TRD-20260115-5399-REF|17=EXE-5097440-1|570=Y|55=BRN|22=8|460=2|207=IFEU|823=UTSS-86999|32=1|31=0.34|75=20260115|6=0.34|442=3|555=2|600=BRN|602=BRN FMF0026!|623=1|624=1|687=1|539=2|524=NPID-65492|524=NPID-21972|587=0|588=20260115|600=BRN|610=202602|624=2|539=1|524=NPID-27229|566=70.62|637=70.71|60=20260115-10:29:05.000|552=2|54=2|37=ORD-9953406|11=CLORD-20260115-74866|453=2|448=CHASGB2L|447=C|452=4|448=BARCGB22|452=17|578=TIS-92444|376=CID-7949|230=20260115|155=0.0799|77=R|58=client instruction on file|54=1|37=ORD-9953406-1|198=SOID-17199|453=2|448=CHASGB2L|452=4|448=BARCGB22|447=C|576=2|577=10|577=0|15=USD|376=CID-9277|529=2|381=340|118=183.8|120=CHF|78=2|79=ACCT-00417|80=1|79=ACCT-00417|661=248|797=N|852=Y|10=190|

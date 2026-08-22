@@ -1,0 +1,33 @@
+{
+  "name": "instrument-scattered-in-body",
+  "note": "Instrument split into two runs in the message body - the shape the shipped repair was written for, and it holds",
+  "dictionary": "repo44",
+  "session": "session/test-initiator.json",
+  "delimiter": "|",
+  "expected": "round-trips",
+  "origin": {
+    "scenario": "spread-trade-capture",
+    "seed": 11,
+    "depth": 1,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 1,
+    "sites": [
+      {
+        "level": "TradeCaptureReport",
+        "component": "TradeCaptureReport.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          48,
+          22,
+          167,
+          207
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+# equity-fill-instrument-scattered - canonical - dictionary order, contiguous, the oracle
+# Instrument scattered in the body of an ExecutionReport - a second message type at the depth the repair covers
+# dictionary repo44, expected round-trips
+# scattered: ExecutionReport.Instrument at structure depth 0, 2 runs
+8=FIX.4.4|9=0000397|35=8|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:54:01.659|37=ORD-7568398|11=CLORD-20260115-31593|41=CLORD-20260115-59799|453=2|448=BARCGB22|448=ABNANL2A|229=20260115|382=1|375=CHASGB2L|437=400|17=EXE-3320340-1|150=0|39=0|103=13|1=SEGR-2210|55=AAPL|350=21|351=worked over the close|54=1|849=0.002|377=Y|30=XNAS|151=200|14=100|6=215.49|60=20260115-10:29:18.000|156=M|21=1|77=O|485=252.2|10=153|

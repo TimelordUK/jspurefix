@@ -1,0 +1,5 @@
+# bond-instrument-scattered - scattered - the same bytes, legally re-ordered
+# Instrument scattered in the body with the fixed income half populated - the widest component the dictionary offers
+# dictionary repo44, expected round-trips
+# scattered: TradeCaptureReport.Instrument at structure depth 0, 2 runs
+8=FIX.4.4|9=0000579|35=AE|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:54:02.880|55=T 4.25 11/34|571=TRD-20260115-2403|39=0|570=Y|423=5|32=1000|31=99.875|75=20260115|6=99.875|218=24.08|662=99.5625|60=20260115-10:29:18.000|64=20260119|552=2|54=1|37=ORD-7568398|198=SOID-40220|11=CLORD-20260115-31593|453=2|448=BARCGB22|448=ABNANL2A|1=SEGR-2210|15=USD|529=1|582=1|483=20260115-10:29:18.000|336=REG|381=99875|118=252.2|54=2|37=ORD-7568398-1|453=2|448=BARCGB22|452=17|448=ABNANL2A|1=SEGR-2210|118=722.54|58=give up to clearer|461=DBFUFR|167=TBOND|224=20260115|255=BBB+|223=0.0424|873=20260115|10=250|

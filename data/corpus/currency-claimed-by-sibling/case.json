@@ -1,0 +1,44 @@
+{
+  "name": "currency-claimed-by-sibling",
+  "note": "qf50sp2 declares Currency(15) inside Instrument and again beside it; the shipped repair claims the sibling tag and invents Instrument.Currency",
+  "dictionary": "qf50sp2",
+  "session": "session/test-qf50sp2-initiator.json",
+  "delimiter": "|",
+  "expected": "mis-attributes",
+  "added": [
+    ".Instrument.Currency"
+  ],
+  "origin": {
+    "scenario": "spread-trade-capture",
+    "seed": 22,
+    "depth": 1,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 1,
+    "sites": [
+      {
+        "level": "TradeCaptureReport",
+        "component": "TradeCaptureReport.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [
+          15
+        ],
+        "fragments": 2,
+        "tags": [
+          55,
+          20460,
+          200,
+          1450,
+          231,
+          996,
+          1191,
+          1195,
+          2575,
+          107
+        ]
+      }
+    ]
+  }
+}

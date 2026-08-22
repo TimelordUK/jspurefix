@@ -1,0 +1,36 @@
+{
+  "name": "bond-instrument-scattered",
+  "note": "Instrument scattered in the body with the fixed income half populated - the widest component the dictionary offers",
+  "dictionary": "repo44",
+  "session": "session/test-initiator.json",
+  "delimiter": "|",
+  "expected": "round-trips",
+  "origin": {
+    "scenario": "bond-trade-capture",
+    "seed": 7,
+    "depth": 1,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 1,
+    "sites": [
+      {
+        "level": "TradeCaptureReport",
+        "component": "TradeCaptureReport.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          55,
+          461,
+          167,
+          224,
+          255,
+          223,
+          873
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+# allocation-instrument-scattered - scattered - the same bytes, legally re-ordered
+# Instrument scattered in the body of an AllocationInstruction
+# dictionary repo44, expected round-trips
+# scattered: AllocationInstruction.Instrument at structure depth 0, 2 runs
+8=FIX.4.4|9=0000370|35=J|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:54:04.088|48=US0378331005|70=AID-97816|71=0|626=7|466=BRID-91381|857=0|54=1|53=1400|30=XNAS|229=20260115|6=215.49|15=USD|74=343|453=3|448=BARCGB22|448=ABNANL2A|452=13|448=CHASGB2L|75=20260115|77=O|78=2|79=SEGR-2210|80=100|81=0|161=cross with house book|79=SEGR-2210|780=0|172=2|170=SIDN-18271|460=5|461=ESVUFR|10=136|

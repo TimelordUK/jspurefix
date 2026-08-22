@@ -2,3 +2,7 @@
 # letting eol normalisation rewrite them on checkout.
 *.crt -text
 *.key -text
+
+# scattered component corpus - the whole point of an entry is that its bytes do not
+# change, so keep them identical on every platform.
+data/corpus/**/*.txt -text

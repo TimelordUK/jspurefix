@@ -1,0 +1,55 @@
+{
+  "name": "nested-component-in-instrument",
+  "note": "a component of Instrument scattered among Instrument own tags while Instrument is itself scattered - the literal russian doll, which exists in 5.0SP2 but not in 4.4",
+  "dictionary": "qf50sp2",
+  "session": "session/test-qf50sp2-initiator.json",
+  "delimiter": "|",
+  "expected": "loses-fields",
+  "missing": [
+    ".Instrument.OptionExercise.ExerciseSplitTicketIndicator"
+  ],
+  "origin": {
+    "scenario": "spread-trade-capture",
+    "seed": 70,
+    "depth": 2,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 2,
+    "sites": [
+      {
+        "level": "TradeCaptureReport",
+        "component": "TradeCaptureReport.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [
+          15
+        ],
+        "fragments": 2,
+        "tags": [
+          41106,
+          55,
+          167,
+          15,
+          969,
+          996,
+          2907,
+          207,
+          41115
+        ]
+      },
+      {
+        "level": "TradeCaptureReport",
+        "component": "TradeCaptureReport.Instrument.OptionExercise",
+        "containment": "within",
+        "structureDepth": 0,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          41106,
+          41115
+        ]
+      }
+    ]
+  }
+}
