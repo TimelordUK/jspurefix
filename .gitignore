@@ -94,3 +94,12 @@ script/certs/server/server.key
 
 # benchmark baselines are specific to the machine that took them
 benchmarks/
+
+# scratch written by jsfix-cmd --generate --unit into the working directory
+/fix.txt
+/canonical.txt
+/object.json
+/plan.json
+/case.txt
+/structure.json
+/token.txt
