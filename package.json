@@ -116,7 +116,7 @@
     "@types/sax": "^1.2.7",
     "@types/winston": "^2.4.4",
     "eslint": "^9.39.5",
-    "eslint-config-love": "^154.1.0",
+    "eslint-config-love": "^155.0.0",
     "jest": "^30.4.2",
     "madge": "^8.0.0",
     "standard": "^17.1.2",
