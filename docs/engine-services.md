@@ -106,29 +106,74 @@ having sum(AllocQty) <> OrderQty
 unusual capability and it came from a small service on the engine.
 
 **Flattening is the whole design problem.** FIX is a sparse tree and SQL wants a rectangle,
-so the selector has to say how groups collapse:
+so the selector has to say what happens to every group it touches. Four choices, and the
+constraint between them is the important part:
 
-- **At most one group may be the row axis.** Exploding it yields one row per instance.
-  Exploding two produces a cross product — a trade capture with two legs and two sides
-  becomes four rows, and every leg/side pairing in it is fiction. This restriction is the
-  single most important rule in the projection.
-- Every other selected group is **widened** — `Legs_1.LegSymbol`, `Legs_2.LegSymbol` — up
-  to a declared cap, with overflow *reported* rather than silently truncated. Silent
-  truncation in an analysis tool is worse than an error.
-- The default row axis is none: exactly one row per message.
+| mode | result | good for |
+| --- | --- | --- |
+| ignore | the group contributes nothing | most groups, most of the time |
+| widen(n) | `Legs_1.LegSymbol`, `Legs_2.LegSymbol` … | small, fixed arity — a two legged spread |
+| explode | one row per instance, parent fields repeated | when the group *is* the grain of the analysis — allocations, fills, book entries |
+| aggregate(fn) | one cell — `leg_count`, `sum(LegQty)`, `concat(LegSymbol)` | triage, where "2 legs, BRN/BRN" beats ten columns |
 
-Three details that decide whether the output is actually usable downstream:
+> **At most one explode along any path.**
 
-- **Column names come from the dictionary path, not the tag number** — `Instrument.Symbol`,
-  `TrdCapRptSideGrp.Side` — so a query survives a broker renumbering a custom field. Tag
-  numbers stay available as aliases.
+Not merely one at the top level. If `NoSides` is the row axis then a `NoPartyIDs` inside
+each side must widen or aggregate, because exploding both brings the cross product back —
+a trade capture with two legs and two sides becomes four rows in which every leg/side
+pairing is fiction. The default row axis is none, giving exactly one row per message.
+
+`aggregate` is the mode easiest to overlook and often the one actually wanted. Widening
+answers "what were the legs"; aggregating answers "how many, and did they sum", which is
+usually the question being asked of a whole day of traffic.
+
+Note that the original use case dodged this entirely: futures allocations where each leg
+arrived as its own message. That is common enough to be worth designing for rather than
+around — see the union question below.
+
+### Naming the columns
+
+`t_8`, `t_35`, `t_10` is the right **default**: it needs no dictionary, never collides,
+and stays stable when a broker renumbers something. Readable names are an option on top,
+not the baseline.
+
+They cannot be unconditional, because a tag may be claimed at two levels of the same
+message. QuickFIX's FIX50SP2 declares `Currency(15)` inside `Instrument` *and* beside it at
+message level in 57 places, which makes a bare `Currency` column ambiguous in exactly the
+dialects where it matters. The rule: use the short name where a tag appears at one level in
+the selected set, and fall back to the dotted path — `Instrument.Currency` against
+`Currency` — where it does not. The ambiguity is already computed;
+[`FragmentSafety`](../src/dictionary/fragment-safety.ts) exists for the parser repair and
+serves the column namer unchanged.
+
+### Row identity
+
+Every row carries a few underscore-prefixed columns that are not FIX at all:
+
+- `_seq` — `MsgSeqNum`, so rows have a stable order
+- `_offset` — byte offset of the message in the file, so a row joins back to the message
+  the UI would show
+- `_instance` — index within the exploded group, zero when there is no row axis
+- `_source` — which file or day, since several broker days routinely arrive concatenated
+
+These matter more than they look. `partition by ClOrdID order by …` needs a deterministic
+ordering, and without an offset a query result cannot be turned back into "show me that
+message". They are the difference between a CSV you can look at and one you can work with.
+
+### Types, nulls, and one message type or many
+
 - **Values are typed.** The wire is all text, but a SQL engine wants to sum a quantity and
-  group by a date. The dictionary knows each field's `TagType`, so the projection should
-  emit numbers unquoted and dates in one consistent form, and publish a schema alongside
-  rather than making the consumer sniff.
+  group by a date. The dictionary knows each field's `TagType`, so the projection emits
+  numbers unquoted and dates in one consistent form, and publishes a schema rather than
+  making the consumer sniff.
 - **An empty cell means absent.** FIX forbids an empty value, so there is no ambiguity to
-  resolve, which is a rare and welcome simplification. Raw data fields are excluded by
-  default — their contents can contain anything, including the delimiter and newlines.
+  resolve — a rare and welcome simplification. Raw data fields are excluded by default;
+  their contents can contain anything, including the delimiter and newlines.
+- **A projection spans message types by default.** The prototype answered this in practice:
+  the analysis that mattered was cross-message — a swathe of `35=8` executions joined to
+  the allocations that followed — so a union with sparse columns and `t_35` present, letting
+  SQL filter and pivot, is what the work actually looked like. Per-type tables push the join
+  back onto the caller for no gain.
 
 Two further observations worth recording.
 
@@ -191,6 +236,92 @@ The result is a simulator that behaves like the counterparty it was learned from
 from a log file somebody already has. The diffing and classification needed for it are in
 [`outcome.ts`](../src/generator/outcome.ts) already.
 
+## Common ground with instrumentation
+
+[`instrumentation.md`](instrumentation.md) is designed and unstarted, and looks at first
+like a different problem — live health metrics rather than offline analysis. The overlap is
+larger than that, and in one place it is load bearing.
+
+**The same principle, arrived at twice.** That note opens with "the snapshot is the
+contract: Prometheus, OpenTelemetry, a JSON endpoint and a CLI table are four *renderings*
+of one data structure". This note opens with "the contract is the product; the UI is one
+client of it". Those are the same sentence about different data. Two design notes reaching
+it independently is reasonable evidence it is the right frame for this codebase.
+
+**One HTTP surface, not two.** The instrumentation note treats its diagnostics endpoint as
+"an independent, later, optional thing" — correctly, since Filebeat is push and delivers
+the whole Elastic story without a server. But these services need a server anyway. There
+should be exactly one: `/metrics` and `/diagnostics` beside `/profiles` and `/logs`, one
+`node:http` implementation, one packaging decision taken once. That changes the priority of
+the diagnostics endpoint for a reason unconnected to instrumentation — it becomes the
+smallest, best understood service on a surface that is going to exist regardless, which
+makes it the right thing to build the surface *with*.
+
+**One spec, two engines — already solved.** The instrumentation note settled how to write a
+portable contract: names and semantics defined in the document, `fix_` rather than
+`jspurefix_` so both engines populate one dashboard, and the same words in each
+convention's punctuation (`fix.msg_type` in a log line, `fix_messages_total{msg_type}` in a
+metric). The services contract should extend that convention rather than invent a second
+one.
+
+**Expose, do not analyse.** Neither of these builds a query engine, a chart or a dashboard.
+Instrumentation hands Prometheus and Kibana a rectangle; the projection hands sql-cli a
+rectangle. A Prometheus exposition line is name plus labels plus value — a projection with
+a fixed schema. Refusing to build the analysis layer is the single decision that keeps both
+of these small, and it is the same decision twice.
+
+**Bounded output with explicit overflow.** The instrumentation note worries that a wildcard
+acceptor meeting an unbounded set of counterparties makes `session` an unsafe label. The
+projection has that problem in a different costume: widening a group of unbounded arity
+produces unbounded columns. Same answer in both — cap it, and *report* what was dropped.
+Silent truncation reads as "I covered everything" when it did not.
+
+### The metric set is computable from a log
+
+This is the one that is more than an analogy.
+
+Look at the metric table in that note — messages by type and direction, bytes, sequence
+numbers, gaps detected, resend requests, reconnects, admin against application traffic,
+session state transitions. **Every one of those is derivable from a FIX log by pass one of
+the indexer.** Same schema, two sources: the live engine emits it from chokepoints, and the
+inspector computes it from a file.
+
+Three things fall out, and the third is the valuable one.
+
+- **Onboarding.** Run a prospective counterparty's sample log through the indexer and get
+  their traffic profile — message mix, peak rates, how they behave around gaps — before
+  connecting to them rather than after.
+- **Post mortem.** "The session dropped at 14:32" becomes a chart, in the same vocabulary
+  as production, computed from the log that is already on disk.
+- **The offline computation is the oracle for the live one.** Run the same traffic through
+  both; if the engine's counters and the log-derived counters disagree, one of them is
+  wrong, and it is usually clear which. Live instrumentation is otherwise very hard to
+  test — a counter that silently under-counts looks exactly like quiet traffic.
+
+That last point is the same move made twice already in this repository: the contiguous
+encoding is the oracle for the scattered one in
+[`generated-cases.md`](generated-cases.md), and `jsfix-bench` is the offline oracle for
+live throughput in the instrumentation note. Deriving the same quantity a second, dumber
+way and requiring the two to agree is turning out to be how this codebase gets confidence.
+
+**Throughput is one number in three places.** `benchmarking.md` measures it offline on
+synthetic bytes, instrumentation wants it live, and this note's pass one rests on it for a
+real file. The instrumentation note already asks that the bench and production figures
+share names so they can be put side by side; the indexer is simply the third, and should
+use the same words.
+
+### Where they genuinely differ
+
+Worth stating, so the wrong discipline is not inherited.
+
+Instrumentation lives in the hot path and must be **zero cost when off** — a disabled sink
+is a no-op call, never a string format or an allocation. These services are cold path and
+may allocate freely; a projection over a 200MB file is not the place for that paranoia.
+And a metric is a cumulative time series that is scraped, while a projection is a snapshot
+of history over an immutable file — different lifecycles, different caching, and only one
+of them needs a selector language, because metrics are known ahead of time and projections
+are defined by whoever is asking.
+
 ## Constraints
 
 **Packaging.** The server belongs in its own package. Every consumer of the engine should
@@ -206,12 +337,18 @@ derived from either engine's types.
 
 1. **The contract.** Settle it before writing code — it is what makes the engines
    interchangeable and what stops the sprawl. This document is the first draft.
-2. **Pass one, measured.** Prototype the indexer in jspurefix and run it against a
-   genuinely large file. Everything above rests on that number.
-3. **Session fault injection.** Small, self-contained, independently useful.
-4. **The projection service.** Highest leverage per line of code, and it needs only pass
+2. **The diagnostics endpoint**, from [`instrumentation.md`](instrumentation.md). Roughly a
+   hundred lines of `node:http`, already designed, useful on its own merits, and it brings
+   the shared HTTP surface into existence at the lowest possible stakes. Building that
+   surface with a service whose shape is already settled is worth more than building it
+   with one that is not.
+3. **Pass one, measured.** Prototype the indexer and run it against a genuinely large file.
+   Everything above rests on that number, and it is also the first half of the log-derived
+   metric set.
+4. **Session fault injection.** Small, self-contained, independently useful.
+5. **The projection service.** Highest leverage per line of code, and it needs only pass
    one plus group framing.
-5. **The UI, last and deliberately.** It was most of the work the first time, and it is the
+6. **The UI, last and deliberately.** It was most of the work the first time, and it is the
    part that benefits most from the contract already being settled.
 
 ## Open decisions
@@ -236,3 +373,9 @@ derived from either engine's types.
 8. Does the replay endpoint validate an edited message before sending, or send exactly what
    it was handed? Debugging a counterparty sometimes means sending something invalid on
    purpose.
+9. Do the live and log-derived metric sets share one type, or merely one set of names? One
+   type is a stronger guarantee and forces both to stay complete; one set of names lets the
+   offline side compute things the live engine cannot cheaply track.
+10. Do the diagnostics endpoint and the inspector share an authentication story? A log
+    inspector holds a firm's order flow, which is considerably more sensitive than a metrics
+    scrape, and the two probably cannot have the same default.

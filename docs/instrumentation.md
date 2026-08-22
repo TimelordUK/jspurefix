@@ -150,6 +150,19 @@ The click-through-and-drill-down picture is entirely the first of those. That ma
 web server in [packaging](#packaging-boundary) an independent, later, optional thing
 rather than a prerequisite.
 
+**Since revised, for a reason outside this note.**
+[`engine-services.md`](engine-services.md) needs an HTTP surface regardless — a broker log
+inspector, a projection service and a replay endpoint all live on one. There should be a
+single surface rather than two, which makes the diagnostics endpoint the smallest and best
+understood service on something that is going to exist anyway, and therefore the right
+service to build it with. Still optional to *use*; no longer optional to *design around*.
+
+That note also observes that everything in [the metric set](#the-metric-set) is derivable
+from a FIX log by an offline indexer — same names, two sources. Worth knowing here because
+it supplies the thing live instrumentation otherwise lacks: an oracle. A counter that
+silently under-counts is indistinguishable from quiet traffic, unless the same quantity is
+computed a second, dumber way and the two are required to agree.
+
 ### The leverage is bound context, not the call sites
 
 The engine has **307 logger call sites** (239 `info`, 39 `warning`, 15 `error`, 14 `debug`)
