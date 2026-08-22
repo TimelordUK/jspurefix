@@ -1,0 +1,42 @@
+{
+  "name": "currency-inside-instrument",
+  "note": "control for currency-claimed-by-sibling - same collision declared, but the message carries tag 15 inside Instrument, so there is nothing to mis-attribute",
+  "dictionary": "qf50sp2",
+  "session": "session/test-qf50sp2-initiator.json",
+  "delimiter": "|",
+  "expected": "round-trips",
+  "origin": {
+    "scenario": "spread-trade-capture",
+    "seed": 1,
+    "depth": 1,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 1,
+    "sites": [
+      {
+        "level": "TradeCaptureReport",
+        "component": "TradeCaptureReport.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [
+          15
+        ],
+        "fragments": 2,
+        "tags": [
+          48,
+          460,
+          461,
+          15,
+          1450,
+          1451,
+          1580,
+          1146,
+          2906,
+          207,
+          2714
+        ]
+      }
+    ]
+  }
+}

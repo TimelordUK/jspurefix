@@ -1,0 +1,5 @@
+# md-entry-instrument-scattered - scattered - the same bytes, legally re-ordered
+# Instrument scattered inside a market data entry - the message body has no component to scatter, so the only site the planner can find is one level down
+# dictionary repo44, expected loses-fields
+# scattered: MarketDataIncrementalRefresh.MDIncGrp[0].Instrument at structure depth 1, 2 runs
+8=FIX.4.4|9=0000278|35=X|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:55:07.055|262=MDRI-53033|268=2|279=2|55=ES|291=2|271=39|282=MDEO-63550|283=LID-90029|37=ORD-5840692|288=MDEB-70510|346=19|22=8|200=202512|107=CME E-mini S and P 500 Dec25|279=0|270=6009.75|15=USD|336=REG|276=A|813=214|10=037|

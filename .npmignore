@@ -5,6 +5,9 @@ dist/test
 # Unzipped repo (postinstall extracts from fix_repo.zip)
 data/fix_repo
 
+# Scattered component corpus - test fixtures, not needed by consumers
+data/corpus
+
 # Large example files
 data/examples/FIXML
 data/examples/FIX.4.4/quickfix

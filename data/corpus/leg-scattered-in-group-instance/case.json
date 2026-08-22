@@ -1,0 +1,52 @@
+{
+  "name": "leg-scattered-in-group-instance",
+  "note": "InstrumentLeg scattered inside a leg group instance - structure depth 1, where detection never fires",
+  "dictionary": "repo44",
+  "session": "session/test-initiator.json",
+  "delimiter": "|",
+  "expected": "loses-fields",
+  "missing": [
+    ".TrdInstrmtLegGrp.0.InstrumentLeg.LegRatioQty",
+    ".TrdInstrmtLegGrp.0.InstrumentLeg.LegSecurityID",
+    ".TrdInstrmtLegGrp.0.InstrumentLeg.LegSide"
+  ],
+  "origin": {
+    "scenario": "spread-trade-capture",
+    "seed": 1,
+    "depth": 2,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 2,
+    "sites": [
+      {
+        "level": "TradeCaptureReport",
+        "component": "TradeCaptureReport.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          55,
+          22,
+          460,
+          207
+        ]
+      },
+      {
+        "level": "TradeCaptureReport.TrdInstrmtLegGrp[0]",
+        "component": "TradeCaptureReport.TrdInstrmtLegGrp[0].InstrumentLeg",
+        "containment": "deeper",
+        "structureDepth": 1,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          600,
+          602,
+          623,
+          624
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "allocation-instrument-scattered",
+  "note": "Instrument scattered in the body of an AllocationInstruction",
+  "dictionary": "repo44",
+  "session": "session/test-initiator.json",
+  "delimiter": "|",
+  "expected": "round-trips",
+  "origin": {
+    "scenario": "block-allocation",
+    "seed": 7,
+    "depth": 1,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 1,
+    "sites": [
+      {
+        "level": "AllocationInstruction",
+        "component": "AllocationInstruction.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          48,
+          460,
+          461
+        ]
+      }
+    ]
+  }
+}

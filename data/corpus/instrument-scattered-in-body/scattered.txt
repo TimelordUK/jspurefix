@@ -1,0 +1,5 @@
+# instrument-scattered-in-body - scattered - the same bytes, legally re-ordered
+# Instrument split into two runs in the message body - the shape the shipped repair was written for, and it holds
+# dictionary repo44, expected round-trips
+# scattered: TradeCaptureReport.Instrument at structure depth 0, 2 runs
+8=FIX.4.4|9=0000699|35=AE|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:53:59.293|48=BRN JAN26-FEB26|22=8|167=MLEG|571=TRD-20260115-8591|572=TRD-20260115-8591-REF|570=N|423=7|711=2|311=GAS|309=GAS FMG0026!|310=3|313=202602|885=880.71|311=GAS|312=USS-8896|462=280|307=cross with house book|32=12|31=0.34|194=0.023|75=20260115|6=0.34|442=1|555=2|600=BRN|607=217|611=20260115|623=1|624=1|539=1|524=NPID-60012|566=71.32|600=BRN|602=BRN FMG0026!|620=give up to clearer|624=2|539=1|524=NPID-74664|60=20260115-10:29:53.000|552=1|54=2|37=ORD-5052924|198=SOID-62909|11=CLORD-20260115-57745|453=2|448=CHASGB2L|802=1|523=PSID-77065|448=ABNANL2A|452=13|15=USD|40=E|483=20260115-10:29:53.000|381=4080|70=AID-10128|207=IFEU|10=179|

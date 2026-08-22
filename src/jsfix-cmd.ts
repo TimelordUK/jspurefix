@@ -5,6 +5,7 @@ import { AsciiParser, AsciiView, AsciiChars } from './buffer/ascii'
 import { ILooseObject } from './collections/collection'
 import { SimpleFieldDefinition, FixDefinitions } from './dictionary/definition'
 import { MessageGenerator, JsonHelper, getWords, DefinitionFactory } from './util'
+import { CaseBuilder, CorpusStore, IGeneratedCase, IGeneratorOptions, IOutcome, Scenarios, classify, describeCase, describeOutcome } from './generator'
 import { ISessionDescription, FileDuplex, StringDuplex } from './transport'
 
 import { MsgTag } from './types'
@@ -116,6 +117,46 @@ const options = buildOptions({
     type: 'number',
     alias: 'd',
     default: 0.8
+  },
+
+  scenarios: {
+    type: 'boolean',
+    default: false
+  },
+
+  realistic: {
+    type: 'boolean',
+    default: false
+  },
+
+  'russian-doll': {
+    type: 'number',
+    default: 0
+  },
+
+  fragments: {
+    type: 'number',
+    default: 2
+  },
+
+  seed: {
+    type: 'number',
+    default: 0
+  },
+
+  'as-of': {
+    type: 'string',
+    default: ''
+  },
+
+  'corpus-add': {
+    type: 'string',
+    default: ''
+  },
+
+  note: {
+    type: 'string',
+    default: ''
   },
 
   repeats: {
@@ -342,6 +383,15 @@ export class JsfixCmd {
   }
 
   protected async generate (): Promise<void> {
+    if (argv.scenarios) {
+      console.log('scenarios - a named shape of traffic, generated to look like the real thing')
+      console.log(Scenarios.describe())
+      return
+    }
+    if (argv.scenario || argv.realistic || argv['russian-doll'] > 0) {
+      await this.generateCase()
+      return
+    }
     const lipPath: string = path.join(this.root, 'data/examples/lipsum.txt')
     const words: string[] = await getWords(lipPath)
     const generator = new MessageGenerator(words, this.definitions)
@@ -358,6 +408,134 @@ export class JsfixCmd {
       await this.script(generator, density)
     } else {
       await this.single(generator, density)
+    }
+  }
+
+  /**
+   * The realistic generator: a message that reads like traffic, optionally taken apart
+   * into a legal but scattered ordering, and then round tripped through the parser to
+   * say whether this engine survives the shape.
+   */
+  private async generateCase (): Promise<void> {
+    if (!this.session) {
+      console.log('provide a session json file e.g. --session=data/session/test-initiator.json')
+      return
+    }
+    const delimiter = String.fromCharCode(this.delimiter)
+    const builder = new CaseBuilder(this.definitions, (msgType, obj) => this.encodeObject(msgType, obj))
+    const generated = builder.build({
+      scenario: argv.scenario,
+      msgType: argv.type,
+      seed: argv.seed || 0x5eed,
+      depth: argv['russian-doll'] || 0,
+      fragments: argv.fragments || 2,
+      delimiter,
+      generator: JsfixCmd.generatorOverrides()
+    })
+    console.log(describeCase(generated, delimiter))
+    console.log('')
+    console.log(JSON.stringify(generated.object, null, 4))
+    console.log('')
+    console.log(`canonical ${generated.canonical}`)
+    if (generated.plan.depth > 0) {
+      console.log(`scattered ${generated.scattered}`)
+    }
+    const outcome = await this.reportRoundTrip(generated)
+    if (argv.unit) {
+      await JsfixCmd.writeFile('./fix.txt', generated.scattered)
+      await JsfixCmd.writeFile('./canonical.txt', generated.canonical)
+      await JsfixCmd.writeFile('./object.json', JSON.stringify(generated.object, null, 4))
+      await JsfixCmd.writeFile('./plan.json', JSON.stringify(generated.plan, null, 4))
+      await JsfixCmd.writeFile('./case.txt', describeCase(generated, delimiter))
+    }
+    if (argv['corpus-add']) {
+      this.addToCorpus(generated, outcome, delimiter)
+    }
+  }
+
+  /**
+   * Only the options actually given on the command line.  A key present with an undefined
+   * value still wins a spread, so building this object unconditionally would silently
+   * erase whatever density the chosen scenario had asked for.
+   */
+  private static generatorOverrides (): IGeneratorOptions {
+    const overrides: ILooseObject = {}
+    // a seed fixes every choice the generator makes, but dates are read off the wall
+    // clock unless anchored, so a reproducible corpus needs --as-of as well
+    if (argv['as-of']) {
+      overrides.asOf = new Date(argv['as-of'])
+    }
+    if (argv.realistic && argv.density != null) {
+      overrides.density = parseFloat(argv.density)
+    }
+    return overrides
+  }
+
+  /**
+   * Freeze this case into the corpus.  What is written is the bytes and the expectation,
+   * not the seed - a seed only reproduces a message while the generator is unchanged, and
+   * a corpus has to outlive the tool that proposed it.
+   */
+  private addToCorpus (generated: IGeneratedCase, outcome: IOutcome | null, delimiter: string): void {
+    if (generated.plan.depth === 0) {
+      console.log('cannot add to the corpus - nothing was scattered, so there is nothing to assert')
+      return
+    }
+    if (!outcome) {
+      console.log('cannot add to the corpus - the canonical encoding did not parse')
+      return
+    }
+    const name = `${argv['corpus-add']}`
+    const note = argv.note ? `${argv.note}` : describeOutcome(outcome)
+    // the corpus records the session relative to data/, and a path may arrive with
+    // either separator on windows
+    const session = `${argv.session}`.replace(/^.*data[\\/]/, '')
+    const store = new CorpusStore(path.join(this.root, 'data/corpus'))
+    const entry = CorpusStore.fromCase(
+      name,
+      note,
+      `${argv.dict ?? this.sessionDescription?.application?.dictionary ?? 'unknown'}`,
+      session,
+      delimiter,
+      generated,
+      outcome.outcome,
+      outcome,
+      argv['as-of'] ? new Date(argv['as-of']) : undefined)
+    const written = store.save(entry, generated.canonical, generated.scattered)
+    console.log(`corpus case ${name} written to ${written}`)
+    console.log(`expected outcome recorded as ${outcome.outcome} - read it before committing`)
+  }
+
+  /**
+   * Parse both encodings and compare.  The canonical one is contiguous by construction
+   * so it is the oracle; the scattered one says the same thing in a different order, so
+   * any difference at all is the engine losing information.
+   */
+  private async reportRoundTrip (generated: IGeneratedCase): Promise<IOutcome | null> {
+    const canonical = await this.parseOnce(generated.canonical)
+    if (!canonical.view) {
+      console.log(`canonical does not parse: ${canonical.error ?? 'no message'}`)
+      return null
+    }
+    if (generated.plan.depth === 0) {
+      console.log('canonical parses')
+      return null
+    }
+    const scattered = await this.parseOnce(generated.scattered)
+    const outcome = classify(
+      canonical.view.toObject(),
+      scattered.view ? scattered.view.toObject() : null)
+    console.log(describeOutcome(outcome))
+    return outcome
+  }
+
+  private async parseOnce (fix: string): Promise<{ view: MsgView | null, error: string | null }> {
+    const transport: MsgTransport = new MsgTransport(1, this.session.config, new StringDuplex(fix))
+    try {
+      const view = await this.firstMessage(transport)
+      return { view, error: null }
+    } catch (e: any) {
+      return { view: null, error: e?.message ?? `${e}` }
     }
   }
 
@@ -776,6 +954,32 @@ function showHelp (): void {
 
   console.log('script to describe field in fixml')
   console.log('npm run fixml -- --field=50')
+  console.log()
+
+  console.log('list the named scenarios - lifelike messages built from a book of real instruments')
+  console.log('node dist/jsfix-cmd --generate --scenarios --session=data/session/test-initiator.json')
+  console.log('npm run scenarios')
+  console.log()
+
+  console.log('generate one lifelike message - prices on tick, quantities in lots, dates that agree')
+  console.log('node dist/jsfix-cmd --generate --scenario=spread-trade-capture --delimiter="|" --session=data/session/test-initiator.json')
+  console.log('npm run scenario -- --scenario=equity-fill')
+  console.log()
+
+  console.log('take the message apart - russian doll n scatters a component inside a component, n levels deep,')
+  console.log('then parses both orderings and says whether this engine survives the shape')
+  console.log('node dist/jsfix-cmd --generate --scenario=spread-trade-capture --russian-doll=2 --delimiter="|" --session=data/session/test-initiator.json')
+  console.log('npm run doll -- --scenario=spread-trade-capture --russian-doll=2')
+  console.log('add --seed=42 --as-of=2026-01-15T10:30:00Z to reproduce a case exactly, --unit to write the files')
+  console.log()
+
+  console.log('keep an interesting case - freezes the two encodings and the outcome into data/corpus,')
+  console.log('where src/test/ascii/corpus.test.ts picks it up.  read what it wrote, then commit it')
+  console.log('npm run doll -- --scenario=spread-trade-capture --russian-doll=2 --seed=1 --as-of=2026-01-15T10:30:00Z --corpus-add=my-case --note="what this shows"')
+  console.log()
+
+  console.log('any message type, lifelike rather than dense - see docs/scattered-components.md for what doll depth means')
+  console.log('node dist/jsfix-cmd --generate --realistic --type=8 --density=0.5 --delimiter="|" --session=data/session/test-initiator.json')
   console.log()
 
   console.log('generate unit test set of files - i.e. randomly generate an object, encode to fix. density 1 is all fields')

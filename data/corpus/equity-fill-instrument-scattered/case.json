@@ -1,0 +1,32 @@
+{
+  "name": "equity-fill-instrument-scattered",
+  "note": "Instrument scattered in the body of an ExecutionReport - a second message type at the depth the repair covers",
+  "dictionary": "repo44",
+  "session": "session/test-initiator.json",
+  "delimiter": "|",
+  "expected": "round-trips",
+  "origin": {
+    "scenario": "equity-fill",
+    "seed": 7,
+    "depth": 1,
+    "asOf": "2026-01-15T10:30:00.000Z"
+  },
+  "plan": {
+    "depth": 1,
+    "sites": [
+      {
+        "level": "ExecutionReport",
+        "component": "ExecutionReport.Instrument",
+        "containment": "root",
+        "structureDepth": 0,
+        "contendedTags": [],
+        "fragments": 2,
+        "tags": [
+          55,
+          350,
+          351
+        ]
+      }
+    ]
+  }
+}

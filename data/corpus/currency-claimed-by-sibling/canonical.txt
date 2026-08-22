@@ -1,0 +1,5 @@
+# currency-claimed-by-sibling - canonical - dictionary order, contiguous, the oracle
+# qf50sp2 declares Currency(15) inside Instrument and again beside it; the shipped repair claims the sibling tag and invents Instrument.Currency
+# dictionary qf50sp2, expected mis-attributes
+# scattered: TradeCaptureReport.Instrument at structure depth 0, 2 runs
+8=FIX.5.0SP2|9=0000664|35=AE|49=init-comp|56=accept-comp|34=1|57=fix|52=20260822-10:54:07.875|1042=SFTI-5709|1838=1|1839=0|1125=20260115|378=0|1907=1|1903=RTID-78931|2397=1|55=BRN|20460=IC-60174|200=202601|1450=SD|231=1000|996=Bbl|1191=PUOM-43208|1195=3060|2575=Y|107=ICE Brent Jan26/Feb26 calendar spread|2738=20260115|1056=22|15=USD|30=IFEU|6=0.34|555=2|600=BRN|602=BRN FMF0026!|2605=17|624=1|566=70.93|637=71.03|1591=2|600=BRN|602=BRN FMG0026!|603=8|2152=255.61|2175=LIAS-4669|2203=Y|621=26|622=client instruction on file|637=70.83|60=20260115-10:29:20.000|552=1|54=2|1154=USD|453=1|448=BARCGB22|578=TIS-29792|376=CID-30345|377=N|336=DAY|58=worked over the close|29=3|381=3060|1929=N|10=246|
