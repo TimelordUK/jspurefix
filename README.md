@@ -516,7 +516,11 @@ model, and the engine repairs the common case by describing such a component wit
 rather than a range. `FragmentSafety.analyse(definitions)` reports whether a dictionary
 lets that repair stay unambiguous — worth running against a house dialect. The
 generalisation to arbitrarily nested scattering, and what it would cost, is in
-[docs/scattered-components.md](docs/scattered-components.md).
+[docs/scattered-components.md](docs/scattered-components.md). What the engine actually does
+when it meets the shape has since been measured rather than argued — the repair holds at
+message-body depth and does not below it — in
+[docs/generated-cases.md](docs/generated-cases.md), which also describes the message
+generator and the corpus of frozen cases behind it.
 
 ## `jsfix` CLI — log parsing & stats
 
@@ -578,6 +582,11 @@ Numbers below are illustrative — generated messages, single-threaded, parser-o
 † The SD and TC fixtures have shrunk since the older measurements were taken (SD was 229 fields / 2 466 chars, TC was 578 fields / 5 741 chars), so the prior numbers aren't comparable with the current fixture and have been dropped from the row. Re-running them on the older hardware would produce a clean third column. Ryzen measurements taken on Node 24 LTS, WSL2.
 
 To measure a change to a hot path rather than the engine as a whole, see [docs/benchmarking.md](docs/benchmarking.md). Measuring a *live* session — throughput, sequence health, session state, at a cost low enough to leave switched on — is not yet possible; the design for it is in [docs/instrumentation.md](docs/instrumentation.md).
+
+Running the engine as a service — a broker log inspector, a projection that turns a log
+into a table SQL can query, and a counterparty simulator — is designed in
+[docs/engine-services.md](docs/engine-services.md). Nothing is built; the contract is
+written to be implemented by both this engine and cspurefix.
 
 ## Developing on jspurefix
 
