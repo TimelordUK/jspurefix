@@ -13,3 +13,13 @@ export * from './ascii/ascii-session'
 export * from './ascii/ascii-session-msg-factory'
 export * from './fixml/fixml-session-msg-factory'
 export * from './session'
+export * from './factory'
+// the transport description types an application writes in its session JSON -
+// the concrete tcp/http entities stay out of the root barrel so that requiring
+// jspurefix does not drag express in behind them
+export * from './tcp/tcp-transport-description'
+export * from './tcp/tls-options'
+export * from './http/http-transport-description'
+export * from './http/http-adapter'
+export * from './http/html-options'
+export * from './http/html-route'

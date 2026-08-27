@@ -1,5 +1,8 @@
 import { ILooseObject } from '../collections/collection'
-import { MsgView } from '../buffer'
+// straight at the module, not the ../buffer barrel: the barrel now names the
+// ascii parser, which reaches config and back into this file - see the madge
+// check in npm run circular
+import { MsgView } from '../buffer/msg-view'
 import { MsgTag } from '../types'
 
 export interface IFixMsgStoreRecord {
