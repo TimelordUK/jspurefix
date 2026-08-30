@@ -666,17 +666,19 @@ export class JsfixCmd {
     this.sys = new SessionContainer()
     this.sys.registerGlobal('error')
     session = this.norm(session)
-    this.sessionDescription = require(session)
+    const described: ISessionDescription = require(session)
+    // --dict has to be applied before the system is made.  registerSession snapshots the
+    // definitions into the session container as DITokens.Definitions, so assigning
+    // config.definitions afterwards changes nothing the parser will ever see - it goes on
+    // using the dictionary named in the session description, silently, and --dict appears
+    // to work while doing nothing at all.  `application` is copied rather than mutated
+    // because require() hands back a cached object shared with every other caller.
+    this.sessionDescription = argv.dict && described.application
+      ? { ...described, application: { ...described.application, dictionary: argv.dict } }
+      : described
     const container = await this.sys.makeSystem(this.sessionDescription)
     this.config = container.resolve<IJsFixConfig>(DITokens.IJsFixConfig)
     this.definitions = this.config.definitions
-    let dict: string
-    if (argv.dict) {
-      dict = argv.dict
-      const df = await new DefinitionFactory().getDefinitions(dict)
-      this.config.definitions = df
-      this.definitions = df
-    }
     const definitions = this.definitions
     if (argv.delimiter) {
       this.delimiter = AsciiChars.firstChar(argv.delimiter)

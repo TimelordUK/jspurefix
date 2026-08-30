@@ -50,5 +50,9 @@
   "qf42": {
     "output": "src/types/FIX4.2/quickfix",
     "dict": "data/FIX42.xml"
+  },
+  "qf44ext": {
+    "output": "src/types/FIX4.4/ext",
+    "dict": "data/FIX44-EXT.xml"
   }
 }
