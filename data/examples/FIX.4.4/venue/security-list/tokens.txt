@@ -1,0 +1,29 @@
+[0] 8 (BeginString) = FIX.4.4, [1] 9 (BodyLength) = 559
+[2] 35 (MsgType) = y[SecurityList], [3] 34 (MsgSeqNum) = 5012
+[4] 49 (SenderCompID) = ICE_MD_SERVER, [5] 52 (SendingTime) = 20260830-11:20:00.000
+[6] 56 (TargetCompID) = CLIENT_PARSER, [7] 320 (SecurityReqID) = REQ-MKID-12
+[8] 24002 (MarketCode) = 10, [9] 322 (SecurityResponseID) = RESP-1002A
+[10] 560 (SecurityRequestResult) = 0[ValidRequest], [11] 393 (TotNoRelatedSym) = 2
+[12] 893 (LastFragment) = Y[Yes], [13] 146 (NoRelatedSym) = 2
+[14] 55 (Symbol) = XAU_USD_SWAP_DEC26, [15] 48 (SecurityID) = ICE10002341
+[16] 22 (SecurityIDSource) = 100[100], [17] 461 (CFICode) = FCSXPS
+[18] 167 (SecurityType) = SWAP[SWAP], [19] 460 (Product) = 2[Commodity]
+[20] 541 (MaturityDate) = 20261230, [21] 207 (SecurityExchange) = ICE
+[22] 24003 (AssetCode) = XAU, [23] 996 (UnitOfMeasure) = FOZ
+[24] 1147 (UnitOfMeasureQty) = 100, [25] 969 (MinPriceIncrement) = 0.10
+[26] 24004 (TickValue) = 0.01, [27] 15 (Currency) = USD
+[28] 561 (RoundLot) = 100, [29] 562 (MinTradeVol) = 10
+[30] 336 (TradingSessionID) = 1, [31] 625 (TradingSessionSubID) = A
+[32] 827 (ExpirationCycle) = 1[ExpireOnTradingSessionOpen], [33] 828 (TrdType) = 12[12]
+[34] 58 (Text) = Gold Fin Swap Dec26, [35] 55 (Symbol) = XAG_USD_SWAP_JAN27
+[36] 48 (SecurityID) = ICE10002342, [37] 22 (SecurityIDSource) = 100[100]
+[38] 461 (CFICode) = FCSXPS, [39] 167 (SecurityType) = SWAP[SWAP]
+[40] 460 (Product) = 2[Commodity], [41] 541 (MaturityDate) = 20270129
+[42] 207 (SecurityExchange) = ICE, [43] 24003 (AssetCode) = XAG
+[44] 996 (UnitOfMeasure) = TROZ, [45] 1147 (UnitOfMeasureQty) = 5000
+[46] 969 (MinPriceIncrement) = 0.01, [47] 24004 (TickValue) = 0.005
+[48] 15 (Currency) = USD, [49] 561 (RoundLot) = 5000
+[50] 562 (MinTradeVol) = 500, [51] 336 (TradingSessionID) = 1
+[52] 625 (TradingSessionSubID) = A, [53] 827 (ExpirationCycle) = 1[ExpireOnTradingSessionOpen]
+[54] 828 (TrdType) = 12[12], [55] 58 (Text) = Silver Fin Swap Jan27
+[56] 10 (CheckSum) = 043

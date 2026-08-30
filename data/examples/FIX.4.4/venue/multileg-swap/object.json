@@ -1,0 +1,93 @@
+{
+    "StandardHeader": {
+        "BeginString": "FIX.4.4",
+        "BodyLength": 539,
+        "MsgType": "AE",
+        "SenderCompID": "ICE",
+        "TargetCompID": "CLIENT_RISK",
+        "MsgSeqNum": 2045,
+        "SendingTime": "2026-08-30T15:45:00.000Z"
+    },
+    "TradeReportID": "TRD-STRAT-774431",
+    "StrategyLinkID": "RV-XAU-CONDOR-7744",
+    "MarketCode": 10,
+    "TradeReportTransType": 0,
+    "TradeReportType": 0,
+    "PreviouslyReported": false,
+    "Instrument": {
+        "Symbol": "XAU_USD_SPREAD",
+        "Product": 2,
+        "SecurityType": "MLEG"
+    },
+    "TradeDate": "2026-08-30T00:00:00.000Z",
+    "MultiLegReportingType": "1",
+    "TrdInstrmtLegGrp": {
+        "NoLegs": [
+            {
+                "InstrumentLeg": {
+                    "LegSymbol": "XAU_SWAP",
+                    "LegMaturityMonthYear": "20261230",
+                    "LegRatioQty": 1000,
+                    "LegSide": "1"
+                },
+                "LegQty": 1000,
+                "Parties": {
+                    "NoPartyIDs": [
+                        {
+                            "PartyID": "FIRM_A_CLEAN",
+                            "PartyIDSource": "D",
+                            "PartyRole": 3
+                        },
+                        {
+                            "PartyID": "EXEC_BROKER_1",
+                            "PartyIDSource": "D",
+                            "PartyRole": 1
+                        }
+                    ]
+                },
+                "LegLastPx": 2515
+            },
+            {
+                "InstrumentLeg": {
+                    "LegSymbol": "XAU_SWAP",
+                    "LegMaturityMonthYear": "20270130",
+                    "LegRatioQty": 1000,
+                    "LegSide": "2"
+                },
+                "LegQty": 1000,
+                "Parties": {
+                    "NoPartyIDs": [
+                        {
+                            "PartyID": "FIRM_A_CLEAN",
+                            "PartyIDSource": "D",
+                            "PartyRole": 3
+                        },
+                        {
+                            "PartyID": "EXEC_BROKER_2",
+                            "PartyIDSource": "D",
+                            "PartyRole": 1
+                        }
+                    ]
+                },
+                "LegLastPx": 2522.5
+            }
+        ]
+    },
+    "OrdAllocGrp": {
+        "NoOrders": [
+            {
+                "ClOrdID": "ORD-LEG1-999",
+                "OrderID": "ICE-ENG-001A"
+            },
+            {
+                "ClOrdID": "ORD-LEG2-888",
+                "OrderID": "ICE-ENG-001B"
+            }
+        ]
+    },
+    "TransactTime": "2026-08-30T15:44:58.117Z",
+    "StandardTrailer": {
+        "CheckSum": "037"
+    }
+}
+

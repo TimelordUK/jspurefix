@@ -1,0 +1,79 @@
+ {
+    "StandardHeader": {
+        "BeginString": "FIX.4.4",
+        "BodyLength": 559,
+        "MsgType": "y",
+        "SenderCompID": "ICE_MD_SERVER",
+        "TargetCompID": "CLIENT_PARSER",
+        "MsgSeqNum": 5012,
+        "SendingTime": "2026-08-30T11:20:00.000Z"
+    },
+    "SecurityReqID": "REQ-MKID-12",
+    "MarketCode": 10,
+    "SecurityResponseID": "RESP-1002A",
+    "SecurityRequestResult": 0,
+    "TotNoRelatedSym": 2,
+    "LastFragment": true,
+    "SecListGrp": {
+        "NoRelatedSym": [
+            {
+                "Instrument": {
+                    "Symbol": "XAU_USD_SWAP_DEC26",
+                    "SecurityID": "ICE10002341",
+                    "SecurityIDSource": "100",
+                    "Product": 2,
+                    "CFICode": "FCSXPS",
+                    "SecurityType": "SWAP",
+                    "MaturityDate": "2026-12-30T00:00:00.000Z",
+                    "SecurityExchange": "ICE"
+                },
+                "VenueInstrmtExt": {
+                    "AssetCode": "XAU",
+                    "UnitOfMeasure": "FOZ",
+                    "UnitOfMeasureQty": 100,
+                    "MinPriceIncrement": 0.1,
+                    "TickValue": 0.01
+                },
+                "Currency": "USD",
+                "RoundLot": 100,
+                "MinTradeVol": 10,
+                "TradingSessionID": "1",
+                "TradingSessionSubID": "A",
+                "ExpirationCycle": 1,
+                "TrdType": 12,
+                "Text": "Gold Fin Swap Dec26"
+            },
+            {
+                "Instrument": {
+                    "Symbol": "XAG_USD_SWAP_JAN27",
+                    "SecurityID": "ICE10002342",
+                    "SecurityIDSource": "100",
+                    "Product": 2,
+                    "CFICode": "FCSXPS",
+                    "SecurityType": "SWAP",
+                    "MaturityDate": "2027-01-29T00:00:00.000Z",
+                    "SecurityExchange": "ICE"
+                },
+                "VenueInstrmtExt": {
+                    "AssetCode": "XAG",
+                    "UnitOfMeasure": "TROZ",
+                    "UnitOfMeasureQty": 5000,
+                    "MinPriceIncrement": 0.01,
+                    "TickValue": 0.005
+                },
+                "Currency": "USD",
+                "RoundLot": 5000,
+                "MinTradeVol": 500,
+                "TradingSessionID": "1",
+                "TradingSessionSubID": "A",
+                "ExpirationCycle": 1,
+                "TrdType": 12,
+                "Text": "Silver Fin Swap Jan27"
+            }
+        ]
+    },
+    "StandardTrailer": {
+        "CheckSum": "043"
+    }
+}
+
