@@ -1,4 +1,4 @@
-[0] 8 (BeginString) = FIX.4.4, [1] 9 (BodyLength) = 915
+[0] 8 (BeginString) = FIX.4.4, [1] 9 (BodyLength) = 918
 [2] 35 (MsgType) = 8[ExecutionReport], [3] 34 (MsgSeqNum) = 1024
 [4] 49 (SenderCompID) = CREDITVENDOR, [5] 56 (TargetCompID) = CLIENT_OMS
 [6] 52 (SendingTime) = 20260831-11:40:00.124, [7] 212 (XmlDataLen) = 566
@@ -19,8 +19,8 @@
 </InstrumentDetails>, [9] 37 (OrderID) = CDS-ORD-998821
 [10] 11 (ClOrdID) = BBG-CDS-998821, [11] 17 (ExecID) = EXE77123984
 [12] 150 (ExecType) = F[Trade], [13] 39 (OrdStatus) = 2[Filled]
-[14] 55 (Symbol) = CDX.NA.IG, [15] 48 (SecurityID) = US12345AB678
-[16] 22 (SecurityIDSource) = 4[IsinNumber], [17] 167 (SecurityType) = CDS[CDS]
+[14] 55 (Symbol) = CDX.NA.IG, [15] 48 (SecurityID) = CDX-NA-IG-46-V1
+[16] 22 (SecurityIDSource) = I[IsdaFpmlProductSpecification], [17] 167 (SecurityType) = CDS[CDS]
 [18] 1958 (IndexAnnexVersion) = 46, [19] 1959 (IndexAnnexDate) = 20260320
 [20] 54 (Side) = 1[Buy], [21] 38 (OrderQty) = 10000000
 [22] 64 (SettlDate) = 20260920, [23] 235 (YieldType) = SPREAD[SPREAD]
@@ -28,4 +28,4 @@
 [26] 31 (LastPx) = 0.0100, [27] 151 (LeavesQty) = 0
 [28] 14 (CumQty) = 10000000, [29] 6 (AvgPx) = 0.0100
 [30] 44 (Price) = 0.0100, [31] 15 (Currency) = USD
-[32] 60 (TransactTime) = 20260831-11:39:58.900, [33] 10 (CheckSum) = 246
+[32] 60 (TransactTime) = 20260831-11:39:58.900, [33] 10 (CheckSum) = 226

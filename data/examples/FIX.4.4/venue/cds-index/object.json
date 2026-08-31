@@ -1,7 +1,7 @@
 {
     "StandardHeader": {
         "BeginString": "FIX.4.4",
-        "BodyLength": 915,
+        "BodyLength": 918,
         "MsgType": "8",
         "SenderCompID": "CREDITVENDOR",
         "TargetCompID": "CLIENT_OMS",
@@ -588,8 +588,8 @@
     "SettlDate": "2026-09-20T00:00:00.000Z",
     "Instrument": {
         "Symbol": "CDX.NA.IG",
-        "SecurityID": "US12345AB678",
-        "SecurityIDSource": "4",
+        "SecurityID": "CDX-NA-IG-46-V1",
+        "SecurityIDSource": "I",
         "SecurityType": "CDS",
         "IndexAnnexVersion": 46,
         "IndexAnnexDate": "2026-03-20T00:00:00.000Z"
@@ -611,7 +611,7 @@
         "Yield": 0.01
     },
     "StandardTrailer": {
-        "CheckSum": "246"
+        "CheckSum": "226"
     }
 }
 
