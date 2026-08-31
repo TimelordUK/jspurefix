@@ -43,6 +43,10 @@ const newFields = [
   [969, 'MinPriceIncrement', 'FLOAT', 'plausible'],
   [996, 'UnitOfMeasure', 'STRING', 'plausible'],
   [1147, 'UnitOfMeasureQty', 'QTY', 'plausible'],
+  // a credit index names the annex series it trades under.  5.0 instrument fields, and
+  // the rest of the credit detail arrives as XML in the header rather than as tags.
+  [1958, 'IndexAnnexVersion', 'INT', 'plausible'],
+  [1959, 'IndexAnnexDate', 'LOCALMKTDATE', 'plausible'],
   // the listed venue's proprietary block.  AssetCode would naturally be 695, and 695 is
   // QuoteQualifier in 4.4 - the collision is exactly why a venue reaches above 24000.
   [24001, 'StrategyLinkID', 'STRING', 'invented'],
@@ -101,6 +105,13 @@ let x = fs.readFileSync(base, 'utf8')
 x = inBlock(x, "<component name='TrdInstrmtLegGrp'>", '</component>', [
   ["<component name='NestedParties' required='N' />",
     "<component name='NestedParties' required='N' />\n    <component name='Parties' required='N' />"]
+])
+
+// a credit index instrument states its annex series
+x = inBlock(x, "<component name='Instrument'>", '</component>', [
+  ["<field name='SecurityType' required='N' />",
+    "<field name='SecurityType' required='N' />\n   <field name='IndexAnnexVersion' required='N' />\n" +
+    "   <field name='IndexAnnexDate' required='N' />"]
 ])
 
 // ------------------------------------------- 2. the venue's instrument component

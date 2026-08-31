@@ -2441,6 +2441,8 @@
    <field name='Product' required='N' />
    <field name='CFICode' required='N' />
    <field name='SecurityType' required='N' />
+   <field name='IndexAnnexVersion' required='N' />
+   <field name='IndexAnnexDate' required='N' />
    <field name='SecuritySubType' required='N' />
    <field name='MaturityMonthYear' required='N' />
    <field name='MaturityDate' required='N' />
@@ -6630,6 +6632,8 @@
    <field number='969' name='MinPriceIncrement' type='FLOAT' />
   <field number='996' name='UnitOfMeasure' type='STRING' />
   <field number='1147' name='UnitOfMeasureQty' type='QTY' />
+  <field number='1958' name='IndexAnnexVersion' type='INT' />
+  <field number='1959' name='IndexAnnexDate' type='LOCALMKTDATE' />
   <field number='24001' name='StrategyLinkID' type='STRING' />
   <field number='24002' name='MarketCode' type='INT' />
   <field number='24003' name='AssetCode' type='STRING' />

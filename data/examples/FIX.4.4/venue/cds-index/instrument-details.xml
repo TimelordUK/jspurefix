@@ -1,0 +1,15 @@
+<InstrumentDetails>
+    <AssetClass>Credit</AssetClass>
+    <ProductType>CDX</ProductType>
+    <IndexName>CDX NA IG</IndexName>
+    <Series>46</Series>
+    <Version>1</Version>
+    <ReferenceObligation>
+        <EntityName>Roll_Index_Basket</EntityName>
+        <Seniority>SeniorSecured</Seniority>
+    </ReferenceObligation>
+    <RestructuringClause>XR</RestructuringClause> <!-- XR = No Restructuring -->
+    <BusinessCenter>USNY</BusinessCenter>
+    <CalculationAgent>Seller</CalculationAgent>
+    <DayCountFraction>ACT/360</DayCountFraction>
+</InstrumentDetails>

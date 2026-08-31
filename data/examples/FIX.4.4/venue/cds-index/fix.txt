@@ -1,0 +1,15 @@
+8=FIX.4.4|9=915|35=8|34=1024|49=CREDITVENDOR|56=CLIENT_OMS|52=20260831-11:40:00.124|212=566|213=<InstrumentDetails>
+    <AssetClass>Credit</AssetClass>
+    <ProductType>CDX</ProductType>
+    <IndexName>CDX NA IG</IndexName>
+    <Series>46</Series>
+    <Version>1</Version>
+    <ReferenceObligation>
+        <EntityName>Roll_Index_Basket</EntityName>
+        <Seniority>SeniorSecured</Seniority>
+    </ReferenceObligation>
+    <RestructuringClause>XR</RestructuringClause> <!-- XR = No Restructuring -->
+    <BusinessCenter>USNY</BusinessCenter>
+    <CalculationAgent>Seller</CalculationAgent>
+    <DayCountFraction>ACT/360</DayCountFraction>
+</InstrumentDetails>|37=CDS-ORD-998821|11=BBG-CDS-998821|17=EXE77123984|150=F|39=2|55=CDX.NA.IG|48=US12345AB678|22=4|167=CDS|1958=46|1959=20260320|54=1|38=10000000|64=20260920|235=SPREAD|236=0.0100|32=10000000|31=0.0100|151=0|14=10000000|6=0.0100|44=0.0100|15=USD|60=20260831-11:39:58.900|10=246|
