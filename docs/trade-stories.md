@@ -265,13 +265,26 @@ The same discipline as a corpus entry, one directory per shape:
 }
 ```
 
-Two modes for the same field, and the pair is the point:
+Three modes for the same field, and the set of them is the point:
 
 - **`"tranches": "explicit"`** — every fill listed. Nothing is drawn at all. This is what
   the small checked-in shapes use, so the fixture a selector test asserts against has no
   random component anywhere in it and a failure is never "which seed was that".
 - **`"tranches": { "mean": 12, "min": 1, "max": 40 }`** — drawn from the seeded RNG. This
   is what the big generated shapes use, where listing 25,000 fills by hand is absurd.
+- **`"tranches": { "profile": "vwap", "slices": 26 }`** — a schedule rather than a draw.
+
+The third is not a variation on the second, and it is worth being clear why. A
+distribution picks each tranche independently; a **profile** is a curve over the session
+that the fills must follow — the U shape of equity volume, heavy into the open and the
+close and thin through the middle of the day. `twap` is the same machinery with a flat
+curve, which makes it the degenerate case rather than a separate feature.
+
+A profile hands back proportions, and proportions have to become whole lots summing to the
+order quantity exactly. That is the problem the allocation split already solves: distribute
+an integer total across n buckets by weight, remainder to a stated place. Worth
+implementing once and calling from both, rather than discovering later that a schedule is
+out by three lots for a different reason than the allocations were.
 
 ### The day file
 
@@ -401,6 +414,24 @@ the one that intersects directly with `scattered-components.md`: this is the sha
 component scattered inside a group instance is currently mis-attributed and nothing
 reports a problem. Having it in the corpus with a manifest stating the correct values
 turns that defect from an argument into a failing test.
+
+**`equity-vwap`** — a cash equity order worked to a benchmark. The simplest message shape
+in the catalogue and the largest number of messages: one order, fills all session, no legs,
+no XML, nothing proprietary. It is the second story after `rv-futures` to need tranching,
+and the only one where the *shape* of the fills carries meaning rather than just volume.
+
+It brings an oracle the others do not have. Every other fixture is checked structurally —
+did the fields land where they should. Here the manifest can assert an **arithmetic** result
+a service is supposed to reproduce: achieved VWAP as the quantity-weighted mean of the
+fills, against the benchmark for the interval, with slippage between them. A projection
+that loses a fill, double counts one from a repeated group, or rounds the wrong way
+produces a number that is close and wrong, and the manifest catches it. `twap` gives the
+same check against a flat curve, where the expected answer is simple enough to work out by
+hand.
+
+The volume curve can come from the VWAP-shaped CSV the sql-cli Python already generates,
+which saves inventing a plausible U shape and means the profile is derived from something
+rather than tuned until it looks right.
 
 **`venue-bootstrap`** — not a trade at all, but the first thing in every log: reference
 data requested and replayed per market, then the last two days of trades replayed for
