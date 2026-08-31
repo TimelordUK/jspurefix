@@ -78,6 +78,28 @@ Two representation decisions, and they are not cosmetic:
 - **Times are UTC epoch milliseconds**, formatted at render. `Date` arithmetic differs
   enough between the two runtimes to be worth avoiding entirely.
 
+**For FX the two amounts are the facts and the rate is derived.** This is the one place
+the integer rule needs stating carefully, because FX quotes invert and a reciprocal is not
+an exact decimal: 1/1.0950 is 0.9132420091324200913… and no fixed precision holds it. A
+model that stores the rate and re-derives the other side loses money in the last digits
+every time it converts, and the loss compounds across a day.
+
+Storing the two currency amounts as exact integers in minor units does not have that
+problem. EUR 10,000,000 against USD 10,950,000 reconciles exactly in both directions
+forever; the rate is whatever you get by dividing, in whichever orientation is asked for,
+and rounding only ever happens at render. Inversion then costs nothing, because it is only
+a question of which amount is the divisor.
+
+Two rules follow, and they are what make an inverted booking testable:
+
+- **Never re-derive over the top of what arrived.** The domain keeps the pair and the rate
+  *as quoted*, plus a flag for the orientation, alongside the two exact amounts. A model
+  that un-inverts on ingest has destroyed the only record of what the counterparty
+  actually said and can never reconcile back to the log.
+- **Where rounding is unavoidable it is specified, not incidental** — precision and
+  rounding mode named in the shape file and applied identically in both engines.
+  Determinism survives inexactness; it does not survive an unstated convention.
+
 ### 2. Story
 
 An `ITradeStory` takes constraints — seed, business date range, instrument selection,
@@ -355,10 +377,23 @@ This is the cancel-and-rebook path in its ordinary form, and having both variant
 trade is what proves the booking-path distinction in the domain model is real rather than
 a modelling convenience.
 
-**`fx-swap-flattened`** — a two-leg swap where the counterparty sends leg one in the
-ordinary tags and leg two in proprietary ones. The reason the extension dictionary exists.
-Rendered through the group-based dialect as well, it becomes the pair of logs that must
-produce one manifest.
+**`fx-swap-flattened`** — a two-leg swap where the counterparty sends the near leg in the
+ordinary tags and the far leg in proprietary ones, so the receiver reconstructs two legs
+by reading two sets of fields. The reason the extension dictionary exists. Rendered
+through the group-based dialect as well, it becomes the pair of logs that must produce one
+manifest.
+
+It also carries the nastiest arithmetic in the catalogue, and deliberately so: **the legs
+need not be quoted the same way round.** The near leg arrives as EUR/USD and the far leg
+as USD/EUR, which says the far leg was booked inverted and has to be turned back over
+before the two can be compared. Do that on rates and the last digits disagree; do it on
+the two integer amounts, as the domain section requires, and it is exact.
+
+That makes this the sharpest fixture we have, because the failure is quiet. A projection
+that un-inverts naively still produces a plausible number - slightly wrong, in the last
+places, on one leg of a two-leg trade - and only a manifest asserting both the as-quoted
+values and the reconciled amounts will catch it. Worth building the inverted variant and
+the same-orientation variant as a pair, so the difference between them is the test.
 
 **`ice-commodity-swap`** — three legs on a single trade capture, with `NoLegs` containing
 `NoParties` containing further nesting, four levels or so deep. The deep-nesting case, and
