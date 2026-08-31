@@ -1,0 +1,148 @@
+    "StandardHeader": {
+        "BeginString": "FIX.4.4",
+        "BodyLength": 951,
+        "MsgType": "AE",
+        "SenderCompID": "FXVENDOR",
+        "TargetCompID": "CLIENT_OMS",
+        "MsgSeqNum": 8821,
+        "SendingTime": "2026-08-31T09:15:22.000Z"
+    },
+    "TradeReportID": "FX-STRAT-994411",
+    "StrategyLinkID": "EURUSD-STRADDLE-994411",
+    "TradeReportTransType": 0,
+    "TradeReportType": 0,
+    "PreviouslyReported": false,
+    "Instrument": {
+        "Symbol": "EURUSD_STRAD_HEDGE",
+        "SecurityType": "MLEG"
+    },
+    "UndInstrmtGrp": {
+        "NoUnderlyings": [
+            {
+                "UnderlyingInstrument": {
+                    "UnderlyingSymbol": "EURUSD",
+                    "UnderlyingCurrency": "EUR",
+                    "UnderlyingQty": 4500000,
+                    "UnderlyingPx": 1.0825
+                },
+                "HedgeType": "SPOT",
+                "HedgeAllocGrp": {
+                    "NoHedgeAllocs": [
+                        {
+                            "HedgeAllocAccount": "FUND_ALPHA",
+                            "HedgeAllocQty": 2250000,
+                            "HedgeAllocPercent": 50
+                        },
+                        {
+                            "HedgeAllocAccount": "FUND_BRAVO",
+                            "HedgeAllocQty": 2250000,
+                            "HedgeAllocPercent": 50
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "TradeDate": "2026-08-31T00:00:00.000Z",
+    "MultiLegReportingType": "1",
+    "TrdInstrmtLegGrp": {
+        "NoLegs": [
+            {
+                "InstrumentLeg": {
+                    "LegSymbol": "EURUSD",
+                    "LegCFICode": "OCEFCS",
+                    "LegSecurityType": "OPT",
+                    "LegMaturityDate": "2026-11-30T00:00:00.000Z",
+                    "LegStrikePrice": 1.095,
+                    "LegSide": "1",
+                    "LegCurrency": "EUR"
+                },
+                "LegQty": 10000000,
+                "OptionStrategyType": "VANILLA",
+                "OptionSettlMethod": "CASH",
+                "OptionExerciseStyle": "EUROPEAN",
+                "OptionFixingDate": "2026-11-28T00:00:00.000Z",
+                "OptionFixingSource": "BFIX",
+                "PremiumAmt": 185000,
+                "PremiumCurrency": "USD",
+                "PremiumSettlDate": "2026-09-02T00:00:00.000Z",
+                "LegPreAllocGrp": {
+                    "NoLegAllocs": [
+                        {
+                            "LegAllocAccount": "FUND_ALPHA",
+                            "LegAllocQty": 5000000,
+                            "LegAllocPercent": 50
+                        },
+                        {
+                            "LegAllocAccount": "FUND_BRAVO",
+                            "LegAllocQty": 5000000,
+                            "LegAllocPercent": 50
+                        }
+                    ]
+                }
+            },
+            {
+                "InstrumentLeg": {
+                    "LegSymbol": "EURUSD",
+                    "LegCFICode": "OPEFCS",
+                    "LegSecurityType": "OPT",
+                    "LegMaturityDate": "2026-11-30T00:00:00.000Z",
+                    "LegStrikePrice": 1.095,
+                    "LegSide": "2",
+                    "LegCurrency": "EUR"
+                },
+                "LegQty": 10000000,
+                "OptionStrategyType": "VANILLA",
+                "OptionSettlMethod": "CASH",
+                "OptionExerciseStyle": "EUROPEAN",
+                "OptionFixingDate": "2026-11-28T00:00:00.000Z",
+                "OptionFixingSource": "BFIX",
+                "PremiumAmt": 185000,
+                "PremiumCurrency": "USD",
+                "PremiumSettlDate": "2026-09-02T00:00:00.000Z",
+                "LegPreAllocGrp": {
+                    "NoLegAllocs": [
+                        {
+                            "LegAllocAccount": "FUND_ALPHA",
+                            "LegAllocQty": 5000000,
+                            "LegAllocPercent": 50
+                        },
+                        {
+                            "LegAllocAccount": "FUND_BRAVO",
+                            "LegAllocQty": 5000000,
+                            "LegAllocPercent": 50
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "TransactTime": "2026-08-31T09:15:20.000Z",
+    "TrdCapRptSideGrp": {
+        "NoSides": [
+            {
+                "Side": "1",
+                "OrderID": "FX-ORD-99441",
+                "Parties": {
+                    "NoPartyIDs": [
+                        {
+                            "PartyID": "FX_EXEC",
+                            "PartyIDSource": "D",
+                            "PartyRole": 1
+                        },
+                        {
+                            "PartyID": "PRIME_BROKER",
+                            "PartyIDSource": "D",
+                            "PartyRole": 3
+                        }
+                    ]
+                },
+                "SettlCurrency": "USD"
+            }
+        ]
+    },
+    "StandardTrailer": {
+        "CheckSum": "252"
+    }
+}
+

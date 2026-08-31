@@ -673,8 +673,14 @@ export class JsfixCmd {
     // using the dictionary named in the session description, silently, and --dict appears
     // to work while doing nothing at all.  `application` is copied rather than mutated
     // because require() hands back a cached object shared with every other caller.
-    this.sessionDescription = argv.dict && described.application
-      ? { ...described, application: { ...described.application, dictionary: argv.dict } }
+    //
+    // It has to be an *explicitly supplied* --dict.  The option carries a default of
+    // data/FIX44.xml, so argv.dict is always set and cannot distinguish a choice from a
+    // fallback; overriding on that would silently re-point every session at base 4.4 and
+    // quietly undo whatever dictionary the session description named.
+    const explicitDict: string | undefined = minimist(process.argv.slice(2)).dict
+    this.sessionDescription = explicitDict && described.application
+      ? { ...described, application: { ...described.application, dictionary: explicitDict } }
       : described
     const container = await this.sys.makeSystem(this.sessionDescription)
     this.config = container.resolve<IJsFixConfig>(DITokens.IJsFixConfig)

@@ -2716,6 +2716,15 @@
     <field name='LegCoveredOrUncovered' required='N' />
     <component name='NestedParties' required='N' />
     <component name='Parties' required='N' />
+    <field name='OptionStrategyType' required='N' />
+    <field name='OptionSettlMethod' required='N' />
+    <field name='OptionExerciseStyle' required='N' />
+    <field name='OptionFixingDate' required='N' />
+    <field name='OptionFixingSource' required='N' />
+    <field name='PremiumAmt' required='N' />
+    <field name='PremiumCurrency' required='N' />
+    <field name='PremiumSettlDate' required='N' />
+    <component name='LegPreAllocGrp' required='N' />
     <field name='LegRefID' required='N' />
     <field name='LegPrice' required='N' />
     <field name='LegSettlType' required='N' />
@@ -2783,6 +2792,7 @@
     <field name='LegIndividualAllocID' required='N' />
     <component name='NestedParties2' required='N' />
     <field name='LegAllocQty' required='N' />
+    <field name='LegAllocPercent' required='N' />
     <field name='LegAllocAcctIDSource' required='N' />
     <field name='LegSettlCurrency' required='N' />
    </group>
@@ -3225,6 +3235,8 @@
   <component name='UndInstrmtGrp'>
    <group name='NoUnderlyings' required='N'>
     <component name='UnderlyingInstrument' required='N' />
+    <field name='HedgeType' required='N' />
+    <component name='HedgeAllocGrp' required='N' />
    </group>
   </component>
   <component name='QuotReqLegsGrp'>
@@ -3740,6 +3752,13 @@
    <field name='MinPriceIncrement' required='N' />
    <field name='TickValue' required='N' />
    <field name='MarketCode' required='N' />
+  </component>
+   <component name='HedgeAllocGrp'>
+   <group name='NoHedgeAllocs' required='N'>
+    <field name='HedgeAllocAccount' required='N' />
+    <field name='HedgeAllocQty' required='N' />
+    <field name='HedgeAllocPercent' required='N' />
+   </group>
   </component>
  </components>
  <fields>
@@ -6615,5 +6634,19 @@
   <field number='24002' name='MarketCode' type='INT' />
   <field number='24003' name='AssetCode' type='STRING' />
   <field number='24004' name='TickValue' type='AMT' />
+  <field number='9001' name='OptionStrategyType' type='STRING' />
+  <field number='9002' name='OptionSettlMethod' type='STRING' />
+  <field number='9003' name='OptionExerciseStyle' type='STRING' />
+  <field number='9004' name='OptionFixingDate' type='LOCALMKTDATE' />
+  <field number='9005' name='OptionFixingSource' type='STRING' />
+  <field number='9006' name='HedgeType' type='STRING' />
+  <field number='9007' name='LegAllocPercent' type='PERCENTAGE' />
+  <field number='9008' name='PremiumAmt' type='AMT' />
+  <field number='9009' name='PremiumCurrency' type='CURRENCY' />
+  <field number='9010' name='PremiumSettlDate' type='LOCALMKTDATE' />
+  <field number='9020' name='NoHedgeAllocs' type='NUMINGROUP' />
+  <field number='9021' name='HedgeAllocAccount' type='STRING' />
+  <field number='9022' name='HedgeAllocQty' type='QTY' />
+  <field number='9023' name='HedgeAllocPercent' type='PERCENTAGE' />
  </fields>
 </fix>

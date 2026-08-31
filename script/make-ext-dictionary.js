@@ -6,7 +6,7 @@
  * rather than as a hand-edited 327KB file whose provenance nobody can reconstruct - run
  * it again and the dialect is rebuilt from whatever base FIX44.xml currently says.
  *
- * Three classes of divergence, which is what real venue dictionaries actually contain:
+ * Four classes of divergence, which is what real venue dictionaries actually contain:
  *
  *   1. relocated standard components - a component allowed somewhere base 4.4 does not
  *      allow it.  Parties inside a trade capture leg is the example: base 4.4 puts
@@ -14,11 +14,20 @@
  *      unusual, it is unparseable in a way nothing reports.
  *   2. backported FIX 5.0 fields - instrument attributes that did not exist in 4.4 and
  *      that every commodity venue needs.  Carried at their real 5.0 tag numbers.
- *   3. proprietary fields above 24000 - things with no standard tag at all, or whose
- *      obvious tag already means something else in 4.4.
+ *   3. a venue component block - the venue's own definition of an instrument, supplied
+ *      as a component to paste in rather than as loose fields on Instrument.
+ *   4. proprietary fields - things with no standard tag at all, or whose obvious tag
+ *      already means something else in 4.4.
  *
  * Provenance markers: `spec` unchanged from FIX 4.4, `plausible` reconstructed and
  * typical, `invented` ours.  See docs/trade-stories.md.
+ *
+ * One engine constraint shapes the OTC FX section below, and it is worth stating because
+ * it is not obvious: a *plain* component nested inside a repeating group instance is
+ * silently dropped by the parser today - the depth-1 defect in
+ * docs/scattered-components.md.  Fields sitting directly on the group survive, and so do
+ * nested repeating groups.  So where the dialect needs structure inside a leg it uses
+ * those two shapes and not a plain component.
  */
 
 const fs = require('fs')
@@ -34,12 +43,31 @@ const newFields = [
   [969, 'MinPriceIncrement', 'FLOAT', 'plausible'],
   [996, 'UnitOfMeasure', 'STRING', 'plausible'],
   [1147, 'UnitOfMeasureQty', 'QTY', 'plausible'],
-  // proprietary. AssetCode would naturally be 695, but 695 is QuoteQualifier in 4.4 -
-  // a real collision, and exactly why a venue reaches above 24000 instead.
+  // the listed venue's proprietary block.  AssetCode would naturally be 695, and 695 is
+  // QuoteQualifier in 4.4 - the collision is exactly why a venue reaches above 24000.
   [24001, 'StrategyLinkID', 'STRING', 'invented'],
   [24002, 'MarketCode', 'INT', 'invented'],
   [24003, 'AssetCode', 'STRING', 'invented'],
-  [24004, 'TickValue', 'AMT', 'invented']
+  [24004, 'TickValue', 'AMT', 'invented'],
+  // The OTC FX vendor block.  A different counterparty, and deliberately a different tag
+  // range - vendors in this space sit in the 9000s where the listed venues sit above
+  // 24000.  In production these would be two dictionaries, one per counterparty; they
+  // share one here because nothing collides, and the second can be split out when
+  // something does.
+  [9001, 'OptionStrategyType', 'STRING', 'invented'],
+  [9002, 'OptionSettlMethod', 'STRING', 'invented'],
+  [9003, 'OptionExerciseStyle', 'STRING', 'invented'],
+  [9004, 'OptionFixingDate', 'LOCALMKTDATE', 'invented'],
+  [9005, 'OptionFixingSource', 'STRING', 'invented'],
+  [9006, 'HedgeType', 'STRING', 'invented'],
+  [9007, 'LegAllocPercent', 'PERCENTAGE', 'invented'],
+  [9008, 'PremiumAmt', 'AMT', 'invented'],
+  [9009, 'PremiumCurrency', 'CURRENCY', 'invented'],
+  [9010, 'PremiumSettlDate', 'LOCALMKTDATE', 'invented'],
+  [9020, 'NoHedgeAllocs', 'NUMINGROUP', 'invented'],
+  [9021, 'HedgeAllocAccount', 'STRING', 'invented'],
+  [9022, 'HedgeAllocQty', 'QTY', 'invented'],
+  [9023, 'HedgeAllocPercent', 'PERCENTAGE', 'invented']
 ]
 
 function slice (src, startMarker, endMarker) {
@@ -58,6 +86,11 @@ function inBlock (src, startMarker, endMarker, edits) {
     b = b.replace(from, to)
   }
   return src.slice(0, s) + b + src.slice(e)
+}
+
+/** field references at the indent used inside a group body */
+function groupFields (names) {
+  return names.map(n => `    <field name='${n}' required='N' />`).join('\n') + '\n'
 }
 
 let x = fs.readFileSync(base, 'utf8')
@@ -97,6 +130,53 @@ x = inBlock(x, "<component name='SecListGrp'>", '</component>', [
     "<field name='ExpirationCycle' required='N' />\n    <field name='TrdType' required='N' />"]
 ])
 
+// ------------------------------------ 2b. the OTC FX option and its delta hedge
+
+// An FX vanilla structure books as a strategy: option legs, a spot or swap hedge that
+// crosses alongside them, and - when the desk allocates in the message rather than later
+// - a split into fund accounts attached to each of them.
+//
+// The option economics sit on the leg as fields.  See the note at the top of this file
+// for why they are not wrapped in a component of their own.
+const legOptionFields = groupFields([
+  'OptionStrategyType', 'OptionSettlMethod', 'OptionExerciseStyle', 'OptionFixingDate',
+  'OptionFixingSource', 'PremiumAmt', 'PremiumCurrency', 'PremiumSettlDate'
+])
+
+// The per-leg allocation block.  FIX 4.4 already has the right shape for this in
+// LegPreAllocGrp (670/671/673) - a repeating group hanging directly off the leg, which
+// is exactly a distinct block per leg of account and quantity.  It only lacks the
+// percentage the desk actually splits on, so that is the one thing added.
+x = inBlock(x, "<component name='LegPreAllocGrp'>", '</component>', [
+  ["<field name='LegAllocQty' required='N' />",
+    "<field name='LegAllocQty' required='N' />\n    <field name='LegAllocPercent' required='N' />"]
+])
+
+x = inBlock(x, "<component name='TrdInstrmtLegGrp'>", '</component>', [
+  ["<component name='Parties' required='N' />",
+    "<component name='Parties' required='N' />\n" + legOptionFields +
+    "    <component name='LegPreAllocGrp' required='N' />"]
+])
+
+// The hedge: what kind it is, and its own split into the same accounts so the funds stay
+// delta neutral.  No standard group fits a hedge allocation, so this one is invented
+// outright - and as a repeating group, not a plain component.
+const hedgeAlloc = `  <component name='HedgeAllocGrp'>
+   <group name='NoHedgeAllocs' required='N'>
+    <field name='HedgeAllocAccount' required='N' />
+    <field name='HedgeAllocQty' required='N' />
+    <field name='HedgeAllocPercent' required='N' />
+   </group>
+  </component>
+`
+x = x.replace('</components>', hedgeAlloc + ' </components>')
+
+x = inBlock(x, "<component name='UndInstrmtGrp'>", '</component>', [
+  ["<component name='UnderlyingInstrument' required='N' />",
+    "<component name='UnderlyingInstrument' required='N' />\n    <field name='HedgeType' required='N' />\n" +
+    "    <component name='HedgeAllocGrp' required='N' />"]
+])
+
 // ------------------------------------------------------------ 3. trade capture
 
 x = inBlock(x, "<message name='TradeCaptureReport' msgcat='app' msgtype='AE'>", '</message>', [
@@ -132,7 +212,6 @@ x = x.replace('</fields>', decls + '\n </fields>')
 
 fs.writeFileSync(out, x)
 
-const added = newFields.length
-console.log(`data/FIX44-EXT.xml written from data/FIX44.xml`)
-console.log(`  ${added} fields added, ${newFields.filter(f => f[3] === 'invented').length} of them proprietary`)
-console.log(`  register as qf44ext in data/dictionary.json`)
+console.log('data/FIX44-EXT.xml written from data/FIX44.xml')
+console.log(`  ${newFields.length} fields added, ${newFields.filter(f => f[3] === 'invented').length} of them proprietary`)
+console.log('  register as qf44ext in data/dictionary.json')
