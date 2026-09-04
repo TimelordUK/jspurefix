@@ -129,6 +129,7 @@
    <field name='OrigCrossID' required='N' />
    <field name='CrossType' required='N' />
    <field name='ExecID' required='Y' />
+   <field name='ExecTransType' required='N' />
    <field name='ExecRefID' required='N' />
    <field name='ExecType' required='Y' />
    <field name='OrdStatus' required='Y' />
@@ -245,6 +246,9 @@
    <field name='LastLiquidityInd' required='N' />
    <component name='ContAmtGrp' required='N' />
    <component name='InstrmtLegExecGrp' required='N' />
+   <field name='NDFFixingDate' required='N' />
+   <field name='NDFFixingSource' required='N' />
+   <field name='ExecVenueID' required='N' />
    <field name='CopyMsgIndicator' required='N' />
    <component name='MiscFeesGrp' required='N' />
   </message>
@@ -4326,6 +4330,8 @@
    <value enum='G' description='TRADE_CORRECT' />
    <value enum='H' description='TRADE_CANCEL' />
    <value enum='I' description='ORDER_STATUS' />
+   <value enum='1' description='PARTIAL_FILL' />
+   <value enum='2' description='FILL' />
   </field>
   <field number='151' name='LeavesQty' type='QTY' />
   <field number='152' name='CashOrderQty' type='QTY' />
@@ -4454,6 +4460,9 @@
    <value enum='MF' description='MUTUAL_FUND' />
    <value enum='MLEG' description='MULTI_LEG_INSTRUMENT' />
    <value enum='NONE' description='NO_SECURITY_TYPE' />
+   <value enum='FXSPOT' description='FX_SPOT' />
+   <value enum='FXFORWARD' description='FX_FORWARD' />
+   <value enum='FXSWAP' description='FX_SWAP' />
   </field>
   <field number='168' name='EffectiveTime' type='UTCTIMESTAMP' />
   <field number='169' name='StandInstDbType' type='INT'>
@@ -6648,9 +6657,18 @@
   <field number='9008' name='PremiumAmt' type='AMT' />
   <field number='9009' name='PremiumCurrency' type='CURRENCY' />
   <field number='9010' name='PremiumSettlDate' type='LOCALMKTDATE' />
+  <field number='9011' name='NDFFixingDate' type='LOCALMKTDATE' />
+  <field number='9012' name='NDFFixingSource' type='STRING' />
+  <field number='9013' name='ExecVenueID' type='STRING' />
   <field number='9020' name='NoHedgeAllocs' type='NUMINGROUP' />
   <field number='9021' name='HedgeAllocAccount' type='STRING' />
   <field number='9022' name='HedgeAllocQty' type='QTY' />
   <field number='9023' name='HedgeAllocPercent' type='PERCENTAGE' />
+  <field number='20' name='ExecTransType' type='CHAR'>
+   <value enum='0' description='NEW' />
+   <value enum='1' description='CANCEL' />
+   <value enum='2' description='CORRECT' />
+   <value enum='3' description='STATUS' />
+  </field>
  </fields>
 </fix>

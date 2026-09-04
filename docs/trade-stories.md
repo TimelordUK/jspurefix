@@ -362,6 +362,35 @@ And no venue is named. The dialect is a listed-derivatives exchange in the gener
 of several, which is both the legally sensible position and an accurate description of
 what a reconstruction from memory actually is.
 
+### What that looks like in practice
+
+The FX drop-copy pair is the worked example, because the reconstruction arrived with the
+shape exactly right and the tag numbers systematically wrong, which is precisely the split
+the convention predicts.
+
+The near and far legs were remembered as `608` security type, `610` maturity date and
+`612` price. In 4.4 those are `LegCFICode`, `LegMaturityMonthYear` and `LegStrikePrice` —
+each one sitting immediately *before* the field actually meant, which are `609`, `611` and
+`566`. Every one of the wrong tags parses: `608` takes a string, so `FXSPOT` lands in it
+silently, and `610` is a `MONTHYEAR` that would quietly mangle a date. Nothing would have
+reported a problem. The tags were corrected to the ones the remembered *names* denote,
+which is the rule — the names are the reliable half of the memory.
+
+Two collisions were resolved the same way. The desk id was remembered on `9003`, which is
+already `OptionExerciseStyle` from the FX option dialect, and the fixing date on `9611`;
+both were renumbered into the free end of the 9000s block as `9013` and `9011`. Two
+counterparties reaching into the same private range and landing on the same number is the
+ordinary case rather than a freak one, and it is the whole argument for a dictionary per
+session rather than one per engine. Since these particular numbers are reconstructed there
+is nothing to preserve by keeping them; a collision where both numbers are *attested* is
+what would split the file in two.
+
+One thing was deliberately not corrected. The NDF carries `SettlCurrency` (120) = INR, the
+restricted currency — and an NDF settles in USD, so by the FIX meaning of the field this
+is simply wrong. It is kept because a standard field used with a non-standard meaning is a
+real and nasty class of divergence, and unlike a bad tag number it cannot be found by
+validating anything. It is only findable by someone who knows what the product does.
+
 ## The catalogue
 
 These are shapes that were actually received, as far as shape is remembered — not shapes
@@ -376,6 +405,44 @@ hundred of them are what gives a day its volume.
 
 **`fx-forward`** — spot with a settlement date. Nearly free once spot exists, which is
 itself a useful check on the layering.
+
+**`fx-ndf`** — a non-deliverable forward, and the case where the dialect *is* the
+product. On the wire it is an ordinary 4.4 execution report: symbol, rate, quantity,
+settlement date, nothing structural to see. What makes it non-deliverable is that no
+rupee ever moves — the trade cash-settles in dollars against a published fix — and the
+two facts that say so, the fixing date and the fixing source, are the two things base 4.4
+has nowhere to put.
+
+That is why it earns a place next to `fx-forward` rather than being a variant of it. Every
+other fixture in the catalogue uses the dialect to carry *extra* detail about a product
+the structure already identifies. Here the structure identifies the wrong product. Strip
+the extension and a reader does not fail, which would be fine — it books a deliverable
+forward, expects INR 417,250,000 to settle on the 5th, and is wrong in a way nothing in
+the message contradicts. A fixture whose failure mode is a clean parse of the wrong thing
+is worth having.
+
+It also carries the one piece of arithmetic base 4.4 gives us for free: `LastSpotRate`
+(194) plus `LastForwardPoints` (195) reconcile to `LastPx` (31), so a projection that
+handles the outright but drops the decomposition is caught by the sum.
+
+**`fx-nds`** — the swap form of the same thing, and the counter-example to the fixture
+above. A near leg and a far leg on one execution report, the far leg being the
+non-deliverable one.
+
+Its interest is that it needed *no dictionary work at all*. The instinct on seeing legs in
+an execution report is to reach for the extension — legs feel like a trade capture
+concern — and base 4.4 already puts `InstrmtLegExecGrp` there, whose `NoLegs` instance
+already carries `LegSecurityType`, `LegMaturityDate`, `LegSide` and `LegPrice`. That is
+the near/far description in full. Having a fixture that proves the base was sufficient is
+worth as much as the ones that prove it was not, because it is the check on a dialect
+growing tags it does not need.
+
+It carries one wart, kept deliberately. The fixing date is a fact about the *far leg* and
+it arrives at message level, after the group, with nothing tying it to the leg it
+describes. A reader has to know that on a swap the non-deliverable leg is the far one.
+Scope stated by convention rather than by structure is extremely common in real drop copy
+and it is exactly what an inspector has to notice, so the shape is preserved rather than
+tidied into the leg where it logically belongs.
 
 **`fx-option-self-allocated`** — the complex single message. Shared parent order
 information, two legs and two allocations in one message, booking directly into the
@@ -612,8 +679,8 @@ allocation batch reference, a desk or booking code, the numeric market permissio
 that a dialect has something real to map and a parser has something outside the base
 dictionary to handle, and no further.
 
-**A venue dictionary contains three different kinds of divergence**, and only the first is
-what people usually mean by "custom tags". `script/make-ext-dictionary.js` derives
+**A venue dictionary contains several different kinds of divergence**, and only the first
+is what people usually mean by "custom tags". `script/make-ext-dictionary.js` derives
 `data/FIX44-EXT.xml` from `data/FIX44.xml` as a list of stated divergences, so the dialect
 is reproducible rather than a hand-edited 327KB file nobody can reconstruct:
 
@@ -630,8 +697,23 @@ is reproducible rather than a hand-edited 327KB file nobody can reconstruct:
    which is how it arrives and is the better shape anyway, because the venue's definition
    of an instrument stays separable from FIX's. A message carries both, and a projection
    can tell which is which. Ours is `VenueInstrmtExt`, referenced from `SecListGrp`.
+4. **Widened value sets** — a standard tag, of the standard type, carrying a code base 4.4
+   never defined. 4.4 offers `FOR` and `FORWARD` for the whole of foreign exchange, which
+   cannot tell a spot from a forward from a swap, so the FX vendors all name their own:
+   `FXSPOT`, `FXFORWARD`, `FXSWAP` on `SecurityType` (167). This is the commonest
+   divergence of the lot and the one most easily mistaken for a bad message, because
+   nothing about the field looks unusual — a validator sees a known tag of the right type
+   and waves it through, and only a reader holding the venue's codes can tell what
+   was traded.
+5. **Fields retained from an earlier FIX version** — the mirror image of the backport, and
+   just as common. A drop copy built on a 4.2 codebase and moved onto a 4.4 wire goes on
+   sending the 4.2 fields it always sent, because nothing on its side ever stopped
+   populating them. Ours carries `ExecTransType` (20), removed in 4.4, in the slot it
+   occupied in 4.2 — directly after `ExecID` — along with the 4.2 `ExecType` codes `1` and
+   `2` that 4.4 replaced with `F`. Worth having precisely because it is not a design
+   decision anybody made; it is what a system that was never migrated looks like.
 
-**Relocation is the fourth kind, and the dangerous one.** Venues also move standard
+**Relocation is the last kind, and the dangerous one.** Venues also move standard
 components, and
 the reconstructed sample below is a good illustration of why that matters: base 4.4 puts
 `NestedParties` (539) inside `TrdInstrmtLegGrp`, and a message carrying `Parties` (453)
@@ -639,6 +721,12 @@ there instead is not merely unusual, it is unparseable in a way nothing reports.
 this. A dialect that only added tags above 24000 would miss the whole class of divergence
 that actually hurts, so the extension dictionary relocates a component too, deliberately,
 and the corpus carries the pair of parses that shows what happens when it is not honoured.
+
+**And the base is sometimes enough**, which is the check on all of the above. `fx-nds`
+wanted a near leg and a far leg on an execution report and needed no divergence at all —
+4.4 already puts `InstrmtLegExecGrp` there and its instance already carries security type,
+maturity date, side and price. A dialect that is only ever added to grows tags it does not
+need, so the corpus deliberately holds a fixture that proves the base sufficed.
 
 ## Replay
 

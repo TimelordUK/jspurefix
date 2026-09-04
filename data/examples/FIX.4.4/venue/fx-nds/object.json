@@ -1,0 +1,65 @@
+{
+    "StandardHeader": {
+        "BeginString": "FIX.4.4",
+        "BodyLength": 462,
+        "MsgType": "8",
+        "SenderCompID": "BBLG_FX_DROP",
+        "TargetCompID": "CLIENT_DROP",
+        "MsgSeqNum": 5002,
+        "SendingTime": "2026-09-03T07:42:05.088Z"
+    },
+    "OrderID": "BBG_TRD_99822",
+    "ClOrdID": "ORDER_ID_002",
+    "ExecID": "EXEC_7761B",
+    "ExecTransType": "0",
+    "ExecType": "2",
+    "OrdStatus": "2",
+    "Instrument": {
+        "Symbol": "USD/KRW",
+        "SecurityType": "FXSWAP"
+    },
+    "Side": "1",
+    "OrderQtyData": {
+        "OrderQty": 10000000
+    },
+    "Currency": "USD",
+    "LastQty": 10000000,
+    "LastPx": 1340.5,
+    "LeavesQty": 0,
+    "CumQty": 10000000,
+    "AvgPx": 1340.5,
+    "TransactTime": "2026-09-03T07:42:03.100Z",
+    "SettlCurrency": "KRW",
+    "InstrmtLegExecGrp": {
+        "NoLegs": [
+            {
+                "InstrumentLeg": {
+                    "LegSymbol": "USD/KRW",
+                    "LegSecurityType": "FXSPOT",
+                    "LegMaturityDate": "2026-09-07T00:00:00.000Z",
+                    "LegSide": "2",
+                    "LegCurrency": "USD"
+                },
+                "LegQty": 10000000,
+                "LegPrice": 1340.5
+            },
+            {
+                "InstrumentLeg": {
+                    "LegSymbol": "USD/KRW",
+                    "LegSecurityType": "FXFORWARD",
+                    "LegMaturityDate": "2026-10-07T00:00:00.000Z",
+                    "LegSide": "1",
+                    "LegCurrency": "USD"
+                },
+                "LegQty": 10000000,
+                "LegPrice": 1342.1
+            }
+        ]
+    },
+    "NDFFixingDate": "2026-10-05T00:00:00.000Z",
+    "NDFFixingSource": "KFTC18",
+    "ExecVenueID": "BBLG_E_FX",
+    "StandardTrailer": {
+        "CheckSum": "062"
+    }
+}

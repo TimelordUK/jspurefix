@@ -1,0 +1,43 @@
+{
+    "StandardHeader": {
+        "BeginString": "FIX.4.4",
+        "BodyLength": 348,
+        "MsgType": "8",
+        "SenderCompID": "BBLG_FX_DROP",
+        "TargetCompID": "CLIENT_DROP",
+        "MsgSeqNum": 5001,
+        "SendingTime": "2026-09-03T07:42:00.317Z"
+    },
+    "OrderID": "BBG_TRD_99821",
+    "ClOrdID": "ORDER_ID_001",
+    "ExecID": "EXEC_7761A",
+    "ExecTransType": "0",
+    "ExecType": "2",
+    "OrdStatus": "2",
+    "SettlDate": "2026-11-05T00:00:00.000Z",
+    "Instrument": {
+        "Symbol": "USD/INR",
+        "SecurityType": "FXFORWARD"
+    },
+    "Side": "1",
+    "OrderQtyData": {
+        "OrderQty": 5000000
+    },
+    "Price": 83.45,
+    "Currency": "USD",
+    "LastQty": 5000000,
+    "LastPx": 83.45,
+    "LastSpotRate": 83.12,
+    "LastForwardPoints": 0.33,
+    "LeavesQty": 0,
+    "CumQty": 5000000,
+    "AvgPx": 83.45,
+    "TransactTime": "2026-09-03T07:41:58.400Z",
+    "SettlCurrency": "INR",
+    "NDFFixingDate": "2026-11-03T00:00:00.000Z",
+    "NDFFixingSource": "INR01",
+    "ExecVenueID": "BBLG_E_FX",
+    "StandardTrailer": {
+        "CheckSum": "220"
+    }
+}

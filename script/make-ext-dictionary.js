@@ -6,7 +6,7 @@
  * rather than as a hand-edited 327KB file whose provenance nobody can reconstruct - run
  * it again and the dialect is rebuilt from whatever base FIX44.xml currently says.
  *
- * Four classes of divergence, which is what real venue dictionaries actually contain:
+ * Six classes of divergence, which is what real venue dictionaries actually contain:
  *
  *   1. relocated standard components - a component allowed somewhere base 4.4 does not
  *      allow it.  Parties inside a trade capture leg is the example: base 4.4 puts
@@ -18,6 +18,12 @@
  *      as a component to paste in rather than as loose fields on Instrument.
  *   4. proprietary fields - things with no standard tag at all, or whose obvious tag
  *      already means something else in 4.4.
+ *   5. widened value sets - a standard tag, of the standard type, carrying a code base 4.4
+ *      never defined.  The commonest divergence of the lot and the one most easily
+ *      mistaken for a bad message, since nothing about the field looks unusual.
+ *   6. retained fields from an *earlier* FIX version.  The mirror image of the backport,
+ *      and just as common: a drop copy built on a 4.2 codebase and moved to a 4.4 wire
+ *      goes on sending the 4.2 field it always sent.  ExecTransType (20) is the classic.
  *
  * Provenance markers: `spec` unchanged from FIX 4.4, `plausible` reconstructed and
  * typical, `invented` ours.  See docs/trade-stories.md.
@@ -58,6 +64,14 @@ const newFields = [
   // 24000.  In production these would be two dictionaries, one per counterparty; they
   // share one here because nothing collides, and the second can be split out when
   // something does.
+  //
+  // The drop copy below very nearly forced that split.  As remembered, it sent the desk
+  // id on 9003 and the fixing date on 9611 - and 9003 is already OptionExerciseStyle two
+  // lines down.  Two counterparties reaching into the same private range and landing on
+  // the same number is the ordinary case, not a freak one, which is the whole argument
+  // for a dictionary per session rather than a dictionary per engine.  Since the tags are
+  // reconstructed anyway the drop copy is renumbered into the free end of this block; a
+  // real collision, where both numbers are attested, is what splits the file.
   [9001, 'OptionStrategyType', 'STRING', 'invented'],
   [9002, 'OptionSettlMethod', 'STRING', 'invented'],
   [9003, 'OptionExerciseStyle', 'STRING', 'invented'],
@@ -68,10 +82,54 @@ const newFields = [
   [9008, 'PremiumAmt', 'AMT', 'invented'],
   [9009, 'PremiumCurrency', 'CURRENCY', 'invented'],
   [9010, 'PremiumSettlDate', 'LOCALMKTDATE', 'invented'],
+  // The FX drop copy.  A non-deliverable trade settles in the deliverable currency
+  // against a published fix, so the date of that fix and the source it reads are the two
+  // facts base 4.4 has nowhere to put - and without them an NDF is indistinguishable on
+  // the wire from an ordinary forward.  The desk id is the venue stamping which of its
+  // dealing systems the fill came off.
+  [9011, 'NDFFixingDate', 'LOCALMKTDATE', 'invented'],
+  [9012, 'NDFFixingSource', 'STRING', 'invented'],
+  [9013, 'ExecVenueID', 'STRING', 'invented'],
   [9020, 'NoHedgeAllocs', 'NUMINGROUP', 'invented'],
   [9021, 'HedgeAllocAccount', 'STRING', 'invented'],
   [9022, 'HedgeAllocQty', 'QTY', 'invented'],
   [9023, 'HedgeAllocPercent', 'PERCENTAGE', 'invented']
+]
+
+/**
+ * ExecTransType was in FIX up to 4.3 and removed in 4.4, its job taken over by the
+ * ExecType codes for correct and cancel.  Drop copies that predate the migration keep
+ * sending it, in its old slot right after ExecID, because nothing on their side ever
+ * stopped populating it.  Declared with the 4.2 value set it actually carries.
+ */
+const retainedFields = `  <field number='20' name='ExecTransType' type='CHAR'>
+   <value enum='0' description='NEW' />
+   <value enum='1' description='CANCEL' />
+   <value enum='2' description='CORRECT' />
+   <value enum='3' description='STATUS' />
+  </field>
+`
+
+/**
+ * Widened value sets.  Same tag, same type, a code base 4.4 never defined - which is why
+ * this class of divergence is the one that bites: a validator sees a known field of the
+ * right type and waves it through, and only a reader that knows the venue's codes can
+ * tell an FX swap from a cash equity.
+ */
+const widenedValues = [
+  // 4.4 offers FOR and FORWARD for the whole of foreign exchange, which is not enough to
+  // tell a spot from a forward from a swap, so the FX vendors all name their own.
+  ['SecurityType', [
+    ['FXSPOT', 'FX_SPOT'],
+    ['FXFORWARD', 'FX_FORWARD'],
+    ['FXSWAP', 'FX_SWAP']
+  ]],
+  // the same drop copy that still sends ExecTransType still sends the 4.2 fill codes.
+  // 4.4 replaced both with F (Trade) and removed them; this pipe never noticed.
+  ['ExecType', [
+    ['1', 'PARTIAL_FILL'],
+    ['2', 'FILL']
+  ]]
 ]
 
 function slice (src, startMarker, endMarker) {
@@ -90,6 +148,24 @@ function inBlock (src, startMarker, endMarker, edits) {
     b = b.replace(from, to)
   }
   return src.slice(0, s) + b + src.slice(e)
+}
+
+/** append values to a field that already declares a value set */
+function addValues (src, fieldName, values) {
+  const open = src.indexOf(`name='${fieldName}' type=`)
+  if (open < 0) throw new Error(`base dictionary has no field ${fieldName}`)
+  const end = src.indexOf('</field>', open)
+  // a self-closing declaration has no value set, and indexOf would run on to the *next*
+  // field's closing tag and quietly widen the wrong one.  so check the opening tag itself
+  // closes with '>' rather than '/>'.
+  const openEnd = src.indexOf('>', open)
+  if (end < 0 || src[openEnd - 1] === '/') {
+    throw new Error(`field ${fieldName} declares no value set to widen`)
+  }
+  const decls = values
+    .map(([v, description]) => `   <value enum='${v}' description='${description}' />\n`)
+    .join('')
+  return src.slice(0, end - 2) + decls + src.slice(end - 2)
 }
 
 /** field references at the indent used inside a group body */
@@ -188,6 +264,32 @@ x = inBlock(x, "<component name='UndInstrmtGrp'>", '</component>', [
     "    <component name='HedgeAllocGrp' required='N' />"]
 ])
 
+// ------------------------------------------- 2c. the FX drop copy: NDF and NDS
+
+// A non-deliverable trade is an ordinary forward everywhere except at settlement: nothing
+// changes hands in the restricted currency, and instead the difference against a published
+// fix is paid in the deliverable one.  So the *shape* of an NDF on the wire is a plain 4.4
+// execution report, and everything that makes it non-deliverable is the two fields 4.4 has
+// nowhere to put.  That is exactly why it is worth carrying: here the dialect is the only
+// thing that distinguishes the product, and a reader without it books a deliverable
+// forward and is wrong about the settlement rather than about the parse.
+//
+// The swap needs nothing structural at all.  Base 4.4 already puts InstrmtLegExecGrp on
+// the execution report, and its NoLegs instance already carries LegSecurityType,
+// LegMaturityDate, LegSide and LegPrice - which is precisely the near-leg/far-leg
+// description an NDS wants.  Worth stating, because the instinct on seeing legs in an
+// execution report is to reach for the dictionary, and the base is enough.
+x = inBlock(x, "<message name='ExecutionReport' msgcat='app' msgtype='8'>", '</message>', [
+  // the retained 4.2 field, in the slot it occupied in 4.2 - directly after ExecID
+  ["<field name='ExecID' required='Y' />",
+    "<field name='ExecID' required='Y' />\n   <field name='ExecTransType' required='N' />"],
+  // the venue's own trailer.  Late in the message because that is where it arrives: the
+  // counterparty appends its block after the standard body rather than interleaving it.
+  ["<field name='CopyMsgIndicator' required='N' />",
+    "<field name='NDFFixingDate' required='N' />\n   <field name='NDFFixingSource' required='N' />\n" +
+    "   <field name='ExecVenueID' required='N' />\n   <field name='CopyMsgIndicator' required='N' />"]
+])
+
 // ------------------------------------------------------------ 3. trade capture
 
 x = inBlock(x, "<message name='TradeCaptureReport' msgcat='app' msgtype='AE'>", '</message>', [
@@ -216,13 +318,18 @@ x = inBlock(x, "<message name='SecurityListRequest' msgcat='app' msgtype='x'>", 
 
 // ------------------------------------------------------------- the field table
 
+for (const [fieldName, values] of widenedValues) {
+  x = addValues(x, fieldName, values)
+}
+
 const decls = newFields
   .map(([tag, name, type]) => `  <field number='${tag}' name='${name}' type='${type}' />`)
   .join('\n')
-x = x.replace('</fields>', decls + '\n </fields>')
+x = x.replace('</fields>', decls + '\n' + retainedFields + ' </fields>')
 
 fs.writeFileSync(out, x)
 
 console.log('data/FIX44-EXT.xml written from data/FIX44.xml')
 console.log(`  ${newFields.length} fields added, ${newFields.filter(f => f[3] === 'invented').length} of them proprietary`)
+console.log(`  1 field retained from 4.2, ${widenedValues.reduce((n, w) => n + w[1].length, 0)} values added to ${widenedValues.length} standard fields`)
 console.log('  register as qf44ext in data/dictionary.json')

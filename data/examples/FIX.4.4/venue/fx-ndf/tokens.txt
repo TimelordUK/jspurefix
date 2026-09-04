@@ -1,0 +1,17 @@
+[0] 8 (BeginString) = FIX.4.4, [1] 9 (BodyLength) = 348
+[2] 35 (MsgType) = 8[ExecutionReport], [3] 34 (MsgSeqNum) = 5001
+[4] 49 (SenderCompID) = BBLG_FX_DROP, [5] 56 (TargetCompID) = CLIENT_DROP
+[6] 52 (SendingTime) = 20260903-07:42:00.317, [7] 37 (OrderID) = BBG_TRD_99821
+[8] 11 (ClOrdID) = ORDER_ID_001, [9] 17 (ExecID) = EXEC_7761A
+[10] 20 (ExecTransType) = 0[New], [11] 150 (ExecType) = 2[Fill]
+[12] 39 (OrdStatus) = 2[Filled], [13] 64 (SettlDate) = 20261105
+[14] 55 (Symbol) = USD/INR, [15] 167 (SecurityType) = FXFORWARD[FxForward]
+[16] 54 (Side) = 1[Buy], [17] 38 (OrderQty) = 5000000
+[18] 44 (Price) = 83.4500, [19] 15 (Currency) = USD
+[20] 32 (LastQty) = 5000000, [21] 31 (LastPx) = 83.4500
+[22] 194 (LastSpotRate) = 83.1200, [23] 195 (LastForwardPoints) = 0.3300
+[24] 151 (LeavesQty) = 0, [25] 14 (CumQty) = 5000000
+[26] 6 (AvgPx) = 83.4500, [27] 60 (TransactTime) = 20260903-07:41:58.400
+[28] 120 (SettlCurrency) = INR, [29] 9011 (NDFFixingDate) = 20261103
+[30] 9012 (NDFFixingSource) = INR01, [31] 9013 (ExecVenueID) = BBLG_E_FX
+[32] 10 (CheckSum) = 220
