@@ -38,7 +38,7 @@ export class TestEntity {
   }
 
   getAsciiParser (text: string, chunks: boolean = false): AsciiParser {
-    const traits = chunks ? StringDuplexTraits.Hunked | StringDuplexTraits.Terminate : StringDuplexTraits.Terminate
+    const traits = chunks ? StringDuplexTraits.All : StringDuplexTraits.Terminate
     return new AsciiParser(this.config, new StringDuplex(text, traits).readable, this.rxBuffer)
   }
 
