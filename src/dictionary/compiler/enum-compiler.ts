@@ -7,8 +7,8 @@ import { ILooseObject } from '../../collections/collection'
 import * as fs from 'fs'
 import * as util from 'util'
 import * as Path from 'path'
-import * as _ from 'lodash'
 import { TagType } from '../../buffer/tag/tag-type'
+import { typeFileName } from './file-name'
 
 export class EnumCompiler {
   private readonly buffer: ElasticBuffer = new ElasticBuffer()
@@ -161,7 +161,7 @@ export class EnumCompiler {
   }
 
   private getFileName (name: string): string {
-    const snake = _.snakeCase(name)
+    const snake = typeFileName(name)
     const settings = this.settings
     const fileName = `${snake}.ts`
     const path: string = `${settings.output}/enum/`

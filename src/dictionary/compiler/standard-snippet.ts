@@ -1,5 +1,5 @@
 import { ICompilerSettings } from './compiler-settings'
-import * as _ from 'lodash'
+import { typeFileName } from './file-name'
 
 export class StandardSnippet {
   constructor (public readonly settings: ICompilerSettings) {
@@ -13,7 +13,7 @@ export class StandardSnippet {
   // import { camelName } from './component/name_underscore'
   public import (name: string, isMsg: boolean, indent: number): string {
     const spaces: string = this.spaces(indent)
-    const fileName = _.snakeCase(name)
+    const fileName = typeFileName(name)
     const path = isMsg ? `./set/${fileName}` : `./${fileName}`
     return `${spaces}import { I${name} } from '${path}'`
   }
