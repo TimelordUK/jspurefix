@@ -7,14 +7,14 @@ import {
 } from '../contained'
 import { FixDefinitions } from '../definition'
 
-import _ = require('lodash')
 import { ContainedSetType } from '../contained-set-type'
 import { FixDefinitionSource } from '../fix-definition-source'
+import { typeFileName } from './file-name'
 
 export class CompilerType {
   public readonly snaked: string
   constructor (public readonly definitions: FixDefinitions, public readonly set: IContainedSet, public readonly qualifiedName: string) {
-    const snake = _.snakeCase(this.qualifiedName)
+    const snake = typeFileName(this.qualifiedName)
     if (set.type === ContainedSetType.Msg) {
       this.snaked = `./${snake}`
     } else {
