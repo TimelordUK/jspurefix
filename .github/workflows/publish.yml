@@ -12,7 +12,7 @@ on:
           - minor
           - major
       dry_run:
-        description: 'Dry run (skip npm publish and GitHub release)'
+        description: 'Dry run (npm publish --dry-run; no commit, tag or release)'
         required: false
         type: boolean
         default: false
@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # npm trusted publishing: the job's OIDC token stands in for an NPM_TOKEN secret
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -61,13 +63,19 @@ jobs:
       - name: Run tests
         run: npm test
 
+      # publish first: if npm refuses, nothing has been pushed, tagged or released,
+      # so the run can simply be retried
+      - name: Publish to npm
+        run: npm publish ${{ inputs.dry_run && '--dry-run' || '' }}
+
       - name: Commit version bump
+        if: ${{ !inputs.dry_run }}
         run: |
           git add package.json package-lock.json
           git commit -m "${{ steps.version.outputs.new }}"
           git push origin master
 
-      - name: Tag and create GitHub release
+      - name: Tag
         if: ${{ !inputs.dry_run }}
         run: |
           git tag ${{ steps.version.outputs.new }}
@@ -81,12 +89,6 @@ jobs:
           gh release create ${{ steps.version.outputs.new }} \
             --title "${{ steps.version.outputs.new }}" \
             --generate-notes
-
-      - name: Publish to npm
-        if: ${{ !inputs.dry_run }}
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Summary
         run: |
