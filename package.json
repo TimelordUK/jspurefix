@@ -117,7 +117,7 @@
     "@types/winston": "^2.4.4",
     "eslint": "^9.39.5",
     "eslint-config-love": "^158.0.0",
-    "jest": "^30.4.2",
+    "jest": "^30.5.2",
     "madge": "^8.0.0",
     "standard": "^17.1.2",
     "ts-jest": "^29.4.15",
